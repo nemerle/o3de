@@ -328,23 +328,7 @@ Q_SIGNALS:
 
             SavedState() {}
 
-            static void Reflect(AZ::ReflectContext* context)
-            {
-                AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context);
-                if (serialize)
-                {
-                    serialize->Class<SavedState>()
-                        ->Version(1)
-                        ->Field("m_tabSettings", &SavedState::m_tabSettings);
-
-                    serialize->Class<TabSettings>()
-                        ->Version(1)
-                        ->Field("window", &TabSettings::m_window)
-                        ->Field("tabName", &TabSettings::m_tabName)
-                        ->Field("textFilter", &TabSettings::m_textFilter)
-                        ->Field("filterFlags", &TabSettings::m_filterFlags);
-                }
-            }
+            static void Reflect(AZ::ReflectContext* context);
         };
     } // namespace LogPanel
 } // namespace AzToolsFramework

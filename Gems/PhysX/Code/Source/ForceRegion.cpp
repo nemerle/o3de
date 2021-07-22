@@ -11,9 +11,10 @@
 #include <PhysX/MeshAsset.h>
 #include <Source/Utils.h>
 
-#include <AzCore/Math/Color.h>
 #include <AzFramework/Physics/ColliderComponentBus.h>
 #include <AzFramework/Physics/RigidBodyBus.h>
+#include <AzCore/Math/Color.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace PhysX
 {

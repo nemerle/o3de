@@ -8,6 +8,7 @@
 
 #include "ScriptEventsSystemComponent.h"
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/EBus/EBus.h>

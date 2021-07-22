@@ -14,6 +14,8 @@
 #include <Authentication/LWAAuthenticationProvider.h>
 #include <Authentication/GoogleAuthenticationProvider.h>
 #include <Authentication/AuthenticationProviderManager.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AWSClientAuth
 {

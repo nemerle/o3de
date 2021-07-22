@@ -11,6 +11,8 @@
 #include <AzCore/JSON/pointer.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/std/smart_ptr/shared_ptr.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Tests/SerializeContextFixture.h>
 #include <Tests/Serialization/Json/JsonSerializationTests.h>

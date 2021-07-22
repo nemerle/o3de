@@ -12,8 +12,6 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <Atom/RHI.Reflect/Handle.h>
 #include <AzCore/Name/Name.h>
-#include <AzCore/std/algorithm.h>
-#include <AzCore/std/sort.h>
 
 namespace AZ
 {
@@ -36,4 +34,22 @@ namespace AZ
             }
         }
     }
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+    
+    template< typename IndexType>
+    struct SerializeGenericTypeInfo<RHI::NameIdReflectionMap<IndexType>> : SerializeGenericTypeInfoImpl<RHI::NameIdReflectionMap<IndexType>>
+    {
+        //treat NameIdReflectionMap as generic value type
+    };
+
+    template< typename IndexType>
+    struct SerializeGenericTypeInfo<RHI::ReflectionNamePair<IndexType>> : SerializeGenericTypeInfoImpl<RHI::ReflectionNamePair<IndexType>>
+    {
+        //treat ReflectionNamePair as generic value type
+    };
+    
 }

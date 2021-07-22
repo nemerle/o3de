@@ -9,6 +9,7 @@
 #include <Atom/RHI.Reflect/NameIdReflectionMapReflectImpl.inl>
 #include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Utils/TypeHash.h>
 
 namespace AZ

@@ -8,6 +8,8 @@
 
 #include "ExecutionLogAsset.h"
 #include <AzCore/IO/FileIO.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvas
 {

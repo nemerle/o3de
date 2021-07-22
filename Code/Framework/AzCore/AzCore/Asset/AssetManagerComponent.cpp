@@ -9,6 +9,7 @@
 #include <AzCore/Asset/AssetJsonSerializer.h>
 #include <AzCore/Asset/AssetManagerComponent.h>
 #include <AzCore/Asset/AssetManagerBus.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Preprocessor/EnumReflectUtils.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContextEnum.inl>

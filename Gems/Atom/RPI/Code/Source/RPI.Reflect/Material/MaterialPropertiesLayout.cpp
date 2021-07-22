@@ -8,7 +8,9 @@
 
 #include <Atom/RPI.Reflect/Material/MaterialPropertiesLayout.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Atom/RHI.Reflect/NameIdReflectionMapReflectImpl.inl>
+#include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 
 namespace AZ
 {

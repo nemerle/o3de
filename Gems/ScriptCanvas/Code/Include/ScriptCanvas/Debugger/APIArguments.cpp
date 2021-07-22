@@ -8,6 +8,8 @@
 
 #include "APIArguments.h"
 
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas
 {
     namespace Debugger

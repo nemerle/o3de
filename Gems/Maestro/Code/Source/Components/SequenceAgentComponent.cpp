@@ -8,6 +8,7 @@
 #include "SequenceAgentComponent.h"
 
 #include <AzFramework/API/ApplicationAPI.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace Maestro
 {

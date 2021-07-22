@@ -7,6 +7,8 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Atom/RPI.Reflect/Asset/AssetReference.h>
 

@@ -10,6 +10,8 @@
 
 #ifdef IMGUI_ENABLED
 
+#include "ImGuiColorDefines.h"
+
 #include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/std/sort.h>
@@ -17,8 +19,8 @@
 #include <AzFramework/Entity/EntityContext.h>
 #include <AzFramework/Entity/EntityContextBus.h>
 #include <AzFramework/Entity/GameEntityContextBus.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
-#include "ImGuiColorDefines.h"
 
 namespace ImGui
 {

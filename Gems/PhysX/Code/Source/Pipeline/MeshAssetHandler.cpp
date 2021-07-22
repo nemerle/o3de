@@ -12,6 +12,7 @@
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <PhysX/MeshAsset.h>
 #include <PhysX/SystemComponentBus.h>
 #include <Source/Pipeline/MeshAssetHandler.h>

@@ -9,6 +9,8 @@
 #include <Atom/RPI.Reflect/Material/MaterialPropertyDescriptor.h>
 #include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/SerializeContextEnum.inl>
 #include <AzCore/Math/Vector2.h>
 #include <AzCore/Math/Vector3.h>

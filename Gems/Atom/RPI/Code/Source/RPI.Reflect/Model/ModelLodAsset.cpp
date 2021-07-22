@@ -8,7 +8,9 @@
 
 #include <Atom/RPI.Reflect/Model/ModelLodAsset.h>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

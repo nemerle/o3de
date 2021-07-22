@@ -186,3 +186,18 @@ namespace LmbrCentral
         m_elementEditData = elementData;
     }
 } // namespace LmbrCentral
+
+namespace AZ 
+{
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+    
+    template< typename AttributeType >
+    struct SerializeGenericTypeInfo<LmbrCentral::SplineAttribute<AttributeType>> : SerializeGenericTypeInfoImpl<LmbrCentral::SplineAttribute<AttributeType>>
+    {
+        //treat LmbrCentral::SplineAttribute as generic value type
+    };
+}

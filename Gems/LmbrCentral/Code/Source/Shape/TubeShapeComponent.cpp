@@ -9,6 +9,7 @@
 #include "TubeShapeComponent.h"
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Shape/ShapeDisplay.h>
 
 namespace LmbrCentral

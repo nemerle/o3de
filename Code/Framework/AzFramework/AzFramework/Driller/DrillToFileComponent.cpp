@@ -10,6 +10,7 @@
 
 #include <AzCore/Driller/Driller.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/IO/FileIO.h>
 
 namespace AzFramework

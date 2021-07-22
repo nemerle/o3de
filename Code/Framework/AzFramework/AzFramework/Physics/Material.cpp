@@ -5,17 +5,21 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
-#include <AzCore/IO/FileIO.h>
-#include <AzCore/Component/ComponentApplicationBus.h>
-#include <AzCore/Interface/Interface.h>
-#include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Serialization/EditContext.h>
 
 #include <AzFramework/Physics/Material.h>
+
 #include <AzFramework/Physics/NameConstants.h>
 #include <AzFramework/Physics/ClassConverters.h>
 #include <AzFramework/Physics/SystemBus.h>
 #include <AzFramework/Physics/PhysicsSystem.h>
+
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/IO/FileIO.h>
+#include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Interface/Interface.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Serialization/EditContext.h>
 
 namespace
 {

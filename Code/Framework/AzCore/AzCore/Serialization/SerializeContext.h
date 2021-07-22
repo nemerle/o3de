@@ -1401,7 +1401,7 @@ namespace AZ
      * required by the system, to properly identify an element anyway). At the moment
      */
     template<class ValueType>
-    struct SerializeGenericTypeInfo
+    struct SerializeGenericTypeInfoImpl
     {
         // Provides a specific type alias that can be used to create GenericClassInfo of the 
         // specified type. By default this is GenericClassInfo class which is abstract
@@ -1412,7 +1412,19 @@ namespace AZ
         /// By default just return the ValueTypeInfo
         static const Uuid& GetClassTypeId();
     };
-
+    
+    template<class ValueType>
+    struct SerializeGenericTypeInfo : SerializeGenericTypeInfoImpl<ValueType>
+    {
+    };
+    
+    // All templated types *need* custom type infos
+    // This template has specializations defined for many common types in `AzCore/Serialization/AZStdContainers.inl`
+    template<template<typename... TYPES> class Container, typename ...TYPES>
+    struct SerializeGenericTypeInfo<Container<TYPES...>>;
+    
+    
+    
     /**
     Helper structure to allow the creation of a function pointer for creating AZStd::any objects
     It takes advantage of type erasure to allow a mapping of Uuids to AZStd::any(*)() function pointers
@@ -2455,7 +2467,7 @@ namespace AZ
     // SerializeGenericTypeInfo<ValueType>::GetClassTypeId
     //=========================================================================
     template<class ValueType>
-    const Uuid& SerializeGenericTypeInfo<ValueType>::GetClassTypeId()
+    const Uuid& SerializeGenericTypeInfoImpl<ValueType>::GetClassTypeId()
     {
         // Detect the scenario when an enum type doesn't specialize AzTypeInfo
         // The underlying type Uuid is returned instead

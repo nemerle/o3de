@@ -8,6 +8,7 @@
 
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include "SelectTrack.h"
 #include "Maestro/Types/AnimValueType.h"
 

@@ -8,7 +8,7 @@
 
 #include <AzFramework/Physics/Character.h>
 #include <AzCore/Serialization/EditContext.h>
-
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace Physics
 {

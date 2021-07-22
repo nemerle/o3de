@@ -7,14 +7,16 @@
  */
 
 #include "FollowTargetFromDistance.h"
-#include <AzCore/Math/Transform.h>
-#include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Math/Crc.h>
-#include <AzCore/Serialization/EditContext.h>
-#include <AzCore/Component/ComponentApplicationBus.h>
+
 #include "StartingPointCamera/StartingPointCameraConstants.h"
 #include "StartingPointCamera/StartingPointCameraUtilities.h"
 
+#include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Math/Crc.h>
+#include <AzCore/Math/Transform.h>
+#include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace Camera
 {

@@ -8,6 +8,7 @@
 
 #include "CameraRigComponent.h"
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Math/Transform.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Component/Entity.h>

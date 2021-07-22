@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Slice/SliceMetadataInfoComponent.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

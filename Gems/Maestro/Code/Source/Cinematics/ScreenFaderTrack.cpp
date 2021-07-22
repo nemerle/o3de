@@ -8,6 +8,7 @@
 
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include "ScreenFaderTrack.h"
 #include <IRenderer.h>
 

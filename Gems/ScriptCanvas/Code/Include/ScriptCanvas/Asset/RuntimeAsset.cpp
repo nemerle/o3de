@@ -9,6 +9,9 @@
 #include "RuntimeAsset.h"
 
 #include <AzCore/Component/Entity.h>
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvasRuntimeAssetCpp
 {

@@ -13,10 +13,12 @@
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/std/algorithm.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 ///////////////////////////////////////////////////////
 // Temp while the asset system is done
 #include <AzCore/Serialization/Utils.h>

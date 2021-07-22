@@ -44,6 +44,40 @@ template <typename F>
 struct Ang3_tpl;
 typedef Ang3_tpl<f32>       Ang3;
 
+namespace AZ 
+{
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+    
+    //treat templated tuple values as generic value types
+    template< typename T>
+    struct SerializeGenericTypeInfo<Color_tpl<T>> : SerializeGenericTypeInfoImpl<Color_tpl<T>>
+    {
+    };
+    template< typename T>
+    struct SerializeGenericTypeInfo<Vec2_tpl<T>> : SerializeGenericTypeInfoImpl<Vec2_tpl<T>>
+    {
+    };
+    template< typename T>
+    struct SerializeGenericTypeInfo<Vec3_tpl<T>> : SerializeGenericTypeInfoImpl<Vec3_tpl<T>>
+    {
+    };
+    template< typename T>
+    struct SerializeGenericTypeInfo<Vec4_tpl<T>> : SerializeGenericTypeInfoImpl<Vec4_tpl<T>>
+    {
+    };
+    template< typename T>
+    struct SerializeGenericTypeInfo<Quat_tpl<T>> : SerializeGenericTypeInfoImpl<Quat_tpl<T>>
+    {
+    };
+    template< typename T>
+    struct SerializeGenericTypeInfo<Ang3_tpl<T>> : SerializeGenericTypeInfoImpl<Ang3_tpl<T>>
+    {
+    };
+} // namespace AZ
 
 #if defined(QT_VERSION)
 #include <QColor>

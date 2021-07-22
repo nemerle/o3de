@@ -8,6 +8,7 @@
 
 #include <AzCore/IO/Streamer/StreamerConfiguration.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ::IO
 {

@@ -9,6 +9,7 @@
 
 #include <AzFramework/Physics/RigidBodyBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Component/NonUniformScaleBus.h>
 #include <AzCore/std/smart_ptr/make_shared.h>

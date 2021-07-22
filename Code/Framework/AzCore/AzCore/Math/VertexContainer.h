@@ -103,7 +103,19 @@ namespace AZ
     };
 
     AZ_TYPE_INFO_TEMPLATE(VertexContainer, "{39A06CC2-D2C4-4803-A2D1-0E674A61EF4E}", AZ_TYPE_INFO_TYPENAME);
-
+    
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+    
+    template< typename T>
+    struct SerializeGenericTypeInfo<VertexContainer<T>> : SerializeGenericTypeInfoImpl<VertexContainer<T>>
+    {
+        //treat VertexContainer as generic value type
+    };
+    
 } // namespace AZ
 
 #include <AzCore/Math/Internal/VertexContainer.inl>

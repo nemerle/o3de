@@ -10,8 +10,11 @@
 #include <AzCore/Preprocessor/Enum.h>
 #include <AzCore/std/string/string.h>
 #include <AzCore/std/chrono/clocks.h>
-#include <AzCore/RTTI/BehaviorContext.h>
-#include <AzCore/Serialization/EditContext.h>
+
+namespace AZ
+{
+    class ReflectContext;
+}
 
 namespace AWSClientAuth
 {

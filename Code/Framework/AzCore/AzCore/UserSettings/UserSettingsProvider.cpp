@@ -8,6 +8,7 @@
 #include <AzCore/UserSettings/UserSettingsProvider.h>
 #include <AzCore/Component/Component.h>
 #include <AzCore/Serialization/ObjectStream.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/IO/GenericStreams.h>
 

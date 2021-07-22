@@ -19,6 +19,32 @@ using namespace AZ;
 
 namespace UnitTest
 {
+    namespace Patching
+    {
+        template<typename BaseClass>
+        class InnerObjectFieldConverterDerivedV1Template;
+    }
+}
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename T>
+    struct SerializeGenericTypeInfo<UnitTest::Patching::InnerObjectFieldConverterDerivedV1Template<T>>
+        : SerializeGenericTypeInfoImpl<UnitTest::Patching::InnerObjectFieldConverterDerivedV1Template<T>>
+    {
+        // treat InnerObjectFieldConverterDerivedV1Template as a generic value type
+    };
+
+} // namespace AZ
+
+namespace UnitTest
+{
     /**
     * Tests generating and applying patching to serialized structures.
     * \note There a lots special... \TODO add notes depending on the final solution

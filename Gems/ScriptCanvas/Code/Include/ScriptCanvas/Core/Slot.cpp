@@ -13,6 +13,7 @@
 #include "Contracts.h"
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Utils.h>
 
 #include <ScriptCanvas/Variable/VariableBus.h>

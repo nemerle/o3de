@@ -7,6 +7,7 @@
  */
 
 #include <Debugger/Messages/Notify.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvas
 {

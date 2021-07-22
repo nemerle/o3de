@@ -10,6 +10,7 @@
 #include "TrackEventTrack.h"
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 CAnimStringTable::CAnimStringTable()
     : m_refCount(0)

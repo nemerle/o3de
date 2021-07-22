@@ -9,6 +9,7 @@
 #include "LogFile.h"
 #include "LoggingComponent.h"
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/Component/Entity.h>

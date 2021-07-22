@@ -12,6 +12,7 @@ set(FILES
     Include/ScriptEvents/ScriptEventsGem.h
     Include/ScriptEvents/ScriptEventsAsset.h
     Include/ScriptEvents/ScriptEventsAsset.cpp
+    Include/ScriptEvents/ScriptEventsAssetRef.cpp
     Include/ScriptEvents/ScriptEventsAssetRef.h
     Include/ScriptEvents/ScriptEventsBus.h
     Include/ScriptEvents/ScriptEventRegistration.h

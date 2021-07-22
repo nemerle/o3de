@@ -624,6 +624,28 @@ namespace ScriptCanvas
     }
 }
 
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename S, typename T>
+    struct SerializeGenericTypeInfo<ScriptCanvas::TaggedParent<S, T>> : SerializeGenericTypeInfoImpl<ScriptCanvas::TaggedParent<S, T>>
+    {
+        // treat JsonSerializationTests::TemplatedClass template as generic value type
+    };
+    
+    template<typename T>
+    struct SerializeGenericTypeInfo<ScriptCanvas::TaggedDataValue<T>> : SerializeGenericTypeInfoImpl<ScriptCanvas::TaggedDataValue<T>>
+    {
+        // treat JsonSerializationTests::TaggedDataValue template as generic value type
+    };
+    
+} // namespace AZ
+
 namespace AZStd
 {
     template<>

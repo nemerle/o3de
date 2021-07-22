@@ -9,6 +9,7 @@
 #include "FileIOBaseTestTypes.h"
 
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
@@ -66,6 +67,27 @@
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/UnitTest/TestTypes.h>
 #include <AZTestShared/Utils/Utils.h>
+
+namespace UnitTest
+{
+    template<typename T>
+    class GenericsLoadInPlaceHolder;
+}
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename T>
+    struct SerializeGenericTypeInfo<UnitTest::GenericsLoadInPlaceHolder<T>>
+        : SerializeGenericTypeInfoImpl<UnitTest::GenericsLoadInPlaceHolder<T>>
+    {
+        // treat SerializeTestClasses::GenericsLoadInPlaceHolder as generic value type
+    };
+} // namespace AZ
 
 namespace SerializeTestClasses {
     class MyClassBase1

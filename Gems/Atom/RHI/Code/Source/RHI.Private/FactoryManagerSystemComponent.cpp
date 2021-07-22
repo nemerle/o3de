@@ -13,6 +13,7 @@
 #include <RHI.Private/FactoryManagerSystemComponent.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/std/containers/unordered_map.h>
 #include <AzCore/std/sort.h>

@@ -132,6 +132,19 @@ typedef TRange<float> Range;
 namespace AZ
 {
     AZ_TYPE_INFO_SPECIALIZE(Range, "{515CF4CF-4992-4139-BDE5-42A887432B45}");
+    
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+    
+    template< typename T>
+    struct SerializeGenericTypeInfo<TRange<T>> : SerializeGenericTypeInfoImpl<TRange<T>>
+    {
+        //treat TRange as generic value type
+    };
+    
 }
 
 #endif // CRYINCLUDE_CRYCOMMON_RANGE_H

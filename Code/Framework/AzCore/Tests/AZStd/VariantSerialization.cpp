@@ -12,6 +12,9 @@
 #include <AzCore/std/containers/variant.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/std/VariantReflection.inl>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Asset/AssetSerializer.h>
 
 namespace UnitTest
 {

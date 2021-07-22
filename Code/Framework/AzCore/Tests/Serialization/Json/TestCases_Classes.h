@@ -186,4 +186,16 @@ namespace AZ
     AZ_TYPE_INFO_SPECIALIZE(JsonSerializationTests::NonReflectedEnumWrapper::SimpleEnumClass, "{E80E4A41-B29E-4B7C-B630-3B599172C837}");
     AZ_TYPE_INFO_SPECIALIZE(JsonSerializationTests::NonReflectedEnumWrapper::SimpleRawEnum, "{C42AF28D-4F84-4540-972A-5B6EEFAB13FF}");
     AZ_TYPE_INFO_TEMPLATE(JsonSerializationTests::TemplatedClass, "{CA4ADF74-66E7-4D16-B4AC-F71278C60EC7}", AZ_TYPE_INFO_TYPENAME);
+    
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+    
+    template< typename T>
+    struct SerializeGenericTypeInfo<JsonSerializationTests::TemplatedClass<T>> : SerializeGenericTypeInfoImpl<JsonSerializationTests::TemplatedClass<T>>
+    {
+        //treat JsonSerializationTests::TemplatedClass template as generic value type
+    };
 }

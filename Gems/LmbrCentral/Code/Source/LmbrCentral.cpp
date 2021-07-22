@@ -9,6 +9,7 @@
 
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/std/containers/list.h>
 #include <AzCore/Memory/AllocatorScope.h>

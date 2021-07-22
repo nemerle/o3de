@@ -17,6 +17,7 @@
 
 #include <AzCore/IO/Streamer/StreamerComponent.h>
 #include <AzCore/Serialization/ObjectStream.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzCore/Memory/MemoryComponent.h>
 #include <AzCore/UserSettings/UserSettingsComponent.h>

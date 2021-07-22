@@ -11,6 +11,7 @@
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
 
 namespace LmbrCentral

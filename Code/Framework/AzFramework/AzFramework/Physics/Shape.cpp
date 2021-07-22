@@ -8,6 +8,7 @@
 
 #include "Shape.h"
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/Physics/ClassConverters.h>
 
 namespace Physics

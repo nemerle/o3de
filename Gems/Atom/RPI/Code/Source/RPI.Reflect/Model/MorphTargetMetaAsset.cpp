@@ -8,6 +8,8 @@
 
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <Atom/RPI.Reflect/Model/MorphTargetMetaAsset.h>
 
 namespace AZ::RPI

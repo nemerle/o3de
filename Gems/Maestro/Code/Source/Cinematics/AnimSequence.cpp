@@ -32,6 +32,7 @@
 #include <Maestro/Types/AnimNodeType.h>
 #include <Maestro/Types/SequenceType.h>
 #include <Maestro/Types/AnimParamType.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 //////////////////////////////////////////////////////////////////////////
 CAnimSequence::CAnimSequence(IMovieSystem* pMovieSystem, uint32 id, SequenceType sequenceType)

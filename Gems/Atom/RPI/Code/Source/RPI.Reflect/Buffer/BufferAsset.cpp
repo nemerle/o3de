@@ -8,8 +8,10 @@
 
 #include <Atom/RPI.Reflect/Buffer/BufferAsset.h>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/SerializeContextEnum.inl>
 
 namespace AZ

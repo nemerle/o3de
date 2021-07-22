@@ -13,6 +13,7 @@
 #include <MathConversion.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/Physics/RigidBodyBus.h>
 #include <AzFramework/Physics/CharacterBus.h>
 #include <AzFramework/Physics/PhysicsScene.h>

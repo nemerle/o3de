@@ -101,7 +101,25 @@ namespace ScriptCanvas
             return t_Id::operator>(rhs);
         }
     };
-}   // namespace AZ
+    
+    
+    
+}   // namespace ScriptCanvas
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename T>
+    struct SerializeGenericTypeInfo<ScriptCanvas::NamedId<T>> : SerializeGenericTypeInfoImpl<ScriptCanvas::NamedId<T>>
+    {
+        // treat NamedId as generic value type
+    };
+} // namespace AZ
 
 namespace AZStd
 {

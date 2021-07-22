@@ -8,6 +8,7 @@
 
 #include <AzFramework/Asset/AssetProcessorMessages.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/API/ApplicationAPI.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Math/Crc.h>

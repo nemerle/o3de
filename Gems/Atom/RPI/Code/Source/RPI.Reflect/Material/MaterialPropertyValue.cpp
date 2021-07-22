@@ -8,7 +8,10 @@
 
 #include <Atom/RPI.Reflect/Material/MaterialPropertyValue.h>
 #include <AzCore/std/typetraits/is_same.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Serialization/std/VariantReflection.inl>
 
 namespace AZ
 {

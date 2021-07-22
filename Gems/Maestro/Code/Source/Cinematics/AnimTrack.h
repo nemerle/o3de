@@ -662,4 +662,18 @@ inline int TAnimTrack<KeyType>::GetActiveKey(float time, KeyType* key)
     return m_currKey;
 }
 
+namespace AZ 
+{
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+    
+    //treat templated TAnimTrack values as generic value types
+    template< typename T>
+    struct SerializeGenericTypeInfo<TAnimTrack<T>> : SerializeGenericTypeInfoImpl<TAnimTrack<T>>
+    {
+    };
+} // namespace AZ
 #endif // CRYINCLUDE_CRYMOVIE_ANIMTRACK_H

@@ -8,6 +8,7 @@
  */
 
 #include <AzFramework/Asset/AssetSeedList.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AzFramework
 {

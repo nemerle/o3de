@@ -9,8 +9,12 @@
 #include <AtomCore/std/containers/vector_set.h>
 #include <Atom/RPI.Reflect/Material/ShaderCollection.h>
 #include <Atom/RHI.Reflect/NameIdReflectionMapReflectImpl.inl>
+#include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 #include <Atom/RHI/RHISystemInterface.h>
 #include <Atom/RHI/DrawListTagRegistry.h>
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdAnyDataContainer.inl>
 
 namespace AZ
 {

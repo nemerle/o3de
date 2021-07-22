@@ -8,6 +8,7 @@
 
 #include "CompoundShapeComponent.h"
 #include <AzCore/Math/Transform.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include "Cry_GeoOverlap.h"
 
 

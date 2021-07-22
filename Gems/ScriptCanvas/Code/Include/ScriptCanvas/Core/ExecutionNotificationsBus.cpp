@@ -8,6 +8,8 @@
 
 #include "Core.h"
 #include "ExecutionNotificationsBus.h"
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvas
 {

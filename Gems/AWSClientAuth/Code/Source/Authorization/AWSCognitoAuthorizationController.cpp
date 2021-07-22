@@ -16,6 +16,8 @@
 #include <AzCore/Jobs/JobFunction.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/Settings/SettingsRegistryImpl.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <aws/identity-management/auth/CognitoCachingCredentialsProvider.h>
 

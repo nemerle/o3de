@@ -26,6 +26,7 @@ AZ_POP_DISABLE_WARNING
 #include <AzCore/PlatformId/PlatformId.h>
 #include <AzCore/std/parallel/lock.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <GridMate/Carrier/Utils.h>
 #include <GridMate/Session/LANSession.h>

@@ -10,6 +10,7 @@
 #include "ScriptEventsBus.h"
 
 #include <AzCore/std/string/regex.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptEvents
 {

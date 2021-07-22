@@ -245,3 +245,19 @@ namespace ScriptCanvas
         }
     }
 }
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename T>
+    struct SerializeGenericTypeInfo<ScriptCanvas::Debugger::Message::NotificationPayload<T>>
+        : SerializeGenericTypeInfoImpl<ScriptCanvas::Debugger::Message::NotificationPayload<T>>
+    {
+        // treat NotificationPayload template as generic value type
+    };
+} // namespace AZ

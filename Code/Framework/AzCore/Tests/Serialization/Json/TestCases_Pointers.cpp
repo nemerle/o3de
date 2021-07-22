@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <Tests/Serialization/Json/TestCases_Classes.h>
 #include <Tests/Serialization/Json/TestCases_Pointers.h>

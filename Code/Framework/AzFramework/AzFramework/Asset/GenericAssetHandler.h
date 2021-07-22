@@ -239,4 +239,19 @@ namespace AzFramework
     };
 } // namespace AzFramework
 
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    // treat templated AzFramework::GenericAssetHandler values as generic value types
+    template<typename T>
+    struct SerializeGenericTypeInfo<AzFramework::GenericAssetHandler<T>> : SerializeGenericTypeInfoImpl<AzFramework::GenericAssetHandler<T>>
+    {
+    };
+} // namespace AZ
+
 #endif // AZFRAMEWORK_ASSET_GENERICASSETHANDLER_H

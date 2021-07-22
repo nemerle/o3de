@@ -6,14 +6,16 @@
  *
  */
 
-#include <Atom/RHI.Reflect/Base.h>
 #include <Atom/RHI.Reflect/IndirectBufferLayout.h>
+
+#include <Atom/RHI.Reflect/Base.h>
 #include <Atom/RHI.Reflect/Handle.h>
 #include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 
 #include <AzCore/Utils/TypeHash.h>
 #include <AzCore/std/containers/unordered_set.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

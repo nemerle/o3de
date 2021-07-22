@@ -9,6 +9,7 @@
 #include <AzCore/Component/EntityUtils.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/std/containers/fixed_vector.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

@@ -11,6 +11,7 @@
 #include <AzCore/Math/Crc.h>
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/IO/SystemFile.h> // for max path
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AssetRegistryInternal
 {

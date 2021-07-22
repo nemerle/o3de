@@ -9,6 +9,8 @@
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Serialization/ObjectStream.h> // Needed for ObjectStreamWriteOverrideCB and its AZ_TYPE_INFO_SPECIALIZE
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Serialization/std/VariantReflection.inl>
 #include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/std/algorithm.h>
 #include <AzCore/std/typetraits/typetraits.h>

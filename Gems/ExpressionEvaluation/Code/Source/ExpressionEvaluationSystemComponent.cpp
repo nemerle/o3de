@@ -11,6 +11,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <ExpressionEngine/InternalTypes.h>
 #include <ExpressionEngine/MathOperators/MathExpressionOperators.h>

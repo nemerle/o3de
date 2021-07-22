@@ -8,6 +8,8 @@
 
 #include "ScriptEventReferencesComponent.h"
 
+#include <AzCore/Asset/AssetSerializer.h>
+
 namespace ScriptEvents
 {
     namespace Components

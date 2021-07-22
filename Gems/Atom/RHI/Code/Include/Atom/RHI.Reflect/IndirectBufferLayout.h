@@ -11,6 +11,8 @@
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/Utils/TypeHash.h>
 #include <AtomCore/std/containers/array_view.h>
+#include <Atom/RHI.Reflect/Bits.h>
+
 #include <AzCore/std/containers/unordered_map.h>
 
 namespace AZ

@@ -654,6 +654,21 @@ inline bool TAnimSplineTrack<T>::SerializeSelection(XmlNodeRef& xmlNode, bool bL
     return true;
 }
 
+namespace AZ 
+{
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+    
+    //treat templated TAnimSplineTrack values as generic value types
+    template< typename T>
+    struct SerializeGenericTypeInfo<TAnimSplineTrack<T>> : SerializeGenericTypeInfoImpl<TAnimSplineTrack<T>>
+    {
+    };
+} // namespace AZ
+
 // This is the current main.
 #include "AnimSplineTrack_Vec2Specialization.h"
 typedef TAnimSplineTrack<Vec2>      C2DSplineTrack;

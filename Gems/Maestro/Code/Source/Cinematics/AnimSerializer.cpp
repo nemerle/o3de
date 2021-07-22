@@ -9,6 +9,7 @@
 #include <Range.h>
 #include <AnimKey.h>
 #include <Maestro/Types/AssetBlendKey.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include "AnimSerializer.h"
 

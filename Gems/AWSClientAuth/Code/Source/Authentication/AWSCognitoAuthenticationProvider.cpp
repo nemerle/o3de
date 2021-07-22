@@ -24,6 +24,9 @@
 #include <aws/cognito-idp/CognitoIdentityProviderClient.h>
 #include <aws/cognito-idp/CognitoIdentityProviderErrors.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace AWSClientAuth
 {
     constexpr char CognitoUsernameKey[] = "USERNAME";

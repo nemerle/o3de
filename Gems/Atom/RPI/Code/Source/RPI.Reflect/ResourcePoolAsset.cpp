@@ -9,6 +9,7 @@
 #include <Atom/RPI.Reflect/ResourcePoolAsset.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Atom/RHI.Reflect/BufferPoolDescriptor.h>
 #include <Atom/RHI.Reflect/ImagePoolDescriptor.h>

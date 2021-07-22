@@ -15,6 +15,7 @@
 #include <AzCore/Debug/Trace.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 
 namespace LmbrCentral

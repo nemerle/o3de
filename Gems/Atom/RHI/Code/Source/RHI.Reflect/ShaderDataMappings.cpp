@@ -6,9 +6,10 @@
  *
  */
 
-#include <AzCore/Serialization/SerializeContext.h>
-
 #include <Atom/RHI.Reflect/ShaderDataMappings.h>
+
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {
