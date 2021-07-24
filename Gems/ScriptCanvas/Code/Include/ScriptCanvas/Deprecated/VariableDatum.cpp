@@ -9,6 +9,9 @@
 #include <ScriptCanvas/Deprecated/VariableDatum.h>
 #include <ScriptCanvas/Variable/VariableBus.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas
 {
     namespace Deprecated
@@ -87,7 +90,7 @@ namespace ScriptCanvas
             {
                 serializeContext->Class<VariableDatum, VariableDatumBase>()
                     ->Version(4, &VariableDatumVersionConverter)
-                    ->Field("m_exposeAsInput", &VariableDatum::m_exposeAsInput)                
+                    ->Field("m_exposeAsInput", &VariableDatum::m_exposeAsInput)
                     ->Field("m_inputControlVisibility", &VariableDatum::m_inputControlVisibility)
                     ->Field("m_exposureCategory", &VariableDatum::m_exposureCategory)
                     ;
@@ -132,7 +135,7 @@ namespace ScriptCanvas
         }
 
         void VariableDatum::OnExposureChanged()
-        {            
+        {
         }
 
         void VariableDatum::OnExposureGroupChanged()
@@ -205,7 +208,7 @@ namespace ScriptCanvas
         }
 
         VariableNameValuePair::VariableNameValuePair(AZStd::string_view variableName, const VariableDatum& variableDatum)
-            : m_varDatum(variableDatum)        
+            : m_varDatum(variableDatum)
         {
             SetVariableName(variableName);
         }
@@ -214,8 +217,8 @@ namespace ScriptCanvas
         {
             // Keeping both here for now.
             //
-            // Var name is essentially unused, despite the fact it should be providing the name.        
-            m_varName = displayName;        
+            // Var name is essentially unused, despite the fact it should be providing the name.
+            m_varName = displayName;
             m_varDatum.GetData().SetLabel(displayName);
         }
 

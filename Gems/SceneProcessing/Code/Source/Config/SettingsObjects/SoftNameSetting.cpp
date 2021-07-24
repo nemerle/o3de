@@ -7,6 +7,8 @@
  */
 
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/sort.h>
 #include <SceneAPI/SceneCore/Events/GraphMetaInfoBus.h>
 #include <Config/SettingsObjects/SoftNameSetting.h>
@@ -15,7 +17,7 @@ namespace AZ
 {
     namespace SceneProcessingConfig
     {
-        SoftNameSetting::SoftNameSetting(const char* pattern, SceneAPI::SceneCore::PatternMatcher::MatchApproach approach, 
+        SoftNameSetting::SoftNameSetting(const char* pattern, SceneAPI::SceneCore::PatternMatcher::MatchApproach approach,
             const char* virtualType)
             : m_pattern(pattern, approach)
             , m_virtualType(virtualType)
@@ -55,10 +57,10 @@ namespace AZ
                         ->ClassElement(Edit::ClassElements::EditorData, "")
                             ->Attribute(Edit::Attributes::AutoExpand, true)
                             ->Attribute(Edit::Attributes::Visibility, AZ_CRC("PropertyVisibility_ShowChildrenOnly", 0xef428f20))
-                        ->DataElement(Edit::UIHandlers::Default, &SoftNameSetting::m_pattern, "Pattern", 
+                        ->DataElement(Edit::UIHandlers::Default, &SoftNameSetting::m_pattern, "Pattern",
                             "The pattern the matcher will check against.")
                             ->Attribute(Edit::Attributes::Visibility, AZ_CRC("PropertyVisibility_ShowChildrenOnly", 0xef428f20))
-                        ->DataElement(Edit::UIHandlers::ComboBox, &SoftNameSetting::m_virtualType, "Virtual Type", 
+                        ->DataElement(Edit::UIHandlers::ComboBox, &SoftNameSetting::m_virtualType, "Virtual Type",
                             "The node(s) will be converted to this type after their pattern matches.")
                             ->Attribute(Edit::Attributes::StringList, &SoftNameSetting::GetAllVirtualTypes);
                 }

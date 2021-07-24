@@ -25,6 +25,7 @@
 #include <AtomCore/Serialization/Json/JsonUtils.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
 #include <AzCore/IO/TextStreamWriters.h>
 #include <AzCore/IO/GenericStreams.h>

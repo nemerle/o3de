@@ -10,6 +10,7 @@
 #include <SurfaceData/SurfaceTag.h>
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/std/sort.h>
@@ -384,7 +385,7 @@ namespace Vegetation
                 ->Property("spawner", &Descriptor::GetSpawner, &Descriptor::SetSpawner)
                 ->Property("weight", BehaviorValueProperty(&Descriptor::m_weight))
                 ->Property("surfaceTagDistance", BehaviorValueProperty(&Descriptor::m_surfaceTagDistance))
-                ->Property("surfaceFilterOverrideMode", 
+                ->Property("surfaceFilterOverrideMode",
                     [](Descriptor* descriptor) { return (AZ::u8)(descriptor->m_surfaceFilterOverrideMode); },
                     [](Descriptor* descriptor, const AZ::u8& i) { descriptor->m_surfaceFilterOverrideMode = (OverrideMode)i; })
                 ->Property("radiusOverrideEnabled", BehaviorValueProperty(&Descriptor::m_radiusOverrideEnabled))
@@ -453,7 +454,7 @@ namespace Vegetation
                     ;
             }
         }
-        
+
         if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
         {
             behaviorContext->Class<SurfaceTagDistance>()
@@ -674,7 +675,7 @@ namespace Vegetation
 
         AZ_Assert(!m_spawnerTypes.empty(), "No serialized InstanceSpawner types were found.");
     }
-    
+
     AZStd::vector<AZStd::pair<AZ::TypeId, AZStd::string>> Descriptor::GetSpawnerTypeList() const
     {
         if (m_spawnerTypes.empty())

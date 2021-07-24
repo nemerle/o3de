@@ -8,6 +8,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <EMotionFX/Source/AnimGraph.h>
 #include <EMotionFX/Source/AnimGraphInstance.h>
 #include <EMotionFX/Source/AnimGraphManager.h>
@@ -188,7 +189,7 @@ namespace EMotionFX
         }
     }
 
-    
+
     // get the name of the currently used test function
     const char* AnimGraphVector2Condition::GetTestFunctionString() const
     {
@@ -312,7 +313,7 @@ namespace EMotionFX
         {
             return AZ::Edit::PropertyVisibility::Show;
         }
-        
+
         return AZ::Edit::PropertyVisibility::Hide;
     }
 

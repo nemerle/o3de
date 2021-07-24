@@ -19,6 +19,8 @@
 #include <Source/PythonProxyObject.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 
 namespace CustomTest
@@ -47,7 +49,7 @@ namespace AZ
                 behaviorContext->Class<MyTemplateType>()
                     ->Attribute(Script::Attributes::Scope, Script::Attributes::ScopeFlags::Automation)
                     ->Attribute(Script::Attributes::Module, "test.template")
-                    ->Property("Value", 
+                    ->Property("Value",
                         [] (MyTemplateType* that) -> T { return that->m_value; },
                         [] (MyTemplateType* that, const T& value) { that->m_value = value; })
                     ;
@@ -56,6 +58,17 @@ namespace AZ
     };
 
     AZ_TYPE_INFO_TEMPLATE(CustomTest::MyTemplate, "{82B9D060-F077-4FAA-9EF4-EF4C3A2A6332}", AZ_TYPE_INFO_CLASS);
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+
+    template< typename T>
+    struct SerializeGenericTypeInfo<CustomTest::MyTemplate<T>> : SerializeGenericTypeInfoImpl<CustomTest::MyTemplate<T>>
+    {
+        //treat CustomTest::MyTemplate as generic value type
+    };
 }
 
 namespace UnitTest

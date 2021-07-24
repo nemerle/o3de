@@ -6,15 +6,17 @@
  *
  */
 #include "ComponentMimeData.h"
+#include <AzToolsFramework/Entity/EditorEntityHelpers.h>
+#include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/IO/ByteContainerStream.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/Utils.h>
 #include <QMimeData>
 #include <QDataStream>
 #include <QClipboard>
 #include <QApplication>
-#include <AzCore/Serialization/Utils.h>
-#include <AzCore/IO/ByteContainerStream.h>
-#include <AzCore/Component/Component.h>
-#include <AzCore/Component/ComponentApplicationBus.h>
-#include <AzToolsFramework/Entity/EditorEntityHelpers.h>
 
 namespace AzToolsFramework
 {
@@ -39,7 +41,7 @@ namespace AzToolsFramework
                 ++numItems;
             }
         }
-        
+
         stream << numItems;
         for (auto item : container)
         {
@@ -79,7 +81,7 @@ namespace AzToolsFramework
 
             return !container.empty();
         }
-        
+
         return false;
     }
 

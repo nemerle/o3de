@@ -58,6 +58,7 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Script/ScriptContextAttributes.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Memory/PoolAllocator.h>
 #include <AzCore/Asset/AssetTypeInfoBus.h>
@@ -214,7 +215,7 @@ CLyShine::CLyShine(ISystem* system)
     // Define a debug console variable that controls display of some debug info on UI draw calls
     DefineConstIntCVar3("ui_DisplayDrawCallData", CV_ui_DisplayDrawCallData, 0, VF_CHEAT,
         "0=off, 1=display draw call info for all loaded and enabled UI canvases");
-    
+
     // Define a debug console variable that controls display of all element bounds when in game
     DefineConstIntCVar3("ui_DisplayElemBounds", CV_ui_DisplayElemBounds, 0, VF_CHEAT,
         "0=off, 1=display the UI element bounding boxes");
@@ -426,9 +427,9 @@ void CLyShine::Render()
 #ifndef _RELEASE
     GetUiRenderer()->DebugSetRecordingOptionForTextureData(CV_ui_DisplayTextureData);
 #endif
-   
+
     GetUiRenderer()->BeginUiFrameRender();
-        
+
     // Render all the canvases loaded in game
     m_uiCanvasManager->RenderLoadedCanvases();
 
@@ -725,7 +726,7 @@ void CLyShine::RunUnitTests(IConsoleCmdArgs* cmdArgs)
             "Unit-tests: skipping! Editor environment detected. Run tests "
             "within editor via game mode (using ui_RunUnitTests) or use "
             "the standalone launcher instead.");
-        
+
         return;
     }
 

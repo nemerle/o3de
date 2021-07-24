@@ -10,6 +10,8 @@
 
 #include <AzCore/Component/ComponentApplication.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
 
 #include <AzToolsFramework/Entity/EditorEntityHelpers.h>
@@ -271,7 +273,7 @@ namespace GraphCanvas
     {
         return m_sceneId;
     }
-    
+
     void NodeComponent::OnSceneReady()
     {
         SceneMemberNotificationBus::Event(GetEntityId(), &SceneMemberNotifications::OnSceneReady);
@@ -469,7 +471,7 @@ namespace GraphCanvas
         return hasConnections;
     }
 
-    AZStd::any* NodeComponent::GetUserData() 
+    AZStd::any* NodeComponent::GetUserData()
     {
         return &m_userData;
     }
@@ -560,9 +562,9 @@ namespace GraphCanvas
             // We only want to follow execution In's for now.
             if (connectionType == CT_Input
                 && slotType == SlotTypes::ExecutionSlot)
-            {            
+            {
                 AZStd::vector< ConnectionId > connections;
-                SlotRequestBus::EventResult(connections, slotEntity->GetId(), &SlotRequests::GetConnections);                
+                SlotRequestBus::EventResult(connections, slotEntity->GetId(), &SlotRequests::GetConnections);
 
                 for (ConnectionId connectionId : connections)
                 {

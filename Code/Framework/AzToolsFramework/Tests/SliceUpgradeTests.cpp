@@ -17,6 +17,8 @@ AZ_PUSH_DISABLE_WARNING(,"-Wdelete-non-virtual-dtor")
 #include <AzCore/IO/Streamer/Streamer.h>
 #include <AzCore/IO/Streamer/StreamerComponent.h>
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Slice/SliceComponent.h>
 #include <AzCore/Slice/SliceMetadataInfoComponent.h>
 #include <AzCore/Slice/SliceAssetHandler.h>
@@ -561,7 +563,7 @@ namespace UnitTest
         componentEV6_2 = nullptr;
         instantiatedSliceEntity = nullptr;
     }
- 
+
     TEST_F(SliceUpgradeTest, TypeChangeTests)
     {
         // TEST TYPES

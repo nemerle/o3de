@@ -25,6 +25,7 @@
 #include <Common/SerializeTester.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Utils/TypeHash.h>
 #include <AzCore/Math/Random.h>
 #include <AzCore/std/string/conversions.h>
@@ -539,19 +540,19 @@ namespace UnitTest
             auto shaderAsset = shader->GetAsset();
             EXPECT_EQ(shader->GetPipelineStateType(), shaderAsset->GetPipelineStateType());
             EXPECT_EQ(shader->GetShaderResourceGroupLayouts(), shaderAsset->GetShaderResourceGroupLayouts());
-            
+
             const RPI::ShaderVariant& rootShaderVariant = shader->GetVariant( RPI::ShaderVariantStableId{0} );
-            
+
             RHI::PipelineStateDescriptorForDraw descriptorForDraw;
             rootShaderVariant.ConfigurePipelineState(descriptorForDraw);
-            
+
             EXPECT_EQ(descriptorForDraw.m_pipelineLayoutDescriptor->GetHash(), m_pipelineLayoutDescriptor->GetHash());
             EXPECT_NE(descriptorForDraw.m_vertexFunction, nullptr);
             EXPECT_NE(descriptorForDraw.m_fragmentFunction, nullptr);
             EXPECT_EQ(descriptorForDraw.m_renderStates.GetHash(), m_renderStates.GetHash());
             EXPECT_EQ(descriptorForDraw.m_inputStreamLayout.GetHash(), HashValue64{ 0 }); // ConfigurePipelineState shouldn't touch descriptorForDraw.m_inputStreamLayout
             EXPECT_EQ(descriptorForDraw.m_renderAttachmentConfiguration.GetHash(), RHI::RenderAttachmentConfiguration().GetHash()); // ConfigurePipelineState shouldn't touch descriptorForDraw.m_outputAttachmentLayout
-            
+
             // Actual layout content doesn't matter for this test, it just needs to be set up to pass validation inside AcquirePipelineState().
             descriptorForDraw.m_inputStreamLayout.SetTopology(RHI::PrimitiveTopology::TriangleList);
             descriptorForDraw.m_inputStreamLayout.Finalize();
@@ -560,7 +561,7 @@ namespace UnitTest
                 ->RenderTargetAttachment(RHI::Format::R8G8B8A8_SNORM)
                 ->DepthStencilAttachment(RHI::Format::R32_FLOAT);
             builder.End(descriptorForDraw.m_renderAttachmentConfiguration.m_renderAttachmentLayout);
-            
+
             const RHI::PipelineState* pipelineState = shader->AcquirePipelineState(descriptorForDraw);
             EXPECT_NE(pipelineState, nullptr);
         }
@@ -750,7 +751,7 @@ namespace UnitTest
         success = shaderOptionGroupLayout->AddShaderOption(AZ::RPI::ShaderOptionDescriptor{ Name{"Invalid"}, intRangeType, RPI::ShaderVariantKeyBitCount - 4, order++, list1, Name("0") });
         EXPECT_FALSE(success);
         errorMessageFinder.CheckExpectedErrorsFound();
-        
+
         // Add shader option with empty name.
         errorMessageFinder.Reset();
         errorMessageFinder.AddExpectedErrorMessage("empty name");
@@ -1174,11 +1175,11 @@ namespace UnitTest
     }
 
     TEST_F(ShaderTests, ShaderAsset_PipelineStateType_VertexImpliesDraw)
-    {    
+    {
         AZ::RPI::ShaderAssetCreator creator;
         BeginCreatingTestShaderAsset(creator, {RHI::ShaderStage::Vertex});
         AZ::Data::Asset<AZ::RPI::ShaderAsset> shaderAsset = EndCreatingTestShaderAsset(creator);
-    
+
         EXPECT_TRUE(shaderAsset);
         EXPECT_EQ(shaderAsset->GetPipelineStateType(), RHI::PipelineStateType::Draw);
     }
@@ -1188,7 +1189,7 @@ namespace UnitTest
         AZ::RPI::ShaderAssetCreator creator;
         BeginCreatingTestShaderAsset(creator, {AZ::RHI::ShaderStage::Compute});
         AZ::Data::Asset<AZ::RPI::ShaderAsset> shaderAsset = EndCreatingTestShaderAsset(creator);
-    
+
         EXPECT_TRUE(shaderAsset);
         EXPECT_EQ(shaderAsset->GetPipelineStateType(), RHI::PipelineStateType::Dispatch);
     }
@@ -1198,13 +1199,13 @@ namespace UnitTest
         ErrorMessageFinder messageFinder("both Draw functions and Dispatch functions");
         messageFinder.AddExpectedErrorMessage("Invalid root variant");
         messageFinder.AddExpectedErrorMessage("Cannot continue building ShaderAsset because 1 error(s) reported");
-    
+
         AZ::RPI::ShaderAssetCreator creator;
         BeginCreatingTestShaderAsset(creator,
             {AZ::RHI::ShaderStage::Vertex, AZ::RHI::ShaderStage::Fragment, AZ::RHI::ShaderStage::Compute});
 
         AZ::Data::Asset<AZ::RPI::ShaderAsset> shaderAsset = EndCreatingTestShaderAsset(creator);
-    
+
         EXPECT_FALSE(shaderAsset);
     }
 
@@ -1216,11 +1217,11 @@ namespace UnitTest
 
         AZ::RPI::ShaderAssetCreator creator;
         BeginCreatingTestShaderAsset(creator, {AZ::RHI::ShaderStage::Fragment});
-  
+
         AZ::Data::Asset<AZ::RPI::ShaderAsset> shaderAsset = EndCreatingTestShaderAsset(creator);
-    
+
         messageFinder.CheckExpectedErrorsFound();
-    
+
         EXPECT_FALSE(shaderAsset);
     }
 
@@ -1236,7 +1237,7 @@ namespace UnitTest
         AZ::Data::Asset<AZ::RPI::ShaderAsset> shaderAsset = EndCreatingTestShaderAsset(creator);
 
         messageFinder.CheckExpectedErrorsFound();
-    
+
         EXPECT_FALSE(shaderAsset);
     }
 
@@ -1290,9 +1291,9 @@ namespace UnitTest
     {
         using namespace AZ;
 
-        
+
         Data::Instance<RPI::Shader> shader = RPI::Shader::FindOrCreate(CreateShaderAsset());
-      
+
         ValidateShader(shader);
     }
 

@@ -8,6 +8,7 @@
 
 // AZ
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 
 // Graph Model
@@ -32,7 +33,7 @@ namespace GraphModel
                 ;
         }
     }
-        
+
     BaseInputOutputNode::BaseInputOutputNode(GraphPtr graph, DataTypePtr dataType)
         : Node(graph)
     {
@@ -40,39 +41,39 @@ namespace GraphModel
         m_dataType = AZStd::make_shared<DataType>(*dataType);
     }
 
-    const char* BaseInputOutputNode::GetTitle() const 
+    const char* BaseInputOutputNode::GetTitle() const
     {
         return m_title.c_str();
     }
 
-    GraphModel::DataTypePtr BaseInputOutputNode::GetNodeDataType() const 
-    { 
-        return m_dataType; 
+    GraphModel::DataTypePtr BaseInputOutputNode::GetNodeDataType() const
+    {
+        return m_dataType;
     }
 
-    AZStd::string BaseInputOutputNode::GetName() const 
-    { 
+    AZStd::string BaseInputOutputNode::GetName() const
+    {
         return GetSlot("name")->GetValue<AZStd::string>();
     }
 
-    AZStd::string BaseInputOutputNode::GetDisplayName() const 
-    { 
+    AZStd::string BaseInputOutputNode::GetDisplayName() const
+    {
         return GetSlot("displayName")->GetValue<AZStd::string>();
     }
 
     AZStd::string BaseInputOutputNode::GetDescription() const
-    { 
-        return GetSlot("description")->GetValue<AZStd::string>(); 
+    {
+        return GetSlot("description")->GetValue<AZStd::string>();
     }
-                
+
     void BaseInputOutputNode::RegisterCommonSlots(AZStd::string_view directionName)
     {
         GraphModel::DataTypePtr stringDataType = GetGraphContext()->GetDataType<AZStd::string>();
-        RegisterSlot(GraphModel::SlotDefinition::CreateProperty("name", "Name", stringDataType, stringDataType->GetDefaultValue(), 
+        RegisterSlot(GraphModel::SlotDefinition::CreateProperty("name", "Name", stringDataType, stringDataType->GetDefaultValue(),
             AZStd::string::format("The official name for this %s", directionName.data())));
-        RegisterSlot(GraphModel::SlotDefinition::CreateProperty("displayName", "Display Name", stringDataType, stringDataType->GetDefaultValue(), 
+        RegisterSlot(GraphModel::SlotDefinition::CreateProperty("displayName", "Display Name", stringDataType, stringDataType->GetDefaultValue(),
             AZStd::string::format("The name for this %s, displayed to the user. Will use the above Name if left blank.", directionName.data())));
-        RegisterSlot(GraphModel::SlotDefinition::CreateProperty("description", "Description", stringDataType, stringDataType->GetDefaultValue(), 
+        RegisterSlot(GraphModel::SlotDefinition::CreateProperty("description", "Description", stringDataType, stringDataType->GetDefaultValue(),
             AZStd::string::format("A description of this %s, used for tooltips", directionName.data())));
     }
 
@@ -90,7 +91,7 @@ namespace GraphModel
                 ;
         }
     }
-        
+
     GraphInputNode::GraphInputNode(GraphModel::GraphPtr graph, DataTypePtr dataType)
         : BaseInputOutputNode(graph, dataType)
     {
@@ -108,9 +109,9 @@ namespace GraphModel
         Node::PostLoadSetup(graph, id);
     }
 
-    AZStd::any GraphInputNode::GetDefaultValue() const 
+    AZStd::any GraphInputNode::GetDefaultValue() const
     {
-        return GetSlot("defaultValue")->GetValue(); 
+        return GetSlot("defaultValue")->GetValue();
     }
 
     void GraphInputNode::RegisterSlots()
@@ -138,7 +139,7 @@ namespace GraphModel
                 ;
         }
     }
-        
+
     GraphOutputNode::GraphOutputNode(GraphModel::GraphPtr graph, DataTypePtr dataType)
         : BaseInputOutputNode(graph, dataType)
     {

@@ -8,6 +8,7 @@
 
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 
 #include <QString>
@@ -125,9 +126,9 @@ namespace ScriptCanvasEditor
 
     void ScriptEventReceiverNodeDescriptorComponent::Activate()
     {
-        NodeDescriptorComponent::Activate();        
+        NodeDescriptorComponent::Activate();
 
-        EBusHandlerNodeDescriptorRequestBus::Handler::BusConnect(GetEntityId());        
+        EBusHandlerNodeDescriptorRequestBus::Handler::BusConnect(GetEntityId());
         GraphCanvas::WrapperNodeNotificationBus::Handler::BusConnect(GetEntityId());
         GraphCanvas::GraphCanvasPropertyBusHandler::OnActivate(GetEntityId());
         GraphCanvas::WrapperNodeConfigurationRequestBus::Handler::BusConnect(GetEntityId());
@@ -150,7 +151,7 @@ namespace ScriptCanvasEditor
         GraphCanvas::EntitySaveDataRequestBus::Handler::BusDisconnect();
         GraphCanvas::WrapperNodeConfigurationRequestBus::Handler::BusDisconnect();
         GraphCanvas::GraphCanvasPropertyBusHandler::OnDeactivate();
-        GraphCanvas::WrapperNodeNotificationBus::Handler::BusDisconnect();        
+        GraphCanvas::WrapperNodeNotificationBus::Handler::BusDisconnect();
         EBusHandlerNodeDescriptorRequestBus::Handler::BusDisconnect();
     }
 
@@ -244,7 +245,7 @@ namespace ScriptCanvasEditor
     GraphCanvas::WrappedNodeConfiguration ScriptEventReceiverNodeDescriptorComponent::GetEventConfiguration(const ScriptCanvas::EBusEventId& eventId) const
     {
         AZ_Warning("ScriptCanvas", m_scriptCanvasId.IsValid(), "Trying to query event list before the node is added to the scene.");
-        
+
         GraphCanvas::WrappedNodeConfiguration wrappedConfiguration;
 
         ScriptCanvas::Nodes::Core::ReceiveScriptEvent* eventHandler = AZ::EntityUtils::FindFirstDerivedComponent<ScriptCanvas::Nodes::Core::ReceiveScriptEvent>(m_scriptCanvasId);
@@ -334,7 +335,7 @@ namespace ScriptCanvasEditor
                 {
                     foundEventId = scriptEventPair.first;
                     break;
-                }  
+                }
             }
 
             if (foundEventId != ScriptCanvas::EBusEventId())
@@ -488,7 +489,7 @@ namespace ScriptCanvasEditor
         GraphCanvas::SceneMemberRequestBus::EventResult(graphCanvasGraphId, GetEntityId(), &GraphCanvas::SceneMemberRequests::GetScene);
 
         ScriptCanvas::ScriptCanvasId scriptCanvasId;
-        GeneralRequestBus::BroadcastResult(scriptCanvasId, &GeneralRequests::GetScriptCanvasId, graphCanvasGraphId);        
+        GeneralRequestBus::BroadcastResult(scriptCanvasId, &GeneralRequests::GetScriptCanvasId, graphCanvasGraphId);
 
         AZStd::vector< GraphCanvas::NodeId > wrappedNodes;
         GraphCanvas::WrapperNodeRequestBus::EventResult(wrappedNodes, GetEntityId(), &GraphCanvas::WrapperNodeRequests::GetWrappedNodeIds);
@@ -498,7 +499,7 @@ namespace ScriptCanvasEditor
 
         AZStd::vector<AZStd::pair<ScriptCanvas::EBusEventId, AZStd::string>> enabledEvents = m_saveData.m_enabledEvents;
         GraphCanvas::SceneRequestBus::Event(graphCanvasGraphId, &GraphCanvas::SceneRequests::Delete, deletedNodes);
-        
+
         AZ::Data::Asset<ScriptEvents::ScriptEventsAsset> asset = AZ::Data::AssetManager::Instance().GetAsset<ScriptEvents::ScriptEventsAsset>(m_scriptEventsAssetId, AZ::Data::AssetLoadBehavior::PreLoad);
         asset.BlockUntilLoadComplete();
 
@@ -524,7 +525,7 @@ namespace ScriptCanvasEditor
                 }
             }
         }
-        
+
 
         DynamicSlotRequestBus::Event(GetEntityId(), &DynamicSlotRequests::StopQueueSlotUpdates);
     }

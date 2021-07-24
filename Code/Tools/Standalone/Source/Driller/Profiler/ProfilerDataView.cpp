@@ -23,6 +23,7 @@
 
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Source/Driller/Workspaces/Workspace.h>
 
 #include <Source/Driller/Profiler/ui_ProfilerDataView.h>

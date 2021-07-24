@@ -12,10 +12,16 @@
 #include <AzCore/Math/Transform.h>
 #include <AzCore/Slice/SliceComponent.h>
 #include <AzCore/Component/Component.h>
-#include <AzFramework/Slice/SliceInstantiationTicket.h>
+
+namespace AzFramework
+{
+    class SliceInstantiationTicket;
+}
 
 namespace AzToolsFramework
 {
+    using EntityIdList = AZStd::vector<AZ::EntityId>;
+
     //! Bus for making slice requests.
     class SliceRequests
         : public AZ::EBusTraits

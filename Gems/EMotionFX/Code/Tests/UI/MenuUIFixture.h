@@ -17,7 +17,7 @@
 
 #include <EMotionStudio/Plugins/StandardPlugins/Source/AnimGraph/BlendGraphWidget.h>
 
-#include <QString>
+class QString;
 
 namespace EMotionFX
 {
@@ -30,6 +30,6 @@ namespace EMotionFX
         static QAction* FindMenuAction(const QMenu* menu, const QString itemName, const QString& parentName);
         static QAction* FindMenuActionWithObjectName(const QMenu* menu, const QString& itemName, const QString& parentName);
     protected:
-       
+
     };
 } // end namespace EMotionFX

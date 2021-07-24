@@ -17,6 +17,7 @@
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 
 namespace AZ
@@ -69,12 +70,12 @@ namespace AZ
 
             DataTypes::ISceneNodeSelectionList& SkinGroup::GetSceneNodeSelectionList()
             {
-                return m_nodeSelectionList; 
+                return m_nodeSelectionList;
             }
 
-            const DataTypes::ISceneNodeSelectionList& SkinGroup::GetSceneNodeSelectionList() const 
+            const DataTypes::ISceneNodeSelectionList& SkinGroup::GetSceneNodeSelectionList() const
             {
-                return m_nodeSelectionList; 
+                return m_nodeSelectionList;
             }
 
             void SkinGroup::Reflect(AZ::ReflectContext* context)

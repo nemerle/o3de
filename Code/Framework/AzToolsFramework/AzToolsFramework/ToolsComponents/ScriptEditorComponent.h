@@ -12,6 +12,7 @@
 #include <AzFramework/Script/ScriptComponent.h>
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/Script/ScriptAsset.h>
+#include <AzCore/Asset/AssetBus.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Debug/TraceMessageBus.h>
 #include <AzToolsFramework/ToolsComponents/EditorComponentBase.h>

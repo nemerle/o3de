@@ -14,6 +14,7 @@
 #include "PythonTestingUtility.h"
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/containers/unordered_set.h>
 #include <AzCore/StringFunc/StringFunc.h>
 #include <AzCore/RTTI/BehaviorContext.h>
@@ -27,7 +28,7 @@ namespace UnitTest
     struct PythonReflectUnorderedSet
     {
         AZ_TYPE_INFO(PythonReflectUnorderedSet, "{A596466F-2F29-4479-A721-0E50FA704962}");
-        
+
         AZStd::unordered_set<AZ::u8> m_u8Set {1,2};
         AZStd::unordered_set<AZ::u16> m_u16Set {4,8};
         AZStd::unordered_set<AZ::u32> m_u32Set {16,32};
@@ -49,12 +50,12 @@ namespace UnitTest
                 serializeContext->RegisterGenericType<decltype(m_u32Set)>();
                 serializeContext->RegisterGenericType<decltype(m_u64Set)>();
                 serializeContext->RegisterGenericType<decltype(m_s8Set)>();
-                serializeContext->RegisterGenericType<decltype(m_s16Set)>(); 
-                serializeContext->RegisterGenericType<decltype(m_s32Set)>(); 
+                serializeContext->RegisterGenericType<decltype(m_s16Set)>();
+                serializeContext->RegisterGenericType<decltype(m_s32Set)>();
                 serializeContext->RegisterGenericType<decltype(m_s64Set)>();
                 serializeContext->RegisterGenericType<decltype(m_floatSet)>();
-                serializeContext->RegisterGenericType<decltype(m_doubleSet)>(); 
-                serializeContext->RegisterGenericType<decltype(m_stringSet)>(); 
+                serializeContext->RegisterGenericType<decltype(m_doubleSet)>();
+                serializeContext->RegisterGenericType<decltype(m_stringSet)>();
             }
 
             if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))

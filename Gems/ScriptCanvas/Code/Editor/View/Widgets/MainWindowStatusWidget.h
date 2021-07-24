@@ -11,6 +11,7 @@
 #include <QWidget>
 
 #include <AzCore/Memory/SystemAllocator.h>
+#include <AzCore/std/smart_ptr/unique_ptr.h>
 
 #include <GraphCanvas/Editor/AssetEditorBus.h>
 
@@ -31,20 +32,20 @@ namespace ScriptCanvasEditor
         Q_OBJECT
     public:
         AZ_CLASS_ALLOCATOR(MainWindowStatusWidget, AZ::SystemAllocator, 0);
-        
+
         MainWindowStatusWidget(QWidget* parent = nullptr);
         ~MainWindowStatusWidget() = default;
 
         // GraphValidatorDockWidgetNotificationBus
         void OnResultsChanged(int errorCount, int warningCount) override;
         ////
-        
+
     public slots:
-        
+
     signals:
         void OnErrorButtonPressed();
         void OnWarningButtonPressed();
-        
+
     private:
         AZStd::unique_ptr<Ui::MainWindowStatusWidget> m_ui;
     };

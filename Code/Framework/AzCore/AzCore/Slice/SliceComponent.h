@@ -12,6 +12,7 @@
 #include <AzCore/Component/EntityUtils.h>
 #include <AzCore/Outcome/Outcome.h>
 #include <AzCore/Slice/SliceAsset.h>
+#include <AzCore/Asset/AssetBus.h>
 #include <AzCore/Serialization/DataPatch.h>
 #include <AzCore/Serialization/DynamicSerializableField.h>
 #include <AzCore/Serialization/IdUtils.h>
@@ -247,7 +248,7 @@ namespace AZ
         };
 
         /**
-         * Stores information required to restore an entity back into an internal slice instance, which 
+         * Stores information required to restore an entity back into an internal slice instance, which
          * includes the address of the reference and owning instance at the time of capture.
          * EntityRestoreInfo must be retrieved via SliceReference::GetEntityRestoreInfo(). It can then be
          * provided to SliceComponent::RestoreEntity() to restore the entity, at which point the owning
@@ -263,7 +264,7 @@ namespace AZ
             /**
              * @param asset The source slice asset of the slice instance containing the to-be-restored entity.
              * @param instanceId The Id of the slice instance that manages local data patches for its entities, including the entity in question.
-             * @param ancestorId The Id of the entity defined in the source slice asset, that is the immediate ancestor of the to-be-restored entity. 
+             * @param ancestorId The Id of the entity defined in the source slice asset, that is the immediate ancestor of the to-be-restored entity.
              * @param dataFlags A copy of the slice instance data flags before the entity is removed.
              */
             EntityRestoreInfo(const Data::Asset<SliceAsset>& asset, const SliceInstanceId& instanceId, const EntityId& ancestorId, const DataPatch::FlagsMap& dataFlags)
@@ -432,7 +433,7 @@ namespace AZ
              *    If the same sliceInstanceId is already registered to this reference a null SliceInstance is returned as error.
              * @return A pointer to the newly created slice instance. Returns nullptr on error.
              */
-            SliceInstance* CreateInstance(const AZ::IdUtils::Remapper<AZ::EntityId>::IdMapper& customMapper = nullptr, 
+            SliceInstance* CreateInstance(const AZ::IdUtils::Remapper<AZ::EntityId>::IdMapper& customMapper = nullptr,
                  SliceInstanceId sliceInstanceId = SliceInstanceId::CreateRandom());
 
             /**
@@ -447,7 +448,7 @@ namespace AZ
                 const EntityIdToEntityIdMap assetToLiveIdMap,
                 SliceInstanceId sliceInstanceId = SliceInstanceId::CreateRandom());
 
-            /** 
+            /**
              * Clones an existing slice instance
              * @param instance Source slice instance to be cloned
              * @param sourceToCloneEntityIdMap [out] The map between source entity ids and clone entity ids
@@ -466,7 +467,7 @@ namespace AZ
             /// Locates an instance by Id.
             SliceInstance* FindInstance(const SliceInstanceId& instanceId);
 
-            /** 
+            /**
              * Remove a slice instance.
              * @param itr The iterator to the slice instance to remove.
              * @return The iterator following the last removed slice instance.
@@ -629,7 +630,7 @@ namespace AZ
          * @param sliceInstances instances that will be given to this slice. It will be empty after this operation completes.
          */
         void AddSliceInstances(SliceAssetToSliceInstancePtrs& sliceInstances, AZStd::unordered_set<const SliceInstance*>& instancesOut);
-        
+
         /**
          * Adds the IDs of all non-metadata entities, including the ones based on instances, to the provided set.
         * @param entities An entity ID set to add the IDs to
@@ -673,7 +674,7 @@ namespace AZ
          *    If the same sliceInstanceId is already registered to the underlying SlicReference an invalid SliceInstanceAddress is returned as error.
          * @returns A SliceInstanceAddress pointing to the added instance. An invalid SliceInstanceAddress if adding slice failed.
          */
-        SliceInstanceAddress AddSlice(const Data::Asset<SliceAsset>& sliceAsset, const AZ::IdUtils::Remapper<AZ::EntityId>::IdMapper& customMapper = nullptr, 
+        SliceInstanceAddress AddSlice(const Data::Asset<SliceAsset>& sliceAsset, const AZ::IdUtils::Remapper<AZ::EntityId>::IdMapper& customMapper = nullptr,
             SliceInstanceId sliceInstanceId = SliceInstanceId::CreateRandom());
 
         /**
@@ -710,11 +711,11 @@ namespace AZ
          * @param sourceSliceInstance The slice instance that contains the sub-slice instance.
          * @param sourceSubSliceInstanceAncestry The ancestry in order from sourceSubSlice to sourceSlice
          * @param sourceSubSliceInstanceAddress The address of the sub-slice instance to be cloned.
-         * @param out_sourceToCloneEntityIdMap [Optional] If provided, the internal source to clone entity ID map will be returned 
+         * @param out_sourceToCloneEntityIdMap [Optional] If provided, the internal source to clone entity ID map will be returned
          * @param preserveIds [Optional] If true will not generate new IDs for the clone and will direct entity ID maps from base ID to existing live IDs of the original
          * @return The address of the newly created clone-instance.
          */
-        SliceInstanceAddress CloneAndAddSubSliceInstance(const SliceInstance* sourceSliceInstance, 
+        SliceInstanceAddress CloneAndAddSubSliceInstance(const SliceInstance* sourceSliceInstance,
             const AZStd::vector<AZ::SliceComponent::SliceInstanceAddress>& sourceSubSliceInstanceAncestry,
             const AZ::SliceComponent::SliceInstanceAddress& sourceSubSliceInstanceAddress,
             AZ::SliceComponent::EntityIdToEntityIdMap* out_sourceToCloneEntityIdMap = nullptr, bool preserveIds = false);
@@ -758,12 +759,12 @@ namespace AZ
         /**
         * A performant way to remove every entity from a SliceComponent. Operates in the same way as though you were to loop
         * through every entity in a SliceComponent and call RemoveEntity(entityId) on them, but using this method will be
-        * much faster and is highly recommended. 
+        * much faster and is highly recommended.
         *
         * \param deleteEntities true by default as we own all entities, pass false to just remove the entity and gain ownership of it
         * \param removeEmptyInstances true by default. When set to true, instances will be removed when the last of their entities is removed
         */
-        void RemoveAllEntities(bool deleteEntities = true, bool removeEmptyInstances = true); 
+        void RemoveAllEntities(bool deleteEntities = true, bool removeEmptyInstances = true);
 
         /*
         * Removes an entity not associated with a slice instance.
@@ -779,7 +780,7 @@ namespace AZ
          */
         SliceInstanceAddress FindSlice(Entity* entity);
         SliceInstanceAddress FindSlice(EntityId entityId);
-        
+
         /**
         * Flattens a slice reference directly into the slice component and then removes the reference, all dependencies inherited from the reference will become directly owned by the slice component
         * \param toFlatten The reference we are flattening into the component
@@ -854,7 +855,7 @@ namespace AZ
          */
         bool SetEntityDataFlagsAtAddress(EntityId entityId, const DataPatch::AddressType& dataAddress, DataPatch::Flags flags);
 
-        /** 
+        /**
         * Appends the metadata entities belonging only directly to each instance in the slice to the given list. Metadata entities belonging
         * to any instances within each instance are omitted.
         */
@@ -886,7 +887,7 @@ namespace AZ
          */
         void GetReferencedSliceAssets(AssetIdSet& idSet, bool recurse = true);
 
-        /** 
+        /**
          * Clones the slice, its references, and its instances. Entity Ids are not regenerated
          * during this process. This utility is currently used to clone slice asset data
          * for data-push without modifying the existing asset in-memory.
@@ -1011,7 +1012,7 @@ namespace AZ
         * from the metadata associations in our newly cloned instance metadata entities.
         */
         void CleanMetadataAssociations();
-        
+
         /// Returns the entity info map (and builds it if necessary).
         const EntityInfoMap& GetEntityInfoMap() const;
 
@@ -1030,7 +1031,7 @@ namespace AZ
         /// Utility function to check if the given assetId would cause an instantiation cycle, and if so
         /// output the chain of slices that causes the cycle.
         bool CheckContainsInstantiateCycle(const AZ::Data::AssetId& assetId);
-        
+
         /// Utility function to pop an assetId to the cycle checker vector (also checks to make sure its at the tail of it and clears it)
         void PopInstantiateCycle(const AZ::Data::AssetId& assetId);
 
@@ -1051,7 +1052,7 @@ namespace AZ
 
         AZ::Entity m_metadataEntity; ///< Entity for attaching slice metadata components
 
-        DataFlagsPerEntity m_dataFlagsForNewEntities; ///< DataFlags for new entities (DataFlags for entities based on a slice are stored within the SliceInstance) 
+        DataFlagsPerEntity m_dataFlagsForNewEntities; ///< DataFlags for new entities (DataFlags for entities based on a slice are stored within the SliceInstance)
 
         DataFlagsPerEntity m_cachedDataFlagsForInstances; ///< Cached DataFlags to be used when instantiating instances of this slice.
         bool m_hasGeneratedCachedDataFlags; ///< Whether the cached DataFlags have been generated yet.
@@ -1066,7 +1067,7 @@ namespace AZ
         AZ::u32 m_filterFlags; ///< Asset load filter flags to apply for internal loads during data patching
 
         AZStd::recursive_mutex m_instantiateMutex; ///< Used to prevent multiple threads from trying to instantiate the slices at once
-        
+
         typedef AZStd::vector<AZ::Data::AssetId> AssetIdVector;
 
         // note that this vector provides a "global" view of instantiation occurring and is only accessed while m_instantiateMutex is locked.

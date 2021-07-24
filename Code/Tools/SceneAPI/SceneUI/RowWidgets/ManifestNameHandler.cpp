@@ -9,6 +9,8 @@
 #include <AzCore/EBus/EBus.h>
 #include <AzToolsFramework/Debug/TraceContext.h>
 #include <SceneAPI/SceneUI/RowWidgets/ManifestNameHandler.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

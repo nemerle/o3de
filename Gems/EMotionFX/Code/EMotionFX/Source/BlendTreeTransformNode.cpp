@@ -6,9 +6,6 @@
  *
  */
 
-#include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Math/Transform.h>
-#include <AzCore/Serialization/EditContext.h>
 #include <EMotionFX/Source/EMotionFXConfig.h>
 #include <EMotionFX/Source/AnimGraph.h>
 #include <EMotionFX/Source/AnimGraphInstance.h>
@@ -20,6 +17,10 @@
 #include <EMotionFX/Source/EMotionFXManager.h>
 #include <MCore/Source/AzCoreConversions.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Math/Transform.h>
+#include <AzCore/Serialization/EditContext.h>
 
 namespace EMotionFX
 {
@@ -157,8 +158,8 @@ namespace EMotionFX
             OutputIncomingNode(animGraphInstance, GetInputNode(INPUTPORT_ROTATE_AMOUNT));
             const float rotateFactor = MCore::Clamp<float>(GetInputNumberAsFloat(animGraphInstance, INPUTPORT_ROTATE_AMOUNT), 0.0f, 1.0f);
             const AZ::Vector3 newAngles = MCore::LinearInterpolate<AZ::Vector3>(m_minRotation, m_maxRotation, rotateFactor);
-            outputTransform.mRotation = inputTransform.mRotation * MCore::AzEulerAnglesToAzQuat(MCore::Math::DegreesToRadians(newAngles.GetX()), 
-                MCore::Math::DegreesToRadians(newAngles.GetY()), 
+            outputTransform.mRotation = inputTransform.mRotation * MCore::AzEulerAnglesToAzQuat(MCore::Math::DegreesToRadians(newAngles.GetX()),
+                MCore::Math::DegreesToRadians(newAngles.GetY()),
                 MCore::Math::DegreesToRadians(newAngles.GetZ()));
         }
 

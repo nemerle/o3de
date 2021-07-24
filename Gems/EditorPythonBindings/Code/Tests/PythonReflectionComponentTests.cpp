@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
+
 #include <Source/PythonCommon.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/embed.h>
@@ -19,7 +20,27 @@
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Math/Vector4.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Serialization/AZStdAnyDataContainer.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
+
+// string_view is a value type in serialization
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<>
+    struct SerializeGenericTypeInfo<AZStd::string_view> : SerializeGenericTypeInfoImpl<AZStd::string_view>
+    {
+        // treat AZStd::string_view as generic value type
+    };
+
+} // namespace AZ
 
 namespace UnitTest
 {
@@ -161,7 +182,7 @@ namespace UnitTest
                     ->Method("accept_vector_of_floats", &PythonReflectionContainerSimpleTypes::AcceptVectorOfFloats, nullptr, "")
                     ->Method("return_vector_of_doubles", &PythonReflectionContainerSimpleTypes::ReturnVectorOfDoubles, nullptr, "")
                     ->Method("accept_vector_of_doubles", &PythonReflectionContainerSimpleTypes::AcceptVectorOfDoubles, nullptr, "")
-                    ->Property("vector_of_s8", 
+                    ->Property("vector_of_s8",
                         [](PythonReflectionContainerSimpleTypes* self) { return self->m_s8ValueValues.ReturnValues(); },
                         [](PythonReflectionContainerSimpleTypes* self, const AZStd::vector<AZ::s8>& values) { return self->m_s8ValueValues.AcceptValues(values); })
                     ->Property("vector_of_u8",
@@ -662,7 +683,7 @@ namespace UnitTest
         EXPECT_EQ(1, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::PythonReflectionTestSimple_DoWork)]);
     }
 
-    // at least 3 deep in a sub module thing like test.that.space
+//    // at least 3 deep in a sub module thing like test.that.space
     TEST_F(PythonReflectionComponentTests, AtLeast3DeepModules)
     {
         enum class LogTypes
@@ -792,7 +813,7 @@ namespace UnitTest
                 theAsset = reflectAny.access_any_ref()
                 if( reflectAny.compare_asset_ids(theAsset,testObject.theAsset) ):
                     print ('MutateAssetId')
-    
+
             )");
         }
         catch ([[maybe_unused]] const std::exception& e)

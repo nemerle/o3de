@@ -90,4 +90,20 @@ namespace AzFramework
     } // namespace Components
 } // namespace AzFramework
 
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename S, typename T>
+    struct SerializeGenericTypeInfo<AzFramework::Components::ComponentAdapter<S, T>>
+        : SerializeGenericTypeInfoImpl<AzFramework::Components::ComponentAdapter<S, T>>
+    {
+        // treat ComponentAdapter as generic value type
+    };
+} // namespace AZ
+
 #include "ComponentAdapter.inl"

@@ -6,6 +6,7 @@
  *
  */
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzToolsFramework/UI/UICore/QTreeViewStateSaver.hxx>
 #include <AzToolsFramework/UI/UICore/QWidgetSavedState.h>
@@ -606,14 +607,14 @@ namespace Driller
             {
                 replicaDisplayHelper->m_bandwidthUsageAggregator.m_bytesReceived += chunkEvent->GetUsageBytes();
             }
-            
+
             ReplicaChunkDetailDisplayHelper* chunkDetailDisplayHelper = replicaDisplayHelper->FindReplicaChunk(chunkEvent->GetReplicaChunkIndex());
 
             if (chunkDetailDisplayHelper == nullptr)
             {
                 chunkDetailDisplayHelper = replicaDisplayHelper->CreateReplicaChunkDisplayHelper(chunkEvent->GetChunkTypeName(), chunkEvent->GetReplicaChunkIndex());
             }
-            
+
             ProcessForBaseDetailDisplayHelper(chunkEvent, chunkDetailDisplayHelper);
         }
     }

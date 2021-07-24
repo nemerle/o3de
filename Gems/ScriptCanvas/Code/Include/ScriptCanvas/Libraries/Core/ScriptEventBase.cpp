@@ -8,11 +8,13 @@
 
 #include "ScriptEventBase.h"
 
+#include <ScriptEvents/ScriptEventsAsset.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Asset/AssetManager.h>
-#include <ScriptEvents/ScriptEventsAsset.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvas
 {

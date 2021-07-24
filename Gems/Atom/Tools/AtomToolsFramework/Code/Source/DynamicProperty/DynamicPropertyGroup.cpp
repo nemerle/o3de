@@ -8,6 +8,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AtomToolsFramework/DynamicProperty/DynamicPropertyGroup.h>
 
 namespace AtomToolsFramework

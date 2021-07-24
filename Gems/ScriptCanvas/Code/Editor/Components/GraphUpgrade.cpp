@@ -20,6 +20,9 @@
 #include <GraphCanvas/GraphCanvasBus.h>
 #include <Editor/GraphCanvas/GraphCanvasEditorNotificationBusId.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvasEditor
 {
 
@@ -64,7 +67,7 @@ namespace ScriptCanvasEditor
     {
         GeneralRequestBus::Broadcast(&GeneralRequests::PushPreventUndoStateUpdate);
     }
-    
+
     void CollectData::Run()
     {
         EditorGraphUpgradeMachine* sm = GetStateMachine<EditorGraphUpgradeMachine>();

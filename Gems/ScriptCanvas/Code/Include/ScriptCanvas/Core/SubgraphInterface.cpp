@@ -6,17 +6,18 @@
  *
  */
 
-#include <AzCore/Serialization/SerializeContext.h>
+#include "SubgraphInterface.h"
+#include "SubgraphInterfaceUtility.h"
+
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/StringFunc/StringFunc.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
-
-#include "SubgraphInterfaceUtility.h"
-#include "SubgraphInterface.h"
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace SubgraphInterfaceCpp
 {
-    const char* s_outRequirementMessage 
+    const char* s_outRequirementMessage
         = "Any immediate execution in without at least 2 declared executions outs triggered by it does not need to be in the map."
         "  Just expose the function to AZ::BehaviorContext (which can include a return value).";
 
@@ -963,7 +964,7 @@ namespace ScriptCanvas
 
             return result;
         }
-        
+
         SubgraphInterfacePtrConst SubgraphInterfaceSystem::GetMap(const FunctionSourceId& nodeTypeId) const
         {
             auto iter = m_mapsByNodeType.find(nodeTypeId);
@@ -987,4 +988,4 @@ namespace ScriptCanvas
             return true;
         }
     }
-} 
+}

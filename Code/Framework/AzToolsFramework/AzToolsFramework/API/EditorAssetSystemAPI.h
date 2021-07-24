@@ -9,7 +9,6 @@
 #pragma once
 
 #include <AzCore/EBus/EBus.h>
-#include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/string/string.h>
 #include <AzCore/Outcome/Outcome.h>
 #include <AzCore/Math/Crc.h>
@@ -41,7 +40,7 @@ namespace AzToolsFramework
 
             // don't lock this bus during dispatch - its mainly just a forwarder of socket-based network requests
             // so when one thread is asking for status of an asset, its okay for another thread to do the same.
-            static const bool LocklessDispatch = true; 
+            static const bool LocklessDispatch = true;
 
             virtual ~AssetSystemRequest() = default;
 
@@ -55,7 +54,7 @@ namespace AzToolsFramework
             //! Retrieve the absolute folder path to the current developer root ('dev'), which contains source artifacts
             //! and is generally checked into source control.
             virtual const char* GetAbsoluteDevRootFolderPath() = 0;
-        
+
             /// Convert a full source path like "c:\\dev\\gamename\\blah\\test.tga" into a relative product path.
             /// asset paths never mention their alias and are relative to the asset cache root
             virtual bool GetRelativeProductPathFromFullSourceOrProductPath(const AZStd::string& fullPath, AZStd::string& relativeProductPath) = 0;
@@ -88,7 +87,7 @@ namespace AzToolsFramework
             * returns false if it cannot find the source, true otherwise.
             */
             virtual bool GetSourceInfoBySourcePath(const char* sourcePath, AZ::Data::AssetInfo& assetInfo, AZStd::string& watchFolder) = 0;
-            
+
             /**
             * Given a UUID of a source file, retrieve its actual watch folder path and other details.
             * @param sourceUUID is the UUID of a source file - If you have an AssetID, its the m_guid member of that assetId
@@ -136,7 +135,7 @@ namespace AzToolsFramework
             */
             virtual bool GetAssetsProducedBySourceUUID(const AZ::Uuid& sourceUuid, AZStd::vector<AZ::Data::AssetInfo>& productsAssetInfo) = 0;
         };
-        
+
 
         //! AssetSystemBusTraits
         //! This bus is for events that concern individual assets and is addressed by file extension
@@ -167,7 +166,7 @@ namespace AzToolsFramework
             Queued,  // its in the queue and will be built shortly
             InProgress,  // its being compiled right now.
             Failed,
-            Failed_InvalidSourceNameExceedsMaxLimit, // use this enum to indicate that the job failed because the source file name length exceeds the maximum length allowed 
+            Failed_InvalidSourceNameExceedsMaxLimit, // use this enum to indicate that the job failed because the source file name length exceeds the maximum length allowed
             Completed, // built successfully (no failure occurred)
             Missing //indicate that the job is not present for example if the source file is not there, or if job key is not there
         };
@@ -206,32 +205,7 @@ namespace AzToolsFramework
                 return crc;
             }
 
-            static void Reflect(AZ::ReflectContext* context)
-            {
-                AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context);
-                if (serialize)
-                {
-                    serialize->Class<JobInfo>()
-                        ->Version(4)
-                        ->Field("sourceFile", &JobInfo::m_sourceFile)
-                        ->Field("platform", &JobInfo::m_platform)
-                        ->Field("builderUuid", &JobInfo::m_builderGuid)
-                        ->Field("jobKey", &JobInfo::m_jobKey)
-                        ->Field("jobRunKey", &JobInfo::m_jobRunKey)
-                        ->Field("status", &JobInfo::m_status)
-                        ->Field("firstFailLogTime", &JobInfo::m_firstFailLogTime)
-                        ->Field("firstFailLogFile", &JobInfo::m_firstFailLogFile)
-                        ->Field("lastFailLogTime", &JobInfo::m_lastFailLogTime)
-                        ->Field("lastFailLogFile", &JobInfo::m_lastFailLogFile)
-                        ->Field("lastLogTime", &JobInfo::m_lastLogTime)
-                        ->Field("lastLogFile", &JobInfo::m_lastLogFile)
-                        ->Field("jobID", &JobInfo::m_jobID)
-                        ->Field("watchFolder", &JobInfo::m_watchFolder)
-                        ->Field("errorCount", &JobInfo::m_errorCount)
-                        ->Field("warningCount", &JobInfo::m_warningCount)
-                        ;
-                }
-            }
+            static void Reflect(AZ::ReflectContext* context);
 
             //! the file from which this job was originally spawned.  Is just the relative source file name ("whatever/something.tif", not an absolute path)
             AZStd::string m_sourceFile;
@@ -250,7 +224,7 @@ namespace AzToolsFramework
             //! the same platform, the same builder UUID (since its the UUID of the builder itself)
             //! but would have different job keys.
             AZStd::string m_jobKey;
-            
+
             //random int made to identify this attempt to process this job
             AZ::u64 m_jobRunKey = 0;
 
@@ -270,7 +244,7 @@ namespace AzToolsFramework
             AZ::s64 m_jobID = 0; // this is the actual database row.   Client is unlikely to need this.
         };
 
-        typedef AZStd::vector<JobInfo> JobInfoContainer; 
+        typedef AZStd::vector<JobInfo> JobInfoContainer;
 
         //! This Ebus will be used to retrieve all the job related information from AP
         class AssetSystemJobRequest
@@ -283,14 +257,14 @@ namespace AzToolsFramework
 
             virtual ~AssetSystemJobRequest() = default;
 
-            /// Retrieve Jobs information for the given source file, setting escalteJobs to true will escalate all queued jobs 
+            /// Retrieve Jobs information for the given source file, setting escalteJobs to true will escalate all queued jobs
             virtual AZ::Outcome<JobInfoContainer> GetAssetJobsInfo(const AZStd::string& sourcePath, const bool escalateJobs) = 0;
 
-            /// Retrieve Jobs information for the given assetId, setting escalteJobs to true will escalate all queued jobs 
-            /// you can also specify whether fencing is required  
+            /// Retrieve Jobs information for the given assetId, setting escalteJobs to true will escalate all queued jobs
+            /// you can also specify whether fencing is required
             virtual AZ::Outcome<JobInfoContainer> GetAssetJobsInfoByAssetID(const AZ::Data::AssetId& assetId, const bool escalateJobs, bool requireFencing) = 0;
 
-            /// Retrieve Jobs information for the given jobKey 
+            /// Retrieve Jobs information for the given jobKey
             virtual AZ::Outcome<JobInfoContainer> GetAssetJobsInfoByJobKey(const AZStd::string& jobKey, const bool escalateJobs) = 0;
 
             /// Retrieve Job Status for the given jobKey.

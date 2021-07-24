@@ -9,6 +9,9 @@
 #include "./Transform2DFunctor.h"
 #include <Atom/RPI.Public/Material/Material.h>
 #include <Atom/RPI.Public/Shader/ShaderResourceGroup.h>
+#include <Atom/RHI.Reflect/HandleReflectImpl.inl>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

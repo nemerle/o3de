@@ -19,6 +19,7 @@
 #include <AzCore/Serialization/Json/RegistrationContext.h>
 #include <AzCore/Serialization/Json/JsonSystemComponent.h>
 #include <AzCore/Component/ComponentBus.h>
+#include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Jobs/JobManager.h>
 #include <AzCore/Jobs/JobManagerBus.h>
 #include <AzCore/Jobs/JobContext.h>
@@ -316,7 +317,7 @@ namespace AWSClientAuthUnitTest
             Aws::CognitoIdentityProvider::Model::ConfirmForgotPasswordOutcome outcome(result);
             return outcome;
         }
-        
+
         Aws::CognitoIdentityProvider::Model::SetUserMFAPreferenceOutcome SetUserMFAPreferenceMock(const Aws::CognitoIdentityProvider::Model::SetUserMFAPreferenceRequest& request)
         {
             AZ_UNUSED(request);
@@ -686,5 +687,5 @@ namespace AWSClientAuthUnitTest
             m_testFolderCreated = true;
             return path;
         }
-    };  
+    };
 }

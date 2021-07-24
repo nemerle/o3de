@@ -9,6 +9,7 @@
 #include <Atom/RPI.Reflect/Shader/PrecompiledShaderAssetSourceData.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

@@ -9,6 +9,7 @@
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Math/MathUtils.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/sort.h>
 #include <AzCore/std/time.h>
 
@@ -50,10 +51,10 @@ namespace Driller
         AZ_CLASS_ALLOCATOR(ReplicaDataViewSavedState, AZ::SystemAllocator, 0);
 
         int m_displayTimeType;
-        int m_displayDataType;        
+        int m_displayDataType;
         int m_displayRange;
         int m_bandwidthUsageDisplayType;
-        int m_tableFilterType;        
+        int m_tableFilterType;
 
         ReplicaDataViewSavedState()
             : m_displayDataType(ReplicaDataView::DDT_START + 1)
@@ -205,7 +206,7 @@ namespace Driller
 
         ReplicaDataContainer* replicaContainer = m_replicaDataView->FindReplicaData(replicaId);
 
-        
+
         if (replicaContainer != nullptr)
         {
             if (role == Qt::BackgroundRole)
@@ -352,7 +353,7 @@ namespace Driller
 
         if (m_replicaDataView->HideInactiveInspectedElements())
         {
-            m_replicaChunkTypes.insert(m_replicaChunkTypes.begin(), m_replicaDataView->m_activeInspectedChunkTypes.begin(), m_replicaDataView->m_activeInspectedChunkTypes.end());            
+            m_replicaChunkTypes.insert(m_replicaChunkTypes.begin(), m_replicaDataView->m_activeInspectedChunkTypes.begin(), m_replicaDataView->m_activeInspectedChunkTypes.end());
         }
         else
         {
@@ -445,7 +446,7 @@ namespace Driller
                         {
                             return QVariant(Qt::AlignCenter);
                         }
-                        break;                
+                        break;
                     case CD_INSPECT:
                         if (role == Qt::DecorationRole || role == Qt::SizeHintRole)
                         {
@@ -473,7 +474,7 @@ namespace Driller
         }
 
         return QVariant();
-    }  
+    }
 
     QVariant ReplicaChunkTypeTableViewModel::headerData(int section, Qt::Orientation orientation, int role) const
     {
@@ -743,15 +744,15 @@ namespace Driller
 
         QObject::connect(m_gui->tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(OnCellClicked(const QModelIndex&)));
         QObject::connect(m_gui->tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(OnDoubleClicked(const QModelIndex&)));
-        
+
         QObject::connect(m_gui->drillerConfigToolbar, SIGNAL(hideAll()), this, SLOT(HideAll()));
         QObject::connect(m_gui->drillerConfigToolbar, SIGNAL(hideSelected()), this, SLOT(HideSelected()));
         QObject::connect(m_gui->drillerConfigToolbar, SIGNAL(showAll()), this, SLOT(ShowAll()));
         QObject::connect(m_gui->drillerConfigToolbar, SIGNAL(showSelected()), this, SLOT(ShowSelected()));
-        
+
         QObject::connect(m_gui->showOverallStatistics,SIGNAL(clicked()),this,SLOT(OnShowOverallStatistics()));
-        QObject::connect(m_gui->displayRange, SIGNAL(valueChanged(int)), this, SLOT(OnDisplayRangeChanged(int)));        
-        QObject::connect(m_gui->dataSelectionComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(OnDataTypeChanged(int)));        
+        QObject::connect(m_gui->displayRange, SIGNAL(valueChanged(int)), this, SLOT(OnDisplayRangeChanged(int)));
+        QObject::connect(m_gui->dataSelectionComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(OnDataTypeChanged(int)));
         QObject::connect(m_gui->bandwidthUsageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(OnBandwidthUsageDisplayTypeChanged(int)));
         QObject::connect(m_gui->tableFilterComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(OnTableFilterTypeChanged(int)));
 
@@ -950,7 +951,7 @@ namespace Driller
             default:
                 AZ_Assert(false,"ERROR: Unknown display data type");
                 break;
-        }        
+        }
     }
 
     void ReplicaDataView::SignalDialogClosed(QDialog* dialog)
@@ -1076,7 +1077,7 @@ namespace Driller
                     container->SetSelected(true);
 
                     const bool isHighlighted = true;
-                    container->GetAreaGraphPlotHelper().SetHighlighted(isHighlighted);                    
+                    container->GetAreaGraphPlotHelper().SetHighlighted(isHighlighted);
                 }
             }
         }
@@ -1096,7 +1097,7 @@ namespace Driller
                     container->GetAreaGraphPlotHelper().SetHighlighted(isHighlighted);
                 }
             }
-        }        
+        }
     }
 
     void ReplicaDataView::ChunkSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
@@ -1118,7 +1119,7 @@ namespace Driller
                     container->SetSelected(true);
 
                     const bool isHighlighted = true;
-                    container->GetAreaGraphPlotHelper().SetHighlighted(isHighlighted);                    
+                    container->GetAreaGraphPlotHelper().SetHighlighted(isHighlighted);
                 }
             }
         }
@@ -1150,7 +1151,7 @@ namespace Driller
 
         m_persistentState->m_displayRange = displayRange;
         FrameChanged(GetCurrentFrame());
-    }    
+    }
 
     void ReplicaDataView::HideAll()
     {
@@ -1193,7 +1194,7 @@ namespace Driller
         default:
             AZ_Assert(false, "Unknown Display Data Type");
             break;
-        }      
+        }
     }
 
     void ReplicaDataView::HideSelected()
@@ -1305,7 +1306,7 @@ namespace Driller
                 AZ::u64 replicaId = m_replicaTypeTableView.GetReplicaIdFromIndex(index);
 
                 ReplicaDataContainer* dataContainer = FindReplicaData(replicaId);
-                dataContainer->SetEnabled(!dataContainer->IsEnabled());                    
+                dataContainer->SetEnabled(!dataContainer->IsEnabled());
                 dataContainer->GetAreaGraphPlotHelper().SetEnabled(dataContainer->IsEnabled());
             }
             break;
@@ -1451,7 +1452,7 @@ namespace Driller
             m_overallReplicaDetailView->raise();
             m_overallReplicaDetailView->activateWindow();
         }
-    }    
+    }
 
     void ReplicaDataView::OnInspectedSeries(size_t seriesId)
     {
@@ -1755,7 +1756,7 @@ namespace Driller
             AZ_Assert(false, "Unknown Display Data Type");
             break;
         }
-    }    
+    }
 
     int ReplicaDataView::GetDisplayRange() const
     {

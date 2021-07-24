@@ -8,6 +8,7 @@
 
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <SceneAPI/SceneCore/Utilities/Reporting.h>
 #include <SceneAPI/SceneCore/Containers/RuleContainer.h>
@@ -102,7 +103,7 @@ namespace AZ
                 }
             }
 
-            
+
             // Previously, groups stored the vector of shared pointers of rules. We moved the vector of shared pointers of rules to the RuleContainer and
             // groups now have a RuleContainer as a member. This version converter converts from groups holding the vector
             bool RuleContainer::VectorToRuleContainerConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement)
@@ -140,7 +141,7 @@ namespace AZ
                         // Create a rule vector element.
                         const int rulesVectorIndex = ruleContainerElement.AddElement<AZStd::vector<AZStd::shared_ptr<DataTypes::IRule>>>(context, "rules");
                         AZ::SerializeContext::DataElementNode& ruleVectorElement = ruleContainerElement.GetSubElement(rulesVectorIndex);
-               
+
                         // Add the copied rules to the rule vector element.
                         for (SerializeContext::DataElementNode& rule : rules)
                         {

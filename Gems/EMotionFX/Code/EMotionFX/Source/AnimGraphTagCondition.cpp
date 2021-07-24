@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <EMotionFX/Source/EMotionFXConfig.h>
 #include <EMotionFX/Source/AnimGraph.h>
@@ -77,7 +78,7 @@ namespace EMotionFX
         }
 
         InitInternalAttributesForAllInstances();
-        
+
         Reinit();
         return true;
     }
@@ -88,7 +89,7 @@ namespace EMotionFX
         return "Tag Condition";
     }
 
-    
+
     bool AnimGraphTagCondition::TestCondition(AnimGraphInstance* animGraphInstance) const
     {
         // Iterate over the cached tag parameters.
@@ -265,7 +266,7 @@ namespace EMotionFX
     {
         m_function = function;
     }
-    
+
     AZStd::vector<AZStd::string> AnimGraphTagCondition::GetParameters() const
     {
         return m_tags;
@@ -294,7 +295,7 @@ namespace EMotionFX
         // Just recompute the indexes in the case the new parameter was inserted before ours
         Reinit();
     }
-    
+
     void AnimGraphTagCondition::ParameterRenamed(const AZStd::string& oldParameterName, const AZStd::string& newParameterName)
     {
         for (AZStd::string& tag : m_tags)

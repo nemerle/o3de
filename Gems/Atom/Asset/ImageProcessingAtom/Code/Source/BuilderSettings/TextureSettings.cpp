@@ -13,6 +13,8 @@
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <BuilderSettings/BuilderSettingManager.h>
 #include <ImageLoader/ImageLoaders.h>
@@ -254,7 +256,7 @@ namespace ImageProcessingAtom
         {
             textureSettingsOut = baseTextureSettings;
         }
-        
+
         return STRING_OUTCOME_SUCCESS;
     }
 

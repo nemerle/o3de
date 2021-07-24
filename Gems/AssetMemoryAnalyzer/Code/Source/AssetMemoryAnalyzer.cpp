@@ -12,6 +12,7 @@
 #include <AzCore/Debug/AssetTrackingTypesImpl.h>
 #include <AzCore/Debug/AssetTracking.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
+#include <AzCore/std/containers/unordered_set.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // CodePoint hash-table support
@@ -94,7 +95,7 @@ namespace AssetMemoryAnalyzer
     // AnalyzerImpl functions
     ///////////////////////////////////////////////////////////////////////////////
 
-    AnalyzerImpl::AnalyzerImpl() : 
+    AnalyzerImpl::AnalyzerImpl() :
         m_allocationTable(m_mutex),
         m_assetTracking(&m_assetTree, &m_allocationTable)
     {
@@ -150,7 +151,7 @@ namespace AssetMemoryAnalyzer
         {
             return;
         }
-        
+
         m_allocationTable.ReallocateAllocation(prevAddress, newAddress, newByteSize);
     }
 

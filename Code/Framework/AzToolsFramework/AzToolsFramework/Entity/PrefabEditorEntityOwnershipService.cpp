@@ -6,17 +6,13 @@
  *
  */
 
-#include <AzCore/Component/Entity.h>
-#include <AzCore/Component/TransformBus.h>
-#include <AzCore/Script/ScriptSystemBus.h>
-#include <AzCore/Serialization/Utils.h>
-#include <AzCore/StringFunc/StringFunc.h>
+#include <AzToolsFramework/Entity/PrefabEditorEntityOwnershipService.h>
+
 #include <AzFramework/API/ApplicationAPI.h>
 #include <AzFramework/Entity/GameEntityContextBus.h>
 #include <AzFramework/Spawnable/RootSpawnableInterface.h>
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
-#include <AzToolsFramework/Entity/PrefabEditorEntityOwnershipService.h>
 #include <AzToolsFramework/Prefab/EditorPrefabComponent.h>
 #include <AzToolsFramework/Prefab/Instance/InstanceEntityMapperInterface.h>
 #include <AzToolsFramework/Prefab/Instance/Instance.h>
@@ -24,6 +20,14 @@
 #include <AzToolsFramework/Prefab/PrefabLoader.h>
 #include <AzToolsFramework/Prefab/PrefabSystemComponentInterface.h>
 #include <AzToolsFramework/Prefab/PrefabUndoHelpers.h>
+
+#include <AzCore/Component/Entity.h>
+#include <AzCore/Component/TransformBus.h>
+#include <AzCore/Script/ScriptSystemBus.h>
+#include <AzCore/Serialization/Utils.h>
+#include <AzCore/StringFunc/StringFunc.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AzToolsFramework
 {
@@ -488,7 +492,7 @@ namespace AzToolsFramework
 
         if (m_rootInstance && !m_playInEditorData.m_isEnabled)
         {
-            // Construct the runtime entities and products 
+            // Construct the runtime entities and products
             Prefab::TemplateReference templateReference = m_prefabSystemComponent->FindTemplate(m_rootInstance->GetTemplateId());
             if (templateReference.has_value())
             {
@@ -543,7 +547,7 @@ namespace AzToolsFramework
                             LoadReferencedAssets(product.GetReferencedAssets());
                         }
 
-                        // make sure that PRE_NOTIFY assets get their notify before we activate, so that we can preserve the order of 
+                        // make sure that PRE_NOTIFY assets get their notify before we activate, so that we can preserve the order of
                         // (load asset) -> (notify) -> (init) -> (activate)
                         AZ::Data::AssetManager::Instance().DispatchEvents();
 
@@ -654,7 +658,7 @@ namespace AzToolsFramework
         return AZ::SliceComponent::SliceInstanceAddress();
     }
 
-   
+
     AZ::Data::AssetId UnimplementedSliceEntityOwnershipService::CurrentlyInstantiatingSlice()
     {
         AZ_Assert(!m_shouldAssertForLegacySlicesUsage, "Slice usage with Prefab code enabled");

@@ -11,6 +11,7 @@
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Math/Uuid.h>
 #include <AzCore/UserSettings/UserSettings.h>
+#include <AzCore/Serialization/SerializeContext.h> // for AZ::SerializeContext::DataElementNode
 
 // qdatastream.h(173): warning C4251: 'QDataStream::d': class 'QScopedPointer<QDataStreamPrivate,QScopedPointerDeleter<T>>' needs to have dll-interface to be used by clients of class 'QDataStream'
 // qwidget.h(858): warning C4800: 'uint': forcing value to bool 'true' or 'false' (performance warning)
@@ -41,7 +42,7 @@ namespace ScriptCanvasEditor
             ScriptCanvasConstructPresets();
             ~ScriptCanvasConstructPresets() override = default;
 
-            void InitializeConstructType(GraphCanvas::ConstructType constructType);            
+            void InitializeConstructType(GraphCanvas::ConstructType constructType);
         };
 
         class EditorWorkspace
@@ -60,7 +61,7 @@ namespace ScriptCanvasEditor
                 AZ::Data::AssetType m_assetType;
             };
 
-        
+
             AZ_RTTI(EditorWorkspace, "{67DACC4D-B92C-4B5A-8884-6AF7C7B74246}", AZ::UserSettings);
             AZ_CLASS_ALLOCATOR(EditorWorkspace, AZ::SystemAllocator, 0);
 
@@ -70,7 +71,7 @@ namespace ScriptCanvasEditor
             EditorWorkspace() = default;
 
             void ConfigureActiveAssets(AZ::Data::AssetId focusedAssetId, const AZStd::vector< WorkspaceAssetSaveData >& activeAssetIds);
-            
+
             AZ::Data::AssetId GetFocusedAssetId() const;
             AZStd::vector< WorkspaceAssetSaveData > GetActiveAssetData() const;
 
@@ -185,7 +186,7 @@ namespace ScriptCanvasEditor
 
             float m_minimumShakeLengthPercent;
             float m_deadZonePercent;
-            
+
             float m_straightnessPercent;
         };
 
@@ -282,7 +283,7 @@ namespace ScriptCanvasEditor
             static void Reflect(AZ::ReflectContext* reflectContext);
 
             StylingSettings() = default;
-            
+
             virtual ~StylingSettings() = default;
 
             GraphCanvas::Styling::ConnectionCurveType GetConnectionCurveType() const

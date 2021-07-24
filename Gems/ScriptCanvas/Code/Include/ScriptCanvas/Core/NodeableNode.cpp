@@ -10,6 +10,7 @@
 
 #include <AzCore/RTTI/AttributeReader.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Serialization/IdUtils.h>
 #include <ScriptCanvas/Core/Attributes.h>
@@ -39,7 +40,7 @@ namespace ScriptCanvas
             outSlotConfig.m_isLatent = isLatent;
             auto outSlotId = AddSlot(outSlotConfig);
             AZ_Error("ScriptCanvas", outSlotId.IsValid(), "Failed to add branching out slot to node.");
-            
+
             SlotExecution::Out outSlotMapEntry;
             // static_assert(false, "check here for why the name NewLevel and DangerZoneEntered get shrunk but the others did not.");
             outSlotMapEntry.name = out.displayName;
@@ -138,7 +139,7 @@ namespace ScriptCanvas
             // Nodeable nodes shouldn't need to introduce any dependencies since they are managed through behavior context
             return AZ::Success(DependencyReport{});
         }
-        
+
         AZ::Outcome<AZStd::string, void> NodeableNode::GetFunctionCallName(const Slot* slot) const
         {
             return AZ::Success(AZStd::string(slot->GetName()));
@@ -211,7 +212,7 @@ namespace ScriptCanvas
         {
             return GetMutableNodeable();
         }
-        
+
         const SlotExecution::Map* NodeableNode::GetSlotExecutionMap() const
         {
             return &m_slotExecutionMap;

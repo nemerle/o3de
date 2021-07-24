@@ -15,6 +15,8 @@ set(FILES
     PlatformIncl.h
     AzCoreModule.h
     AzCoreModule.cpp
+    Asset/AssetBus.cpp
+    Asset/AssetBus.h
     Asset/AssetCommon.cpp
     Asset/AssetCommon.h
     Asset/AssetContainer.cpp
@@ -483,7 +485,7 @@ set(FILES
     Serialization/EditContextConstants.inl
     Serialization/IdUtils.inl
     Serialization/IdUtils.h
-    Serialization/Internal/AddressTypeSerializer.h    
+    Serialization/Internal/AddressTypeSerializer.h
     Serialization/Utils.h
     Serialization/SerializationUtils.cpp
     Serialization/ObjectStream.cpp

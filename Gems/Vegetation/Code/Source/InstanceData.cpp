@@ -7,6 +7,9 @@
  */
 #include <Vegetation/InstanceData.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace Vegetation
 {
     void InstanceData::Reflect(AZ::ReflectContext* context)

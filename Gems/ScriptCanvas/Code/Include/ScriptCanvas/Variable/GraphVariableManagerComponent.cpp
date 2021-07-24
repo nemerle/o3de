@@ -12,6 +12,8 @@
 // Version Conversion Maintenance
 #include <ScriptCanvas/Deprecated/VariableDatumBase.h>
 ////
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvas
 {
@@ -32,7 +34,7 @@ namespace ScriptCanvas
     {
     }
 
-    GraphVariableManagerComponent::GraphVariableManagerComponent(ScriptCanvasId scriptCanvasId)        
+    GraphVariableManagerComponent::GraphVariableManagerComponent(ScriptCanvasId scriptCanvasId)
     {
         ConfigureScriptCanvasId(scriptCanvasId);
     }
@@ -45,11 +47,11 @@ namespace ScriptCanvas
 
     void GraphVariableManagerComponent::Reflect(AZ::ReflectContext* context)
     {
-        VariableId::Reflect(context);        
-        GraphVariable::Reflect(context);        
+        VariableId::Reflect(context);
+        GraphVariable::Reflect(context);
         VariableData::Reflect(context);
         EditableVariableConfiguration::Reflect(context);
-        EditableVariableData::Reflect(context);        
+        EditableVariableData::Reflect(context);
 
         if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
         {
@@ -60,15 +62,15 @@ namespace ScriptCanvas
 
             serializeContext->Class<GraphVariableManagerComponent, AZ::Component>()
                 ->Version(3, &GraphVariableManagerComponentVersionConverter)
-                ->Field("m_variableData", &GraphVariableManagerComponent::m_variableData)                
+                ->Field("m_variableData", &GraphVariableManagerComponent::m_variableData)
                 ->Field("CopiedVariableRemapping", &GraphVariableManagerComponent::m_copiedVariableRemapping)
                 ;
         }
     }
 
     void GraphVariableManagerComponent::Init()
-    {        
-        GraphConfigurationNotificationBus::Handler::BusConnect(GetEntityId());        
+    {
+        GraphConfigurationNotificationBus::Handler::BusConnect(GetEntityId());
     }
 
     void GraphVariableManagerComponent::Activate()
@@ -189,7 +191,7 @@ namespace ScriptCanvas
     }
 
     AZ::Outcome<VariableId, AZStd::string> GraphVariableManagerComponent::RemapVariable(const GraphVariable& graphVariable)
-    {        
+    {
         if (FindVariableById(graphVariable.GetVariableId()))
         {
             return AZ::Success(graphVariable.GetVariableId());
@@ -235,7 +237,7 @@ namespace ScriptCanvas
         if (!addVariableOutcome)
         {
             return addVariableOutcome;
-        }        
+        }
 
         const VariableId& newId = addVariableOutcome.GetValue();
 
@@ -376,7 +378,7 @@ namespace ScriptCanvas
         {
             return AZ::Failure(AZStd::string::format("Unable to find variable with Id %s on Entity %s. Cannot rename",
                 variableId.ToString().data(), GetEntityId().ToString().data()));
-        }        
+        }
 
         GraphVariable* graphVariable = FindVariable(newVarName);
         if (graphVariable && graphVariable->GetVariableId() != variableId)

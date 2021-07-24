@@ -11,12 +11,13 @@
 #include <AzCore/Memory/SystemAllocator.h>
 
 #include <AzFramework/Windowing/WindowBus.h>
+#include <AzCore/std/smart_ptr/unique_ptr.h>
 
 namespace AzFramework
 {
     //! A simple structure to contain window geometry.
     //! The defaults here reflect the defaults when creating a new
-    //! WindowGeometry object. Different window implementations may 
+    //! WindowGeometry object. Different window implementations may
     //! have their own separate default window sizes.
     struct WindowGeometry
     {
@@ -43,7 +44,7 @@ namespace AzFramework
         static constexpr uint32_t WINDOW_STYLE_RESIZEABLE   = 0x0002; //!< Should the window be resizeable? (Implies WINDOW_STYLE_BORDERED)
         static constexpr uint32_t WINDOW_STYLE_TITLED       = 0x0004; //!< Should the window have a title bar? (Implies WINDOW_STYLE_BORDERED)
         static constexpr uint32_t WINDOW_STYLE_TITLED_MENU  = 0x0008; //!< Should the window have a title bar with a menu? (Implies WINDOW_STYLE_TITLED)
-        
+
         static constexpr uint32_t WINDOW_STYLE_CLOSABLE     = 0x0010; //!< Should the window have a close button? (Implies WINDOW_STYLE_TITLED_MENU)
         static constexpr uint32_t WINDOW_STYLE_MAXIMIZE     = 0x0020; //!< Should the window have a maximize button? (Implies WINDOW_STYLE_TITLED_MENU)
         static constexpr uint32_t WINDOW_STYLE_MINIMIZE     = 0x0040; //!< Should the window have a minimize button? (Implies WINDOW_STYLE_TITLED_MENU)
@@ -74,12 +75,12 @@ namespace AzFramework
     //!
     //! This is mainly designed to be used as a base window for rendering.
     //! The window provides just a simple surface and handles implementation
-    //! details for each platform. 
-    //! 
+    //! details for each platform.
+    //!
     //! Window events are pumped via the AzFramework's application. No event messaging
     //! or message translation/dispatch needs to be handled by the underlying implementation.
     //!
-    //! Multiple NativeWindows are supported by this system. This is impractical for most standalone 
+    //! Multiple NativeWindows are supported by this system. This is impractical for most standalone
     //! game applications, and unnecessary for some platforms, but still possible.
     //!
     //! The Window implementation will be created when the NativeWindow is constructed and the

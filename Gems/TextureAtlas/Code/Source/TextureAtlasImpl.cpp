@@ -9,6 +9,7 @@
 #include "TextureAtlasImpl.h"
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/API/ApplicationAPI.h>
 
 namespace TextureAtlasNamespace
@@ -71,7 +72,7 @@ namespace TextureAtlasNamespace
                 }
                 return true;
             });
-            
+
             // Need to serialize the old AZStd::unordered_map<AZStd::string, AtlasCoordinates> type
             serialize->RegisterGenericType<AZStd::unordered_map<AZStd::string, AtlasCoordinates>>();
             serialize->Class<TextureAtlasImpl>()->Version(2, &TextureAtlasVersionConverter)
@@ -120,13 +121,13 @@ namespace TextureAtlasNamespace
         // We don't need to delete the old value because the pointer is handled elsewhere
         m_image = image;
     }
-    
+
     // Returns the image linked to this atlas
     AZ::Data::Instance<AZ::RPI::Image> TextureAtlasImpl::GetTexture() const
     {
         return m_image;
     }
-    
+
     // Internal to gem function for overwriting parameters
     void TextureAtlasImpl::OverwriteMappings(TextureAtlasImpl* source)
     {

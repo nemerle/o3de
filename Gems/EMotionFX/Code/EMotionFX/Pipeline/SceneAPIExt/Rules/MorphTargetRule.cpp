@@ -9,6 +9,7 @@
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <SceneAPI/SceneCore/Containers/Utilities/SceneGraphUtilities.h>
 #include <SceneAPI/SceneCore/Containers/Views/PairIterator.h>
@@ -108,7 +109,7 @@ namespace EMotionFX
             //MorphTargetRuleReadOnly
 
             AZ_CLASS_ALLOCATOR_IMPL(MorphTargetRuleReadOnly, AZ::SystemAllocator, 0)
-            
+
             MorphTargetRuleReadOnly::MorphTargetRuleReadOnly()
                 :m_descriptionText("All morph targets motions imported")
             {

@@ -10,6 +10,13 @@
 #include "PropertyAudioCtrl.h"
 #include "PropertyQTConstants.h"
 
+#include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzToolsFramework/API/ToolsApplicationAPI.h>
+#include <AzToolsFramework/AssetBrowser/AssetSelectionModel.h>
+#include <AzQtComponents/Components/Widgets/BrowseEdit.h>
+
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QToolButton>
@@ -18,11 +25,6 @@ AZ_PUSH_DISABLE_WARNING(4244 4251, "-Wunknown-warning-option") // 4244: conversi
 #include <QtWidgets/QHBoxLayout>
 #include <QtGui/QMouseEvent>
 AZ_POP_DISABLE_WARNING
-
-#include <AzCore/Component/ComponentApplicationBus.h>
-#include <AzToolsFramework/API/ToolsApplicationAPI.h>
-#include <AzToolsFramework/AssetBrowser/AssetSelectionModel.h>
-#include <AzQtComponents/Components/Widgets/BrowseEdit.h>
 
 namespace AzToolsFramework
 {

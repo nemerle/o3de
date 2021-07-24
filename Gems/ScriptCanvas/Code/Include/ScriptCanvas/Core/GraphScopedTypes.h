@@ -21,7 +21,7 @@ namespace ScriptCanvas
     {
     public:
         AZ_RTTI((GraphScopedIdentifier, "{1B01849B-57BA-4926-8DF6-252966E2BF8F}", T));
-        
+
         GraphScopedIdentifier() = default;
         GraphScopedIdentifier(const ScriptCanvasId& scriptCanvasId, const T& identifier)
             : m_scriptCanvasId(scriptCanvasId)
@@ -43,22 +43,22 @@ namespace ScriptCanvas
         {
             return m_scriptCanvasId == other.m_scriptCanvasId && m_identifier == other.m_identifier;
         }
-        
+
         void Clear()
         {
             m_scriptCanvasId.SetInvalid();
             m_identifier = T();
         }
-        
+
         bool IsValid()
         {
             return m_scriptCanvasId.IsValid() && m_identifier.IsValid();
-        }        
-        
+        }
+
         ScriptCanvasId m_scriptCanvasId;
         T           m_identifier;
     };
-    
+
     typedef GraphScopedIdentifier<VariableId> GraphScopedVariableId;
     typedef GraphScopedIdentifier<AZ::EntityId> GraphScopedNodeId;
     typedef GraphScopedIdentifier<Endpoint> GraphScopedEndpoint;
@@ -78,3 +78,20 @@ namespace AZStd
         }
     };
 }
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    // treat templated GraphScopedIdentifier and TrackSplineInterpolator values as generic value types
+    template<typename T>
+    struct SerializeGenericTypeInfo<ScriptCanvas::GraphScopedIdentifier<T>>
+        : SerializeGenericTypeInfoImpl<ScriptCanvas::GraphScopedIdentifier<T>>
+    {
+    };
+
+} // namespace AZ

@@ -21,6 +21,8 @@
 
 #include <AzCore/Component/Entity.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace
 {
@@ -63,7 +65,7 @@ namespace
             }
         }
 
-        auto newEndIter = AZStd::remove_if(imageList.begin(), imageList.end(), 
+        auto newEndIter = AZStd::remove_if(imageList.begin(), imageList.end(),
             [&invalidTextures](const UiImageSequenceComponent::TextureAssetRef& assetRef)
             {
                 return invalidTextures.find(assetRef.GetAssetPath()) != invalidTextures.end();

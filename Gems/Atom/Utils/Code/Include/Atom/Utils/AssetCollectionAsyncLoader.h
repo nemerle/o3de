@@ -7,11 +7,13 @@
  */
 #pragma once
 
+#include <AzCore/std/containers/unordered_set.h>
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/std/string/string.h>
 #include <AzCore/std/parallel/shared_mutex.h>
 #include <AzCore/Jobs/JobCompletion.h>
 #include <AzCore/Asset/AssetCommon.h>
+#include <AzCore/Asset/AssetBus.h>
 
 namespace AZ
 {

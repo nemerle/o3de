@@ -5,18 +5,19 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
+#include <AzToolsFramework/Entity/EditorEntitySearchComponent.h>
 
 #include <AzToolsFramework/Component/EditorComponentAPIBus.h>
-#include <AzToolsFramework/Entity/EditorEntitySearchComponent.h>
 #include <AzToolsFramework/Entity/EditorEntityContextBus.h>
 #include <AzToolsFramework/Entity/EditorEntityHelpers.h>
 #include <AzToolsFramework/Entity/EditorEntityInfoBus.h>
 
-#include <AzCore/RTTI/BehaviorContext.h>
-
 #include <AzFramework/StringFunc/StringFunc.h>
-#include <AzCore/std/string/wildcard.h>
 #include <AzCore/Component/TransformBus.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/std/string/wildcard.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AzToolsFramework
 {
@@ -192,7 +193,7 @@ namespace AzToolsFramework
         void EditorEntitySearchComponent::FilterEntity(AZ::EntityId entityId, const SearchConditions& conditions, EntityIdSet& filteredEntities)
         {
             EntityIdSet tempEntities;
-            
+
             // Ignore root entity
             if (!entityId.IsValid() || entityId == AZ::EntityId(0))
             {
@@ -256,7 +257,7 @@ namespace AzToolsFramework
 
             for (AZ::EntityId entityId : entities)
             {
-                if((!caseSensitive && wildcard_match(tokenizedPath[currentIndex], GetEntityById(entityId)->GetName())) || 
+                if((!caseSensitive && wildcard_match(tokenizedPath[currentIndex], GetEntityById(entityId)->GetName())) ||
                     (caseSensitive && wildcard_match_case(tokenizedPath[currentIndex], GetEntityById(entityId)->GetName())))
                 {
                     resultPtr->insert(entityId);
@@ -312,7 +313,7 @@ namespace AzToolsFramework
             // check each component type/property values filter
             for (auto& componentProperties : components)
             {
-                // check if entity has any component matching the type       
+                // check if entity has any component matching the type
                 bool hasComponent = false;
                 AZ::Uuid componentTypeId = componentProperties.first;
                 EditorComponentAPIBus::BroadcastResult(hasComponent, &EditorComponentAPIRequests::HasComponentOfType, entityId, componentTypeId);
@@ -364,7 +365,7 @@ namespace AzToolsFramework
                 }
             }
 
-            return doesMatch;            
+            return doesMatch;
         }
 
     } // Components

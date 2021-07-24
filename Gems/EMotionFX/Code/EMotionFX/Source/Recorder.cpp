@@ -6,7 +6,6 @@
  *
  */
 
-#include <AzCore/Serialization/SerializeContext.h>
 #include "Recorder.h"
 #include "RecorderBus.h"
 #include "ActorInstance.h"
@@ -29,6 +28,8 @@
 #include <MCore/Source/LogManager.h>
 #include <MCore/Source/ReflectionSerializer.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace EMotionFX
 {

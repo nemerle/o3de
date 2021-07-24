@@ -27,13 +27,13 @@ set(FILES
 
     Include/Private/UserManagement/AWSCognitoUserManagementController.h
     Include/Private/UserManagement/UserManagementNotificationBusBehaviorHandler.h
-    
+
     Include/Private/Authentication/AuthenticationProviderInterface.h
     Include/Private/Authentication/OAuthConstants.h
     Include/Private/Authentication/AWSCognitoAuthenticationProvider.h
     Include/Private/Authentication/LWAAuthenticationProvider.h
     Include/Private/Authentication/GoogleAuthenticationProvider.h
- 
+
     Source/AWSClientAuthSystemComponent.cpp
     Source/Authentication/AuthenticationTokens.cpp
     Source/Authentication/AuthenticationProviderInterface.cpp
@@ -42,6 +42,7 @@ set(FILES
     Source/Authentication/LWAAuthenticationProvider.cpp
     Source/Authentication/GoogleAuthenticationProvider.cpp
 
+    Source/Authorization/ClientAuthAWSCredentials.cpp
     Source/Authorization/AWSCognitoAuthorizationController.cpp
     Source/Authorization/AWSClientAuthPersistentCognitoIdentityProvider.cpp
 

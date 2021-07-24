@@ -13,6 +13,7 @@
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/UserSettings/UserSettings.h>
+#include <AzCore/std/containers/unordered_set.h>
 #endif
 
 namespace MaterialEditor

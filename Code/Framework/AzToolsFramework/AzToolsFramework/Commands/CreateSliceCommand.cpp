@@ -9,6 +9,8 @@
 
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzToolsFramework/Slice/SliceUtilities.h>
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>

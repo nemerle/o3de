@@ -12,6 +12,8 @@
 #include <ScriptCanvas/Core/Core.h>
 #include <ScriptCanvas/Core/Graph.h>
 #include <ScriptCanvas/Core/SlotConfigurationDefaults.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <gtest/gtest.h>
 
@@ -19,7 +21,7 @@ namespace TestNodes
 {
     //////////////////////////////////////////////////////////////////////////////
     void TestResult::OnInit()
-    {        
+    {
         Node::AddSlot(ScriptCanvas::CommonSlots::GeneralInSlot());
         Node::AddSlot(ScriptCanvas::CommonSlots::GeneralOutSlot());
 
@@ -277,7 +279,7 @@ namespace TestNodes
         Node::AddSlot(ScriptCanvas::CommonSlots::GeneralOutSlot());
         Node::AddSlot(ScriptCanvas::DataSlotConfiguration(ScriptCanvas::Data::Type::String(), "Result", ScriptCanvas::ConnectionType::Output));
     }
-    
+
     /////////////////////////////
     // ConfigurableUnitTestNode
     /////////////////////////////
@@ -329,6 +331,6 @@ namespace TestNodes
     bool ConfigurableUnitTestNode::TestIsSlotConnectedToConcreteDisplayType(const ScriptCanvas::Slot& slot, ExploredDynamicGroupCache& exploredGroupCache) const
     {
         return FindConnectedConcreteDisplayType(slot, exploredGroupCache).IsValid();
-    }    
+    }
 }
 

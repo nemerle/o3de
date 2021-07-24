@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) Contributors to the Open 3D Engine Project.
  * For complete copyright and license terms please see the LICENSE at the root of this distribution.
  *
@@ -16,6 +16,7 @@
 #include <AzCore/Module/Module.h>
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/Asset/GenericAssetHandler.h>
 
@@ -217,8 +218,8 @@ namespace StartingPointInput
         }
 
         AZ::ComponentTypeList GetRequiredSystemComponents() const override
-        { 
-            return AZ::ComponentTypeList({ StartingPointInputSystemComponent::RTTI_Type() }); 
+        {
+            return AZ::ComponentTypeList({ StartingPointInputSystemComponent::RTTI_Type() });
         }
     };
 }

@@ -22,12 +22,6 @@
 #include <AzCore/EBus/Results.h>
 #include <AzCore/EBus/Internal/Debug.h>
 
- // Included for backwards compatibility purposes
-#include <AzCore/std/smart_ptr/unique_ptr.h>
-#include <AzCore/std/containers/unordered_set.h>
-#include <AzCore/std/typetraits/is_same.h>
-// End backwards compat
-
 #include <AzCore/std/utils.h>
 #include <AzCore/std/parallel/scoped_lock.h>
 #include <AzCore/std/parallel/shared_mutex.h>

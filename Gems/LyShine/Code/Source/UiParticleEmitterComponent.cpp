@@ -13,6 +13,7 @@
 #include <AzCore/Math/Crc.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/std/sort.h>
 
@@ -968,7 +969,7 @@ void UiParticleEmitterComponent::Update(float deltaTime)
 
     // Currently we mark the render graph dirty whenever a particle emitter is updated and has any
     // active particles.
-    // A future optimization could be that we only mark it dirty if new particles were emitted or 
+    // A future optimization could be that we only mark it dirty if new particles were emitted or
     // particles were removed. At other times we could update the vertices in m_cachedPrimitive
     // without regenerating the graph. This would require some way to register to get the vertices updated
     // during the canvas render in the case when the render graph was not being regenerated.

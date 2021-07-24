@@ -9,6 +9,8 @@
 #include "EditorEntityIconComponent.h"
 
 #include <AzCore/RTTI/TypeInfo.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Asset/AssetManagerBus.h>
 
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>

@@ -12,6 +12,8 @@
 
 #include <Editor/PropertyTypes.h>
 #include <Editor/MeshNodeHandler.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace NvCloth
 {
@@ -31,14 +33,14 @@ namespace NvCloth
             picker->GetEditButton()->setText("");
             picker->GetEditButton()->setEnabled(false);
 
-            connect(picker->GetComboBox(), 
+            connect(picker->GetComboBox(),
                 &QComboBox::currentTextChanged, this,
                 [picker]()
                 {
                     AzToolsFramework::PropertyEditorGUIMessages::Bus::Broadcast(&AzToolsFramework::PropertyEditorGUIMessages::RequestWrite, picker);
                 });
 
-            connect(picker->GetEditButton(), 
+            connect(picker->GetEditButton(),
                 &QToolButton::clicked, this,
                 [this, picker]()
                 {

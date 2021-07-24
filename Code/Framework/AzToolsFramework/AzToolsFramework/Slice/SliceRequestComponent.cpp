@@ -5,15 +5,16 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
+#include <AzToolsFramework/Slice/SliceRequestComponent.h>
 
-
-#include <AzCore/RTTI/BehaviorContext.h>
-#include <AzFramework/IO/FileOperations.h>
-#include <AzFramework/StringFunc/StringFunc.h>
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>
 #include <AzToolsFramework/Entity/SliceEditorEntityOwnershipServiceBus.h>
-#include <AzToolsFramework/Slice/SliceRequestComponent.h>
 #include <AzToolsFramework/Slice/SliceUtilities.h>
+#include <AzFramework/IO/FileOperations.h>
+#include <AzFramework/StringFunc/StringFunc.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AzToolsFramework
 {

@@ -8,7 +8,6 @@
 
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Asset/AssetManager.h>
-#include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/parallel/lock.h>
@@ -252,7 +251,7 @@ namespace AZ
             int creationToken = m_creationToken;
             AssetType assetType = GetType();
             bool removeFromHash = IsRegisterReadonlyAndShareable();
-            // default creation token implies that the asset was not created by the asset manager and therefore it cannot be in the asset map. 
+            // default creation token implies that the asset was not created by the asset manager and therefore it cannot be in the asset map.
             removeFromHash = creationToken == s_defaultCreationToken ? false : removeFromHash;
 
             if (m_weakUseCount.fetch_sub(1) == 1)
@@ -271,7 +270,7 @@ namespace AZ
         bool AssetData::IsLoading(bool includeQueued) const
         {
             auto curStatus = GetStatus();
-            return(curStatus == AssetStatus::Loading || curStatus == AssetStatus::LoadedPreReady || curStatus==AssetStatus::StreamReady || 
+            return(curStatus == AssetStatus::Loading || curStatus == AssetStatus::LoadedPreReady || curStatus==AssetStatus::StreamReady ||
                     (includeQueued && curStatus == AssetStatus::Queued));
         }
 
@@ -310,121 +309,6 @@ namespace AZ
         void AssetData::SetRequeue(bool requeue)
         {
             SetFlag(AssetDataFlags::Requeue, requeue);
-        }
-
-        void AssetBusCallbacks::SetCallbacks(const AssetReadyCB& readyCB, const AssetMovedCB& movedCB, const AssetReloadedCB& reloadedCB,
-            const AssetSavedCB& savedCB, const AssetUnloadedCB& unloadedCB, const AssetErrorCB& errorCB, const AssetCanceledCB& cancelCB)
-        {
-            m_onAssetReadyCB = readyCB;
-            m_onAssetMovedCB = movedCB;
-            m_onAssetReloadedCB = reloadedCB;
-            m_onAssetSavedCB = savedCB;
-            m_onAssetUnloadedCB = unloadedCB;
-            m_onAssetErrorCB = errorCB;
-            m_onAssetCanceledCB = cancelCB;
-        }
-
-        void AssetBusCallbacks::ClearCallbacks()
-        {
-            SetCallbacks(AssetBusCallbacks::AssetReadyCB(),
-                AssetBusCallbacks::AssetMovedCB(),
-                AssetBusCallbacks::AssetReloadedCB(),
-                AssetBusCallbacks::AssetSavedCB(),
-                AssetBusCallbacks::AssetUnloadedCB(),
-                AssetBusCallbacks::AssetErrorCB(),
-                AssetBusCallbacks::AssetCanceledCB());
-        }
-
-
-        void AssetBusCallbacks::SetOnAssetReadyCallback(const AssetReadyCB& readyCB)
-        {
-            m_onAssetReadyCB = readyCB;
-        }
-
-        void AssetBusCallbacks::SetOnAssetMovedCallback(const AssetMovedCB& movedCB)
-        {
-            m_onAssetMovedCB = movedCB;
-        }
-
-        void AssetBusCallbacks::SetOnAssetReloadedCallback(const AssetReloadedCB& reloadedCB)
-        {
-            m_onAssetReloadedCB = reloadedCB;
-        }
-
-        void AssetBusCallbacks::SetOnAssetSavedCallback(const AssetSavedCB& savedCB)
-        {
-            m_onAssetSavedCB = savedCB;
-        }
-
-        void AssetBusCallbacks::SetOnAssetUnloadedCallback(const AssetUnloadedCB& unloadedCB)
-        {
-            m_onAssetUnloadedCB = unloadedCB;
-        }
-
-        void AssetBusCallbacks::SetOnAssetErrorCallback(const AssetErrorCB& errorCB)
-        {
-            m_onAssetErrorCB = errorCB;
-        }
-
-        void AssetBusCallbacks::SetOnAssetCanceledCallback(const AssetCanceledCB& cancelCB)
-        {
-            m_onAssetCanceledCB = cancelCB;
-        }
-
-        void AssetBusCallbacks::OnAssetReady(Asset<AssetData> asset)
-        {
-            if (m_onAssetReadyCB)
-            {
-                m_onAssetReadyCB(asset, *this);
-            }
-        }
-
-        void AssetBusCallbacks::OnAssetMoved(Asset<AssetData> asset, void* oldDataPointer)
-        {
-            if (m_onAssetMovedCB)
-            {
-                m_onAssetMovedCB(asset, oldDataPointer, *this);
-            }
-        }
-
-        void AssetBusCallbacks::OnAssetReloaded(Asset<AssetData> asset)
-        {
-            if (m_onAssetReloadedCB)
-            {
-                m_onAssetReloadedCB(asset, *this);
-            }
-        }
-
-        void AssetBusCallbacks::OnAssetSaved(Asset<AssetData> asset, bool isSuccessful)
-        {
-            if (m_onAssetSavedCB)
-            {
-                m_onAssetSavedCB(asset, isSuccessful, *this);
-            }
-        }
-
-        void AssetBusCallbacks::OnAssetUnloaded(const AssetId assetId, const AssetType assetType)
-        {
-            if (m_onAssetUnloadedCB)
-            {
-                m_onAssetUnloadedCB(assetId, assetType, *this);
-            }
-        }
-
-        void AssetBusCallbacks::OnAssetError(Asset<AssetData> asset)
-        {
-            if (m_onAssetErrorCB)
-            {
-                m_onAssetErrorCB(asset, *this);
-            }
-        }
-
-        void AssetBusCallbacks::OnAssetCanceled(const AssetId assetId)
-        {
-            if (m_onAssetCanceledCB)
-            {
-                m_onAssetCanceledCB(assetId, *this);
-            }
         }
 
         /*static*/ bool AssetFilterNoAssetLoading([[maybe_unused]] const AssetFilterInfo& filterInfo)

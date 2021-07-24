@@ -13,6 +13,7 @@
 #include <AzCore/Math/VectorConversions.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <LmbrCentral/Shape/PolygonPrismShapeComponentBus.h>
 #include <Shape/PolygonPrismShape.h>
 #include <MathConversion.h>
@@ -106,8 +107,8 @@ namespace LmbrCentral
         // reset switching to game mode on activate
         m_switchingToGameMode = false;
 
-        // We must relink during entity activation or the NavigationSystem will throw 
-        // errors in SpawnJob. Don't force an unnecessary update of the game area.  
+        // We must relink during entity activation or the NavigationSystem will throw
+        // errors in SpawnJob. Don't force an unnecessary update of the game area.
         // RelinkWithMesh will still update the game area if the volume hasn't been created.
         const bool updateGameArea = false;
         RelinkWithMesh(updateGameArea);
@@ -324,7 +325,7 @@ namespace LmbrCentral
             }
 
             // Update the game area if requested or in the case that the volume doesn't exist yet.
-            // This can happen when a volume doesn't have an associated mesh which is always the  
+            // This can happen when a volume doesn't have an associated mesh which is always the
             // case with exclusion volumes.
             if (updateGameArea || !aiNavigation->ValidateVolume(NavigationVolumeID(m_volume)))
             {

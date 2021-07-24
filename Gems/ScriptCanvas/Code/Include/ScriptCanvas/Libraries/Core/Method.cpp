@@ -8,13 +8,16 @@
 
 #include "Method.h"
 
-#include <AzCore/RTTI/BehaviorContext.h>
-#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
-#include <AzCore/Serialization/Utils.h>
-#include <Core/SlotConfigurationDefaults.h> 
+#include <Core/SlotConfigurationDefaults.h>
 #include <Core/SlotExecutionMap.h>
 #include <Libraries/Core/MethodUtility.h>
 #include <ScriptCanvas/Utils/BehaviorContextUtils.h>
+
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace MethodCPP
 {
@@ -139,7 +142,7 @@ namespace ScriptCanvas
                             }
                         }
                     }
-                }                    
+                }
 
                 return true;
             }

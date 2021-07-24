@@ -11,6 +11,7 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/std/containers/set.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -135,7 +136,7 @@ namespace Maestro
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     void EditorSequenceAgentComponent::DisconnectSequence()
-    {   
+    {
         const Maestro::SequenceAgentEventBusId* busIdToDisconnect = SequenceAgentComponentRequestBus::GetCurrentBusId();
 
         if (!busIdToDisconnect)
@@ -165,7 +166,7 @@ namespace Maestro
         AZ::EntityId curEntityId = GetEntityId();
 
         // remove this SequenceAgent from this entity if no sequenceComponents are connected to it
-        AzToolsFramework::EntityCompositionRequestBus::Broadcast(&AzToolsFramework::EntityCompositionRequests::RemoveComponents, AZ::Entity::ComponentArrayType{this});        
+        AzToolsFramework::EntityCompositionRequestBus::Broadcast(&AzToolsFramework::EntityCompositionRequests::RemoveComponents, AZ::Entity::ComponentArrayType{this});
 
         // Let any currently-active undo operations know that this entity has changed state.
         auto undoCacheInterface = AZ::Interface<AzToolsFramework::UndoSystem::UndoCacheInterface>::Get();
@@ -216,7 +217,7 @@ namespace Maestro
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     void EditorSequenceAgentComponent::GetAllAnimatableProperties(IAnimNode::AnimParamInfos& properties, AZ::ComponentId componentId)
-    {       
+    {
         // add all properties found during Activate() that match the given componentId
         for (auto propertyIter = m_addressToBehaviorVirtualPropertiesMap.begin(); propertyIter != m_addressToBehaviorVirtualPropertiesMap.end(); propertyIter++)
         {
@@ -272,7 +273,7 @@ namespace Maestro
             auto findIter = appendedComponentIds.find(address->first.GetComponentId());
             if (findIter == appendedComponentIds.end())
             {
-                animatableComponentIds.push_back(address->first.GetComponentId());   
+                animatableComponentIds.push_back(address->first.GetComponentId());
                 appendedComponentIds.insert(address->first.GetComponentId());
             }
         }

@@ -6,13 +6,15 @@
  *
  */
 
-#include <AzCore/Serialization/Utils.h>
-
 #include <ScriptCanvas/Variable/VariableData.h>
 
 // Version Conversion
 #include <ScriptCanvas/Deprecated/VariableHelpers.h>
 ////
+
+#include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvas
 {
@@ -38,7 +40,7 @@ namespace ScriptCanvas
                 idToVariableMap.emplace(uuidToVariableNamePair.first, GraphVariable(AZStd::move(uuidToVariableNamePair.second)));
             }
 
-            rootElementNode.AddElementWithData(context, "m_nameVariableMap", idToVariableMap);            
+            rootElementNode.AddElementWithData(context, "m_nameVariableMap", idToVariableMap);
         }
         else if (rootElementNode.GetVersion() < VariableData::Version::VariableDatumSimplification)
         {
@@ -57,14 +59,14 @@ namespace ScriptCanvas
                 idToVariableMap.emplace(idPair.first, GraphVariable(AZStd::move(idPair.second)));
             }
 
-            rootElementNode.AddElementWithData(context, "m_nameVariableMap", idToVariableMap);            
+            rootElementNode.AddElementWithData(context, "m_nameVariableMap", idToVariableMap);
         }
 
         return true;
     }
     void VariableData::Reflect(AZ::ReflectContext* context)
     {
-        Deprecated::VariableNameValuePair::Reflect(context);        
+        Deprecated::VariableNameValuePair::Reflect(context);
 
         if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
         {
@@ -224,7 +226,7 @@ namespace ScriptCanvas
             if (auto genericClassInfo = AZ::SerializeGenericTypeInfo<AZStd::list<Deprecated::VariableNameValuePair>>::GetGenericInfo())
             {
                 genericClassInfo->Reflect(serializeContext);
-            }            
+            }
 
             serializeContext->Class<EditableVariableData>()
                 ->Version(2, &EditableVariableDataConverter)

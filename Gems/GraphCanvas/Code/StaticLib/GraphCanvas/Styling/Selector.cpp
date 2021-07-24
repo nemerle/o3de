@@ -13,6 +13,8 @@
 
 #include <GraphCanvas/Components/StyleBus.h>
 #include <GraphCanvas/Styling/SelectorImplementations.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace GraphCanvas
 {

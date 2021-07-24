@@ -10,6 +10,7 @@
 
 #include <AssetBuilderSDK/AssetBuilderSDK.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 
 #include <Editor/Assets/ScriptCanvasAssetHolder.h>
@@ -33,8 +34,8 @@ namespace ScriptCanvasEditor
     {
         ScriptCanvas::ScriptCanvasData::Reflect(context);
         ScriptCanvasAssetHolder::Reflect(context);
-        EditorSettings::EditorWorkspace::Reflect(context);        
-        EditorSettings::ScriptCanvasEditorSettings::Reflect(context);        
+        EditorSettings::EditorWorkspace::Reflect(context);
+        EditorSettings::ScriptCanvasEditorSettings::Reflect(context);
         LiveLoggingUserSettings::Reflect(context);
         UndoData::Reflect(context);
 
@@ -63,7 +64,7 @@ namespace ScriptCanvasEditor
         CreateScriptEventsReceiverMimeEvent::Reflect(context);
         CreateScriptEventsSenderMimeEvent::Reflect(context);
         CreateSendOrReceiveScriptEventsMimeEvent::Reflect(context);
-        
+
         if (auto serialize = azrtti_cast<AZ::SerializeContext*>(context))
         {
             serialize->Class<ReflectComponent, AZ::Component>()

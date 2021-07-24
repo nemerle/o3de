@@ -11,6 +11,8 @@
 #include <QPainter>
 
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Components/Nodes/General/GeneralNodeTitleComponent.h>
 
@@ -263,7 +265,7 @@ namespace GraphCanvas
     }
 
     void GeneralNodeTitleGraphicsWidget::Deactivate()
-    {        
+    {
         SceneMemberNotificationBus::Handler::BusDisconnect();
         RootGraphicsItemNotificationBus::Handler::BusDisconnect();
         NodeNotificationBus::Handler::BusDisconnect();
@@ -299,7 +301,7 @@ namespace GraphCanvas
 
         AZ::EntityId sceneId;
         SceneMemberRequestBus::EventResult(sceneId, GetEntityId(), &SceneMemberRequests::GetScene);
-        
+
         m_paletteOverride = nullptr;
         StyleManagerRequestBus::BroadcastResult(m_paletteOverride, &StyleManagerRequests::FindColorPalette, paletteOverride);
         update();
@@ -448,7 +450,7 @@ namespace GraphCanvas
     void GeneralNodeTitleGraphicsWidget::OnEnabledChanged(RootGraphicsItemEnabledState /*enabledState*/)
     {
         UpdateStyles();
-        RefreshDisplay();        
+        RefreshDisplay();
     }
 
     void GeneralNodeTitleGraphicsWidget::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
@@ -461,7 +463,7 @@ namespace GraphCanvas
         {
             style = m_paletteOverride->GetAttribute(Styling::Attribute::PaletteStyle, Styling::PaletteStyle::Solid);
         }
-        
+
         // Background
         QRectF bounds = boundingRect();
 
@@ -498,7 +500,7 @@ namespace GraphCanvas
             if (!m_disabledPalette)
             {
                 StyleManagerRequestBus::BroadcastResult(m_disabledPalette, &StyleManagerRequests::FindColorPalette, "DisabledColorPalette");
-            }            
+            }
 
             if (m_disabledPalette)
             {

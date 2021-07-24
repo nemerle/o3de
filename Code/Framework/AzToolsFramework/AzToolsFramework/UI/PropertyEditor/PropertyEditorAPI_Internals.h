@@ -17,6 +17,8 @@
 
 #include <AzCore/RTTI/AttributeReader.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzToolsFramework/UI/PropertyEditor/InstanceDataHierarchy.h>
 
 class QWidget;

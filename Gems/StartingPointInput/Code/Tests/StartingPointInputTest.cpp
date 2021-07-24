@@ -11,11 +11,14 @@
 #include <InputEventGroup.h>
 #include <InputEventBindings.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 class StartingPointInputTest
     : public ::testing::Test
 {
 protected:
-    void SetUp() override 
+    void SetUp() override
     {
         // A system allocator needs to be created so the application and system entity can
         // function correctly.
@@ -25,7 +28,7 @@ protected:
             AZ::AllocatorInstance<AZ::SystemAllocator>::Create(systemAllocatorDesc);
         }
     }
-    void TearDown() override 
+    void TearDown() override
     {
         AZ::AllocatorInstance<AZ::SystemAllocator>::Destroy();
     }
@@ -103,7 +106,7 @@ TEST_F(StartingPointInputTest, CopyingInputEventGroupDoesDeepCopy)
     // Set up the bindings that will be swapped.
     testBindings1.AddInputEventGroup(testEventGroup1);
     testBindings2.AddInputEventGroup(testEventGroup2);
-    
+
     // Perform the swap, which is the primary thing being tested here.
     testBindings1.Swap(&testBindings2);
 

@@ -10,6 +10,8 @@
 
 #include <AzFramework/IO/LocalFileIO.h>
 #include <AzFramework/StringFunc/StringFunc.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace CustomAssetExample
 {
@@ -50,7 +52,7 @@ namespace CustomAssetExample
                 // Please see the JobDescriptor for the full complement of configuration parameters.
                 response.m_createJobOutputs.push_back(descriptor);
 
-                // One builder can make multiple jobs for the same source file, for the same platform, as long as it emits a different job key per job. 
+                // One builder can make multiple jobs for the same source file, for the same platform, as long as it emits a different job key per job.
                 // This allows you to break large compilations up into smaller jobs.  Jobs emitted in this manner may be run in parallel
                 descriptor.m_jobKey = "Second Compile Example";
 
@@ -66,7 +68,7 @@ namespace CustomAssetExample
         // Our *.examplesource extension details a source file with dependencies.
         // Here we declare source file dependencies and forward the info to the Asset Processor
         // This example creates the following dependencies:
-        //     * the source file .../test.examplesource depends on the source file  .../test.exampleinclude 
+        //     * the source file .../test.examplesource depends on the source file  .../test.exampleinclude
         //     * the source file .../test.exampleinclude depends on the source file .../common.exampleinclude
         //     * the source file .../common.exampleinclude depends on the non-source file .../common.examplefile
 
@@ -124,8 +126,8 @@ namespace CustomAssetExample
         }
         // This example shows how you would be able to declare job dependencies on source files inside a builder and
         // forward that info to the asset processor.
-        // Basically here we are creating a job dependency such that the job with source file ./test.examplejob and 
-        // jobKey "Compile Example" depends on the fingerprint of the job with source file ./test.examplesource and jobkey "Compile Example". 
+        // Basically here we are creating a job dependency such that the job with source file ./test.examplejob and
+        // jobKey "Compile Example" depends on the fingerprint of the job with source file ./test.examplesource and jobkey "Compile Example".
 
         else if (AzFramework::StringFunc::Equal(ext.c_str(), "examplejob"))
         {
@@ -236,7 +238,7 @@ namespace CustomAssetExample
         // or you can come up with your own scheme to ensure stability, using the 32-bit address space as you see fit.  It only has to be unique
         // and stable within the confines of a single source file, it is not globally unique.
         jobProduct.m_productSubID = 0;
-        
+
         // once you've filled up the details of the product in jobProduct, add it to the result list:
         response.m_outputProducts.push_back(jobProduct);
 

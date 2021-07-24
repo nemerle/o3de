@@ -9,6 +9,7 @@
 
 #if !defined(Q_MOC_RUN)
 #include <AzCore/Asset/AssetCommon.h>
+#include <AzCore/Asset/AssetBus.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/UserSettings/UserSettings.h>
 #include <AzFramework/Asset/AssetCatalogBus.h>
@@ -146,13 +147,13 @@ namespace AzToolsFramework
 
             // Ids can change when an asset goes from in-memory to saved on disk.
             // If there is a failure, the asset will be removed from the catalog.
-            // The only reliable mechanism to be certain the asset being added/removed 
+            // The only reliable mechanism to be certain the asset being added/removed
             // from the catalog is the same one that was added is to compare its file path.
-            AZStd::string m_expectedAddedAssetPath; 
+            AZStd::string m_expectedAddedAssetPath;
             AZStd::string m_recentlyAddedAssetPath;
 
             bool m_dirty = false;
-            
+
             QString m_currentAsset;
 
             QAction* m_saveAssetAction;

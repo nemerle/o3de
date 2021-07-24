@@ -20,7 +20,8 @@
 #include <AzToolsFramework/Asset/AssetDebugInfo.h>
 #include <AzToolsFramework/AssetCatalog/PlatformAddressedAssetCatalogBus.h>
 #include <AzToolsFramework/AssetCatalog/PlatformAddressedAssetCatalog.h>
-
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 const char SeedFileExtension[] = "seed";
 const char AssetListFileExtension[] = "assetlist";
@@ -45,7 +46,7 @@ namespace AzToolsFramework
                 return assetPath;
             }
         }
-        
+
         AZ_Warning("AssetSeedManager", false, "Unable to resolve path of Seed asset (%s) for the given platforms (%s).\n", assetId.ToString<AZStd::string>().c_str(), AzFramework::PlatformHelper::GetCommaSeparatedPlatformList(platformFlags).c_str());
 
         return {};
@@ -484,7 +485,7 @@ namespace AzToolsFramework
 
             AZ::Data::AssetInfo seedAssetInfo = GetAssetInfoById(m_assetSeedList[idx].m_assetId, platformIndex, m_assetSeedList[idx].m_seedListFilePath, m_assetSeedList[idx].m_assetRelativePath);
 
-            if (optionalDebugList && 
+            if (optionalDebugList &&
                 optionalDebugList->m_fileDebugInfoList.find(seedAssetInfo.m_assetId) == optionalDebugList->m_fileDebugInfoList.end())
             {
                 optionalDebugList->m_fileDebugInfoList[seedAssetInfo.m_assetId].m_assetId = seedAssetInfo.m_assetId;
@@ -546,7 +547,7 @@ namespace AzToolsFramework
     }
 
     AssetFileInfoList AssetSeedManager::GetDependencyList(AzFramework::PlatformId platformIndex, const AZStd::unordered_set<AZ::Data::AssetId>& exclusionList, AssetFileDebugInfoList* optionalDebugList, const AZStd::vector<AZStd::string>& wildcardPatternExclusionList) const
-    {     
+    {
         AssetSeedManager::AssetsInfoList  assetInfoList = AZStd::move(GetDependenciesInfo(platformIndex, exclusionList, optionalDebugList, wildcardPatternExclusionList));
 
         AssetFileInfoList assetFileInfoList;

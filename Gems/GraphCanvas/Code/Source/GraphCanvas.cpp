@@ -9,6 +9,8 @@
 #include <GraphCanvas.h>
 
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Component/EntityUtils.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 
@@ -130,8 +132,8 @@ namespace GraphCanvas
                     ->Attribute(AZ::Edit::Attributes::Category, "Editor")
                     ->Attribute(AZ::Edit::Attributes::AppearsInAddComponentMenu, AZ_CRC("System", 0xc94d118b))
                     ;
-            }            
-            
+            }
+
             NodeConfiguration::Reflect(serializeContext);
             Styling::SelectorImplementation::Reflect(serializeContext);
             Styling::Selector::Reflect(serializeContext);
@@ -147,7 +149,7 @@ namespace GraphCanvas
 
         EditorConstructPresets::Reflect(context);
         GraphCanvasMimeEvent::Reflect(context);
-        GraphCanvasTreeModel::Reflect(context);        
+        GraphCanvasTreeModel::Reflect(context);
         CreateSplicingNodeMimeEvent::Reflect(context);
         TranslationAsset::Reflect(context);
 

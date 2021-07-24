@@ -9,7 +9,9 @@
 #undef RC_INVOKED
 
 #include <Atom/Feature/Utils/ModelPreset.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/RTTI/BehaviorContext.h>
 
 namespace AZ

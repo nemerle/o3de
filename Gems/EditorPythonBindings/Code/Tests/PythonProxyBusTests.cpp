@@ -18,6 +18,8 @@
 
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzFramework/StringFunc/StringFunc.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace UnitTest
 {
@@ -35,8 +37,8 @@ namespace UnitTest
         bool IsValid() const { return m_id != AZ::InvalidComponentId; }
         AZStd::string ToString() const { return AZStd::string::format("[%llu]", m_id); }
 
-        void Set(AZ::u64 id) 
-        { 
+        void Set(AZ::u64 id)
+        {
             m_id = id;
         }
 
@@ -219,7 +221,7 @@ namespace UnitTest
         : public PythonTestSingleAddressNotificationBus::Handler
         , public AZ::BehaviorEBusHandler
     {
-        AZ_EBUS_BEHAVIOR_BINDER(PythonTestNotificationHandler, "{97052D15-A4E8-461B-B065-91D16E31C4F7}", AZ::SystemAllocator, 
+        AZ_EBUS_BEHAVIOR_BINDER(PythonTestNotificationHandler, "{97052D15-A4E8-461B-B065-91D16E31C4F7}", AZ::SystemAllocator,
             OnPing, OnPong, MultipleInputs, OnAddFish);
 
         virtual ~PythonTestNotificationHandler() = default;
@@ -372,7 +374,7 @@ namespace UnitTest
         {
             Skip = 0,
             BasicRequests_ImportEbus,
-            BasicRequests_ImportEbusCount, 
+            BasicRequests_ImportEbusCount,
             BasicRequests_AcceptProxyList
         };
 
@@ -625,8 +627,8 @@ namespace UnitTest
         enum class LogTypes
         {
             Skip = 0,
-            Notifications_OnPing, 
-            Notifications_OnPong, 
+            Notifications_OnPing,
+            Notifications_OnPong,
             Notifications_Match,
             Notifications_Multi,
         };

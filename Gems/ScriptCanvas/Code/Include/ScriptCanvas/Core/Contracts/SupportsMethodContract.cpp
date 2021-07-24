@@ -14,10 +14,13 @@
 #include <ScriptCanvas/Core/Slot.h>
 #include <ScriptCanvas/Core/Node.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas
 {
     AZ::Outcome<void, AZStd::string> SupportsMethodContract::OnEvaluate([[maybe_unused]] const Slot& sourceSlot, const Slot& targetSlot) const
-    {   
+    {
         if (targetSlot.IsDynamicSlot() && targetSlot.HasDisplayType())
         {
             Data::Type dataType = targetSlot.GetDataType();

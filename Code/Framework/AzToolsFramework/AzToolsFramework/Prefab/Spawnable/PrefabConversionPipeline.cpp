@@ -10,6 +10,7 @@
 
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Settings/SettingsRegistry.h>
 
 namespace AzToolsFramework::Prefab::PrefabConversionUtils
@@ -84,7 +85,7 @@ namespace AzToolsFramework::Prefab::PrefabConversionUtils
             serializeContext->Class<PrefabProcessor>()->Version(1);
             serializeContext->RegisterGenericType<PrefabProcessorList>();
             serializeContext->RegisterGenericType<PrefabProcessorListEntry>();
-        }  
+        }
     }
 
     size_t PrefabConversionPipeline::GetFingerprint() const

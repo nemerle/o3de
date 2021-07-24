@@ -9,6 +9,7 @@
 #include "EditorSurfaceTagListAsset.h"
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace SurfaceData
 {

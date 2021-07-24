@@ -12,6 +12,8 @@
 
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/Path/Path.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzToolsFramework/AssetBrowser/Entries/RootAssetBrowserEntry.h>
 #include <AzToolsFramework/AssetBrowser/Entries/FolderAssetBrowserEntry.h>
@@ -92,7 +94,7 @@ namespace AzToolsFramework
         void RootAssetBrowserEntry::AddFile(const AssetDatabase::FileDatabaseEntry& fileDatabaseEntry)
         {
             using namespace AzFramework;
-            
+
             AssetBrowserEntry* scanFolder = nullptr;
 
             auto itScanFolder = EntryCache::GetInstance()->m_scanFolderIdMap.find(fileDatabaseEntry.m_scanFolderPK);
@@ -232,7 +234,7 @@ namespace AzToolsFramework
             }
 
             auto source = itSource->second;
-            
+
             if (!source)
             {
                 AZ_Assert(false, "Source is invalid");

@@ -8,6 +8,8 @@
 
 #include <AzCore/std/containers/unordered_set.h>
 #include <AzCore/std/sort.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include "ReplicaChunkTypeDetailView.h"
 
@@ -74,7 +76,7 @@ namespace Driller
                     {
                         return QVariant(Qt::AlignVCenter);
                     }
-                    
+
                     break;
                 case CD_REPLICA_ID:
                     {
@@ -93,7 +95,7 @@ namespace Driller
                             {
                                 const ReplicaDetailDisplayHelper* replicaDisplay = static_cast<const ReplicaDetailDisplayHelper*>(currentDisplay);
                                 replicaId = replicaDisplay->GetReplicaId();
-                            }                       
+                            }
 
                             return FormattingHelper::ReplicaID(replicaId);
                         }
@@ -102,7 +104,7 @@ namespace Driller
                             return QVariant(Qt::AlignCenter);
                         }
                     }
-                    break;            
+                    break;
                 case CD_TOTAL_SENT:
                     if (role == Qt::DisplayRole)
                     {
@@ -122,7 +124,7 @@ namespace Driller
                     {
                         return QVariant(Qt::AlignCenter);
                     }
-                    break;                
+                    break;
                 case CD_RPC_COUNT:
                     if (role == Qt::DisplayRole)
                     {
@@ -416,7 +418,7 @@ namespace Driller
             {
                 BaseDetailDisplayHelper* displayHelper = mapPair.second;
 
-                displayHelper->InspectSeries(m_inspectedSeries);                
+                displayHelper->InspectSeries(m_inspectedSeries);
             }
 
             if (m_aggregateDisplayHelper)

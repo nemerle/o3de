@@ -7,19 +7,26 @@
  */
 
 #include "EditorAreaBlenderComponent.h"
-#include <AzCore/Serialization/Utils.h>
+
+#include <GradientSignal/Ebuses/SectorDataRequestBus.h>
+#include <LmbrCentral/Dependency/DependencyNotificationBus.h>
+#include <LmbrCentral/Shape/BoxShapeComponentBus.h>
+#include <Vegetation/Ebuses/AreaSystemRequestBus.h>
+
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
 #include <AzToolsFramework/UI/PropertyEditor/PropertyEditorAPI.h>
-#include <LmbrCentral/Dependency/DependencyNotificationBus.h>
-#include <GradientSignal/Ebuses/SectorDataRequestBus.h>
-#include <Vegetation/Ebuses/AreaSystemRequestBus.h>
-#include <LmbrCentral/Shape/BoxShapeComponentBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Serialization/Utils.h>
 
 namespace Vegetation
 {
     void EditorAreaBlenderComponent::Reflect(AZ::ReflectContext* context)
     {
-        ReflectSubClass<DerivedClassType, BaseClassType>(context, 1, &EditorAreaComponentBaseVersionConverter<typename BaseClassType::WrappedComponentType, typename BaseClassType::WrappedConfigType>);
+        ReflectSubClass<DerivedClassType, BaseClassType>(
+            context, 1,
+            &EditorAreaComponentBaseVersionConverter<
+                typename BaseClassType::WrappedComponentType, typename BaseClassType::WrappedConfigType>);
     }
 
     void EditorAreaBlenderComponent::Init()
@@ -48,4 +55,4 @@ namespace Vegetation
             SetDirty();
         }
     }
-}
+} // namespace Vegetation

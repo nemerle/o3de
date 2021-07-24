@@ -7,6 +7,8 @@
  */
 #include "EditorInspectorComponent.h"
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/sort.h>
 
 namespace AzToolsFramework
@@ -20,7 +22,7 @@ namespace AzToolsFramework
                 serializeContext->Class<ComponentOrderEntry>()
                     // Persistent IDs for this are simply the component id
                     ->PersistentId([](const void* instance) -> AZ::u64
-                    { 
+                    {
                         return reinterpret_cast<const ComponentOrderEntry*>(instance)->m_componentId;
                     })
                     ->Version(1)
@@ -152,7 +154,7 @@ namespace AzToolsFramework
             // This will sort all the component order entries by sort index (primary) and component id (secondary) which should never result in any collisions
             // This is used since slice data patching may create duplicate entries for the same sort index, missing indices and the like.
             // It should never result in multiple component id entries since the serialization of this data uses a persistent id which is the component id
-            AZStd::sort(m_componentOrderEntryArray.begin(), m_componentOrderEntryArray.end(), 
+            AZStd::sort(m_componentOrderEntryArray.begin(), m_componentOrderEntryArray.end(),
                 [](const ComponentOrderEntry& lhs, const ComponentOrderEntry& rhs) -> bool
                 {
                     return lhs.m_sortIndex < rhs.m_sortIndex || (lhs.m_sortIndex == rhs.m_sortIndex && lhs.m_componentId < rhs.m_componentId);
@@ -183,7 +185,7 @@ namespace AzToolsFramework
 
             SetDirty();
 
-            // mark the order as dirty before sending the OnComponentOrderChanged event in order for PrepareSave to be properly handled in the case 
+            // mark the order as dirty before sending the OnComponentOrderChanged event in order for PrepareSave to be properly handled in the case
             // one of the event listeners needs to build the InstanceDataHierarchy
             m_componentOrderIsDirty = true;
             EditorInspectorComponentNotificationBus::Event(GetEntityId(), &EditorInspectorComponentNotificationBus::Events::OnComponentOrderChanged);

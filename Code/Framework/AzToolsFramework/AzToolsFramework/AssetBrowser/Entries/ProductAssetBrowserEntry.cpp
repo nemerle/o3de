@@ -7,6 +7,8 @@
  */
 #include <AzCore/Asset/AssetManagerBus.h>
 #include <AzCore/Asset/AssetTypeInfoBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/StringFunc/StringFunc.h>
 
@@ -74,7 +76,7 @@ namespace AzToolsFramework
         {
             return AssetEntryType::Product;
         }
-        
+
         AZ::s64 ProductAssetBrowserEntry::GetProductID() const
         {
             return m_productId;
@@ -94,7 +96,7 @@ namespace AzToolsFramework
         {
             return m_assetType;
         }
-        
+
         const AZStd::string& ProductAssetBrowserEntry::GetAssetTypeString() const
         {
             return m_assetTypeString;

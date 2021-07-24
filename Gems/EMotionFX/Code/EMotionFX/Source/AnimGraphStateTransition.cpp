@@ -6,8 +6,6 @@
  *
  */
 
-#include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Serialization/EditContext.h>
 #include "EMotionFXConfig.h"
 #include "AnimGraphStateTransition.h"
 #include "AnimGraphStateMachine.h"
@@ -24,6 +22,9 @@
 #include <MCore/Source/IDGenerator.h>
 #include <MCore/Source/ReflectionSerializer.h>
 #include <EMotionFX/Source/AnimGraphBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Serialization/EditContext.h>
 
 
 namespace EMotionFX

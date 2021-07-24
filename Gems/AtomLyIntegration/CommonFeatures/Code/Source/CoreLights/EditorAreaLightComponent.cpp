@@ -207,7 +207,7 @@ namespace AZ
 
             BaseClass::Activate();
             AzFramework::EntityDebugDisplayEventBus::Handler::BusConnect(GetEntityId());
-            
+
             // Override the shape component so that this component controls the color.
             LmbrCentral::EditorShapeComponentRequestsBus::Event(GetEntityId(), &LmbrCentral::EditorShapeComponentRequests::SetShapeColorIsEditable, false);
             LmbrCentral::EditorShapeComponentRequestsBus::Event(GetEntityId(), &LmbrCentral::EditorShapeComponentRequests::SetShapeColor, m_controller.m_configuration.m_color);
@@ -227,7 +227,7 @@ namespace AZ
                 // Light type is unknown, see if it can be determined from a shape component.
                 Crc32 shapeType = Crc32(0);
                 LmbrCentral::ShapeComponentRequestsBus::EventResult(shapeType, GetEntityId(), &LmbrCentral::ShapeComponentRequestsBus::Events::GetShapeType);
-                
+
                 constexpr Crc32 SphereShapeTypeId = AZ_CRC_CE("Sphere");
                 constexpr Crc32 DiskShapeTypeId = AZ_CRC_CE("DiskShape");
                 constexpr Crc32 CapsuleShapeTypeId = AZ_CRC_CE("Capsule");
@@ -252,7 +252,7 @@ namespace AZ
                     m_lightType = AreaLightComponentConfig::LightType::Polygon;
                     break;
                 default:
-                    break; // Light type can't be deduced. 
+                    break; // Light type can't be deduced.
                 }
             }
 
@@ -264,7 +264,7 @@ namespace AZ
 
             // Update the cached light type.
             m_lightType = m_controller.m_configuration.m_lightType;
-            
+
             // Check to see if the current photometric type is supported by the light type. If not, convert to lumens before deactivating.
             auto supportedPhotometricUnits = m_controller.m_configuration.GetValidPhotometricUnits();
             auto foundIt = AZStd::find_if(
@@ -280,7 +280,7 @@ namespace AZ
             {
                 m_controller.ConvertToIntensityMode(PhotometricUnit::Lumen);
             }
-            
+
             // componets may be removed or added here, so deactivate now and reactivate the entity when everything is done shifting around.
             GetEntity()->Deactivate();
 
@@ -304,7 +304,7 @@ namespace AZ
             }
 
             // Add a new shape component for light types that require it.
-            
+
             auto addComponentOfType = [&](AZ::Uuid type)
             {
                 AzToolsFramework::EntityCompositionRequests::AddComponentsOutcome outcome =
@@ -334,10 +334,10 @@ namespace AZ
                 addComponentOfType(LmbrCentral::EditorPolygonPrismShapeComponentTypeId);
                 break;
             default:
-                // Some light types don't require a shape, this is ok. 
+                // Some light types don't require a shape, this is ok.
                 break;
             }
-            
+
             GetEntity()->Activate();
 
             // Set more reasonable default values for certain shapes.

@@ -13,6 +13,7 @@
 #include <AzCore/Component/Entity.h>
 #include <AzCore/NativeUI/NativeUIRequests.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 
 #include <AzFramework/API/ApplicationAPI.h>
@@ -177,7 +178,7 @@ namespace AZ
                     AZ::NativeUI::NativeUIRequestBus::Broadcast(
                         &AZ::NativeUI::NativeUIRequestBus::Events::DisplayOkDialog, "O3DE Fatal Error", msgBoxMessage.c_str(), false);
                     AzFramework::ApplicationRequests::Bus::Broadcast(&AzFramework::ApplicationRequests::ExitMainLoop);
-                                        
+
                     return;
                 }
 
@@ -237,7 +238,7 @@ namespace AZ
                 // Listen to window notification so we can request exit application when window closes
                 AzFramework::WindowNotificationBus::Handler::BusConnect(GetDefaultWindowHandle());
             }
-            
+
             AZ::RPI::ScenePtr BootstrapSystemComponent::GetOrCreateAtomSceneFromAzScene(AzFramework::Scene* scene)
             {
                 // Get or create a weak pointer to our scene

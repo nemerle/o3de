@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/EBus/EBus.h>
+#include <AzCore/std/containers/unordered_set.h>
 
 // A configurable queue that allows for multiple sources to try to control a single value in a configurable way
 // such that each object can control the object independently of the other systems, while still maintaining a reasonable state.
@@ -37,7 +38,7 @@ namespace GraphCanvas
     class StateController
     {
         friend class StateSetter<T>;
-        
+
     public:
         using Notifications = AZ::EBus< StateControllerNotificationInterface<T> >;
 
@@ -45,9 +46,9 @@ namespace GraphCanvas
             : m_defaultState(defaultState)
         {
         }
-        
-        virtual ~StateController() = default;        
-        
+
+        virtual ~StateController() = default;
+
         const T& GetState() const
         {
             if (HasState())
@@ -61,7 +62,7 @@ namespace GraphCanvas
         }
 
         virtual bool HasState() const = 0;
-        
+
         bool operator==(const T& comparisonValue) const
         {
             return GetState() == comparisonValue;
@@ -73,7 +74,7 @@ namespace GraphCanvas
         }
 
     protected:
-    
+
         bool PushState(StateSetter<T>* stateSetter, const T& state)
         {
             bool pushedState = false;
@@ -112,17 +113,17 @@ namespace GraphCanvas
         }
 
         virtual const T& GetCalculatedState() const = 0;
-    
+
         const T& GetDefaultState() const
         {
             return m_defaultState;
         }
 
         virtual bool OnPushState(StateSetter<T>* stateSetter, const T& state) = 0;
-        virtual bool OnReleaseState(StateSetter<T>* stateSetter) = 0;        
-    
+        virtual bool OnReleaseState(StateSetter<T>* stateSetter) = 0;
+
     private:
-    
+
         T m_defaultState;
     };
 
@@ -137,7 +138,7 @@ namespace GraphCanvas
     {
         return controller == comparisonValue;
     }
-    
+
     template<class T>
     class StateSetter
     {
@@ -148,27 +149,27 @@ namespace GraphCanvas
         StateSetter()
             : m_hasPushedState(false)
         {
-        
-        }        
+
+        }
 
         explicit StateSetter(StateController<T>* stateController)
             : StateSetter()
         {
             AddStateController(stateController);
         }
-        
+
         StateSetter(StateController<T>* stateController, const T& state)
             : StateSetter()
         {
             AddStateController(stateController);
             SetState(state);
         }
-        
+
         virtual ~StateSetter()
         {
             ResetStateSetter();
         }
-        
+
         void SetState(const T& state)
         {
             ReleaseState();
@@ -181,7 +182,7 @@ namespace GraphCanvas
                 stateController->PushState(this, m_pushedState);
             }
         }
-        
+
         void ReleaseState()
         {
             if (m_hasPushedState)
@@ -194,7 +195,7 @@ namespace GraphCanvas
                 m_hasPushedState = false;
             }
         }
-        
+
         void AddStateController(StateController<T>* stateController)
         {
             if (stateController)
@@ -202,7 +203,7 @@ namespace GraphCanvas
                 auto insertResult = m_stateControllers.insert(stateController);
 
                 if (m_hasPushedState && insertResult.second)
-                {                    
+                {
                     stateController->PushState(this, m_pushedState);
                 }
             }
@@ -240,7 +241,7 @@ namespace GraphCanvas
         {
             return m_hasPushedState;
         }
-        
+
     private:
         T                   m_pushedState;
         bool                m_hasPushedState;

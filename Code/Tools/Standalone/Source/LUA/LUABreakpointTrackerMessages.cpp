@@ -6,8 +6,10 @@
  *
  */
 
-#include <AzCore/Serialization/SerializeContext.h>
 #include "LUABreakpointTrackerMessages.h"
+
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 
 namespace LUAEditor

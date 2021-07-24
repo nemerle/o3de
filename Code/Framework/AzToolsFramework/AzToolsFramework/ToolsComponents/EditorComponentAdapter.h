@@ -99,4 +99,21 @@ namespace AzToolsFramework
     } // namespace Components
 } // namespace AzToolsFramework
 
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename R, typename S, typename T>
+    struct SerializeGenericTypeInfo<AzToolsFramework::Components::EditorComponentAdapter<R, S, T>>
+        : SerializeGenericTypeInfoImpl<AzToolsFramework::Components::EditorComponentAdapter<R, S, T>>
+    {
+        // treat VertexContainer as generic value type
+    };
+
+} // namespace AZ
+
 #include "EditorComponentAdapter.inl"

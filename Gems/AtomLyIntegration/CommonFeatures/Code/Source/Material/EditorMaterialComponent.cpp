@@ -11,6 +11,7 @@
 
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <Atom/RPI.Edit/Common/AssetUtils.h>
 #include <Atom/RPI.Edit/Material/MaterialPropertyId.h>
@@ -466,7 +467,7 @@ namespace AZ
                 }
             }
 
-            // Convert the unique set of asset IDs into export items that can be configured in the dialog 
+            // Convert the unique set of asset IDs into export items that can be configured in the dialog
             // The order should not matter because the table in the dialog can sort itself for a specific row
             EditorMaterialComponentExporter::ExportItemsContainer exportItems;
             for (const AZ::Data::AssetId& assetId : assetIds)

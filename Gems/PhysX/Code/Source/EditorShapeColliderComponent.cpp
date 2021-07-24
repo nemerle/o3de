@@ -8,6 +8,8 @@
 
 #include <EditorShapeColliderComponent.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/Physics/ColliderComponentBus.h>
 #include <AzFramework/Physics/SystemBus.h>
 #include <AzFramework/Physics/Common/PhysicsSimulatedBody.h>
@@ -60,7 +62,7 @@ namespace PhysX
         {
             return AZ::Edit::Attributes::Visibility, AZ::Edit::PropertyVisibility::Show;
         }
-        
+
         return AZ::Edit::Attributes::Visibility, AZ::Edit::PropertyVisibility::Hide;
     }
 
@@ -405,7 +407,7 @@ namespace PhysX
                 static_cast<Physics::SphereShapeConfiguration&>(*m_shapeConfigs.back());
             configuration = Physics::SphereShapeConfiguration(radius);
         }
-        
+
         m_shapeConfigs.back()->m_scale = scale;
         m_geometryCache.m_radius = scale.GetMaxElement() * radius;
     }
@@ -842,7 +844,7 @@ namespace PhysX
                 Physics::ShapeConfiguration* shapeConfig = m_shapeConfigs[0].get();
                 m_colliderDebugDraw.BuildMeshes(*shapeConfig, shapeIndex);
                 m_colliderDebugDraw.DrawMesh(debugDisplay, m_colliderConfig, *static_cast<Physics::CookedMeshShapeConfiguration*>(shapeConfig), uniformScale, shapeIndex);
-            }            
+            }
         }
 
         // for primitive shapes just display the shape configs

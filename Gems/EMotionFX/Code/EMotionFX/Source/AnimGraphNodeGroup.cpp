@@ -8,6 +8,7 @@
 
 #include <AzCore/Math/Color.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include "EMotionFXConfig.h"
 #include "AnimGraphNodeGroup.h"
 

@@ -8,6 +8,9 @@
 
 #include <Atom/RPI.Reflect/Pass/PassRequest.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace AZ
 {
     namespace RPI

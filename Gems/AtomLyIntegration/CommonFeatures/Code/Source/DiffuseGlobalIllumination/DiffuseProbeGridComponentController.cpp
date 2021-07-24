@@ -15,8 +15,10 @@
 
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Asset/AssetManagerBus.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Debug/EventTrace.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/Entity/EntityContextBus.h>
 #include <AzFramework/Entity/EntityContext.h>
@@ -375,7 +377,7 @@ namespace AZ
            {
                return;
            }
-           
+
            DiffuseProbeGridBakedTextures bakedTextures;
            bakedTextures.m_irradianceImage = RPI::StreamingImage::FindOrCreate(m_configuration.m_bakedIrradianceTextureAsset);
            bakedTextures.m_irradianceImageRelativePath = m_configuration.m_bakedIrradianceTextureRelativePath;

@@ -9,6 +9,7 @@
 #include <CustomAssetExample/Builder/CustomAssetExampleBuilderComponent.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContextConstants.inl>
 
 namespace CustomAssetExample
@@ -49,7 +50,7 @@ namespace CustomAssetExample
 
         // note that this particualar builder does in fact emit various kinds of dependencies (as an example).
         // if your builder is simple and emits no dependencies (for example, it just processes a single file and that file
-        // doesn't really depend on any other files or jobs), setting the BF_EmitsNoDependencies flag 
+        // doesn't really depend on any other files or jobs), setting the BF_EmitsNoDependencies flag
         // will improve "fast analysis" scan performance.
         builderDescriptor.m_flags = AssetBuilderSDK::AssetBuilderDesc::BF_None;
 

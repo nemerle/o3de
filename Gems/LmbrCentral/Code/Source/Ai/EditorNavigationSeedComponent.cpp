@@ -15,6 +15,7 @@
 
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 
 namespace LmbrCentral
@@ -64,7 +65,7 @@ namespace LmbrCentral
     {
         AZ::Vector3 translation = AZ::Vector3::CreateZero();
         AZ::TransformBus::EventResult(translation, m_entity->GetId(), &AZ::TransformInterface::GetWorldTranslation);
-        
+
         INavigationSystem* navigationSystem = nullptr; // INavigationSystem will be converted to an AZInterface (LY-111343)
         if (navigationSystem)
         {

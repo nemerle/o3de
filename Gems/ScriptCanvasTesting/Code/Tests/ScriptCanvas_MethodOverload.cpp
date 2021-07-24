@@ -20,6 +20,26 @@
 using namespace ScriptCanvasTests;
 
 template<typename Type>
+class SingleTypeNodeable;
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename T>
+    struct SerializeGenericTypeInfo<SingleTypeNodeable<T>> : SerializeGenericTypeInfoImpl<SingleTypeNodeable<T>>
+    {
+        // treat SingleTypeNodeable as generic value type
+    };
+
+} // namespace AZ
+
+
+template<typename Type>
 class SingleTypeNodeable
     : public ScriptCanvas::Nodeable
 {
@@ -419,7 +439,7 @@ TEST_F(ScriptCanvasTestFixture, Overload_NodeableNode_NumberConnection)
     ScriptCanvas::Endpoint validStartEndpoint = validSlot->GetEndpoint();
 
     ScriptCanvas::Endpoint paramEndpoint = { nodeableNode->GetEntityId(), paramId };
-    TestConnectionBetween(validStartEndpoint, paramEndpoint);    
+    TestConnectionBetween(validStartEndpoint, paramEndpoint);
 
     EXPECT_TRUE(paramOneSlot->HasDisplayType());
     EXPECT_EQ(paramOneSlot->GetDisplayType(), ScriptCanvas::Data::Type::Number());

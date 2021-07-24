@@ -18,6 +18,8 @@ AZ_PUSH_DISABLE_WARNING(4251 4800 4244, "-Wunknown-warning-option")
 AZ_POP_DISABLE_WARNING
 
 #include <AzCore/RTTI/TypeInfo.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Components/Nodes/Comment/CommentNodeTextComponent.h>
 
@@ -155,7 +157,7 @@ namespace GraphCanvas
     CommentNodeTextComponent::CommentNodeTextComponent()
         : m_saveData(this)
         , m_commentTextWidget(nullptr)
-        , m_commentMode(CommentMode::Comment)        
+        , m_commentMode(CommentMode::Comment)
     {
     }
 
@@ -168,7 +170,7 @@ namespace GraphCanvas
     void CommentNodeTextComponent::Init()
     {
         GraphCanvasPropertyComponent::Init();
-        
+
         m_saveData.m_fontConfiguration.InitializePixelSize();
         EntitySaveDataRequestBus::Handler::BusConnect(GetEntityId());
     }
@@ -187,7 +189,7 @@ namespace GraphCanvas
         CommentLayoutRequestBus::Handler::BusConnect(GetEntityId());
 
         NodeNotificationBus::Handler::BusConnect(GetEntityId());
-        
+
         m_commentTextWidget->Activate();
     }
 
@@ -219,7 +221,7 @@ namespace GraphCanvas
         AZ::EntityId grid;
         SceneRequestBus::EventResult(grid, sceneId, &SceneRequests::GetGrid);
 
-        NodeUIRequestBus::Event(GetEntityId(), &NodeUIRequests::SetGrid, grid);        
+        NodeUIRequestBus::Event(GetEntityId(), &NodeUIRequests::SetGrid, grid);
 
         m_commentTextWidget->OnAddedToScene();
         UpdateStyleOverrides();

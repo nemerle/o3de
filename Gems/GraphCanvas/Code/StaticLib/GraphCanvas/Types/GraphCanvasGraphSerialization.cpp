@@ -8,6 +8,8 @@
 #include <AzCore/std/any.h>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Serialization/IdUtils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <GraphCanvas/Types/GraphCanvasGraphSerialization.h>
 

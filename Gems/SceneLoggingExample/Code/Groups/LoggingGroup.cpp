@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <Groups/LoggingGroup.h>
 
@@ -20,7 +21,7 @@ namespace SceneLoggingExample
     }
 
     // The data in groups will be saved to the manifest file and will be reflected in the Scene Settings
-    // window. For those systems to do their work, the LoggingGroup needs to tell a bit more about itself 
+    // window. For those systems to do their work, the LoggingGroup needs to tell a bit more about itself
     // than the other classes in this example.
     void LoggingGroup::Reflect(AZ::ReflectContext* context)
     {
@@ -40,7 +41,7 @@ namespace SceneLoggingExample
             ->Field("graphLogRoot", &LoggingGroup::m_graphLogRoot)
             ->Field("logProcessingEvents", &LoggingGroup::m_logProcessingEvents);
 
-        // The EditContext allows you to add additional meta information to the previously registered fields. 
+        // The EditContext allows you to add additional meta information to the previously registered fields.
         // This meta information will be used in the Scene Settings, which uses the Reflected Property Editor.
         AZ::EditContext* editContext = serializeContext->GetEditContext();
         if (editContext)
@@ -49,20 +50,20 @@ namespace SceneLoggingExample
                 ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
                     ->Attribute("AutoExpand", true)
                     ->Attribute(AZ::Edit::Attributes::NameLabelOverride, "")
-                ->DataElement(AZ::Edit::UIHandlers::Default, &LoggingGroup::m_groupName, 
+                ->DataElement(AZ::Edit::UIHandlers::Default, &LoggingGroup::m_groupName,
                     "Name", "The name of the group will be used in the log")
                 // The Reflected Property Editor can pick a default editor for many types. However, for the string
                 // that will store the selected node, a more specialized editor is needed. NodeListSelection is
                 // one such editor and it is SceneGraph-aware. It allows the selection of a specific node from the
-                // graph and the selectable items can be filtered. You can find other available editors in the 
+                // graph and the selectable items can be filtered. You can find other available editors in the
                 // "RowWidgets"-folder of the SceneUI.
                 ->DataElement(AZ_CRC("NodeListSelection", 0x45c54909), &LoggingGroup::m_graphLogRoot,
                     "Graph log root", "Select the node in the graph to list children of to the log, or disable logging.")
                     ->Attribute(AZ_CRC("DisabledOption", 0x6cd17278), s_disabledOption)
-                    // Nodes in the SceneGraph can be marked as endpoints. To the graph, this means that these nodes 
-                    // are not allowed to have children. While not a true one-to-one mapping, endpoints often act as 
-                    // attributes to a node. For example, a transform can be marked as an endpoint. This means that 
-                    // it applies its transform to the parent object like an attribute. If the transform is not marked 
+                    // Nodes in the SceneGraph can be marked as endpoints. To the graph, this means that these nodes
+                    // are not allowed to have children. While not a true one-to-one mapping, endpoints often act as
+                    // attributes to a node. For example, a transform can be marked as an endpoint. This means that
+                    // it applies its transform to the parent object like an attribute. If the transform is not marked
                     // as an endpoint, then it is the root transform for the group(s) that are its children.
                     ->Attribute(AZ_CRC("ExcludeEndPoints", 0x53bd29cc), true)
                 ->DataElement(AZ::Edit::UIHandlers::Default, &LoggingGroup::m_logProcessingEvents,
@@ -99,17 +100,17 @@ namespace SceneLoggingExample
         return m_id;
     }
 
-    // Groups have the minimal amount of options to generate a working product in the cache and nothing more. 
-    // A group might not be perfect or contain all the data the user would expect, but it will load in the 
-    // engine and not crash. You can add additional settings to fine tune the exporting process in the form of 
-    // rules (or "modifiers" in the Scene Settings UI). Rules usually group a subset of settings together, 
-    // such as control of physics or level of detail. This approach keeps UI clutter to a minimum by only 
-    // presenting options that are relevant for the user's file, while still providing access to all available 
-    // settings. 
-    // 
-    // By using the "GetAvailableModifiers" in the ManifestMetaInfoHandler EBus, it's possible to filter out 
-    // any options that are not relevant to the group. For example, if a group only allows for a single instance 
-    // of a rule, it would no longer be added to this call if there is already one. Because the logging doesn't 
+    // Groups have the minimal amount of options to generate a working product in the cache and nothing more.
+    // A group might not be perfect or contain all the data the user would expect, but it will load in the
+    // engine and not crash. You can add additional settings to fine tune the exporting process in the form of
+    // rules (or "modifiers" in the Scene Settings UI). Rules usually group a subset of settings together,
+    // such as control of physics or level of detail. This approach keeps UI clutter to a minimum by only
+    // presenting options that are relevant for the user's file, while still providing access to all available
+    // settings.
+    //
+    // By using the "GetAvailableModifiers" in the ManifestMetaInfoHandler EBus, it's possible to filter out
+    // any options that are not relevant to the group. For example, if a group only allows for a single instance
+    // of a rule, it would no longer be added to this call if there is already one. Because the logging doesn't
     // require any rules, empty defaults are provided.
     AZ::SceneAPI::Containers::RuleContainer& LoggingGroup::GetRuleContainer()
     {

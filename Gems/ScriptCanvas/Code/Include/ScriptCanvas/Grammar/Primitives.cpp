@@ -19,6 +19,9 @@
 #include "ParsingUtilities.h"
 #include "PrimitivesExecution.h"
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas
 {
     namespace Grammar

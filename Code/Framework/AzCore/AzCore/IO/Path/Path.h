@@ -177,7 +177,7 @@ namespace AZ::IO
         //! Normalizes a path in a purely lexical manner.
         //! # Path separators are converted to their preferred path separator
         //! # Path parts of "." are collapsed to nothing empty
-        //! # Paths parts of ".." are removed if there is a preceding directory 
+        //! # Paths parts of ".." are removed if there is a preceding directory
         //! The preceding directory is also removed
         //! # Runs of Two or more path separators are collapsed into one path separator
         //! unless the path begins with two path separators
@@ -237,7 +237,7 @@ namespace AZ::IO
 
         // iterators
         //! Returns an iterator to the beginning of the path that can be used to traverse the path
-        //! according to the following 
+        //! according to the following
         //! 1. Root name - (0 or 1)
         //! 2. Root directory - (0 or 1)
         //! 3. Filename - (0 or more)
@@ -556,7 +556,7 @@ namespace AZ::IO
         //! Normalizes a path in a purely lexical manner.
         //! # Path separators are converted to their preferred path separator
         //! # Path parts of "." are collapsed to nothing empty
-        //! # Paths parts of ".." are removed if there is a preceding directory 
+        //! # Paths parts of ".." are removed if there is a preceding directory
         //! The preceding directory is also removed
         //! # Runs of Two or more path separators are collapsed into one path separator
         //! unless the path begins with two path separators
@@ -598,7 +598,7 @@ namespace AZ::IO
 
         // iterators
         //! Returns an iterator to the beginning of the path that can be used to traverse the path
-        //! according to the following 
+        //! according to the following
         //! 1. Root name - (0 or 1)
         //! 2. Root directory - (0 or 1)
         //! 3. Filename - (0 or more)
@@ -637,6 +637,18 @@ namespace AZ::IO
 namespace AZ
 {
     AZ_TYPE_INFO_SPECIALIZE(AZ::IO::Path, "{88E0A40F-3085-4CAB-8B11-EF5A2659C71A}");
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+
+    template< typename T>
+    struct SerializeGenericTypeInfo<AZ::IO::BasicPath<T>> : SerializeGenericTypeInfoImpl<AZ::IO::BasicPath<T>>
+    {
+        //treat BasicPath as generic value type
+    };
+
 }
 
 namespace AZ::IO

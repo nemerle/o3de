@@ -15,6 +15,7 @@
 #include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/Serialization/IdUtils.h>
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Math/Transform.h>
 
 #include <ScriptCanvas/Data/DataRegistry.h>

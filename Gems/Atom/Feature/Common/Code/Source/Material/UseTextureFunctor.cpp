@@ -10,6 +10,9 @@
 #include <Atom/RPI.Public/Material/Material.h>
 #include <Atom/RPI.Reflect/Image/Image.h>
 #include <Atom/RPI.Reflect/Shader/ShaderOptionGroup.h>
+#include <Atom/RHI.Reflect/Handle.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

@@ -6,6 +6,7 @@
  *
  */
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <GraphCanvas/Widgets/GraphCanvasMimeContainer.h>
 
@@ -14,11 +15,11 @@ namespace GraphCanvas
     /////////////////////////////
     // GraphCanvasMimeContainer
     /////////////////////////////
-    
+
     void GraphCanvasMimeContainer::Reflect(AZ::ReflectContext* reflectContext)
-    {    
+    {
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(reflectContext);
-        
+
         if (serializeContext)
         {
             serializeContext->Class<GraphCanvasMimeContainer>()
@@ -26,7 +27,7 @@ namespace GraphCanvas
                 ->Field("MimeEvents", &GraphCanvasMimeContainer::m_mimeEvents);
             ;
         }
-    }    
+    }
 
     GraphCanvasMimeContainer::~GraphCanvasMimeContainer()
     {
@@ -35,14 +36,14 @@ namespace GraphCanvas
             delete mimeEvent;
         }
     }
-    
+
     bool GraphCanvasMimeContainer::ToBuffer(AZStd::vector<char>& buffer)
     {
         buffer.clear();
         AZ::IO::ByteContainerStream<AZStd::vector<char> > ms(&buffer);
         return AZ::Utils::SaveObjectToStream(ms, AZ::DataStream::ST_BINARY, this);
     }
-    
+
     bool GraphCanvasMimeContainer::FromBuffer(const char* data, AZStd::size_t size)
     {
         AZ::IO::MemoryStream ms(data, size);

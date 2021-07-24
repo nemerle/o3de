@@ -5,10 +5,11 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
+#include <Atom/RPI.Reflect/System/RenderPipelineDescriptor.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
-#include <Atom/RPI.Reflect/System/RenderPipelineDescriptor.h>
 
 namespace AZ
 {

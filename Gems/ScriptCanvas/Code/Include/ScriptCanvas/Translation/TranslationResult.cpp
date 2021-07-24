@@ -10,6 +10,8 @@
 
 #include <ScriptCanvas/Core/Nodeable.h>
 #include <ScriptCanvas/Grammar/AbstractCodeModel.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace TranslationResultCpp
 {
@@ -51,7 +53,7 @@ namespace ScriptCanvas
             , m_parseDuration(m_model->GetParseDuration())
             , m_translationDuration(0)
         {}
-    
+
         Result::Result(Grammar::AbstractCodeModelConstPtr model, Translations&& translations, Errors&& errors)
             : m_model(model)
             , m_translations(AZStd::move(translations))
@@ -80,7 +82,7 @@ namespace ScriptCanvas
             return m_invalidSourceInfo.empty();
         }
 
-        bool Result::IsModelValid() const 
+        bool Result::IsModelValid() const
         {
             return m_model->IsErrorFree();
         }
@@ -157,6 +159,6 @@ namespace ScriptCanvas
             }
         }
 
-    } 
+    }
 
-} 
+}

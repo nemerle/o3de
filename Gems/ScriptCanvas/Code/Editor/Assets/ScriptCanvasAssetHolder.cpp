@@ -20,6 +20,8 @@
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/IdUtils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Asset/AssetManager.h>
 
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
@@ -61,7 +63,7 @@ namespace ScriptCanvasEditor
 
     void ScriptCanvasAssetHolder::Init(AZ::EntityId ownerId, AZ::ComponentId componentId)
     {
-        m_ownerId = AZStd::make_pair(ownerId, componentId);        
+        m_ownerId = AZStd::make_pair(ownerId, componentId);
 
         if (!m_scriptCanvasAsset || !m_scriptCanvasAsset.IsReady())
         {

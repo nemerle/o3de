@@ -10,6 +10,8 @@
 #include "EditorEntityHelpers.h"
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/sort.h>
 
 static_assert(sizeof(AZ::u64) == sizeof(AZ::EntityId), "We use AZ::EntityId for Persistent ID, which is a u64 under the hood. These must be the same size otherwise the persistent id will have to be rewritten");
@@ -162,7 +164,7 @@ namespace AzToolsFramework
 
                 // Use the ToolsApplication to mark the entity dirty, this will only do something if we already have an undo batch
                 ToolsApplicationRequestBus::Broadcast(&ToolsApplicationRequestBus::Events::AddDirtyEntity, GetEntityId());
-                
+
                 return true;
             }
             return false;
@@ -252,7 +254,7 @@ namespace AzToolsFramework
 
         void EditorEntitySortComponent::MarkDirtyAndSendChangedEvent()
         {
-            // mark the order as dirty before sending the ChildEntityOrderArrayUpdated event in order for PrepareSave to be properly handled in the case 
+            // mark the order as dirty before sending the ChildEntityOrderArrayUpdated event in order for PrepareSave to be properly handled in the case
             // one of the event listeners needs to build the InstanceDataHierarchy
             m_entityOrderIsDirty = true;
             EditorEntitySortNotificationBus::Event(GetEntityId(), &EditorEntitySortNotificationBus::Events::ChildEntityOrderArrayUpdated);

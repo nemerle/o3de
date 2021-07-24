@@ -10,8 +10,11 @@
 #include <QMessageBox>
 #include <QApplication>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Slice/SliceComponent.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/Entity/EntityContextBus.h>
 #include <AzFramework/Slice/SliceEntityBus.h>

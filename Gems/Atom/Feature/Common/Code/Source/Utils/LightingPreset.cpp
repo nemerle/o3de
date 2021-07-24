@@ -9,7 +9,9 @@
 #undef RC_INVOKED
 
 #include <Atom/Feature/Utils/LightingPreset.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <Atom/RPI.Public/Image/StreamingImage.h>
 #include <Atom/Feature/SkyBox/SkyBoxFeatureProcessorInterface.h>

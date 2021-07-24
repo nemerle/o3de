@@ -7,14 +7,16 @@
  */
 #pragma once
 
-#include <AzCore/RTTI/RTTI.h>
-#include <AzCore/std/any.h>
+#include <SurfaceData/SurfaceDataTypes.h>
+#include <Vegetation/InstanceSpawner.h>
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Math/Vector3.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/RTTI.h>
 #include <AzCore/RTTI/ReflectContext.h>
-#include <SurfaceData/SurfaceDataTypes.h>
-#include <Vegetation/InstanceSpawner.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/std/any.h>
 #include <AzCore/std/smart_ptr/shared_ptr.h>
 
 namespace Vegetation

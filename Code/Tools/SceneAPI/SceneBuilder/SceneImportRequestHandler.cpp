@@ -9,6 +9,7 @@
 #include <AssetProcessor/AssetBuilderSDK/AssetBuilderSDK/AssetBuilderSDK.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
 #include <AzCore/Settings/SettingsRegistry.h>
 #include <AzCore/StringFunc/StringFunc.h>
@@ -61,7 +62,7 @@ namespace AZ
                     AZStd::vector<AZ::Crc32>(
                         {AssetBuilderSDK::ComponentTags::AssetBuilder,
                         AssetImportRequest::GetAssetImportRequestComponentTag()}));
-                    
+
             }
         }
 
@@ -75,7 +76,7 @@ namespace AZ
             AZStd::string extension;
             StringFunc::Path::GetExtension(path.c_str(), extension);
             AZStd::to_lower(extension.begin(), extension.end());
-                
+
             if (!m_settings.m_supportedFileTypeExtensions.contains(extension))
             {
                 return Events::LoadingResult::Ignored;

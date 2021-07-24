@@ -11,6 +11,8 @@
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/StringFunc/StringFunc.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/API/ApplicationAPI.h>
 #include <AzFramework/Asset/AssetSystemBus.h>
@@ -37,7 +39,7 @@ namespace AzToolsFramework
 {
     namespace Prefab
     {
-        
+
         EditorEntityUiInterface* PrefabIntegrationManager::s_editorEntityUiInterface = nullptr;
         PrefabPublicInterface* PrefabIntegrationManager::s_prefabPublicInterface = nullptr;
         PrefabEditInterface* PrefabIntegrationManager::s_prefabEditInterface = nullptr;
@@ -273,7 +275,7 @@ namespace AzToolsFramework
             const AZStd::string prefabFilesPath = "@devassets@/Prefabs";
 
             // Remove Level entity if it's part of the list
-            
+
             auto levelContainerIter =
                 AZStd::find(selectedEntities.begin(), selectedEntities.end(), s_prefabPublicInterface->GetLevelInstanceContainerEntityId());
             if (levelContainerIter != selectedEntities.end())
@@ -872,7 +874,7 @@ namespace AzToolsFramework
                         {
                             return false;
                         }
-                        
+
                         if (classData->m_typeId == AZ::SerializeTypeInfo<AZ::EntityId>::GetUuid())
                         {
                             if (!parentStack.empty() && parentStack.back()->m_typeId == AZ::SerializeTypeInfo<AZ::Entity>::GetUuid())

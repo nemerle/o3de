@@ -10,6 +10,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <MCore/Source/Distance.h>
 #include "PluginOptionsBus.h"
 
@@ -30,7 +31,7 @@ namespace EMStudio
     const char* GUIOptions::s_importerLogDetailsEnabledOptionName = "importerLogDetailsEnabled";
     const char* GUIOptions::s_autoLoadLastWorkspaceOptionName = "autoLoadLastWorkspace";
     const char* GUIOptions::s_applicationModeOptionName = "applicationMode";
-     
+
     GUIOptions::GUIOptions()
         : m_maxRecentFiles(16)
         , m_maxHistoryItems(256)
@@ -116,7 +117,7 @@ namespace EMStudio
         {
             options.m_notificationVisibleTime = tmpVariant.toInt();
         }
-        
+
         // Read the autosave settings
         tmpVariant = settings.value(s_enableAutosaveOptionName);
         if (!tmpVariant.isNull())
@@ -133,14 +134,14 @@ namespace EMStudio
         {
             options.m_autoSaveNumberOfFiles = tmpVariant.toInt();
         }
-        
+
         // Read the maximum number of recent files
         tmpVariant = settings.value(s_maxRecentFilesOptionName);
         if (!tmpVariant.isNull())
         {
             options.m_maxRecentFiles = tmpVariant.toInt();
         }
-        
+
         // Read the log details flag for the importer
         tmpVariant = settings.value(s_importerLogDetailsEnabledOptionName);
         if (!tmpVariant.isNull())
@@ -161,7 +162,7 @@ namespace EMStudio
         {
             options.m_autoLoadLastWorkspace = tmpVariant.toBool();
         }
-        
+
         // Set the size
         const int sizeX = settings.value("mainWindowSizeX", 1920).toInt();
         const int sizeY = settings.value("mainWindowSizeY", 1080).toInt();
@@ -204,7 +205,7 @@ namespace EMStudio
 
         return options;
     }
-    
+
     void GUIOptions::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
@@ -231,7 +232,7 @@ namespace EMStudio
         {
             return;
         }
-        
+
         editContext->Class<GUIOptions>("EMStudio properties", "General Animation Editor properties")
             ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
                 ->Attribute(AZ::Edit::Attributes::AutoExpand, true)

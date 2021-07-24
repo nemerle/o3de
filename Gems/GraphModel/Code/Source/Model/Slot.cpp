@@ -16,6 +16,7 @@
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/Json/RegistrationContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 // Graph Model
 #include <GraphModel/Model/Slot.h>
@@ -223,7 +224,7 @@ namespace GraphModel
 
     bool SlotDefinition::SupportsValue() const
     {
-        return (GetSlotType() == SlotType::Data && GetSlotDirection() == SlotDirection::Input) || 
+        return (GetSlotType() == SlotType::Data && GetSlotDirection() == SlotDirection::Input) ||
                (GetSlotType() == SlotType::Property);
     }
 
@@ -468,7 +469,7 @@ namespace GraphModel
     {
         if (SupportsValue())
         {
-            // The m_value must be initialized with an object of the appropriate type, or 
+            // The m_value must be initialized with an object of the appropriate type, or
             // GetValue() will fail the first time its called.
             SetValue(m_slotDefinition->GetDefaultValue());
         }
@@ -561,9 +562,9 @@ namespace GraphModel
         return m_slotDefinition;
     }
 
-    bool Slot::Is(SlotDirection slotDirection, SlotType slotType) const 
-    { 
-        return m_slotDefinition->Is(slotDirection, slotType); 
+    bool Slot::Is(SlotDirection slotDirection, SlotType slotType) const
+    {
+        return m_slotDefinition->Is(slotDirection, slotType);
     }
 
     SlotDirection        Slot::GetSlotDirection()      const { return m_slotDefinition->GetSlotDirection(); }

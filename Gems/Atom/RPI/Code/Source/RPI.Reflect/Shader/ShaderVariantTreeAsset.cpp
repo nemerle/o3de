@@ -10,8 +10,10 @@
 #include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/algorithm.h>
 
+#include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 #include <Atom/RPI.Reflect/Shader/ShaderAsset.h>
 #include <Atom/RPI.Reflect/Shader/ShaderOptionGroupLayout.h>
 #include <Atom/RPI.Reflect/Shader/ShaderVariantKey.h>
@@ -42,7 +44,7 @@ namespace AZ
                     , shaderAssetId);
             AZ::IO::FixedMaxPath shaderAssetPathRoot = shaderAssetPath.ParentPath();
             AZ::IO::FixedMaxPath shaderAssetPathName = shaderAssetPath.Stem();
-            
+
             AZStd::string shaderVariantTreeAssetDir;
             AzFramework::StringFunc::Path::Join(ShaderVariantTreeAsset::CommonSubFolderLowerCase, shaderAssetPathRoot.c_str(), shaderVariantTreeAssetDir);
             AZStd::string shaderVariantTreeAssetFilename = AZStd::string::format("%s.%s", shaderAssetPathName.c_str(), ShaderVariantTreeAsset::Extension);
@@ -168,7 +170,7 @@ namespace AZ
                     }
                 });
 
-            // Calculate the number of dynamic branches. 
+            // Calculate the number of dynamic branches.
             const uint32_t optionCount = aznumeric_cast<uint32_t>(shaderOptionGroupLayout->GetShaderOptions().size());
             return ShaderVariantSearchResult{ bestFitStableId, optionCount - totalBranchCount };
         }
@@ -225,7 +227,7 @@ namespace AZ
         {
             return true;
         }
-         
+
         ShaderVariantTreeAssetHandler::LoadResult ShaderVariantTreeAssetHandler::LoadAssetData(const Data::Asset<Data::AssetData>& asset, AZStd::shared_ptr<Data::AssetDataStream> stream, const AZ::Data::AssetFilterCB& assetLoadFilterCB)
         {
             if (Base::LoadAssetData(asset, stream, assetLoadFilterCB) == LoadResult::LoadComplete)

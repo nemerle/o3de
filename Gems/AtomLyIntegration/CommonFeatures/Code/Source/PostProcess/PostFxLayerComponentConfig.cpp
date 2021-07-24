@@ -8,6 +8,7 @@
 
 #include <AtomLyIntegration/CommonFeatures/PostProcess/PostFxLayerComponentConfig.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 
 #include <AtomLyIntegration/CommonFeatures/PostProcess/PostFxLayerCategoriesProviderRequestBus.h>

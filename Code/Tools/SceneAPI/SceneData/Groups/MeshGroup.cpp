@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <SceneAPI/SceneData/Groups/MeshGroup.h>
 #include <SceneAPI/SceneCore/DataTypes/GraphData/IMeshData.h>
@@ -60,7 +61,7 @@ namespace AZ
             {
                 return m_rules;
             }
-            
+
             DataTypes::ISceneNodeSelectionList& MeshGroup::GetSceneNodeSelectionList()
             {
                 return m_nodeSelectionList;

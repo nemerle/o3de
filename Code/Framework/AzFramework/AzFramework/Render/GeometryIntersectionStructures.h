@@ -12,6 +12,7 @@
 #include <AzCore/Math/Vector3.h>
 #include <AzCore/Component/ComponentBus.h>
 #include <AzCore/std/functional.h>
+#include <AzCore/std/containers/unordered_set.h>
 
 //! Common structures for Render geometry queries
 namespace AzFramework
@@ -57,7 +58,7 @@ namespace AzFramework
                                                                     //! return false for not considering this entity
         };
 
-        //! Ray intersection request 
+        //! Ray intersection request
         struct RayRequest
         {
             AZ::Vector3 m_startWorldPosition; //!< Ray start position in world space

@@ -617,6 +617,20 @@ inline bool TUiAnimSplineTrack<T>::SerializeSelection(XmlNodeRef& xmlNode, bool 
     }
     return true;
 }
+namespace AZ
+{
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+
+    //treat templated TUiAnimSplineTrack values as generic value types
+    template< typename T>
+    struct SerializeGenericTypeInfo<TUiAnimSplineTrack<T>> : SerializeGenericTypeInfoImpl<TUiAnimSplineTrack<T>>
+    {
+    };
+} // namespace AZ
 
 // This is the current main.
 #include "AnimSplineTrack_Vec2Specialization.h"

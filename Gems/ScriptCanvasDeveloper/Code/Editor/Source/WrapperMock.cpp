@@ -13,6 +13,8 @@
 #include <Editor/Nodes/NodeUtils.h>
 
 #include <ScriptCanvasDeveloperEditor/WrapperMock.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvasDeveloper
 {
@@ -148,7 +150,7 @@ namespace ScriptCanvasDeveloper
             }
 
             GraphCanvas::SceneRequestBus::Event(graphId, &GraphCanvas::SceneRequests::Delete, deleteIds);
-            
+
             m_wrappedNodeIds.clear();
             m_graphCanvasMapping.clear();
         }

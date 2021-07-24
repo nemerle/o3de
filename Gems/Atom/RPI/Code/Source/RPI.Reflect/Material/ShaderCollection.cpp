@@ -14,7 +14,7 @@
 #include <Atom/RHI/DrawListTagRegistry.h>
 #include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Serialization/AZStdAnyDataContainer.inl>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {
@@ -234,7 +234,7 @@ namespace AZ
             }
 
             RHI::DrawListTagRegistry* drawListTagRegistry = RHI::RHISystemInterface::Get()->GetDrawListTagRegistry();
-            // Note: we should use FindTag instead of AcquireTag to avoid occupy DrawListTag entries. 
+            // Note: we should use FindTag instead of AcquireTag to avoid occupy DrawListTag entries.
             RHI::DrawListTag newTag = drawListTagRegistry->FindTag(drawListName);
             if (newTag.IsNull())
             {

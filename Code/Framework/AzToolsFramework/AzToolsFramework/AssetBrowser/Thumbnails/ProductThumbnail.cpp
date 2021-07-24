@@ -7,6 +7,8 @@
  */
 
 #include <AzCore/Asset/AssetTypeInfoBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzFramework/API/ApplicationAPI.h>
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>
@@ -57,7 +59,7 @@ namespace AzToolsFramework
             : Thumbnail(key)
         {}
 
-        void ProductThumbnail::LoadThread() 
+        void ProductThumbnail::LoadThread()
         {
             auto productKey = azrtti_cast<const ProductThumbnailKey*>(m_key.data());
             AZ_Assert(productKey, "Incorrect key type, excpected ProductThumbnailKey");
@@ -68,7 +70,7 @@ namespace AzToolsFramework
             {
                 // is it an embedded resource or absolute path?
                 bool isUsablePath = (iconPath.startsWith(":") || (!AzFramework::StringFunc::Path::IsRelative(iconPath.toUtf8().constData())));
-                
+
                 if (!isUsablePath)
                 {
                     // getting here means it needs resolution.  Can we find the real path of the file?  This also searches in gems for sources.

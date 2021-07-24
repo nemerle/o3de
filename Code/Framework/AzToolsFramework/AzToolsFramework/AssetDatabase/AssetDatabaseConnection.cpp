@@ -8,15 +8,17 @@
 
 #include <AzToolsFramework/AssetDatabase/AssetDatabaseConnection.h>
 
-#include <sqlite3.h>
-
-#include <AzCore/IO/SystemFile.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzToolsFramework/SQLite/SQLiteConnection.h>
 #include <AzToolsFramework/API/AssetDatabaseBus.h>
 #include <AzToolsFramework/Debug/TraceContext.h>
 #include <AzToolsFramework/SQLite/SQLiteQuery.h>
 #include <AzToolsFramework/SQLite/SQLiteBoundColumnSet.h>
+
+#include <AzCore/IO/SystemFile.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <sqlite3.h>
 #include <cinttypes>
 
 namespace AzToolsFramework
@@ -893,7 +895,7 @@ namespace AzToolsFramework
 
             static const auto s_queryFilesByFileName = MakeSqlQuery(QUERY_FILES_BY_FILENAME_AND_SCANFOLDER, QUERY_FILES_BY_FILENAME_AND_SCANFOLDER_STATEMENT, LOG_NAME,
                     SqlParam<AZ::s64>(":scanfolderpk"),
-                    SqlParam<const char*>(":filename") 
+                    SqlParam<const char*>(":filename")
                 );
 
             static const char* QUERY_FILES_LIKE_FILENAME = "AzToolsFramework::AssetDatabase::QueryFilesLikeFileName";
@@ -940,7 +942,7 @@ namespace AzToolsFramework
                 jobinfo.m_errorCount = jobDatabaseEntry.m_errorCount;
             }
         }
-        
+
         //////////////////////////////////////////////////////////////////////////
         //DatabaseInfoEntry
         DatabaseInfoEntry::DatabaseInfoEntry(AZ::s64 rowID, DatabaseVersion version)
@@ -1830,11 +1832,11 @@ namespace AzToolsFramework
             AddStatement(m_databaseConnection, s_queryProductdependencyByProductid);
             AddStatement(m_databaseConnection, s_queryProductdependencyBySourceGuidSubId);
             AddStatement(m_databaseConnection, s_queryProductDependenciesThatDependOnProductBySourceId);
-            
+
             AddStatement(m_databaseConnection, s_queryMissingProductDependencyByProductId);
             AddStatement(m_databaseConnection, s_queryMissingProductDependencyByMissingProductDependencyId);
             AddStatement(m_databaseConnection, s_deleteMissingProductDependencyByProductId);
-            
+
             AddStatement(m_databaseConnection, s_queryDirectProductdependencies);
             AddStatement(m_databaseConnection, s_queryDirectReverseProductdependenciesBySourceGuidSubId);
             AddStatement(m_databaseConnection, s_queryAllProductdependencies);
@@ -1924,7 +1926,7 @@ namespace AzToolsFramework
             {
                 return s_queryJobsTablePlatform.BindAndThen(*m_databaseConnection, handler, platform).Query(&GetJobResult, builderGuid, jobKey, status);
             }
-            
+
             return s_queryJobsTable.BindAndThen(*m_databaseConnection, handler).Query(&GetJobResult, builderGuid, jobKey, status);
         }
 
@@ -1934,7 +1936,7 @@ namespace AzToolsFramework
             {
                 return s_queryProductsTablePlatform.BindAndThen(*m_databaseConnection, handler, platform).Query(&GetProductResult, builderGuid, jobKey, status);
             }
-            
+
             return s_queryProductsTable.BindAndThen(*m_databaseConnection, handler).Query(&GetProductResult, builderGuid, jobKey, status);
         }
 
@@ -2113,7 +2115,7 @@ namespace AzToolsFramework
             {
                 return s_queryJobBySourceidPlatform.BindAndThen(*m_databaseConnection, handler, sourceID, platform).Query(&GetJobResult, builderGuid, jobKey, status);
             }
-            
+
             return s_queryJobBySourceid.BindAndThen(*m_databaseConnection, handler, sourceID).Query(&GetJobResult, builderGuid, jobKey, status);
         }
 
@@ -2128,7 +2130,7 @@ namespace AzToolsFramework
             {
                 return s_queryProductByJobidPlatform.BindAndThen(*m_databaseConnection, handler, jobid, platform).Query(&GetProductResult, builderGuid, jobKey, status);
             }
-            
+
             return s_queryProductByJobid.BindAndThen(*m_databaseConnection, handler, jobid).Query(&GetProductResult, builderGuid, jobKey, status);
         }
 
@@ -2138,7 +2140,7 @@ namespace AzToolsFramework
             {
                 return s_queryProductBySourceidPlatform.BindAndThen(*m_databaseConnection, handler, sourceid, platform).Query(&GetProductResult, builderGuid, jobKey, status);
             }
-            
+
             return s_queryProductBySourceid.BindAndThen(*m_databaseConnection, handler, sourceid).Query(&GetProductResult, builderGuid, jobKey, status);
         }
 
@@ -2153,7 +2155,7 @@ namespace AzToolsFramework
             {
                 return s_queryProductByProductnamePlatform.BindAndThen(*m_databaseConnection, handler, exactProductname, platform).Query(&GetProductResult, builderGuid, jobKey, status);
             }
-            
+
             return s_queryProductByProductname.BindAndThen(*m_databaseConnection, handler, exactProductname).Query(&GetProductResult, builderGuid, jobKey, status);
         }
 
@@ -2165,7 +2167,7 @@ namespace AzToolsFramework
             {
                 return s_queryProductLikeProductnamePlatform.BindAndThen(*m_databaseConnection, handler, actualSearchTerm.c_str(), platform).Query(&GetProductResult, builderGuid, jobKey, status);
             }
-            
+
             return s_queryProductLikeProductname.BindAndThen(*m_databaseConnection, handler, actualSearchTerm.c_str()).Query(&GetProductResult, builderGuid, jobKey, status);
         }
 
@@ -2175,7 +2177,7 @@ namespace AzToolsFramework
             {
                 return s_queryProductBySourcenamePlatform.BindAndThen(*m_databaseConnection, handler, exactSourceName, platform).Query(&GetProductResult, builderGuid, jobKey, status);
             }
-            
+
             return s_queryProductBySourcename.BindAndThen(*m_databaseConnection, handler, exactSourceName).Query(&GetProductResult, builderGuid, jobKey, status);
         }
 
@@ -2187,7 +2189,7 @@ namespace AzToolsFramework
             {
                 return s_queryProductLikeSourcenamePlatform.BindAndThen(*m_databaseConnection, handler, actualSearchTerm.c_str(), platform).Query(&GetProductResult, builderGuid, jobKey, status);
             }
-            
+
             return s_queryProductLikeSourcename.BindAndThen(*m_databaseConnection, handler, actualSearchTerm.c_str()).Query(&GetProductResult, builderGuid, jobKey, status);
         }
 
@@ -2212,7 +2214,7 @@ namespace AzToolsFramework
             {
                 return s_queryCombinedByPlatform.BindAndQuery(*m_databaseConnection, handler, callback, platform);
             }
-            
+
             return s_queryCombined.BindAndQuery(*m_databaseConnection, handler, callback);
         }
 
@@ -2231,7 +2233,7 @@ namespace AzToolsFramework
                 return s_queryCombinedBySourceidPlatform.BindAndThen(*m_databaseConnection, handler, sourceID, platform)
                     .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
             }
-            
+
             return s_queryCombinedBySourceid.BindAndThen(*m_databaseConnection, handler, sourceID)
                 .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
         }
@@ -2243,7 +2245,7 @@ namespace AzToolsFramework
                 return s_queryCombinedByJobidPlatform.BindAndThen(*m_databaseConnection, handler, jobID, platform)
                     .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
             }
-            
+
             return s_queryCombinedByJobid.BindAndThen(*m_databaseConnection, handler, jobID)
                 .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
         }
@@ -2255,7 +2257,7 @@ namespace AzToolsFramework
                 return s_queryCombinedByProductidPlatform.BindAndThen(*m_databaseConnection, handler, productID, platform)
                     .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
             }
-            
+
             return s_queryCombinedByProductid.BindAndThen(*m_databaseConnection, handler, productID)
                 .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
         }
@@ -2267,7 +2269,7 @@ namespace AzToolsFramework
                 return s_queryCombinedBySourceguidProductsubidPlatform.BindAndThen(*m_databaseConnection, handler, productSubID, sourceGuid, platform)
                     .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
             }
-            
+
             return s_queryCombinedBySourceguidProductsubid.BindAndThen(*m_databaseConnection, handler, productSubID, sourceGuid)
                 .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
         }
@@ -2279,7 +2281,7 @@ namespace AzToolsFramework
                 return s_queryCombinedBySourcenamePlatform.BindAndThen(*m_databaseConnection, handler, exactSourceName, platform)
                     .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
             }
-            
+
             return s_queryCombinedBySourcename.BindAndThen(*m_databaseConnection, handler, exactSourceName)
                 .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
         }
@@ -2293,7 +2295,7 @@ namespace AzToolsFramework
                 return s_queryCombinedLikeSourcenamePlatform.BindAndThen(*m_databaseConnection, handler, actualSearchTerm.c_str(), platform)
                     .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
             }
-            
+
             return s_queryCombinedLikeSourcename.BindAndThen(*m_databaseConnection, handler, actualSearchTerm.c_str())
                 .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
         }
@@ -2305,7 +2307,7 @@ namespace AzToolsFramework
                 return s_queryCombinedByProductnamePlatform.BindAndThen(*m_databaseConnection, handler, exactProductName, platform)
                     .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
             }
-            
+
             return s_queryCombinedByProductname.BindAndThen(*m_databaseConnection, handler, exactProductName)
                 .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
         }
@@ -2319,7 +2321,7 @@ namespace AzToolsFramework
                 return s_queryCombinedLikeProductnamePlatform.BindAndThen(*m_databaseConnection, handler, actualSearchTerm.c_str(), platform)
                     .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
             }
-            
+
             return s_queryCombinedLikeProductname.BindAndThen(*m_databaseConnection, handler, actualSearchTerm.c_str())
                 .Query(GetCombinedResultAsLambda(), builderGuid, jobKey, status);
         }
@@ -2590,7 +2592,7 @@ namespace AzToolsFramework
             return s_queryFilesLikeFileName.BindAndQuery(*m_databaseConnection, handler, &GetFileResult, actualSearchTerm.c_str());
         }
 
-        bool AssetDatabaseConnection::QueryFilesByScanFolderID(AZ::s64 scanFolderID, fileHandler handler) 
+        bool AssetDatabaseConnection::QueryFilesByScanFolderID(AZ::s64 scanFolderID, fileHandler handler)
         {
             return s_queryFilesByScanfolderid.BindAndQuery(*m_databaseConnection, handler, &GetFileResult, scanFolderID);
         }

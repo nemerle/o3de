@@ -6,7 +6,7 @@
  *
  */
 
-#include "AnimGraphConditionCommands.h" 
+#include "AnimGraphConditionCommands.h"
 #include "AnimGraphConnectionCommands.h"
 
 #include <MCore/Source/ReflectionSerializer.h>
@@ -20,6 +20,8 @@
 #include <EMotionFX/Source/BlendTree.h>
 #include <EMotionFX/Source/ActorManager.h>
 #include <EMotionFX/CommandSystem/Source/CommandManager.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace CommandSystem
 {

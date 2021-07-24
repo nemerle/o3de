@@ -7,6 +7,8 @@
  */
 
 #include <AzCore/EBus/EBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzToolsFramework/Debug/TraceContext.h>
 #include <SceneAPI/SceneUI/RowWidgets/NodeListSelectionHandler.h>
 
@@ -23,7 +25,7 @@ namespace AZ
             QWidget* NodeListSelectionHandler::CreateGUI(QWidget* parent)
             {
                 NodeListSelectionWidget* instance = aznew NodeListSelectionWidget(parent);
-                connect(instance, &NodeListSelectionWidget::valueChanged, this, 
+                connect(instance, &NodeListSelectionWidget::valueChanged, this,
                     [instance]()
                     {
                         EBUS_EVENT(AzToolsFramework::PropertyEditorGUIMessages::Bus, RequestWrite, instance);

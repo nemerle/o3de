@@ -10,8 +10,13 @@
 
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/std/hash.h>
-#include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Memory/Memory.h>
+#include <AzCore/Memory/SystemAllocator.h>
+
+namespace AZ
+{
+    class ReflectContext;
+}
 
 namespace GraphCanvas
 {
@@ -39,27 +44,7 @@ namespace GraphCanvas
             return !(this->operator==(other));
         }
 
-        static void Reflect(AZ::ReflectContext* reflection)
-        {
-            AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(reflection);
-            if (serializeContext)
-            {
-                serializeContext->Class<Endpoint>()
-                    ->Version(1)
-                    ->Field("nodeId", &Endpoint::m_nodeId)
-                    ->Field("slotId", &Endpoint::m_slotId)
-                    ;
-
-                if (auto editContext = serializeContext->GetEditContext())
-                {
-                    editContext->Class<Endpoint>("Endpoint", "Endpoint")
-                        ->DataElement(0, &Endpoint::m_nodeId, "Node Id", "Node Id portion of endpoint")
-                        ->Attribute(AZ::Edit::Attributes::SliceFlags, AZ::Edit::SliceFlags::DontGatherReference | AZ::Edit::SliceFlags::NotPushable)
-                        ->Attribute(AZ::Edit::Attributes::Visibility, AZ::Edit::PropertyVisibility::Hide)
-                        ;
-                }
-            }
-        }
+        static void Reflect(AZ::ReflectContext* reflection);
 
         bool IsValid() const { return m_nodeId.IsValid() && m_slotId.IsValid(); }
 

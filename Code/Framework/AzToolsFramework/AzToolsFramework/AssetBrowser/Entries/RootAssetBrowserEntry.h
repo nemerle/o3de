@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/std/string/string.h>
+#include <AzCore/std/containers/unordered_set.h>
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/Math/Uuid.h>
@@ -37,7 +38,7 @@ namespace AzToolsFramework
         class ProductDatabaseEntry;
         class CombinedDatabaseEntry;
     }
-    
+
     namespace AssetBrowser
     {
         using ProductWithUuid = AZStd::pair<AZ::Uuid, AssetDatabase::ProductDatabaseEntry>;

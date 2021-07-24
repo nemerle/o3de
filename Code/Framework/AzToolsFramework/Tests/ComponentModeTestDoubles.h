@@ -11,6 +11,8 @@
 #include <AzToolsFramework/ComponentMode/ComponentModeDelegate.h>
 #include <AzToolsFramework/ComponentMode/EditorBaseComponentMode.h>
 #include <AzToolsFramework/ToolsComponents/EditorComponentBase.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AzToolsFramework
 {
@@ -178,7 +180,7 @@ namespace AzToolsFramework
         public:
             explicit ComponentModeActionSignalNotificationChecker(int busId);
             ~ComponentModeActionSignalNotificationChecker();
-            
+
             int GetCount() const { return m_counter; }
 
         private:
@@ -249,7 +251,7 @@ namespace AzToolsFramework
             /// AzToolsFramework::ViewportInteraction::ViewportSelectionRequests ...
             bool HandleMouseInteraction(const AzToolsFramework::ViewportInteraction::MouseInteractionEvent& mouseInteraction) override
             {
-                // Pretend like we are handling some mouse interaction 
+                // Pretend like we are handling some mouse interaction
                 AZ_UNUSED(mouseInteraction);
                 return true;
             }
@@ -257,3 +259,19 @@ namespace AzToolsFramework
 
     } // namespace ComponentModeFramework
 } // namespace AzToolsFramework
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+    template<typename T>
+    struct SerializeGenericTypeInfo<AzToolsFramework::ComponentModeFramework::TestComponentModeComponent<T>>
+        : SerializeGenericTypeInfoImpl<AzToolsFramework::ComponentModeFramework::TestComponentModeComponent<T>>
+    {
+        // treat TestComponentModeComponent as generic value type
+    };
+
+} // namespace AZ

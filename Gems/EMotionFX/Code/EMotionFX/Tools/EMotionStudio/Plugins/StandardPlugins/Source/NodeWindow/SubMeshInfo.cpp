@@ -8,6 +8,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <EMotionFX/Source/Actor.h>
 #include <EMotionFX/Source/Material.h>
 #include <EMotionFX/Source/SubMesh.h>

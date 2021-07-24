@@ -28,6 +28,7 @@
 #include <AzCore/Math/Sha1.h>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/ObjectStream.h>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -62,7 +63,7 @@ namespace ImageProcessingAtom
     AZ::EnvironmentVariable<BuilderSettingManager*> BuilderSettingManager::s_globalInstance = nullptr;
     AZStd::mutex BuilderSettingManager::s_instanceMutex;
     const PlatformName BuilderSettingManager::s_defaultPlatform = AZ_TRAIT_IMAGEPROCESSING_DEFAULT_PLATFORM;
-    
+
     void BuilderSettingManager::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context);
@@ -111,7 +112,7 @@ namespace ImageProcessingAtom
             s_globalInstance.Set(aznew BuilderSettingManager());
         }
     }
-    
+
     void BuilderSettingManager::DestroyInstance()
     {
         AZStd::lock_guard<AZStd::mutex> lock(s_instanceMutex);
@@ -121,7 +122,7 @@ namespace ImageProcessingAtom
         delete s_globalInstance.Get();
         s_globalInstance.Reset();
     }
-    
+
     const PresetSettings* BuilderSettingManager::GetPreset(const PresetName& presetName, const PlatformName& platform, AZStd::string_view* settingsFilePathOut)
     {
         AZStd::lock_guard<AZStd::recursive_mutex> lock(m_presetMapLock);
@@ -252,17 +253,17 @@ namespace ImageProcessingAtom
 
         AZStd::lock_guard<AZStd::recursive_mutex> lock(m_presetMapLock);
         ClearSettings();
-        
+
         outcome = LoadSettings((projectConfigFolder / s_builderSettingFileName).Native());
 
         if (!outcome.IsSuccess())
         {
             outcome = LoadSettings((defaultConfigFolder / s_builderSettingFileName).Native());
         }
-        
+
         if (outcome.IsSuccess())
         {
-            // Load presets in default folder first, then load from project folder. 
+            // Load presets in default folder first, then load from project folder.
             // The same presets which loaded last will overwrite previous loaded one.
             LoadPresets(defaultConfigFolder.Native());
             LoadPresets(projectConfigFolder.Native());
@@ -307,7 +308,7 @@ namespace ImageProcessingAtom
     StringOutcome BuilderSettingManager::LoadConfigFromFolder(AZStd::string_view configFolder)
     {
         // Load builder settings
-        AZStd::string settingFilePath = AZStd::string::format("%.*s%s",  aznumeric_cast<int>(configFolder.size()), 
+        AZStd::string settingFilePath = AZStd::string::format("%.*s%s",  aznumeric_cast<int>(configFolder.size()),
             configFolder.data(), s_builderSettingFileName);
         auto result = LoadSettings(settingFilePath);
 
@@ -346,7 +347,7 @@ namespace ImageProcessingAtom
     AZ_TOOLS_EXPAND_FOR_RESTRICTED_PLATFORMS
 #undef AZ_RESTRICTED_PLATFORM_EXPANSION
 #endif //AZ_TOOLS_EXPAND_FOR_RESTRICTED_PLATFORMS
-        
+
         return STRING_OUTCOME_SUCCESS;
     }
 
@@ -381,7 +382,7 @@ namespace ImageProcessingAtom
         {
             const MultiplatformPresetSettings& multiPreset = presetIter.second.m_multiPreset;
             const PresetSettings& preset = multiPreset.GetDefaultPreset();
-            
+
             //Put into no filter preset list
             m_presetFilterMap[noFilter].insert(preset.m_name);
 
@@ -534,7 +535,7 @@ namespace ImageProcessingAtom
         bool rv = m_builderSettings.find(platformId) != m_builderSettings.end();
         return rv;
     }
-    
+
     void BuilderSettingManager::SavePresets(AZStd::string_view outputFolder)
     {
         for (const auto& element : m_presets)
@@ -551,7 +552,7 @@ namespace ImageProcessingAtom
             auto result = AZ::JsonSerializationUtils::SaveObjectToFile(&presetEntry.m_multiPreset, filePath);
             if (!result.IsSuccess())
             {
-                AZ_Warning("Image Processing", false, "Failed to save preset '%s' to file '%s'. Error: %s", 
+                AZ_Warning("Image Processing", false, "Failed to save preset '%s' to file '%s'. Error: %s",
                     presetEntry.m_multiPreset.GetDefaultPreset().m_name.c_str(), filePath.c_str(), result.GetError().c_str());
             }
         }

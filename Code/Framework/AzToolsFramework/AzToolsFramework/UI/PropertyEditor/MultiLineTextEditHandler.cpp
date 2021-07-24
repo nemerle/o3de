@@ -8,6 +8,8 @@
 
 #include "MultiLineTextEditHandler.h"
 #include <AzToolsFramework/Debug/TraceContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AzToolsFramework
 {
@@ -49,7 +51,7 @@ namespace AzToolsFramework
             }
             else
             {
-                AZ_WarningOnce("AzToolsFramework", false, 
+                AZ_WarningOnce("AzToolsFramework", false,
                     "Failed to read 'PlaceholderText' attribute from property '%s' into multi-line text field.", debugName);
             }
         }
@@ -62,7 +64,7 @@ namespace AzToolsFramework
             }
             else
             {
-                AZ_WarningOnce("AzToolsFramework", false, 
+                AZ_WarningOnce("AzToolsFramework", false,
                     "Failed to read 'ReadOnly' attribute from property '%s' into multi-line text field.", debugName);
             }
         }

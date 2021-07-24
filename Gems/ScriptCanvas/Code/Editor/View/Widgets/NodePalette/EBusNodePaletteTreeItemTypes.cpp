@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <QCoreApplication>
 
@@ -148,7 +149,7 @@ namespace ScriptCanvasEditor
         return m_propertyStatus;
     }
 
-    bool EBusSendEventPaletteTreeItem::IsOverload() const 
+    bool EBusSendEventPaletteTreeItem::IsOverload() const
     {
         return m_isOverload;
     }
@@ -271,7 +272,7 @@ namespace ScriptCanvasEditor
 
         return eventNode;
     }
-    
+
     void CreateEBusHandlerEventMimeEvent::ConfigureEvent(AZStd::string_view busName, AZStd::string_view eventName, const ScriptCanvas::EBusEventId& eventId)
     {
         m_busName = busName;

@@ -11,6 +11,7 @@
 
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/std/any.h>
+#include <AzCore/std/containers/unordered_set.h>
 
 #include <ScriptCanvasDeveloperEditor/EditorAutomation/EditorAutomationAction.h>
 #include <ScriptCanvasDeveloperEditor/EditorAutomation/EditorAutomationModelIds.h>
@@ -20,7 +21,7 @@ namespace ScriptCanvasDeveloper
     /**
         ActionRunner that will manage the editor automation stack, and handle pushing the precondition elements into the queue.
         Will not take ownership of all actions added manually, but any precondition elements will be deleted.
-        
+
         Needs to be externally ticked.
     */
     class EditorAutomationActionRunner
@@ -86,7 +87,7 @@ namespace ScriptCanvasDeveloper
     private:
         AZStd::unordered_map< DataKey, AZStd::any > m_stateData;
     };
-    
+
     template <AZ::u32 Id>
     struct StateTraits
     {
@@ -206,7 +207,7 @@ namespace ScriptCanvasDeveloper
         int GetStateId() const override { return m_stateId; }
 
     protected:
-        
+
         void SetStateName(const AZStd::string& stateName)
         {
             m_name = stateName;
@@ -285,7 +286,7 @@ namespace ScriptCanvasDeveloper
         virtual void OnTestStarting() {}
         virtual void OnStateComplete(int /*stateId*/) {}
         virtual void OnTestComplete() {}
-        
+
 
         bool HasRun() const;
         bool IsRunning() const;
@@ -310,7 +311,7 @@ namespace ScriptCanvasDeveloper
         EditorAutomationTest(QString testName);
 
         void AddError(AZStd::string error);
-        
+
         EditorAutomationActionRunner m_actionRunner;
         AZStd::vector< AZStd::string > m_testErrors;
 
@@ -320,7 +321,7 @@ namespace ScriptCanvasDeveloper
         AZStd::unordered_map< int, EditorAutomationState* > m_states;
 
     private:
-        
+
         QString m_testName;
 
         int m_initialStateId = EditorAutomationState::EXIT_STATE_ID;

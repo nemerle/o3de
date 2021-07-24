@@ -60,4 +60,21 @@ namespace LmbrCentral
 
 } // namespace LmbrCentral
 
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename S,typename T>
+    struct SerializeGenericTypeInfo<LmbrCentral::EditorWrappedComponentBase<S,T>>
+        : SerializeGenericTypeInfoImpl<LmbrCentral::EditorWrappedComponentBase<S,T>>
+    {
+        // treat EditorWrappedComponentBase as generic value type
+    };
+
+} // namespace AZ
+
 #include "EditorWrappedComponentBase.inl"

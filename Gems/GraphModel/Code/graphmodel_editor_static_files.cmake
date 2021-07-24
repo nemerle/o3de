@@ -60,4 +60,5 @@ set(FILES
     Source/Integration/IntegerDataInterface.cpp
     Source/Integration/StringDataInterface.cpp
     Source/Integration/NodePalette/GraphCanvasNodePaletteItems.cpp
+    Source/Integration/NodePalette/ModuleNodePaletteItem.cpp
 )

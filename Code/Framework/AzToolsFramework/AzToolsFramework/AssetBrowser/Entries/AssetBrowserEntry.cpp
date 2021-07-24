@@ -8,6 +8,8 @@
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/std/string/regex.h>
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzToolsFramework/AssetBrowser/AssetBrowserBus.h>
 #include <AzToolsFramework/AssetBrowser/Entries/AssetBrowserEntry.h>

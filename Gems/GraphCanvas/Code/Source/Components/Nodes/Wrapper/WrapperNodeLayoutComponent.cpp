@@ -14,6 +14,8 @@
 #include <qgraphicssceneevent.h>
 
 #include <AzCore/RTTI/TypeInfo.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Components/Nodes/Wrapper/WrapperNodeLayoutComponent.h>
 
@@ -33,11 +35,11 @@
 #include <GraphCanvas/Utils/GraphUtils.h>
 
 namespace GraphCanvas
-{    
+{
     //////////////////////
     // WrappedNodeLayout
     //////////////////////
-    
+
     WrapperNodeLayoutComponent::WrappedNodeLayout::WrappedNodeLayout(WrapperNodeLayoutComponent& wrapperLayoutComponent)
         : QGraphicsWidget(nullptr)
         , m_wrapperLayoutComponent(wrapperLayoutComponent)
@@ -52,7 +54,7 @@ namespace GraphCanvas
     WrapperNodeLayoutComponent::WrappedNodeLayout::~WrappedNodeLayout()
     {
     }
-    
+
     void WrapperNodeLayoutComponent::WrappedNodeLayout::RefreshStyle()
     {
         prepareGeometryChange();
@@ -64,24 +66,24 @@ namespace GraphCanvas
 
         setMinimumSize(m_styleHelper.GetMinimumSize());
         setMaximumSize(m_styleHelper.GetMaximumSize());
-        
+
         // Layout spacing
         m_layout->setSpacing(m_styleHelper.GetAttribute(Styling::Attribute::Spacing, 0.0));
-        
+
         m_layout->invalidate();
         m_layout->updateGeometry();
 
         updateGeometry();
         update();
     }
-    
+
     void WrapperNodeLayoutComponent::WrappedNodeLayout::RefreshLayout()
     {
         prepareGeometryChange();
         ClearLayout();
         LayoutItems();
     }
-    
+
     void WrapperNodeLayoutComponent::WrappedNodeLayout::LayoutItems()
     {
         if (!m_wrapperLayoutComponent.m_wrappedNodes.empty())
@@ -96,7 +98,7 @@ namespace GraphCanvas
                 {
                     m_layout->addItem(rootLayoutItem);
                 }
-            }            
+            }
 
             updateGeometry();
             update();
@@ -106,7 +108,7 @@ namespace GraphCanvas
             setVisible(false);
         }
     }
-    
+
     void WrapperNodeLayoutComponent::WrappedNodeLayout::ClearLayout()
     {
         while (m_layout->count() > 0)
@@ -255,11 +257,11 @@ namespace GraphCanvas
 
         return false;
     }
-    
+
     ///////////////////////////////
     // WrapperNodeLayoutComponent
     ///////////////////////////////
-    
+
     void WrapperNodeLayoutComponent::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
@@ -312,10 +314,10 @@ namespace GraphCanvas
 
         m_layout = new QGraphicsLinearLayout(Qt::Vertical);
         GetLayoutAs<QGraphicsLinearLayout>()->setInstantInvalidatePropagation(true);
-        
+
         m_wrappedNodeLayout = aznew WrappedNodeLayout((*this));
         m_wrapperNodeActionWidget = aznew WrappedNodeActionGraphicsWidget((*this));
-        
+
         for (auto& mapPair : m_wrappedNodeConfigurations)
         {
             m_wrappedNodes.insert(mapPair.first);
@@ -353,7 +355,7 @@ namespace GraphCanvas
     {
         return AZStd::vector< AZ::EntityId >(m_wrappedNodes.begin(), m_wrappedNodes.end());
     }
-    
+
     void WrapperNodeLayoutComponent::WrapNode(const AZ::EntityId& nodeId, const WrappedNodeConfiguration& nodeConfiguration)
     {
         if (m_wrappedNodeConfigurations.find(nodeId) == m_wrappedNodeConfigurations.end())
@@ -366,9 +368,9 @@ namespace GraphCanvas
 
             m_wrappedNodeConfigurations[nodeId] = nodeConfiguration;
             m_wrappedNodeConfigurations[nodeId].m_elementOrdering = m_elementCounter;
-            
+
             ++m_elementCounter;
-            
+
             m_wrappedNodes.insert(nodeId);
             m_wrappedNodeLayout->RefreshLayout();
 
@@ -382,7 +384,7 @@ namespace GraphCanvas
             RefreshActionStyle();
         }
     }
-    
+
     void WrapperNodeLayoutComponent::UnwrapNode(const AZ::EntityId& nodeId)
     {
         auto configurationIter = m_wrappedNodeConfigurations.find(nodeId);
@@ -540,7 +542,7 @@ namespace GraphCanvas
         m_wrapperNodeActionWidget->RefreshStyle();
 
         RefreshDisplay();
-    }    
+    }
 
     void WrapperNodeLayoutComponent::RefreshActionStyle()
     {
@@ -586,7 +588,7 @@ namespace GraphCanvas
         SceneRequestBus::EventResult(editorId, sceneId, &SceneRequests::GetEditorId);
         AssetEditorRequestBus::Event(editorId, &AssetEditorRequests::OnWrapperNodeActionWidgetClicked, GetEntityId(), m_wrapperNodeActionWidget->boundingRect().toRect(), scenePoint, screenPoint);
     }
-    
+
     void WrapperNodeLayoutComponent::ClearLayout()
     {
         if (m_layout)
@@ -625,14 +627,14 @@ namespace GraphCanvas
         GetLayoutAs<QGraphicsLinearLayout>()->addItem(m_wrappedNodeLayout);
         GetLayoutAs<QGraphicsLinearLayout>()->addItem(m_wrapperNodeActionWidget);
     }
-    
+
     void WrapperNodeLayoutComponent::UpdateLayout()
     {
         m_wrappedNodeLayout->RefreshLayout();
-        
+
         RefreshDisplay();
     }
-    
+
     void WrapperNodeLayoutComponent::RefreshDisplay()
     {
         m_layout->invalidate();

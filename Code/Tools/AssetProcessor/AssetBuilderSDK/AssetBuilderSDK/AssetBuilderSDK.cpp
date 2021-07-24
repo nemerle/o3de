@@ -21,6 +21,8 @@
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Slice/SliceAsset.h> // For slice asset sub ids
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 //////////////////////////////////////////////////////////////////////////
 
 namespace AssetBuilderSDK
@@ -645,7 +647,7 @@ namespace AssetBuilderSDK
         , m_productSubID(productSubID)
     {
         //////////////////////////////////////////////////////////////////////////
-        // Builders should output product asset types directly.  
+        // Builders should output product asset types directly.
         // This should only be used for exceptions, mostly legacy and generic data.
         if (m_productAssetType.IsNull())
         {
@@ -664,7 +666,7 @@ namespace AssetBuilderSDK
         , m_productSubID(productSubID)
     {
         //////////////////////////////////////////////////////////////////////////
-        // Builders should output product asset types directly.  
+        // Builders should output product asset types directly.
         // This should only be used for exceptions, mostly legacy.
         if (m_productAssetType.IsNull())
         {

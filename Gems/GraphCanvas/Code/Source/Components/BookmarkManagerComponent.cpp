@@ -9,6 +9,8 @@
 #include <qgraphicsitem.h>
 
 #include <AzCore/Component/Entity.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Components/BookmarkManagerComponent.h>
 
@@ -16,6 +18,7 @@
 #include <GraphCanvas/Components/SceneBus.h>
 #include <GraphCanvas/Editor/AssetEditorBus.h>
 #include <GraphCanvas/GraphCanvasBus.h>
+
 
 namespace GraphCanvas
 {
@@ -36,11 +39,11 @@ namespace GraphCanvas
             ;
         }
     }
-    
+
     BookmarkManagerComponent::BookmarkManagerComponent()
-    {        
+    {
     }
-    
+
     BookmarkManagerComponent::~BookmarkManagerComponent()
     {
     }
@@ -184,7 +187,7 @@ namespace GraphCanvas
     {
         JumpToBookmark(FindBookmarkForShortcut(shortcut));
     }
-    
+
     void BookmarkManagerComponent::JumpToBookmark(const AZ::EntityId& bookmark)
     {
         if (!bookmark.IsValid())

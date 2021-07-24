@@ -24,6 +24,8 @@
 #include <AzCore/std/containers/map.h>
 #include <AzCore/std/delegate/delegate.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <QtGui/QPalette>
 

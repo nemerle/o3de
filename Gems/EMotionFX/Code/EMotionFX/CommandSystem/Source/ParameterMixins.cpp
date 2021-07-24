@@ -17,6 +17,9 @@
 #include <EMotionFX/Source/EMotionFXManager.h>
 #include <EMotionFX/CommandSystem/Source/ParameterMixins.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 
 namespace EMotionFX
 {

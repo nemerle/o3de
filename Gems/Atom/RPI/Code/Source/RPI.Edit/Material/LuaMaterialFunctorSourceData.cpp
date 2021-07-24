@@ -10,6 +10,7 @@
 #include <Atom/RPI.Reflect/Material/LuaMaterialFunctor.h>
 #include <Atom/RPI.Reflect/Material/MaterialPropertiesLayout.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Script/ScriptAsset.h>
 #include <AzCore/Script/ScriptContext.h>
 #include <Atom/RPI.Edit/Common/AssetUtils.h>
@@ -171,7 +172,7 @@ namespace AZ
             {
                 return Failure();
             }
-            
+
             if (materialPropertyDependencies.GetValue().empty())
             {
                 AZ_Error("LuaMaterialFunctorSourceData", false, "Material functor must use at least one material property.");

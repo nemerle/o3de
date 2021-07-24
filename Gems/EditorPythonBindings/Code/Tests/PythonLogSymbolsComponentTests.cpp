@@ -18,6 +18,8 @@
 
 #include <AzCore/Math/Vector3.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 
 
@@ -203,7 +205,7 @@ namespace UnitTest
         voidParam.m_name = "void";
         voidParam.m_typeId = AZ::Uuid("{9B3E8886-B749-418E-A696-6D7E9EB4D691}"); // A random Uuid
         voidParam.m_traits = AZ::BehaviorParameter::TR_NONE;
-        
+
         AZStd::string_view result = m_pythonLogSymbolsComponent.FetchPythonTypeWrapper(voidParam);
         EXPECT_EQ(result, "None");
     }

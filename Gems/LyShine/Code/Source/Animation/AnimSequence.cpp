@@ -17,6 +17,9 @@
 #include "AzEntityNode.h"
 #include "UiAnimSerialize.h"
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 //////////////////////////////////////////////////////////////////////////
 CUiAnimSequence::CUiAnimSequence()
     : CUiAnimSequence(nullptr, 0)

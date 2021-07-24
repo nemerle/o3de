@@ -13,6 +13,7 @@ set(FILES
     Source/ScriptCanvasTestingSystemComponent.h
     Source/Framework/ScriptCanvasTestVerify.cpp
     Source/Framework/ScriptCanvasTestVerify.h
+    Source/Nodes/BehaviorContextObjectTestNode.cpp
     Source/Nodes/BehaviorContextObjectTestNode.h
     Source/Nodes/Nodeables/NodeableTestingLibrary.h
     Source/Nodes/Nodeables/NodeableTestingLibrary.cpp

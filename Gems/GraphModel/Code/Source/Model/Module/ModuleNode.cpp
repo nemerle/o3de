@@ -8,6 +8,8 @@
 
 // AZ
 #include <AzFramework/StringFunc/StringFunc.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 // Graph Model
 #include <GraphModel/Model/Graph.h>
@@ -19,7 +21,7 @@
 
 namespace GraphModel
 {
- 
+
     void ModuleNode::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
@@ -32,7 +34,7 @@ namespace GraphModel
                 ;
         }
     }
-    
+
     ModuleNode::ModuleNode(GraphPtr ownerGraph, AZ::Uuid moduleGraphFileId, AZStd::string_view moduleGraphFileName)
         : Node(ownerGraph)
         , m_moduleGraphFileId(moduleGraphFileId)
@@ -85,18 +87,18 @@ namespace GraphModel
                 if (AZStd::shared_ptr<const GraphInputNode> inputNode = azrtti_cast<const GraphInputNode*>(node))
                 {
                     RegisterSlot(GraphModel::SlotDefinition::CreateInputData(
-                        inputNode->GetName(), 
-                        inputNode->GetDisplayName(), 
+                        inputNode->GetName(),
+                        inputNode->GetDisplayName(),
                         inputNode->GetNodeDataType(),
-                        inputNode->GetDefaultValue(), 
+                        inputNode->GetDefaultValue(),
                         inputNode->GetDescription()));
                 }
                 else if (AZStd::shared_ptr<const GraphOutputNode> outputNode = azrtti_cast<const GraphOutputNode*>(node))
                 {
                     RegisterSlot(GraphModel::SlotDefinition::CreateOutputData(
-                        outputNode->GetName(), 
-                        outputNode->GetDisplayName(), 
-                        outputNode->GetNodeDataType(), 
+                        outputNode->GetName(),
+                        outputNode->GetDisplayName(),
+                        outputNode->GetNodeDataType(),
                         outputNode->GetDescription()));
                 }
             }

@@ -8,6 +8,7 @@
 
 // AZ
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 // Graph Canvas
 #include <GraphCanvas/Types/EntitySaveData.h>

@@ -10,6 +10,8 @@
 
 #include <EMotionFX/Source/Allocators.h>
 #include <MCore/Source/AttributeString.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace EMotionFX
 {

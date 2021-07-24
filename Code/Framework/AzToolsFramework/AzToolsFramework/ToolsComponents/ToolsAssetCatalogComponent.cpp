@@ -6,14 +6,17 @@
  *
  */
 
-#include <AzCore/Asset/AssetManager.h>
-#include <AzCore/IO/SystemFile.h>
-#include <AzCore/IO/FileIO.h>
-#include <AzFramework/StringFunc/StringFunc.h>
 #include <AzToolsFramework/ToolsComponents/ToolsAssetCatalogComponent.h>
+
+#include <AzFramework/StringFunc/StringFunc.h>
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>
 #include <AzToolsFramework/Asset/AssetProcessorMessages.h>
 #include <AzFramework/Network/AssetProcessorConnection.h>
+#include <AzCore/Asset/AssetManager.h>
+#include <AzCore/IO/SystemFile.h>
+#include <AzCore/IO/FileIO.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AssetProcessor
 {

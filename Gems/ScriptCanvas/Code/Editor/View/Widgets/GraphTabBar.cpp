@@ -22,6 +22,8 @@
 #include <Editor/QtMetaTypes.h>
 
 #include <ScriptCanvas/Asset/AssetDescription.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvasEditor
 {
@@ -72,7 +74,7 @@ namespace ScriptCanvasEditor
 
                     ConfigureTab(newTabIndex, assetId, tabName);
 
-                    // new graphs will need to use their in-memory assetid which we'll need to update 
+                    // new graphs will need to use their in-memory assetid which we'll need to update
                     // upon saving the asset
                     if (!memoryAsset->GetFileAssetId().IsValid())
                     {
@@ -108,7 +110,7 @@ namespace ScriptCanvasEditor
                     auto tabAssetId = tabDataVariant.value<AZ::Data::AssetId>();
                     MemoryAssetNotificationBus::MultiHandler::BusDisconnect(tabAssetId);
                 }
-            
+
                 setTabData(tabIndex, QVariant::fromValue(fileAssetId));
 
                 MemoryAssetNotificationBus::MultiHandler::BusConnect(fileAssetId);

@@ -9,6 +9,7 @@
 #include <AzCore/Debug/Timer.h>
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/ObjectStream.h>
 #include <AzCore/Serialization/Utils.h>
 #include <AzFramework/StringFunc/StringFunc.h>
@@ -480,7 +481,7 @@ namespace EMotionFX
     MotionSet* MotionSet::RecursiveFindMotionSetByName(const AZStd::string& motionSetName, bool isOwnedByRuntime) const
     {
         MCore::LockGuardRecursive lock(m_mutex);
-        
+
         if (GetIsOwnedByRuntime() == isOwnedByRuntime && m_name == motionSetName)
         {
             return const_cast<MotionSet*>(this);
@@ -819,7 +820,7 @@ namespace EMotionFX
         for (const auto& item : motionEntries)
         {
             const MotionEntry* motionEntry = item.second;
-            const Motion* motion = motionEntry->GetMotion();           
+            const Motion* motion = motionEntry->GetMotion();
             if (motion)
             {
                 if (motion->GetMotionData()->GetNumMorphs() > 0)
@@ -861,7 +862,7 @@ namespace EMotionFX
             const float loadTimeInMs = loadTimer.GetDeltaTimeInSeconds() * 1000.0f;
             AZ_Printf("EMotionFX", "Loaded motion set from %s in %.1f ms.", filename.c_str(), loadTimeInMs);
         }
-        
+
         return result;
     }
 

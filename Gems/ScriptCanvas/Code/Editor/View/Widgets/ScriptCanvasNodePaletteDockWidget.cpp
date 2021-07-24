@@ -24,6 +24,7 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/UserSettings/UserSettings.h>
 #include <AzCore/std/containers/map.h>
 #include <AzFramework/StringFunc/StringFunc.h>
@@ -325,7 +326,7 @@ namespace ScriptCanvasEditor
                     else if (entryType == azrtti_typeid<ScriptEvents::ScriptEventsAsset>())
                     {
                         const AZ::Data::AssetId& assetId = productEntry->GetAssetId();
- 
+
                         auto elementIter = m_scriptEventElementTreeItems.find(assetId.m_guid);
                         if (elementIter == m_scriptEventElementTreeItems.end())
                         {
@@ -491,7 +492,7 @@ namespace ScriptCanvasEditor
 
                     m_monitoredAssets.emplace(asset->GetId(), asset);
                 }
-                else 
+                else
                 {
                     RequestBuildChildrenFromSubgraphInterface(treePaletteIter->second, asset);
                     treePaletteIter->second->ClearError();
@@ -552,7 +553,7 @@ namespace ScriptCanvasEditor
 
             NodePaletteTreeItem* categoryRoot = GetCategoryNode(category.c_str());
             auto functionCategory = categoryRoot->CreateChildNode<NodePaletteTreeItem>(name.c_str(), ScriptCanvasEditor::AssetEditorId);
-            RequestBuildChildrenFromSubgraphInterface(functionCategory, asset);            
+            RequestBuildChildrenFromSubgraphInterface(functionCategory, asset);
             m_globalFunctionTreeItems[asset->GetId()] = functionCategory;
             categoryRoot->SetEnabled(true);
         }

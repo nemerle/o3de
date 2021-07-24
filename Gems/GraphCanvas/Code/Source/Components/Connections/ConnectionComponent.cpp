@@ -12,6 +12,8 @@
 #include <QToolTip>
 
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Components/Connections/ConnectionComponent.h>
 
@@ -145,7 +147,7 @@ namespace GraphCanvas
         entity->CreateComponent<ConnectionVisualComponent>();
 
         return entity;
-    }    
+    }
 
     ConnectionComponent::ConnectionComponent()
         : m_dragContext(DragContext::Unknown)
@@ -174,7 +176,7 @@ namespace GraphCanvas
     {
         ConnectionRequestBus::Handler::BusConnect(GetEntityId());
         SceneMemberRequestBus::Handler::BusConnect(GetEntityId());
-        
+
         if (m_sourceEndpoint.IsValid() && m_targetEndpoint.IsValid() && m_dragContext != DragContext::TryConnection)
         {
             m_dragContext = DragContext::Connected;
@@ -284,14 +286,14 @@ namespace GraphCanvas
     void ConnectionComponent::AnimateSourceDisplayTo(const Endpoint& sourceEndpoint, float connectionTime)
     {
         QPointF startPosition = GetSourcePosition();
-        SnapSourceDisplayTo(sourceEndpoint);        
+        SnapSourceDisplayTo(sourceEndpoint);
         m_sourceAnimator.AnimateToEndpoint(startPosition, sourceEndpoint, connectionTime);
-            
+
         if (!AZ::TickBus::Handler::BusIsConnected())
         {
             AZ::TickBus::Handler::BusConnect();
-        }        
-    }    
+        }
+    }
 
     AZ::EntityId ConnectionComponent::GetTargetSlotId() const
     {
@@ -352,7 +354,7 @@ namespace GraphCanvas
         if (!canDisplayTarget)
         {
             return;
-        }        
+        }
 
         if (m_targetEndpoint.IsValid())
         {
@@ -364,7 +366,7 @@ namespace GraphCanvas
         m_targetEndpoint = targetEndpoint;
 
         ConnectionNotificationBus::Event(GetEntityId(), &ConnectionNotifications::OnTargetSlotIdChanged, oldTarget.GetSlotId(), m_targetEndpoint.GetSlotId());
-        SlotRequestBus::Event(m_targetEndpoint.GetSlotId(), &SlotRequests::AddConnectionId, GetEntityId(), m_sourceEndpoint);        
+        SlotRequestBus::Event(m_targetEndpoint.GetSlotId(), &SlotRequests::AddConnectionId, GetEntityId(), m_sourceEndpoint);
     }
 
     void ConnectionComponent::AnimateTargetDisplayTo(const Endpoint& targetEndpoint, float connectionTime)
@@ -673,7 +675,7 @@ namespace GraphCanvas
             {
                 return;
             }
-            
+
             viewHandler->HideToastNotification(m_toastId);
             m_toastId.SetInvalid();
         }
@@ -750,7 +752,7 @@ namespace GraphCanvas
             connectionGraphicsItem->removeSceneEventFilter(m_eventFilter);
             delete m_eventFilter;
             m_eventFilter = nullptr;
-            
+
             connectionGraphicsItem->setOpacity(1.0f);
             connectionGraphicsItem->ungrabMouse();
 
@@ -896,7 +898,7 @@ namespace GraphCanvas
                     if (newConnectionEndpoint.IsValid())
                     {
                         canCreateConnection = true;
-                        endpoint = newConnectionEndpoint;                        
+                        endpoint = newConnectionEndpoint;
                     }
                 }
                 else
@@ -907,7 +909,7 @@ namespace GraphCanvas
 
             if (canCreateConnection)
             {
-                candidate.m_connectableTarget = endpoint;                
+                candidate.m_connectableTarget = endpoint;
                 break;
             }
         }
@@ -959,10 +961,10 @@ namespace GraphCanvas
             else
             {
                 DisplayConnectionToolTip(position, connectionCandidate.m_testedTarget);
-                
+
                 AZ::EntityId groupTarget;
                 SceneRequestBus::EventResult(groupTarget, GetScene(), &SceneRequests::FindTopmostGroupAtPoint, m_mousePoint);
-                SetGroupTarget(groupTarget);                
+                SetGroupTarget(groupTarget);
             }
 
             if (updateConnection)
@@ -1013,7 +1015,7 @@ namespace GraphCanvas
 
             AZStd::unordered_set<AZ::EntityId> deletion;
             deletion.insert(connectionId);
-            
+
             SceneRequestBus::Event(graphId, &SceneRequests::Delete, deletion);
             if (preventUndoState)
             {
@@ -1081,7 +1083,7 @@ namespace GraphCanvas
             // This just looks weird, so we won't do it.
             if (m_endpointTooltip.IsValid())
             {
-                // If we are pointing at an extender slot. Don't investigate the reason for a failure.                
+                // If we are pointing at an extender slot. Don't investigate the reason for a failure.
                 if (ExtenderSlotRequestBus::FindFirstHandler(m_endpointTooltip.GetSlotId()) != nullptr)
                 {
                     return;
@@ -1110,7 +1112,7 @@ namespace GraphCanvas
 
                 QPointF connectionPoint;
                 SlotUIRequestBus::EventResult(connectionPoint, m_endpointTooltip.GetSlotId(), &SlotUIRequests::GetConnectionPoint);
-                
+
                 AZ::Vector2 globalConnectionVector = ConversionUtils::QPointToVector(connectionPoint);
                 globalConnectionVector = viewHandler->MapToGlobal(globalConnectionVector);
 

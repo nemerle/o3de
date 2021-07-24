@@ -9,40 +9,35 @@
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <SceneAPI/SceneData/Rules/ScriptProcessorRule.h>
 
-namespace AZ
+namespace AZ::SceneAPI::SceneData
 {
-    namespace SceneAPI
+    const AZStd::string& ScriptProcessorRule::GetScriptFilename() const
     {
-        namespace SceneData
+        return m_scriptFilename;
+    }
+
+    void ScriptProcessorRule::Reflect(AZ::ReflectContext* context)
+    {
+        AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
+        if (serializeContext)
         {
-            const AZStd::string& ScriptProcessorRule::GetScriptFilename() const
-            {
-                return m_scriptFilename;
-            }
+            serializeContext->Class<ScriptProcessorRule, DataTypes::IScriptProcessorRule>()->Version(1)->Field(
+                "scriptFilename", &ScriptProcessorRule::m_scriptFilename);
 
-            void ScriptProcessorRule::Reflect(AZ::ReflectContext* context)
+            AZ::EditContext* editContext = serializeContext->GetEditContext();
+            if (editContext)
             {
-                AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
-                if (serializeContext)
-                {
-                    serializeContext->Class<ScriptProcessorRule, DataTypes::IScriptProcessorRule>()->Version(1)
-                        ->Field("scriptFilename", &ScriptProcessorRule::m_scriptFilename);
-
-                    AZ::EditContext* editContext = serializeContext->GetEditContext();
-                    if (editContext)
-                    {
-                        editContext->Class<ScriptProcessorRule>("ScriptProcessorRule", "Script rule settings to process a scene asset file")
-                            ->ClassElement(Edit::ClassElements::EditorData, "")
-                            ->Attribute("AutoExpand", true)
-                            ->Attribute(AZ::Edit::Attributes::NameLabelOverride, "")
-                            ->DataElement(0, &ScriptProcessorRule::m_scriptFilename, "scriptFilename",
-                                "Relative path to scene processor Python script.");
-                    }
-                }
+                editContext->Class<ScriptProcessorRule>("ScriptProcessorRule", "Script rule settings to process a scene asset file")
+                    ->ClassElement(Edit::ClassElements::EditorData, "")
+                    ->Attribute("AutoExpand", true)
+                    ->Attribute(AZ::Edit::Attributes::NameLabelOverride, "")
+                    ->DataElement(
+                        0, &ScriptProcessorRule::m_scriptFilename, "scriptFilename", "Relative path to scene processor Python script.");
             }
-        } // SceneData
-    } // SceneAPI
-} // AZ
+        }
+    }
+} // namespace AZ::SceneAPI::SceneData

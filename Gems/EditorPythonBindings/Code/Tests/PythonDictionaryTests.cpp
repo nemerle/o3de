@@ -17,6 +17,8 @@
 
 #include <AzCore/Math/Vector3.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 
 namespace UnitTest
@@ -58,7 +60,7 @@ namespace UnitTest
         MapOf<AZStd::string, AZStd::string> m_indexOfStringToString { {"hello", "foo"}, {"world", "bar"}, {"bye", "baz"}, {"sky", "qux"} };
         MapOf<AZStd::string, AZ::Vector3> m_indexOfStringToVec3{ {"up", AZ::Vector3{ 0, 1.0, 0 }}, {"down", AZ::Vector3{0, -1.0, 0}},
                                                                  {"left", AZ::Vector3{1.0, 0, 0}}, {"right", AZ::Vector3{-1, 0, 0}} };
-        
+
         void Reflect(AZ::ReflectContext* context)
         {
             if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -253,7 +255,7 @@ namespace UnitTest
 
                 test = azlmbr.object.create('PythonReflectionDictionaryTypes')
 
-                mismatchMap = {'one': 1, 'two': 2}      
+                mismatchMap = {'one': 1, 'two': 2}
                 test.accept_dict_of_stringToString(mismatchMap)
             )");
         }

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Asset/AssetCommon.h>
+#include <AzCore/Asset/AssetBus.h>
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/Serialization/ObjectStream.h>
 #include <AzFramework/Entity/EntityOwnershipServiceBus.h>
@@ -32,7 +33,7 @@ namespace AzFramework
 
     class EntityOwnershipService
         : public AZ::Data::AssetBus::MultiHandler
-    {   
+    {
     public:
         using EntityIdToEntityIdMap = AZStd::unordered_map<AZ::EntityId, AZ::EntityId>;
 
@@ -60,14 +61,14 @@ namespace AzFramework
 
         /**
          * Gets the entities in entity ownership service that do not belong to a prefab.
-         * 
+         *
          * \param entityList The entity list to add the entities to.
          */
         virtual void GetNonPrefabEntities(EntityList& entityList) = 0;
 
         /**
          * Gets all entities, including those that are owned by prefabs in the entity ownership service.
-         * 
+         *
          * \param entityList The entity list to add the entities to.
          * \return bool whether fetching entities was successful.
          */
@@ -75,7 +76,7 @@ namespace AzFramework
 
         /**
          * Instantiates all the prefabs that are in the entity ownership service.
-         * 
+         *
          */
         virtual void InstantiateAllPrefabs() = 0;
 
@@ -84,7 +85,7 @@ namespace AzFramework
         virtual bool LoadFromStream(AZ::IO::GenericStream& stream, bool remapIds,
             EntityIdToEntityIdMap* idRemapTable = nullptr,
             const AZ::ObjectStream::FilterDescriptor& filterDesc = AZ::ObjectStream::FilterDescriptor()) = 0;
-        
+
         virtual void SetEntitiesAddedCallback(OnEntitiesAddedCallback onEntitiesAddedCallback) = 0;
         virtual void SetEntitiesRemovedCallback(OnEntitiesRemovedCallback onEntitiesRemovedCallback) = 0;
         virtual void SetValidateEntitiesCallback(ValidateEntitiesCallback validateEntitiesCallback) = 0;

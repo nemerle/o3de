@@ -11,6 +11,7 @@
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include "SubgraphInterfaceUtility.h"
 
 namespace SlotExecutionMapCpp
@@ -35,7 +36,7 @@ namespace SlotExecutionMapCpp
         auto iter = find_if(ins, [&slotId](const In& in) { return in.slotId == slotId; });
         return iter != ins.end() ? iter : nullptr;
     }
-    
+
     In* FindInBySlotId(SlotId inSlotId, Ins& ins)
     {
         if (auto in = FindInBySlotIdNoError(inSlotId, ins))
@@ -67,7 +68,7 @@ namespace SlotExecutionMapCpp
 namespace ScriptCanvas
 {
     namespace SlotExecution
-    {          
+    {
         using namespace SlotExecutionMapCpp;
 
         Input::Input(const SlotId& slotId)
@@ -319,7 +320,7 @@ namespace ScriptCanvas
         {
             return FindInBySlotIdNoError(inName, const_cast<Ins&>(m_ins));
         }
-        
+
         const Inputs* Map::GetInput(SlotId slotId) const
         {
             if (auto in = FindInFromSlotId(slotId))
@@ -348,7 +349,7 @@ namespace ScriptCanvas
             {
                 return &(latent->outputs);
             }
-            
+
             return nullptr;
         }
 
@@ -378,7 +379,7 @@ namespace ScriptCanvas
             {
                 return &out->outputs;
             }
-            
+
             return nullptr;
         }
 
@@ -388,7 +389,7 @@ namespace ScriptCanvas
             {
                 return &out->outputs;
             }
-            
+
             return nullptr;
         }
 
@@ -398,7 +399,7 @@ namespace ScriptCanvas
             {
                 return &in->outs;
             }
-            
+
             return nullptr;
         }
 
@@ -431,7 +432,7 @@ namespace ScriptCanvas
 
             return nullptr;
         }
-        
+
         AZ::Outcome<bool> Map::IsBranch(SlotId inName) const
         {
             if (auto in = GetIn(inName))
@@ -441,7 +442,7 @@ namespace ScriptCanvas
             else
             {
                 return AZ::Failure();
-            }          
+            }
         }
 
         bool Map::IsEmpty() const
@@ -512,7 +513,7 @@ namespace ScriptCanvas
                     ->Field("_returnValues", &Out::returnValues)
                     ->Field("_interfaceSourceId", &Out::interfaceSourceId)
                     ;
-            
+
                 serializeContext->Class<In>()
                     ->Version(1)
                     ->Field("_slotId", &In::slotId)
@@ -530,4 +531,4 @@ namespace ScriptCanvas
             }
         }
     }
-} 
+}

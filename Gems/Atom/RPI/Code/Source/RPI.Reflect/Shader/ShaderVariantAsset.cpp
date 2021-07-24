@@ -7,12 +7,14 @@
  */
 #include <Atom/RPI.Reflect/Shader/ShaderVariantAsset.h>
 #include <Atom/RPI.Reflect/Shader/ShaderCommonTypes.h>
-
 #include <AzCore/Casting/numeric_cast.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/algorithm.h>
 
 #include <Atom/RPI.Reflect/Shader/ShaderCommonTypes.h>
+#include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 #include <Atom/RHI.Reflect/ShaderStageFunction.h>
 #include <Atom/RHI.Reflect/Limits.h>
 
@@ -106,6 +108,6 @@ namespace AZ
                 return true;
             }
             return false;
-        }   
+        }
     } // namespace RPI
 } // namespace AZ

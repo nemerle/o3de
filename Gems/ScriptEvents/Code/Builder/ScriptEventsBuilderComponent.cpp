@@ -11,6 +11,8 @@
 #include <AssetBuilderSDK/AssetBuilderBusses.h>
 #include <AzToolsFramework/ToolsComponents/ToolsAssetCatalogBus.h>
 #include <ScriptEvents/ScriptEventsAsset.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptEventsBuilder
 {
@@ -18,17 +20,17 @@ namespace ScriptEventsBuilder
     {
         provided.push_back(AZ_CRC("ScriptEventsBuilderService", 0x049e945c));
     }
-    
+
     void ScriptEventsBuilderComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
-    
+
     void ScriptEventsBuilderComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));
     }
-    
+
     void ScriptEventsBuilderComponent::Activate()
     {
         // Register ScriptEvents Builder
@@ -58,7 +60,7 @@ namespace ScriptEventsBuilder
     {
         // Finish all queued work
         AZ::Data::AssetBus::ExecuteQueuedEvents();
-        
+
         AzToolsFramework::ToolsAssetSystemBus::Broadcast(&AzToolsFramework::ToolsAssetSystemRequests::UnregisterSourceAssetType, azrtti_typeid<ScriptEvents::ScriptEventsAsset>());
 
         m_scriptEventsBuilder.Deactivate();

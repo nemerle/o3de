@@ -9,6 +9,8 @@
 #include <AzFramework/StringFunc/StringFunc.h>
 
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Editor/Assets/ScriptCanvasAssetTrackerBus.h>
 #include <Editor/GraphCanvas/GraphCanvasEditorNotificationBusId.h>
@@ -267,7 +269,7 @@ namespace ScriptCanvasEditor
             {
                 AZStd::string relativePath = assetInfo.m_relativePath;
                 AZStd::string fileName;
-                    
+
                 if (AzFramework::StringFunc::Path::GetFileName(relativePath.c_str(), fileName))
                 {
                     AzFramework::StringFunc::Path::Normalize(relativePath);

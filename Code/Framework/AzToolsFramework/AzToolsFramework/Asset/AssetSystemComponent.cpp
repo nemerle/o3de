@@ -6,17 +6,18 @@
  *
  */
 
-#include <AzCore/IO/FileIO.h>
-
-#include <AzCore/RTTI/BehaviorContext.h>
-#include <AzFramework/Asset/AssetProcessorMessages.h>
-#include <AzFramework/Network/AssetProcessorConnection.h>
+#include <AzToolsFramework/Asset/AssetSystemComponent.h>
 
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
 #include <AzToolsFramework/Asset/AssetProcessorMessages.h>
-#include <AzToolsFramework/Asset/AssetSystemComponent.h>
 #include <AzToolsFramework/AssetEditor/AssetEditorBus.h>
+#include <AzFramework/Asset/AssetProcessorMessages.h>
+#include <AzFramework/Network/AssetProcessorConnection.h>
+#include <AzCore/IO/FileIO.h>
 #include <AzCore/PlatformIncl.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AzToolsFramework
 {
@@ -88,7 +89,7 @@ namespace AzToolsFramework
                 {
                     AZ_Error("Editor", false, "GetAssetJobsInfo request failed, no AssetId or search term was provided");
                 }
-                
+
                 return AZ::Failure();
             }
 

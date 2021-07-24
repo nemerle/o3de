@@ -11,6 +11,8 @@
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzFramework/StringFunc/StringFunc.h>
@@ -209,8 +211,8 @@ namespace AzToolsFramework
     {
         bool found = false;
         bool succeeded = m_databaseConnection->QueryDependsOnSourceBySourceDependency(
-            relativePath.c_str(),"%.slice", 
-            AzToolsFramework::AssetDatabase::SourceFileDependencyEntry::DEP_SourceOrJob, 
+            relativePath.c_str(),"%.slice",
+            AzToolsFramework::AssetDatabase::SourceFileDependencyEntry::DEP_SourceOrJob,
             [&](AssetDatabase::SourceFileDependencyEntry& entry)
         {
             found = true;

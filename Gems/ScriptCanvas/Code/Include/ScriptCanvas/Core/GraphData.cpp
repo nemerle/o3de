@@ -11,6 +11,7 @@
 #include <ScriptCanvas/Core/GraphData.h>
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

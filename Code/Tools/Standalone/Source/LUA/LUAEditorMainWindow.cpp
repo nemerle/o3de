@@ -43,6 +43,8 @@
 #include <Source/AssetDatabaseLocationListener.h>
 #include <Source/LUA/ui_LUAEditorMainWindow.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzQtComponents/Components/FilteredSearchWidget.h>
 #include <AzQtComponents/Components/StyleManager.h>
 
@@ -1559,7 +1561,7 @@ namespace LUAEditor
                 }
             }
         }
-        
+
         return willShutDown;
     }
 

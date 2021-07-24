@@ -51,6 +51,20 @@ namespace AZ
                 AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
         };
     } // namespace Render
+
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename R, typename S, typename T>
+    struct SerializeGenericTypeInfo<Render::EditorRenderComponentAdapter<R, S, T>>
+        : SerializeGenericTypeInfoImpl<Render::EditorRenderComponentAdapter<R, S, T>>
+    {
+        // treat EditorRenderComponentAdapter as generic value type
+    };
+
 } // namespace AZ
 
 #include <Atom/Feature/Utils/EditorRenderComponentAdapter.inl>

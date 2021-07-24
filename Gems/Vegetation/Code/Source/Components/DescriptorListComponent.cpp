@@ -8,11 +8,13 @@
 
 #include "DescriptorListComponent.h"
 #include <AzCore/Asset/AssetManagerBus.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <LmbrCentral/Dependency/DependencyNotificationBus.h>
 #include <Vegetation/Ebuses/InstanceSystemRequestBus.h>
 #include <SurfaceData/Utility/SurfaceDataUtility.h>

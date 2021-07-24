@@ -9,6 +9,8 @@
 #include <AzCore/Module/DynamicModuleHandle.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Source/SceneProcessingModule.h>
 
 #include <SceneAPI/SceneCore/DataTypes/GraphData/IAnimationData.h>
@@ -34,7 +36,7 @@ namespace AZ
             ActivateSceneModule(SceneProcessing::s_sceneCoreModule);
             ActivateSceneModule(SceneProcessing::s_sceneDataModule);
             ActivateSceneModule(SceneProcessing::s_sceneBuilderModule);
-            
+
             // Defaults in case there's no config setup in the Project Configurator.
             m_softNames.push_back(aznew NodeSoftNameSetting("^.*_[Ll][Oo][Dd]1(_optimized)?$", PatternMatcher::MatchApproach::Regex, "LODMesh1", true));
             m_softNames.push_back(aznew NodeSoftNameSetting("^.*_[Ll][Oo][Dd]2(_optimized)?$", PatternMatcher::MatchApproach::Regex, "LODMesh2", true));
@@ -153,7 +155,7 @@ namespace AZ
             {
                 serialize->Class<SceneProcessingConfigSystemComponent, AZ::Component>()
                     ->Version(2)
-                    ->EventHandler<SceneProcessingConfigSystemComponentSerializationEvents>() 
+                    ->EventHandler<SceneProcessingConfigSystemComponentSerializationEvents>()
                     ->Field("softNames", &SceneProcessingConfigSystemComponent::m_softNames)
                     ->Field("useCustomNormals", &SceneProcessingConfigSystemComponent::m_UseCustomNormals);
 
@@ -194,7 +196,7 @@ namespace AZ
             AZ_UNUSED(dependent);
         }
 
-        void SceneProcessingConfigSystemComponent::ReflectSceneModule(AZ::ReflectContext* context, 
+        void SceneProcessingConfigSystemComponent::ReflectSceneModule(AZ::ReflectContext* context,
             const AZStd::unique_ptr<AZ::DynamicModuleHandle>& module)
         {
             using ReflectFunc = void(*)(AZ::SerializeContext*);

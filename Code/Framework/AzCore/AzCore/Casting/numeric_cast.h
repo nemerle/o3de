@@ -18,7 +18,8 @@
 #include <AzCore/std/typetraits/is_unsigned.h>
 #include <AzCore/std/typetraits/remove_cvref.h>
 #include <AzCore/std/typetraits/underlying_type.h>
-#include <AzCore/std/utils.h>
+#include <AzCore/std/typetraits/conditional.h>
+#include <AzCore/std/typetraits/is_convertible.h>
 #include <limits>
 
 /*

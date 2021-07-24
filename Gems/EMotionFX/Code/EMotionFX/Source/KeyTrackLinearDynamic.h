@@ -40,7 +40,7 @@ namespace EMotionFX
 
     public:
         AZ_TYPE_INFO_LEGACY(EMotionFX::KeyTrackLinear, "{8C6EB52A-9720-467B-9D96-B4B967A113D1}", StorageType)
-            
+
         /**
          * Default constructor.
          */
@@ -273,3 +273,20 @@ namespace EMotionFX
     // include keytrack inline code
 #include "KeyTrackLinearDynamic.inl"
 } // namespace EMotionFX
+
+namespace AZ
+{
+    class ReflectContext;
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename S, typename T>
+    struct SerializeGenericTypeInfo<EMotionFX::KeyTrackLinearDynamic<S, T>>
+        : SerializeGenericTypeInfoImpl<EMotionFX::KeyTrackLinearDynamic<S, T>>
+    {
+        // treat EMotionFX::KeyTrackLinearDynamic as generic value type
+    };
+} // namespace AZ

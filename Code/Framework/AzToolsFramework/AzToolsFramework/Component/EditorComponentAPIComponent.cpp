@@ -8,8 +8,6 @@
 
 #include <AzToolsFramework/Component/EditorComponentAPIComponent.h>
 
-#include <AzCore/RTTI/BehaviorContext.h>
-#include <AzCore/Serialization/Utils.h>
 
 #include <AzToolsFramework/API/EntityCompositionRequestBus.h>
 #include <AzToolsFramework/ToolsComponents/EditorDisabledCompositionBus.h>
@@ -18,6 +16,10 @@
 #include <AzToolsFramework/UI/PropertyEditor/InstanceDataHierarchy.h>
 #include <AzToolsFramework/UI/PropertyEditor/PropertyEditorAPI.h>
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AzToolsFramework
 {
@@ -251,7 +253,7 @@ namespace AzToolsFramework
             });
 
             AZ_Warning("EditorComponentAPI", (counter >= typesCount), "FindComponentTypeNames - Not all Type Ids provided could be converted to Type Names.");
-            
+
             return foundTypeNames;
         }
 
@@ -315,7 +317,7 @@ namespace AzToolsFramework
             {
                 return AddComponentsOutcome( AZStd::string("AddComponentsOfType - AddComponentsToEntities failed (") + outcome.GetError().c_str() + ")." );
             }
-           
+
             auto entityToComponentMap = outcome.GetValue();
 
             if (entityToComponentMap.find(entityId) == entityToComponentMap.end() || entityToComponentMap[entityId].m_componentsAdded.size() == 0)
@@ -323,7 +325,7 @@ namespace AzToolsFramework
                 AZ_Warning("EditorComponentAPI", false, "Malformed result from AddComponentsToEntities.");
                 return AddComponentsOutcome( AZStd::string("Malformed result from AddComponentsToEntities.") );
             }
-            
+
             AZStd::vector<AZ::EntityComponentIdPair> componentIds;
             for (AZ::Component* component : entityToComponentMap[entityId].m_componentsAdded)
             {
@@ -423,7 +425,7 @@ namespace AzToolsFramework
                     return false;
                 }
             }
-            
+
             return true;
         }
 
@@ -507,7 +509,7 @@ namespace AzToolsFramework
 
             EditorEntityActionComponent::RemoveComponentsOutcome outcome;
             EntityCompositionRequestBus::BroadcastResult(outcome, &EntityCompositionRequests::RemoveComponents, components);
-            
+
             if (!outcome.IsSuccess())
             {
                 AZ_Warning("EditorComponentAPI", false, "RemoveComponents failed - components could not be removed from entity.");

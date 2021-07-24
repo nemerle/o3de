@@ -9,6 +9,8 @@
 
 // AZ
 #include <AzCore/std/smart_ptr/make_shared.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 // Graph Canvas
 #include <GraphCanvas/Widgets/NodePalette/TreeItems/DraggableNodePaletteTreeItem.h>
@@ -104,3 +106,26 @@ namespace GraphModelIntegration
         AZStd::shared_ptr<GraphModel::DataType> m_dataType;
     };
 }
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename T>
+    struct SerializeGenericTypeInfo<GraphModelIntegration::CreateInputOutputNodeMimeEvent<T>>
+        : SerializeGenericTypeInfoImpl<GraphModelIntegration::CreateInputOutputNodeMimeEvent<T>>
+    {
+        // treat CreateInputOutputNodeMimeEvent as generic value type
+    };
+    template<typename T>
+    struct SerializeGenericTypeInfo<GraphModelIntegration::InputOutputNodePaletteItem<T>>
+        : SerializeGenericTypeInfoImpl<GraphModelIntegration::InputOutputNodePaletteItem<T>>
+    {
+        // treat InputOutputNodePaletteItem as generic value type
+    };
+
+} // namespace AZ

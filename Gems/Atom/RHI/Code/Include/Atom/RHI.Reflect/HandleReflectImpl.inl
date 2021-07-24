@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) Contributors to the Open 3D Engine Project.
  * For complete copyright and license terms please see the LICENSE at the root of this distribution.
  *
@@ -36,15 +36,4 @@ namespace AZ
             }
         }
     }
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template< typename T>
-    struct SerializeGenericTypeInfo;
-    
-    template <typename T, typename NamespaceType>
-    struct SerializeGenericTypeInfo<RHI::Handle<T, NamespaceType>> : SerializeGenericTypeInfoImpl<RHI::Handle<T, NamespaceType>>
-    {
-        //treat Handle as generic value type
-    };
 }

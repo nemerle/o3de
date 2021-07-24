@@ -9,6 +9,7 @@
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzFramework/Physics/PhysicsSystem.h>
 #include <AzToolsFramework/UI/PropertyEditor/PropertyEditorAPI.h>

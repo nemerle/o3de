@@ -10,6 +10,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <EMotionFX/Source/Parameter/StringParameter.h>
 #include <EMotionStudio/EMStudioSDK/Source/Allocators.h>
 #include <MCore/Source/AttributeString.h>

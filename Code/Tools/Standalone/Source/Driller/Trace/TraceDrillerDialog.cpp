@@ -15,6 +15,7 @@
 #include <AzToolsFramework/UI/UICore/QWidgetSavedState.h>
 #include <AzCore/UserSettings/UserSettingsComponent.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Source/Driller/Workspaces/Workspace.h>
 
 #include <QSortFilterProxyModel>

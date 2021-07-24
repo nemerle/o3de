@@ -7,6 +7,8 @@
  */
 #include "PropertyButtonCtrl.hxx"
 #include "PropertyQTConstants.h"
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <QtWidgets/QPushButton>
 AZ_PUSH_DISABLE_WARNING(4251, "-Wunknown-warning-option") // 4251: 'QLayoutItem::align': class 'QFlags<Qt::AlignmentFlag>' needs to have dll-interface to be used by clients of class 'QLayoutItem'
 #include <QtWidgets/QHBoxLayout>
@@ -41,7 +43,7 @@ namespace AzToolsFramework
         });
 
         connect(m_button, &QPushButton::released, this, [this]()
-        { 
+        {
             Q_EMIT buttonPressed();
             // return context menu to default behavior
             setContextMenuPolicy(Qt::DefaultContextMenu);
@@ -70,7 +72,7 @@ namespace AzToolsFramework
                 break;
             }
         }
-        
+
         return QWidget::eventFilter(object, event);
     }
 
@@ -154,7 +156,7 @@ namespace AzToolsFramework
     {
         ConsumeAttributeCommon(widget, attrib, attrValue, debugName);
     }
-    
+
     void ButtonBoolHandler::WriteGUIValuesIntoProperty(size_t /*index*/, PropertyButtonCtrl* /*GUI*/, property_t& /*instance*/, InstanceDataNode* /*node*/)
     {
     }
@@ -168,7 +170,7 @@ namespace AzToolsFramework
 
         return true;
     }
-        
+
     QWidget* ButtonStringHandler::CreateGUI(QWidget* pParent)
     {
         return CreateGUICommon(pParent);
@@ -178,7 +180,7 @@ namespace AzToolsFramework
     {
         ConsumeAttributeCommon(widget, attrib, attrValue, debugName);
     }
-    
+
     void ButtonStringHandler::WriteGUIValuesIntoProperty(size_t /*index*/, PropertyButtonCtrl* /*GUI*/, property_t& /*instance*/, InstanceDataNode* /*node*/)
     {
     }

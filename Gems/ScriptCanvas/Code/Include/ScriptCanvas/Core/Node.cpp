@@ -14,6 +14,7 @@
 #include <AzCore/Component/EntityUtils.h>
 #include <AzCore/RTTI/AttributeReader.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Serialization/IdUtils.h>
 #include <AzCore/Asset/AssetManagerBus.h>
@@ -45,7 +46,7 @@ namespace NodeCpp
 
         // add your named version above
         Current,
-    }; 
+    };
 }
 
 namespace ScriptCanvas
@@ -259,7 +260,7 @@ namespace ScriptCanvas
             // Create a variable mapping to the previous datum iterators for easier lookup
             AZStd::unordered_map<VariableId, typename AZStd::list<Deprecated::VariableDatumBase>::iterator> variableIdMap;
 
-            for (auto varIter = varDatums.begin(); varIter != varDatums.end(); ++varIter)            
+            for (auto varIter = varDatums.begin(); varIter != varDatums.end(); ++varIter)
             {
                 variableIdMap[varIter->GetId()] = varIter;
             }
@@ -299,7 +300,7 @@ namespace ScriptCanvas
                 Slot& slotReference = (*slotIter->second);
 
                 Deprecated::VariableInfo variableInfo = mapPair.second;
-                
+
                 // If the slot reference is an output. We don't want to register a datum for it, we just want to set the display
                 // type of the slot to the correct element.
                 if (slotReference.IsOutput())
@@ -402,7 +403,7 @@ namespace ScriptCanvas
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
         if (serializeContext)
         {
-            // Needed to serialize in the AZStd::vector<Slot> from the old SlotContainer class 
+            // Needed to serialize in the AZStd::vector<Slot> from the old SlotContainer class
             serializeContext->RegisterGenericType<AZStd::vector<Slot>>();
 
             // Needed to serialize in the AZStd::vector<Datum> from this class
@@ -412,7 +413,7 @@ namespace ScriptCanvas
             serializeContext->RegisterGenericType<AZStd::vector<Data::Type>>();
 
             // Needed to serialize in the AZStd::unordered<int, int> from version 5 and below
-            serializeContext->RegisterGenericType<AZStd::unordered_map<int, int>>();            
+            serializeContext->RegisterGenericType<AZStd::unordered_map<int, int>>();
 
             // Needed to serialize in the AZStd::list<Deprecated::VariableDatumBase> from version 6 and below
             serializeContext->RegisterGenericType<AZStd::list<Deprecated::VariableDatum>>();
@@ -626,7 +627,7 @@ namespace ScriptCanvas
         {
             IteratorCache cache;
 
-            cache.m_slotIterator = slotIter;            
+            cache.m_slotIterator = slotIter;
 
             // Manage the datum iterator here as well
             if (slotIter->IsData() && slotIter->IsInput())
@@ -717,7 +718,7 @@ namespace ScriptCanvas
                 // for each output slot...
                 // for each connected node...
                 // remove the ability to default it...
-                
+
                 EndpointsResolved connections = GetConnectedNodes(inputSlot);
                 if (!connections.empty())
                 {
@@ -836,7 +837,7 @@ namespace ScriptCanvas
 
     GraphVariable* Node::FindGraphVariable(const VariableId& variableId) const
     {
-        return m_graphRequestBus->FindVariableById(variableId);      
+        return m_graphRequestBus->FindVariableById(variableId);
     }
 
     void Node::OnSlotConvertedToValue(const SlotId& slotId)
@@ -1199,7 +1200,7 @@ namespace ScriptCanvas
     bool Node::CanDeleteSlot([[maybe_unused]] const SlotId& slotId) const
     {
         return false;
-    }    
+    }
 
     SlotId Node::HandleExtension(AZ::Crc32 extensionId)
     {
@@ -1250,8 +1251,8 @@ namespace ScriptCanvas
 
     void Node::SignalReconfigurationEnd()
     {
-        
-        OnReconfigurationEnd();        
+
+        OnReconfigurationEnd();
     }
 
     Signal Node::CreateNodeInputSignal(const SlotId& slotId) const
@@ -1658,7 +1659,7 @@ namespace ScriptCanvas
             else
             {
                 AZ_Error("ScriptCanvas", slot->CanConvertToReference(), "Could not convert Slot into a reference. Aborting SetVariableId attempt.");
-            }            
+            }
         }
     }
 
@@ -1742,7 +1743,7 @@ namespace ScriptCanvas
             for (const auto& updatePair : m_queuedDisplayUpdates)
             {
                 SetDisplayType(updatePair.first, updatePair.second);
-            }            
+            }
         }
     }
 
@@ -1840,7 +1841,7 @@ namespace ScriptCanvas
 
         if (slotIter != m_slotIdIteratorCache.end())
         {
-            
+
             if (slotIter->second.HasDatum())
             {
                 datumView.ConfigureView((*slotIter->second.GetDatum()));
@@ -1959,7 +1960,7 @@ namespace ScriptCanvas
                 return &(*slotNameIter->second);
             }
         }
-        
+
         return nullptr;
     }
 
@@ -2062,10 +2063,10 @@ namespace ScriptCanvas
 
                     storageDatum.SetLabel(slotConfig.m_name);
                     storageDatum.SetNotificationsTarget(GetEntityId());
-                    
+
                     DatumIterator insertionPoint = m_slotDatums.end();
 
-                    if (index >= 0)                    
+                    if (index >= 0)
                     {
                         insertionPoint = m_slotDatums.begin();
 
@@ -2153,7 +2154,7 @@ namespace ScriptCanvas
             {
                 m_slotDatums.erase(iteratorCache.GetDatumIter());
                 iteratorCache.ClearIterator();
-            }            
+            }
 
             m_slotIdIteratorCache.erase(slotIter);
 
@@ -2392,7 +2393,7 @@ namespace ScriptCanvas
         }
 
         return true;
-    }    
+    }
 
     Graph* Node::GetGraph() const
     {
@@ -2415,7 +2416,7 @@ namespace ScriptCanvas
         for (const auto& endpoint : GetAllEndpointsByDescriptor(slotDescriptor, followLatentConnections))
         {
             Node* connectedNode = m_graphRequestBus->FindNode(endpoint.GetNodeId());
-            
+
             if (connectedNode)
             {
                 connectedNodes.emplace_back(connectedNode);
@@ -2434,7 +2435,7 @@ namespace ScriptCanvas
         for (const auto& endpoint : GetAllEndpointsByDescriptor(slotDescriptor, followLatentConnections))
         {
             Node* connectedNode = m_graphRequestBus->FindNode(endpoint.GetNodeId());
-            
+
             if (connectedNode)
             {
                 connectedNodes.emplace_back(AZStd::make_pair(connectedNode, endpoint.GetSlotId()));
@@ -2613,7 +2614,7 @@ namespace ScriptCanvas
         if (slotId.IsValid())
         {
             NodeNotificationsBus::Event((GetEntity() != nullptr) ? GetEntityId() : AZ::EntityId(), &NodeNotifications::OnSlotInputChanged, slotId);
-        }        
+        }
     }
 
     void Node::OnEndpointConnected(const Endpoint& endpoint)
@@ -2753,7 +2754,7 @@ namespace ScriptCanvas
         }
 
         return datum;
-    }    
+    }
 
     void Node::FindModifiableDatumView(const SlotId& slotId, ModifiableDatumView& datumView)
     {
@@ -2825,9 +2826,9 @@ namespace ScriptCanvas
         const Slot* slot = GetSlot(slotId);
         return slot && IsConnected((*slot));
     }
-    
+
     bool Node::HasConnectionForDescriptor(const SlotDescriptor& slotDescriptor) const
-    {        
+    {
         for (const auto& slot : m_slots)
         {
             if (slot.GetDescriptor() == slotDescriptor)
@@ -2841,7 +2842,7 @@ namespace ScriptCanvas
 
         return false;
     }
-    
+
     bool Node::IsPureData() const
     {
         for (const auto& slot : m_slots)
@@ -2859,7 +2860,7 @@ namespace ScriptCanvas
     {
         return m_graphRequestBus;
     }
-    
+
     EndpointsResolved Node::GetConnectedNodes(const Slot& slot) const
     {
         AZ_PROFILE_SCOPE(AZ::Debug::ProfileCategory::ScriptCanvas, "ScriptCanvas::Node::GetConnectedNodes");
@@ -2874,7 +2875,7 @@ namespace ScriptCanvas
             auto node = m_graphRequestBus->FindNode(endpoint.GetNodeId());
 
             if (node == nullptr)
-            {                
+            {
                 AZStd::string assetName = m_graphRequestBus->GetAssetName();
                 AZ::EntityId assetNodeId = m_graphRequestBus->FindAssetNodeIdByRuntimeNodeId(endpoint.GetNodeId());
                 AZ_Warning("Script Canvas", false, "Unable to find node with id (id: %s) in the graph '%s'. Most likely the node was serialized with a type that is no longer reflected",
@@ -3079,7 +3080,7 @@ namespace ScriptCanvas
     {
         return AZ::Failure();
     }
-    
+
     AZ::Outcome<AZStd::string, void> Node::GetFunctionCallName(const Slot* /*slot*/) const
     {
         return AZ::Failure();

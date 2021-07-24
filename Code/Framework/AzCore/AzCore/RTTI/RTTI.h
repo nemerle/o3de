@@ -11,6 +11,7 @@
 #include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/Module/Environment.h>
 #include <AzCore/std/typetraits/is_abstract.h>
+#include <AzCore/std/typetraits/is_const.h>
 
 namespace AZStd
 {
@@ -242,7 +243,7 @@ namespace AZ
         Intrusive,
         External
     };
-    
+
     template<typename T>
     struct HasAZRttiExternal
     {
@@ -264,7 +265,7 @@ namespace AZ
      * AZ_RTTI includes the functionality of AZ_TYPE_INFO, so you don't have to declare TypeInfo it if you use AZ_RTTI
      * The syntax is AZ_RTTI(ClassName,ClassUuid,(BaseClass1..N)) you can have 0 to N base classes this will allow us
      * to perform dynamic casts and query about types.
-     * 
+     *
      *  \note A more complex use case is when you use templates where you have to group the parameters for the TypeInfo call.
      * ex. AZ_RTTI( ( (ClassName<TemplateArg1, TemplateArg2, ...>), ClassUuid, TemplateArg1, TemplateArg2, ...), BaseClass1...)
      *
@@ -287,7 +288,7 @@ namespace AZ
             struct AZ::Internal::RttiHelper<Type>                                   \
             : public AZ::Internal::ExternalVariadicRttiHelper<Type, ##__VA_ARGS__>  \
         {                                                                           \
-        };    
+        };
 
      /**
       * Interface for resolving RTTI information when no compile-time type information is available.
@@ -551,7 +552,7 @@ namespace AZ
             {
                 if (outPointer == nullptr)
                 {
-                    // For classes with Intrusive RTTI IsTypeOf is used instead as this External RTTI class does not have 
+                    // For classes with Intrusive RTTI IsTypeOf is used instead as this External RTTI class does not have
                     // virtual RTTI_AddressOf functions for looking up the correct address
                     if (HasAZRttiExternal<T2>::value)
                     {
@@ -620,7 +621,7 @@ namespace AZ
             " Specializing AzTypeInfo for a type would cause it not be used");
 
         return AZ::Internal::GetRttiHelper_Internal<ValueType>(Tag{});
-    }                                                      
+    }
 
     namespace Internal
     {
@@ -984,37 +985,37 @@ namespace AZ
     {
         return AZ::Internal::RttiTypeId<U, TypeIdResolverTag>();
     }
-    
+
     template<template<typename...> class U, typename = void>
     inline const AZ::TypeId& RttiTypeId()
     {
         return AzGenericTypeInfo::Uuid<U>();
     }
-    
+
     template<template<AZStd::size_t...> class U, typename = void>
     inline const AZ::TypeId& RttiTypeId()
     {
         return AzGenericTypeInfo::Uuid<U>();
     }
-    
+
     template<template<typename, AZStd::size_t> class U, typename = void>
     inline const AZ::TypeId& RttiTypeId()
     {
         return AzGenericTypeInfo::Uuid<U>();
     }
-    
+
     template<template<typename, typename, AZStd::size_t> class U, typename = void>
     inline const AZ::TypeId& RttiTypeId()
     {
         return AzGenericTypeInfo::Uuid<U>();
     }
-    
+
     template<template<typename, typename, typename, AZStd::size_t> class U, typename = void>
     inline const AZ::TypeId& RttiTypeId()
     {
         return AzGenericTypeInfo::Uuid<U>();
     }
-    
+
     template<class U>
     inline const AZ::TypeId& RttiTypeId(const U& data)
     {

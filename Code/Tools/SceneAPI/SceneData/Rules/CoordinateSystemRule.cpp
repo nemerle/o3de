@@ -8,6 +8,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Memory/SystemAllocator.h>
@@ -37,38 +38,38 @@ namespace AZ::SceneAPI::SceneData
                 case ZUpPositiveYForward:
                 {
                     // Source coordinate system, use identity for now, which will currently just assume LY's coordinate system.
-                    const AZ::Vector3 sourceBasisVectors[3] = { AZ::Vector3( 1.0f, 0.0f, 0.0f), 
-                                                                AZ::Vector3( 0.0f, 1.0f, 0.0f), 
+                    const AZ::Vector3 sourceBasisVectors[3] = { AZ::Vector3( 1.0f, 0.0f, 0.0f),
+                                                                AZ::Vector3( 0.0f, 1.0f, 0.0f),
                                                                 AZ::Vector3( 0.0f, 0.0f, 1.0f) };
 
                     // The target coordinate system, with X and Y inverted (rotate 180 degrees over Z)
-                    const AZ::Vector3 targetBasisVectors[3] = { AZ::Vector3(-1.0f, 0.0f, 0.0f), 
-                                                                AZ::Vector3( 0.0f,-1.0f, 0.0f), 
+                    const AZ::Vector3 targetBasisVectors[3] = { AZ::Vector3(-1.0f, 0.0f, 0.0f),
+                                                                AZ::Vector3( 0.0f,-1.0f, 0.0f),
                                                                 AZ::Vector3( 0.0f, 0.0f, 1.0f) };
 
                     // X, Y and Z are all at the same indices inside the target coordinate system, compared to the source coordinate system.
                     const AZ::u32 targetBasisIndices[3] = { 0, 1, 2 };
 
-                    m_coordinateSystemConverter = CoordinateSystemConverter::CreateFromBasisVectors(sourceBasisVectors, targetBasisVectors, targetBasisIndices);                                             
+                    m_coordinateSystemConverter = CoordinateSystemConverter::CreateFromBasisVectors(sourceBasisVectors, targetBasisVectors, targetBasisIndices);
                 }
                 break;
 
                 case ZUpNegativeYForward:
                 {
                     // Source coordinate system, use identity for now, which will currently just assume LY's coordinate system.
-                    const AZ::Vector3 sourceBasisVectors[3] = { AZ::Vector3( 1.0f, 0.0f, 0.0f), 
-                                                                AZ::Vector3( 0.0f, 1.0f, 0.0f), 
+                    const AZ::Vector3 sourceBasisVectors[3] = { AZ::Vector3( 1.0f, 0.0f, 0.0f),
+                                                                AZ::Vector3( 0.0f, 1.0f, 0.0f),
                                                                 AZ::Vector3( 0.0f, 0.0f, 1.0f) };
 
                     // The target coordinate system, which is the same as the source, so basically we won't do anything here.
-                    const AZ::Vector3 targetBasisVectors[3] = { AZ::Vector3( 1.0f, 0.0f, 0.0f), 
-                                                                AZ::Vector3( 0.0f, 1.0f, 0.0f), 
+                    const AZ::Vector3 targetBasisVectors[3] = { AZ::Vector3( 1.0f, 0.0f, 0.0f),
+                                                                AZ::Vector3( 0.0f, 1.0f, 0.0f),
                                                                 AZ::Vector3( 0.0f, 0.0f, 1.0f) };
 
                     // X, Y and Z are all at the same indices inside the target coordinate system, compared to the source coordinate system.
                     const AZ::u32 targetBasisIndices[3] = { 0, 1, 2 };
 
-                    m_coordinateSystemConverter = CoordinateSystemConverter::CreateFromBasisVectors(sourceBasisVectors, targetBasisVectors, targetBasisIndices);                                             
+                    m_coordinateSystemConverter = CoordinateSystemConverter::CreateFromBasisVectors(sourceBasisVectors, targetBasisVectors, targetBasisIndices);
                 }
                 break;
 

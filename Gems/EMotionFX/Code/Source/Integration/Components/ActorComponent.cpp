@@ -7,7 +7,9 @@
  */
 
 #include <AzCore/Component/Entity.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Math/Transform.h>
@@ -404,7 +406,7 @@ namespace EMotionFX
             AZ::TransformNotificationBus::MultiHandler::BusConnect(GetEntityId());
 
             m_actorInstance->UpdateWorldTransform();
-            // Set bounds update mode and compute bbox first time 
+            // Set bounds update mode and compute bbox first time
             m_configuration.m_bboxConfig.SetAndUpdate(m_actorInstance.get());
             m_actorInstance->UpdateBounds(0, ActorInstance::EBoundsType::BOUNDS_STATIC_BASED);
 

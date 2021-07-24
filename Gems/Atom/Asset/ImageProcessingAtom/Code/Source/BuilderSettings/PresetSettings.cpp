@@ -10,6 +10,7 @@
 #include <Processing/PixelFormatInfo.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ImageProcessingAtom
 {
@@ -94,7 +95,7 @@ namespace ImageProcessingAtom
                 ->Value("A8", EPixelFormat::ePixelFormat_A8)
                 ->Value("R16G16B16A16", EPixelFormat::ePixelFormat_R16G16B16A16)
                 ->Value("R16G16", EPixelFormat::ePixelFormat_R16G16)
-                ->Value("R16", EPixelFormat::ePixelFormat_R16)                    
+                ->Value("R16", EPixelFormat::ePixelFormat_R16)
                 ->Value("ASTC_4x4", EPixelFormat::ePixelFormat_ASTC_4x4)
                 ->Value("ASTC_5x4", EPixelFormat::ePixelFormat_ASTC_5x4)
                 ->Value("ASTC_5x5", EPixelFormat::ePixelFormat_ASTC_5x5)
@@ -283,7 +284,7 @@ namespace ImageProcessingAtom
                 ;
         }
     }
-    
+
     const PresetSettings* MultiplatformPresetSettings::GetPreset(const PlatformName& platform) const
     {
         auto itr = m_presets.find(platform);
@@ -293,12 +294,12 @@ namespace ImageProcessingAtom
         }
         return &m_defaultPreset;
     }
-        
+
     const PresetSettings& MultiplatformPresetSettings::GetDefaultPreset() const
     {
         return m_defaultPreset;
     }
-    
+
     void MultiplatformPresetSettings::ClearPlatformPresets()
     {
         m_presets.clear();
@@ -308,7 +309,7 @@ namespace ImageProcessingAtom
     {
         m_defaultPreset = preset;
     }
-    
+
     void MultiplatformPresetSettings::SetPresetForPlatform(const PresetSettings& preset, const PlatformName& platform)
     {
         AZ_Assert(!platform.empty(), "Platform string shouldn't be empty");
@@ -317,7 +318,7 @@ namespace ImageProcessingAtom
             m_presets[platform] = preset;
         }
     }
-    
+
     void MultiplatformPresetSettings::SetPresetName(const PresetName& name)
     {
         m_defaultPreset.m_name = name;

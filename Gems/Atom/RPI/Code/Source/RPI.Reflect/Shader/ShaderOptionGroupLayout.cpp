@@ -14,6 +14,7 @@
 #include <Atom/RHI.Reflect/Bits.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/std/sort.h>
 #include <AzCore/Utils/TypeHash.h>
@@ -86,15 +87,15 @@ namespace AZ
                     ->Method("GetValueName", &ShaderOptionDescriptor::GetValueName)
                     ->Method("FindValue", &ShaderOptionDescriptor::FindValue)
                     ;
-            }   
+            }
         }
 
-        ShaderOptionDescriptor::ShaderOptionDescriptor(const Name& name,            
-                                                       const ShaderOptionType& optionType, 
-                                                       uint32_t bitOffset,                                      
+        ShaderOptionDescriptor::ShaderOptionDescriptor(const Name& name,
+                                                       const ShaderOptionType& optionType,
+                                                       uint32_t bitOffset,
                                                        uint32_t order,
                                                        const AZStd::vector<RPI::ShaderOptionValuePair>& nameIndexList,
-                                                       const Name& defaultValue)                        
+                                                       const Name& defaultValue)
 
             : m_name{name}
             , m_type{optionType}
@@ -177,7 +178,7 @@ namespace AZ
                 AZ_Error(DebugCategory, false, "Invalid ShaderOption value");
                 return false;
             }
-            
+
             if (m_type == ShaderOptionType::Unknown)
             {
                 group.GetShaderVariantMask() &= m_bitMaskNot;
@@ -205,7 +206,7 @@ namespace AZ
                 AZ_Error(DebugCategory, false, "Invalid ShaderOption value");
                 return false;
             }
-            
+
             if (m_type != ShaderOptionType::Unknown)
             {
                 if (!(m_minValue.GetIndex() <= valueIndex.GetIndex() && valueIndex.GetIndex() <= m_maxValue.GetIndex()))
@@ -219,7 +220,7 @@ namespace AZ
             }
 
             return true;
-            
+
         }
 
         ShaderOptionValue ShaderOptionDescriptor::Get(const ShaderOptionGroup& group) const
@@ -357,7 +358,7 @@ namespace AZ
             uint32_t value = shaderVariantKey.to_ulong();
             return value;
         }
-        
+
         bool ShaderOptionDescriptor::operator==(const ShaderOptionDescriptor& rhs) const
         {
             return m_hash == rhs.m_hash;
@@ -370,7 +371,7 @@ namespace AZ
 
         bool ShaderOptionDescriptor::CompareOrder(const ShaderOptionDescriptor& first, const ShaderOptionDescriptor& second)
         {
-            return first.GetOrder() < second.GetOrder();            
+            return first.GetOrder() < second.GetOrder();
         }
 
         bool ShaderOptionDescriptor::SameOrder(const ShaderOptionDescriptor& first, const ShaderOptionDescriptor& second)
@@ -402,7 +403,7 @@ namespace AZ
                     ->Attribute(AZ::Script::Attributes::Module, "shader")
                     ->Method("GetShaderOptions", &ShaderOptionGroupLayout::GetShaderOptions)
                     ;
-            }   
+            }
         }
 
         Ptr<ShaderOptionGroupLayout> ShaderOptionGroupLayout::Create()

@@ -9,6 +9,9 @@
 #include <ScriptCanvas/Data/PropertyTraits.h>
 #include <ScriptCanvas/Data/DataRegistry.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas
 {
     namespace Data
@@ -47,5 +50,5 @@ namespace ScriptCanvas
 
             return {};
         }
-    } 
+    }
 }

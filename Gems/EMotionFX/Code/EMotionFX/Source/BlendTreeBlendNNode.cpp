@@ -16,6 +16,7 @@
 #include "MotionInstance.h"
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <EMotionFX/Source/AnimGraphBus.h>
 
 namespace EMotionFX

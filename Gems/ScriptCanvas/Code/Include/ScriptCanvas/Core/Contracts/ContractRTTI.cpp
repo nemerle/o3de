@@ -12,6 +12,8 @@
 #include <Core/Node.h>
 #include <Core/Slot.h>
 
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas
 {
     AZ::Outcome<void, AZStd::string> ContractRTTI::OnEvaluate(const Slot& sourceSlot, const Slot& targetSlot) const
@@ -33,14 +35,14 @@ namespace ScriptCanvas
                         break;
                     }
                 }
-            }            
+            }
         }
         else
         {
             if (node)
             {
                 valid = true;
-                
+
                 for (const auto& type : m_types)
                 {
                     if (node->RTTI_IsTypeOf(type))

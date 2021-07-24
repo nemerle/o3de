@@ -10,6 +10,7 @@
 #include "TrackEventTrack.h"
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 CUiAnimStringTable::CUiAnimStringTable()
     : m_refCount(0)

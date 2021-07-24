@@ -9,6 +9,8 @@
 #include <AssetBuilderSDK/SerializationDependencies.h>
 
 #include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AssetBuilderSDK
 {
@@ -60,7 +62,7 @@ namespace AssetBuilderSDK
                     // 2) one file extension like "fileExtension"
                     // 3) a semi colon separated list of file extensions like  "*.fileExtension1; *.fileExtension2"
                     // Please note that if file extension is missing from the path and we get a list of semicolon separated file extensions
-                    // we will extract the first file extension and use that. 
+                    // we will extract the first file extension and use that.
                     fileExtension = asset->GetFileFilter();
                     AZStd::regex fileExtensionRegex("^(?:\\*\\.)?(\\w+);?");
                     AZStd::smatch match;

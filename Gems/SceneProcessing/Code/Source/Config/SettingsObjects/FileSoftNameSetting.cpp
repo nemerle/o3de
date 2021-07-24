@@ -8,6 +8,8 @@
 
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <SceneAPI/SceneCore/Containers/Scene.h>
 #include <SceneAPI/SceneCore/DataTypes/IGraphObject.h>
@@ -185,7 +187,7 @@ namespace AZ
                         ->DataElement(AZ_CRC("GraphTypeSelector", 0x362ac245), &FileSoftNameSetting::m_graphTypes, "Graph type",
                             "The graph types that are the soft name applies to.")
                             ->Attribute(Edit::Attributes::AutoExpand, true)
-                        ->DataElement(Edit::UIHandlers::Default, &FileSoftNameSetting::m_inclusiveList, "Inclusive", 
+                        ->DataElement(Edit::UIHandlers::Default, &FileSoftNameSetting::m_inclusiveList, "Inclusive",
                             "If true the types in the list will marked as the virtual type, otherwise any types that are NOT in the list.");
                 }
             }

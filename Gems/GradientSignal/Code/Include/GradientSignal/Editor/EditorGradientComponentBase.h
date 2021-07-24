@@ -119,11 +119,29 @@ namespace GradientSignal
     private:
         AZ::EntityId m_previewEntityId;
         AZ::Vector3 m_previewPosition = AZ::Vector3(0.0f);
-        AZ::Vector3 m_previewSize = AZ::Vector3(1.0f); //1m sq preview...arbitrary default box size in meters chosen by design 
+        AZ::Vector3 m_previewSize = AZ::Vector3(1.0f); //1m sq preview...arbitrary default box size in meters chosen by design
         bool m_constrainToShape = false;
         AZ::EntityId m_gradientEntityId;
     };
 
 } // namespace GradientSignal
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename S,typename T>
+    struct SerializeGenericTypeInfo<GradientSignal::EditorGradientComponentBase<S,T>>
+        : SerializeGenericTypeInfoImpl<GradientSignal::EditorGradientComponentBase<S,T>>
+    {
+        // treat EditorGradientComponentBase as generic value type
+    };
+
+} // namespace AZ
+
 
 #include "EditorGradientComponentBase.inl"

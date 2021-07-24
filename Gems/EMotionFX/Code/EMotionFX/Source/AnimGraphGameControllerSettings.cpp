@@ -8,6 +8,7 @@
 
 #include <EMotionFX/Source/AnimGraphGameControllerSettings.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 
 namespace EMotionFX

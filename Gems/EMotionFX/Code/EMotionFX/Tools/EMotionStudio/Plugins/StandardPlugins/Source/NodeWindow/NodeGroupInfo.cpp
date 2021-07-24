@@ -8,6 +8,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <EMotionFX/Source/Actor.h>
 #include <EMotionFX/Source/Node.h>
 #include <EMotionFX/Source/NodeGroup.h>
@@ -31,7 +32,7 @@ namespace EMStudio
             m_nodes.emplace_back(node->GetNameString());
         }
     }
-    
+
 
     void NodeGroupInfo::Reflect(AZ::ReflectContext* context)
     {

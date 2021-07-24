@@ -6,9 +6,11 @@
  *
  */
 
-#include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Component/ComponentApplicationBus.h>
 #include "EditorTagComponent.h"
+
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
 #include <AzCore/Serialization/EditContext.h>
 
@@ -105,7 +107,7 @@ namespace LmbrCentral
     }
 
     void EditorTagComponent::ActivateTag(const char* tagName)
-    { 
+    {
         Tag tag(tagName);
         const AZ::EntityId entityId = GetEntityId();
         m_activeTags.push_back(tagName);

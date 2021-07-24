@@ -8,6 +8,7 @@
 #ifndef AZ_SCRIPT_COMPONENT_H
 #define AZ_SCRIPT_COMPONENT_H
 
+#include <AzCore/Asset/AssetBus.h>
 #include <AzCore/Script/ScriptAsset.h>
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/Component/Component.h>
@@ -41,7 +42,7 @@ namespace AzFramework
         AZStd::string_view m_sourceFile;
         AZStd::string_view m_fullPath;
         AZStd::string_view m_fileName;
-        AZStd::string_view m_tempDirPath;        
+        AZStd::string_view m_tempDirPath;
         AZ::IO::GenericStream* m_input = nullptr;
         AZ::IO::GenericStream* m_output = nullptr;
         WriteFunction m_prewriteCallback;
@@ -85,7 +86,7 @@ namespace AzFramework
         : public AZ::Component
         , private AZ::Data::AssetBus::Handler
     {
-        friend class AzToolsFramework::Components::ScriptEditorComponent;        
+        friend class AzToolsFramework::Components::ScriptEditorComponent;
 
     public:
         static const char* DefaultFieldName;
@@ -93,7 +94,7 @@ namespace AzFramework
         AZ_COMPONENT(AzFramework::ScriptComponent, "{8D1BC97E-C55D-4D34-A460-E63C57CD0D4B}", AZ::Component);
 
         /// \red ComponentDescriptor::Reflect
-        static void Reflect(AZ::ReflectContext* reflection);        
+        static void Reflect(AZ::ReflectContext* reflection);
 
         ScriptComponent();
         ~ScriptComponent();
@@ -141,7 +142,7 @@ namespace AzFramework
         AZ::Data::Asset<AZ::ScriptAsset>    m_script;               ///< Reference to the script asset used for this component.
         int                                 m_table;                ///< Cached table index
         ScriptPropertyGroup                 m_properties;           ///< List with all properties that were tweaked in the editor and should override values in the m_sourceScriptName class inside m_script.
-    };        
+    };
 }   // namespace AZ
 
 #endif  // AZ_SCRIPT_COMPONENTH_

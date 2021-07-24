@@ -9,6 +9,7 @@
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <SceneAPI/SceneCore/DataTypes/Rules/IRule.h>
 #include <SceneAPI/SceneData/Groups/AnimationGroup.h>
@@ -44,7 +45,7 @@ namespace AZ
         }
 
         namespace SceneData
-        {            
+        {
             AZ_CLASS_ALLOCATOR_IMPL(AnimationGroup, SystemAllocator, 0)
 
             AnimationGroup::AnimationGroup()

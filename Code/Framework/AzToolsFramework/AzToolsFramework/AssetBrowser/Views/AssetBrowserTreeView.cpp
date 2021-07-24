@@ -11,6 +11,8 @@
 #include <AzCore/Math/Crc.h>
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/StringFunc/StringFunc.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/StringFunc/StringFunc.h>
 
@@ -149,7 +151,7 @@ namespace AzToolsFramework
             // Get all entries in the AssetBrowser-relative path-to-product
             AZStd::vector<AZStd::string> entries;
             AssetBrowserEntry* entry = itABEntry->second;
-            do 
+            do
             {
                 entries.push_back(entry->GetName());
                 entry = entry->GetParent();

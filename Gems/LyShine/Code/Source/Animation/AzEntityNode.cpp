@@ -20,6 +20,7 @@
 #include <Cry_Camera.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <LyShine/Bus/UiAnimateEntityBus.h>
 #include <CryCommon/StaticInstance.h>

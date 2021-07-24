@@ -9,6 +9,8 @@
 #include <Tests/SliceStabilityTests/SliceStabilityTestFramework.h>
 
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Slice/SliceAsset.h>
 #include <AzCore/UserSettings/UserSettingsComponent.h>

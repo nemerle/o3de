@@ -12,6 +12,9 @@
 #include <LyShine/ISprite.h>
 #include <IRenderer.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void UiParticle::Init(UiParticle::UiParticleInitialParameters* initialParams)
 {

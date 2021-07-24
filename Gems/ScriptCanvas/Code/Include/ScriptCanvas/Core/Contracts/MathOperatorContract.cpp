@@ -10,6 +10,9 @@
 #include <ScriptCanvas/Core/Slot.h>
 #include <ScriptCanvas/Core/Node.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas
 {
     void MathOperatorContract::SetSupportedNativeTypes(const AZStd::unordered_set< Data::Type >& nativeTypes)
@@ -35,7 +38,7 @@ namespace ScriptCanvas
         auto dataNode = targetSlotEntity ? AZ::EntityUtils::FindFirstDerivedComponent<Node>(targetSlotEntity) : nullptr;
         if (dataNode)
         {
-            const Data::Type& dataType = dataNode->GetSlotDataType(targetSlot.GetId());            
+            const Data::Type& dataType = dataNode->GetSlotDataType(targetSlot.GetId());
 
             if (dataType == Data::Type::Invalid())
             {

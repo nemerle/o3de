@@ -12,6 +12,7 @@
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/sort.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/SystemFile.h>
@@ -118,7 +119,7 @@ namespace TextureAtlasBuilder
             fullPath.append("/");
             fullPath.append(relativePath);
 
-            // Resolve to canonical path (remove "./" and "../") 
+            // Resolve to canonical path (remove "./" and "../")
             resolved = GetCanonicalPathFromFullPath(fullPath, resolvedFullPathOut);
         }
 
@@ -1031,7 +1032,7 @@ namespace TextureAtlasBuilder
 
             response.m_outputProducts.push_back(outProducts[0]);
 
-            // The texatlasidx file is a data file that indicates where the original parts are inside the atlas, 
+            // The texatlasidx file is a data file that indicates where the original parts are inside the atlas,
             // and this would usually imply that it refers to its dds file in some way or needs it to function.
             // The texatlasidx file should be the one that depends on the DDS because it's possible to use the DDS
             // without the texatlasid, but not the other way around

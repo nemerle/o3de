@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <EMotionFX/Source/AnimGraphInstance.h>
@@ -141,7 +142,7 @@ namespace EMotionFX
         // This has to happen when we changed LOD levels, as the new LOD might have another number of morph targets.
         ActorInstance* actorInstance = animGraphInstance->GetActorInstance();
         UpdateMorphIndices(actorInstance, uniqueData, false);
-        
+
         // If there is no input pose init the uutput pose to the bind pose.
         AnimGraphPose* outputPose;
         if (!mInputPorts[INPUTPORT_POSE].mConnection)

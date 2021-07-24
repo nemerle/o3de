@@ -7,6 +7,7 @@
 #
 
 set(FILES
+    AssetEditor/AssetEditorBus.cpp
     AssetEditor/AssetEditorBus.h
     AssetEditor/AssetEditorToolbar.ui
     AssetEditor/AssetEditorStatusBar.ui
@@ -25,6 +26,7 @@ set(FILES
     AzToolsFrameworkModule.h
     AzToolsFrameworkModule.cpp
     API/ToolsApplicationAPI.h
+    API/EditorAssetSystemAPI.cpp
     API/EditorAssetSystemAPI.h
     API/AssetDatabaseBus.h
     API/ComponentEntityObjectBus.h

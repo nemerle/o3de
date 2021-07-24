@@ -12,6 +12,8 @@
 #include <ScriptCanvas/Core/GraphScopedTypes.h>
 #include <ScriptCanvas/Core/ModifiableDatumView.h>
 #include <ScriptCanvas/Variable/VariableBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvas
 {

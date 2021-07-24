@@ -11,6 +11,9 @@
 #include <ScriptCanvas/Core/NodeBus.h>
 #include <ScriptCanvas/Core/Slot.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas
 {
     void RestrictedTypeContract::Reflect(AZ::ReflectContext* reflection)
@@ -99,7 +102,7 @@ namespace ScriptCanvas
         bool valid = false;
 
         if (m_flags == Inclusive)
-        {            
+        {
             valid = m_types.empty();
 
             for (const auto& type : m_types)

@@ -12,6 +12,7 @@
 #include "ProfilerDataView.hxx"
 #include "ProfilerEvents.h"
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/UserSettings/UserSettings.h>
 #include "Source/Driller/Workspaces/Workspace.h"
 

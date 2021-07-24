@@ -8,6 +8,7 @@
 
 #include <AzCore/Debug/Timer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/Utils.h>
 #include <EMotionFX/Source/ActorInstance.h>
@@ -490,7 +491,7 @@ namespace EMotionFX
 #endif
     }
 
-    
+
 
     // get a pointer to the given node group
     AnimGraphNodeGroup* AnimGraph::GetNodeGroup(uint32 index) const
@@ -1040,7 +1041,7 @@ namespace EMotionFX
                 {
                     if (logWarnings)
                     {
-                        AZ_Warning("EMotionFX", false, "Removing a connection plugged into input port index %d of node '%s' (parent='%s'), because the source node most likely has been removed as it was an unknown (probably custom) node.", 
+                        AZ_Warning("EMotionFX", false, "Removing a connection plugged into input port index %d of node '%s' (parent='%s'), because the source node most likely has been removed as it was an unknown (probably custom) node.",
                             connection->GetTargetPort(), node->GetName(), node->GetParentNode() ? node->GetParentNode()->GetName() : "<Root>");
                     }
                     node->RemoveConnection(connection);

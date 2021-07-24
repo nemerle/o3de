@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 
 #include <qstring.h>
@@ -127,7 +128,7 @@ namespace ScriptCanvasEditor
                 ->Field("DisplayConnections", &EBusHandlerNodeDescriptorSaveData::m_displayConnections)
                 ->Field("EventIds", &EBusHandlerNodeDescriptorSaveData::m_enabledEvents)
             ;
-            
+
             serializeContext->Class<EBusHandlerNodeDescriptorComponent, NodeDescriptorComponent>()
                 ->Version(3, &EBusHandlerDescriptorVersionConverter)
                 ->Field("SaveData", &EBusHandlerNodeDescriptorComponent::m_saveData)
@@ -160,7 +161,7 @@ namespace ScriptCanvasEditor
         , m_loadingEvents(false)
     {
     }
-    
+
     EBusHandlerNodeDescriptorComponent::EBusHandlerNodeDescriptorComponent(const AZStd::string& busName)
         : NodeDescriptorComponent(NodeDescriptorType::EBusHandler)
         , m_saveData(this)
@@ -210,16 +211,16 @@ namespace ScriptCanvasEditor
         {
             if (m_eventTypeToId.find(eventId) == m_eventTypeToId.end())
             {
-                AZStd::string eventName;                
+                AZStd::string eventName;
 
                 for (const HandlerEventConfiguration& testEventConfiguration : eventConfigurations)
-                {                    
+                {
                     if (testEventConfiguration.m_eventId == eventId)
                     {
                         eventName = testEventConfiguration.m_eventName;
                     }
                 }
-    
+
                 AZ::EntityId internalNode = Nodes::DisplayEbusEventNode(graphCanvasGraphId, m_busName, eventName, eventId);
 
                 if (internalNode.IsValid())
@@ -450,7 +451,7 @@ namespace ScriptCanvasEditor
 
                 GraphCanvas::NodeDataSlotRequestBus::Event(wrappedNode, &GraphCanvas::NodeDataSlotRequests::RecreatePropertyDisplay);
             }
-            
+
             if (!m_loadingEvents)
             {
                 m_saveData.m_enabledEvents.emplace_back(eventId);

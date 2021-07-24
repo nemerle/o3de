@@ -7,7 +7,9 @@
  */
 
 #include <AssetBuilderSDK/SerializationDependencies.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzTest/AzTest.h>
 #include <AzToolsFramework/Slice/SliceUtilities.h>
 #include <AzCore/IO/ByteContainerStream.h>

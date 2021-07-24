@@ -8,6 +8,7 @@
 
 #include <AzToolsFramework/Asset/AssetBundler.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/std/hash.h>
 #include <AzCore/std/string/wildcard.h>
@@ -78,7 +79,7 @@ namespace AzToolsFramework
         {
             return AZ::Failure(AZStd::string::format("Failed to load AssetBundleSettings file (%s) from disk.\n", filePath.c_str()));
         }
-        
+
         assetBundleSettings.m_platform = GetPlatformFromAssetInfoFilePath(assetBundleSettings);
 
 
@@ -524,7 +525,7 @@ namespace AzToolsFramework
     AssetFileInfoList AssetFileInfoListComparison::Complement(const AssetFileInfoList& firstAssetFileInfoList, const AssetFileInfoList& secondAssetFileInfoList) const
     {
         AZStd::unordered_map<AZ::Data::AssetId, AzToolsFramework::AssetFileInfo> assetIdToAssetFileInfoMap;
-        
+
         // Populate the map with entries from the firstAssetFileInfoList
         for (const AssetFileInfo& assetFileInfo : firstAssetFileInfoList.m_fileInfoList)
         {
@@ -604,7 +605,7 @@ namespace AzToolsFramework
         }
 
 
-        // Loop over the map and create a assetFileInfo of assets that appeared at least the number of times specified by the user    
+        // Loop over the map and create a assetFileInfo of assets that appeared at least the number of times specified by the user
         AssetFileInfoList outputAssetFileInfoList;
         for (auto iter = assetCountMap.begin(); iter != assetCountMap.end(); iter++)
         {

@@ -8,8 +8,9 @@
 
 #include <AzToolsFramework/Asset/AssetDebugInfo.h>
 
-#include <AzCore/Serialization/SerializeContext.h>
 #include <AzToolsFramework/AssetCatalog/PlatformAddressedAssetCatalogBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <cinttypes>
 
 

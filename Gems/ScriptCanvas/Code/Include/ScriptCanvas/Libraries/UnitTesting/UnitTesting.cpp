@@ -9,6 +9,8 @@
 #include "UnitTesting.h"
 
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvas
 {
@@ -46,7 +48,7 @@ namespace ScriptCanvas
 
             return true;
         }
-        
+
         bool ExpectComparisonVersioner(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
         {
             if (rootElement.GetVersion() == 0)
@@ -91,6 +93,6 @@ namespace ScriptCanvas
             return true;
         }
 
-    } 
+    }
 
-} 
+}

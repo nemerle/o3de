@@ -811,7 +811,7 @@ inline void CryStringT<T>::_Free()
 template <class T>
 inline void CryStringT<T>::_FreeData(StrHeader* pData)
 {
-    //Cry uses -1 to represent strings on the stack. 
+    //Cry uses -1 to represent strings on the stack.
     if (pData->nRefCount < 0)
     {
         return;
@@ -2500,8 +2500,8 @@ namespace AZStd
     {
         typedef ::string   argument_type;
         typedef size_t     result_type;
-        inline result_type operator()(const argument_type& value) const 
-        { 
+        inline result_type operator()(const argument_type& value) const
+        {
             return hash_string(value.c_str(), value.length());
         }
 

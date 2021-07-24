@@ -21,6 +21,7 @@
 #include <AzFramework/Archive/Codec.h>
 #include <AzFramework/Archive/ZipDirStructures.h>
 #include <AzFramework/Archive/ZipDirTree.h>
+#include <AzCore/std/containers/unordered_set.h>
 
 namespace AZ::IO::ZipDir
 {

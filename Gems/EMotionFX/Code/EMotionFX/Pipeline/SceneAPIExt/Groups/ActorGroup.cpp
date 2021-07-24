@@ -9,6 +9,7 @@
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <SceneAPI/SceneCore/Containers/SceneGraph.h>
 #include <SceneAPI/SceneCore/Containers/Views/PairIterator.h>
@@ -102,7 +103,7 @@ namespace EMotionFX
                 AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
                 if (!serializeContext)
                 {
-                    // Check if the context is serialized and has actorGroup class data. 
+                    // Check if the context is serialized and has actorGroup class data.
                     return;
                 }
 

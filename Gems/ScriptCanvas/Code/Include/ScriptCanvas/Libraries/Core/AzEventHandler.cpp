@@ -14,6 +14,9 @@
 #include <ScriptCanvas/Utils/BehaviorContextUtils.h>
 #include <ScriptCanvas/Utils/NodeUtils.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas::Nodes::Core
 {
     AzEventHandler::~AzEventHandler() = default;

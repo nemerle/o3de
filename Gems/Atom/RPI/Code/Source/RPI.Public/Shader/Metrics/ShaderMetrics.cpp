@@ -6,7 +6,11 @@
  *
  */
 #include <Atom/RPI.Public/Shader/Metrics/ShaderMetrics.h>
+
+#include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 #include <AtomCore/Serialization/Json/JsonUtils.h>
+
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

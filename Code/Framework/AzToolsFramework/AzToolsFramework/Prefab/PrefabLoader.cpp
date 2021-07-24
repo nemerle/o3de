@@ -13,6 +13,8 @@
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/StringFunc/StringFunc.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/Asset/AssetSystemBus.h>
 #include <AzFramework/FileFunc/FileFunc.h>
@@ -36,7 +38,7 @@ namespace AzToolsFramework
 
             auto settingsRegistry = AZ::SettingsRegistry::Get();
             AZ_Assert(settingsRegistry, "Settings registry is not set");
-            
+
             [[maybe_unused]] bool result =
                 settingsRegistry->Get(m_projectPathWithOsSeparator.Native(), AZ::SettingsRegistryMergeUtils::FilePathKey_ProjectPath);
             AZ_Warning("Prefab", result, "Couldn't retrieve project root path");

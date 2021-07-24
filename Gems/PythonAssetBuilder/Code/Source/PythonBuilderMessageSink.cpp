@@ -9,6 +9,8 @@
 #include <AssetBuilderSDK/AssetBuilderBusses.h>
 #include <PythonAssetBuilder/PythonAssetBuilderBus.h>
 #include <AssetBuilderSDK/AssetBuilderSDK.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace PythonAssetBuilder
 {

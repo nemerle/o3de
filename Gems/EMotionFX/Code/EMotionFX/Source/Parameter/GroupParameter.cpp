@@ -10,6 +10,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <EMotionFX/Source/Allocators.h>
 
 
@@ -132,7 +133,7 @@ namespace EMotionFX
                 AZStd::copy(recursiveChildParameters.begin(), recursiveChildParameters.end(), AZStd::back_inserter(childParameters));
             }
         }
-        
+
         return childParameters;
     }
 

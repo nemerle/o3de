@@ -9,7 +9,9 @@
 #include <Atom/Feature/Material/MaterialAssignment.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/Json/RegistrationContext.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Material/MaterialAssignmentSerializer.h>
 
 namespace AZ

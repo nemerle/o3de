@@ -12,6 +12,7 @@
 
 #include <AzCore/std/containers/unordered_map.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Components/Nodes/Group/CollapsedNodeGroupComponent.h>
 
@@ -114,7 +115,7 @@ namespace GraphCanvas
     ////////////////////////////////
 
     constexpr int k_collapsingAnimationTimeMS = 175;
-    constexpr int k_fadeInTimeMS = 50;    
+    constexpr int k_fadeInTimeMS = 50;
 
     // 0.9f found through the scientific process of it looking right.
     constexpr float k_endpointanimationTimeSec = (k_collapsingAnimationTimeMS/1000.0f) * 0.9f;
@@ -122,11 +123,11 @@ namespace GraphCanvas
     // General frame delay to ensure that qt has updated and refreshed its display so that everything looks right.
     // 3 is just a magic number found through visual testing.
     constexpr int k_qtFrameDelay = 3;
-    
+
     void CollapsedNodeGroupComponent::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
-        
+
         if (serializeContext)
         {
             serializeContext->Class<SlotRedirectionConfiguration>()
@@ -140,7 +141,7 @@ namespace GraphCanvas
             ;
         }
     }
-    
+
     AZ::Entity* CollapsedNodeGroupComponent::CreateCollapsedNodeGroupEntity(const CollapsedNodeGroupConfiguration& config)
     {
         AZ::Entity* nodeEntity = GeneralNodeLayoutComponent::CreateGeneralNodeEntity(".collapsedGroup", config);
@@ -149,12 +150,12 @@ namespace GraphCanvas
 
         return nodeEntity;
     }
-    
+
     CollapsedNodeGroupComponent::CollapsedNodeGroupComponent()
         : GraphCanvasPropertyComponent()
         , m_animationDelayCounter(0)
         , m_isExpandingOccluderAnimation(false)
-        , m_occluderDestructionCounter(0)        
+        , m_occluderDestructionCounter(0)
         , m_unhideOnAnimationComplete(false)
         , m_deleteObjects(true)
         , m_positionDirty(false)
@@ -195,17 +196,17 @@ namespace GraphCanvas
             OnAnimationFinished();
         });
     }
-    
+
     CollapsedNodeGroupComponent::CollapsedNodeGroupComponent(const CollapsedNodeGroupConfiguration& config)
         : CollapsedNodeGroupComponent()
     {
         m_nodeGroupId = config.m_nodeGroupId;
     }
-    
+
     CollapsedNodeGroupComponent::~CollapsedNodeGroupComponent()
     {
     }
-    
+
     void CollapsedNodeGroupComponent::Init()
     {
         GraphCanvasPropertyComponent::Init();
@@ -213,7 +214,7 @@ namespace GraphCanvas
         m_memberHiddenStateSetter.AddStateController(&m_ignorePositionChanges);
         m_memberDraggedStateSetter.AddStateController(&m_ignorePositionChanges);
     }
-    
+
     void CollapsedNodeGroupComponent::Activate()
     {
         GraphCanvasPropertyComponent::Activate();
@@ -221,14 +222,14 @@ namespace GraphCanvas
         AZ::EntityId entityId = GetEntityId();
 
         m_redirectedSlotWatcher.ConfigureWatcher(entityId);
-        
+
         CollapsedNodeGroupRequestBus::Handler::BusConnect(entityId);
         VisualNotificationBus::Handler::BusConnect(entityId);
         NodeNotificationBus::Handler::BusConnect(entityId);
         SceneMemberNotificationBus::Handler::BusConnect(entityId);
         GeometryNotificationBus::Handler::BusConnect(entityId);
     }
-    
+
     void CollapsedNodeGroupComponent::Deactivate()
     {
         GraphCanvasPropertyComponent::Deactivate();
@@ -249,7 +250,7 @@ namespace GraphCanvas
         if (m_animationDelayCounter > 0)
         {
             m_animationDelayCounter--;
-            
+
             if (m_animationDelayCounter <= 0)
             {
                 AnimateOccluder(m_isExpandingOccluderAnimation);
@@ -286,7 +287,7 @@ namespace GraphCanvas
             }
         }
     }
-    
+
     void CollapsedNodeGroupComponent::OnAddedToScene(const GraphId& graphId)
     {
         SceneNotificationBus::Handler::BusConnect(graphId);
@@ -347,7 +348,7 @@ namespace GraphCanvas
         config.m_createNonConnectableSubGraph = true;
 
         m_containedSubGraphs = GraphUtils::ParseSceneMembersIntoSubGraphs(elementsToManage, config);
-        
+
         ConstructGrouping(graphId);
 
         SetupGroupPosition(graphId);
@@ -370,9 +371,9 @@ namespace GraphCanvas
             TriggerCollapseAnimation();
         }
     }
-    
+
     void CollapsedNodeGroupComponent::OnRemovedFromScene(const GraphId& graphId)
-    {        
+    {
         if (m_effectId.IsValid())
         {
             SceneRequestBus::Event(graphId, &SceneRequests::CancelGraphicsEffect, m_effectId);
@@ -440,7 +441,7 @@ namespace GraphCanvas
 
         // This is a quick implementation of this. Really this shouldn't be necessary as I can just
         // calculate the offset when the group is broken and just apply the changes then.
-        // 
+        //
         // But for simplicity now, I'll do this the quick way and just update everything after each move.
         if (m_positionDirty)
         {
@@ -570,7 +571,7 @@ namespace GraphCanvas
 
         // Reget the position we set since we might have snapped to a grid.
         GeometryRequestBus::EventResult(m_previousPosition, GetEntityId(), &GeometryRequests::GetPosition);
-        
+
         m_positionDirty = false;
     }
 

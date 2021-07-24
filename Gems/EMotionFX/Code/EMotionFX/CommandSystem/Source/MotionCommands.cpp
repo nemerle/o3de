@@ -24,6 +24,8 @@
 #include <EMotionFX/Exporters/ExporterLib/Exporter/Exporter.h>
 
 #include <AzFramework/API/ApplicationAPI.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 
 namespace CommandSystem

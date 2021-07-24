@@ -9,6 +9,7 @@
 #include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/std/sort.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <MCore/Source/DelaunayTriangulator.h>
 #include <EMotionFX/Source/BlendSpace2DNode.h>

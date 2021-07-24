@@ -7,7 +7,6 @@
  */
 
 
-#include <AzCore/Serialization/SerializeContext.h>
 #include "AnimNode.h"
 #include "AnimTrack.h"
 #include "AnimSequence.h"
@@ -16,6 +15,8 @@
 #include "TrackEventTrack.h"
 #include "CompoundSplineTrack.h"
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/sort.h>
 #include <ctime>
 

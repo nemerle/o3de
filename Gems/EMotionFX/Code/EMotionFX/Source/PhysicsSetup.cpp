@@ -9,6 +9,7 @@
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <EMotionFX/Source/Allocators.h>
 #include <EMotionFX/Source/Actor.h>
@@ -231,7 +232,7 @@ namespace EMotionFX
             outResult = AZStd::string::format("Could not create collider with type '%s'.", typeId.ToString<AZStd::string>().c_str());
             return AZ::Failure();
         }
-        
+
         AzPhysics::ShapeColliderPair pair(AZStd::make_shared<Physics::ColliderConfiguration>(), shapeConfig);
         if (pair.first->m_materialSelection.GetMaterialIdsAssignedToSlots().empty())
         {

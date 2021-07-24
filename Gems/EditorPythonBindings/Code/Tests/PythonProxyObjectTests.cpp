@@ -16,6 +16,7 @@
 #include <Source/PythonProxyObject.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Casting/numeric_cast.h>
 #include <AzFramework/StringFunc/StringFunc.h>
@@ -173,7 +174,7 @@ namespace UnitTest
     };
 
     struct EntityIdByValueTester
-        : public AZ::EntityId 
+        : public AZ::EntityId
     {
         AZ_TYPE_INFO(EntityIdByValueTester, "{DE8A9968-B6E1-49D1-86B4-8DC946AC3FC7}");
         AZ_CLASS_ALLOCATOR(EntityIdByValueTester, AZ::SystemAllocator, 0);
@@ -516,7 +517,7 @@ namespace UnitTest
         EXPECT_EQ(1, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::ReflectingObjectProxySimple_GetFloat)]);
         EXPECT_EQ(1, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::ReflectingObjectProxySimple_SetFloat)]);
         EXPECT_EQ(1, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::ReflectingObjectProxySimple_mySignedInt64)]);
-        EXPECT_EQ(2, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::ReflectingObjectProxySimple_printedMessage)]);        
+        EXPECT_EQ(2, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::ReflectingObjectProxySimple_printedMessage)]);
     }
 
     TEST_F(PythonObjectProxyTests, AsNativelyUsed)
@@ -568,7 +569,7 @@ namespace UnitTest
                 fValue = proxy.get_property('f32')
                 if(fValue == 32.0):
                     print('OutputTypes_ReturnCheck')
-        
+
                 dValue = proxy.get_property('d64')
                 if(dValue == 64.0):
                     print('OutputTypes_ReturnCheck')
@@ -930,7 +931,7 @@ namespace UnitTest
 
         EXPECT_EQ(1, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::ObjectAzTypePassing_Input)]);
         EXPECT_EQ(1, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::ObjectAzTypePassing_Output)]);
-        EXPECT_EQ(1, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::ObjectAzTypePassing_EntityPassed)]);        
+        EXPECT_EQ(1, m_testSink.m_evaluationMap[static_cast<int>(LogTypes::ObjectAzTypePassing_EntityPassed)]);
     }
 
     TEST_F(PythonObjectProxyTests, ConstructWithArgs)
@@ -1078,7 +1079,7 @@ namespace UnitTest
 
                 intList = testObjectBase.invoke('return_vector_by_value')
                 if (len(intList) == 3):
-                    print ('PassByValue_CallReturnByValue')                    
+                    print ('PassByValue_CallReturnByValue')
             )");
         }
         catch ([[maybe_unused]] const std::exception& e)
@@ -1400,7 +1401,7 @@ namespace UnitTest
         e.Deactivate();
 
         EXPECT_EQ(2, m_testSink.m_evaluationMap[aznumeric_cast<int>(LogTypes::Found)]);
-        EXPECT_EQ(2, m_testSink.m_evaluationMap[aznumeric_cast<int>(LogTypes::Equals)]);        
+        EXPECT_EQ(2, m_testSink.m_evaluationMap[aznumeric_cast<int>(LogTypes::Equals)]);
     }
 
     TEST_F(PythonObjectProxyTests, ClassEnumsAreFound)
@@ -1473,7 +1474,7 @@ namespace UnitTest
 
         EXPECT_EQ(3, m_testSink.m_evaluationMap[aznumeric_cast<int>(LogTypes::Assigned)]);
         EXPECT_EQ(4, m_testSink.m_evaluationMap[aznumeric_cast<int>(LogTypes::Equals)]);
-    }    
+    }
 
     TEST_F(PythonObjectProxyTests, Repr)
     {

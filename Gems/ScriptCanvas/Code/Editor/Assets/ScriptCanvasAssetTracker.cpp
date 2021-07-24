@@ -10,6 +10,9 @@
 
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/Component/TickBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzFramework/API/ApplicationAPI.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 
@@ -25,8 +28,6 @@
 
 #include <ScriptCanvas/Assets/ScriptCanvasAssetHandler.h>
 #include <ScriptCanvas/Core/ScriptCanvasBus.h>
-
-#include <AzCore/std/smart_ptr/make_shared.h>
 
 namespace ScriptCanvasEditor
 {
@@ -94,7 +95,7 @@ namespace ScriptCanvasEditor
                     {
                         m_queuedCloses.insert(fileAssetId);
                     }
-                    
+
                     auto assetIter = m_assetsInUse.find(fileAssetId);
 
                     if (assetIter != m_assetsInUse.end())
@@ -282,10 +283,10 @@ namespace ScriptCanvasEditor
                 {
                     m_remappedAsset[asset.GetId()] = assetId;
                 };
-                
+
                 insertResult.first->second->Load(assetId, AZ::Data::AssetType::CreateNull(), onReady);
                 insertResult.first->second->ActivateAsset();
-                
+
                 return insertResult.first->second;
             }
 

@@ -8,6 +8,7 @@
 
 #include <AzToolsFramework/Asset/AssetProcessorMessages.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Math/Crc.h>
 
@@ -21,7 +22,7 @@ namespace AzToolsFramework
         //---------------------------------------------------------------------
         AssetJobsInfoRequest::AssetJobsInfoRequest(const AZ::OSString& searchTerm, bool requireFencing /*= true*/)
             : BaseAssetProcessorMessage(requireFencing)
-            , m_searchTerm(searchTerm) 
+            , m_searchTerm(searchTerm)
         {
             AZ_Assert(!searchTerm.empty(), "AssetJobsInfoRequest: Search Term is empty");
         }
@@ -31,7 +32,7 @@ namespace AzToolsFramework
             : BaseAssetProcessorMessage(requireFencing)
             , m_assetId(assetId)
             , m_escalateJobs(escalateJobs)
-            
+
         {
         }
 
@@ -251,7 +252,7 @@ namespace AzToolsFramework
         }
 
         //---------------------------------------------------------------------
-        
+
         unsigned int GetAssetSafeFoldersRequest::GetMessageType() const
         {
             return MessageType;

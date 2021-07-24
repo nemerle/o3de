@@ -7,6 +7,7 @@
  */
 #include "AttachmentComponent.h"
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Component/Entity.h>
 #include <MathConversion.h>

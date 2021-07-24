@@ -86,12 +86,12 @@ namespace ScriptEvents
         Internal::BindingRequest::BindingParameters parameters;
         parameters.m_eventName = m_name;
         parameters.m_address = &params[0];  // The address is stored in the first parameter
-        parameters.m_parameters = params + 1; 
+        parameters.m_parameters = params + 1;
         parameters.m_parameterCount = paramCount - 1; // Minus the address
         parameters.m_returnValue = returnValue;
 
         Internal::BindingRequestBus::Event(m_busBindingId, &Internal::BindingRequest::Bind, parameters);
-        
+
         if (returnValue && returnValue->m_onAssignedResult)
         {
             returnValue->m_onAssignedResult();
@@ -132,5 +132,5 @@ namespace ScriptEvents
         // Default values for Script Events are not implemented.
         return nullptr;
     }
-    
+
 }

@@ -73,7 +73,7 @@ namespace GraphModelIntegration
                     ;
             }
         }
-        
+
         bool ExecuteEvent([[maybe_unused]] const AZ::Vector2& mouseDropPosition, AZ::Vector2& dropPosition, const AZ::EntityId& graphCanvasSceneId) override
         {
             GraphModel::GraphPtr graph = nullptr;
@@ -102,3 +102,20 @@ namespace GraphModelIntegration
         GraphModelIntegration::CreateStandardNodeMimeEvent<NodeType>::Reflect(context);
     }
 }
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename T>
+    struct SerializeGenericTypeInfo<GraphModelIntegration::CreateStandardNodeMimeEvent<T>>
+        : SerializeGenericTypeInfoImpl<GraphModelIntegration::CreateStandardNodeMimeEvent<T>>
+    {
+        // treat CreateStandardNodeMimeEvent as generic value type
+    };
+} // namespace AZ
+

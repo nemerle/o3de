@@ -11,6 +11,8 @@
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace MCore
 {
@@ -111,7 +113,7 @@ namespace MCore
     AZ::Outcome<AZStd::string> ReflectionSerializer::SerializeMembersExcept(const AZ::TypeId& classTypeId, const void* classPtr, const AZStd::vector<AZStd::string>& excludeMembers)
     {
         AZStd::vector<AZStd::pair<AZStd::string, AZStd::string>> membersAndValues;
-        
+
         AZ::SerializeContext* context = nullptr;
         AZ::ComponentApplicationBus::BroadcastResult(context, &AZ::ComponentApplicationBus::Events::GetSerializeContext);
         if (!context)

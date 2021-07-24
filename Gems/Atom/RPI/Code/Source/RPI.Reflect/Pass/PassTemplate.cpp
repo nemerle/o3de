@@ -10,6 +10,8 @@
 
 #include <Atom/RPI.Public/Pass/Pass.h>
 #include <Atom/RPI.Reflect/Pass/PassTemplate.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

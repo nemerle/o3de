@@ -9,6 +9,7 @@
 #include "./ConvertEmissiveUnitFunctor.h"
 #include <Atom/RPI.Public/Material/Material.h>
 #include <Atom/RPI.Public/Shader/ShaderResourceGroup.h>
+#include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 
 namespace AZ
 {

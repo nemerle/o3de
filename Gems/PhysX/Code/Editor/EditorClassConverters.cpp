@@ -9,6 +9,7 @@
 #include <Source/EditorColliderComponent.h>
 #include <PhysX/MeshAsset.h>
 #include <AzCore/Math/Matrix3x3.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzFramework/Physics/Collision/CollisionGroups.h>
 
 namespace PhysX
@@ -261,7 +262,7 @@ namespace PhysX
                 // Moved:
                 //    EditorColliderComponent::MeshAsset                        -> EditorColliderComponent::ShapeConfiguration::PhysicsAsset::Asset
                 //    EditorColliderComponent::ShapeConfiguration::PhysicsAsset -> EditorColliderComponent::ShapeConfiguration::PhysicsAsset::Configuration
-                
+
                 Physics::PhysicsAssetShapeConfiguration physAssetConfig;
                 FindElementAndGetData(*shapeConfigurationElement, AZ_CRC("PhysicsAsset", 0x4a3b5e62), physAssetConfig);
                 shapeConfigurationElement->RemoveElementByName(AZ_CRC("PhysicsAsset", 0x4a3b5e62));
@@ -276,7 +277,7 @@ namespace PhysX
 
                 shapeConfigurationElement->AddElementWithData(context, "PhysicsAsset", newAssetShapeConfig);
             }
-            
+
             if (dataElement.GetVersion() <= 8)
             {
                 dataElement.RemoveElementByName(AZ_CRC("LinkedRenderMeshAssetId", 0x466f4230));
@@ -311,11 +312,11 @@ namespace PhysX
                     currentShapeType == Physics::ShapeType::Native)
                 {
                     shapeTypeElement->SetData<Physics::ShapeType>(context, Physics::ShapeType::PhysicsAsset);
-                 
+
                     // Insert PhysicsAsset configuration instead of NativeShape. Save the mesh scale.
                     Physics::PhysicsAssetShapeConfiguration assetConfiguration;
                     assetConfiguration.m_assetScale = nativeShapeConfiguration.m_nativeShapeScale;
-                    
+
                     classElement.AddElementWithData<Physics::PhysicsAssetShapeConfiguration>(context, "PhysicsAsset", assetConfiguration);
                 }
             }

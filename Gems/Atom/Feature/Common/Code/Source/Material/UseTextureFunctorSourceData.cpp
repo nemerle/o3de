@@ -9,6 +9,7 @@
 #include "./UseTextureFunctorSourceData.h"
 #include <Atom/RPI.Reflect/Shader/ShaderOptionGroupLayout.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

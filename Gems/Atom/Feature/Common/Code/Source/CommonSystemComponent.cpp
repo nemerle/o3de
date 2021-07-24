@@ -14,6 +14,7 @@
 #include <Source/Material/ConvertEmissiveUnitFunctor.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
 
@@ -230,7 +231,7 @@ namespace AZ
 
             // Add Depth Downsample/Upsample passes
             passSystem->AddPassCreator(Name("DepthUpsamplePass"), &DepthUpsamplePass::Create);
-            
+
             // Add Taa Pass
             passSystem->AddPassCreator(Name("TaaPass"), &TaaPass::Create);
 

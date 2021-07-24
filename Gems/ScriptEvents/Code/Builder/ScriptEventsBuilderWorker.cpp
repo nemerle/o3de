@@ -15,6 +15,7 @@
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/Math/Uuid.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 
 #include <AzFramework/StringFunc/StringFunc.h>
@@ -194,7 +195,7 @@ namespace ScriptEventsBuilder
         ScriptEvents::ScriptEvent definition = asset.Get()->m_definition;
         definition.Flatten();
 
-        // Populate the runtime Asset 
+        // Populate the runtime Asset
         AZStd::vector<AZ::u8> byteBuffer;
         AZ::IO::ByteContainerStream<decltype(byteBuffer)> byteStream(&byteBuffer);
 

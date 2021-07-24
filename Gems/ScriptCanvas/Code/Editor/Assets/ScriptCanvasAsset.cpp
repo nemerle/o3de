@@ -9,6 +9,8 @@
 
 #include <AzCore/Asset/AssetManagerBus.h>
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <ScriptCanvas/Assets/ScriptCanvasAsset.h>
 
@@ -110,7 +112,7 @@ namespace ScriptCanvasEditor
     ScriptCanvas::Graph* ScriptCanvasAsset::GetScriptCanvasGraph() const
     {
         return AZ::EntityUtils::FindFirstDerivedComponent<ScriptCanvas::Graph>(m_data->m_scriptCanvasEntity.get());
-    }    
+    }
 
     ScriptCanvas::ScriptCanvasData& ScriptCanvasAsset::GetScriptCanvasData()
     {

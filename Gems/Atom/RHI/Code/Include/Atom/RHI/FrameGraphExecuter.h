@@ -10,8 +10,10 @@
 #include <Atom/RHI.Reflect/FrameSchedulerEnums.h>
 #include <Atom/RHI/DeviceObject.h>
 #include <Atom/RHI/FrameGraphExecuteGroup.h>
-#include <AzCore/Memory/PoolAllocator.h>
 #include <Atom/RHI.Reflect/PlatformLimitsDescriptor.h>
+#include <AzCore/Memory/PoolAllocator.h>
+#include <AzCore/std/containers/unordered_set.h>
+#include <AzCore/std/smart_ptr/unique_ptr.h>
 
 namespace AZ
 {
@@ -46,10 +48,10 @@ namespace AZ
         //! is common in cases where many commands are processed within the same scope and the platform decides to partition the
         //! work across several jobs. Each execute group describes its policy for whether contexts can be recorded independently
         //! on separate threads.
-         
+
         //! The class provides two API's: one for external users (e.g. the FrameScheduler), and one
         //! for the derived platform implementation.
-         
+
         //! To use this class, first call Begin to prepare the executer using a compiled FrameGraph
         //! instance. Then, iterate over the execute groups and process each one (either independently or
         //! serially, depending on the platform policy). Call End to complete processing of the graph.
@@ -65,7 +67,7 @@ namespace AZ
 
             AZ_RTTI(FrameGraphExecuter, "{9DF0B900-A426-4056-8638-38A5007825F5}", Object);
 
-            
+
             //! Initializes the frame graph executer. Instances are created in an uninitialized state. Attempting
             //! to use an uninitialized instance will result in an error (when validation is enabled). If the call
             //! fails, an error code is returned and the instance will remain in an uninitialized state.
@@ -76,7 +78,7 @@ namespace AZ
             //! Shuts down the frame graph executer, releasing all internal allocations. The user
             //! may re-initialize.
             void Shutdown() override final;
-            
+
             //! Returns the job policy for context groups. The policy dictates whether groups can be
             //! independently traversed across multiple threads. If the value is JobPolicy::Serial,
             //! BeginGroup and EndGroup must be called in order for each group index. If the value

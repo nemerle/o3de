@@ -18,6 +18,8 @@
 #include <ScriptCanvas/Libraries/Core/ContainerTypeReflection.h>
 #include <ScriptCanvas/Libraries/Libraries.h>
 #include <ScriptCanvas/Core/SubgraphInterface.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ContainerTypeReflection
 {
@@ -80,7 +82,7 @@ namespace ScriptCanvas
             Nodes::Core::Internal::Nodeling::Reflect(reflection);
 
             ContainerTypeReflection::ReflectOnDemandTargets::Reflect(reflection);
-            
+
             // reflected to go over the network
             ExecutionState::Reflect(reflection);
             Grammar::Variable::Reflect(reflection);
@@ -102,7 +104,7 @@ namespace ScriptCanvas
             using namespace ScriptCanvas::Nodes::Core;
             AddNodeToRegistry<Core, Method>(nodeRegistry);
             AddNodeToRegistry<Core, MethodOverloaded>(nodeRegistry);
-            AddNodeToRegistry<Core, Start>(nodeRegistry);            
+            AddNodeToRegistry<Core, Start>(nodeRegistry);
             AddNodeToRegistry<Core, EBusEventHandler>(nodeRegistry);
             AddNodeToRegistry<Core, AzEventHandler>(nodeRegistry);
             AddNodeToRegistry<Core, ExtractProperty>(nodeRegistry);
@@ -123,11 +125,11 @@ namespace ScriptCanvas
             return AZStd::vector<AZ::ComponentDescriptor*>({
                 ScriptCanvas::Nodes::Core::Method::CreateDescriptor(),
                 ScriptCanvas::Nodes::Core::MethodOverloaded::CreateDescriptor(),
-                ScriptCanvas::Nodes::Core::Start::CreateDescriptor(),                
+                ScriptCanvas::Nodes::Core::Start::CreateDescriptor(),
                 ScriptCanvas::Nodes::Core::EBusEventHandler::CreateDescriptor(),
                 ScriptCanvas::Nodes::Core::AzEventHandler::CreateDescriptor(),
                 ScriptCanvas::Nodes::Core::ExtractProperty::CreateDescriptor(),
-                ScriptCanvas::Nodes::Core::ForEach::CreateDescriptor(),                
+                ScriptCanvas::Nodes::Core::ForEach::CreateDescriptor(),
                 ScriptCanvas::Nodes::Core::GetVariableNode::CreateDescriptor(),
                 ScriptCanvas::Nodes::Core::SetVariableNode::CreateDescriptor(),
                 ScriptCanvas::Nodes::Core::ReceiveScriptEvent::CreateDescriptor(),

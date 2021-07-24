@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Component/ComponentApplicationBus.h>
 
 #include <GraphCanvas/Components/SceneBus.h>
@@ -48,7 +49,7 @@ namespace ScriptCanvasEditor
 
         return true;
     }
-    
+
     void EBusHandlerEventNodeDescriptorComponent::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
@@ -67,7 +68,7 @@ namespace ScriptCanvasEditor
         : NodeDescriptorComponent(NodeDescriptorType::EBusHandlerEvent)
     {
     }
-    
+
     EBusHandlerEventNodeDescriptorComponent::EBusHandlerEventNodeDescriptorComponent(const AZStd::string& busName, const AZStd::string& eventName, ScriptCanvas::EBusEventId eventId)
         : NodeDescriptorComponent(NodeDescriptorType::EBusHandlerEvent)
         , m_busName(busName)
@@ -80,7 +81,7 @@ namespace ScriptCanvasEditor
     {
         NodeDescriptorComponent::Activate();
 
-        EBusHandlerEventNodeDescriptorRequestBus::Handler::BusConnect(GetEntityId());        
+        EBusHandlerEventNodeDescriptorRequestBus::Handler::BusConnect(GetEntityId());
         GraphCanvas::ForcedWrappedNodeRequestBus::Handler::BusConnect(GetEntityId());
         GraphCanvas::SceneMemberNotificationBus::Handler::BusConnect(GetEntityId());
     }
@@ -117,7 +118,7 @@ namespace ScriptCanvasEditor
             GraphCanvas::SceneMemberRequestBus::EventResult(graphId, GetEntityId(), &GraphCanvas::SceneMemberRequests::GetScene);
 
             ScriptCanvas::ScriptCanvasId canvasId;
-            GeneralRequestBus::BroadcastResult(canvasId, &GeneralRequests::GetScriptCanvasId, graphId);            
+            GeneralRequestBus::BroadcastResult(canvasId, &GeneralRequests::GetScriptCanvasId, graphId);
 
             ScriptCanvas::GraphScopedNodeId scopedNodeId(canvasId, m_ebusWrapper.m_scriptCanvasId);
             ScriptCanvas::EBusHandlerNodeRequestBus::Event(scopedNodeId, &ScriptCanvas::EBusHandlerNodeRequests::SetAddressId, AZStd::move(idDatum));
@@ -259,7 +260,7 @@ namespace ScriptCanvasEditor
                                 GraphCanvas::SlotRequestBus::Event(graphCanvasSlotId, &GraphCanvas::SlotRequests::SetTranslationKeyedTooltip, slotTooltipKeyedString);
                             }
                         }
-                        
+
                         GraphCanvas::NodeRequestBus::EventResult(graphCanvasSlotIds, GetEntityId(), &GraphCanvas::NodeRequests::GetSlotIds);
                     }
 
@@ -268,7 +269,7 @@ namespace ScriptCanvasEditor
 
                 if (m_queuedId.GetType().IsValid())
                 {
-                    SetHandlerAddress(m_queuedId);                    
+                    SetHandlerAddress(m_queuedId);
                 }
             }
         }

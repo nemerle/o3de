@@ -8,6 +8,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <EMotionFX/Source/AnimGraph.h>
 #include <EMotionFX/Source/AnimGraphInstance.h>
 #include <EMotionFX/Source/AnimGraphManager.h>
@@ -100,7 +101,7 @@ namespace EMotionFX
     {
         return "Parameter Condition";
     }
-    
+
     void AnimGraphParameterCondition::SetTestString(const AZStd::string& testString)
     {
         m_testString = testString;

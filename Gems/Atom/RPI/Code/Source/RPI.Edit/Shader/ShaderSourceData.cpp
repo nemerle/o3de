@@ -11,6 +11,8 @@
 #include <Atom/RHI.Edit/ShaderCompilerArguments.h>
 #include <AzCore/std/string/regex.h>
 #include <AzFramework/StringFunc/StringFunc.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {
@@ -67,7 +69,7 @@ namespace AZ
         //! Example:
         //! Input string: "--switch1 -DMACRO1 -v -DMACRO2=23"
         //! append the following items: ["MACRO1", "MACRO2"]
-        static void GetListOfMacroDefinitionNames( 
+        static void GetListOfMacroDefinitionNames(
             const AZStd::string& stringWithArguments, AZStd::vector<AZStd::string>& macroDefinitionNames)
         {
             const AZStd::regex macroRegex(R"(-D\s*(\w+))", AZStd::regex::ECMAScript);

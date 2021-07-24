@@ -8,8 +8,11 @@
 
 #include "PrefabBuilderTests.h"
 #include <AzCore/Component/TransformBus.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/Json/JsonSystemComponent.h>
 #include <AzCore/Serialization/Json/RegistrationContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/UserSettings/UserSettingsComponent.h>
 
@@ -50,7 +53,7 @@ namespace UnitTest
 
         // Create a parent entity and a prefab for it, pass in the child prefab for it to reference
         auto parentInstance = prefabSystemComponentInterface->CreatePrefab({CreateEntity("parent")}, AZStd::move(childInstances), "parent.prefab");
-        
+
         AZStd::string serializedInstance;
 
         // Save to a string so we can load it as a PrefabDom and so that the nested instance becomes a Source file reference
@@ -74,7 +77,7 @@ namespace UnitTest
 
         AZ::Uuid TestAssetUuid("{7725567D-D420-46C2-B481-E0F79212CD34}");
         AZ::Data::AssetId TestAssetId(TestAssetUuid, 0);
-        
+
         AZStd::vector<AZStd::unique_ptr<Instance>> childInstances;
 
         auto* prefabSystemComponentInterface = AZ::Interface<PrefabSystemComponentInterface>::Get();
@@ -95,10 +98,10 @@ namespace UnitTest
             prefabSystemComponentInterface->CreatePrefab({CreateEntity("parent")}, AZStd::move(childInstances), "parent.prefab", AZStd::unique_ptr<AZ::Entity>(CreateEntity("Container")));
 
         AZStd::string serializedInstance;
-        
+
         TestPrefabBuilderComponent prefabBuilderComponent;
         prefabBuilderComponent.Activate();
-        
+
         AZStd::vector<AssetBuilderSDK::JobProduct> jobProducts;
         auto&& prefabDom = prefabSystemComponentInterface->FindTemplateDom(parentInstance->GetTemplateId());
 
@@ -128,7 +131,7 @@ namespace UnitTest
         auto* prefabSystemComponentInterface = AZ::Interface<AzToolsFramework::Prefab::PrefabSystemComponentInterface>::Get();
 
         ASSERT_NE(prefabSystemComponentInterface, nullptr);
-        
+
         auto* component = aznew TestComponent();
         AZ::Entity* entity = CreateEntity("test", {component});
 
@@ -138,7 +141,7 @@ namespace UnitTest
 
         AZStd::vector<AssetBuilderSDK::JobProduct> jobProducts;
         auto&& prefabDom = prefabSystemComponentInterface->FindTemplateDom(parentInstance->GetTemplateId());
-        
+
         auto [v0Dom, v0Builder] = GetFingerprint(prefabDom);
         auto [sanityDom, sanityBuilder] = GetFingerprint(prefabDom);
 

@@ -9,6 +9,7 @@
 #include <Atom/RPI.Reflect/Shader/ShaderOutputContract.h>
 #include <AzCore/Utils/TypeHash.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

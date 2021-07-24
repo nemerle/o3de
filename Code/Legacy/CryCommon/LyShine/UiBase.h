@@ -66,5 +66,18 @@ namespace AZ
     AZ_TYPE_INFO_SPECIALIZE(ColorB, "{6F0CC2C0-0CC6-4DBF-9297-B043F270E6A4}");
     AZ_TYPE_INFO_SPECIALIZE(Vec4, "{CAC9510C-8C00-41D4-BC4D-2C6A8136EB30}");
     AZ_TYPE_INFO_SPECIALIZE(CryStringT<char>, "{835199FB-292B-4DB3-BC7C-366E356300FA}");
+
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename T>
+    struct SerializeGenericTypeInfo<CryStringT<T>> : SerializeGenericTypeInfoImpl<CryStringT<T>>
+    {
+        // treat CryStringT as generic value type
+    };
+
 } // namespace AZ
 

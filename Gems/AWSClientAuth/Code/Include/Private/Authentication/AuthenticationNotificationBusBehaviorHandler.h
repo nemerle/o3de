@@ -9,6 +9,7 @@
 
 #include <Authentication/AuthenticationProviderBus.h>
 #include <AzCore/Component/TickBus.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 
 namespace AWSClientAuth
 {

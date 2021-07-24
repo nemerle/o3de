@@ -7,11 +7,15 @@
  */
 
 #include "InputConfigurationComponent.h"
+
 #include <AzCore/Component/ComponentApplicationBus.h>
-#include <AzCore/IO/SystemFile.h>
-#include <AzCore/Serialization/ObjectStream.h>
-#include <AzCore/Serialization/DataPatch.h>
 #include <AzCore/IO/ByteContainerStream.h>
+#include <AzCore/IO/SystemFile.h>
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Serialization/DataPatch.h>
+#include <AzCore/Serialization/ObjectStream.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Utils.h>
 
 namespace StartingPointInput
@@ -90,7 +94,7 @@ namespace StartingPointInput
             // an aggregate type for m_localUserId and only have the pertinent constructors/operators for u32
             m_localUserId = aznumeric_cast<AZ::u32>(m_localPlayerIndex);
         }
-        
+
     }
 
     void InputConfigurationComponent::Activate()

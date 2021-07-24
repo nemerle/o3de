@@ -8,6 +8,8 @@
 
 #include "LUAEditorStyleMessages.h"
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include "LUAEditorViewMessages.h"
 
 namespace LUAEditor

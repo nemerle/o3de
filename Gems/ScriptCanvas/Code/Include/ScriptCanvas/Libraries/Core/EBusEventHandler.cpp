@@ -7,8 +7,6 @@
  */
 #include "EBusEventHandler.h"
 
-#include <AzCore/RTTI/BehaviorContext.h>
-#include <AzCore/Serialization/Utils.h>
 #include <ScriptCanvas/Core/ScriptCanvasBus.h>
 #include <ScriptCanvas/Grammar/Primitives.h>
 #include <ScriptCanvas/Grammar/ParsingUtilities.h>
@@ -16,6 +14,11 @@
 #include <ScriptCanvas/Utils/BehaviorContextUtils.h>
 #include <ScriptCanvas/Utils/NodeUtils.h>
 #include <ScriptCanvas/Utils/VersionConverters.h>
+
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/Utils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvas
 {
@@ -54,7 +57,7 @@ namespace ScriptCanvas
 
             void EBusEventHandler::OnActivate()
             {
-                // Set the auto connect value to the serialized value to give the setter 
+                // Set the auto connect value to the serialized value to give the setter
                 // the chance to overrule it if the node's Connect slot is manually connected.
                 SetAutoConnectToGraphOwner(m_autoConnectToGraphOwner);
             }

@@ -8,11 +8,12 @@
 
 #pragma once
 
-#include <AzCore/Component/EntityBus.h>
-#include <AzCore/Component/TransformBus.h>
 #include <LmbrCentral/Shape/ShapeComponentBus.h>
 #include <LmbrCentral/Dependency/DependencyNotificationBus.h>
 #include <AzCore/Asset/AssetCommon.h>
+#include <AzCore/Asset/AssetBus.h>
+#include <AzCore/Component/EntityBus.h>
+#include <AzCore/Component/TransformBus.h>
 
 namespace LmbrCentral
 {

@@ -12,6 +12,8 @@
 #include <AzToolsFramework/AssetDatabase/AssetDatabaseConnection.h>
 #include <AzToolsFramework/AssetBrowser/Entries/RootAssetBrowserEntry.h>
 #include <AzToolsFramework/AssetBrowser/AssetEntryChange.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AzToolsFramework
 {
@@ -155,7 +157,7 @@ namespace AzToolsFramework
             }
 
             m_changes.push_back(aznew RemoveProductChange(assetId));
-            
+
 
         }
 
@@ -171,7 +173,7 @@ namespace AzToolsFramework
                     m_relativePath = scanFolderDatabaseEntry.m_scanFolder.c_str();
                     return true;
                 });
-        
+
             // query all scanfolders
             m_databaseConnection->QueryScanFoldersTable(
                 [&](ScanFolderDatabaseEntry& scanFolder)

@@ -7,8 +7,10 @@
  */
 
 #include <Atom/RPI.Reflect/Shader/ShaderInputContract.h>
+#include <Atom/RHI.Reflect/HandleReflectImpl.inl>
 #include <AzCore/Utils/TypeHash.h>
-#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

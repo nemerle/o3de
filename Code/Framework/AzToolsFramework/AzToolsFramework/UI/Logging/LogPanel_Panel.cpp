@@ -11,6 +11,7 @@
 
 #include <AzCore/std/delegate/delegate.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Casting/lossy_cast.h>
 #include <AzCore/UserSettings/UserSettings.h>
@@ -143,7 +144,7 @@ namespace AzToolsFramework
         {
             // user clicked the "Add..." button
 
-            NewLogTabDialog newDialog(this); 
+            NewLogTabDialog newDialog(this);
             if (newDialog.exec() == QDialog::Accepted)
             {
                 // add a new tab with those settings.
@@ -192,7 +193,7 @@ namespace AzToolsFramework
                 int newTabIndex = m_impl->pTabWidget->addTab(newTab, QString::fromUtf8(settings.m_tabName.c_str()));
                 m_impl->pTabWidget->setCurrentIndex(newTabIndex);
                 m_impl->settingsForTabs.insert(AZStd::make_pair(qobject_cast<QObject*>(newTab), settings));
-                
+
                 connect(newTab, SIGNAL(onLinkActivated(const QString&)), this, SIGNAL(onLinkActivated(const QString&)));
             }
         }
@@ -868,7 +869,7 @@ namespace AzToolsFramework
         {
             return QStyledItemDelegate::editorEvent(event, model, option, index);
         }
-        
+
         void SavedState::Reflect(AZ::ReflectContext *context)
         {
             AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context);
@@ -877,7 +878,7 @@ namespace AzToolsFramework
                 serialize->Class<SavedState>()
                         ->Version(1)
                         ->Field("m_tabSettings", &SavedState::m_tabSettings);
-                
+
                 serialize->Class<TabSettings>()
                         ->Version(1)
                         ->Field("window", &TabSettings::m_window)
@@ -886,7 +887,7 @@ namespace AzToolsFramework
                         ->Field("filterFlags", &TabSettings::m_filterFlags);
             }
         }
-        
+
     } // namespace LogPanel
 } // namespace AzToolsFramework
 

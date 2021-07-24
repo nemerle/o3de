@@ -8,13 +8,15 @@
 
 #include "MethodOverloaded.h"
 
-#include <AzCore/RTTI/BehaviorContext.h>
-#include <AzCore/RTTI/BehaviorContextUtilities.h>
-#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
 #include <Libraries/Core/MethodUtility.h>
 #include <ScriptCanvas/Core/Contracts/MethodOverloadContract.h>
 #include <ScriptCanvas/Core/SlotConfigurations.h>
 #include <ScriptCanvas/Utils/BehaviorContextUtils.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/BehaviorContextUtilities.h>
+#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace MethodOverloadedCpp
 {
@@ -30,7 +32,7 @@ namespace MethodOverloadedCpp
         // add version label above
         Current,
     };
-}    
+}
 
 namespace ScriptCanvas
 {
@@ -243,7 +245,7 @@ namespace ScriptCanvas
                     slotConfig.SetConnectionType(ConnectionType::Input);
                     slotId = AddSlot(slotConfig);
                 }
-                
+
                 EndpointNotificationBus::MultiHandler::BusConnect({ GetEntityId(), slotId });
                 m_orderedInputSlotIds.push_back(slotId);
                 return slotId;
@@ -429,7 +431,7 @@ namespace ScriptCanvas
                         lookUpMethod = info.m_overloads[0].first;
                     }
                 }
-                
+
                 if (lookUpMethod)
                 {
                     SetupMethodData(lookUpMethod, lookUpClass);
@@ -578,7 +580,7 @@ namespace ScriptCanvas
                             }
                         }
                     }
-                }                
+                }
 
                 for (size_t outputIndex = 0; outputIndex < m_outputSlotIds.size(); ++outputIndex)
                 {
@@ -710,6 +712,6 @@ namespace ScriptCanvas
 
                 return AZ::Success();
             }
-        } 
-    } 
-} 
+        }
+    }
+}

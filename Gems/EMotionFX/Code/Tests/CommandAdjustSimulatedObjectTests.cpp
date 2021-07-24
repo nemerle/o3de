@@ -16,6 +16,9 @@
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/std/string/string.h>
 #include <AzFramework/Physics/SystemBus.h>
+// prevent serialization from being placed in CommandAdjustSimulatedObjectTests be the #include's in namespace.
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <EMotionFX/CommandSystem/Source/CommandManager.h>
 #include <EMotionFX/Source/Actor.h>

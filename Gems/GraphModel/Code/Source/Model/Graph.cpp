@@ -11,6 +11,7 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 // Graph Model
 #include <GraphModel/Model/Graph.h>
@@ -101,7 +102,7 @@ namespace GraphModel
     }
 
     const char* Graph::GetSystemName() const
-    { 
+    {
         return GetContext()->GetSystemName();
     }
 
@@ -171,7 +172,7 @@ namespace GraphModel
     {
         AZ_Assert(Node::INVALID_NODE_ID == node->GetId(), "It appears this node already exists in a Graph");
         AZ_Assert(this == node->GetGraph().get(), "The Node was not created for this Graph");
-        
+
         node->m_id = m_nextNodeId++;
         m_nodes.insert(AZStd::make_pair(node->m_id, node));
 
@@ -182,7 +183,7 @@ namespace GraphModel
     bool Graph::RemoveNode(ConstNodePtr node)
     {
         // First delete any connections that are attached to the node.
-        // It looks like this code is never run because the connections are always 
+        // It looks like this code is never run because the connections are always
         // deleted individually first. But still have this hear for completeness.
         for (int i = static_cast<int>(m_connections.size()) - 1; i >= 0; --i)
         {

@@ -37,6 +37,8 @@
 #include <GraphCanvas/Widgets/GraphCanvasEditor/GraphCanvasEditorDockWidget.h>
 #include <GraphCanvas/Widgets/NodePalette/NodePaletteDockWidget.h>
 #include <GraphCanvas/Widgets/NodePalette/TreeItems/NodePaletteTreeItem.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace GraphCanvas
 {
@@ -98,7 +100,7 @@ namespace GraphCanvas
             RestoreWindowState();
         });
     }
-    
+
     AssetEditorMainWindow::~AssetEditorMainWindow()
     {
         AssetEditorNotificationBus::Handler::BusDisconnect();

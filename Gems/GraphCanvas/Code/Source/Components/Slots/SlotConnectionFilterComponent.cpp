@@ -7,6 +7,8 @@
  */
 
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Components/Slots/SlotConnectionFilterComponent.h>
 
@@ -113,9 +115,9 @@ namespace GraphCanvas
             return false;
         }
 
-        return AZStd::all_of(m_filters.begin(), m_filters.end(), 
-            [&](ConnectionFilter* filter) 
-            { 
+        return AZStd::all_of(m_filters.begin(), m_filters.end(),
+            [&](ConnectionFilter* filter)
+            {
                 return filter->CanConnectWith(endpoint, moveType);
             }
         );

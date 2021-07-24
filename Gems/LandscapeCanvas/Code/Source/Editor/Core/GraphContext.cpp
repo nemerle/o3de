@@ -9,6 +9,7 @@
 // AZ
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
+#include <AzCore/std/smart_ptr/weak_ptr.h>
 
 // Graph Model
 #include <GraphModel/Model/Module/ModuleGraphManager.h>

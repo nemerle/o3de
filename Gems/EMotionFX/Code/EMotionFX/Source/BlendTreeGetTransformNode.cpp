@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Math/Transform.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <EMotionFX/Source/EMotionFXConfig.h>
@@ -39,7 +40,7 @@ namespace EMotionFX
         m_nodeIndex = InvalidIndex32;
         const AZStd::string& nodeName = transformNode->GetNodeName();
         const int actorInstanceParentDepth = transformNode->GetActorInstanceParentDepth();
-        
+
         // lookup the actor instance to get the node from
         const ActorInstance* alignInstance = mAnimGraphInstance->FindActorInstanceFromParentDepth(actorInstanceParentDepth);
         if (alignInstance)

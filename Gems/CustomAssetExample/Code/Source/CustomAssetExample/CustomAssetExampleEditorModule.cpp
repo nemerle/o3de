@@ -10,6 +10,8 @@
 #include <AzCore/Module/Module.h>
 
 #include <CustomAssetExample/Builder/CustomAssetExampleBuilderComponent.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace CustomAssetExample
 {

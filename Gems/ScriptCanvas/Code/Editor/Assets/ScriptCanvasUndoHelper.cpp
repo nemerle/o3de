@@ -9,6 +9,8 @@
 #include "ScriptCanvasUndoHelper.h"
 #include "ScriptCanvasMemoryAsset.h"
 #include <Undo/ScriptCanvasGraphCommand.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace ScriptCanvasEditor
 {

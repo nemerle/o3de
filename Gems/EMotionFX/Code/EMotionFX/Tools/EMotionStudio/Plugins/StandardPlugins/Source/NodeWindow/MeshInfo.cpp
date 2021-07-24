@@ -8,6 +8,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <EMotionFX/Source/Actor.h>
 #include <EMotionFX/Source/Mesh.h>
 #include <EMotionFX/Source/Node.h>
@@ -42,7 +43,7 @@ namespace EMStudio
 
         // skinning influences
         mesh->CalcMaxNumInfluences(m_verticesByInfluences);
-        
+
         // sub meshes
         const uint32 numSubMeshes = mesh->GetNumSubMeshes();
         for (uint32 i = 0; i < numSubMeshes; ++i)
@@ -146,7 +147,7 @@ namespace EMStudio
             ->Field("attributeLayers", &MeshInfo::m_attributeLayers)
             ->Field("sharedAttributeLayers", &MeshInfo::m_sharedAttributeLayers)
            ;
-        
+
         AZ::EditContext* editContext = serializeContext->GetEditContext();
         if (!editContext)
         {

@@ -18,6 +18,8 @@
 #include <EMotionFX/Source/Node.h>
 #include <EMotionFX/Source/PhysicsSetup.h>
 #include <EMotionFX/Source/SimulatedObjectBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 
 namespace EMotionFX

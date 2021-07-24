@@ -12,9 +12,10 @@
 
 #include <Atom/RPI.Public/Image/ImageSystemInterface.h>
 
+#include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Math/Crc.h>
 #include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Utils.h>
 
 #include <LyShine/Bus/UiCanvasBus.h>

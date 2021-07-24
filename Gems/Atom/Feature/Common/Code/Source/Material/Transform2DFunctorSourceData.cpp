@@ -9,6 +9,7 @@
 #include "./Transform2DFunctorSourceData.h"
 #include <Atom/RHI.Reflect/ShaderResourceGroupLayout.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

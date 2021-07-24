@@ -11,13 +11,14 @@
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/std/algorithm.h>
+#include <AzCore/std/containers/unordered_set.h>
 
 namespace AZ
 {
     //! This is the Job class that runs until all assetPaths become valid AssetIds.
     //! A valid AssetId doesn't mean that the asset is ready and loaded in memory,
     //! it simply means the assetPath is acknowledged by the AP as an asset in the database
-    //! that CAN be loaded. 
+    //! that CAN be loaded.
     class AssetDiscoveryJob : public Job
     {
     public:

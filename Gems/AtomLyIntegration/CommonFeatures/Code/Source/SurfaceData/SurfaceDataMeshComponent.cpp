@@ -11,6 +11,7 @@
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <LmbrCentral/Rendering/MeshAsset.h>
 #include <Atom/RPI.Reflect/Model/ModelAssetCreator.h>
 

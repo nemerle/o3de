@@ -6,12 +6,15 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 #}
 {% macro add_attribute(attribute, tags) %}
 {% set value = tags[attribute] %}
-{% if value is defined %} 
+{% if value is defined %}
 ->Attribute(AZ::Edit::Attributes::{{ attribute }}, {{ value }})
 {% endif %}
 {% endmacro %}
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/RTTI/TypeInfo.h>
 
 #include <ScriptCanvas/Core/Slot.h>
@@ -133,7 +136,7 @@ void {{ Class.attrib['QualifiedName'] }}::ConfigureSlots()
 {% for Property in Class.iter('DynamicDataSlot') %}
     // {{ Property.attrib['Name'] }}
     {
-        ScriptCanvas::DynamicDataSlotConfiguration slotConfiguration;       
+        ScriptCanvas::DynamicDataSlotConfiguration slotConfiguration;
         slotConfiguration.m_name = "{{ Property.attrib['Name'] }}";
         slotConfiguration.m_toolTip = "{{ Property.attrib['Description'] }}";
     {% if Property.attrib['DisplayGroup'] is defined %}
@@ -191,7 +194,7 @@ void {{ Class.attrib['QualifiedName'] }}::Reflect(AZ::ReflectContext* context)
 {% if Class.attrib['DependentReflections'] is defined %}
 {% for dependentClass in Class.attrib['DependentReflections'].split(';') %}
     {{ dependentClass }}::Reflect(context);
-{% endfor %}    
+{% endfor %}
 
 {% endif %}
 {% if Class.attrib['Base'] is defined %}

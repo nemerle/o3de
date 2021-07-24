@@ -9,6 +9,7 @@
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <SceneAPI/SceneCore/DataTypes/Rules/IRule.h>
 #include <SceneAPI/SceneData/Groups/SkeletonGroup.h>
@@ -61,7 +62,7 @@ namespace AZ
             {
                 return m_rules;
             }
-            
+
             const AZStd::string& SkeletonGroup::GetSelectedRootBone() const
             {
                 return m_selectedRootBone;

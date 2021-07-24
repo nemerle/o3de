@@ -9,6 +9,7 @@
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <SceneAPI/SceneData/Rules/SkinMeshAdvancedRule.h>
 #include <SceneAPI/SceneCore/DataTypes/GraphData/IMeshVertexUVData.h>
@@ -109,7 +110,7 @@ namespace AZ
                             "to enable 'Vertex Coloring'.")
                             ->Attribute("ClassTypeIdFilter", DataTypes::IMeshVertexColorData::TYPEINFO_Uuid())
                             ->Attribute("DisabledOption", DataTypes::s_advancedDisabledString)
-                            ->Attribute("UseShortNames", true);                            
+                            ->Attribute("UseShortNames", true);
                 }
             }
         } // SceneData

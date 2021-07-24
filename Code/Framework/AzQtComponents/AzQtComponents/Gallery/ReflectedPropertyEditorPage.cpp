@@ -9,8 +9,10 @@
 #include "ReflectedPropertyEditorPage.h"
 #include <AzQtComponents/Gallery/ui_ReflectedPropertyEditorPage.h>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 
 #include <AzToolsFramework/UI/PropertyEditor/ReflectedPropertyEditor.hxx>
@@ -150,7 +152,7 @@ void GalleryComponent::Reflect(AZ::ReflectContext* context)
             ->Field("BoolForLongLabel", &GalleryComponent::m_boolForLongLabel)
             ->Field("Strings", &GalleryComponent::m_strings)
             ;
- 
+
         AZ::EditContext* edit = serialize->GetEditContext();
         if (edit)
         {

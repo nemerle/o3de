@@ -17,6 +17,8 @@
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/Casting/numeric_cast.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzFramework/API/ApplicationAPI.h>
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>
@@ -55,7 +57,7 @@ namespace AZ
             Events::ProcessingResult BaseMaterialExporterComponent::ExportMaterialsToTempDir(Events::PreExportEventContext& context, bool registerProducts) const
             {
                 using MaterialExporterMap = AZStd::unordered_map<AZStd::string, MtlMaterialExporter>;
-                
+
                 AZStd::string textureRootPath = GetTextureRootPath();
                 AZ_TraceContext("Texture root", textureRootPath);
 
@@ -233,7 +235,7 @@ namespace AZ
             //
             // MtlMaterialExporter
             //
-            
+
             MtlMaterialExporter::SaveMaterialResult MtlMaterialExporter::SaveMaterialGroup(const DataTypes::ISceneNodeGroup& sceneNodeGroup,
                 const Containers::Scene& scene, const AZStd::string& textureRootPath)
             {
@@ -269,7 +271,7 @@ namespace AZ
 
                 return AppendMaterialGroup(sceneNodeGroup, scene);
             }
-            
+
             MtlMaterialExporter::SaveMaterialResult MtlMaterialExporter::AppendMaterialGroup(const DataTypes::ISceneNodeGroup& sceneNodeGroup, const Containers::Scene& scene)
             {
                 AZ_Assert(!m_textureRootPath.empty(), "Texture root path hasn't been set. Call SaveMaterialGroup before this function to setup the material first.");
@@ -299,7 +301,7 @@ namespace AZ
                 if (rules.FindFirstByType<DataTypes::IMaterialRule>())
                 {
                     // create materials for render nodes
-                    AZStd::vector<AZStd::string> renderTargetNodes = Utilities::SceneGraphSelector::GenerateTargetNodes(sceneGraph, 
+                    AZStd::vector<AZStd::string> renderTargetNodes = Utilities::SceneGraphSelector::GenerateTargetNodes(sceneGraph,
                         sceneNodeGroup.GetSceneNodeSelectionList(), Utilities::SceneGraphSelector::IsMesh);
                     for (auto& nodeName : renderTargetNodes)
                     {
@@ -341,7 +343,7 @@ namespace AZ
                         {
                             auto& lodSceneNodeList = lodRule->GetSceneNodeSelectionList(lodIndex);
 
-                            AZStd::vector<AZStd::string> lodNodes = 
+                            AZStd::vector<AZStd::string> lodNodes =
                                 Utilities::SceneGraphSelector::GenerateTargetNodes(sceneGraph, lodSceneNodeList, Utilities::SceneGraphSelector::IsMesh);
 
                             for (const AZStd::string& nodeName : lodNodes)
@@ -351,7 +353,7 @@ namespace AZ
                                 {
                                     continue;
                                 }
-                                    
+
                                 auto view = Containers::Views::MakeSceneGraphChildView<Containers::Views::AcceptEndPointsOnly>(sceneGraph, index,
                                     sceneGraph.GetContentStorage().begin(), true);
                                 for (auto it = view.begin(); it != view.end(); ++it)
@@ -360,10 +362,10 @@ namespace AZ
                                     {
                                         const Containers::SceneGraph::Name& name =
                                             sceneGraph.GetNodeName(sceneGraph.ConvertToNodeIndex(it.GetHierarchyIterator()));
-                                            
+
                                         auto material = AZStd::find_if(
-                                            m_materialGroup.m_materials.begin(), 
-                                            m_materialGroup.m_materials.end(), 
+                                            m_materialGroup.m_materials.begin(),
+                                            m_materialGroup.m_materials.end(),
                                             [&name](const MaterialInfo& info) -> bool
                                         {
                                             return info.m_name == name.GetName();
@@ -431,7 +433,7 @@ namespace AZ
 
                 if (updateWithChanges)
                 {
-                    //Open the MTL file for read if it exists 
+                    //Open the MTL file for read if it exists
                     bool fileRead = matGroup.ReadMtlFile(filePath);
                     AZ_TraceContext("MTL File Name", filePath);
                     if (fileRead)
@@ -516,7 +518,7 @@ namespace AZ
                     }
                 }
 
-                //Remove a physical material if one had been added previously. 
+                //Remove a physical material if one had been added previously.
                 if (!hasPhysicalMaterial)
                 {
                     matGroup.RemoveMaterial(GFxFramework::MaterialExport::g_stringPhysicsNoDraw);

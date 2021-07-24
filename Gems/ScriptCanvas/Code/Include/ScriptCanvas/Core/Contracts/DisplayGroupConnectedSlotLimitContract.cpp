@@ -16,6 +16,9 @@
 #include <ScriptCanvas/Core/Node.h>
 #include <ScriptCanvas/Core/Graph.h>
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ScriptCanvas
 {
     void DisplayGroupConnectedSlotLimitContract::Reflect(AZ::ReflectContext* reflection)
@@ -31,21 +34,21 @@ namespace ScriptCanvas
             ;
         }
     }
-    
+
     DisplayGroupConnectedSlotLimitContract::DisplayGroupConnectedSlotLimitContract(const AZStd::string& displayGroup, AZ::u32 connectedSlotLimit)
         : m_displayGroup(displayGroup)
         , m_limit(connectedSlotLimit)
     {
     }
-    
+
     AZ::Outcome<void, AZStd::string> DisplayGroupConnectedSlotLimitContract::OnEvaluate(const Slot& sourceSlot, [[maybe_unused]] const Slot& targetSlot) const
-    {        
+    {
         // If the slot is already connected, it can have more connections
         if (sourceSlot.IsConnected())
         {
             return AZ::Success();
         }
-        
+
         AZ::u32 connectionCount = 0;
 
         AZStd::vector<Slot*> slotGroup = sourceSlot.GetNode()->GetSlotsWithDisplayGroup(m_displayGroup);
@@ -65,7 +68,7 @@ namespace ScriptCanvas
                         errorMessage = AZStd::string::format("Too many connections present for DisplayGroup - %s", m_displayGroup.c_str());
                     }
 
-                    return AZ::Failure(errorMessage);                            
+                    return AZ::Failure(errorMessage);
                 }
             }
         }

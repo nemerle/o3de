@@ -20,6 +20,8 @@
 #include <AzCore/std/optional.h>
 #include <AzCore/std/string/regex.h>
 #include <AzCore/Platform.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/StringFunc/StringFunc.h>
 
@@ -108,7 +110,7 @@ namespace AZ
         AZStd::string PrependFile(PrependArguments& arguments)
         {
             static const char* executableFolder = nullptr;
-            const auto AsAbsolute = [](const AZStd::string& localFile) -> AZStd::optional<AZStd::string> 
+            const auto AsAbsolute = [](const AZStd::string& localFile) -> AZStd::optional<AZStd::string>
             {
                 if (!AzFramework::StringFunc::Path::IsRelative(localFile.c_str()))
                 {
@@ -155,7 +157,7 @@ namespace AZ
                 AZ_Error(ShaderPlatformInterfaceName, false, "%s", prependFileLoadResult.GetError().c_str());
                 return arguments.m_sourceFile;
             }
-            
+
             auto sourceFileAbsolutePath = AsAbsolute(arguments.m_sourceFile);
             if (!sourceFileAbsolutePath)
             {
@@ -281,8 +283,8 @@ namespace AZ
             auto pumpOuputStreams = [&watcherPtr, &errorMessages]()
             {
                 auto communicator = watcherPtr->GetCommunicator();
-                
-                // Instead of collecting all the output in a giant string, it would be better to report 
+
+                // Instead of collecting all the output in a giant string, it would be better to report
                 // the chunks of messages as they arrive, but this should be good enough for now.
                 if (auto byteCount = communicator->PeekError())
                 {
@@ -374,7 +376,7 @@ namespace AZ
             AzFramework::StringFunc::Tokenize(errorMessages.data(), lines, "\n\r");
 
             bool foundErrors = false;
-            
+
             for (auto& line : lines)
             {
                 if (AZStd::string::npos != AzFramework::StringFunc::Find(line, "error"))
@@ -386,7 +388,7 @@ namespace AZ
                 {
                     AZ_Warning(window.data(), false, "%s", line.data());
                 }
-                else 
+                else
                 {
                     AZ_TracePrintf(window.data(), "%s", line.data());
                 }
@@ -434,7 +436,7 @@ namespace AZ
             {
                 return AZ::Failure(AZStd::string::format("Failed to load file '%s'.", path));
             }
-            
+
             return AZ::Success(AZStd::move(text));
         }
 
@@ -454,7 +456,7 @@ namespace AZ
             {
                 return AZ::Failure(AZStd::string::format("Failed to load file '%s'.", path));
             }
-            
+
             return AZ::Success(AZStd::move(bytes));
         }
 
@@ -479,7 +481,7 @@ namespace AZ
             } while (searchFrom != text.end());
             return count;
         }
-    
+
         AZStd::string BuildFileNameWithExtension(const AZStd::string& shaderSourceFile,
                                                                    const AZStd::string& tempFolder,
                                                                    const char* outputExtension)

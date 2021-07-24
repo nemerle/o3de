@@ -116,7 +116,7 @@ set(FILES
     Source/Decals/DecalTextureArray.cpp
     Source/Decals/AsyncLoadTracker.h
     Source/Decals/DecalTextureArrayFeatureProcessor.h
-    Source/Decals/DecalTextureArrayFeatureProcessor.cpp    
+    Source/Decals/DecalTextureArrayFeatureProcessor.cpp
     Source/DiffuseGlobalIllumination/DiffuseProbeGridRayTracingPass.cpp
     Source/DiffuseGlobalIllumination/DiffuseProbeGridRayTracingPass.h
     Source/DiffuseGlobalIllumination/DiffuseProbeGridBlendIrradiancePass.cpp
@@ -258,6 +258,7 @@ set(FILES
     Source/RayTracing/RayTracingAccelerationStructurePass.h
     Source/RayTracing/RayTracingPass.cpp
     Source/RayTracing/RayTracingPass.h
+    Source/RayTracing/RayTracingPassData.cpp
     Source/RayTracing/RayTracingPassData.h
     Source/ReflectionProbe/ReflectionProbeFeatureProcessor.cpp
     Source/ReflectionProbe/ReflectionProbe.cpp

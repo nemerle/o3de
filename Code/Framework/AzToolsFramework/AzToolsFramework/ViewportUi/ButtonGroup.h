@@ -9,6 +9,7 @@
  */
 
 #include <AzToolsFramework/ViewportUi/ViewportUiRequestBus.h>
+#include <AzCore/std/smart_ptr/unique_ptr.h>
 
 namespace AzToolsFramework::ViewportUi::Internal
 {

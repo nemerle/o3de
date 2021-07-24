@@ -7,6 +7,8 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzFramework/Components/TransformComponent.h>
 #include <AzFramework/Entity/EntityContext.h>
 #include <AzFramework/Asset/SimpleAsset.h>
@@ -133,7 +135,7 @@ namespace UnitTest
                     ->Field("myMap", &PropertyTreeEditorTester::m_myMap)
                     ->Field("mySubBlock", &PropertyTreeEditorTester::m_mySubBlock)
                     ->Field("myHiddenDouble", &PropertyTreeEditorTester::m_myHiddenDouble)
-                    ->Field("myReadOnlyShort", &PropertyTreeEditorTester::m_myReadOnlyShort)                    
+                    ->Field("myReadOnlyShort", &PropertyTreeEditorTester::m_myReadOnlyShort)
                     ->Field("nestedTesterHiddenChildren", &PropertyTreeEditorTester::m_nestedTesterHiddenChildren)
                     ->Field("myAssetData", &PropertyTreeEditorTester::m_myAssetData)
                     ->Field("myTestSimpleAsset", &PropertyTreeEditorTester::m_myTestSimpleAsset)
@@ -173,7 +175,7 @@ namespace UnitTest
                             ->Attribute(AZ::Edit::Attributes::ReadOnly, true)
                         ->DataElement(0, &PropertyTreeEditorTester::m_mySubBlock, "My Sub Block", "sub block test")
                             ->Attribute(AZ::Edit::Attributes::Visibility, AZ::Edit::PropertyVisibility::ShowChildrenOnly)
-                            ->Attribute(AZ::Edit::Attributes::AutoExpand, true)                            
+                            ->Attribute(AZ::Edit::Attributes::AutoExpand, true)
                         ->ClassElement(AZ::Edit::ClassElements::Group, "Grouped")
                             ->DataElement(AZ::Edit::UIHandlers::Default, &PropertyTreeEditorTester::m_myGroupedString, "My Grouped String", "A test grouped string.")
                         ;
@@ -196,7 +198,7 @@ namespace UnitTest
         {
             m_app.Start(AzFramework::Application::Descriptor());
             // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
             // in the unit tests.
             AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
         }
@@ -278,7 +280,7 @@ namespace UnitTest
         }
 
     }
-    
+
     TEST_F(PropertyTreeEditorTests, WritePropertyTreeValues)
     {
         AZ::ComponentApplicationBus::BroadcastResult(m_serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);

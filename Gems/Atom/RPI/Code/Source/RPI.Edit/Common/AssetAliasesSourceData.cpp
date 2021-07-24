@@ -12,13 +12,15 @@
 
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>
 
 namespace AZ
 {
     namespace RPI
-    {             
+    {
         void AssetAliasesSourceData::Reflect(ReflectContext* context)
         {
             if (auto* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))

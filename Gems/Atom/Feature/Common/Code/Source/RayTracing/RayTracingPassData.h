@@ -24,28 +24,7 @@ namespace AZ
             RayTracingPassData() = default;
             virtual ~RayTracingPassData() = default;
 
-            static void Reflect(ReflectContext* context)
-            {
-                if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
-                {
-                    serializeContext->Class<RayTracingPassData, RenderPassData>()
-                        ->Version(1)
-                        ->Field("RayGenerationShaderAsset", &RayTracingPassData::m_rayGenerationShaderAssetReference)
-                        ->Field("RayGenerationShaderName", &RayTracingPassData::m_rayGenerationShaderName)
-                        ->Field("ClosestHitShaderAsset", &RayTracingPassData::m_closestHitShaderAssetReference)
-                        ->Field("ClosestHitShaderName", &RayTracingPassData::m_closestHitShaderName)
-                        ->Field("MissShaderAsset", &RayTracingPassData::m_missShaderAssetReference)
-                        ->Field("MissShaderName", &RayTracingPassData::m_missShaderName)
-                        ->Field("MaxPayloadSize", &RayTracingPassData::m_maxPayloadSize)
-                        ->Field("MaxAttributeSize", &RayTracingPassData::m_maxAttributeSize)
-                        ->Field("MaxRecursionDepth", &RayTracingPassData::m_maxRecursionDepth)
-                        ->Field("Thread Count X", &RayTracingPassData::m_threadCountX)
-                        ->Field("Thread Count Y", &RayTracingPassData::m_threadCountY)
-                        ->Field("Thread Count Z", &RayTracingPassData::m_threadCountZ)
-                        ->Field("Make Fullscreen Pass", &RayTracingPassData::m_makeFullscreenPass)
-                        ;
-                }
-            }
+            static void Reflect(ReflectContext* context);
 
             RPI::AssetReference m_rayGenerationShaderAssetReference;
             AZStd::string m_rayGenerationShaderName;

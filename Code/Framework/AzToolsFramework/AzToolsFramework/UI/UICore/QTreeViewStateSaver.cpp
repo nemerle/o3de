@@ -13,6 +13,7 @@
 
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/UserSettings/UserSettings.h>
 
@@ -685,7 +686,7 @@ namespace AzToolsFramework
 
     void QTreeViewWithStateSaving::CaptureTreeViewSnapshot() const
     {
-        // doing a null check here because it can be called before SetupSaver() 
+        // doing a null check here because it can be called before SetupSaver()
         if (m_treeStateSaver)
         {
             m_treeStateSaver->CaptureSnapshot();

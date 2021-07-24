@@ -9,6 +9,7 @@
 #include <AzCore/Debug/Trace.h>
 #include <AzCore/Math/MathUtils.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/UserSettings/UserSettings.h>
 

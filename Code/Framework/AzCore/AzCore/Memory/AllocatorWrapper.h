@@ -10,7 +10,13 @@
 #include <AzCore/base.h>
 #include <AzCore/std/typetraits/alignment_of.h>
 #include <AzCore/std/typetraits/aligned_storage.h>
-#include <AzCore/std/utils.h>
+
+#include <utility> // for std::forward
+
+namespace AZStd
+{
+    using std::forward;
+}
 
 namespace AZ
 {
@@ -18,7 +24,7 @@ namespace AZ
     * Safe wrapper for an instance of an allocator.
     *
     * Generally it is preferred to use AllocatorInstance<> for allocator singletons over this wrapper,
-    * but you may want to use this wrapper in particular when scoping a custom allocator to the lifetime 
+    * but you may want to use this wrapper in particular when scoping a custom allocator to the lifetime
     * of some other object.
     */
     template<class Allocator>

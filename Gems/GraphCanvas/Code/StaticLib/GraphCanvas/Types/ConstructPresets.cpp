@@ -14,6 +14,8 @@
 #include <GraphCanvas/Utils/GraphUtils.h>
 
 #include <GraphCanvas/Components/Nodes/Comment/CommentBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace GraphCanvas
 {
@@ -161,7 +163,7 @@ namespace GraphCanvas
         }
 
         return m_presets[index];
-    }    
+    }
 
     AZStd::shared_ptr<ConstructPreset> ConstructTypePresetBucket::GetDefaultPreset() const
     {
@@ -181,7 +183,7 @@ namespace GraphCanvas
         ConfigurePresetDefaults(dataContainer);
 
         if (!dataContainer->IsEmpty())
-        {            
+        {
             AddPreset(preset);
 
             if (!m_presets.empty())
@@ -190,7 +192,7 @@ namespace GraphCanvas
             }
         }
         else
-        {            
+        {
             delete preset;
         }
 
@@ -204,7 +206,7 @@ namespace GraphCanvas
         preset->m_displayName = displayName;
 
         if (preset->IsValidEntityForPreset(elementId))
-        {            
+        {
             EntitySaveDataContainer* dataContainer = &preset->m_dataPreset;
 
             EntitySaveDataRequestBus::Event(elementId, &EntitySaveDataRequests::WriteSaveData, (*dataContainer));
@@ -216,7 +218,7 @@ namespace GraphCanvas
             dataContainer->RemoveAll(allowablePresetTypes);
 
             if (!dataContainer->IsEmpty())
-            {            
+            {
                 isValid = true;
 
                 DeconfigurePresetsFromEntity(dataContainer);
@@ -323,7 +325,7 @@ namespace GraphCanvas
     ConstructPreset* CommentPresetBucket::CreateEmptyPreset()
     {
         return aznew CommentPreset();
-    }   
+    }
 
     void CommentPresetBucket::ConfigurePresetDefaults(EntitySaveDataContainer* presetData)
     {
@@ -411,7 +413,7 @@ namespace GraphCanvas
             ;
 
             serializeContext->Class<NodeGroupPreset, ConstructPreset>()
-                ->Version(1)                
+                ->Version(1)
             ;
 
             serializeContext->Class<CommentPresetBucket, ConstructTypePresetBucket>()
@@ -448,10 +450,10 @@ namespace GraphCanvas
     }
 
     void EditorConstructPresets::Initialize()
-    {        
+    {
         RegisterPresetBucket<CommentPresetBucket>();
         InitializeConstructType(ConstructType::CommentNode);
-        
+
         RegisterPresetBucket<NodeGroupPresetBucket>();
         InitializeConstructType(ConstructType::NodeGroup);
     }
@@ -471,7 +473,7 @@ namespace GraphCanvas
                 break;
             }
         }
-    }    
+    }
 
     void EditorConstructPresets::RemovePresets(const AZStd::vector< AZStd::shared_ptr< ConstructPreset> >& presets)
     {
@@ -490,7 +492,7 @@ namespace GraphCanvas
         }
 
         for (auto constructType : constructTypes)
-        {            
+        {
             AssetEditorPresetNotificationBus::Event(m_editorId, &AssetEditorPresetNotifications::OnConstructPresetsChanged, constructType);
         }
     }

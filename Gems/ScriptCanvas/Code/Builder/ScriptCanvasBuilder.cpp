@@ -7,6 +7,9 @@
  */
 
 #include <AzToolsFramework/API/EditorAssetSystemAPI.h>
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Builder/ScriptCanvasBuilder.h>
 #include <Builder/ScriptCanvasBuilderWorker.h>
 #include <ScriptCanvas/Assets/ScriptCanvasAsset.h>

@@ -9,6 +9,8 @@
 #include <Atom/RHI.Edit/ShaderCompilerArguments.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzCore/std/string/regex.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Atom/RHI.Edit/Utils.h>
 
@@ -108,7 +110,7 @@ namespace AZ
                     arguments += " " + azslcFreeArguments;
                 }
             }
-            
+
             return arguments;
         }
 

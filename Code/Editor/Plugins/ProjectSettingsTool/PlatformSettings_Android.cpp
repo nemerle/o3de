@@ -11,6 +11,9 @@
 #include "PlatformSettings_common.h"
 #include "Validators.h"
 
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 namespace ProjectSettingsTool
 {
     static const char* defaultImageTooltip = "Default image used if a specific DPI override is not given.";

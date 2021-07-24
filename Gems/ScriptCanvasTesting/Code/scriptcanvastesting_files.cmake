@@ -9,5 +9,6 @@
 set(FILES
     Source/ScriptCanvasTestingSystemComponent.cpp
     Source/ScriptCanvasTestingSystemComponent.h
+    Source/Nodes/BehaviorContextObjectTestNode.cpp
     Source/Nodes/BehaviorContextObjectTestNode.h
 )

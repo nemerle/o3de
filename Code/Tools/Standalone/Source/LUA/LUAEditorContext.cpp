@@ -18,6 +18,7 @@
 #include <AzCore/Script/ScriptContextAttributes.h>
 #include <AzCore/Script/ScriptSystemBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/std/string/regex.h>
@@ -593,7 +594,7 @@ namespace LUAEditor
             {
                 // the document was probably closed.
                 if (foundAbsolutePath)
-                { 
+                {
                     AssetOpenRequested(absolutePath, true);
                 }
                 else
@@ -1260,7 +1261,7 @@ namespace LUAEditor
         {
             return;
         }
-        
+
         DocumentInfo& doc = actualDocument->second;
 
         //this operation is considered done

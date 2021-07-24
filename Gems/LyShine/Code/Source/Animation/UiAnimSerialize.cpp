@@ -15,6 +15,8 @@
 #include "AnimSequence.h"
 #include "AzEntityNode.h"
 #include "EventNode.h"
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // NAMESPACE FUNCTIONS

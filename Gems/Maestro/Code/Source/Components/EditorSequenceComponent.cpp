@@ -17,6 +17,7 @@
 #include <AzCore/Math/Uuid.h>
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
@@ -113,7 +114,7 @@ namespace Maestro
                     ;
             }
         }
-        
+
         AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context);
         if (behaviorContext)
         {

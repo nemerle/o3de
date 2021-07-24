@@ -61,6 +61,7 @@ set(FILES
     StaticLib/GraphCanvas/Components/NodePropertyDisplay/VectorDataInterface.h
     StaticLib/GraphCanvas/Components/Nodes/NodeBus.h
     StaticLib/GraphCanvas/Components/Nodes/NodeUIBus.h
+    StaticLib/GraphCanvas/Components/Nodes/NodeConfiguration.cpp
     StaticLib/GraphCanvas/Components/Nodes/NodeConfiguration.h
     StaticLib/GraphCanvas/Components/Nodes/NodeLayoutBus.h
     StaticLib/GraphCanvas/Components/Nodes/NodeTitleBus.h
@@ -97,12 +98,14 @@ set(FILES
     StaticLib/GraphCanvas/Types/ConstructPresets.cpp
     StaticLib/GraphCanvas/Types/ConstructPresets.h
     StaticLib/GraphCanvas/Types/EntitySaveData.h
+    StaticLib/GraphCanvas/Types/Endpoint.cpp
     StaticLib/GraphCanvas/Types/Endpoint.h
     StaticLib/GraphCanvas/Types/GraphCanvasGraphData.cpp
     StaticLib/GraphCanvas/Types/GraphCanvasGraphData.h
     StaticLib/GraphCanvas/Types/GraphCanvasGraphSerialization.cpp
     StaticLib/GraphCanvas/Types/GraphCanvasGraphSerialization.h
     StaticLib/GraphCanvas/Types/SceneMemberComponentSaveData.h
+    StaticLib/GraphCanvas/Types/TranslationTypes.cpp
     StaticLib/GraphCanvas/Types/TranslationTypes.h
     StaticLib/GraphCanvas/Types/Types.h
     StaticLib/GraphCanvas/Types/QtMetaTypes.h

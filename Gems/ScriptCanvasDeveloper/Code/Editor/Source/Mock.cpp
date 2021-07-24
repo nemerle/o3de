@@ -9,6 +9,8 @@
 
 #include <AzCore/std/containers/set.h>
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Editor/Nodes/NodeUtils.h>
 #include <GraphCanvas/Components/Nodes/NodeTitleBus.h>
 #include <GraphCanvas/Components/Slots/SlotBus.h>
@@ -100,7 +102,7 @@ namespace ScriptCanvasDeveloper
                     {
                         continue;
                     }
-                    
+
                     bool isDeprecated{};
                     if (auto isDeprecatedAttributePtr = AZ::FindAttribute(AZ::Script::Attributes::Deprecated, behaviorClass->m_attributes))
                     {
@@ -417,7 +419,7 @@ namespace ScriptCanvasDeveloper
                         DataSlotConfiguration slotConfiguration;
 
                         slotConfiguration.m_name = dataInConfig.m_name;
-                        slotConfiguration.m_toolTip = dataInConfig.m_toolTip;                        
+                        slotConfiguration.m_toolTip = dataInConfig.m_toolTip;
                         slotConfiguration.SetType(dataInConfig.m_type);
                         slotConfiguration.SetConnectionType(ConnectionType::Input);
 
@@ -565,7 +567,7 @@ namespace ScriptCanvasDeveloper
                 slotConfig.OnSlotToolTipChanged();
             }
 
-            MockDescriptorNotificationBus::Event(GetEntityId(), &MockDescriptorNotifications::OnGraphCanvasNodeSetup, m_graphCanvasNodeId);            
+            MockDescriptorNotificationBus::Event(GetEntityId(), &MockDescriptorNotifications::OnGraphCanvasNodeSetup, m_graphCanvasNodeId);
         }
 
         void Mock::OnSceneMemberDeserialized([[maybe_unused]] const GraphCanvas::GraphId& graphId, [[maybe_unused]] const GraphCanvas::GraphSerialization& serialization)

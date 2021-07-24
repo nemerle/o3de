@@ -82,10 +82,26 @@ namespace Vegetation
         bool m_overridePreviewSettings = false;
         AZ::EntityId m_previewEntityId;
         AZ::Vector3 m_previewPosition = AZ::Vector3(0.0f);
-        AZ::Vector3 m_previewSize = AZ::Vector3(1.0f); //1m sq preview...arbitrary default box size in meters chosen by design 
+        AZ::Vector3 m_previewSize = AZ::Vector3(1.0f); //1m sq preview...arbitrary default box size in meters chosen by design
         bool m_constrainToShape = false;
     };
 
 } // namespace Vegetation
+
+namespace AZ
+{
+    // Serialization helpers
+    template<typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template<typename T>
+    struct SerializeGenericTypeInfo;
+
+    template<typename S, typename T>
+    struct SerializeGenericTypeInfo<Vegetation::EditorAreaComponentBase<S, T>>
+        : SerializeGenericTypeInfoImpl<Vegetation::EditorAreaComponentBase<S, T>>
+    {
+        // treat VertexContainer as generic value type
+    };
+} // namespace AZ
 
 #include "EditorAreaComponentBase.inl"

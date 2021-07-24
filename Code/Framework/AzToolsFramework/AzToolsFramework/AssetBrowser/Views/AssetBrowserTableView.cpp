@@ -9,6 +9,8 @@
 #include <API/EditorAssetSystemAPI.h>
 
 #include <AzCore/std/containers/vector.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/StringFunc/StringFunc.h>
 

@@ -6,6 +6,12 @@
  *
  */
 
+#include <AzToolsFramework/Asset/AssetUtils.h>
+
+#include <AzFramework/API/ApplicationAPI.h>
+#include <AzFramework/IO/LocalFileIO.h>
+#include <AzToolsFramework/API/EditorAssetSystemAPI.h>
+
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Debug/Trace.h>
 #include <AzCore/IO/Path/Path.h>
@@ -14,10 +20,9 @@
 #include <AzCore/Module/DynamicModuleHandle.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/StringFunc/StringFunc.h>
-#include <AzFramework/API/ApplicationAPI.h>
-#include <AzFramework/IO/LocalFileIO.h>
-#include <AzToolsFramework/API/EditorAssetSystemAPI.h>
-#include <AzToolsFramework/Asset/AssetUtils.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 #include <QString>
 
 namespace AzToolsFramework::AssetUtils::Internal

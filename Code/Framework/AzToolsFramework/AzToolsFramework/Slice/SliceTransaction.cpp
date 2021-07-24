@@ -10,6 +10,7 @@
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Slice/SliceBus.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
@@ -349,7 +350,7 @@ namespace AzToolsFramework
                     {
                         break;
                     }
-                    
+
                     AZ::EntityId currentParentId = parentId;
                     parentId.SetInvalid();
                     AZ::SliceEntityHierarchyRequestBus::EventResult(parentId, currentParentId, &AZ::SliceEntityHierarchyRequestBus::Events::GetSliceEntityParentId);
@@ -885,7 +886,7 @@ namespace AzToolsFramework
                         }
 
                         return originalId;
-                    }, 
+                    },
                 m_serializeContext);
 
             // Invoke user pre-save callback.
@@ -919,7 +920,7 @@ namespace AzToolsFramework
             AzFramework::SliceEntityRequestBus::EventResult(instanceAddr, entityId,
                 &AzFramework::SliceEntityRequestBus::Events::GetOwningSlice);
             if (!instanceAddr.IsValid()) // entityId here could be a newly added loose entity, hence doesn't belong to any slice instance.
-            {   
+            {
                 return AZ::EntityId();
             }
 
@@ -997,9 +998,9 @@ namespace AzToolsFramework
         }
 
         //=========================================================================
-        void SliceTransaction::add_ref()          
-        { 
-            ++m_refCount; 
+        void SliceTransaction::add_ref()
+        {
+            ++m_refCount;
         }
 
         //=========================================================================

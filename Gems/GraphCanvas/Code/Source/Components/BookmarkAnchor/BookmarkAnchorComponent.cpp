@@ -10,6 +10,7 @@
 
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Components/BookmarkAnchor/BookmarkAnchorComponent.h>
 #include <GraphCanvas/Editor/AssetEditorBus.h>
@@ -17,7 +18,7 @@
 #include <GraphCanvas/Utils/ColorUtils.h>
 
 namespace GraphCanvas
-{    
+{
     ////////////////////////////
     // BookmarkAnchorComponent
     ////////////////////////////
@@ -213,7 +214,7 @@ namespace GraphCanvas
     }
 
     void BookmarkAnchorComponent::WriteSaveData(EntitySaveDataContainer& saveDataContainer) const
-    {        
+    {
         BookmarkAnchorComponentSaveData* saveData = saveDataContainer.FindCreateSaveData<BookmarkAnchorComponentSaveData>();
 
         if (saveData)
@@ -234,7 +235,7 @@ namespace GraphCanvas
 
     void BookmarkAnchorComponent::OnBookmarkNameChanged()
     {
-        BookmarkNotificationBus::Event(GetEntityId(), &BookmarkNotifications::OnBookmarkNameChanged);        
+        BookmarkNotificationBus::Event(GetEntityId(), &BookmarkNotifications::OnBookmarkNameChanged);
     }
 
     void BookmarkAnchorComponent::OnBookmarkColorChanged()

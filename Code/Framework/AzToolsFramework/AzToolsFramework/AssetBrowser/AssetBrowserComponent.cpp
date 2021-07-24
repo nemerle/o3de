@@ -10,6 +10,8 @@
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/EBus/Results.h>
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzFramework/StringFunc/StringFunc.h>
 
@@ -174,7 +176,7 @@ namespace AzToolsFramework
         // for example, when a file first appears on disk, it will come in as just a file (with a file id).  Later, if its something
         // that the Asset Processor actually cares about and feeds to a builder, it gets assigned a UUID and this function is called.
         // we can then associate an existing file with a UUID.
-        void AssetBrowserComponent::SourceFileChanged(AZStd::string /*relativePath*/, AZStd::string /*scanFolder*/, AZ::Uuid sourceUuid) 
+        void AssetBrowserComponent::SourceFileChanged(AZStd::string /*relativePath*/, AZStd::string /*scanFolder*/, AZ::Uuid sourceUuid)
         {
             m_changeset->AddSource(sourceUuid);
             if (m_dbReady)
@@ -187,7 +189,7 @@ namespace AzToolsFramework
         // if you are writing a gem that produces new asset types and you'd like to set an icon, just listen to this bus and return
         // your own SourceFileDetails for your types of files in your gem!  Don't add your gem-embedded types here.
         // this is only here so that other applications (besides Editor.exe) may use AssetBrowser and see icons for types
-        // that are either built into Cry DLLs, or into Editor Plugins. 
+        // that are either built into Cry DLLs, or into Editor Plugins.
         SourceFileDetails AssetBrowserComponent::GetSourceFileDetails(const char* fullSourceFileName)
         {
             using namespace AzToolsFramework::AssetBrowser;
@@ -274,7 +276,7 @@ namespace AzToolsFramework
         }
 
 
-        void AssetBrowserComponent::AddFile(const AZ::s64& fileId) 
+        void AssetBrowserComponent::AddFile(const AZ::s64& fileId)
         {
             m_changeset->AddFile(fileId);
             if (m_dbReady)
@@ -283,7 +285,7 @@ namespace AzToolsFramework
             }
         }
 
-        void AssetBrowserComponent::RemoveFile(const AZ::s64& fileId) 
+        void AssetBrowserComponent::RemoveFile(const AZ::s64& fileId)
         {
             m_changeset->RemoveFile(fileId);
             if (m_dbReady)

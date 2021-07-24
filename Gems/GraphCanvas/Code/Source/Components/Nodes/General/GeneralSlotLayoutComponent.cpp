@@ -15,6 +15,8 @@
 #include <QPainter>
 
 #include <AzCore/RTTI/TypeInfo.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <Components/Nodes/General/GeneralSlotLayoutComponent.h>
 
@@ -114,12 +116,12 @@ namespace GraphCanvas
     {
         prepareGeometryChange();
         qreal border = AZStd::max(1., styleHelper.GetAttribute(Styling::Attribute::BorderWidth, 0.));
-        
+
         QColor dividerColor = styleHelper.GetColor(Styling::Attribute::BorderColor);
         QPalette widgetPalette = palette();
         widgetPalette.setColor(QPalette::ColorGroup::Active, QPalette::ColorRole::Window, dividerColor);
         setPalette(widgetPalette);
-        
+
         setMinimumHeight(border);
         setPreferredHeight(border);
         setMaximumHeight(border);
@@ -134,7 +136,7 @@ namespace GraphCanvas
     GeneralSlotLayoutGraphicsWidget::LinearSlotGroupWidget::LinearSlotGroupWidget(QGraphicsItem* parent)
         : QGraphicsWidget(parent)
         , m_inputs(nullptr)
-        , m_outputs(nullptr)        
+        , m_outputs(nullptr)
     {
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
@@ -188,8 +190,8 @@ namespace GraphCanvas
     void GeneralSlotLayoutGraphicsWidget::LinearSlotGroupWidget::DisplaySlot(const AZ::EntityId& slotId)
     {
         ConnectionType connectionType = ConnectionType::CT_Invalid;
-        SlotRequestBus::EventResult(connectionType, slotId, &SlotRequests::GetConnectionType);                
-        
+        SlotRequestBus::EventResult(connectionType, slotId, &SlotRequests::GetConnectionType);
+
         int layoutOrder = 0;
 
         SlotLayoutInfo slotInfo(slotId);
@@ -206,7 +208,7 @@ namespace GraphCanvas
             SlotUINotificationBus::MultiHandler::BusConnect(slotId);
 
             m_outputSlotSet.insert(slotId);
-            LayoutSlot(m_outputs, m_outputSlots, slotInfo);            
+            LayoutSlot(m_outputs, m_outputSlots, slotInfo);
         }
         else
         {
@@ -324,7 +326,7 @@ namespace GraphCanvas
         {
             return;
         }
-        
+
         for (auto layoutIter = layoutVector->begin(); layoutIter != layoutVector->end(); ++layoutIter)
         {
             if (layoutIter->m_slotId == (*slotId))
@@ -366,7 +368,7 @@ namespace GraphCanvas
         {
             slotList.insert(slotList.end(), slotInfo);
         }
-        
+
         QGraphicsLayoutItem* layoutItem = GetLayoutItem(slotInfo.m_slotId);
 
         if (layoutItem)
@@ -504,7 +506,7 @@ namespace GraphCanvas
     }
 
     int GeneralSlotLayoutGraphicsWidget::GetSlotGroupDisplayOrder(SlotGroup group) const
-    {        
+    {
         AZStd::set<SlotGroup, SlotGroupConfigurationComparator> slotOrdering(SlotGroupConfigurationComparator(&m_nodeSlots.m_slotGroupConfigurations));
 
         for (auto& mapPair : m_slotGroups)
@@ -725,7 +727,7 @@ namespace GraphCanvas
                 m_groupLayout->addItem(groupIter->second);
             }
         }
-        
+
         RefreshDisplay();
 
         NodeUIRequestBus::Event(GetEntityId(), &NodeUIRequests::AdjustSize);

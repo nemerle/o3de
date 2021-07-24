@@ -15,6 +15,7 @@
 #include <Atom/RPI.Reflect/Image/StreamingImagePoolAsset.h>
 #include <Atom/Utils/DdsFile.h>
 #include <AzCore/Component/Entity.h>
+#include <AzCore/Asset/AssetSerializer.h>
 
 AZ_PUSH_DISABLE_WARNING(4251 4800, "-Wunknown-warning-option") // disable warnings spawned by QT
 #include <QApplication>
@@ -119,7 +120,7 @@ namespace AZ
                     ->Attribute(AZ::Script::Attributes::Module, "render")
                     ->Event("BakeReflectionProbe", &EditorReflectionProbeInterface::BakeReflectionProbe)
                     ;
-                
+
                 behaviorContext->ConstantProperty("EditorReflectionProbeComponentTypeId", BehaviorConstant(Uuid(EditorReflectionProbeComponentTypeId)))
                     ->Attribute(AZ::Script::Attributes::Module, "render")
                     ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Automation);
@@ -379,7 +380,7 @@ namespace AZ
             AzFramework::StringFunc::Path::GetFolderPath(cubeMapFullPath.data(), reflectionProbeFolder);
             AZ::IO::SystemFile::CreateDir(reflectionProbeFolder.c_str());
 
-            // check out the file in source control                
+            // check out the file in source control
             bool checkedOutSuccessfully = false;
             using ApplicationBus = AzToolsFramework::ToolsApplicationRequestBus;
             ApplicationBus::BroadcastResult(

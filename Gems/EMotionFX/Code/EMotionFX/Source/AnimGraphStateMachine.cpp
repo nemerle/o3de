@@ -10,6 +10,7 @@
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <EMotionFX/Source/ActorInstance.h>
 #include <EMotionFX/Source/AnimGraph.h>
 #include <EMotionFX/Source/AnimGraphAttributeTypes.h>
@@ -149,7 +150,7 @@ namespace EMotionFX
 
                     const AnimGraphNode* targetNode = activeTransition->GetTargetNode();
                     const AnimGraphPose* targetPose = targetNode->GetMainOutputPose(animGraphInstance);
-                    AZ_Assert(targetPose, "Transition target node has to provide a valid main output pose.");                  
+                    AZ_Assert(targetPose, "Transition target node has to provide a valid main output pose.");
                     if (targetPose)
                     {
                         // Processes the transition, calculate and blend the in between pose and use it as output for the state machine.
@@ -487,7 +488,7 @@ namespace EMotionFX
             if (entryState)
             {
                 SwitchToState(animGraphInstance, entryState);
-            }          
+            }
             uniqueData->mSwitchToEntryState = false;
         }
 

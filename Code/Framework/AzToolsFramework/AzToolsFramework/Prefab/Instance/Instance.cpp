@@ -10,6 +10,7 @@
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/StringFunc/StringFunc.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <AzToolsFramework/Entity/EditorEntityContextBus.h>
 #include <AzToolsFramework/Entity/EditorEntityHelpers.h>
@@ -82,7 +83,7 @@ namespace AzToolsFramework
                 return;
             }
 
-            // If this instance's templateId is valid, we should be able to unregister this instance from 
+            // If this instance's templateId is valid, we should be able to unregister this instance from
             // Template to Instance mapping successfully.
             if (m_templateId != InvalidTemplateId &&
                 !m_templateInstanceMapper->UnregisterInstance(*this))
@@ -95,7 +96,7 @@ namespace AzToolsFramework
 
             m_templateId = templateId;
 
-            // If this instance's templateId is valid, we should be able to register this instance to 
+            // If this instance's templateId is valid, we should be able to register this instance to
             // Template to Instance mapping successfully.
             if (m_templateId != InvalidTemplateId &&
                 !m_templateInstanceMapper->RegisterInstanceToTemplate(*this))
@@ -507,7 +508,7 @@ namespace AzToolsFramework
             {
                 return m_instanceToTemplateEntityIdMap[id];
             }
-                
+
             return AZStd::nullopt;
         }
 
@@ -517,7 +518,7 @@ namespace AzToolsFramework
             {
                 return m_templateToInstanceEntityIdMap[alias];
             }
-                
+
             return AZ::EntityId();
         }
 

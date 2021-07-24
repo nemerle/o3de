@@ -11,6 +11,7 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 // Graph Model
 #include <GraphModel/Model/Graph.h>
@@ -99,10 +100,10 @@ namespace GraphModel
         {
             SlotPtr slot = AZStd::make_shared<Slot>(GetGraph(), slotDefinition);
             slot->SetValue(slotDefinition->GetDefaultValue());
-            
+
             SlotId slotId(slotDefinition->GetName());
             auto newEntry = AZStd::make_pair(slotId, slot);
-            
+
             slotMap.insert(newEntry);
             m_allSlots.insert(newEntry);
         }
@@ -160,7 +161,7 @@ namespace GraphModel
             }
             else
             {
-                // CJS TODO: Consider using AZ::Outcome for better error reporting, and if PostLoadSetup fails (could be due to type mismatch) 
+                // CJS TODO: Consider using AZ::Outcome for better error reporting, and if PostLoadSetup fails (could be due to type mismatch)
                 slot->PostLoadSetup(GetGraph(), *slotDefinitionIter);
 
                 ++slotDataIter;
@@ -201,7 +202,7 @@ namespace GraphModel
             {
                 for (SlotPtr slot : slotDataIter->second)
                 {
-                    // CJS TODO: Consider using AZ::Outcome for better error reporting, and if PostLoadSetup fails (could be due to type mismatch) 
+                    // CJS TODO: Consider using AZ::Outcome for better error reporting, and if PostLoadSetup fails (could be due to type mismatch)
                     slot->PostLoadSetup(GetGraph(), *slotDefinitionIter);
 
                     auto newEntry = AZStd::make_pair(slot->GetSlotId(), slot);

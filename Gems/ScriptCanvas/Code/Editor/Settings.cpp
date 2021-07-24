@@ -8,6 +8,8 @@
 
 
 #include <AzCore/UserSettings/UserSettingsProvider.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 #include <GraphCanvas/Components/Nodes/Comment/CommentBus.h>
 
@@ -497,7 +499,7 @@ namespace ScriptCanvasEditor
                 }
             }
         }
-        
+
         ScriptCanvasEditorSettings::ScriptCanvasEditorSettings()
             : m_snapDistance(10.0)
             , m_enableGroupDoubleClickCollapse(true)

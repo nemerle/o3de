@@ -6,10 +6,12 @@
  *
  */
 
+#include <EMotionFX/Source/TriggerActionSetup.h>
+
+#include <EMotionFX/Source/AnimGraphTriggerAction.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
-#include <EMotionFX/Source/AnimGraphTriggerAction.h>
-#include <EMotionFX/Source/TriggerActionSetup.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace EMotionFX
 {

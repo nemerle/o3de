@@ -14,6 +14,8 @@
 #include "UiAnimSerialize.h"
 
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <StlUtils.h>
 
 #include <ISystem.h>

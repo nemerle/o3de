@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzFramework/Logging/MissingAssetNotificationBus.h>
+#include <AzCore/std/smart_ptr/unique_ptr.h>
 
 namespace AzFramework { class LogFile; }
 

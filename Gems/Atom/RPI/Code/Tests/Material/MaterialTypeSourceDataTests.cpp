@@ -22,6 +22,8 @@
 
 #include <AtomCore/Serialization/Json/JsonUtils.h>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 
 namespace UnitTest
@@ -293,7 +295,7 @@ namespace UnitTest
 
             m_testShaderAsset = CreateTestShaderAsset(Uuid::CreateRandom(), m_testMaterialSrgLayout, shaderOptions);
             m_testShaderAsset2 = CreateTestShaderAsset(Uuid::CreateRandom());
-            
+
             // Since this test doesn't actually instantiate a Material, it won't need to instantiate this ImageAsset, so all we
             // need is an asset reference with a valid ID.
             m_testImageAsset = Data::Asset<ImageAsset>{ Data::AssetId{ Uuid::CreateRandom(), StreamingImageAsset::GetImageAssetSubId() }, azrtti_typeid<AZ::RPI::StreamingImageAsset>() };
@@ -344,7 +346,7 @@ namespace UnitTest
                 EXPECT_EQ(propertyDescriptor->GetOutputConnections()[i].m_containerIndex.GetIndex(), expectedValues.m_outputConnections[i].m_shaderIndex);
             }
         }
-        
+
     };
 
     TEST_F(MaterialTypeSourceDataTests, CreateMaterialTypeAsset_GetMaterialSrgAsset)
@@ -623,7 +625,7 @@ namespace UnitTest
     TEST_F(MaterialTypeSourceDataTests, CreateMaterialTypeAsset_Error_InvalidGroupNameId)
     {
         MaterialTypeSourceData sourceData;
-        
+
         MaterialTypeSourceData::PropertyDefinition propertySource;
         propertySource.m_dataType = MaterialPropertyDataType::Int;
 
@@ -767,7 +769,7 @@ namespace UnitTest
 
         // m_uint
         EXPECT_EQ(propertyDescriptor->GetOutputConnections()[1].m_containerIndex.GetIndex(), -1);
-        EXPECT_EQ(propertyDescriptor->GetOutputConnections()[1].m_itemIndex.GetIndex(), 3); 
+        EXPECT_EQ(propertyDescriptor->GetOutputConnections()[1].m_itemIndex.GetIndex(), 3);
 
         // shaderA's Speed option
         EXPECT_EQ(propertyDescriptor->GetOutputConnections()[2].m_containerIndex.GetIndex(), 0);
@@ -834,7 +836,7 @@ namespace UnitTest
 
         sourceData.m_shaderCollection.push_back(MaterialTypeSourceData::ShaderVariantReferenceData{TestShaderFilename});
         sourceData.m_shaderCollection.push_back(MaterialTypeSourceData::ShaderVariantReferenceData{TestShaderFilename});
-        
+
         MaterialTypeSourceData::PropertyDefinition propertySource;
         propertySource.m_nameId = "EnableSpecialPassA";
         propertySource.m_displayName = "Enable Special Pass";
@@ -963,7 +965,7 @@ namespace UnitTest
         CheckPropertyValue<Color>   (materialTypeAsset,  Name{"general.MyColor"},  Color{ 0.1f, 0.2f, 0.3f, 0.4f });
         CheckPropertyValue<Data::Asset<ImageAsset>>(materialTypeAsset, Name{"general.MyImage"}, m_testImageAsset);
     }
-    
+
     TEST_F(MaterialTypeSourceDataTests, LoadAndStoreJson_AllFields)
     {
         // Note that serialization of individual fields within material properties is thoroughly tested in
@@ -1104,7 +1106,7 @@ namespace UnitTest
         EXPECT_TRUE(azrtti_cast<const Splat3FunctorSourceData*>(material.m_materialFunctorSourceData[1]->GetActualSourceData().get()));
         EXPECT_EQ(azrtti_cast<const Splat3FunctorSourceData*>(material.m_materialFunctorSourceData[1]->GetActualSourceData().get())->m_floatPropertyInputId, "groupB.foo");
         EXPECT_EQ(azrtti_cast<const Splat3FunctorSourceData*>(material.m_materialFunctorSourceData[1]->GetActualSourceData().get())->m_float3ShaderSettingOutputId, "m_someFloat3");
-        
+
         AZStd::string outputJson;
         JsonTestResult storeResult = StoreTestDataToJson(material, outputJson);
         ExpectSimilarJson(inputJson, outputJson);

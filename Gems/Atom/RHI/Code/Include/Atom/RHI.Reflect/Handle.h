@@ -117,7 +117,7 @@ namespace AZ
         {
             return m_index <= rhs.m_index;
         }
-        
+
         template <typename T, typename NamespaceType>
         bool Handle<T, NamespaceType>::operator>(const Handle& rhs) const
         {
@@ -153,6 +153,17 @@ namespace AZ
 namespace AZ
 {
     AZ_TYPE_INFO_TEMPLATE(AZ::RHI::Handle, "{273A36DB-D62B-45EB-9E05-E097EE9743BB}", AZ_TYPE_INFO_TYPENAME, AZ_TYPE_INFO_TYPENAME);
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+
+    template <typename T, typename NamespaceType>
+    struct SerializeGenericTypeInfo<RHI::Handle<T, NamespaceType>> : SerializeGenericTypeInfoImpl<RHI::Handle<T, NamespaceType>>
+    {
+        //treat Handle as generic value type
+    };
 }
 
 namespace AZStd

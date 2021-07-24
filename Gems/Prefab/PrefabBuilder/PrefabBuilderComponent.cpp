@@ -7,6 +7,8 @@
  */
 
 #include "PrefabBuilderComponent.h"
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ::Prefab
 {
@@ -90,21 +92,21 @@ namespace AZ::Prefab
     {
         AZStd::vector<AssetBuilderSDK::SourceFileDependency> sourceFileDependencies;
         auto instancesIterator = genericDocument.FindMember(AzToolsFramework::Prefab::PrefabDomUtils::InstancesName);
-    
+
         if (instancesIterator != genericDocument.MemberEnd())
         {
             auto&& instances = instancesIterator->value;
-    
+
             if (instances.IsObject())
             {
                 for (auto&& entry : instances.GetObject())
                 {
                     auto sourceIterator = entry.value.FindMember(AzToolsFramework::Prefab::PrefabDomUtils::SourceName);
-    
+
                     if (sourceIterator != entry.value.MemberEnd())
                     {
                         auto&& source = sourceIterator->value;
-    
+
                         if (source.IsString())
                         {
                             sourceFileDependencies.emplace_back(source.GetString(), Uuid::CreateNull());
@@ -130,7 +132,7 @@ namespace AZ::Prefab
 
         AZStd::string fullPath;
         AZ::StringFunc::Path::ConstructFull(request.m_watchFolder.c_str(), request.m_sourceFile.c_str(), fullPath);
-        
+
         // Load the JSON Dom
         AZ::Outcome<PrefabDom, AZStd::string> readPrefabFileResult = AzFramework::FileFunc::ReadJsonFile(AZ::IO::Path(fullPath));
         if (!readPrefabFileResult.IsSuccess())
@@ -165,7 +167,7 @@ namespace AZ::Prefab
 
             response.m_createJobOutputs.push_back(AZStd::move(job));
         }
-        
+
         response.m_result = AssetBuilderSDK::CreateJobsResultCode::Success;
     }
 
@@ -249,7 +251,7 @@ namespace AZ::Prefab
             return false;
         }
         context.AddPrefab(AZStd::move(rootPrefabName), AZStd::move(mutableRootDom));
-        
+
         context.SetPlatformTags(AZStd::move(platformTags));
 
         AZ_TracePrintf("Prefab Builder", "Sending Prefab to the processor stack.\n");

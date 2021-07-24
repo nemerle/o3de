@@ -6,9 +6,11 @@
  *
  */
 
-#include <AzCore/Serialization/SerializeContext.h>
-
 #include <Atom/RPI.Reflect/System/SceneDescriptor.h>
+
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+
 
 namespace AZ
 {

@@ -16,6 +16,7 @@
 #include <Atom/RPI.Reflect/Material/MaterialFunctor.h>
 #include <Atom/RPI.Reflect/Shader/ShaderOptionGroup.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Json/RegistrationContext.h>
 #include <Atom/RPI.Edit/Material/MaterialPropertyId.h>
 
@@ -437,7 +438,7 @@ namespace AZ
                 }
             }
 
-            // We cannot create the MaterialFunctor until after all the properties are added because 
+            // We cannot create the MaterialFunctor until after all the properties are added because
             // CreateFunctor() may need to look up properties in the MaterialPropertiesLayout
             for (auto& functorData : m_materialFunctorSourceData)
             {

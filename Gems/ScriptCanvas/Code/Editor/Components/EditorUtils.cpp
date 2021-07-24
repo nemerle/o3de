@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 AZ_PUSH_DISABLE_WARNING(4251 4800 4244, "-Wunknown-warning-option")
 #include <ScriptCanvas/Components/EditorUtils.h>
@@ -128,7 +129,7 @@ namespace ScriptCanvasEditor
                 if (auto ebusHandlerNode  = azrtti_cast<ScriptCanvas::Nodes::Core::EBusEventHandler*>(nodeComponent))
                 {
                     GraphCanvas::NodeId graphCanvasNodeId;
-                    SceneMemberMappingRequestBus::EventResult(graphCanvasNodeId, nodeEntity->GetId(), &SceneMemberMappingRequests::GetGraphCanvasEntityId);                    
+                    SceneMemberMappingRequestBus::EventResult(graphCanvasNodeId, nodeEntity->GetId(), &SceneMemberMappingRequests::GetGraphCanvasEntityId);
 
                     const ScriptCanvas::Nodes::Core::EBusEventHandler::EventMap& events = ebusHandlerNode->GetEvents();
 
