@@ -7,14 +7,14 @@
  */
 #pragma once
 
-#include <AzCore/Casting/numeric_cast.h>
-#include <AzCore/ScriptCanvas/ScriptCanvasOnDemandNames.h>
-#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
-#include <AzCore/std/algorithm.h>
-#include <AzCore/std/smart_ptr/unique_ptr.h>
-#include <AzCore/std/string/conversions.h>
-#include <AzCore/std/string/tokenize.h>
-#include "AzCore/std/string/string.h"
+// #include <AzCore/Casting/numeric_cast.h>
+// #include <AzCore/ScriptCanvas/ScriptCanvasOnDemandNames.h>
+// #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+// #include <AzCore/std/algorithm.h>
+// #include <AzCore/std/smart_ptr/unique_ptr.h>
+// #include <AzCore/std/string/conversions.h>
+// #include <AzCore/std/string/tokenize.h>
+// #include "AzCore/std/string/string.h"
 
 // forward declare specialized types
 namespace AZStd
@@ -50,6 +50,11 @@ namespace AZ
 {
     namespace ScriptCanvasOnDemandReflection
     {
+         template<typename T>
+         struct OnDemandPrettyName;
+         template<typename T>
+         struct OnDemandToolTip;
+
          template<class Element, class Traits, class Allocator>
          struct OnDemandPrettyName< AZStd::basic_string<Element, Traits, Allocator> >
          {

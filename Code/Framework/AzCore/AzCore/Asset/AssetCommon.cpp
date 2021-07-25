@@ -10,8 +10,15 @@
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Script/ScriptContext.h>
+#include <AzCore/ScriptCanvas/ScriptCanvasOnDemandNames.h>
+#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+
 #include <AzCore/std/parallel/lock.h>
 #include <AzCore/std/string/conversions.h>
+
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
+#include <AzCore/RTTI/AzStdOnDemandPrettyName.inl>
 
 namespace AZ
 {

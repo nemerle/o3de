@@ -785,3 +785,19 @@ namespace WhiteBox
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     } // namespace Api
 } // namespace WhiteBox
+
+namespace AZ
+{
+    // Serialization helpers
+    template< typename T>
+    struct SerializeGenericTypeInfoImpl;
+    template< typename T>
+    struct SerializeGenericTypeInfo;
+
+    template< typename T>
+    struct SerializeGenericTypeInfo<WhiteBox::GenericHandle<T>> : SerializeGenericTypeInfoImpl<WhiteBox::GenericHandle<T>>
+    {
+        //treat GenericHandle as generic value type
+    };
+
+}

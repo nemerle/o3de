@@ -14,6 +14,7 @@
 #include <AzCore/Memory/OSAllocator.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
 #include <AzCore/UnitTest/TestTypes.h>

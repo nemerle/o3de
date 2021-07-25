@@ -10,6 +10,7 @@
 
 #include <AzCore/Serialization/ObjectStream.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 

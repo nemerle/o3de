@@ -7,9 +7,7 @@
  */
 #pragma once
 
-#include <AzCore/Asset/AssetTypeInfoBus.h>
 #include <AzCore/Component/Entity.h>
-#include <AzCore/Math/Transform.h>
 #include <Blast/BlastActor.h>
 
 namespace Blast
@@ -26,35 +24,7 @@ namespace Blast
         {
         }
 
-        static void Reflect(AZ::ReflectContext* context)
-        {
-            if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
-            {
-                serializeContext->Class<BlastActorData>()
-                    ->Version(1)
-                    ->Field("EntityId", &BlastActorData::m_entityId)
-                    ->Field("IsStatic", &BlastActorData::m_isStatic);
-
-                serializeContext->RegisterGenericType<AZStd::vector<BlastActorData>>();
-
-                if (auto editContext = serializeContext->GetEditContext())
-                {
-                    editContext
-                        ->Class<BlastActorData>("Blast Actor Data", "Represents Blast Actor in a Script Canvas friendly format.")
-                        ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
-                        ->DataElement(AZ::Edit::UIHandlers::Default, &BlastActorData::m_isStatic)
-                        ->DataElement(AZ::Edit::UIHandlers::Default, &BlastActorData::m_entityId);
-                }
-            }
-
-            if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
-            {
-                behaviorContext->Class<BlastActorData>("BlastActorData")
-                    ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
-                    ->Property("EntityId", BehaviorValueProperty(&BlastActorData::m_entityId))
-                    ->Property("IsStatic", BehaviorValueProperty(&BlastActorData::m_isStatic));
-            }
-        }
+        static void Reflect(AZ::ReflectContext* context);
 
         bool m_isStatic;
         AZ::EntityId m_entityId;

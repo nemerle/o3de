@@ -7,18 +7,23 @@
  */
 #pragma once
 
-#include <AzCore/Casting/numeric_cast.h>
-#include <AzCore/Script/ScriptContext.h>
-#include <AzCore/Script/ScriptContextAttributes.h>
-#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
-#include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/std/algorithm.h>
-#include <AzCore/std/smart_ptr/unique_ptr.h>
-#include <AzCore/std/string/conversions.h>
-#include <AzCore/std/string/tokenize.h>
-#include <AzCore/RTTI/AzStdOnDemandPrettyName.inl>
-#include <AzCore/RTTI/AzStdOnDemandReflectionLuaFunctions.inl>
-#include <AzCore/EBus/Event.h>
+//#include <AzCore/Casting/numeric_cast.h>
+//#include <AzCore/Script/ScriptContext.h>
+//#include <AzCore/Script/ScriptContextAttributes.h>
+//#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+//#include <AzCore/Serialization/SerializeContext.h>
+//#include <AzCore/std/algorithm.h>
+//#include <AzCore/std/smart_ptr/unique_ptr.h>
+//#include <AzCore/std/string/conversions.h>
+//#include <AzCore/std/string/tokenize.h>
+//#include <AzCore/RTTI/AzStdOnDemandPrettyName.inl>
+//#include <AzCore/RTTI/AzStdOnDemandReflectionLuaFunctions.inl>
+//#include <AzCore/EBus/Event.h>
+
+#ifndef AZ_USE_CUSTOM_SCRIPT_BIND
+struct lua_State;
+struct lua_Debug;
+#endif // AZ_USE_CUSTOM_SCRIPT_BIND
 
 // forward declare specialized types
 namespace AZStd
@@ -58,7 +63,19 @@ namespace AZ
 {
     class BehaviorContext;
     class ScriptDataContext;
-
+    namespace OnDemandLuaFunctions
+    {
+        inline void AnyToLua(lua_State* lua, BehaviorValueParameter& param);
+    }
+    namespace ScriptCanvasOnDemandReflection
+    {
+        template<typename T>
+        struct OnDemandPrettyName;
+        template<typename T>
+        struct OnDemandToolTip;
+        template<typename T>
+        struct OnDemandCategoryName;
+    }
     /// OnDemand reflection for AZStd::basic_string
     template<class Element, class Traits, class Allocator>
     struct OnDemandReflection< AZStd::basic_string<Element, Traits, Allocator> >

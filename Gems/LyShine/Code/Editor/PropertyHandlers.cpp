@@ -19,6 +19,8 @@
 #include "PropertyHandlerSprite.h"
 #include "PropertyHandlerVec.h"
 
+#include <AzCore/Asset/AssetSerializer.h>
+
 void PropertyHandlers::Register()
 {
     // This MUST be done only ONCE.

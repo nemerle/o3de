@@ -13,6 +13,7 @@
 #include <Widgets/GraphCanvasLabel.h>
 
 #include <AzToolsFramework/AssetBrowser/EBusFindAssetTypeByName.h>
+#include <AzCore/Asset/AssetSerializer.h>
 
 namespace GraphCanvas
 {

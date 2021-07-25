@@ -11,10 +11,12 @@
 #include <Atom/RHI.Edit/Utils.h>
 #include <Atom/RHI.Reflect/NameIdReflectionMap.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/ObjectStream.h>
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/IO/ByteContainerStream.h>
 #include <AzCore/Serialization/Utils.h>
+#include <Atom/RHI.Reflect/NameIdReflectionMapReflectImpl.inl>
 
 namespace UnitTest
 {

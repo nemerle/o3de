@@ -17,6 +17,7 @@
 #include <QtWidgets/QPushButton>
 
 #include <AzCore/Asset/AssetManagerBus.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Memory/OSAllocator.h>
 #include <AzFramework/API/ApplicationAPI.h>
 #include <AzToolsFramework/UI/PropertyEditor/PropertyQTConstants.h>

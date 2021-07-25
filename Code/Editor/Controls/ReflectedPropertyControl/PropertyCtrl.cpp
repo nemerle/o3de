@@ -15,6 +15,7 @@
 #include "PropertyGenericCtrl.h"
 #include "PropertyMiscCtrl.h"
 #include "PropertyMotionCtrl.h"
+#include <AzCore/Asset/AssetSerializer.h>
 
 void RegisterReflectedVarHandlers()
 {

@@ -19,6 +19,8 @@
 #include <AzCore/std/string/regex.h>
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/Utils/Utils.h>

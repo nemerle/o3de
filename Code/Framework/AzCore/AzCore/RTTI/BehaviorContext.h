@@ -30,10 +30,47 @@
 #   pragma warning(disable: 4127) // conditional expression is constant
 #endif
 
+// forward declare specialized types
 namespace AZStd
 {
+    class any;
     template <typename T>
     struct hash;
+    template< class T, class Allocator/* = AZStd::allocator*/ >
+    class vector;
+    template< class T, class Allocator/* = AZStd::allocator*/ >
+    class list;
+    template< class T, class Allocator/* = AZStd::allocator*/ >
+    class forward_list;
+    template< class T, size_t Capacity >
+    class fixed_vector;
+    template< class T, size_t N >
+    class array;
+    template<class Key, class MappedType, class Hasher /*= AZStd::hash<Key>*/, class EqualKey /*= AZStd::equal_to<Key>*/, class Allocator /*= AZStd::allocator*/ >
+    class unordered_map;
+    template<class Key, class Hasher /*= AZStd::hash<Key>*/, class EqualKey /*= AZStd::equal_to<Key>*/, class Allocator /*= AZStd::allocator*/>
+    class unordered_set;
+    template<AZStd::size_t NumBits>
+    class bitset;
+    template<class Element, class Traits, class Allocator>
+    class basic_string;
+    template<class Element>
+    struct char_traits;
+
+    template<class T>
+    class intrusive_ptr;
+    template<class T>
+    class shared_ptr;
+
+    // Wrapper types
+    template <typename T>
+    class optional;
+}
+
+namespace AzFramework
+{
+    template<typename AssetType>
+    class SimpleAssetReference;
 }
 
 namespace AZ
@@ -4871,8 +4908,107 @@ namespace AZ
         bool IsInScope(const AttributeArray& attributes, const AZ::Script::Attributes::ScopeFlags scope);
 
     } // namespace Internal
+    namespace Data
+    {
+        template<typename T>
+        class Asset;
+    }
+
+    //Forward declare specializations.
+    template<class Element, class Traits, class Allocator>
+    struct OnDemandReflection< AZStd::basic_string<Element, Traits, Allocator> >;
+    template<class Element, class Traits>
+    struct OnDemandReflection< AZStd::basic_string_view<Element, Traits> >;
+    template<class T>
+    struct OnDemandReflection< AZStd::intrusive_ptr<T> >;
+    template<class T>
+    struct OnDemandReflection< AZStd::shared_ptr<T> >;
+    template<typename... T>
+    struct OnDemandReflection<AZ::Event<T...>>;
+    template<class T, class A>
+    struct OnDemandReflection< AZStd::vector<T, A> >;
+    template<class T, AZStd::size_t N>
+    struct OnDemandReflection< AZStd::array<T, N> >;
+    template<typename ValueT, typename ErrorT>
+    struct OnDemandReflection<AZ::Outcome<ValueT, ErrorT>>;
+    template<typename ValueT>
+    struct OnDemandReflection<AZ::Outcome<ValueT, void>>;
+    template<typename ErrorT>
+    struct OnDemandReflection<AZ::Outcome<void, ErrorT>>;
+    template<>
+    struct OnDemandReflection<AZ::Outcome<void, void>>;
+    template<typename T1, typename T2>
+    struct OnDemandReflection<AZStd::pair<T1, T2>>;
+    template<typename... T>
+    struct OnDemandReflection<AZStd::tuple<T...>>;
+    template<class Key, class MappedType, class Hasher, class EqualKey, class Allocator>
+    struct OnDemandReflection< AZStd::unordered_map<Key, MappedType, Hasher, EqualKey, Allocator> >;
+    template<class Key, class Hasher, class EqualKey, class Allocator>
+    struct OnDemandReflection< AZStd::unordered_set<Key, Hasher, EqualKey, Allocator> >;
+    template <>
+    struct OnDemandReflection<AZStd::any>;
+    template <typename T>
+    struct OnDemandReflection<AZStd::optional<T>>;
+
+    template<typename T>
+    struct OnDemandReflection<Data::Asset<T>>;
+
+    template<typename T>
+    struct OnDemandReflection<AzFramework::SimpleAssetReference<T>>;
+
+    namespace ScriptCanvasOnDemandReflection
+    {
+        template<typename T>
+        struct OnDemandPrettyName;
+        template<typename T>
+        struct OnDemandToolTip;
+        template<typename T>
+        struct OnDemandCategoryName;
+
+        template<class Element, class Traits, class Allocator>
+        struct OnDemandPrettyName< AZStd::basic_string<Element, Traits, Allocator> >;
+        template<class Element, class Traits>
+        struct OnDemandPrettyName< AZStd::basic_string_view<Element, Traits> >;
+        template<class T>
+        struct OnDemandPrettyName< AZStd::intrusive_ptr<T> >;
+        template<class T>
+        struct OnDemandToolTip< AZStd::intrusive_ptr<T> >;
+        template<class T>
+        struct OnDemandPrettyName< AZStd::shared_ptr<T> >;
+        template<class T>
+        struct OnDemandToolTip< AZStd::shared_ptr<T> >;
+        template<class T, class A>
+        struct OnDemandPrettyName< AZStd::vector<T, A> >;
+        template<class T, class A>
+        struct OnDemandToolTip< AZStd::vector<T, A> >;
+        template<class T, AZStd::size_t N>
+        struct OnDemandPrettyName< AZStd::array<T, N> >;
+        template<class T, AZStd::size_t N>
+        struct OnDemandToolTip< AZStd::array<T, N> >;
+        template<typename T1, typename T2>
+        struct OnDemandPrettyName< AZStd::pair<T1, T2> >;
+        template<typename T1, typename T2>
+        struct OnDemandToolTip< AZStd::pair<T1, T2> >;
+        template<typename... T>
+        struct OnDemandPrettyName<AZStd::tuple<T...>>;
+        template<typename... T>
+        struct OnDemandToolTip<AZStd::tuple<T...>>;
+        template<class Key, class MappedType, class Hasher, class EqualKey, class Allocator>
+        struct OnDemandPrettyName< AZStd::unordered_map<Key, MappedType, Hasher, EqualKey, Allocator> >;
+        template<class Key, class MappedType, class Hasher, class EqualKey, class Allocator>
+        struct OnDemandToolTip< AZStd::unordered_map<Key, MappedType, Hasher, EqualKey, Allocator> >;
+        template<class Key, class Hasher, class EqualKey, class Allocator>
+        struct OnDemandPrettyName< AZStd::unordered_set<Key, Hasher, EqualKey, Allocator> >;
+        template<class Key, class Hasher, class EqualKey, class Allocator>
+        struct OnDemandToolTip< AZStd::unordered_set<Key, Hasher, EqualKey, Allocator> >;
+        template<typename t_Success, typename t_Failure>
+        struct OnDemandPrettyName< AZ::Outcome<t_Success, t_Failure> >;
+        template<typename t_Success, typename t_Failure>
+        struct OnDemandToolTip< AZ::Outcome<t_Success, t_Failure> >;
+    }
 } // namespace AZ
 
 #if defined(AZ_COMPILER_MSVC)
 #   pragma warning(pop)
 #endif
+

@@ -13,6 +13,7 @@
 // AzToolsFramework
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
 #include <AzToolsFramework/AssetBrowser/AssetSelectionModel.h>
+#include <AzCore/Asset/AssetSerializer.h>
 
 QWidget* MotionPropertyWidgetHandler::CreateGUI(QWidget* pParent)
 {

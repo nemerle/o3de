@@ -9,6 +9,7 @@
 
 #include "PropertyHandlerDirectory.h"
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzToolsFramework/UI/PropertyEditor/PropertyQTConstants.h>
 #include <LyShine/Bus/UiEditorChangeNotificationBus.h>
 #include <Editor/Util/PathUtil.h>

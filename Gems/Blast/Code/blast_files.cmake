@@ -14,6 +14,7 @@ set(FILES
     Include/Blast/BlastSystemBus.h
     Include/Blast/BlastDebug.h
     Source/Actor/BlastActorDesc.h
+    Source/Actor/BlastActorData.cpp
     Source/Actor/BlastActorFactory.h
     Source/Actor/BlastActorFactory.cpp
     Source/Actor/BlastActorImpl.h

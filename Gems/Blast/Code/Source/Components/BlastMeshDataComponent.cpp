@@ -6,8 +6,10 @@
  *
  */
 
-#include <AzCore/Serialization/SerializeContext.h>
 #include <Components/BlastMeshDataComponent.h>
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace Blast
 {

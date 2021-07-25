@@ -15,8 +15,10 @@
 #include <AzCore/Jobs/JobCompletion.h>
 #include <AzCore/Jobs/JobFunction.h>
 #include <AzCore/Memory/Memory.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Blast/BlastActorData.h>
 #include <Blast/BlastDebug.h>
 #include <Blast/BlastFamilyComponentBus.h>

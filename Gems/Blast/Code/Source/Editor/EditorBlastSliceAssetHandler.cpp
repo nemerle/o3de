@@ -9,11 +9,13 @@
 #include <Editor/EditorBlastMeshDataComponent.h>
 #include <Editor/EditorBlastSliceAssetHandler.h>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/GenericStreams.h>
 #include <AzCore/Serialization/ObjectStream.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Slice/SliceComponent.h>
 #include <AzCore/StringFunc/StringFunc.h>
