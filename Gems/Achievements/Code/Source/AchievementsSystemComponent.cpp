@@ -9,6 +9,7 @@
 #include <AchievementsSystemComponent.h>
 #include <Achievements/AchievementNotificationBus.h>
 #include <AzCore/Component/TickBus.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace Achievements
 {
@@ -62,7 +63,7 @@ namespace Achievements
 
         if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
         {
-            
+
             behaviorContext->Class<AchievementDetails>()
                 ->Constructor<AchievementDetails&>()
                 ->Attribute(AZ::Script::Attributes::Storage, AZ::Script::Attributes::StorageType::Value)

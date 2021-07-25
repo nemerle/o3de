@@ -19,6 +19,7 @@
 #include <AzCore/std/sort.h>
 #include <AzCore/Utils/TypeHash.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <AzFramework/StringFunc/StringFunc.h>
 

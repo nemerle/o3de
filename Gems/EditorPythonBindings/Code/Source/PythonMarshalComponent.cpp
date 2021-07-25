@@ -12,6 +12,7 @@
 #include <Source/PythonTypeCasters.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
@@ -270,7 +271,7 @@ namespace EditorPythonBindings
                 AZ_Warning("python", false, "Empty behavior object sent in.");
                 return AZStd::nullopt;
             }
-            
+
             AZStd::any* anyValue = CreateAnyValue(behaviorObject.value()->m_typeId, behaviorObject.value()->m_address);
             if (!anyValue)
             {
@@ -431,7 +432,7 @@ namespace EditorPythonBindings
             result.first = MarshalBehaviorValueParameter<BehaviorType, pybind11::float_>(behaviorValue);
             return result;
         }
-    
+
         bool CanConvertPythonToBehaviorValue([[maybe_unused]] PythonMarshalTypeRequests::BehaviorTraits traits, pybind11::object pyObj) const override
         {
             return (PyFloat_Check(pyObj.ptr()) != false);
@@ -484,7 +485,7 @@ namespace EditorPythonBindings
     };
 
     // The 'char' type can come in with a variety of type traits:
-    // 
+    //
     class TypeConverterChar
         : public PythonMarshalComponent::TypeConverter
     {
@@ -540,7 +541,7 @@ namespace EditorPythonBindings
             }
             return AZStd::nullopt;
         }
-    
+
         bool CanConvertPythonToBehaviorValue([[maybe_unused]] PythonMarshalTypeRequests::BehaviorTraits traits, pybind11::object pyObj) const override
         {
             return (PyUnicode_Check(pyObj.ptr()) != false);
@@ -902,7 +903,7 @@ namespace EditorPythonBindings
                 return (PyDict_Check(pyObj.ptr()) != false);
             }
         };
-               
+
         class TypeConverterVector
             : public PythonMarshalComponent::TypeConverter
         {
@@ -914,7 +915,7 @@ namespace EditorPythonBindings
             TypeConverterVector(AZ::GenericClassInfo* genericClassInfo, const AZ::SerializeContext::ClassData* classData, const AZ::TypeId& typeId)
                 : m_genericClassInfo(genericClassInfo)
                 , m_classData(classData)
-                , m_typeId(typeId) 
+                , m_typeId(typeId)
             {
             }
 
@@ -1115,7 +1116,7 @@ namespace EditorPythonBindings
 
                     PythonMarshalTypeRequests::PythonValueResult result;
                     result.first = pythonList;
-                    
+
                     if (!deleterList->empty())
                     {
                         AZStd::weak_ptr<AZStd::vector<PythonMarshalTypeRequests::DeallocateFunction>> cleanUp(deleterList);
@@ -1133,7 +1134,7 @@ namespace EditorPythonBindings
                 }
                 return AZStd::nullopt;
             }
-        
+
             bool CanConvertPythonToBehaviorValue([[maybe_unused]] PythonMarshalTypeRequests::BehaviorTraits traits, pybind11::object pyObj) const override
             {
                 AZStd::vector<AZ::Uuid> typeList = AZ::Utils::GetContainedTypes(m_typeId);
@@ -1524,7 +1525,7 @@ namespace EditorPythonBindings
 
                 return PythonMarshalTypeRequests::BehaviorValueResult{ true, pairInstanceDeleter };
             }
-            
+
             AZStd::optional<PythonMarshalTypeRequests::PythonValueResult> BehaviorValueParameterToPython(AZ::BehaviorValueParameter& behaviorValue) override
             {
                 // the class data must have a container interface
@@ -1549,7 +1550,7 @@ namespace EditorPythonBindings
                 pybind11::object pythonItem0{ pybind11::none() };
                 pybind11::object pythonItem1{ pybind11::none() };
                 size_t itemCount = 0;
-                
+
                 auto pairElementCallback = [cleanUpList, &pythonItem0, &pythonItem1, &itemCount](void* instancePair, const AZ::Uuid& elementClassId, [[maybe_unused]] const AZ::SerializeContext::ClassData* elementGenericClassData, [[maybe_unused]] const AZ::SerializeContext::ClassElement* genericClassElement)
                 {
                     AZ::BehaviorObject behaviorObjectValue(instancePair, elementClassId);

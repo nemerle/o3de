@@ -9,6 +9,7 @@
 #include <AzToolsFramework/Component/EditorLevelComponentAPIComponent.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/Utils.h>
 
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>

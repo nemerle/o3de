@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzTest/AzTest.h>
 
 #include <ScriptCanvas/AWSScriptBehaviorDynamoDB.h>

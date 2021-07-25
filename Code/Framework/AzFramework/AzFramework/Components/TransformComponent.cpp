@@ -10,6 +10,7 @@
 #include <AzFramework/Visibility/EntityBoundsUnionBus.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Interface/Interface.h>
@@ -28,10 +29,10 @@ namespace AZ
         (
             BehaviorTransformNotificationBusHandler,
             "{9CEF4DAB-F359-4A3E-9856-7780281E0DAA}",
-            AZ::SystemAllocator, 
-            OnTransformChanged, 
-            OnParentChanged, 
-            OnChildAdded, 
+            AZ::SystemAllocator,
+            OnTransformChanged,
+            OnParentChanged,
+            OnChildAdded,
             OnChildRemoved
         );
 
@@ -97,7 +98,7 @@ namespace AzFramework
         if (classElement.GetVersion() == 3)
         {
             // a field was temporarily added to this specific version, then was removed.
-            // However, some data may have been exported with this field present, so 
+            // However, some data may have been exported with this field present, so
             // remove it if its found, but only in this version which the change was present in, so that
             // future re-additions of it won't remove it (as long as they bump the version number.)
             classElement.RemoveElementByName(AZ_CRC("InterpolateScale", 0x9d00b831));
@@ -369,16 +370,16 @@ namespace AzFramework
     void TransformComponent::RotateAroundLocalX(float eulerAngleRadian)
     {
         AZ::Vector3 xAxis = m_localTM.GetBasisX();
-        
+
         AZ::Transform newLocalTM = RotateAroundLocalHelper(eulerAngleRadian, m_localTM, xAxis);
-        
+
         SetLocalTM(newLocalTM);
     }
 
     void TransformComponent::RotateAroundLocalY(float eulerAngleRadian)
     {
         AZ::Vector3 yAxis = m_localTM.GetBasisY();
-        
+
         AZ::Transform newLocalTM = RotateAroundLocalHelper(eulerAngleRadian, m_localTM, yAxis);
 
         SetLocalTM(newLocalTM);
@@ -387,7 +388,7 @@ namespace AzFramework
     void TransformComponent::RotateAroundLocalZ(float eulerAngleRadian)
     {
         AZ::Vector3 zAxis = m_localTM.GetBasisZ();
-        
+
         AZ::Transform newLocalTM = RotateAroundLocalHelper(eulerAngleRadian, m_localTM, zAxis);
 
         SetLocalTM(newLocalTM);

@@ -13,6 +13,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <IRenderer.h>
 
@@ -370,7 +371,7 @@ namespace LyShineExamples
             {
                 delete [] m_cachedPrimitive.m_vertices;
             }
-    
+
             m_cachedPrimitive.m_vertices = new SVF_P2F_C4B_T2F_F4B[numVertices];
             m_cachedPrimitive.m_numVertices = numVertices;
         }

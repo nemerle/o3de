@@ -141,8 +141,12 @@ set(FILES
     Source/RPI.Reflect/Material/MaterialFunctor.cpp
     Source/RPI.Reflect/Pass/PassAsset.cpp
     Source/RPI.Reflect/Pass/PassAttachmentReflect.cpp
+    Source/RPI.Reflect/Pass/ComputePassData.cpp
+    Source/RPI.Reflect/Pass/PassData.cpp
     Source/RPI.Reflect/Pass/PassRequest.cpp
     Source/RPI.Reflect/Pass/PassTemplate.cpp
+    Source/RPI.Reflect/Pass/RasterPassData.cpp
+    Source/RPI.Reflect/Pass/RenderPassData.cpp
     Source/RPI.Reflect/Shader/ShaderStageType.cpp
     Source/RPI.Reflect/Shader/ShaderAsset.cpp
     Source/RPI.Reflect/Shader/ShaderAssetCreator.cpp

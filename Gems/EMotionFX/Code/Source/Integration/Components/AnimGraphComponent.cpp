@@ -12,6 +12,7 @@
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <MCore/Source/AttributeString.h>
 #include <MCore/Source/AzCoreConversions.h>

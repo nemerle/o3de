@@ -15,6 +15,8 @@
 #include <AzCore/std/string/string.h>
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/RTTI/ReflectContext.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <ScriptCanvas/Variable/GraphVariableManagerComponent.h>
 
@@ -73,7 +75,7 @@ using namespace ScriptCanvasTests;
 
 TEST_F(ScriptCanvasTestFixture, CreateVariableTest)
 {
-    
+
 
     StringArray::Reflect(m_serializeContext);
     StringArray::Reflect(m_behaviorContext);
@@ -84,7 +86,7 @@ TEST_F(ScriptCanvasTestFixture, CreateVariableTest)
 
         ScriptCanvas::ScriptCanvasId scriptCanvasId = AZ::Entity::MakeId();
 
-        AZStd::unique_ptr<AZ::Entity> propertyEntity = AZStd::make_unique<AZ::Entity>("PropertyGraph");        
+        AZStd::unique_ptr<AZ::Entity> propertyEntity = AZStd::make_unique<AZ::Entity>("PropertyGraph");
 
         propertyEntity->CreateComponent<GraphVariableManagerComponent>(scriptCanvasId);
         propertyEntity->Init();
@@ -342,11 +344,11 @@ TEST_F(ScriptCanvasTestFixture, FindVariableTest)
         EXPECT_EQ(stringVariableDatum, (*variableByName->GetDatum()));
     }
 
-    GraphVariable* variableById = nullptr;    
+    GraphVariable* variableById = nullptr;
     {
         // Find Property by id
         GraphVariableManagerRequestBus::EventResult(variableById, scriptCanvasId, &GraphVariableManagerRequests::FindVariableById, stringVariableId);
-        ASSERT_NE(nullptr, variableById);                
+        ASSERT_NE(nullptr, variableById);
         EXPECT_EQ(stringVariableDatum, (*variableById->GetDatum()));
     }
 
@@ -437,7 +439,7 @@ TEST_F(ScriptCanvasTestFixture, SerializationTest)
 
         ScriptCanvasId scriptCanvasId = AZ::Entity::MakeId();
 
-        AZStd::unique_ptr<AZ::Entity> propertyEntity = AZStd::make_unique<AZ::Entity>("PropertyGraph");        
+        AZStd::unique_ptr<AZ::Entity> propertyEntity = AZStd::make_unique<AZ::Entity>("PropertyGraph");
         propertyEntity->CreateComponent<GraphVariableManagerComponent>(scriptCanvasId);
         propertyEntity->Init();
         propertyEntity->Activate();
@@ -449,7 +451,7 @@ TEST_F(ScriptCanvasTestFixture, SerializationTest)
         EXPECT_TRUE(addPropertyOutcome);
         EXPECT_TRUE(addPropertyOutcome.GetValue().IsValid());
 
-        GraphVariable* stringArrayVariable = nullptr;        
+        GraphVariable* stringArrayVariable = nullptr;
         GraphVariableManagerRequestBus::EventResult(stringArrayVariable, scriptCanvasId, &GraphVariableManagerRequests::FindVariable, "My String Array");
         ASSERT_NE(nullptr, stringArrayVariable);
         EXPECT_EQ(stringArrayDatum, (*stringArrayVariable->GetDatum()));
@@ -462,8 +464,8 @@ TEST_F(ScriptCanvasTestFixture, SerializationTest)
         const bool objectSaved = AZ::Utils::SaveObjectToStream(byteStream, AZ::DataStream::ST_BINARY, propertyEntity.get(), m_serializeContext);
         EXPECT_TRUE(objectSaved);
 
-        // Delete the Property Component 
-        propertyEntity.reset();        
+        // Delete the Property Component
+        propertyEntity.reset();
 
         // Load Variable Component Entity
         {
@@ -496,7 +498,7 @@ TEST_F(ScriptCanvasTestFixture, SerializationTest)
         GraphVariable* matrixVariable = nullptr;
         GraphVariableManagerRequestBus::EventResult(matrixVariable, scriptCanvasId, &GraphVariableManagerRequests::FindVariableById, addPropertyOutcome.GetValue());
         ASSERT_NE(nullptr, matrixVariable);
-        
+
         const Datum* matrix3x3Datum = matrixVariable->GetDatum();
         EXPECT_EQ(identityMatrixDatum, (*matrix3x3Datum));
 

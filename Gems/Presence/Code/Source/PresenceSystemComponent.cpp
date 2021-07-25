@@ -9,6 +9,7 @@
 #include <PresenceSystemComponent.h>
 #include <Presence/PresenceNotificationBus.h>
 #include <AzCore/Component/TickBus.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace Presence
 {

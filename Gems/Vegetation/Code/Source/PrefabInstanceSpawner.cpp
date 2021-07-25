@@ -12,6 +12,7 @@
 #include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Math/Transform.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzFramework/Components/TransformComponent.h>
 #include <AzFramework/StringFunc/StringFunc.h>

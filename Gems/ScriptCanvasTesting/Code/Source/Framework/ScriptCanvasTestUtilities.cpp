@@ -13,6 +13,8 @@
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/IOUtils.h>
 #include <AzCore/IO/FileIOEventBus.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/UnitTest/UnitTest.h>
 #include <AzFramework/API/ApplicationAPI.h>
 #include <Editor/Framework/ScriptCanvasGraphUtilities.h>
@@ -371,7 +373,7 @@ namespace ScriptCanvasTests
 
         EXPECT_EQ(reporterNative0, reporterNative1);
         EXPECT_EQ(reporterIterpreted0, reporterIterpreted1);
-        
+
         AZ_TEST_STOP_TRACE_SUPPRESSION_NO_COUNT;
     }
 
@@ -693,6 +695,109 @@ namespace ScriptCanvasTests
 
         return cloneEntity;
     }
+
+    void TestBehaviorContextProperties::Reflect(AZ::ReflectContext *reflectContext)
+    {
+        if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(reflectContext))
+        {
+            serializeContext->Class<TestBehaviorContextProperties>()
+                    ->Version(0)
+                    ;
+        }
+
+        if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(reflectContext))
+        {
+            behaviorContext->Class<TestBehaviorContextProperties>("TestBehaviorContextProperties")
+                    ->Property("boolean", BehaviorValueGetter(&TestBehaviorContextProperties::m_booleanProp), BehaviorValueSetter(&TestBehaviorContextProperties::m_booleanProp))
+                    ->Property("number", BehaviorValueGetter(&TestBehaviorContextProperties::m_numberProp), BehaviorValueSetter(&TestBehaviorContextProperties::m_numberProp))
+                    ->Property("string", BehaviorValueGetter(&TestBehaviorContextProperties::m_stringProp), BehaviorValueSetter(&TestBehaviorContextProperties::m_stringProp))
+                    ->Property("getterOnlyNumber", BehaviorValueGetter(&TestBehaviorContextProperties::m_getterOnlyProp), nullptr)
+                    ->Property("setterOnlyNumber", nullptr, BehaviorValueSetter(&TestBehaviorContextProperties::m_setterOnlyProp))
+                    ;
+        }
+    }
+
+    void EventTestHandler::Reflect(AZ::ReflectContext *context)
+    {
+        if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
+        {
+            serializeContext->Class<EventTestHandler>()
+                    ->Version(0)
+                    ;
+        }
+
+        if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
+        {
+            behaviorContext->EBus<EventTestBus>("EventTestHandler")
+                    ->Handler<EventTestHandler>()
+                    ;
+        }
+    }
+
+    void ConvertibleToString::Reflect(AZ::ReflectContext *context)
+    {
+        AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
+        if (serializeContext)
+        {
+            serializeContext->Class<ConvertibleToString>()
+                    ->Version(0)
+                    ;
+        }
+
+        if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
+        {
+            behaviorContext->Class<ConvertibleToString>("ConvertibleToString")
+                    ->Method("ConstCharPtrToString", &ConvertibleToString::ConstCharPtrToString)
+                    ->Method("StringViewToString", &ConvertibleToString::StringViewToString)
+                    ;
+        }
+    }
+
+    void ScriptUnitTestEventHandler::Reflect(AZ::ReflectContext *context)
+    {
+        if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
+        {
+            serializeContext->Class<ScriptUnitTestEventHandler>()
+                    ->Version(0)
+                    ;
+        }
+
+        if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
+        {
+            behaviorContext->EBus<UnitTestEventsBus>("UnitTestEventsBus")
+                    ->Handler<ScriptUnitTestEventHandler>()
+                    ->Event("Failed", &UnitTestEventsBus::Events::Failed)
+                    ->Event("Result", &UnitTestEventsBus::Events::Result)
+                    ->Event("SideEffect", &UnitTestEventsBus::Events::SideEffect)
+                    ->Event("Succeeded", &UnitTestEventsBus::Events::Succeeded)
+                    ;
+        }
+    }
+
+    void TestNodeableObject::Reflect(AZ::ReflectContext *reflectContext)
+    {
+        if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(reflectContext))
+        {
+            serializeContext->Class<TestNodeableObject, Nodeable>();
+
+            if (auto editContext = serializeContext->GetEditContext())
+            {
+                editContext->Class<TestNodeableObject>("TestNodeableObject", "")
+                        ;
+            }
+        }
+
+        // reflect API for the node
+        if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(reflectContext))
+        {
+            behaviorContext->Class<TestNodeableObject>("TestNodeableObject")
+                    ->Method("Branch", &TestNodeableObject::Branch)
+                    ;
+        }
+    }
+
+
+
 
     //AZ::Data::AssetId UnitTestEntityContext::CurrentlyInstantiatingSlice()
     //{

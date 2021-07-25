@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include <AzCore/Component/Component.h>
-#include <AzCore/Component/TransformBus.h>
 
 #include <AtomLyIntegration/CommonFeatures/PostProcess/LookModification/LookModificationBus.h>
 #include <AtomLyIntegration/CommonFeatures/PostProcess/LookModification/LookModificationComponentConfig.h>
@@ -18,8 +16,11 @@
 #include <Atom/Feature/PostProcess/LookModification/LookModificationSettingsInterface.h>
 #include <Atom/Feature/PostProcess/PostProcessSettingsInterface.h>
 #include <Atom/Feature/PostProcess/PostProcessFeatureProcessorInterface.h>
-#include <AzCore/Asset/AssetCommon.h>
 #include <Atom/RPI.Reflect/System/AnyAsset.h>
+
+#include <AzCore/Asset/AssetCommon.h>
+#include <AzCore/Component/Component.h>
+#include <AzCore/Component/TransformBus.h>
 
 namespace AZ
 {

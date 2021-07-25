@@ -15,6 +15,7 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Script/ScriptContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
@@ -123,7 +124,7 @@ namespace AZ
             *this = Name();
         }
     }
-    
+
     AZStd::string_view Name::GetStringView() const
     {
         return m_view;
@@ -197,6 +198,6 @@ namespace AZ
             jsonContext->Serializer<NameJsonSerializer>()->HandlesType<Name>();
         }
     }
-    
+
 } // namespace AZ
 

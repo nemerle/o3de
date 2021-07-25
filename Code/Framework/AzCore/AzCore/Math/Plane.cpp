@@ -8,6 +8,7 @@
 
 #include <AzCore/Math/Plane.h>
 #include <AzCore/Math/MathScriptHelpers.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
@@ -149,7 +150,7 @@ namespace AZ
                     Attribute(AZ::Script::Attributes::Operator, AZ::Script::Attributes::OperatorType::ToString)->
                 Method("Clone", [](const Plane& rhs) -> Plane { return rhs; })->
                     Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::All)->
-                Method("CreateFromCoefficients", &Plane::CreateFromCoefficients)->                
+                Method("CreateFromCoefficients", &Plane::CreateFromCoefficients)->
                 Method("CreateFromNormalAndPoint", &Plane::CreateFromNormalAndPoint)->
                 Method("CreateFromNormalAndDistance", &Plane::CreateFromNormalAndDistance)->
                 Method<void(Plane::*)(const Vector4&)>("Set", &Plane::Set)->

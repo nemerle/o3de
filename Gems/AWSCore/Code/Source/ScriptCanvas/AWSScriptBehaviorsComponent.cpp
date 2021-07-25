@@ -10,6 +10,7 @@
 #include <ScriptCanvas/AWSScriptBehaviorDynamoDB.h>
 #include <ScriptCanvas/AWSScriptBehaviorLambda.h>
 #include <ScriptCanvas/AWSScriptBehaviorS3.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AWSCore
 {

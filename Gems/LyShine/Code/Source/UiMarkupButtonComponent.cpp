@@ -14,6 +14,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace
 {
@@ -209,8 +210,8 @@ bool UiMarkupButtonComponent::HandleReleased(AZ::Vector2 point)
 
         if (!onClickTriggered)
         {
-            // Clear the hover state now in case this entity is no longer 
-            // being hovered. This can happen when the user releases the 
+            // Clear the hover state now in case this entity is no longer
+            // being hovered. This can happen when the user releases the
             // mouse outside of the clickable text rect.
             HandleClickableHoverEnd();
         }
@@ -238,7 +239,7 @@ void UiMarkupButtonComponent::OnClickableTextChanged()
     int lastClickableId = -1;
     for (const auto& clickableText : m_clickableTextRects)
     {
-        // Color is assigned by clickable ID and it's possible for 
+        // Color is assigned by clickable ID and it's possible for
         // multiple clickable text rects to share the same ID, so guard
         // against unnecessary calls to set the color for IDs that have
         // previously been set.
@@ -291,7 +292,7 @@ void UiMarkupButtonComponent::UpdateHover()
         AZ::EntityId hoverInteractable;
         EBUS_EVENT_ID_RESULT(hoverInteractable, canvasId, UiCanvasBus, GetHoverInteractable);
 
-        // Similarly, the hover interactable won't updated while another 
+        // Similarly, the hover interactable won't updated while another
         // element is being pressed - we don't want to update hover state
         // of any clickable text (on any entity) while a press is happening.
         if (hoverInteractable == GetEntityId())
@@ -309,7 +310,7 @@ void UiMarkupButtonComponent::UpdateHover()
             {
                 hoverClickableId = m_clickableTextRects[m_clickableRectHoverIndex].id;
             }
-            
+
             const bool enteringHover = rectIndexClickableId >= 0 && hoverClickableId < 0;
             const bool leavingHover = rectIndexClickableId < 0 && hoverClickableId >= 0;
             const bool switchingHoverRect = rectIndexClickableId >= 0 && hoverClickableId >= 0 && rectIndexClickableId != hoverClickableId;
@@ -385,7 +386,7 @@ void UiMarkupButtonComponent::OnLinkColorChanged()
     int lastClickableId = -1;
     for (const auto& clickableText : m_clickableTextRects)
     {
-        // Color is assigned by clickable ID and it's possible for 
+        // Color is assigned by clickable ID and it's possible for
         // multiple clickable text rects to share the same ID, so guard
         // against unnecessary calls to set the color for IDs that have
         // previously been set.
@@ -414,7 +415,7 @@ void UiMarkupButtonComponent::OnLinkHoverColorChanged()
     int lastClickableId = -1;
     for (const auto& clickableText : m_clickableTextRects)
     {
-        // Color is assigned by clickable ID and it's possible for 
+        // Color is assigned by clickable ID and it's possible for
         // multiple clickable text rects to share the same ID, so guard
         // against unnecessary calls to set the color for IDs that have
         // previously been set.

@@ -114,13 +114,7 @@ namespace ScriptCanvasTesting
             return AZStd::make_tuple(v, s, b);
         }
 
-        static void Reflect(AZ::ReflectContext* context)
-        {
-            if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
-            {
-                behaviorContext->Class<TestTupleMethods>("TestTupleMethods")->Method("Three", &TestTupleMethods::Three);
-            }
-        }
+        static void Reflect(AZ::ReflectContext* context);
     };
 
 

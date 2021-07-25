@@ -10,6 +10,7 @@
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AzFramework
 {
@@ -296,7 +297,7 @@ namespace AzFramework
             AZ_Warning("Entity", false, "Cannot create component. %s", errorMessage.c_str());
             return AZ::InvalidComponentId;
         }
-        
+
         // don't create component if an incompatible component exists on the entity
         AZStd::vector<AZ::Component*> incompatibleComponents;
         entity->IsComponentReadyToAdd(componentTypeId, nullptr, &incompatibleComponents);

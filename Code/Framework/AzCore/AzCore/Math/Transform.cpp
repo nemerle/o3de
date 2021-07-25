@@ -14,10 +14,11 @@
 #include <AzCore/Math/Vector2.h>
 #include <AzCore/Math/MathScriptHelpers.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
-    namespace 
+    namespace
     {
         class TransformSerializer
             : public SerializeContext::IDataSerializer

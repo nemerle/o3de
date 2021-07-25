@@ -23,6 +23,7 @@
 
 // AzCore
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 // Editor
 #include "CryEdit.h"

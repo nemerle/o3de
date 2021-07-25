@@ -24,6 +24,7 @@
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/IdUtils.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <AzCore/Math/Crc.h>
 #include <AzCore/std/algorithm.h>

@@ -12,6 +12,8 @@
 #include <Source/Framework/ScriptCanvasTestUtilities.h>
 #include <Source/Framework/ScriptCanvasTestNodes.h>
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/IdUtils.h>
 
 #include <ScriptCanvas/Asset/RuntimeAsset.h>
@@ -30,7 +32,7 @@ TEST_F(ScriptCanvasTestFixture, CoreNodeFunction_OwningGraphCheck)
 
     ScriptCanvas::Graph* graph = CreateGraph();
     ConfigurableUnitTestNode* groupedNode = CreateConfigurableNode();
-    
+
     EXPECT_EQ(graph, groupedNode->GetGraph());
 }
 
@@ -57,11 +59,11 @@ TEST_F(ScriptCanvasTestFixture, AddRemoveSlotNotifications)
     SlotId duplicateSlotId = numberAddNode->AddSlot("duplicate");
     EXPECT_EQ(2U, nodeNotifications.GetSlotsAdded());
     EXPECT_EQ(testSlotId, duplicateSlotId);
-    
+
     numberAddNode->RemoveSlot(testSlotId);
     EXPECT_EQ(2U, nodeNotifications.GetSlotsRemoved());
     // This should not signal the NodeNotification::OnSlotRemoved event as the slot no longer exist on the node
-    numberAddNode->RemoveSlot(testSlotId, false); 
+    numberAddNode->RemoveSlot(testSlotId, false);
     EXPECT_EQ(2U, nodeNotifications.GetSlotsRemoved());
 
     numberAddEntity.reset();
@@ -342,9 +344,9 @@ TEST_F(ScriptCanvasTestFixture, InsertSlot_FrontPadded)
         }
     }
 }
- 
+
 TEST_F(ScriptCanvasTestFixture, ValueTypes)
-{    
+{
     using namespace ScriptCanvas;
 
     Datum number0(Datum(0));
@@ -409,7 +411,7 @@ TEST_F(ScriptCanvasTestFixture, ValueTypes)
 }
 
 TEST_F(ScriptCanvasTestFixture, Contracts)
-{    
+{
     using namespace ScriptCanvas;
     RegisterComponentDescriptor<ContractNode>();
 

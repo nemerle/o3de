@@ -18,6 +18,7 @@
 #include <Source/PythonMarshalComponent.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/UnitTest/TestTypes.h>
 #include <AzCore/Memory/Memory.h>
 #include <AzCore/Memory/PoolAllocator.h>

@@ -19,6 +19,7 @@
 #include <AzCore/JSON/rapidjson.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
 #include <AzCore/Serialization/Json/JsonSerializationResult.h>
 #include <AzCore/Serialization/Json/RegistrationContext.h>

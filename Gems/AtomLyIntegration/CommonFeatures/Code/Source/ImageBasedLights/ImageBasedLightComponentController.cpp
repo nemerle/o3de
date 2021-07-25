@@ -9,6 +9,7 @@
 #include <ImageBasedLights/ImageBasedLightComponentController.h>
 #include <AtomLyIntegration/CommonFeatures/ImageBasedLights/ImageBasedLightComponentConstants.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <Atom/RPI.Public/Scene.h>
 #include <Atom/Utils/Utils.h>

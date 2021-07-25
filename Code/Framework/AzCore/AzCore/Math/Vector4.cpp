@@ -14,6 +14,7 @@
 #include <AzCore/Math/Vector4.h>
 
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {

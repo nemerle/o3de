@@ -8,6 +8,8 @@
 
 
 #include <Source/Framework/ScriptCanvasTestFixture.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 using namespace ScriptCanvasTests;
 

@@ -8,6 +8,8 @@
 #include <AzCore/PlatformDef.h>
 
 #include <AzCore/RTTI/RTTI.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <Source/Framework/ScriptCanvasTestFixture.h>
 #include <Source/Framework/ScriptCanvasTestUtilities.h>

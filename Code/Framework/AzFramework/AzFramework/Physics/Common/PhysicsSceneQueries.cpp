@@ -15,6 +15,7 @@
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <AzFramework/Physics/CollisionBus.h>
 #include <AzFramework/Physics/ShapeConfiguration.h>

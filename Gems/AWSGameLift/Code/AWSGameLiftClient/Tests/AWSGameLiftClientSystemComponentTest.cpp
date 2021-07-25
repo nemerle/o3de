@@ -10,6 +10,8 @@
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <AWSGameLiftClientFixture.h>
 #include <AWSGameLiftClientManager.h>

@@ -7,6 +7,7 @@
  */
 #include <AzCore/UnitTest/TestTypes.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Outcome/Outcome.h>
 #include <AzCore/Script/ScriptContext.h>
 
@@ -44,7 +45,7 @@ namespace UnitTest
             Counter0::Reset();
 
             m_context.Class<Counter0>("Counter0")
-                ->Property("val", static_cast<int& (Counter0::*)()>(&Counter0::val), nullptr);            
+                ->Property("val", static_cast<int& (Counter0::*)()>(&Counter0::val), nullptr);
 
             m_context.Class<TypingStruct>("TypingStruct")
                 ->Property("stringValue", BehaviorValueGetter(&TypingStruct::m_stringValue), BehaviorValueSetter(&TypingStruct::m_stringValue))
@@ -74,7 +75,7 @@ namespace UnitTest
 
         if (findIter != m_typingClass->m_properties.end())
         {
-            EXPECT_EQ(AZ::BehaviorParameter::TR_STRING, findIter->second->m_getter->GetResult()->m_traits & AZ::BehaviorParameter::TR_STRING);            
+            EXPECT_EQ(AZ::BehaviorParameter::TR_STRING, findIter->second->m_getter->GetResult()->m_traits & AZ::BehaviorParameter::TR_STRING);
         }
     }
 

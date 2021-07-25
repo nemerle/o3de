@@ -15,6 +15,7 @@
 #include <AzCore/Math/Vector3.h>
 
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {

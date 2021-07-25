@@ -7,6 +7,7 @@
  */
 
 #include <AzFramework/Entity/SliceEntityOwnershipService.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AzFramework
 {
@@ -216,7 +217,7 @@ namespace AzFramework
         }
 
         const EntityList& looseEntities = rootSliceComponent->GetNewEntities();
-        
+
         entities.reserve(looseEntities.size());
         for (AZ::Entity* entity : looseEntities)
         {
@@ -246,7 +247,7 @@ namespace AzFramework
 
         AZ::Entity* newRootEntity = AZ::Utils::LoadObjectFromStream<AZ::Entity>(stream, m_serializeContext, filterDesc);
 
-        // Make sure that PRE_NOTIFY assets get their notify before we activate, so that we can preserve the order of 
+        // Make sure that PRE_NOTIFY assets get their notify before we activate, so that we can preserve the order of
         // (load asset) -> (notify) -> (init) -> (activate)
         AZ::Data::AssetManager::Instance().DispatchEvents();
 
@@ -417,7 +418,7 @@ namespace AzFramework
                         AddSlice(asset, instantiating.m_customMapper);
 
                     // Its important to remove this instantiation from the instantiation list
-                    // as soon as possible, before we call these below notification functions, because they might result in our 
+                    // as soon as possible, before we call these below notification functions, because they might result in our
                     // own functions that search this list being called again.
                     iter = m_queuedSliceInstantiations.erase(iter);
                     // --------------------------- do not refer to 'instantiating' after the above call, it has been destroyed ------------
@@ -529,7 +530,7 @@ namespace AzFramework
             m_queuedSliceInstantiations.erase(iter);
 
             // Clear the iterator so that code inserted after this point to operate on iter will raise issues.
-            iter = m_queuedSliceInstantiations.end(); 
+            iter = m_queuedSliceInstantiations.end();
 
             // No need to queue this notification.
             // (It's queued in other circumstances, to avoid holding the AssetBus lock any longer than necessary)

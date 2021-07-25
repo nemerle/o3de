@@ -9,6 +9,7 @@
 #include <Authentication/AuthenticationTokens.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
@@ -16,7 +17,7 @@
 namespace AWSClientAuth
 {
     //! Used to share authentication tokens to caller and to AWSCognitoAuthorizationController.
-   
+
     AuthenticationTokens::AuthenticationTokens()
     {
         m_tokensExpireTimeStamp = AZStd::chrono::system_clock::time_point::min();

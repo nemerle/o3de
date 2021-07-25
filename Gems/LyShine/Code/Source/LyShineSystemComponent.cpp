@@ -10,6 +10,7 @@
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include "LyShineSystemComponent.h"
 #include "UiSerialize.h"
@@ -265,7 +266,7 @@ namespace LyShine
         UiCanvasFileObject* canvasFileObject = static_cast<UiCanvasFileObject*>(canvas);
         AZ::Entity* oldRootSliceEntity = canvasFileObject->m_rootSliceEntity;
         AZ::EntityId idToReuse = oldRootSliceEntity->GetId();
-        
+
         AZ::Entity* newRootSliceEntity = aznew AZ::Entity(idToReuse, AZStd::to_string(static_cast<AZ::u64>(idToReuse)).c_str());
         newRootSliceEntity->AddComponent(newSliceComponent);
         canvasFileObject->m_rootSliceEntity = newRootSliceEntity;
@@ -378,7 +379,7 @@ namespace LyShine
     {
         gEnv->pLyShine = nullptr;
         delete m_pLyShine;
-        m_pLyShine = nullptr;       
+        m_pLyShine = nullptr;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////

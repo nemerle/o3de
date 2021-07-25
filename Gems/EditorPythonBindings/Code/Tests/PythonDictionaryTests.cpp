@@ -17,6 +17,7 @@
 
 #include <AzCore/Math/Vector3.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzFramework/StringFunc/StringFunc.h>

@@ -12,6 +12,8 @@
 #include <Source/Framework/ScriptCanvasTestUtilities.h>
 
 #include <AzCore/Math/Vector3.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <ScriptCanvas/Libraries/Math/Math.h>
 #include <ScriptCanvas/Data/Data.h>
 

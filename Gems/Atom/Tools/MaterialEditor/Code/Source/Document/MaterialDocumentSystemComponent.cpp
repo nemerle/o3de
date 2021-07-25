@@ -17,6 +17,7 @@
 #include <AtomToolsFramework/Debug/TraceRecorder.h>
 #include <AtomToolsFramework/Util/Util.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzFramework/Asset/AssetSystemBus.h>

@@ -16,6 +16,7 @@
 #include <Source/PythonProxyObject.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 
 namespace UnitTest
@@ -117,7 +118,7 @@ namespace UnitTest
                 // azlmbr.my.enum.One
                 behaviorContext->EnumProperty<aznumeric_cast<int>(MyTypes::One)>("One")
                     ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Automation)
-                    ->Attribute(AZ::Script::Attributes::Module, "my.enum") 
+                    ->Attribute(AZ::Script::Attributes::Module, "my.enum")
                     ;
 
                 // azlmbr.my.enum.Two
@@ -140,13 +141,13 @@ namespace UnitTest
                 // azlmbr.constant.MY_TYPE
                 behaviorContext->ConstantProperty("MY_TYPE", []() { return s_myTypeId; })
                     ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Automation)
-                    ->Attribute(AZ::Script::Attributes::Module, "constant") 
+                    ->Attribute(AZ::Script::Attributes::Module, "constant")
                     ;
 
                 // azlmbr.constant.MY_STRING
                 behaviorContext->ConstantProperty("MY_STRING", []() { return s_myString; })
                     ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Automation)
-                    ->Attribute(AZ::Script::Attributes::Module, "constant") 
+                    ->Attribute(AZ::Script::Attributes::Module, "constant")
                     ;
             }
         }
@@ -564,7 +565,7 @@ namespace UnitTest
             }
             return aznumeric_cast<int>(LogTypes::Skip);
         };
-        
+
         try
         {
             pybind11::exec(R"(

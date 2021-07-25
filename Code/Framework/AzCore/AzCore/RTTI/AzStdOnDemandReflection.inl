@@ -8,16 +8,17 @@
 #pragma once
 
 //#include <AzCore/Casting/numeric_cast.h>
-//#include <AzCore/Script/ScriptContext.h>
-//#include <AzCore/Script/ScriptContextAttributes.h>
-//#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/Script/ScriptContext.h>
+#include <AzCore/Script/ScriptContextAttributes.h>
+#include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/ScriptCanvas/ScriptCanvasOnDemandNames.h>
 //#include <AzCore/Serialization/SerializeContext.h>
 //#include <AzCore/std/algorithm.h>
 //#include <AzCore/std/smart_ptr/unique_ptr.h>
-//#include <AzCore/std/string/conversions.h>
-//#include <AzCore/std/string/tokenize.h>
-//#include <AzCore/RTTI/AzStdOnDemandPrettyName.inl>
-//#include <AzCore/RTTI/AzStdOnDemandReflectionLuaFunctions.inl>
+#include <AzCore/std/string/conversions.h>
+#include <AzCore/std/string/tokenize.h>
+#include <AzCore/RTTI/AzStdOnDemandPrettyName.inl>
+#include <AzCore/RTTI/AzStdOnDemandReflectionLuaFunctions.inl>
 //#include <AzCore/EBus/Event.h>
 
 #ifndef AZ_USE_CUSTOM_SCRIPT_BIND
@@ -83,7 +84,7 @@ namespace AZ
         using ContainerType = AZStd::basic_string<Element, Traits, Allocator>;
         using SizeType = typename ContainerType::size_type;
         using ValueType = typename ContainerType::value_type;
-        
+
         static void Reflect(ReflectContext* context)
         {
             if (BehaviorContext* behaviorContext = azrtti_cast<BehaviorContext*>(context))
@@ -112,7 +113,7 @@ namespace AZ
                         return thisPtr->substr(pos, len);
                     })
                     ->Method("Replace", [](ContainerType* thisPtr, const ContainerType& stringToReplace, const ContainerType& replacementString)
-                    { 
+                    {
                         SizeType startPos = 0;
                         while ((startPos = thisPtr->find(stringToReplace, startPos)) != ContainerType::npos && !stringToReplace.empty())
                         {
@@ -150,7 +151,7 @@ namespace AZ
                         for (auto itr = thisPtr->begin(); itr < thisPtr->end(); itr++)
                         {
                             toLowerString.push_back(static_cast<ValueType>(tolower(*itr)));
-                        }                    
+                        }
                         return toLowerString;
                     })
                     ->Method("ToUpper", [](ContainerType* thisPtr)
@@ -245,7 +246,7 @@ namespace AZ
     {
         using ContainerType = AZStd::intrusive_ptr<T>;
 
-        // TODO: Count reflection types for a proper un-reflect 
+        // TODO: Count reflection types for a proper un-reflect
 
         static void CustomConstructor(ContainerType* thisPtr, ScriptDataContext& dc)
         {
@@ -293,7 +294,7 @@ namespace AZ
     {
         using ContainerType = AZStd::shared_ptr<T>;
 
-        // TODO: Count reflection types for a proper un-reflect 
+        // TODO: Count reflection types for a proper un-reflect
 
         static void CustomConstructor(ContainerType* thisPtr, ScriptDataContext& dc)
         {
@@ -452,7 +453,7 @@ namespace AZ
             thisPtr[uindex] = value;
         }
 
-        
+
         static bool EraseCheck_VM(ContainerType& thisPtr, AZ::u64 index)
         {
             if (index < thisPtr.size())
@@ -465,7 +466,7 @@ namespace AZ
                 return false;
             }
         }
-            
+
         static ContainerType& ErasePost_VM(ContainerType& thisPtr, AZ::u64 /*index*/)
         {
             return thisPtr;
@@ -621,7 +622,7 @@ namespace AZ
                 return AZ::Failure(AZStd::string::format("Index out of bounds: %zu (size: %zu)", index, thisContainer.size()));
             }
         }
-        
+
         static AZ::Outcome<void, void> Replace(ContainerType& thisContainer, size_t index, T& value)
         {
             if (index >= 0 && index < thisContainer.size())
@@ -651,7 +652,7 @@ namespace AZ
                         ->Attribute(AZ::Script::Attributes::Operator, AZ::Script::Attributes::OperatorType::Length)
                         ->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::All)
                         ->Attribute(AZ::Script::Attributes::Deprecated, true)
-                    
+
                     ->Method(k_accessElementName, &At, {{ {}, { "Index", "The index to read from", nullptr, BehaviorParameter::Traits::TR_INDEX }}})
                     ->Method(k_sizeName, [](ContainerType*) { return aznumeric_cast<int>(N); })
                         ->Attribute(AZ::Script::Attributes::Operator, AZ::Script::Attributes::OperatorType::Length)

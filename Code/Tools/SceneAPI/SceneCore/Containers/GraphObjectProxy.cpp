@@ -9,6 +9,7 @@
 #include <SceneAPI/SceneCore/Containers/GraphObjectProxy.h>
 #include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzToolsFramework/API/EditorPythonConsoleBus.h>

@@ -11,6 +11,7 @@
 
 #include <AzCore/std/string/regex.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace ScriptEvents
 {
@@ -93,7 +94,7 @@ namespace ScriptEvents
         {
             return AZ::Failure(AZStd::string::format("The specified type %s is not valid as an address for Script Events: %s", addressType.ToString<AZStd::string>().c_str(), name.c_str()));
         }
-        
+
         // Definition name cannot be empty
         if (name.empty())
         {

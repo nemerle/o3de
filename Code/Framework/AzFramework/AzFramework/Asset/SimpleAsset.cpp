@@ -10,6 +10,7 @@
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzFramework/Asset/SimpleAsset.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AzFramework
 {
@@ -38,7 +39,7 @@ namespace AzFramework
 
         return "";
     }
-    
+
     void SimpleAssetReferenceBase::Reflect(AZ::ReflectContext *context)
     {
         if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -46,7 +47,7 @@ namespace AzFramework
             serializeContext->Class<SimpleAssetReferenceBase>()
                     ->Version(1)
                     ->Field("AssetPath", &SimpleAssetReferenceBase::m_assetPath);
-            
+
             AZ::EditContext* edit = serializeContext->GetEditContext();
             if (edit)
             {
@@ -56,7 +57,7 @@ namespace AzFramework
                         ;
             }
         }
-        
+
         if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
         {
             behaviorContext->Class<SimpleAssetReferenceBase>()
@@ -71,5 +72,5 @@ namespace AzFramework
                     ;
         }
     }
-    
+
 } // namespace AzFramework

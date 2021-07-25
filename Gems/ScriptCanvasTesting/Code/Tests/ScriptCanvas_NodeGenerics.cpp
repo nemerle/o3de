@@ -12,13 +12,15 @@
 #include <Source/Framework/ScriptCanvasTestUtilities.h>
 
 #include <ScriptCanvas/Core/NodeFunctionGeneric.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #pragma warning( push )
 #pragma warning( disable : 5046) //'function' : Symbol involving type with internal linkage not defined
 
 using namespace ScriptCanvasTests;
 
-namespace 
+namespace
 {
 
     AZ_INLINE void ArgsNoReturn(float)
@@ -118,7 +120,7 @@ namespace ScriptCanvas
 }
 
 TEST_F(ScriptCanvasTestFixture, NodeGenerics)
-{    
+{
     using namespace ScriptCanvasEditor;
 
     RegisterComponentDescriptor<ArgsNoReturnNode>();

@@ -18,6 +18,10 @@
 #include <AzToolsFramework/Thumbnails/ThumbnailerComponent.h>
 #include <AzToolsFramework/AssetBrowser/AssetBrowserComponent.h>
 
+// AzCore
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
+
 // Editor
 #include "MainWindow.h"
 #include "CryEdit.h"
@@ -111,7 +115,7 @@ namespace EditorInternal
     }
 
     void EditorToolsApplication::QueryApplicationType(AZ::ApplicationTypeQuery& appType) const
-    { 
+    {
         appType.m_maskValue = AZ::ApplicationTypeQuery::Masks::Editor | AZ::ApplicationTypeQuery::Masks::Tool;
     };
 
@@ -193,7 +197,7 @@ namespace EditorInternal
                 return false;
             }
         }
-        
+
         auto previousDocument = GetIEditor()->GetDocument();
         QString previousPathName = (previousDocument != nullptr) ? previousDocument->GetLevelPathName() : "";
         auto newDocument = CCryEditApp::instance()->OpenDocumentFile(levelPath.c_str());

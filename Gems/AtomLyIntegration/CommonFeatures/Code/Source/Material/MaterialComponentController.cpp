@@ -8,8 +8,10 @@
 
 #include <Material/MaterialComponentController.h>
 #include <Atom/RPI.Reflect/Material/MaterialAsset.h>
-#include <AzCore/Serialization/SerializeContext.h>
 #include <AtomCore/Instance/InstanceDatabase.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
@@ -163,7 +165,7 @@ namespace AZ
                 materialInstance->Compile();
             }
 
-            // Only disconnect from tick bus and send notification after all pending properties have been applied 
+            // Only disconnect from tick bus and send notification after all pending properties have been applied
             if (m_queuedPropertyOverrides.empty())
             {
                 if (m_queuedMaterialUpdateNotification)
@@ -258,7 +260,7 @@ namespace AZ
             // this function is called twice once material asset is changed, a temp variable is
             // needed to prevent material asset going out of scope during second call
             // before LoadMaterials() is called [LYN-2249]
-            auto temp = m_configuration.m_materials; 
+            auto temp = m_configuration.m_materials;
             m_configuration.m_materials = materials;
             LoadMaterials();
         }

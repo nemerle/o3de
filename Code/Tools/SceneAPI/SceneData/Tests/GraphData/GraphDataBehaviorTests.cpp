@@ -10,6 +10,7 @@
 #include <AzCore/Math/MathReflection.h>
 #include <AzCore/Name/NameDictionary.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/RTTI/ReflectionManager.h>
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/Serialization/Json/RegistrationContext.h>

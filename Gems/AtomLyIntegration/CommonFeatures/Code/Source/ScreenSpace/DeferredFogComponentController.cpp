@@ -6,11 +6,12 @@
  *
  */
 
-#include <AzCore/RTTI/BehaviorContext.h>
+#include <ScreenSpace/DeferredFogComponentController.h>
 
 #include <Atom/RPI.Public/Scene.h>
 
-#include <ScreenSpace/DeferredFogComponentController.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
@@ -93,7 +94,7 @@ namespace AZ
             if (m_postProcessInterface)
             {
                 // turn off the lights before leaving
-                m_settingsInterface->SetEnabled(false);     
+                m_settingsInterface->SetEnabled(false);
                 m_settingsInterface->OnSettingsChanged();
                 // Now you can leave
                 m_postProcessInterface->RemoveDeferredFogSettingsInterface();

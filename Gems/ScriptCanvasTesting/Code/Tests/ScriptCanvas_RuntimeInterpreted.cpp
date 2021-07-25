@@ -9,6 +9,7 @@
 #include <AzCore/EBus/EBus.h>
 #include <AzCore/Math/MathReflection.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <ScriptCanvas/Core/EBusHandler.h>
 #include <ScriptCanvas/Core/SubgraphInterfaceUtility.h>
@@ -336,7 +337,7 @@ TEST_F(ScriptCanvasTestFixture, NodeableDurationSubgraph)
 {
     RunUnitTestGraph("LY_SC_UnitTest_NodeableDurationSubgraph", ExecutionMode::Interpreted, DurationSpec::Ticks(3));
 }
- 
+
 TEST_F(ScriptCanvasTestFixture, NodeableDurationFunctionDirectExposeOut)
 {
     ExpectParse("LY_SC_UnitTest_NodeableDurationFunctionDirectExposeOut");
@@ -483,12 +484,12 @@ TEST_F(ScriptCanvasTestFixture, InterpretedDataConversionsColor)
 // {
 //     RunUnitTestGraph("LY_SC_UnitTest_DataConversionsMatrix", ExecutionMode::Interpreted);
 // }
-// 
+//
 //  TEST_F(ScriptCanvasTestFixture, InterpretedDataConversionsString)
-//  { 
+//  {
 //      RunUnitTestGraph("LY_SC_UnitTest_DataConversionsString", ExecutionMode::Interpreted);
 //  }
-// 
+//
 //  TEST_F(ScriptCanvasTestFixture, InterpretedDataConversionsTransformQuaternion)
 //  {
 //      RunUnitTestGraph("LY_SC_UnitTest_DataConversionsTransformQuaternion", ExecutionMode::Interpreted);
@@ -791,22 +792,22 @@ TEST_F(ScriptCanvasTestFixture, InterpretedProperties)
 {
     RunUnitTestGraph("LY_SC_UnitTest_Properties", ExecutionMode::Interpreted);
 }
- 
+
 TEST_F(ScriptCanvasTestFixture, InterpretedPropertiesLiteReference)
 {
     RunUnitTestGraph("LY_SC_UnitTest_PropertiesLite", ExecutionMode::Interpreted);
 }
- 
+
 TEST_F(ScriptCanvasTestFixture, InterpretedPropertiesLiteConnection)
 {
     RunUnitTestGraph("LY_SC_UnitTest_PropertiesByConnection", ExecutionMode::Interpreted);
 }
- 
+
 TEST_F(ScriptCanvasTestFixture, InterpretedPropertiesRecursion)
 {
     RunUnitTestGraph("LY_SC_UnitTest_PropertiesRecursion", ExecutionMode::Interpreted);
 }
- 
+
 TEST_F(ScriptCanvasTestFixture, InterpretedPropertiesSet)
 {
     RunUnitTestGraph("LY_SC_UnitTest_PropertiesSet", ExecutionMode::Interpreted);
@@ -841,7 +842,7 @@ TEST_F(ScriptCanvasTestFixture, InterpretedVariableChangeEvent)
 {
     RunUnitTestGraph("LY_SC_UnitTest_VariableChangeEvent", ExecutionMode::Interpreted);
 }
- 
+
 TEST_F(ScriptCanvasTestFixture, InterpretedVariableChangeEventConnectionControl)
 {
     RunUnitTestGraph("LY_SC_UnitTest_VariableChangeEventConnectionControl", ExecutionMode::Interpreted);

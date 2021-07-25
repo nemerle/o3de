@@ -12,6 +12,8 @@
 #include <Atom/RPI.Reflect/Pass/RasterPassData.h>
 #include <CoreLights/ProjectedShadowmapsPass.h>
 #include <AzCore/std/iterator.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
@@ -50,7 +52,7 @@ namespace AZ
 
         bool ProjectedShadowmapsPass::IsOfRenderPipeline(const RPI::RenderPipeline& renderPipeline) const
         {
-            return &renderPipeline == m_pipeline;         
+            return &renderPipeline == m_pipeline;
         }
 
         const RPI::PipelineViewTag& ProjectedShadowmapsPass::GetPipelineViewTagOfChild(size_t childIndex)

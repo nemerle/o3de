@@ -13,6 +13,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <AzFramework/Physics/CollisionBus.h>
 
@@ -136,7 +137,7 @@ namespace AzPhysics
         return !(*this == other);
     }
 
-    CollisionGroup::CollisionGroup(AZ::u64 mask) 
+    CollisionGroup::CollisionGroup(AZ::u64 mask)
         : m_mask(mask)
     {
     }
@@ -155,7 +156,7 @@ namespace AzPhysics
             m_mask |= 1ULL << layer.GetIndex();
         }
         else
-        { 
+        {
             m_mask &= ~(1ULL << layer.GetIndex());
         }
     }
@@ -205,7 +206,7 @@ namespace AzPhysics
 
     CollisionGroup CollisionGroups::FindGroupById(CollisionGroups::Id id) const
     {
-        auto found = AZStd::find_if(m_groups.begin(), m_groups.end(), [id](const Preset& preset) 
+        auto found = AZStd::find_if(m_groups.begin(), m_groups.end(), [id](const Preset& preset)
         {
             return preset.m_id == id;
         });

@@ -8,6 +8,7 @@
 
 #include <AzCore/Math/Matrix4x4.h>
 #include <AzCore/Math/MathScriptHelpers.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {

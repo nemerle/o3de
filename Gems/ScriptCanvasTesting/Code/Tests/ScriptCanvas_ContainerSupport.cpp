@@ -9,8 +9,11 @@
 #include <Source/Framework/ScriptCanvasTestFixture.h>
 #include <Source/Framework/ScriptCanvasTestUtilities.h>
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
+
 using namespace ScriptCanvasTests;
-using namespace ScriptCanvas; 
+using namespace ScriptCanvas;
 
 TEST_F(ScriptCanvasTestFixture, AZStdArray)
 {

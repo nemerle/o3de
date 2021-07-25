@@ -15,6 +15,8 @@
 #include <Libraries/Spawning/Spawning.h>
 #include <Libraries/UnitTesting/UnitTestingLibrary.h>
 #include <AzCore/std/containers/vector.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace ScriptCanvas
 {
@@ -73,13 +75,13 @@ namespace ScriptCanvas
         using namespace Library;
 
         AZStd::vector<AZ::ComponentDescriptor*> libraryDescriptors(Core::GetComponentDescriptors());
-        
+
         AZStd::vector<AZ::ComponentDescriptor*> componentDescriptors(Math::GetComponentDescriptors());
         libraryDescriptors.insert(libraryDescriptors.end(), componentDescriptors.begin(), componentDescriptors.end());
-        
+
         componentDescriptors = Logic::GetComponentDescriptors();
         libraryDescriptors.insert(libraryDescriptors.end(), componentDescriptors.begin(), componentDescriptors.end());
-        
+
         componentDescriptors = Entity::GetComponentDescriptors();
         libraryDescriptors.insert(libraryDescriptors.end(), componentDescriptors.begin(), componentDescriptors.end());
 

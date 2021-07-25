@@ -9,6 +9,7 @@
 #include <Atom/RPI.Reflect/Shader/ShaderOptionGroup.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 
 namespace AZ
@@ -208,7 +209,7 @@ namespace AZ
         {
             for (auto& option : m_layout->GetShaderOptions())
             {
-                option.Set(*this, option.GetDefaultValue());                    
+                option.Set(*this, option.GetDefaultValue());
             }
         }
 
@@ -218,7 +219,7 @@ namespace AZ
             {
                 if (!(m_id.m_mask & option.GetBitMask()).any())
                 {
-                    option.Set(*this, option.GetDefaultValue());                    
+                    option.Set(*this, option.GetDefaultValue());
                 }
             }
         }
@@ -272,7 +273,7 @@ namespace AZ
         {
             return m_id;
         }
-        
+
         ShaderVariantKey& ShaderOptionGroup::GetShaderVariantKey()
         {
             return m_id.m_key;

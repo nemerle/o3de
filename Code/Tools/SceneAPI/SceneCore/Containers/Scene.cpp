@@ -8,6 +8,7 @@
 
 #include <SceneAPI/SceneCore/Containers/Scene.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {

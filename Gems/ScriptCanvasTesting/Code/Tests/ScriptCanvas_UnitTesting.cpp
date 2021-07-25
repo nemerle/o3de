@@ -6,6 +6,8 @@
  *
  */
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/IdUtils.h>
 #include <ScriptCanvas/Asset/RuntimeAsset.h>
 #include <ScriptCanvas/Asset/RuntimeAssetHandler.h>
@@ -167,7 +169,7 @@ void MetaReporter::ExpectFalse(const bool value, const Report&)
 {
     if (!value)
         ++m_countFalseSucceeded;
-    else 
+    else
         ++m_countFalseFailed;
 }
 
@@ -243,22 +245,22 @@ TEST_F(ScriptCanvasTestFixture, FixtureSanity)
 TEST_F(ScriptCanvasTestFixture, AddFailure)
 {
     MetaReporter reporter = MetaRunUnitTestGraph("LY_SC_UnitTest_Meta_AddFailure");
-    
+
     if (!reporter.GetScriptCanvasId().IsValid())
     {
         ADD_FAILURE() << "Graph is not valid";
         return;
     }
-    
+
     EXPECT_EQ(reporter.GetFailure().size(), 3);
-    
+
     if (reporter.GetFailure().size() == 3)
     {
         EXPECT_EQ(reporter.GetFailure()[0], "zero");
         EXPECT_EQ(reporter.GetFailure()[1], "one");
         EXPECT_EQ(reporter.GetFailure()[2], "two");
     }
-    
+
     EXPECT_TRUE(reporter.IsComplete());
     EXPECT_TRUE(reporter.IsDeactivated());
     EXPECT_FALSE(reporter.IsErrorFree());
@@ -275,14 +277,14 @@ TEST_F(ScriptCanvasTestFixture, AddSuccess)
     }
 
     EXPECT_EQ(reporter.GetSuccess().size(), 3);
-    
+
     if (reporter.GetFailure().size() == 3)
     {
         EXPECT_EQ(reporter.GetSuccess()[0], "zero");
         EXPECT_EQ(reporter.GetSuccess()[1], "one");
         EXPECT_EQ(reporter.GetSuccess()[2], "two");
     }
-    
+
     EXPECT_TRUE(reporter.IsComplete());
     EXPECT_TRUE(reporter.IsDeactivated());
     EXPECT_TRUE(reporter.IsErrorFree());
@@ -302,7 +304,7 @@ TEST_F(ScriptCanvasTestFixture, ExpectTrueFail)
     EXPECT_EQ(reporter.GetCountTrueFailed(), 1);
     EXPECT_TRUE(reporter.IsErrorFree());
 }
- 
+
 TEST_F(ScriptCanvasTestFixture, ExpectTrueSucceed)
 {
     MetaReporter reporter = MetaRunUnitTestGraph("LY_SC_UnitTest_Meta_ExpectTrueSucceed");
@@ -346,7 +348,7 @@ TEST_F(ScriptCanvasTestFixture, ExpectEqualSucceed)
     }
 
     EXPECT_EQ(reporter.GetCountEQFailed(), 0);
-    EXPECT_EQ(reporter.GetCountEQSucceeded(), 1);   
+    EXPECT_EQ(reporter.GetCountEQSucceeded(), 1);
     EXPECT_TRUE(reporter.IsComplete());
     EXPECT_TRUE(reporter.IsDeactivated());
     EXPECT_TRUE(reporter.IsErrorFree());
@@ -540,7 +542,7 @@ TEST_F(ScriptCanvasTestFixture, ExpectLessThanEqualFail)
 TEST_F(ScriptCanvasTestFixture, ExpectLessThanEqualSucceed)
 {
     MetaReporter reporter = MetaRunUnitTestGraph("LY_SC_UnitTest_Meta_ExpectLessThanEqualSucceed");
-    
+
     if (!reporter.GetScriptCanvasId().IsValid())
     {
         ADD_FAILURE() << "Graph is not valid";

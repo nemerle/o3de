@@ -18,6 +18,7 @@
 #include <AzCore/std/containers/unordered_set.h>
 #include <AzCore/StringFunc/StringFunc.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <Source/PythonSystemComponent.h>
 #include <Source/PythonReflectionComponent.h>

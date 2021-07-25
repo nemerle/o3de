@@ -10,6 +10,7 @@
 
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
@@ -97,7 +98,7 @@ namespace LmbrCentral
             behaviorContext->EBus<TagGlobalRequestBus>("TagGlobalRequestBus")
                 ->Event("RequestTaggedEntities", &TagGlobalRequestBus::Events::RequestTaggedEntities)
                 ;
-            
+
             behaviorContext->EBus<TagComponentNotificationsBus>("TagComponentNotificationsBus")
                 ->Handler<BehaviorTagComponentNotificationsBusHandler>()
                 ;
@@ -122,7 +123,7 @@ namespace LmbrCentral
     }
 
     void TagComponent::Deactivate()
-    { 
+    {
         TagComponentRequestBus::Handler::BusDisconnect();
         for (const Tag& tag : m_tags)
         {

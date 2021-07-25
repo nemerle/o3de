@@ -17,6 +17,7 @@
 #include <Source/PythonProxyObject.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Math/MathUtils.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 

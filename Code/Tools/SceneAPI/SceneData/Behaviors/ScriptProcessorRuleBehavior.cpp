@@ -10,6 +10,7 @@
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -263,7 +264,7 @@ namespace AZ::SceneAPI::Behaviors
                 context.GetScene(),
                 context.GetOutputDirectory(),
                 context.GetPlatformIdentifier(),
-                context.GetProductList()      
+                context.GetProductList()
             );
 
             // add new products

@@ -14,6 +14,8 @@
 
 #include <ScriptCanvas/Libraries/Core/Start.h>
 #include <AzCore/Math/Uuid.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/std/string/string.h>
 
 using namespace ScriptCanvasTests;

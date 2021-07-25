@@ -7,11 +7,14 @@
  */
 #pragma once
 
-#include <Atom/RHI.Reflect/ShaderDataMappings.h>
-#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/RTTI/RTTI.h>
+#include <AzCore/Memory/Memory.h>
+#include <AzCore/Memory/SystemAllocator.h>
 
 namespace AZ
 {
+    class ReflectContext;
+
     namespace RPI
     {
         //! Base class for custom data for Passes to be specified in a PassRequest or PassTemplate.
@@ -26,14 +29,7 @@ namespace AZ
             PassData() = default;
             virtual ~PassData() = default;
 
-            static void Reflect(ReflectContext* context)
-            {
-                if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
-                {
-                    serializeContext->Class<PassData>()
-                        ->Version(0);
-                }
-            }
+            static void Reflect(ReflectContext* context);
         };
     } // namespace RPI
 } // namespace AZ

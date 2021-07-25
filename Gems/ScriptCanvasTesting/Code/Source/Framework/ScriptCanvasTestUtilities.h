@@ -243,26 +243,7 @@ namespace ScriptCanvasTests
     {
         AZ_TYPE_INFO(TestBehaviorContextProperties, "{13ECCA93-9A62-4A46-846C-ABFEEA215C48}");
 
-        static void Reflect(AZ::ReflectContext* reflectContext)
-        {
-            if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(reflectContext))
-            {
-                serializeContext->Class<TestBehaviorContextProperties>()
-                    ->Version(0)
-                    ;
-            }
-
-            if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(reflectContext))
-            {
-                behaviorContext->Class<TestBehaviorContextProperties>("TestBehaviorContextProperties")
-                    ->Property("boolean", BehaviorValueGetter(&TestBehaviorContextProperties::m_booleanProp), BehaviorValueSetter(&TestBehaviorContextProperties::m_booleanProp))
-                    ->Property("number", BehaviorValueGetter(&TestBehaviorContextProperties::m_numberProp), BehaviorValueSetter(&TestBehaviorContextProperties::m_numberProp))
-                    ->Property("string", BehaviorValueGetter(&TestBehaviorContextProperties::m_stringProp), BehaviorValueSetter(&TestBehaviorContextProperties::m_stringProp))
-                    ->Property("getterOnlyNumber", BehaviorValueGetter(&TestBehaviorContextProperties::m_getterOnlyProp), nullptr)
-                    ->Property("setterOnlyNumber", nullptr, BehaviorValueSetter(&TestBehaviorContextProperties::m_setterOnlyProp))
-                    ;
-            }
-        }
+        static void Reflect(AZ::ReflectContext* reflectContext);
 
         ScriptCanvas::Data::BooleanType m_booleanProp = false;
         ScriptCanvas::Data::NumberType m_numberProp = 0.0f;
@@ -407,22 +388,7 @@ namespace ScriptCanvasTests
             , String
             , Object);
 
-        static void Reflect(AZ::ReflectContext* context)
-        {
-            if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
-            {
-                serializeContext->Class<EventTestHandler>()
-                    ->Version(0)
-                    ;
-            }
-
-            if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
-            {
-                behaviorContext->EBus<EventTestBus>("EventTestHandler")
-                    ->Handler<EventTestHandler>()
-                    ;
-            }
-        }
+        static void Reflect(AZ::ReflectContext* context);
 
         void Event() override
         {
@@ -473,24 +439,7 @@ namespace ScriptCanvasTests
             return inputView;
         }
 
-        static void Reflect(AZ::ReflectContext* context)
-        {
-            AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
-            if (serializeContext)
-            {
-                serializeContext->Class<ConvertibleToString>()
-                    ->Version(0)
-                    ;
-            }
-
-            if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
-            {
-                behaviorContext->Class<ConvertibleToString>("ConvertibleToString")
-                    ->Method("ConstCharPtrToString", &ConvertibleToString::ConstCharPtrToString)
-                    ->Method("StringViewToString", &ConvertibleToString::StringViewToString)
-                    ;
-            }
-        }
+        static void Reflect(AZ::ReflectContext* context);
     };
 
     class UnitTestEntityContext
@@ -633,26 +582,7 @@ namespace ScriptCanvasTests
             , SideEffect
             , Succeeded);
 
-        static void Reflect(AZ::ReflectContext* context)
-        {
-            if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
-            {
-                serializeContext->Class<ScriptUnitTestEventHandler>()
-                    ->Version(0)
-                    ;
-            }
-
-            if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
-            {
-                behaviorContext->EBus<UnitTestEventsBus>("UnitTestEventsBus")
-                    ->Handler<ScriptUnitTestEventHandler>()
-                    ->Event("Failed", &UnitTestEventsBus::Events::Failed)
-                    ->Event("Result", &UnitTestEventsBus::Events::Result)
-                    ->Event("SideEffect", &UnitTestEventsBus::Events::SideEffect)
-                    ->Event("Succeeded", &UnitTestEventsBus::Events::Succeeded)
-                    ;
-            }
-        }
+        static void Reflect(AZ::ReflectContext* context);
 
         void Failed(AZStd::string description) override
         {
@@ -717,7 +647,7 @@ namespace ScriptCanvasTests
         AZ::u32 m_slotsAdded = 0;
         AZ::u32 m_slotsRemoved = 0;
     };
-    
+
     class TestNodeableObject
         : public ScriptCanvas::Nodeable
     {
@@ -726,27 +656,7 @@ namespace ScriptCanvasTests
         AZ_RTTI(TestNodeableObject, "{5FA6967F-AB4D-4077-91C9-1C2CE36733AF}", Nodeable);
         AZ_CLASS_ALLOCATOR(Nodeable, AZ::SystemAllocator, 0);
 
-        static void Reflect(AZ::ReflectContext* reflectContext)
-        {
-            if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(reflectContext))
-            {
-                serializeContext->Class<TestNodeableObject, Nodeable>();
-
-                if (auto editContext = serializeContext->GetEditContext())
-                {
-                    editContext->Class<TestNodeableObject>("TestNodeableObject", "")
-                        ;
-                }
-            }
-
-            // reflect API for the node
-            if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(reflectContext))
-            {
-                behaviorContext->Class<TestNodeableObject>("TestNodeableObject")
-                    ->Method("Branch", &TestNodeableObject::Branch)
-                    ;
-            }
-        }
+        static void Reflect(AZ::ReflectContext* reflectContext);
 
         void Branch(bool condition)
         {

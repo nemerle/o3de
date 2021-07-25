@@ -20,6 +20,7 @@
 #include <Atom/RPI.Public/Pass/RasterPass.h>
 
 #include <AzCore/UnitTest/TestTypes.h>
+#include <AzCore/Serialization/SerializeContext.h>
 
 #include <Common/RPITestFixture.h>
 
@@ -606,7 +607,7 @@ namespace UnitTest
             AZ_TEST_STOP_TRACE_SUPPRESSION(1);
             EXPECT_FALSE(filter.Matches(pass.get()));
         }
-        
+
         {
             // Filters with partial hierarchy by using string vector
             AZStd::vector<AZStd::string> passHierarchy1 = { "parent1", "pass1" };
@@ -649,7 +650,7 @@ namespace UnitTest
 
         {
             // Failed to find pass
-            // Mis-matching hierarchy 
+            // Mis-matching hierarchy
             PassHierarchyFilter filter1(AZStd::vector<AZStd::string>{"Parent1", "Parent3", "pass1"});
             EXPECT_FALSE(filter1.Matches(pass.get()));
             // Mis-matching name

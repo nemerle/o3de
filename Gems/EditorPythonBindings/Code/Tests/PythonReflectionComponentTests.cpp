@@ -20,6 +20,7 @@
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Math/Vector4.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/AZStdAnyDataContainer.inl>

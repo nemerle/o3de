@@ -12,6 +12,7 @@
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Component/ComponentApplicationBus.h>
 
 #include <AzFramework/Input/Devices/Keyboard/InputDeviceKeyboard.h>

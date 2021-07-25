@@ -8,6 +8,7 @@
 
 #include <AzCore/Math/Matrix3x3.h>
 #include <AzCore/Math/MathScriptHelpers.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
@@ -274,7 +275,7 @@ namespace AZ
                 Method<Matrix3x3(Matrix3x3::*)(float) const>("MultiplyFloat", &Matrix3x3::operator*)->
                     Attribute(Script::Attributes::MethodOverride, &Internal::Matrix3x3MultiplyGeneric)->
                     Attribute(Script::Attributes::Operator, Script::Attributes::OperatorType::Mul)->
-                Method<Vector3(Matrix3x3::*)(const Vector3&) const>("MultiplyVector3", &Matrix3x3::operator*)->            
+                Method<Vector3(Matrix3x3::*)(const Vector3&) const>("MultiplyVector3", &Matrix3x3::operator*)->
                     Attribute(Script::Attributes::Ignore, 0)-> // ignore for script since we already got the generic multiply above
                 Method<Matrix3x3(Matrix3x3::*)(const Matrix3x3&) const>("MultiplyMatrix3x3", &Matrix3x3::operator*)->
                     Attribute(Script::Attributes::Ignore, 0)-> // ignore for script since we already got the generic multiply above
@@ -288,9 +289,9 @@ namespace AZ
                     Attribute(Script::Attributes::Operator, Script::Attributes::OperatorType::Equal)->
                     Attribute(Script::Attributes::ExcludeFrom, Script::Attributes::ExcludeFlags::All)->
                 Method("Add", &Matrix3x3::operator+)->
-                    Attribute(Script::Attributes::Operator, Script::Attributes::OperatorType::Add)->                
+                    Attribute(Script::Attributes::Operator, Script::Attributes::OperatorType::Add)->
                 Method<Matrix3x3(Matrix3x3::*)(const Matrix3x3&) const>("Subtract", &Matrix3x3::operator-)->
-                    Attribute(Script::Attributes::Operator, Script::Attributes::OperatorType::Sub)->                
+                    Attribute(Script::Attributes::Operator, Script::Attributes::OperatorType::Sub)->
                 Method("GetBasis", &Matrix3x3::GetBasis)->
                     Attribute(Script::Attributes::MethodOverride, &Internal::Matrix3x3GetBasisMultipleReturn)->
                     Attribute(Script::Attributes::ExcludeFrom, Script::Attributes::ExcludeFlags::All)->
@@ -329,7 +330,7 @@ namespace AZ
                     Attribute(Script::Attributes::ExcludeFrom, Script::Attributes::ExcludeFlags::All)->
                 Method("InvertFast", &Matrix3x3::InvertFast)->
                     Attribute(Script::Attributes::ExcludeFrom, Script::Attributes::ExcludeFlags::All)->
-                Method("RetrieveScale", &Matrix3x3::RetrieveScale)->                
+                Method("RetrieveScale", &Matrix3x3::RetrieveScale)->
                 Method("ExtractScale", &Matrix3x3::ExtractScale)->
                     Attribute(Script::Attributes::ExcludeFrom, Script::Attributes::ExcludeFlags::All)->
                 Method("MultiplyByScale", &Matrix3x3::MultiplyByScale)->

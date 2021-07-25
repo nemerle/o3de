@@ -6,12 +6,8 @@
  *
  */
 
-#include <AzCore/RTTI/BehaviorContext.h>
-#include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Serialization/EditContext.h>
-#include <AzCore/std/sort.h>
-
 #include "SurfaceDataSystemComponent.h"
+
 #include <SurfaceData/SurfaceDataConstants.h>
 #include <SurfaceData/SurfaceTag.h>
 #include <SurfaceData/SurfaceDataSystemNotificationBus.h>
@@ -19,6 +15,11 @@
 #include <SurfaceData/SurfaceDataModifierRequestBus.h>
 #include <SurfaceData/Utility/SurfaceDataUtility.h>
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/EditContext.h>
+#include <AzCore/std/sort.h>
 
 namespace SurfaceData
 {
@@ -217,7 +218,7 @@ namespace SurfaceData
                     SurfaceDataModifierRequestBus::Event(entryAddress, &SurfaceDataModifierRequestBus::Events::ModifySurfacePoints, surfacePointList);
                 }
             }
-            
+
             // After we've finished creating and annotating all the surface points, combine any points together that have effectively the
             // same XY coordinates and extremely similar Z values.  This produces results that are sorted in decreasing Z order.
             // Also, this filters out any remaining points that don't match the desired tag list.  This can happen when a surface provider

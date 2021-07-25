@@ -24,20 +24,7 @@ namespace AZ
             ComputePassData() = default;
             virtual ~ComputePassData() = default;
 
-            static void Reflect(ReflectContext* context)
-            {
-                if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
-                {
-                    serializeContext->Class<ComputePassData, RenderPassData>()
-                        ->Version(1)
-                        ->Field("ShaderAsset", &ComputePassData::m_shaderReference)
-                        ->Field("Target Thread Count X", &ComputePassData::m_totalNumberOfThreadsX)
-                        ->Field("Target Thread Count Y", &ComputePassData::m_totalNumberOfThreadsY)
-                        ->Field("Target Thread Count Z", &ComputePassData::m_totalNumberOfThreadsZ)
-                        ->Field("Make Fullscreen Pass", &ComputePassData::m_makeFullscreenPass)
-                        ;
-                }
-            }
+            static void Reflect(ReflectContext* context);
 
             AssetReference m_shaderReference;
 

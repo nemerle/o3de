@@ -13,6 +13,7 @@
 #include <AzCore/Math/MathScriptHelpers.h>
 
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {

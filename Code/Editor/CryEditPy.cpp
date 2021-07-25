@@ -17,6 +17,8 @@
 // AzCore
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Console/IConsole.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 // AzToolsFramework
 #include <AzToolsFramework/API/EditorPythonConsoleBus.h>

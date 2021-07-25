@@ -8,6 +8,7 @@
 
 #include <Atom/Feature/Material/MaterialAssignment.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/Json/RegistrationContext.h>
 #include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>

@@ -9,6 +9,7 @@
 #include <AzCore/EBus/EBus.h>
 #include <AzCore/Math/MathReflection.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <ScriptCanvas/Core/EBusHandler.h>
 #include <ScriptCanvas/Core/SubgraphInterfaceUtility.h>
@@ -34,16 +35,16 @@ using namespace ScriptCanvas::Execution;
 //    auto ins = CreateInsFromBehaviorContextMethods("TestNodeableObject", behaviorContext, { "Branch" } );
 //    auto branchOutVoidTrue = CreateOut<Data::BooleanType, const Data::StringType&>("BranchTrue", { "condition", "message" });
 //    auto branchOutVoidFalse = CreateOut<Data::BooleanType, const Data::StringType&, const Data::Vector3Type&>("BranchFalse", { "condition", "message", "vector" });
-//    
+//
 //    auto branchOut = FindInByName("Branch", ins);
-//    
+//
 //    EXPECT_NE(branchOut, nullptr);
 //    if (branchOut)
 //    {
 //        branchOut->outs.emplace_back(AZStd::move(branchOutVoidTrue));
 //        branchOut->outs.emplace_back(AZStd::move(branchOutVoidFalse));
 //    }
-//    
+//
 //    return aznew SubgraphInterface(AZStd::move(ins));
 //}
 
@@ -70,7 +71,7 @@ assert(type(nodeable) == "userdata", 'nodeable not userdata')
 local SubGraph = {}
 SubGraph.s_name = "SubGraphery"
 SubGraph.s_createdCount = 0
-function SubGraph:IncrementCreated() 
+function SubGraph:IncrementCreated()
     SubGraph.s_createdCount = 1 + SubGraph.s_createdCount
 end
 
@@ -85,7 +86,7 @@ function SubGraph.new() --  Add executionState input here and to Nodeable()
     local instance = OverrideNodeableMetatable(Nodeable(), SubGraphInstanceMetatable)
     assert(type(instance.s_createdCount) == 'number', 'subgraph.s_createdCount was not a number')
     instance:IncrementCreated()
-    instance.name = 'SubGraph '..tostring(instance.s_createdCount) 
+    instance.name = 'SubGraph '..tostring(instance.s_createdCount)
     return instance
 end
 
@@ -95,13 +96,13 @@ function SubGraph.newTable() --  Add executionState input here and to Nodeable()
     -- assert(getmetatable(instance) == SubGraphInstanceMetatable, "subgraphT")
     assert(type(instance.s_createdCount) == 'number', 'subgraphT.s_createdCount was not a number')
     instance:IncrementCreated()
-    instance.name = 'SubGraph '..tostring(instance.s_createdCount) 
+    instance.name = 'SubGraph '..tostring(instance.s_createdCount)
     return instance
 end
 
 function SubGraph:Foo()
     return "I, " .. tostring(self.name) .. ", am a user function"
-end 
+end
 
 local subgraphT = SubGraph.newTable()
 assert(subgraphT ~= nil, "subgraphT was nil")
@@ -144,15 +145,15 @@ return SubGraph
 }
 
 
-// 
+//
 // TEST_F(ScriptCanvasTestFixture, NativeNodeableStack)
 // {
 //     TestNodeableObject nodeable;
 //     nodeable.Initialize();
-// 
+//
 //     bool wasTrueCalled = false;
 //     bool wasFalseCalled = false;
-//         
+//
 //     nodeable.SetExecutionOut
 //         ( AZ_CRC("BranchTrue", 0xd49f121c)
 //         , CreateOut
@@ -163,7 +164,7 @@ return SubGraph
 //                 wasTrueCalled = true;
 //             }
 //             , StackAllocatorType{}));
-// 
+//
 //     nodeable.SetExecutionOut
 //         ( AZ_CRC("BranchFalse", 0xaceca8bc)
 //         , CreateOut
@@ -175,32 +176,32 @@ return SubGraph
 //                 wasFalseCalled = true;
 //             }
 //             , StackAllocatorType{}));
-// 
+//
 //     nodeable.Branch(true);
 //     nodeable.Branch(false);
-// 
+//
 //     EXPECT_TRUE(wasTrueCalled);
 //     EXPECT_TRUE(wasFalseCalled);
 // }
 
-// 
+//
 // TEST_F(ScriptCanvasTestFixture, NativeNodeableHeap)
 // {
 //     TestNodeableObject nodeable;
 //     nodeable.Initialize();
-//     
+//
 //     AZStd::string routedArg("XYZ");
 //     AZStd::array<int, 2048> bigArray;
 //     std::fill(bigArray.begin(), bigArray.end(), 0);
-//     
+//
 //     bigArray[0] = 7;
 //     bigArray[2047] = 7;
-// 
+//
 //     EXPECT_EQ(bigArray[0], 7);
 //     EXPECT_EQ(bigArray[2047], 7);
-// 
+//
 //     bool isHeapCalled = false;
-// 
+//
 //     nodeable.SetExecutionOut
 //         ( AZ_CRC("BranchTrue", 0xd49f121c)
 //         , CreateOut
@@ -217,16 +218,16 @@ return SubGraph
 //                 EXPECT_EQ(bigArray[2047], 9);
 //             }
 //             , HeapAllocatorType{}));
-// 
-// 
+//
+//
 //     bigArray[0] = 8;
 //     bigArray[2047] = 8;
 //     EXPECT_EQ(bigArray[0], 8);
 //     EXPECT_EQ(bigArray[2047], 8);
-//     
+//
 //     nodeable.Branch(true);
 //     EXPECT_TRUE(isHeapCalled);
-// 
+//
 //     // just making sure no crash occurs on unconnected outs
 //     nodeable.Branch(false);
 // }
@@ -321,63 +322,63 @@ public:
 // TEST_F(ScriptCanvasTestFixture, CreateUuidsFast)
 // {
 //     using namespace ScriptCanvas::Execution;
-// 
+//
 //     ScriptCanvasEditor::ScopedOutputSuppression outputSuppression;
-// 
+//
 //     AZ::Uuid candidate;
 //     AZ::Uuid reference;
 //     AZStd::string candidateString;
 //     AZStd::string referenceString;
-// 
+//
 //     candidateString = /**************/ "0123ABCD4567EFAB0123ABCD4567EFAB";
 //     candidate = CreateIdFromStringFast(candidateString.data());
 //     reference = AZ::Uuid::CreateString("0123abcd4567efab0123abcd4567efab");
 //     EXPECT_EQ(candidate, reference);
 //     referenceString = CreateStringFastFromId(candidate);
 //     EXPECT_EQ(candidateString, referenceString);
-// 
+//
 //     candidateString = /**************/ "12345678909876543345676524676553";
 //     candidate = CreateIdFromStringFast(candidateString.data());
 //     reference = AZ::Uuid::CreateString("12345678909876543345676524676553");
 //     EXPECT_EQ(candidate, reference);
 //     referenceString = CreateStringFastFromId(candidate);
 //     EXPECT_EQ(candidateString, referenceString);
-// 
+//
 //     candidateString = /**************/ "ABCDEFABCDEFABCDEFABCDEFABCDEFAB";
 //     candidate = CreateIdFromStringFast(candidateString.data());
 //     reference = AZ::Uuid::CreateString("abcdefabcdefabcdefabcdefabcdefab");
 //     EXPECT_EQ(candidate, reference);
 //     referenceString = CreateStringFastFromId(candidate);
 //     EXPECT_EQ(candidateString, referenceString);
-// 
+//
 //     candidateString = /**************/ "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 //     candidate = CreateIdFromStringFast(candidateString.data());
 //     reference = AZ::Uuid::CreateString("ffffffffffffffffffffffffffffffff");
 //     EXPECT_EQ(candidate, reference);
 //     referenceString = CreateStringFastFromId(candidate);
 //     EXPECT_EQ(candidateString, referenceString);
-// 
+//
 //     candidateString = /**************/ "00000000000000000000000000000000";
 //     candidate = CreateIdFromStringFast(candidateString.data());
 //     reference = AZ::Uuid::CreateString("00000000000000000000000000000000");
 //     EXPECT_EQ(candidate, reference);
 //     referenceString = CreateStringFastFromId(candidate);
 //     EXPECT_EQ(candidateString, referenceString);
-// 
+//
 //     candidateString = /**************/ "00000000000000000000000000000001";
 //     candidate = CreateIdFromStringFast(candidateString.data());
 //     reference = AZ::Uuid::CreateString("00000000000000000000000000000001");
 //     EXPECT_EQ(candidate, reference);
 //     referenceString = CreateStringFastFromId(candidate);
 //     EXPECT_EQ(candidateString, referenceString);
-// 
+//
 //     candidateString = /**************/ "80000000000000000000000000000000";
 //     candidate = CreateIdFromStringFast(candidateString.data());
 //     reference = AZ::Uuid::CreateString("80000000000000000000000000000000");
 //     EXPECT_EQ(candidate, reference);
 //     referenceString = CreateStringFastFromId(candidate);
 //     EXPECT_EQ(candidateString, referenceString);
-// 
+//
 //     // ................................."0123ABCD4567EFAB0123ABCD4567EFAB"
 //     EXPECT_DEATH(CreateIdFromStringFast("0123ABCD4567EFAB0123ABCD4567EFA"), "");
 //     EXPECT_DEATH(CreateIdFromStringFast("0123ABCD4567EFA"), "");
@@ -437,7 +438,7 @@ public:
     AZ_CLASS_ALLOCATOR(Marker, AZ::SystemAllocator, 0);
 
     static AZStd::vector<int> s_markedPositions;
-    
+
     static void MarkPosition(int mark)
     {
         s_markedPositions.push_back(mark);

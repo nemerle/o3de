@@ -30,6 +30,7 @@ AZ_POP_DISABLE_WARNING
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/Component/ComponentApplication.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/Utils/Utils.h>
@@ -304,7 +305,7 @@ MainWindow::MainWindow(QWidget* parent)
     , m_undoStateAdapter(new UndoStackStateAdapter(this))
     , m_keyboardCustomization(nullptr)
     , m_activeView(nullptr)
-    , m_settings("O3DE", "O3DE") 
+    , m_settings("O3DE", "O3DE")
     , m_toolbarManager(new ToolbarManager(m_actionManager, this))
     , m_assetImporterManager(new AssetImporterManager(this))
     , m_levelEditorMenuHandler(new LevelEditorMenuHandler(this, m_viewPaneManager, m_settings))
@@ -1874,7 +1875,7 @@ QWidget* MainWindow::CreateToolbarWidget(int actionId)
         break;
     case ID_TOOLBAR_WIDGET_SPACER_RIGHT:
         w = CreateSpacerRightWidget();
-        break; 
+        break;
     default:
         qWarning() << Q_FUNC_INFO << "Unknown id " << actionId;
         return nullptr;

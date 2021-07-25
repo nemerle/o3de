@@ -9,6 +9,8 @@
 #include <AzCore/Console/IConsole.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/Jobs/JobFunction.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzFramework/Session/SessionConfig.h>
 
@@ -329,7 +331,7 @@ namespace AWSGameLift
             },
             true, jobContext);
 
-        searchSessionsJob->Start(); 
+        searchSessionsJob->Start();
     }
 
     AzFramework::SearchSessionsResponse AWSGameLiftClientManager::SearchSessionsHelper(

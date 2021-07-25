@@ -14,6 +14,7 @@
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContextEnum.inl>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Serialization/Json/RegistrationContext.h>
 #include <AzCore/Slice/SliceAssetHandler.h>

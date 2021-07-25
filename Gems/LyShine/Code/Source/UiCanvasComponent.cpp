@@ -38,6 +38,7 @@
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/std/sort.h>
 #include <AzCore/std/time.h>
@@ -4018,7 +4019,7 @@ UiCanvasComponent* UiCanvasComponent::FixupPostLoad(AZ::Entity* canvasEntity, AZ
 
         canvasComponent->m_editorToGameEntityIdMap = *previousRemapTable;
         ReuseOrGenerateNewIdsAndFixRefs(&entityContainer, canvasComponent->m_editorToGameEntityIdMap, context);
-        
+
         AzFramework::SliceEntityOwnershipServiceRequestBus::EventResult(isLoadingRootEntitySuccessful,
             canvasComponent->m_entityContext->GetContextId(),
             &AzFramework::SliceEntityOwnershipServiceRequestBus::Events::HandleRootEntityReloadedFromStream, rootSliceEntity, false, nullptr);

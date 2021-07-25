@@ -6,8 +6,10 @@
  *
  */
 
-#include <AzFramework/StreamingInstall/StreamingInstallNotifications.h>
 #include "StreamingInstall.h"
+
+#include <AzFramework/StreamingInstall/StreamingInstallNotifications.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AzFramework
 {

@@ -14,6 +14,7 @@
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <AzCore/Math/Uuid.h>
 #include <AzCore/Math/UuidSerializer.h>

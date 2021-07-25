@@ -12,6 +12,7 @@
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/Settings/SettingsRegistryScriptUtils.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ::SettingsRegistryScriptUtils::Internal
 {

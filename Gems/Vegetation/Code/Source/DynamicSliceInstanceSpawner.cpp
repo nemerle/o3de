@@ -11,6 +11,7 @@
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <Vegetation/Ebuses/DescriptorNotificationBus.h>
 #include <Vegetation/Ebuses/InstanceSystemRequestBus.h>

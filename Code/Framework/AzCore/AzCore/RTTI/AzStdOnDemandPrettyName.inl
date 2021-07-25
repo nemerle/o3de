@@ -63,7 +63,7 @@ namespace AZ
                  return "String";
              }
          };
- 
+
          template<class Element, class Traits>
          struct OnDemandPrettyName< AZStd::basic_string_view<Element, Traits> >
          {
@@ -72,7 +72,7 @@ namespace AZ
                  return "String";
              }
          };
- 
+
          template<class T>
          struct OnDemandPrettyName< AZStd::intrusive_ptr<T> >
          {
@@ -85,12 +85,12 @@ namespace AZ
          template<class T>
          struct OnDemandToolTip< AZStd::intrusive_ptr<T> >
          {
-             static AZStd::string Get(AZ::BehaviorContext&)
+             static const char* Get(AZ::BehaviorContext&)
              {
                  return "A smart pointer which manages the life cycle of an object, and guarantees a single point of ownership for the specified memory.";
              }
          };
- 
+
          template<class T>
          struct OnDemandPrettyName< AZStd::shared_ptr<T> >
          {
@@ -108,7 +108,7 @@ namespace AZ
                  return "A smart pointer which manages the life cycle of an object, and provides multiple points of ownership for the specified memory(The memory will remain active so long as any shared_ptr has a reference to it).";
              }
          };
- 
+
          template<class T, class A>
          struct OnDemandPrettyName< AZStd::vector<T, A> >
          {
@@ -126,7 +126,7 @@ namespace AZ
                  return "A dynamically sized container of elements.";
              }
          };
- 
+
          template<class T, AZStd::size_t N>
          struct OnDemandPrettyName< AZStd::array<T, N> >
          {
@@ -144,7 +144,7 @@ namespace AZ
                  return "A fixed-sized container of elements.";
              }
          };
- 
+
          template<typename T1, typename T2>
          struct OnDemandPrettyName< AZStd::pair<T1, T2> >
          {
@@ -229,7 +229,7 @@ namespace AZ
                  return "A collection of Key/Value pairs, where each Key value must be unique.";
              }
          };
- 
+
          template<class Key, class Hasher, class EqualKey, class Allocator>
          struct OnDemandPrettyName< AZStd::unordered_set<Key, Hasher, EqualKey, Allocator> >
          {

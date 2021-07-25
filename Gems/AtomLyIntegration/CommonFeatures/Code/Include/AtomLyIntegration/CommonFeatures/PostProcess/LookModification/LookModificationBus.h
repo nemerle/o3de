@@ -8,9 +8,11 @@
 
 #pragma once
 
-#include <AzCore/Component/Component.h>
 #include <ACES/Aces.h>
+#include <Atom/RPI.Reflect/System/AnyAsset.h>
 #include <Atom/RPI.Reflect/Image/StreamingImageAsset.h>
+
+#include <AzCore/Component/Component.h>
 
 namespace AZ
 {

@@ -12,6 +12,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzFramework/Entity/EntityContext.h>
 #include <AzFramework/Components/TransformComponent.h>
 #include <AzFramework/API/ApplicationAPI.h>
@@ -275,7 +276,7 @@ namespace AzFramework
         DestroyGameEntityInternal(id, true);
     }
 
-    
+
     void GameEntityContextComponent::DestroyGameEntityAndDescendantsOnlyInSliceMode(const AZ::EntityId& id)
     {
         bool isPrefabSystemEnabled = false;

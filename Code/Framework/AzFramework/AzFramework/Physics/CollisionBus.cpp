@@ -8,6 +8,7 @@
 
 #include "CollisionBus.h"
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace Physics
 {

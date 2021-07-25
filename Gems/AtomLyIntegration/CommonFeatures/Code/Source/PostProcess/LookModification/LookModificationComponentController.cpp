@@ -6,13 +6,15 @@
  *
  */
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/RTTI/BehaviorContext.h>
-
-#include <Atom/RPI.Public/Scene.h>
-
-#include <ACES/Aces.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <PostProcess/LookModification/LookModificationComponentController.h>
+
+#include <Atom/RPI.Public/Scene.h>
+#include <Atom/RPI.Reflect/System/AnyAsset.h>
+#include <ACES/Aces.h>
 
 namespace AZ
 {

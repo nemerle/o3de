@@ -12,6 +12,7 @@
 #include <AzCore/JSON/error/en.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzFramework/Archive/IArchive.h>
 
 namespace LyShineExamples

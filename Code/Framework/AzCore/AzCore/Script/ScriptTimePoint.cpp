@@ -13,15 +13,16 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
     //AZStd::chrono::system_clock::time_point is a value type, treat it as such.
     template<>
-    struct SerializeGenericTypeInfo<AZStd::chrono::system_clock::time_point> : SerializeGenericTypeInfoImpl<AZStd::chrono::system_clock::time_point> 
+    struct SerializeGenericTypeInfo<AZStd::chrono::system_clock::time_point> : SerializeGenericTypeInfoImpl<AZStd::chrono::system_clock::time_point>
     {
     };
-    
+
     void ScriptTimePoint::Reflect(ReflectContext* reflection)
     {
         BehaviorContext* behaviorContext = azrtti_cast<BehaviorContext*>(reflection);

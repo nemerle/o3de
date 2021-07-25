@@ -7,6 +7,7 @@
  */
 #include "Events/ReflectScriptableEvents.h"
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/Script/ScriptContextAttributes.h>
@@ -78,8 +79,8 @@ namespace LmbrCentral
             outData->m_actionNameCrc = 0;
             outData->m_payloadTypeId = AZ::Uuid::CreateNull();
         }
-        else if (dc.GetNumArguments() == s_deprecatedConstructorArgCount 
-            && dc.IsClass<AZ::EntityId>(s_channelIndex) 
+        else if (dc.GetNumArguments() == s_deprecatedConstructorArgCount
+            && dc.IsClass<AZ::EntityId>(s_channelIndex)
             && dc.IsString(s_actionNameIndex))
         {
             AZ::EntityId channel(0);
@@ -90,12 +91,12 @@ namespace LmbrCentral
             outData->m_actionNameCrc = AZ_CRC(actionName);
             outData->m_payloadTypeId = AZ::Uuid::CreateNull();
             AZ::ScriptContext::FromNativeContext(dc.GetNativeContext())->Error(
-                AZ::ScriptContext::ErrorType::Warning, 
+                AZ::ScriptContext::ErrorType::Warning,
                 s_showCallStack,
                 "This constructor has been deprecated.  Please add the name of the type you wish to send/receive, example \"float\""
             );
         }
-        else if (dc.GetNumArguments() == s_verboseConstructorArgCount 
+        else if (dc.GetNumArguments() == s_verboseConstructorArgCount
             && dc.IsClass<AZ::EntityId>(s_channelIndex)
             && (dc.IsString(s_actionNameIndex) || dc.IsClass<AZ::Crc32>(s_actionNameIndex))
             && (dc.IsString(s_payloadTypeIndex) || dc.IsClass<AZ::Crc32>(s_payloadTypeIndex) || dc.IsClass<AZ::Uuid>(s_payloadTypeIndex)))
@@ -154,7 +155,7 @@ namespace LmbrCentral
                     AZ::Crc32 requestedCrc;
                     dc.ReadArg(s_payloadTypeIndex, requestedCrc);
                     AZ::ScriptContext::FromNativeContext(dc.GetNativeContext())->Error(
-                        AZ::ScriptContext::ErrorType::Warning, 
+                        AZ::ScriptContext::ErrorType::Warning,
                         s_showCallStack,
                         "Constructing a GameplayNotificationId with a Crc32 for payload type is expensive. Consider using string name or typeid instead."
                     );
@@ -172,7 +173,7 @@ namespace LmbrCentral
         else
         {
             AZ::ScriptContext::FromNativeContext(dc.GetNativeContext())->Error(
-                AZ::ScriptContext::ErrorType::Error, 
+                AZ::ScriptContext::ErrorType::Error,
                 s_showCallStack,
                 "The GameplayNotificationId takes 3 arguments: an entityId representing the channel, a string or crc representing the action's name, and a string or uuid for the type"
             );

@@ -13,6 +13,7 @@
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Asset/AssetManagerBus.h>
 
 #include <LyShine/Bus/UiGameEntityContextBus.h>

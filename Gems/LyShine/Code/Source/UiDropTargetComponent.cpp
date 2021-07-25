@@ -12,6 +12,7 @@
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 #include <LyShine/Bus/UiCanvasBus.h>
 #include <LyShine/Bus/UiElementBus.h>

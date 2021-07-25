@@ -11,6 +11,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Component/ComponentApplicationBus.h>
 
 #include <IRenderer.h>
@@ -394,7 +395,7 @@ void UiImageComponent::Render(LyShine::IRenderGraph* renderGraph)
             if (textureSize.GetX() == 0 || textureSize.GetY() == 0)
             {
                 // don't render to cache and leave m_isRenderCacheDirty set to true
-                return;        
+                return;
             }
         }
 
@@ -1267,7 +1268,7 @@ void UiImageComponent::Deactivate()
     {
         UiCanvasPixelAlignmentNotificationBus::Handler::BusDisconnect();
     }
- 
+
     if (UiSpriteSettingsChangeNotificationBus::Handler::BusIsConnected())
     {
         UiSpriteSettingsChangeNotificationBus::Handler::BusDisconnect();

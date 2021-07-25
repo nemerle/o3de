@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Settings/SettingsRegistryImpl.h>
 #include <AzCore/Settings/SettingsRegistryScriptUtils.h>
 #include <AzCore/UnitTest/TestTypes.h>
@@ -15,7 +16,7 @@
 namespace SettingsRegistryScriptUtilsTests
 {
     static constexpr const char* SettingsRegistryScriptClassName = "SettingsRegistryInterface";
-   
+
 
     class SettingsRegistryBehaviorContextFixture
         : public UnitTest::ScopedAllocatorSetupFixture
@@ -78,7 +79,7 @@ namespace SettingsRegistryScriptUtilsTests
         // so the invoking the getter on global Settings Registry should succeed, but return nullptr
         EXPECT_TRUE(globalSettingsRegistryGetter->InvokeResult(settingsRegistryObject));
         EXPECT_EQ(nullptr, settingsRegistryObject.m_settingsRegistry);
-        
+
         // Register the Settings Registry stored on the fixture with the SettingsRegistry Interface<T>
         AZ::SettingsRegistry::Register(m_registry.get());
         EXPECT_TRUE(globalSettingsRegistryGetter->InvokeResult(settingsRegistryObject));
@@ -228,7 +229,7 @@ namespace SettingsRegistryScriptUtilsTests
             R"(        "intIndex": -55)" "\n"
             R"(    })" "\n"
             R"(])";
-        
+
         // Populate the settings registry to match the expected json values
         m_registry->Set("/TestObject/boolValue", false);
         m_registry->Set("/TestObject/intValue", aznumeric_cast<AZ::s64>(17));
@@ -563,4 +564,4 @@ namespace SettingsRegistryScriptUtilsTests
             SettingsRegistryBehaviorContextParams{ "/TestObject/stringValue", AZStd::string_view{"Hello World"}, "GetString", "SetString" }
         )
     );
-} 
+}

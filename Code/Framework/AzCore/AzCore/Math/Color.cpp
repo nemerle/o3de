@@ -8,6 +8,7 @@
 
 #include "Color.h"
 #include <AzCore/Math/MathScriptHelpers.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
@@ -356,7 +357,7 @@ namespace AZ
         const Color Crimson                   { 0.863f, 0.078f, 0.235f, 1.000f }; // RGB: (220, 20, 60)
         const Color FireBrick                 { 0.698f, 0.133f, 0.133f, 1.000f }; // RGB: (178, 34, 34)
         const Color DarkRed                   { 0.545f, 0.000f, 0.000f, 1.000f }; // RGB: (139, 0, 0)
-        // Pinks                                                              
+        // Pinks
         const Color Pink                      { 1.000f, 0.753f, 0.796f, 1.000f }; // RGB: (255, 192, 203)
         const Color LightPink                 { 1.000f, 0.714f, 0.757f, 1.000f }; // RGB: (255, 182, 193)
         const Color HotPink                   { 1.000f, 0.412f, 0.706f, 1.000f }; // RGB: (255, 105, 180)
@@ -379,7 +380,7 @@ namespace AZ
         const Color PaleGoldenrod             { 0.933f, 0.910f, 0.667f, 1.000f }; // RGB: (238, 232, 170)
         const Color Khaki                     { 0.941f, 0.902f, 0.549f, 1.000f }; // RGB: (240, 230, 140)
         const Color DarkKhaki                 { 0.741f, 0.718f, 0.420f, 1.000f }; // RGB: (189, 183, 107)
-        // Purples                                                                    
+        // Purples
         const Color Lavender                  { 0.902f, 0.902f, 0.980f, 1.000f }; // RGB: (230, 230, 250)
         const Color Thistle                   { 0.847f, 0.749f, 0.847f, 1.000f }; // RGB: (216, 191, 216)
         const Color Plum                      { 0.867f, 0.627f, 0.867f, 1.000f }; // RGB: (221, 160, 221)

@@ -9,6 +9,7 @@
 #include "ScriptCanvasTestBus.h"
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
@@ -273,4 +274,13 @@ namespace ScriptCanvasTesting
                 ->Event("Void", &NativeHandlingOnlyEBus::Events::Void);
         }
     }
+
+    void TestTupleMethods::Reflect(AZ::ReflectContext *context)
+    {
+        if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
+        {
+            behaviorContext->Class<TestTupleMethods>("TestTupleMethods")->Method("Three", &TestTupleMethods::Three);
+        }
+    }
+
 }

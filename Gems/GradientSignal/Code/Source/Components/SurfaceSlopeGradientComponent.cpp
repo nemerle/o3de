@@ -10,6 +10,7 @@
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Math/MathUtils.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
@@ -52,7 +53,7 @@ namespace GradientSignal
                     ->EnumAttribute(SurfaceSlopeGradientConfig::RampType::LINEAR_RAMP_DOWN, "Linear Ramp Down")
                     ->EnumAttribute(SurfaceSlopeGradientConfig::RampType::LINEAR_RAMP_UP, "Linear Ramp Up")
                     ->EnumAttribute(SurfaceSlopeGradientConfig::RampType::SMOOTH_STEP, "Smooth Step")
-                    // Note: ReadOnly doesn't currently propagate to children, so instead we hide/show smooth step parameters when 
+                    // Note: ReadOnly doesn't currently propagate to children, so instead we hide/show smooth step parameters when
                     // we change the ramp type.  If ReadOnly is ever changed to propagate downwards, we should change the next line
                     // to PropertyRefreshLevels::AttributesAndLevels and change the Visibility line below on m_smoothStep
                     // to AZ::Edit::PropertyVisibility::Show.

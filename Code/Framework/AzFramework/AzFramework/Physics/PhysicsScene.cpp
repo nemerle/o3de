@@ -10,6 +10,7 @@
 #include <AzFramework/Physics/PhysicsSystem.h>
 #include <AzFramework/Physics/Configuration/SceneConfiguration.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AzPhysics
 {

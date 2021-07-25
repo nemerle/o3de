@@ -12,6 +12,8 @@
 #include <Source/Framework/ScriptCanvasTestUtilities.h>
 #include <Source/Framework/ScriptCanvasTestNodes.h>
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/IdUtils.h>
 #include <AzCore/std/containers/vector.h>
 
@@ -29,11 +31,11 @@ using namespace TestNodes;
 TEST_F(ScriptCanvasTestFixture, SlotDescriptors_General)
 {
     using namespace ScriptCanvas;
-    
+
     SlotDescriptor dataIn = SlotDescriptors::DataIn();
     EXPECT_TRUE(dataIn.IsData());
     EXPECT_FALSE(dataIn.IsExecution());
-    EXPECT_TRUE(dataIn.IsInput());    
+    EXPECT_TRUE(dataIn.IsInput());
     EXPECT_FALSE(dataIn.IsOutput());
 
     SlotDescriptor dataOut = SlotDescriptors::DataOut();
@@ -48,7 +50,7 @@ TEST_F(ScriptCanvasTestFixture, SlotDescriptors_General)
     EXPECT_TRUE(executionIn.IsInput());
     EXPECT_FALSE(executionIn.IsOutput());
 
-    SlotDescriptor executionOut = SlotDescriptors::ExecutionOut();    
+    SlotDescriptor executionOut = SlotDescriptors::ExecutionOut();
     EXPECT_FALSE(executionOut.IsData());
     EXPECT_TRUE(executionOut.IsExecution());
     EXPECT_FALSE(executionOut.IsInput());
@@ -224,7 +226,7 @@ TEST_F(ScriptCanvasTestFixture, SlotCreation_DataSlotCreation)
 
             EXPECT_TRUE(dataInSlot->IsInput());
             EXPECT_FALSE(dataInSlot->IsOutput());
-            
+
             const Datum* datum = emptyNode->FindDatum(dataInSlot->GetId());
 
             EXPECT_TRUE(datum != nullptr);
@@ -382,7 +384,7 @@ TEST_F(ScriptCanvasTestFixture, SlotConnecting_ExecutionFailure)
 
         TestConnectionBetween(dynamicValueOutEndpoint, inputEndpoint, invalidConnection);
     }
-    
+
     for (auto type : GetTypes())
     {
         Endpoint dataInputEndpoint;
@@ -429,7 +431,7 @@ TEST_F(ScriptCanvasTestFixture, SlotConnecting_DataBasic)
     {
         DataSlotConfiguration slotConfiguration;
 
-        slotConfiguration.m_name = GenerateSlotName();        
+        slotConfiguration.m_name = GenerateSlotName();
         slotConfiguration.SetType(Data::Type::Number());
         slotConfiguration.SetConnectionType(ConnectionType::Input);
 
@@ -457,146 +459,146 @@ TEST_F(ScriptCanvasTestFixture, SlotConnecting_DataBasic)
 
 // Exhaustive Data Connection Test(attempts to connect every data type to every other data type, in both input and output)
 
-// 
+//
 // TEST_F(ScriptCanvasTestFixture, SlotConnecting_DataExhaustive)
 // {
 //     using namespace ScriptCanvas;
-// 
+//
 //     ScriptCanvas::Graph* graph = CreateGraph();
 //     ConfigurableUnitTestNode* inputNode = CreateConfigurableNode();
 //     ConfigurableUnitTestNode* outputNode = CreateConfigurableNode();
-// 
+//
 //     Endpoint dynamicAnyInEndpoint;
 //     Endpoint dynamicAnyOutEndpoint;
-// 
+//
 //     Endpoint dynamicContainerInEndpoint;
 //     Endpoint dynamicContainerOutEndpoint;
-// 
+//
 //     Endpoint dynamicValueInEndpoint;
 //     Endpoint dynamicValueOutEndpoint;
-// 
+//
 //     AZStd::unordered_map< Data::Type, ScriptCanvas::Endpoint > inputTypeMapping;
-// 
+//
 //     {
 //         DynamicDataSlotConfiguration slotConfiguration;
-// 
+//
 //         slotConfiguration.m_name = GenerateSlotName();
 //         slotConfiguration.SetConnectionType(ConnectionType::Input);
 //         slotConfiguration.m_dynamicDataType = DynamicDataType::Any;
-// 
+//
 //         Slot* dynamicAnyInSlot = inputNode->AddTestingSlot(slotConfiguration);
-// 
+//
 //         dynamicAnyInEndpoint = Endpoint(inputNode->GetEntityId(), dynamicAnyInSlot->GetId());
 //     }
-// 
+//
 //     {
 //         DynamicDataSlotConfiguration slotConfiguration;
-// 
+//
 //         slotConfiguration.m_name = GenerateSlotName();
 //         slotConfiguration.SetConnectionType(ConnectionType::Output);
 //         slotConfiguration.m_dynamicDataType = DynamicDataType::Any;
-// 
+//
 //         Slot* dynamicAnyOutSlot = outputNode->AddTestingSlot(slotConfiguration);
-// 
+//
 //         dynamicAnyOutEndpoint = Endpoint(outputNode->GetEntityId(), dynamicAnyOutSlot->GetId());
 //     }
-// 
+//
 //     {
 //         DynamicDataSlotConfiguration slotConfiguration;
-// 
+//
 //         slotConfiguration.m_name = GenerateSlotName();
 //         slotConfiguration.SetConnectionType(ConnectionType::Input);
 //         slotConfiguration.m_dynamicDataType = DynamicDataType::Container;
-// 
+//
 //         Slot* dynamicContainerInSlot = inputNode->AddTestingSlot(slotConfiguration);
-// 
+//
 //         dynamicContainerInEndpoint = Endpoint(inputNode->GetEntityId(), dynamicContainerInSlot->GetId());
 //     }
-// 
+//
 //     {
 //         DynamicDataSlotConfiguration slotConfiguration;
-// 
+//
 //         slotConfiguration.m_name = GenerateSlotName();
 //         slotConfiguration.SetConnectionType(ConnectionType::Output);
 //         slotConfiguration.m_dynamicDataType = DynamicDataType::Container;
-// 
+//
 //         Slot* dynamicContainerOutSlot = outputNode->AddTestingSlot(slotConfiguration);
-// 
+//
 //         dynamicContainerOutEndpoint = Endpoint(outputNode->GetEntityId(), dynamicContainerOutSlot->GetId());
 //     }
-// 
+//
 //     {
 //         DynamicDataSlotConfiguration slotConfiguration;
-// 
+//
 //         slotConfiguration.m_name = GenerateSlotName();
 //         slotConfiguration.SetConnectionType(ConnectionType::Input);
 //         slotConfiguration.m_dynamicDataType = DynamicDataType::Value;
-// 
+//
 //         Slot* dynamicValueInSlot = inputNode->AddTestingSlot(slotConfiguration);
-// 
+//
 //         dynamicValueInEndpoint = Endpoint(inputNode->GetEntityId(), dynamicValueInSlot->GetId());
 //     }
-// 
+//
 //     {
 //         DynamicDataSlotConfiguration slotConfiguration;
-// 
+//
 //         slotConfiguration.m_name = GenerateSlotName();
 //         slotConfiguration.SetConnectionType(ConnectionType::Output);
 //         slotConfiguration.m_dynamicDataType = DynamicDataType::Value;
-// 
+//
 //         Slot* dynamicValueOutSlot = outputNode->AddTestingSlot(slotConfiguration);
-// 
+//
 //         dynamicValueOutEndpoint = Endpoint(outputNode->GetEntityId(), dynamicValueOutSlot->GetId());
 //     }
-// 
+//
 //     for (auto type : GetTypes())
 //     {
 //         DataSlotConfiguration slotConfiguration;
-// 
+//
 //         slotConfiguration.m_name = GenerateSlotName();
 //         slotConfiguration.SetType(type);
 //         slotConfiguration.SetConnectionType(ConnectionType::Input);
-// 
+//
 //         Slot* newSlot = inputNode->AddTestingSlot(slotConfiguration);
-// 
+//
 //         Endpoint inputEndpoint = Endpoint(inputNode->GetEntityId(), newSlot->GetId());
 //         inputTypeMapping[type] = inputEndpoint;
-// 
+//
 //         const bool validConnection = true;
 //         TestIsConnectionPossible(dynamicAnyOutEndpoint, inputEndpoint, validConnection);
-// 
+//
 //         bool isContainerType = Data::IsContainerType(type);
-// 
+//
 //         TestIsConnectionPossible(dynamicContainerOutEndpoint, inputEndpoint, isContainerType);
 //         TestIsConnectionPossible(dynamicValueOutEndpoint, inputEndpoint, !isContainerType);
 //     }
-// 
+//
 //     for (auto type : GetTypes())
 //     {
 //         DataSlotConfiguration slotConfiguration;
-// 
+//
 //         slotConfiguration.m_name = GenerateSlotName();
 //         slotConfiguration.SetType(type);
 //         slotConfiguration.SetConnectionType(ConnectionType::Output);
-// 
+//
 //         Slot* outputSlot = outputNode->AddTestingSlot(slotConfiguration);
-// 
+//
 //         ScriptCanvas::Endpoint outputEndpoint(outputNode->GetEntityId(), outputSlot->GetId());
-// 
+//
 //         const bool validConnection = true;
 //         TestIsConnectionPossible(outputEndpoint, dynamicAnyInEndpoint, validConnection);
-// 
+//
 //         bool isContainerType = Data::IsContainerType(type);
-// 
+//
 //         TestIsConnectionPossible(outputEndpoint, dynamicContainerInEndpoint, isContainerType);
 //         TestIsConnectionPossible(outputEndpoint, dynamicValueInEndpoint, !isContainerType);
-// 
+//
 //         for (auto slotPair : inputTypeMapping)
 //         {
 //             bool isSameType = slotPair.first == type;
-// 
+//
 //             TestIsConnectionPossible(outputEndpoint, slotPair.second, isSameType);
-//         }        
+//         }
 //     }
 // }
 
@@ -798,8 +800,8 @@ TEST_F(ScriptCanvasTestFixture, DynamicSlotCreation_NoDisplayType)
         {
             DynamicDataSlotConfiguration dataSlotConfiguration;
 
-            dataSlotConfiguration.m_name = GenerateSlotName();            
-            dataSlotConfiguration.SetConnectionType(connectionType);            
+            dataSlotConfiguration.m_name = GenerateSlotName();
+            dataSlotConfiguration.SetConnectionType(connectionType);
             dataSlotConfiguration.m_dynamicDataType = dynamicDataType;
 
             Slot* slot = emptyNode->AddTestingSlot(dataSlotConfiguration);
@@ -851,7 +853,7 @@ TEST_F(ScriptCanvasTestFixture, DynamicSlotCreation_WithDisplayType)
             dataSlotConfiguration.m_displayType = dataType;
 
             Slot* slot = emptyNode->AddTestingSlot(dataSlotConfiguration);
-            
+
             EXPECT_TRUE(slot->HasDisplayType());
             EXPECT_TRUE(slot->IsDynamicSlot());
             EXPECT_TRUE(slot->GetDynamicDataType() == dynamicDataType);
@@ -1017,7 +1019,7 @@ TEST_F(ScriptCanvasTestFixture, TypeMatching_AnyWithDisplayType)
         Slot* slot = emptyNode->AddTestingSlot(dataSlotConfiguration);
 
         slot->SetDisplayType(ScriptCanvas::Data::Type::Number());
-        
+
         EXPECT_TRUE(slot->IsTypeMatchFor(ScriptCanvas::Data::Type::Number()));
 
         for (auto type : GetTypes())
@@ -1117,7 +1119,7 @@ TEST_F(ScriptCanvasTestFixture, TypeMatching_DynamicValueWithDisplayType)
         slot->SetDisplayType(ScriptCanvas::Data::Type::EntityID());
 
         EXPECT_TRUE(slot->IsTypeMatchFor(ScriptCanvas::Data::Type::EntityID()));
-        
+
         for (auto primitiveType : GetPrimitiveTypes())
         {
             if (primitiveType == ScriptCanvas::Data::Type::EntityID())
@@ -1377,7 +1379,7 @@ TEST_F(ScriptCanvasTestFixture, SlotMatching_FixedPrimitiveSlotToDynamicAnySlot)
     }
 
     ConfigurableUnitTestNode* targetNode = CreateConfigurableNode();
-    Slot* dynamicTarget = nullptr;    
+    Slot* dynamicTarget = nullptr;
 
     {
         DynamicDataSlotConfiguration dataSlotConfiguration;
@@ -1564,7 +1566,7 @@ TEST_F(ScriptCanvasTestFixture, SlotMatching_DynamicAnySlotToDynamicValueSlot)
     dynamicTarget->SetDisplayType(ScriptCanvas::Data::Type::Number());
     EXPECT_TRUE(dynamicSource->IsTypeMatchFor((*dynamicTarget)));
     EXPECT_TRUE(dynamicTarget->IsTypeMatchFor((*dynamicSource)));
-    
+
     // Any[Number] : Value
     dynamicSource->SetDisplayType(ScriptCanvas::Data::Type::Invalid());
     dynamicSource->SetDisplayType(ScriptCanvas::Data::Type::Number());
@@ -1598,7 +1600,7 @@ TEST_F(ScriptCanvasTestFixture, SlotMatching_DynamicAnySlotToDynamicValueSlot)
     dynamicTarget->SetDisplayType(ScriptCanvas::Data::Type::Invalid());
     EXPECT_FALSE(dynamicSource->IsTypeMatchFor((*dynamicTarget)));
     EXPECT_FALSE(dynamicTarget->IsTypeMatchFor((*dynamicSource)));
-    
+
     // Any[Display Container] : Value[Display Object]
     dynamicSource->SetDisplayType(ScriptCanvas::Data::Type::Invalid());
     dynamicSource->SetDisplayType(m_numericVectorType);
@@ -1738,7 +1740,7 @@ TEST_F(ScriptCanvasTestFixture, SlotMatching_DynamicValueSlotToDynamicValueSlot)
     EXPECT_TRUE(dynamicTarget->IsTypeMatchFor((*dynamicSource)));
 
     // Value : Value[Number]
-    dynamicSource->SetDisplayType(ScriptCanvas::Data::Type::Invalid());    
+    dynamicSource->SetDisplayType(ScriptCanvas::Data::Type::Invalid());
 
     dynamicTarget->SetDisplayType(ScriptCanvas::Data::Type::Invalid());
     dynamicTarget->SetDisplayType(ScriptCanvas::Data::Type::Number());
@@ -1957,7 +1959,7 @@ TEST_F(ScriptCanvasTestFixture, SlotGrouping_BasicFunctionalitySanityTest)
     EXPECT_EQ(dynamicInputSlot->GetDynamicGroup(), dynamicGroupName);
     EXPECT_EQ(dynamicOutputSlot->GetDynamicGroup(), dynamicGroupName);
 
-    EXPECT_FALSE(dynamicInputSlot->HasDisplayType());    
+    EXPECT_FALSE(dynamicInputSlot->HasDisplayType());
     EXPECT_EQ(dynamicInputSlot->GetDataType(), Data::Type::Invalid());
 
     EXPECT_FALSE(dynamicOutputSlot->HasDisplayType());
@@ -2054,7 +2056,7 @@ TEST_F(ScriptCanvasTestFixture, SlotGrouping_SingleGroupDisplayTypeConnection)
 
     EXPECT_TRUE(dynamicInputSlot->HasDisplayType());
     EXPECT_EQ(dynamicInputSlot->GetDisplayType(), Data::Type::Boolean());
-    EXPECT_EQ(dynamicInputSlot->GetDataType(), Data::Type::Boolean());    
+    EXPECT_EQ(dynamicInputSlot->GetDataType(), Data::Type::Boolean());
 
     EXPECT_TRUE(dynamicOutputSlot->HasDisplayType());
     EXPECT_EQ(dynamicOutputSlot->GetDisplayType(), Data::Type::Boolean());
@@ -2070,7 +2072,7 @@ TEST_F(ScriptCanvasTestFixture, SlotGrouping_SingleGroupDisplayTypeConnection)
         graph->RemoveConnection(connection->GetId());
     }
 
-    EXPECT_FALSE(dynamicInputSlot->HasDisplayType());    
+    EXPECT_FALSE(dynamicInputSlot->HasDisplayType());
     EXPECT_EQ(dynamicInputSlot->GetDataType(), Data::Type::Invalid());
 
     EXPECT_FALSE(dynamicOutputSlot->HasDisplayType());
@@ -2254,7 +2256,7 @@ TEST_F(ScriptCanvasTestFixture, SlotGrouping_MultiGroupDisplayTypeConnection)
 
             for (Slot* groupedSlot : groupedSlots)
             {
-                EXPECT_FALSE(groupedSlot->HasDisplayType());                
+                EXPECT_FALSE(groupedSlot->HasDisplayType());
                 EXPECT_EQ(groupedSlot->GetDataType(), Data::Type::Invalid());
             }
 
@@ -2524,7 +2526,7 @@ TEST_F(ScriptCanvasTestFixture, SlotGrouping_MultiGroupDisplayTypeRestrictionCon
         }
     }
 
-    CreateExecutionFlowBetween({concreteTypeNode, groupedUnrestrictedNode, groupedRestrictedNode });    
+    CreateExecutionFlowBetween({concreteTypeNode, groupedUnrestrictedNode, groupedRestrictedNode });
 
     for (Slot* unrestrictedSlot : {groupedUnrestrictedInputSlot, groupedUnrestrictedOutputSlot})
     {

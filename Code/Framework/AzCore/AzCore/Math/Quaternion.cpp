@@ -12,6 +12,7 @@
 #include <AzCore/Math/MathScriptHelpers.h>
 
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AZ
 {
@@ -230,7 +231,7 @@ namespace AZ
                     Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::All)->
                 Method("InvertFast", &Quaternion::InvertFast)->
                     Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::All)->
-                Method("GetInverseFull", &Quaternion::GetInverseFull)->                
+                Method("GetInverseFull", &Quaternion::GetInverseFull)->
                 Method("InvertFull", &Quaternion::InvertFull)->
                     Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::All)->
                 Method("Dot", &Quaternion::Dot)->

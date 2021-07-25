@@ -20,6 +20,7 @@
 
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Jobs/JobFunction.h>
@@ -314,7 +315,7 @@ namespace Vegetation
                 ;
             }
         }
-        
+
         AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context);
         if (behaviorContext)
         {
@@ -558,7 +559,7 @@ namespace Vegetation
                     AreaNotificationBus::Event(area.m_id, &AreaNotificationBus::Events::OnAreaRefreshed);
                 }
 
-                // Set all existing sectors as needing to be rebuilt.  
+                // Set all existing sectors as needing to be rebuilt.
                 const auto& cachedMainThreadData = context->GetCachedMainThreadData();
                 vegTasks->MarkDirtySectors(AZ::Aabb::CreateNull(), threadData->m_dirtySectorContents,
                                              cachedMainThreadData.m_worldToSector, cachedMainThreadData.m_currViewRect);

@@ -10,6 +10,7 @@
 #include <AzToolsFramework/PropertyTreeEditor/PropertyTreeEditor.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AzToolsFramework
 {
@@ -36,7 +37,7 @@ namespace AzToolsFramework
                         ->Attribute(AZ::Script::Attributes::Alias, "build_paths_list_with_types")
 
                     // Attribute & visibility API
-                    ->Method("SetVisibleEnforcement", &PropertyTreeEditor::SetVisibleEnforcement, nullptr, "Limits the properties using the visibility flags such as ShowChildrenOnly.") 
+                    ->Method("SetVisibleEnforcement", &PropertyTreeEditor::SetVisibleEnforcement, nullptr, "Limits the properties using the visibility flags such as ShowChildrenOnly.")
                         ->Attribute(AZ::Script::Attributes::Alias, "set_visible_enforcement")
                     ->Method("HasAttribute", &PropertyTreeEditor::HasAttribute, nullptr, "Detects if a property has an attribute.")
                         ->Attribute(AZ::Script::Attributes::Alias, "has_attribute")

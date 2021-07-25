@@ -16,6 +16,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace MessagePopup
 {
@@ -86,7 +87,7 @@ namespace MessagePopup
                 ;
         }
     }
-    
+
     //-------------------------------------------------------------------------
     void MessagePopupSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
     {
@@ -156,13 +157,13 @@ namespace MessagePopup
     AZ::u32 MessagePopupSystemComponent::InternalShowPopup(const AZStd::string& _message, EPopupButtons _buttons, EPopupKind _kind, AZStd::function<void(int _button)> _callback, float _showTime)
     {
         void *clientData = nullptr;
-        
+
         AZ::u32 popupID = m_PopupsManager.CreatePopup();
 
         // First try to send the request to a valid MessagePopup implementation.
         // If none consumed it and return the clientID then use the platform specific default popup
         MessagePopup::MessagePopupImplBus::Broadcast(&MessagePopup::MessagePopupImplBus::Events::OnShowPopup, popupID, _message, _buttons, _kind, _callback, &clientData);
-        
+
         if (clientData != nullptr)
         {
             m_PopupsManager.SetPopupData(popupID, clientData, _callback, _showTime);
@@ -170,7 +171,7 @@ namespace MessagePopup
         else
         {
             bool res = ShowNativePopup(_message, _buttons, _kind, _callback);
-            
+
             if (res)
             {
                 m_PopupsManager.SetPopupData(popupID, nullptr, _callback, _showTime);
@@ -232,7 +233,7 @@ namespace MessagePopup
         MessagePopup::MessagePopupImplBus::Broadcast(&MessagePopup::MessagePopupImplBus::Events::OnHidePopup, *popupInfo);
         if (clientData == nullptr)
         {
-            // No way to remove the native UI 
+            // No way to remove the native UI
             AZ_Assert(false, "Invalid option since we cannot Hide a native Popup.");
         }
 

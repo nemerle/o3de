@@ -8,6 +8,7 @@
 
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Script/lua/lua.h>
 #include <AzCore/Script/ScriptContextDebug.h>
 #include <AzCore/UnitTest/TestTypes.h>
@@ -2476,7 +2477,7 @@ namespace UnitTest
         s_globalVarString.clear();
         script.Execute("globalVarString = tostring(sc)");
         AZ_TEST_ASSERT(s_globalVarString.find("ScriptClass") != AZStd::string::npos);
-        AZ_TEST_ASSERT(s_globalVarString.find("LuaUserData") != AZStd::string::npos); 
+        AZ_TEST_ASSERT(s_globalVarString.find("LuaUserData") != AZStd::string::npos);
 
         // release test
         script.Execute("sc = nil");

@@ -6,9 +6,12 @@
  *
  */
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
+
 #include <AzFramework/Session/SessionConfig.h>
 
 #include <AWSGameLiftClientManager.h>

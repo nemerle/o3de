@@ -9,6 +9,7 @@
 #include "UnitTestBusSender.h"
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -18,7 +19,7 @@
 namespace ScriptCanvas
 {
     namespace UnitTesting
-    {        
+    {
         void EventSender::AddFailure(const AZ::EntityId& graphUniqueId, const Report& report)
         {
             Bus::Event(graphUniqueId, &BusTraits::AddFailure, report);
@@ -607,7 +608,7 @@ namespace ScriptCanvas
                 ;
             }
         }
-    
+
     }
 
-} 
+}

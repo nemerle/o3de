@@ -30,6 +30,8 @@
 #include "Plugins/ComponentEntityEditorPlugin/Objects/ComponentEntityObject.h"
 
 #include <AzCore/Console/Console.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 AZ_CVAR_EXTERNED(bool, ed_visibility_logTiming);
 AZ_CVAR_EXTERNED(bool, ed_visibility_use);

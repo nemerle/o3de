@@ -13,6 +13,8 @@
 #include <ScriptCanvas/Core/Attributes.h>
 #include <ScriptCanvas/Libraries/Libraries.h>
 #include <ScriptCanvas/Libraries/UnitTesting/UnitTestBusSender.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 
 namespace ScriptCanvas
@@ -22,7 +24,7 @@ namespace ScriptCanvas
         void UnitTesting::Reflect(AZ::ReflectContext* reflection)
         {
             ScriptCanvas::UnitTesting::EventSender::Reflect(reflection);
-            
+
             if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(reflection))
             {
                 serializeContext->Class<UnitTesting, LibraryDefinition>()
@@ -83,7 +85,7 @@ namespace ScriptCanvas
             return descriptors;
         }
     }
-} 
+}
 
 
 #endif

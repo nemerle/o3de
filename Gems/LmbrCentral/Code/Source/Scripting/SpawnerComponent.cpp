@@ -12,6 +12,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/std/sort.h>
 #include <AzCore/Asset/AssetManager.h>
 
@@ -23,7 +24,7 @@
 #ifdef LMBR_CENTRAL_EDITOR
 #include "EditorSpawnerComponent.h"
 #endif
- 
+
 namespace LmbrCentral
 {
     // BehaviorContext SpawnerComponentNotificationBus forwarder
@@ -130,7 +131,7 @@ namespace LmbrCentral
                 ->Field("DestroyOnDeactivate", &SpawnerComponent::m_destroyOnDeactivate)
                 ;
         }
- 
+
         AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context);
         if (behaviorContext)
         {
@@ -282,7 +283,7 @@ namespace LmbrCentral
     {
         return SpawnSliceInternalRelative(m_sliceAsset, relative);
     }
-    
+
     //=========================================================================
     AzFramework::SliceInstantiationTicket SpawnerComponent::SpawnAbsolute(const AZ::Transform& world)
     {
@@ -300,7 +301,7 @@ namespace LmbrCentral
     {
         return SpawnSliceInternalRelative(slice, relative);
     }
-    
+
     //=========================================================================
     AzFramework::SliceInstantiationTicket SpawnerComponent::SpawnSliceAbsolute(const AZ::Data::Asset<AZ::Data::AssetData>& slice, const AZ::Transform& world)
     {
@@ -545,7 +546,7 @@ namespace LmbrCentral
     {
         AZ::Data::AssetBus::Handler::BusDisconnect();
 
-        m_sliceAsset = asset;  
+        m_sliceAsset = asset;
     }
 
 } // namespace LmbrCentral

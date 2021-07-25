@@ -62,7 +62,7 @@ namespace AZ
             StreamingImageAsset() = default;
 
             //! Returns an immutable reference to the mip chain associated by index into the array of mip chains.
-            const Data::Asset<ImageMipChainAsset>& GetMipChainAsset(size_t mipChainIndex) const; 
+            const Data::Asset<ImageMipChainAsset>& GetMipChainAsset(size_t mipChainIndex) const;
 
             //! Release referenced ImageMipChainAssets
             void ReleaseMipChainAssets();
@@ -94,7 +94,7 @@ namespace AZ
             //!  Streaming image assets are subId 1000, mipchain assets are 1001 + n
             static constexpr uint32_t GetImageAssetSubId() { return 1000; };
 
-            //! Returns the total size of pixel data across all mips, both in this StreamingImageAsset and in all child ImageMipChainAssets. 
+            //! Returns the total size of pixel data across all mips, both in this StreamingImageAsset and in all child ImageMipChainAssets.
             size_t GetTotalImageDataSize() const;
 
         private:

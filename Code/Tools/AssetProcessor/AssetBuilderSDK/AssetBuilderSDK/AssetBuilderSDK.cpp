@@ -20,6 +20,7 @@
 #include <AzFramework/IO/LocalFileIO.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Slice/SliceAsset.h> // For slice asset sub ids
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>

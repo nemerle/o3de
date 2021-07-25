@@ -13,6 +13,8 @@
 #include <Authorization/AWSCognitoAuthorizationNotificationBusBehaviorHandler.h>
 #include <Authorization/AWSCognitoAuthorizationController.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <ResourceMapping/AWSResourceMappingBus.h>

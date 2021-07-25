@@ -8,6 +8,7 @@
 
 #include <SceneAPI/SceneCore/Events/ExportProductList.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/std/limits.h>
 #include <AzCore/Serialization/SerializeContext.h>
 

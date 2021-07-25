@@ -9,6 +9,9 @@
 
 #include "ScriptCanvasTestFixture.h"
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
+
 namespace ScriptCanvasTests
 {
     Application* ScriptCanvasTestFixture::s_application = nullptr;

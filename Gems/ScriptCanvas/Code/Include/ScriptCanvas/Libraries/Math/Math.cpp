@@ -10,6 +10,9 @@
 
 #include <ScriptCanvas/Internal/Nodes/ExpressionNodeBase.h>
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
+
 #pragma warning (disable:4503) // decorated name length exceeded, name was truncated
 
 namespace ScriptCanvas
