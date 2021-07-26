@@ -73,7 +73,7 @@ namespace AZ {
     template<typename T>
     struct SerializeGenericTypeInfo< Data::Asset<T> >
     {
-        typedef typename Data::Asset<T> ThisType;
+        using ThisType = Data::Asset<T>;
 
         class Factory
             : public SerializeContext::IObjectFactory

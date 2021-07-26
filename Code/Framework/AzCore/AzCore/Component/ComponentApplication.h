@@ -434,4 +434,5 @@ namespace AZ
         using EventLoggerPtr = AZStd::unique_ptr<AZ::Debug::LocalFileEventLogger, EventLoggerDeleter>;
         EventLoggerPtr m_eventLogger;
     };
+    GTI_SPECIALIZE(ComponentApplication::Descriptor::AllocatorRemapping);
 }

@@ -433,11 +433,11 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template<typename T>
-    struct SerializeGenericTypeInfo<CReflectedVarEnum<T>> : SerializeGenericTypeInfoImpl<CReflectedVarEnum<T>>
+    struct SerializeGenericTypeInfo<CReflectedVarEnum<T>,void> : SerializeGenericTypeInfoImpl<CReflectedVarEnum<T>>
     {
         // treat CReflectedVarEnum as generic value type
     };

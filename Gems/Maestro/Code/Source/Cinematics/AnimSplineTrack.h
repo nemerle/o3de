@@ -659,12 +659,12 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
     
     //treat templated TAnimSplineTrack values as generic value types
     template< typename T>
-    struct SerializeGenericTypeInfo<TAnimSplineTrack<T>> : SerializeGenericTypeInfoImpl<TAnimSplineTrack<T>>
+    struct SerializeGenericTypeInfo<TAnimSplineTrack<T>, void> : SerializeGenericTypeInfoImpl<TAnimSplineTrack<T>>
     {
     };
 } // namespace AZ

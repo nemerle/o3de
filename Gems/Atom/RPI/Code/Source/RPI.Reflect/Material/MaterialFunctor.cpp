@@ -9,6 +9,7 @@
 #include <Atom/RPI.Reflect/Material/MaterialFunctor.h>
 #include <Atom/RPI.Reflect/Material/MaterialPropertiesLayout.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 #include <Atom/RPI.Reflect/Material/ShaderCollection.h>
 #include <AzCore/Math/Vector2.h>
 #include <AzCore/Math/Vector3.h>

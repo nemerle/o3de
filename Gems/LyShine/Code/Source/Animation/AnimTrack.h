@@ -608,13 +608,7 @@ namespace AZ
 {
     // Serialization helpers
     template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template< typename T>
-    struct SerializeGenericTypeInfo;
-
-    //treat templated TUiAnimTrack values as generic value types
-    template< typename T>
-    struct SerializeGenericTypeInfo<TUiAnimTrack<T>> : SerializeGenericTypeInfoImpl<TUiAnimTrack<T>>
+    struct SerializeGenericTypeInfo<TUiAnimTrack<T>, void> : SerializeGenericTypeInfoImpl<TUiAnimTrack<T>>
     {
     };
 } // namespace AZ

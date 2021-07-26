@@ -65,11 +65,11 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template<typename S,typename T>
-    struct SerializeGenericTypeInfo<LmbrCentral::EditorWrappedComponentBase<S,T>>
+    struct SerializeGenericTypeInfo<LmbrCentral::EditorWrappedComponentBase<S,T>, void>
         : SerializeGenericTypeInfoImpl<LmbrCentral::EditorWrappedComponentBase<S,T>>
     {
         // treat EditorWrappedComponentBase as generic value type

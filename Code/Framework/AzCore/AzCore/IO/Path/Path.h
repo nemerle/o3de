@@ -640,11 +640,11 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template< typename T>
-    struct SerializeGenericTypeInfo<AZ::IO::BasicPath<T>> : SerializeGenericTypeInfoImpl<AZ::IO::BasicPath<T>>
+    struct SerializeGenericTypeInfo<AZ::IO::BasicPath<T>, void> : SerializeGenericTypeInfoImpl<AZ::IO::BasicPath<T>>
     {
         //treat BasicPath as generic value type
     };

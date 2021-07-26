@@ -95,11 +95,11 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template<typename S, typename T>
-    struct SerializeGenericTypeInfo<AzFramework::Components::ComponentAdapter<S, T>>
+    struct SerializeGenericTypeInfo<AzFramework::Components::ComponentAdapter<S, T>, void>
         : SerializeGenericTypeInfoImpl<AzFramework::Components::ComponentAdapter<S, T>>
     {
         // treat ComponentAdapter as generic value type

@@ -192,11 +192,12 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
     
     template< typename AttributeType >
-    struct SerializeGenericTypeInfo<LmbrCentral::SplineAttribute<AttributeType>> : SerializeGenericTypeInfoImpl<LmbrCentral::SplineAttribute<AttributeType>>
+    struct SerializeGenericTypeInfo<LmbrCentral::SplineAttribute<AttributeType>, void>
+        : SerializeGenericTypeInfoImpl<LmbrCentral::SplineAttribute<AttributeType>>
     {
         //treat LmbrCentral::SplineAttribute as generic value type
     };

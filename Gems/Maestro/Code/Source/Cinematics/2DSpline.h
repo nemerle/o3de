@@ -594,17 +594,11 @@ namespace AZ
 {
     // Serialization helpers
     template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template< typename T>
-    struct SerializeGenericTypeInfo;
-    
-    //treat templated SplineKeyEx and TrackSplineInterpolator values as generic value types
-    template< typename T>
-    struct SerializeGenericTypeInfo<spline::SplineKeyEx<T>> : SerializeGenericTypeInfoImpl<spline::SplineKeyEx<T>>
+    struct SerializeGenericTypeInfo<spline::SplineKeyEx<T>, void> : SerializeGenericTypeInfoImpl<spline::SplineKeyEx<T>>
     {
     };
     template< typename T>
-    struct SerializeGenericTypeInfo<spline::TrackSplineInterpolator<T>> : SerializeGenericTypeInfoImpl<spline::TrackSplineInterpolator<T>>
+    struct SerializeGenericTypeInfo<spline::TrackSplineInterpolator<T>, void> : SerializeGenericTypeInfoImpl<spline::TrackSplineInterpolator<T>>
     {
     };
     

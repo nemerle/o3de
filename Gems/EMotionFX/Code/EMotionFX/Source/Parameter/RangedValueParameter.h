@@ -147,13 +147,9 @@ namespace EMotionFX
 namespace AZ
 {
     // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T>
-    struct SerializeGenericTypeInfo;
 
     template<typename S, typename T>
-    struct SerializeGenericTypeInfo<EMotionFX::RangedValueParameter<S, T>>
+    struct SerializeGenericTypeInfo<EMotionFX::RangedValueParameter<S, T>, void>
         : SerializeGenericTypeInfoImpl<EMotionFX::RangedValueParameter<S, T>>
     {
         // treat RangedValueParameter as generic value type

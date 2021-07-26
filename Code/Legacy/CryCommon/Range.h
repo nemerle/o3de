@@ -136,11 +136,11 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
     
     template< typename T>
-    struct SerializeGenericTypeInfo<TRange<T>> : SerializeGenericTypeInfoImpl<TRange<T>>
+    struct SerializeGenericTypeInfo<TRange<T>, void> : SerializeGenericTypeInfoImpl<TRange<T>>
     {
         //treat TRange as generic value type
     };

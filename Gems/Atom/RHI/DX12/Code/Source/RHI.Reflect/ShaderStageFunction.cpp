@@ -9,6 +9,7 @@
 #include <Atom/RHI.Reflect/DX12/ShaderStageFunction.h>
 #include <AzCore/Utils/TypeHash.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

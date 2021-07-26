@@ -242,11 +242,11 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template<typename T>
-    struct SerializeGenericTypeInfo<ScriptCanvas::Debugger::Message::TaggedRequest<T>> : SerializeGenericTypeInfoImpl<ScriptCanvas::Debugger::Message::TaggedRequest<T>>
+    struct SerializeGenericTypeInfo<ScriptCanvas::Debugger::Message::TaggedRequest<T>, void> : SerializeGenericTypeInfoImpl<ScriptCanvas::Debugger::Message::TaggedRequest<T>>
     {
         // treat TaggedRequest template as generic value type
     };

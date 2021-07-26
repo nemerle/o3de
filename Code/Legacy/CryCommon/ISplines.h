@@ -1259,21 +1259,21 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
     
     //treat templated spline types as generic value types
     template< typename T>
-    struct SerializeGenericTypeInfo<spline::SplineKey<T>> : SerializeGenericTypeInfoImpl<spline::SplineKey<T>>
+    struct SerializeGenericTypeInfo<spline::SplineKey<T>, void> : SerializeGenericTypeInfoImpl<spline::SplineKey<T>>
     {
     };
     
     template <class T, class Key>
-    struct SerializeGenericTypeInfo<spline::BezierSpline<T,Key>> : SerializeGenericTypeInfoImpl<spline::BezierSpline<T,Key>>
+    struct SerializeGenericTypeInfo<spline::BezierSpline<T,Key>, void> : SerializeGenericTypeInfoImpl<spline::BezierSpline<T,Key>>
     {
     };
     template <class KeyType,class BasisType>
-    struct SerializeGenericTypeInfo<spline::TSpline<KeyType,BasisType>> : SerializeGenericTypeInfoImpl<spline::TSpline<KeyType,BasisType>>
+    struct SerializeGenericTypeInfo<spline::TSpline<KeyType,BasisType>, void> : SerializeGenericTypeInfoImpl<spline::TSpline<KeyType,BasisType>>
     {
     };
 }

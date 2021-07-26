@@ -31,11 +31,11 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template<typename T>
-    struct SerializeGenericTypeInfo<UnitTest::Patching::InnerObjectFieldConverterDerivedV1Template<T>>
+    struct SerializeGenericTypeInfo<UnitTest::Patching::InnerObjectFieldConverterDerivedV1Template<T>, void>
         : SerializeGenericTypeInfoImpl<UnitTest::Patching::InnerObjectFieldConverterDerivedV1Template<T>>
     {
         // treat InnerObjectFieldConverterDerivedV1Template as a generic value type

@@ -22,16 +22,7 @@ namespace AZ::Render
         TaaPassData() = default;
         virtual ~TaaPassData() = default;
 
-        static void Reflect(ReflectContext* context)
-        {
-            if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
-            {
-                serializeContext->Class<TaaPassData, RPI::ComputePassData>()
-                    ->Version(1)
-                    ->Field("NumJitterPositions", &TaaPassData::m_numJitterPositions)
-                    ;
-            }
-        }
+        static void Reflect(ReflectContext* context);
 
         uint32_t m_numJitterPositions = 8;
     };

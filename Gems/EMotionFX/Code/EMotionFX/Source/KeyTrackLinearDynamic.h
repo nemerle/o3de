@@ -278,13 +278,9 @@ namespace AZ
 {
     class ReflectContext;
     // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T>
-    struct SerializeGenericTypeInfo;
 
     template<typename S, typename T>
-    struct SerializeGenericTypeInfo<EMotionFX::KeyTrackLinearDynamic<S, T>>
+    struct SerializeGenericTypeInfo<EMotionFX::KeyTrackLinearDynamic<S, T>, void>
         : SerializeGenericTypeInfoImpl<EMotionFX::KeyTrackLinearDynamic<S, T>>
     {
         // treat EMotionFX::KeyTrackLinearDynamic as generic value type

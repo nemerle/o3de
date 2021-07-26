@@ -37,16 +37,7 @@ namespace AZ
             ImGuiPassData() = default;
             virtual ~ImGuiPassData() = default;
 
-            static void Reflect(ReflectContext* context)
-            {
-                if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
-                {
-                    serializeContext->Class<ImGuiPassData, RPI::RasterPassData>()
-                        ->Version(1)
-                        ->Field("isDefaultImGui", &ImGuiPassData::m_isDefaultImGui)
-                        ;
-                }
-            }
+            static void Reflect(ReflectContext* context);
 
             bool m_isDefaultImGui = false;
         };

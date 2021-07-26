@@ -13,6 +13,8 @@
 #include <AzCore/Component/Entity.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/GenericStreams.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/ObjectStream.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>

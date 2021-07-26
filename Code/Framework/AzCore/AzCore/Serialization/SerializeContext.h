@@ -41,6 +41,11 @@
 
 #define AZ_SERIALIZE_SWAP_ENDIAN(_value, _isSwap)  if (_isSwap) AZStd::endian_swap(_value)
 
+namespace AZStd
+{
+    template<typename T, size_t Capacity>
+    struct fixed_trivial_storage;
+}
 namespace AZ
 {
     class EditContext;
@@ -602,7 +607,7 @@ namespace AZ
             ///< @param resultPtr output parameter that is populated with the memory address that can be used to store an element of the convertible type
             ///< @param convertibleTypeId type to check to determine if it can converted to an element of class represent by this Class Data
             ///< @param classPtr memory address of the class represented by the ClassData
-            ///< @return true if a non-null memory address has been returned that can store the  convertible type 
+            ///< @return true if a non-null memory address has been returned that can store the  convertible type
             bool ConvertFromType(void*& convertibleTypePtr, const TypeId& convertibleTypeId, void* classPtr, AZ::SerializeContext& serializeContext) const;
 
             /// Find the persistence id (check base classes) \todo this is a TEMP fix, analyze and cache that information in the class
@@ -797,8 +802,8 @@ namespace AZ
             virtual void*   ReserveElement(void* instance, const ClassElement* classElement) = 0;
             /// Free an element that was reserved using ReserveElement, but was not stored by calling StoreElement.
             virtual void    FreeReservedElement(void* instance, void* element, SerializeContext* deletePointerDataContext)
-            { 
-                RemoveElement(instance, element, deletePointerDataContext); 
+            {
+                RemoveElement(instance, element, deletePointerDataContext);
             }
             /// Get an element's address by its index (called before the element is loaded).
             virtual void*   GetElementByIndex(void* instance, const ClassElement* classElement, size_t index) = 0;
@@ -858,7 +863,7 @@ namespace AZ
 
         /**
          * Data Converter interface which can be used to provide a conversion operation from to unrelated C++ types
-         * derived class to base class casting is taken care of through the RTTI system so those relations should not be 
+         * derived class to base class casting is taken care of through the RTTI system so those relations should not be
          * check within this class
          */
         class IDataConverter
@@ -879,7 +884,7 @@ namespace AZ
             ///< @param convertibleTypeId type to check to determine if it can converted to an element of class represent by this Class Data
             ///< @param classPtr memory address of the class represented by the @classData type
             ///< @param classData reference to the metadata representing the type stored in classPtr
-            ///< @return true if a non-null memory address has been returned that can store the convertible type 
+            ///< @return true if a non-null memory address has been returned that can store the convertible type
             virtual bool ConvertFromType(void*& convertibleTypePtr, const TypeId& convertibleTypeId, void* classPtr, const SerializeContext::ClassData& classData, SerializeContext& /*serializeContext*/)
             {
                 if (classData.m_typeId == convertibleTypeId)
@@ -1054,7 +1059,7 @@ namespace AZ
         AZStd::vector<AZ::Uuid> FindClassId(const AZ::Crc32& classNameCrc) const;
 
         /// Find GenericClassData data based on the supplied class ID
-        GenericClassInfo* FindGenericClassInfo(const Uuid& classId) const; 
+        GenericClassInfo* FindGenericClassInfo(const Uuid& classId) const;
 
         /// Creates an AZStd::any based on the provided class Uuid, or returns an empty AZStd::any if no class data is found or the class is virtual
         AZStd::any CreateAny(const Uuid& classId);
@@ -1161,7 +1166,7 @@ namespace AZ
 
             /* Declare a name change of a serialized field
              *  These are used by the serializer to repair old data patches
-             *  
+             *
              */
             ClassBuilder* NameChange(unsigned int fromVersion, unsigned int toVersion, AZStd::string_view oldFieldName, AZStd::string_view newFieldName);
 
@@ -1403,7 +1408,7 @@ namespace AZ
     template<class ValueType>
     struct SerializeGenericTypeInfoImpl
     {
-        // Provides a specific type alias that can be used to create GenericClassInfo of the 
+        // Provides a specific type alias that can be used to create GenericClassInfo of the
         // specified type. By default this is GenericClassInfo class which is abstract
         using ClassInfoType = GenericClassInfo;
 
@@ -1412,19 +1417,59 @@ namespace AZ
         /// By default just return the ValueTypeInfo
         static const Uuid& GetClassTypeId();
     };
-    
-    template<class ValueType>
-    struct SerializeGenericTypeInfo : SerializeGenericTypeInfoImpl<ValueType>
+
+    template<class ValueType,typename = void>
+    struct SerializeGenericTypeInfo;
+
+#define GTI_SPECIALIZE(type)\
+    template<>\
+    struct SerializeGenericTypeInfo<type> : SerializeGenericTypeInfoImpl<type>\
+    {\
+    }
+
+    // Enums integral types and pointers type infos are all using generic impl
+    template<typename T>
+    struct SerializeGenericTypeInfo<T,typename AZStd::enable_if_t<
+            AZStd::is_arithmetic_v<T> || AZStd::is_pointer_v<T> || AZStd::is_enum_v<T>>> : SerializeGenericTypeInfoImpl<T>
     {
     };
-    
+    class EntityId;
+    class EntityComponentIdPair;
+    class Component;
+    class Entity;
+    class NamedEntityId;
+    class AssetManagerComponent;
+    class ComponentConfig;
+    namespace Data
+    {
+        class AssetData;
+        struct AssetId;
+    }
+    GTI_SPECIALIZE(Uuid);
+    GTI_SPECIALIZE(EntityId);
+    GTI_SPECIALIZE(EntityComponentIdPair);
+    GTI_SPECIALIZE(ComponentConfig);
+    GTI_SPECIALIZE(Component);
+    GTI_SPECIALIZE(NamedEntityId);
+    GTI_SPECIALIZE(Entity);
+    GTI_SPECIALIZE(AssetManagerComponent);
+    GTI_SPECIALIZE(Data::AssetData);
+    GTI_SPECIALIZE(Data::AssetId);
+
     // All templated types *need* custom type infos
     // This template has specializations defined for many common types in `AzCore/Serialization/AZStdContainers.inl`
     template<template<typename... TYPES> class Container, typename ...TYPES>
     struct SerializeGenericTypeInfo<Container<TYPES...>>;
-    
-    
-    
+
+    //
+    template<AZStd::size_t N>
+    struct SerializeGenericTypeInfo<AZStd::bitset<N>>;
+    template<typename T, AZStd::size_t N>
+    struct SerializeGenericTypeInfo<AZStd::fixed_trivial_storage<T,N>>;
+    template< class T, AZStd::size_t N >
+    struct SerializeGenericTypeInfo < AZStd::array<T,N>>;
+
+
     /**
     Helper structure to allow the creation of a function pointer for creating AZStd::any objects
     It takes advantage of type erasure to allow a mapping of Uuids to AZStd::any(*)() function pointers
@@ -1967,7 +2012,7 @@ namespace AZ
             m_classData->second.m_name,
             AzTypeInfo<ClassType>::Name());
 
-        // SerializeGenericTypeInfo<ValueType>::GetClassTypeId() is needed solely because 
+        // SerializeGenericTypeInfo<ValueType>::GetClassTypeId() is needed solely because
         // the SerializeGenericTypeInfo specialization for AZ::Data::Asset<T> returns the GetAssetClassId() value
         // and not the AzTypeInfo<AZ::Data::Asset<T>>::Uuid()
         // Therefore in order to remain backwards compatible the SerializeGenericTypeInfo<ValueType>::GetClassTypeId specialization

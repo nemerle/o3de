@@ -62,11 +62,11 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template< typename T>
-    struct SerializeGenericTypeInfo<CustomTest::MyTemplate<T>> : SerializeGenericTypeInfoImpl<CustomTest::MyTemplate<T>>
+    struct SerializeGenericTypeInfo<CustomTest::MyTemplate<T>, void> : SerializeGenericTypeInfoImpl<CustomTest::MyTemplate<T>>
     {
         //treat CustomTest::MyTemplate as generic value type
     };

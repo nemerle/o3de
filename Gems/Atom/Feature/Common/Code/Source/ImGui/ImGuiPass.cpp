@@ -60,6 +60,16 @@ namespace AZ
             ImGuiContext* m_savedContext = nullptr;
         };
 
+        void ImGuiPassData::Reflect(ReflectContext* context)
+        {
+            if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
+            {
+                serializeContext->Class<ImGuiPassData, RPI::RasterPassData>()
+                                ->Version(1)
+                                ->Field("isDefaultImGui", &ImGuiPassData::m_isDefaultImGui);
+            }
+        }
+
         RPI::Ptr<Render::ImGuiPass> ImGuiPass::Create(const RPI::PassDescriptor& descriptor)
         {
             return aznew ImGuiPass(descriptor);

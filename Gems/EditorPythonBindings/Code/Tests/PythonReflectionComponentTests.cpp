@@ -30,16 +30,7 @@
 namespace AZ
 {
     // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T>
-    struct SerializeGenericTypeInfo;
-
-    template<>
-    struct SerializeGenericTypeInfo<AZStd::string_view> : SerializeGenericTypeInfoImpl<AZStd::string_view>
-    {
-        // treat AZStd::string_view as generic value type
-    };
+    GTI_SPECIALIZE(AZStd::string_view);
 
 } // namespace AZ
 

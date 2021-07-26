@@ -216,6 +216,8 @@ namespace AZ
             const Entity* entity);
 
     } // namespace EntityUtils
+    //Serialization helper
+    GTI_SPECIALIZE(EntityUtils::SerializableEntityContainer);
 }   // namespace AZ
 
 #endif  // AZCORE_ENTITY_UTILS_H

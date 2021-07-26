@@ -627,10 +627,6 @@ namespace ScriptCanvas
 namespace AZ
 {
     // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T>
-    struct SerializeGenericTypeInfo;
 
     template<typename S, typename T>
     struct SerializeGenericTypeInfo<ScriptCanvas::TaggedParent<S, T>> : SerializeGenericTypeInfoImpl<ScriptCanvas::TaggedParent<S, T>>

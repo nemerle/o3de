@@ -84,12 +84,12 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     // treat templated GraphScopedIdentifier and TrackSplineInterpolator values as generic value types
     template<typename T>
-    struct SerializeGenericTypeInfo<ScriptCanvas::GraphScopedIdentifier<T>>
+    struct SerializeGenericTypeInfo<ScriptCanvas::GraphScopedIdentifier<T>, void>
         : SerializeGenericTypeInfoImpl<ScriptCanvas::GraphScopedIdentifier<T>>
     {
     };

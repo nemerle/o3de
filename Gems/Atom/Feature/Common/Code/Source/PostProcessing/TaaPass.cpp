@@ -18,6 +18,15 @@
 
 namespace AZ::Render
 {
+    void TaaPassData::Reflect(ReflectContext* context)
+    {
+        if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
+        {
+            serializeContext->Class<TaaPassData, RPI::ComputePassData>()
+                            ->Version(1)
+                            ->Field("NumJitterPositions", &TaaPassData::m_numJitterPositions);
+        }
+    }
     
     RPI::Ptr<TaaPass> TaaPass::Create(const RPI::PassDescriptor& descriptor)
     {

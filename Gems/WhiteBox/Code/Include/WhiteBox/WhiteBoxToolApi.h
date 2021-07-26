@@ -791,11 +791,11 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template< typename T>
-    struct SerializeGenericTypeInfo<WhiteBox::GenericHandle<T>> : SerializeGenericTypeInfoImpl<WhiteBox::GenericHandle<T>>
+    struct SerializeGenericTypeInfo<WhiteBox::GenericHandle<T>, void> : SerializeGenericTypeInfoImpl<WhiteBox::GenericHandle<T>>
     {
         //treat GenericHandle as generic value type
     };

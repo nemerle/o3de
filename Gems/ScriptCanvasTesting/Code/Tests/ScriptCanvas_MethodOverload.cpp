@@ -28,11 +28,6 @@ namespace AZ
 {
     // Serialization helpers
     template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T>
-    struct SerializeGenericTypeInfo;
-
-    template<typename T>
     struct SerializeGenericTypeInfo<SingleTypeNodeable<T>> : SerializeGenericTypeInfoImpl<SingleTypeNodeable<T>>
     {
         // treat SingleTypeNodeable as generic value type

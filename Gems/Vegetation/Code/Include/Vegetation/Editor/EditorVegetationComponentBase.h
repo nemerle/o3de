@@ -56,11 +56,11 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template<typename S, typename T>
-    struct SerializeGenericTypeInfo<Vegetation::EditorVegetationComponentBase<S, T>>
+    struct SerializeGenericTypeInfo<Vegetation::EditorVegetationComponentBase<S, T>, void>
         : SerializeGenericTypeInfoImpl<Vegetation::EditorVegetationComponentBase<S, T>>
     {
         // treat EditorVegetationComponentBase as generic value type

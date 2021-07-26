@@ -156,11 +156,11 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template <typename T, typename NamespaceType>
-    struct SerializeGenericTypeInfo<RHI::Handle<T, NamespaceType>> : SerializeGenericTypeInfoImpl<RHI::Handle<T, NamespaceType>>
+    struct SerializeGenericTypeInfo<RHI::Handle<T, NamespaceType>, void> : SerializeGenericTypeInfoImpl<RHI::Handle<T, NamespaceType>>
     {
         //treat Handle as generic value type
     };

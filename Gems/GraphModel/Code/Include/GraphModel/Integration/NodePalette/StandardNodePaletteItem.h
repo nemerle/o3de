@@ -107,12 +107,7 @@ namespace AZ
 {
     // Serialization helpers
     template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T>
-    struct SerializeGenericTypeInfo;
-
-    template<typename T>
-    struct SerializeGenericTypeInfo<GraphModelIntegration::CreateStandardNodeMimeEvent<T>>
+    struct SerializeGenericTypeInfo<GraphModelIntegration::CreateStandardNodeMimeEvent<T>, void>
         : SerializeGenericTypeInfoImpl<GraphModelIntegration::CreateStandardNodeMimeEvent<T>>
     {
         // treat CreateStandardNodeMimeEvent as generic value type

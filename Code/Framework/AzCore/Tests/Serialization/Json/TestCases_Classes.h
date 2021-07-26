@@ -190,11 +190,11 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
     
     template< typename T>
-    struct SerializeGenericTypeInfo<JsonSerializationTests::TemplatedClass<T>> : SerializeGenericTypeInfoImpl<JsonSerializationTests::TemplatedClass<T>>
+    struct SerializeGenericTypeInfo<JsonSerializationTests::TemplatedClass<T>, void> : SerializeGenericTypeInfoImpl<JsonSerializationTests::TemplatedClass<T>>
     {
         //treat JsonSerializationTests::TemplatedClass template as generic value type
     };

@@ -104,11 +104,11 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     template<typename R, typename S, typename T>
-    struct SerializeGenericTypeInfo<AzToolsFramework::Components::EditorComponentAdapter<R, S, T>>
+    struct SerializeGenericTypeInfo<AzToolsFramework::Components::EditorComponentAdapter<R, S, T>, void>
         : SerializeGenericTypeInfoImpl<AzToolsFramework::Components::EditorComponentAdapter<R, S, T>>
     {
         // treat VertexContainer as generic value type

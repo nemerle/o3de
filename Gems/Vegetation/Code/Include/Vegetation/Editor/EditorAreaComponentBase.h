@@ -91,13 +91,9 @@ namespace Vegetation
 namespace AZ
 {
     // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T>
-    struct SerializeGenericTypeInfo;
 
     template<typename S, typename T>
-    struct SerializeGenericTypeInfo<Vegetation::EditorAreaComponentBase<S, T>>
+    struct SerializeGenericTypeInfo<Vegetation::EditorAreaComponentBase<S, T>, void>
         : SerializeGenericTypeInfoImpl<Vegetation::EditorAreaComponentBase<S, T>>
     {
         // treat VertexContainer as generic value type

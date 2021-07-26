@@ -1142,6 +1142,7 @@ namespace AZ
         }
     } // namespace IdUtils
 
+    GTI_SPECIALIZE(SliceComponent::InstantiatedContainer);
 } // namespace AZ
 
 

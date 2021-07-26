@@ -37,11 +37,11 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
     
     template< typename IndexType>
-    struct SerializeGenericTypeInfo<RHI::NameIdReflectionMap<IndexType>> : SerializeGenericTypeInfoImpl<RHI::NameIdReflectionMap<IndexType>>
+    struct SerializeGenericTypeInfo<RHI::NameIdReflectionMap<IndexType>, void> : SerializeGenericTypeInfoImpl<RHI::NameIdReflectionMap<IndexType>>
     {
         //treat NameIdReflectionMap as generic value type
     };

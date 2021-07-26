@@ -49,32 +49,32 @@ namespace AZ
     // Serialization helpers
     template< typename T>
     struct SerializeGenericTypeInfoImpl;
-    template< typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
     
     //treat templated tuple values as generic value types
     template< typename T>
-    struct SerializeGenericTypeInfo<Color_tpl<T>> : SerializeGenericTypeInfoImpl<Color_tpl<T>>
+    struct SerializeGenericTypeInfo<Color_tpl<T>, void> : SerializeGenericTypeInfoImpl<Color_tpl<T>>
     {
     };
     template< typename T>
-    struct SerializeGenericTypeInfo<Vec2_tpl<T>> : SerializeGenericTypeInfoImpl<Vec2_tpl<T>>
+    struct SerializeGenericTypeInfo<Vec2_tpl<T>, void> : SerializeGenericTypeInfoImpl<Vec2_tpl<T>>
     {
     };
     template< typename T>
-    struct SerializeGenericTypeInfo<Vec3_tpl<T>> : SerializeGenericTypeInfoImpl<Vec3_tpl<T>>
+    struct SerializeGenericTypeInfo<Vec3_tpl<T>, void> : SerializeGenericTypeInfoImpl<Vec3_tpl<T>>
     {
     };
     template< typename T>
-    struct SerializeGenericTypeInfo<Vec4_tpl<T>> : SerializeGenericTypeInfoImpl<Vec4_tpl<T>>
+    struct SerializeGenericTypeInfo<Vec4_tpl<T>, void> : SerializeGenericTypeInfoImpl<Vec4_tpl<T>>
     {
     };
     template< typename T>
-    struct SerializeGenericTypeInfo<Quat_tpl<T>> : SerializeGenericTypeInfoImpl<Quat_tpl<T>>
+    struct SerializeGenericTypeInfo<Quat_tpl<T>, void> : SerializeGenericTypeInfoImpl<Quat_tpl<T>>
     {
     };
     template< typename T>
-    struct SerializeGenericTypeInfo<Ang3_tpl<T>> : SerializeGenericTypeInfoImpl<Ang3_tpl<T>>
+    struct SerializeGenericTypeInfo<Ang3_tpl<T>, void> : SerializeGenericTypeInfoImpl<Ang3_tpl<T>>
     {
     };
 } // namespace AZ

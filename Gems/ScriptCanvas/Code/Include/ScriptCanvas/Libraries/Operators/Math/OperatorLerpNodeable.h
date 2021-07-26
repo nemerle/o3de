@@ -191,11 +191,6 @@ namespace AZ
 {
     // Serialization helpers
     template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T>
-    struct SerializeGenericTypeInfo;
-
-    template<typename T>
     struct SerializeGenericTypeInfo<ScriptCanvas::Nodes::LerpBetweenNodeable<T>>
         : SerializeGenericTypeInfoImpl<ScriptCanvas::Nodes::LerpBetweenNodeable<T>>
     {

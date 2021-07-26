@@ -197,12 +197,12 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<class ValueType, typename>
     struct SerializeGenericTypeInfo;
 
     // treat templated SimpleAssetReference values as generic value types
     template<typename T>
-    struct SerializeGenericTypeInfo<AzFramework::SimpleAssetReference<T>>
+    struct SerializeGenericTypeInfo<AzFramework::SimpleAssetReference<T>, void>
         : SerializeGenericTypeInfoImpl<AzFramework::SimpleAssetReference<T>>
     {
     };
