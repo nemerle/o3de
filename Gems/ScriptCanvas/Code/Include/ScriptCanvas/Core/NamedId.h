@@ -40,12 +40,12 @@ namespace ScriptCanvas
         }
 
         AZStd::string m_name;
-        
+
         NamedId() = default;
         virtual ~NamedId() = default;
 
         NamedId(const NamedId&) = default;
-        
+
         explicit NamedId(const t_Id& id)
             : t_Id(id)
             , m_name("")
@@ -55,7 +55,7 @@ namespace ScriptCanvas
             : t_Id(id)
             , m_name(name)
         {}
-        
+
         AZStd::string ToString() const
         {
             return AZStd::string::format("%s [%s]", m_name.data(), t_Id::ToString().data());
@@ -101,9 +101,9 @@ namespace ScriptCanvas
             return t_Id::operator>(rhs);
         }
     };
-    
-    
-    
+
+
+
 }   // namespace ScriptCanvas
 
 namespace AZ
@@ -111,11 +111,11 @@ namespace AZ
     // Serialization helpers
     template<typename T>
     struct SerializeGenericTypeInfoImpl;
-    template<typename T>
+    template<typename T, typename>
     struct SerializeGenericTypeInfo;
 
     template<typename T>
-    struct SerializeGenericTypeInfo<ScriptCanvas::NamedId<T>> : SerializeGenericTypeInfoImpl<ScriptCanvas::NamedId<T>>
+    struct SerializeGenericTypeInfo<ScriptCanvas::NamedId<T>, void> : SerializeGenericTypeInfoImpl<ScriptCanvas::NamedId<T>>
     {
         // treat NamedId as generic value type
     };

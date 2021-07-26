@@ -1420,41 +1420,20 @@ namespace AZ
 
     template<class ValueType,typename = void>
     struct SerializeGenericTypeInfo;
-
-#define GTI_SPECIALIZE(type)\
-    template<>\
-    struct SerializeGenericTypeInfo<type> : SerializeGenericTypeInfoImpl<type>\
-    {\
-    }
-
+#if 0
     // Enums integral types and pointers type infos are all using generic impl
     template<typename T>
     struct SerializeGenericTypeInfo<T,typename AZStd::enable_if_t<
             AZStd::is_arithmetic_v<T> || AZStd::is_pointer_v<T> || AZStd::is_enum_v<T>>> : SerializeGenericTypeInfoImpl<T>
     {
     };
-    class EntityId;
-    class EntityComponentIdPair;
-    class Component;
-    class Entity;
-    class NamedEntityId;
-    class AssetManagerComponent;
-    class ComponentConfig;
-    namespace Data
+#else
+    template<typename T>
+    struct SerializeGenericTypeInfo<T,void> : SerializeGenericTypeInfoImpl<T>
     {
-        class AssetData;
-        struct AssetId;
-    }
-    GTI_SPECIALIZE(Uuid);
-    GTI_SPECIALIZE(EntityId);
-    GTI_SPECIALIZE(EntityComponentIdPair);
-    GTI_SPECIALIZE(ComponentConfig);
-    GTI_SPECIALIZE(Component);
-    GTI_SPECIALIZE(NamedEntityId);
-    GTI_SPECIALIZE(Entity);
-    GTI_SPECIALIZE(AssetManagerComponent);
-    GTI_SPECIALIZE(Data::AssetData);
-    GTI_SPECIALIZE(Data::AssetId);
+    };
+#endif
+
 
     // All templated types *need* custom type infos
     // This template has specializations defined for many common types in `AzCore/Serialization/AZStdContainers.inl`
@@ -1468,7 +1447,8 @@ namespace AZ
     struct SerializeGenericTypeInfo<AZStd::fixed_trivial_storage<T,N>>;
     template< class T, AZStd::size_t N >
     struct SerializeGenericTypeInfo < AZStd::array<T,N>>;
-
+    template<class A>
+    struct SerializeGenericTypeInfo< AZStd::vector<AZ::u8, A> >;
 
     /**
     Helper structure to allow the creation of a function pointer for creating AZStd::any objects

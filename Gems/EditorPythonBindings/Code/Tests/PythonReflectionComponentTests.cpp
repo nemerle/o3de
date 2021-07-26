@@ -30,7 +30,11 @@
 namespace AZ
 {
     // Serialization helpers
-    GTI_SPECIALIZE(AZStd::string_view);
+    template<>
+    struct SerializeGenericTypeInfo<AZStd::string_view,void> : SerializeGenericTypeInfoImpl<AZStd::string_view>
+    {
+    };
+
 
 } // namespace AZ
 

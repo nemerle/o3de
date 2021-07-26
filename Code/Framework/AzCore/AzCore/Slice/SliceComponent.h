@@ -1141,8 +1141,6 @@ namespace AZ
             return replaced;
         }
     } // namespace IdUtils
-
-    GTI_SPECIALIZE(SliceComponent::InstantiatedContainer);
 } // namespace AZ
 
 
