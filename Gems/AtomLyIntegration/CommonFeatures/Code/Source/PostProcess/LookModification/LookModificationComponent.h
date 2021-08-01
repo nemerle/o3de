@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Components/ComponentAdapter.h>
 #include <AtomLyIntegration/CommonFeatures/PostProcess/LookModification/LookModificationComponentConfig.h>
 #include <AtomLyIntegration/CommonFeatures/PostProcess/LookModification/LookModificationComponentConstants.h>

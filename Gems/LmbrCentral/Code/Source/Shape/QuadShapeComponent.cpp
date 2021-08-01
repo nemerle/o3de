@@ -13,24 +13,24 @@
 
 namespace LmbrCentral
 {
-    void QuadShapeComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void QuadShapeComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
         provided.push_back(AZ_CRC("QuadShapeService", 0xe449b0fc));
     }
 
-    void QuadShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void QuadShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
         incompatible.push_back(AZ_CRC("QuadShapeService", 0xe449b0fc));
     }
 
-    void QuadShapeComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void QuadShapeComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
     }
 
-    void QuadShapeComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void QuadShapeComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }

@@ -14,6 +14,7 @@
 #include <Atom/Viewport/MaterialViewportRequestBus.h>
 #include <Atom/Viewport/MaterialViewportSettings.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Asset/AssetCatalogBus.h>
 
 namespace MaterialEditor
@@ -34,9 +35,9 @@ namespace MaterialEditor
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
     private:
         ////////////////////////////////////////////////////////////////////////

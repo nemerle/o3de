@@ -9,12 +9,16 @@
 #include <AzFramework/Driller/DrillToFileComponent.h>
 
 #include <AzCore/Driller/Driller.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/IO/FileIO.h>
 
 namespace AzFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(DrillToFileComponent)
+
     void DrillToFileComponent::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context);

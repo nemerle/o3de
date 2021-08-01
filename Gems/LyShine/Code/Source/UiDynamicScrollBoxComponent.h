@@ -15,6 +15,7 @@
 #include <LyShine/UiComponentTypes.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Vector2.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,18 +105,18 @@ public: // member functions
 
 public:  // static member functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiDynamicScrollBoxService", 0x11112f1a));
         provided.push_back(AZ_CRC("UiDynamicContentService", 0xc5af0b83));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiDynamicContentService", 0xc5af0b83));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiElementService", 0x3dca7ad4));
         required.push_back(AZ_CRC("UiTransformService", 0x3a838e34));
@@ -325,7 +326,7 @@ protected: // member functions
         float& scrollChangeOut);
 
     // Calculate the change in the content's top or left when resizing content with the specified delta.
-    // Used to get the scroll delta needed to keep the beginning (top or left) of the content element 
+    // Used to get the scroll delta needed to keep the beginning (top or left) of the content element
     // at the same position after a content size change
     float CalculateContentBeginningDeltaAfterSizeChange(float contentSizeDelta) const;
 

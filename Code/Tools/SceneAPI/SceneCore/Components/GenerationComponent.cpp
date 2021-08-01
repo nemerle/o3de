@@ -6,11 +6,15 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <SceneAPI/SceneCore/Components/GenerationComponent.h>
 
 namespace AZ::SceneAPI::SceneCore
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(GenerationComponent)
+
     void GenerationComponent::Activate()
     {
         ActivateBindings();

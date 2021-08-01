@@ -15,6 +15,7 @@
 #include <LyShine/IRenderGraph.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class UiMaskComponent
@@ -62,18 +63,18 @@ public: // member functions
 
 public:  // static member functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiMaskService", 0x806f6dac));
         provided.push_back(AZ_CRC("UiRenderControlService", 0x4e302454));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiRenderControlService", 0x4e302454));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         // Note that the UiVisualService is not required because a child mask element can be used instead.
         required.push_back(AZ_CRC("UiElementService", 0x3dca7ad4));
@@ -190,7 +191,7 @@ private: // data
     //! When rendering to a texture this is our depth surface, we use the same one for rendering the mask elements
     //! and the content elements - it is cleared in between.
     SDepthTexture* m_renderTargetDepthSurface = nullptr;
-    
+
     //! When rendering to a texture this is the texture ID of the render target
     int m_maskRenderTargetHandle = -1;
 

@@ -126,22 +126,4 @@ namespace GradientSignal
 
 } // namespace GradientSignal
 
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template<typename S,typename T>
-    struct SerializeGenericTypeInfo<GradientSignal::EditorGradientComponentBase<S,T>, void>
-        : SerializeGenericTypeInfoImpl<GradientSignal::EditorGradientComponentBase<S,T>>
-    {
-        // treat EditorGradientComponentBase as generic value type
-    };
-
-} // namespace AZ
-
-
 #include "EditorGradientComponentBase.inl"

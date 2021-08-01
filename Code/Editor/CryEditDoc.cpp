@@ -16,6 +16,7 @@
 
 // AzCore
 #include <AzCore/Component/TransformBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/Utils/Utils.h>
@@ -2256,6 +2257,9 @@ void CCryEditDoc::OnSliceInstantiationFailed(const AZ::Data::AssetId& sliceAsset
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(CryEditDocFuncsHandler)
+
     void CryEditDocFuncsHandler::Reflect(AZ::ReflectContext* context)
     {
         if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))

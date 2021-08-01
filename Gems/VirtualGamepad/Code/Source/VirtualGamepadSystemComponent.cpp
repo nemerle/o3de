@@ -17,26 +17,26 @@
 namespace VirtualGamepad
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void VirtualGamepadSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("VirtualGamepadService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void VirtualGamepadSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("VirtualGamepadService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void VirtualGamepadSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("InputSystemService", 0x5438d51a));
         required.push_back(AZ_CRC("LyShineService", 0xae98ab29));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void VirtualGamepadSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

@@ -12,6 +12,7 @@
 
 #include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/containers/fixed_vector.h>
 #include <AzCore/Math/Matrix3x4.h>
 
@@ -46,7 +47,7 @@ namespace AZ::AtomBridge
     };
 
     //! Utility class to collect line segments when the number of segments is known at compile time.
-    template <int MaxNumLines> 
+    template <int MaxNumLines>
     struct SingleColorStaticSizeLineHelper
     {
         bool AddLineSegment(const AZ::Vector3& lineStart, const AZ::Vector3& lineEnd)
@@ -131,7 +132,7 @@ namespace AZ::AtomBridge
 
         ////////////////////////////////////////////////////////////////////////////
         // AzFramework/Entity/DebugDisplayRequestBus::Handler overrides ...
-        // Partial implementation of the DebugDisplayRequestBus on Atom. 
+        // Partial implementation of the DebugDisplayRequestBus on Atom.
         // Commented out function prototypes are remaining part of the api
         // waiting to be implemented.
         // work tracked in [ATOM-3459]
@@ -211,28 +212,28 @@ namespace AZ::AtomBridge
         };
         template<typename LineStorageType>
         void CreateAxisAlignedArc(
-            LineStorageType& lines, 
+            LineStorageType& lines,
             float segmentAngle, // radians
             float minAngle,     // radians
             float maxAngle,     // radians
-            const AZ::Vector3& position, 
-            const AZ::Vector3& radiusV3, 
-            CircleAxis circleAxis, 
-            LineSegmentFilterFunc filterFunc = 
+            const AZ::Vector3& position,
+            const AZ::Vector3& radiusV3,
+            CircleAxis circleAxis,
+            LineSegmentFilterFunc filterFunc =
                 [](const AZ::Vector3&, const AZ::Vector3&, int)
                 {return true;}
             );
-        
+
         template<typename LineStorageType>
         void CreateArbitraryAxisArc(
-            LineStorageType& lines, 
+            LineStorageType& lines,
             float segmentAngle, // radians
             float minAngle,     // radians
             float maxAngle,     // radians
-            const AZ::Vector3& position, 
-            const AZ::Vector3& radiusV3, 
-            const AZ::Vector3& axis, 
-            LineSegmentFilterFunc filterFunc = 
+            const AZ::Vector3& position,
+            const AZ::Vector3& radiusV3,
+            const AZ::Vector3& axis,
+            LineSegmentFilterFunc filterFunc =
                 [](const AZ::Vector3&, const AZ::Vector3&, int)
                 {return true;}
             );
@@ -251,7 +252,7 @@ namespace AZ::AtomBridge
         AZStd::vector<AZ::Vector3> ToWorldSpaceVector(const AZStd::vector<AZ::Vector3>& vectors) const;
 
         void CalcBasisVectors(const AZ::Vector3& n, AZ::Vector3& b1, AZ::Vector3& b2) const;
-        
+
         const AZ::Matrix3x4& GetCurrentTransform() const;
 
         void UpdateAuxGeom(RPI::Scene* scene, AZ::RPI::View* view);
@@ -292,7 +293,7 @@ namespace AZ::AtomBridge
         basis1 = AZ::Vector3(1.0f - unitVector.GetX() * unitVector.GetX() * a, b, -unitVector.GetX());
         basis2 = AZ::Vector3(b, 1.0f - unitVector.GetY() * unitVector.GetY() * a, -unitVector.GetY());
     }
-    
+
     template<typename LineStorageType>
     void AtomDebugDisplayViewportInterface::CreateAxisAlignedArc(
                     LineStorageType& lines,

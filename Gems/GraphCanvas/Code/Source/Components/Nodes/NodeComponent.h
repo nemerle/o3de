@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 #include <AzCore/std/string/string_view.h>
 
@@ -48,23 +49,23 @@ namespace GraphCanvas
         ~NodeComponent() override;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_NodeService", 0xcc0f32cc));
             provided.push_back(AZ_CRC("GraphCanvas_SceneMemberService", 0xe9759a2d));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("GraphCanvas_NodeService", 0xcc0f32cc));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("GraphCanvas_GeometryService", 0x80981600));
             required.push_back(StyledGraphicItemServiceCrc);
@@ -91,7 +92,7 @@ namespace GraphCanvas
         void SignalMemberSetupComplete() override;
 
         AZ::EntityId GetScene() const override;
-        ////        
+        ////
 
         // SceneMemberNotificationsBus
         void OnSceneReady() override;

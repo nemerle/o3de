@@ -27,7 +27,7 @@ namespace AzFramework
     {
     public:
 
-        AZ_COMPONENT(CustomAssetTypeComponent, "{E19B2FA4-60F1-4B7C-AF14-7C7A7D8DCFC2}");
+        AZ_COMPONENT_SPLIT(CustomAssetTypeComponent, "{E19B2FA4-60F1-4B7C-AF14-7C7A7D8DCFC2}");
 
         void Activate() override;
         void Deactivate() override;

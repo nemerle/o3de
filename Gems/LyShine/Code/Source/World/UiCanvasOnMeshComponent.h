@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <LyShine/Bus/World/UiCanvasRefBus.h>
 #include <LyShine/Bus/World/UiCanvasOnMeshBus.h>
 #include <LyShine/Bus/UiCanvasManagerBus.h>
@@ -51,17 +52,17 @@ public: // member functions
 
 public: // static member functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiCanvasOnMeshService", 0xd2539f92));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiCanvasOnMeshService", 0xd2539f92));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("MeshService", 0x71d8a455));
         required.push_back(AZ_CRC("UiCanvasRefService", 0xb4cb5ef4));

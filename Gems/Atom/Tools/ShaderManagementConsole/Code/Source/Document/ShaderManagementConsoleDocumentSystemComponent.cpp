@@ -100,7 +100,7 @@ namespace ShaderManagementConsole
         }
     }
 
-    void ShaderManagementConsoleDocumentSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void ShaderManagementConsoleDocumentSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AssetProcessorToolsConnection", 0x734669bc));
         required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
@@ -108,12 +108,12 @@ namespace ShaderManagementConsole
         required.push_back(AZ_CRC("RPISystem", 0xf2add773));
     }
 
-    void ShaderManagementConsoleDocumentSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ShaderManagementConsoleDocumentSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ShaderManagementConsoleDocumentSystemService"));
     }
 
-    void ShaderManagementConsoleDocumentSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void ShaderManagementConsoleDocumentSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ShaderManagementConsoleDocumentSystemService"));
     }

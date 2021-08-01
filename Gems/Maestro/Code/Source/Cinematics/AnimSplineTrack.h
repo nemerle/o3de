@@ -44,9 +44,9 @@ public:
     {
         m_spline.reset();
     }
-    
+
     //////////////////////////////////////////////////////////////////////////
-    // for intrusive_ptr support 
+    // for intrusive_ptr support
     void add_ref() override;
     void release() override;
     //////////////////////////////////////////////////////////////////////////
@@ -356,9 +356,9 @@ public:
         return false;
     }
 
-    unsigned int GetId() const override 
-    { 
-        return m_id; 
+    unsigned int GetId() const override
+    {
+        return m_id;
     }
 
     void SetId(unsigned int id) override
@@ -653,21 +653,6 @@ inline bool TAnimSplineTrack<T>::SerializeSelection(XmlNodeRef& xmlNode, bool bL
     }
     return true;
 }
-
-namespace AZ 
-{
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-    
-    //treat templated TAnimSplineTrack values as generic value types
-    template< typename T>
-    struct SerializeGenericTypeInfo<TAnimSplineTrack<T>, void> : SerializeGenericTypeInfoImpl<TAnimSplineTrack<T>>
-    {
-    };
-} // namespace AZ
 
 // This is the current main.
 #include "AnimSplineTrack_Vec2Specialization.h"

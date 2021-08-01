@@ -10,6 +10,7 @@
 #include <qrect.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityId.h>
 
 #include <AzCore/Math/Vector2.h>
@@ -29,7 +30,7 @@ namespace GraphCanvas
     public:
         AZ_COMPONENT(BookmarkManagerComponent, "{A8F08DEA-0F42-4236-9E1E-B93C964B113F}");
         static void Reflect(AZ::ReflectContext* context);
-        
+
         BookmarkManagerComponent();
         ~BookmarkManagerComponent();
 
@@ -40,7 +41,7 @@ namespace GraphCanvas
 
         // BookmarkNotifications
         ////
-        
+
         // BookmarkRequestBus
         bool CreateBookmarkAnchor(const AZ::Vector2& position, int bookmarkIndex) override;
 
@@ -50,12 +51,12 @@ namespace GraphCanvas
         bool IsBookmarkRegistered(const AZ::EntityId& bookmarkId) const override;
         AZ::EntityId FindBookmarkForShortcut(int shortcut) const override;
 
-        bool RequestShortcut(const AZ::EntityId& bookmarkId, int quickIndex) override;        
+        bool RequestShortcut(const AZ::EntityId& bookmarkId, int quickIndex) override;
 
         void ActivateShortcut(int index) override;
         void JumpToBookmark(const AZ::EntityId& bookmarkId) override;
         ////
-        
+
     private:
 
         void UnregisterShortcut(const AZ::EntityId& bookmarkId);

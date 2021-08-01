@@ -10,6 +10,7 @@
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/EBus/EBus.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 namespace GraphCanvas
@@ -21,13 +22,13 @@ namespace GraphCanvas
     public:
         static const AZ::EBusAddressPolicy AddressPolicy = AZ::EBusAddressPolicy::ById;
         using BusIdType = AZ::EntityId;
-        
+
         virtual AZ::Component* GetPropertyComponent() = 0;
 
         virtual void AddBusId(const AZ::EntityId& busId) = 0;
         virtual void RemoveBusId(const AZ::EntityId& busId) = 0;
     };
-    
+
     using GraphCanvasPropertyBus = AZ::EBus<GraphCanvasPropertyInterface>;
 
     class GraphCanvasPropertyInterfaceNotifications
@@ -75,8 +76,8 @@ namespace GraphCanvas
     {
     public:
         AZ_COMPONENT(GraphCanvasPropertyComponent, "{12408A55-4742-45B2-8694-EE1C80430FB4}");
-        static void Reflect(AZ::ReflectContext* context) 
-        { 
+        static void Reflect(AZ::ReflectContext* context)
+        {
             if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
             {
                 serializeContext->Class<GraphCanvasPropertyComponent, AZ::Component>()

@@ -105,7 +105,7 @@ namespace AzToolsFramework
         , private SourceControlConnectionRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(PerforceComponent, "{680C2C8B-37CA-42EB-9E50-06AB2474201E}")
+        AZ_COMPONENT_SPLIT(PerforceComponent, "{680C2C8B-37CA-42EB-9E50-06AB2474201E}")
 
         AZStd::string m_autoChangelistDescription;
 
@@ -122,8 +122,8 @@ namespace AzToolsFramework
 
     private:
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         //////////////////////////////////////////////////////////////////////////
         // SourceControlCommandBus::Handler overrides

@@ -42,17 +42,17 @@ namespace AZ
             }
         }
 
-        void SsaoComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void SsaoComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("SsaoService"));
         }
 
-        void SsaoComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void SsaoComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("SsaoService"));
         }
 
-        void SsaoComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void SsaoComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("PostFXLayerService"));
         }

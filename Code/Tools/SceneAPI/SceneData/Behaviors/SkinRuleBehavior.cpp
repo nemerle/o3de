@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <SceneAPI/SceneCore/Containers/Scene.h>
@@ -21,6 +22,9 @@ namespace AZ
     {
         namespace SceneData
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(SkinRuleBehavior)
+
             void SkinRuleBehavior::Reflect(AZ::ReflectContext* context)
             {
                 SkinRule::Reflect(context);

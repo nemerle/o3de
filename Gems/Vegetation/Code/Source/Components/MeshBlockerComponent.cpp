@@ -68,18 +68,18 @@ namespace Vegetation
         }
     }
 
-    void MeshBlockerComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void MeshBlockerComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         AreaComponentBase::GetProvidedServices(services);
     }
 
-    void MeshBlockerComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void MeshBlockerComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         AreaComponentBase::GetIncompatibleServices(services);
         services.push_back(AZ_CRC("VegetationModifierService", 0xc551fca6));
     }
 
-    void MeshBlockerComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void MeshBlockerComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         AreaComponentBase::GetRequiredServices(services);
         services.push_back(AZ_CRC("MeshService", 0x71d8a455));

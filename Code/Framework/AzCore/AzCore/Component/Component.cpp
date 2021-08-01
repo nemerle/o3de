@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -16,6 +17,9 @@
 
 namespace AZ
 {
+    // Class template instantations
+    template class AZ::EBus<ComponentDescriptor, ComponentDescriptorBusTraits>;
+
     //=========================================================================
     // Component
     // [6/15/2012]

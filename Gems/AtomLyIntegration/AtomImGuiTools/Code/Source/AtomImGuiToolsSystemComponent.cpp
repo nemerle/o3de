@@ -35,22 +35,22 @@ namespace AtomImGuiTools
         }
     }
 
-    void AtomImGuiToolsSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AtomImGuiToolsSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("AtomImGuiToolsService"));
     }
 
-    void AtomImGuiToolsSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AtomImGuiToolsSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("AtomImGuiToolsService"));
     }
 
-    void AtomImGuiToolsSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void AtomImGuiToolsSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
 
-    void AtomImGuiToolsSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void AtomImGuiToolsSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

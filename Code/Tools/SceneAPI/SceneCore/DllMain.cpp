@@ -9,6 +9,7 @@
 #if !defined(AZ_MONOLITHIC_BUILD)
 
 #include <AzCore/Component/EntityBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/EBus/EBus.h>
 #include <AzCore/Module/Environment.h>

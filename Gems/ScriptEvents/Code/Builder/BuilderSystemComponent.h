@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
 
 namespace ScriptEventsBuilder
@@ -24,7 +25,7 @@ namespace ScriptEventsBuilder
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         ////////////////////////////////////////////////////////////////////////
         // AZ::Component...

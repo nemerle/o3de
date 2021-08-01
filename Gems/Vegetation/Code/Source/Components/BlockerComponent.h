@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Math/Aabb.h>
 #include <AzCore/Math/Transform.h>
@@ -53,9 +54,9 @@ namespace Vegetation
         friend class EditorBlockerComponent;
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(BlockerComponent, BlockerComponentTypeId, AreaComponentBase);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         BlockerComponent(const BlockerConfig& configuration);

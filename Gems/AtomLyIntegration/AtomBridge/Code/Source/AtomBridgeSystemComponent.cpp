@@ -65,17 +65,17 @@ namespace AZ
         {
         }
 
-        void AtomBridgeSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void AtomBridgeSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("AtomBridgeService", 0xdb816a99));
         }
 
-        void AtomBridgeSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+        void AtomBridgeSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("AtomBridgeService", 0xdb816a99));
         }
 
-        void AtomBridgeSystemComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+        void AtomBridgeSystemComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ::RHI::Factory::GetComponentService());
             required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
@@ -83,7 +83,7 @@ namespace AZ
             required.push_back(AZ_CRC("BootstrapSystemComponent", 0xb8f32711));
         }
 
-        void AtomBridgeSystemComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent)
+        void AtomBridgeSystemComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& dependent)
         {
             AZ_UNUSED(dependent);
         }

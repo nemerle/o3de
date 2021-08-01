@@ -10,6 +10,7 @@
 #include <AzCore/Math/Transform.h>
 #include <AzCore/Component/EntityBus.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <LmbrCentral/Shape/ShapeComponentBus.h>
 #include <LmbrCentral/Shape/CompoundShapeComponentBus.h>
@@ -28,14 +29,14 @@ namespace LmbrCentral
 
         AZ_COMPONENT(CompoundShapeComponent, "{C0C817DE-843F-44C8-9FC1-989CDE66B662}");
 
-        CompoundShapeComponent() : 
+        CompoundShapeComponent() :
             m_currentlyActiveChildren(0)
         {}
 
         // AZ::Component interface implementation
         void Activate() override;
         void Deactivate() override;
-        
+
         // ShapeComponent::Handler implementation
         AZ::Crc32 GetShapeType() override
         {
@@ -47,7 +48,7 @@ namespace LmbrCentral
         bool IsPointInside(const AZ::Vector3& point) override;
         float DistanceSquaredFromPoint(const AZ::Vector3& point) override;
         bool IntersectRay(const AZ::Vector3& src, const AZ::Vector3& dir, float& distance) override;
-        
+
         // CompoundShapeComponentRequestsBus::Handler implementation
         CompoundShapeConfiguration GetCompoundShapeConfiguration() override
         {
@@ -60,15 +61,15 @@ namespace LmbrCentral
 
         // ShapeComponentNotificationsBus::MultiHandler
         void OnShapeChanged(ShapeComponentNotifications::ShapeChangeReasons) override;
-    
+
     protected:
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
             provided.push_back(AZ_CRC("CompoundShapeService", 0x4f7c640a));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
             incompatible.push_back(AZ_CRC("CompoundShapeService", 0x4f7c640a));

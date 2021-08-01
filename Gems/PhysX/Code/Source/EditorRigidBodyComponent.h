@@ -55,25 +55,25 @@ namespace PhysX
         explicit EditorRigidBodyComponent(const EditorRigidBodyConfiguration& configuration);
         ~EditorRigidBodyComponent() = default;
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("PhysicsWorldBodyService", 0x944da0cc));
             provided.push_back(AZ_CRC("PhysXRigidBodyService", 0x1d4c64a8));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("PhysXRigidBodyService", 0x1d4c64a8));
             incompatible.push_back(AZ_CRC("PhysicsService", 0xa7350d22));
             incompatible.push_back(AZ_CRC("LegacyCryPhysicsService", 0xbb370351));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("PhysXColliderService", 0x4ff43f7c));
             dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));

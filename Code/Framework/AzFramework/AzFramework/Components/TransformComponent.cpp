@@ -12,6 +12,7 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Component/Entity.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/Math/Transform.h>
@@ -82,6 +83,9 @@ namespace AZ
 
 namespace AzFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(TransformComponent)
+
     bool TransformComponentVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 3)
@@ -670,7 +674,7 @@ namespace AzFramework
         return true;
     }
 
-    void TransformComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void TransformComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("TransformService", 0x8ee22c50));
     }

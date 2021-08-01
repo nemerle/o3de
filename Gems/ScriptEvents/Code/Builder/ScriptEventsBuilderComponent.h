@@ -14,6 +14,7 @@
 #include <AssetBuilderSDK/AssetBuilderSDK.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace ScriptEventsBuilder
 {
@@ -28,9 +29,9 @@ namespace ScriptEventsBuilder
         ScriptEventsBuilderComponent() = default;
         ~ScriptEventsBuilderComponent() override = default;
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         //////////////////////////////////////////////////////////////////////////
         // AZ::Component

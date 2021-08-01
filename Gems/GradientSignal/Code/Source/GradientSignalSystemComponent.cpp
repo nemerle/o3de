@@ -87,22 +87,22 @@ namespace GradientSignal
         }
     }
 
-    void GradientSignalSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void GradientSignalSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("GradientSignalService", 0xa7a775e2));
     }
 
-    void GradientSignalSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void GradientSignalSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("GradientSignalService", 0xa7a775e2));
     }
 
-    void GradientSignalSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void GradientSignalSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         (void)required;
     }
 
-    void GradientSignalSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void GradientSignalSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         (void)dependent;
     }

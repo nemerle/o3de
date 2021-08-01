@@ -11,6 +11,7 @@
 #include <LyShine/UiComponentTypes.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 #include "UiInteractableState.h"
@@ -52,21 +53,21 @@ protected: // member functions
 
 protected: // static member functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiDropTargetService", 0x39a63abd));
         provided.push_back(AZ_CRC("UiNavigationService"));
         provided.push_back(AZ_CRC("UiStateActionsService"));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiDropTargetService", 0x39a63abd));
         incompatible.push_back(AZ_CRC("UiNavigationService"));
         incompatible.push_back(AZ_CRC("UiStateActionsService"));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiElementService", 0x3dca7ad4));
         required.push_back(AZ_CRC("UiTransformService", 0x3a838e34));

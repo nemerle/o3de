@@ -180,18 +180,18 @@ namespace Vegetation
         m_surfaceTagsToSnapTo.push_back(SurfaceData::SurfaceTag(tag));
     }
 
-    void PositionModifierComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void PositionModifierComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationModifierService", 0xc551fca6));
         services.push_back(AZ_CRC("VegetationPositionModifierService", 0xe7d7293e));
     }
 
-    void PositionModifierComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void PositionModifierComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationPositionModifierService", 0xe7d7293e));
     }
 
-    void PositionModifierComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void PositionModifierComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
     }

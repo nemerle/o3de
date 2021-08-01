@@ -672,22 +672,22 @@ namespace Twitch
         }
     }
 
-    void TwitchSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void TwitchSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("TwitchService"));
     }
 
-    void TwitchSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void TwitchSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("TwitchService"));
     }
 
-    void TwitchSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void TwitchSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         (void)required;
     }
 
-    void TwitchSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void TwitchSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         (void)dependent;
     }

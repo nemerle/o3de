@@ -6,23 +6,27 @@
  *
  */
 
-#include <AzCore/Asset/AssetJsonSerializer.h>
 #include <AzCore/Asset/AssetManagerComponent.h>
+#include <AzCore/Asset/AssetJsonSerializer.h>
 #include <AzCore/Asset/AssetManagerBus.h>
-#include <AzCore/Asset/AssetSerializer.h>
-#include <AzCore/Preprocessor/EnumReflectUtils.h>
-#include <AzCore/Serialization/EditContext.h>
-#include <AzCore/Serialization/SerializeContextEnum.inl>
-#include <AzCore/RTTI/BehaviorContext.h>
-#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Component/ComponentDescriptor.h>
+#include <AzCore/Math/Crc.h>
+#include <AzCore/Preprocessor/EnumReflectUtils.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/Json/RegistrationContext.h>
 #include <AzCore/Slice/SliceAssetHandler.h>
 #include <AzCore/Slice/SliceComponent.h>
-#include <AzCore/Math/Crc.h>
+#include <AzCore/RTTI/AzStdOnDemandReflection.inl>
+#include <AzCore/Serialization/SerializeContextEnum.inl>
 
 namespace AZ
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(AssetManagerComponent)
+
     namespace Data
     {
         AZ_ENUM_DEFINE_REFLECT_UTILITIES(AssetLoadBehavior);
@@ -71,7 +75,7 @@ namespace AZ
     //=========================================================================
     // GetProvidedServices
     //=========================================================================
-    void AssetManagerComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+    void AssetManagerComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("AssetDatabaseService"));
     }
@@ -79,7 +83,7 @@ namespace AZ
     //=========================================================================
     // GetIncompatibleServices
     //=========================================================================
-    void AssetManagerComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+    void AssetManagerComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("AssetDatabaseService"));
     }
@@ -87,7 +91,7 @@ namespace AZ
     //=========================================================================
     // GetRequiredServices
     //=========================================================================
-    void AssetManagerComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+    void AssetManagerComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC_CE("DataStreamingService"));
         required.push_back(AZ_CRC_CE("JobsService"));

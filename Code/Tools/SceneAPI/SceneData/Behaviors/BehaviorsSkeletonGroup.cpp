@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/algorithm.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -28,6 +29,9 @@ namespace AZ
     {
         namespace Behaviors
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(SkeletonGroup)
+
             const int SkeletonGroup::s_rigsPreferredTabOrder = 1;
 
             void SkeletonGroup::Activate()
@@ -113,7 +117,7 @@ namespace AZ
                 auto contentStorage = graph.GetContentStorage();
                 auto nameStorage = graph.GetNameStorage();
                 auto nameContentView = Containers::Views::MakePairView(nameStorage, contentStorage);
-                
+
                 bool hasCreatedSkeletons = false;
                 m_isDefaultConstructing = true;
                 for (auto it = nameContentView.begin(); it != nameContentView.end(); ++it)
@@ -126,13 +130,13 @@ namespace AZ
                     // Check if this is a virtual type. There are no known virtual types supported by skeletons so this skeleton
                     //      pretends to be something that's not understood by this behavior, so skip it.
                     AZStd::set<Crc32> virtualTypes;
-                    Events::GraphMetaInfoBus::Broadcast(&Events::GraphMetaInfoBus::Events::GetVirtualTypes, virtualTypes, 
+                    Events::GraphMetaInfoBus::Broadcast(&Events::GraphMetaInfoBus::Events::GetVirtualTypes, virtualTypes,
                         scene, graph.ConvertToNodeIndex(it.GetFirstIterator()));
                     if (!virtualTypes.empty())
                     {
                         continue;
                     }
-                    
+
                     AZStd::shared_ptr<SceneData::SkeletonGroup> group = AZStd::make_shared<SceneData::SkeletonGroup>();
                     AZStd::string name = DataTypes::Utilities::CreateUniqueName<DataTypes::ISkeletonGroup>(scene.GetName(), it->first.GetName(), scene.GetManifest());
                     // This is a group that's generated automatically so may not be saved to disk but would need to be recreated
@@ -166,7 +170,7 @@ namespace AZ
                     }
                     if (group.GetId().IsNull())
                     {
-                        // When the uuid is null it's likely because the manifest has been updated from an older version. Include the 
+                        // When the uuid is null it's likely because the manifest has been updated from an older version. Include the
                         // name of the group as there could be multiple groups.
                         group.OverrideId(DataTypes::Utilities::CreateStableUuid(scene, SceneData::SkeletonGroup::TYPEINFO_Uuid(), group.GetName()));
                         updated = true;

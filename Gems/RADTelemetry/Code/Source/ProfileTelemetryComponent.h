@@ -12,6 +12,7 @@
 
 #include <AzCore/std/parallel/threadbus.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/std/string/string.h>
 
@@ -67,7 +68,7 @@ namespace RADTelemetry
         //////////////////////////////////////////////////////////////////////////
         // Component descriptor
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
         //////////////////////////////////////////////////////////////////////////
         // Private helpers

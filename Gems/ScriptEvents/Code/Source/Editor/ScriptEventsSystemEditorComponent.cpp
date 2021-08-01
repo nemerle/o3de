@@ -206,12 +206,12 @@ namespace ScriptEventsEditor
         ScriptEventsAssetPtr::Reflect(context);
     }
 
-    void ScriptEventEditorSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ScriptEventEditorSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptEventsService", 0x6897c23b));
     }
 
-    void ScriptEventEditorSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void ScriptEventEditorSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ScriptEventsService", 0x6897c23b));
     }

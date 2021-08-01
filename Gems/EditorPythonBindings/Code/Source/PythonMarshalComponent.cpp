@@ -1700,17 +1700,17 @@ namespace EditorPythonBindings
 
     //////////////////////////////////////////////////////////////////////////
     // PythonMarshalComponent
-    void PythonMarshalComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void PythonMarshalComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(PythonMarshalingService);
     }
 
-    void PythonMarshalComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void PythonMarshalComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(PythonMarshalingService);
     }
 
-    void PythonMarshalComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void PythonMarshalComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(PythonEmbeddedService);
     }

@@ -13,6 +13,7 @@
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/EBus/Event.h>
+#include <AzCore/EBus/EBus.h>
 
 #include <AtomCore/Instance/Instance.h>
 #include <Atom/RHI/Allocator.h>

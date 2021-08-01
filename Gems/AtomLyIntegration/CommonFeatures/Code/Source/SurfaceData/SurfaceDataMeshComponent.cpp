@@ -46,17 +46,17 @@ namespace SurfaceData
         }
     }
 
-    void SurfaceDataMeshComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceDataMeshComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SurfaceDataProviderService", 0xfe9fb95e));
     }
 
-    void SurfaceDataMeshComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceDataMeshComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SurfaceDataProviderService", 0xfe9fb95e));
     }
 
-    void SurfaceDataMeshComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceDataMeshComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("MeshService", 0x71d8a455));
     }

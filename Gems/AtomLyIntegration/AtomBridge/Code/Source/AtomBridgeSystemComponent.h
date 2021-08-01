@@ -12,6 +12,7 @@
 #include <AzCore/std/smart_ptr/shared_ptr.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <AzFramework/Render/RenderSystemBus.h>
 #include <AzFramework/Components/DeprecatedComponentsBus.h>
@@ -47,10 +48,10 @@ namespace AZ
             AtomBridgeSystemComponent();
             ~AtomBridgeSystemComponent() override;
 
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required);
-            static void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(ComponentDescriptorDependencyArrayType& required);
+            static void GetDependentServices(ComponentDescriptorDependencyArrayType& dependent);
 
         protected:
             // Component overrides ...

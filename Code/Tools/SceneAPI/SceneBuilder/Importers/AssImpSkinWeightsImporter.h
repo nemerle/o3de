@@ -37,7 +37,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpSkinWeightsImporter, "{79B5E863-C155-473A-BC0D-B85F8D8303EB}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpSkinWeightsImporter, "{79B5E863-C155-473A-BC0D-B85F8D8303EB}", SceneCore::LoadingComponent);
 
                 AssImpSkinWeightsImporter();
                 ~AssImpSkinWeightsImporter() override = default;

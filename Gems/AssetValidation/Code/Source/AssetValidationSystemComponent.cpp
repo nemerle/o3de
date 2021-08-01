@@ -47,22 +47,22 @@ namespace AssetValidation
         }
     }
 
-    void AssetValidationSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AssetValidationSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("AssetValidationService"));
     }
 
-    void AssetValidationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AssetValidationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("AssetValidationService"));
     }
 
-    void AssetValidationSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void AssetValidationSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
 
-    void AssetValidationSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void AssetValidationSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

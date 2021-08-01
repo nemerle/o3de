@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/SystemFile.h>
@@ -29,6 +30,9 @@ namespace AZ
     {
         namespace Import
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(ManifestImportRequestHandler)
+
             const char* ManifestImportRequestHandler::s_extension = ".assetinfo";
             const char* ManifestImportRequestHandler::s_generated = ".generated"; // support for foo.fbx.assetinfo.generated
 
@@ -56,7 +60,7 @@ namespace AZ
                 result = s_extension;
             }
 
-            Events::LoadingResult ManifestImportRequestHandler::LoadAsset(Containers::Scene& scene, const AZStd::string& path, 
+            Events::LoadingResult ManifestImportRequestHandler::LoadAsset(Containers::Scene& scene, const AZStd::string& path,
                 const Uuid& /*guid*/, RequestingApplication /*requester*/)
             {
                 AZStd::string manifestPath = path + s_extension;

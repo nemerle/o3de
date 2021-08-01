@@ -10,6 +10,7 @@
 
 #include <SceneAPI/SceneCore/Components/ExportingComponent.h>
 #include <SceneAPI/SceneCore/DataTypes/MatrixType.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

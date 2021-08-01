@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Component/EntityBus.h>
 #include <AzCore/std/parallel/mutex.h>
@@ -75,10 +76,10 @@ namespace DebugDraw
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
 #ifdef DEBUGDRAW_GEM_EDITOR
         // EditorEntityContextNotificationBus interface implementation

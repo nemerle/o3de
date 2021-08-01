@@ -12,6 +12,7 @@
 #include <AzCore/Component/EntitySerializer.h>
 #include <AzCore/Component/EntityUtils.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Component/NamedEntityId.h>
 #include <AzCore/Interface/Interface.h>
@@ -353,12 +354,12 @@ namespace AZ
         return true;
     }
 
-    bool Entity::IsComponentReadyToAdd(const Uuid& componentTypeId, const Component* instance, ComponentDescriptor::DependencyArrayType* servicesNeededToBeAdded, ComponentArrayType* incompatibleComponents)
+    bool Entity::IsComponentReadyToAdd(const Uuid& componentTypeId, const Component* instance, ComponentDescriptorDependencyArrayType* servicesNeededToBeAdded, ComponentArrayType* incompatibleComponents)
     {
         bool isReadyToAdd = true;
 
-        ComponentDescriptor::DependencyArrayType provided;
-        ComponentDescriptor::DependencyArrayType incompatible;
+        ComponentDescriptorDependencyArrayType provided;
+        ComponentDescriptorDependencyArrayType incompatible;
         ComponentDescriptor* componentDescriptor = nullptr;
         EBUS_EVENT_ID_RESULT(componentDescriptor, componentTypeId, ComponentDescriptorBus, GetDescriptor);
         if (!componentDescriptor)
@@ -430,7 +431,7 @@ namespace AZ
         }
 
         // Check if all required components are present
-        ComponentDescriptor::DependencyArrayType required;
+        ComponentDescriptorDependencyArrayType required;
         componentDescriptor->GetRequiredServices(required, instance);
         if (!required.empty())
         {
@@ -536,7 +537,7 @@ namespace AZ
     {
         AZ_Assert(component, "You need to provide a valid component!");
         AZ_Assert(component->GetEntity() == this, "Component belongs to a different entity!");
-        ComponentDescriptor::DependencyArrayType provided;
+        ComponentDescriptorDependencyArrayType provided;
         ComponentDescriptor* componentDescriptor = nullptr;
         EBUS_EVENT_ID_RESULT(componentDescriptor, component->RTTI_GetType(), ComponentDescriptorBus, GetDescriptor);
         AZ_Assert(componentDescriptor, "Component class %s descriptor is not created! It must be before you can use it!", component->RTTI_GetTypeName());
@@ -550,7 +551,7 @@ namespace AZ
                 {
                     continue;
                 }
-                ComponentDescriptor::DependencyArrayType subProvided;
+                ComponentDescriptorDependencyArrayType subProvided;
                 ComponentDescriptor* subComponentDescriptor = nullptr;
                 EBUS_EVENT_ID_RESULT(subComponentDescriptor, (*componentIt)->RTTI_GetType(), ComponentDescriptorBus, GetDescriptor);
                 AZ_Assert(componentDescriptor, "Component class %s descriptor is not created! It must be before you can use it!", (*componentIt)->RTTI_GetTypeName());
@@ -583,7 +584,7 @@ namespace AZ
                 {
                     continue;
                 }
-                ComponentDescriptor::DependencyArrayType required;
+                ComponentDescriptorDependencyArrayType required;
                 ComponentDescriptor* subComponentDescriptor = nullptr;
                 EBUS_EVENT_ID_RESULT(subComponentDescriptor, (*componentIt)->RTTI_GetType(), ComponentDescriptorBus, GetDescriptor);
                 AZ_Assert(subComponentDescriptor, "Component class %s descriptor is not created! It must be before you can use it!", (*componentIt)->RTTI_GetTypeName());
@@ -979,7 +980,7 @@ namespace AZ
             // but these might be the same component.
             if (componentProvidingService == componentIncompatibleWithService)
             {
-                ComponentDescriptor::DependencyArrayType servicesTmp;
+                ComponentDescriptorDependencyArrayType servicesTmp;
 
                 if (incompatibleServiceInfo.m_componentsIncompatibleWithServiceCount > 1)
                 {
@@ -1075,7 +1076,7 @@ namespace AZ
         AZStd::vector<Component*> sortedComponents;
 
         // Tmp vectors to re-use when querying services
-        ComponentDescriptor::DependencyArrayType servicesTmp;
+        ComponentDescriptorDependencyArrayType servicesTmp;
 
         // reserve capacity
         componentInfos.reserve(inOutComponents.size());
@@ -1130,7 +1131,7 @@ namespace AZ
             servicesTmp.clear();
             componentInfo.m_descriptor->GetProvidedServices(servicesTmp, componentInfo.m_component);
             componentInfo.m_providesAnyServices |= !servicesTmp.empty();
-            for (AZ::ComponentDescriptor::DependencyArrayType::iterator providedService = servicesTmp.begin();
+            for (AZ::ComponentDescriptorDependencyArrayType::iterator providedService = servicesTmp.begin();
                 providedService != servicesTmp.end(); ++providedService)
             {
                 AZ::EntityUtils::RemoveDuplicateServicesOfAndAfterIterator(

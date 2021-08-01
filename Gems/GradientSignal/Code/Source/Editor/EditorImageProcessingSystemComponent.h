@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzToolsFramework/AssetBrowser/AssetBrowserBus.h>
 #include <AzToolsFramework/AssetBrowser/AssetBrowserEntry.h>
 
@@ -23,10 +24,10 @@ namespace GradientSignal
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
     protected:
 

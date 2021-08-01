@@ -9,13 +9,14 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {
     namespace RHI
     {
         /*
-         * System component in charge of firing the event that tells the Factory Manager that all 
+         * System component in charge of firing the event that tells the Factory Manager that all
          * available factories have registered. In order to do this it depends on the service
          * provided by the platform factories implementation. This guarantees that it will always be activated after the platform
          * factories. It also provides the RHI component service so other components can activate after the RHI is ready.
@@ -30,9 +31,9 @@ namespace AZ
             FactoryRegistrationFinalizerSystemComponent() = default;
             ~FactoryRegistrationFinalizerSystemComponent() override = default;
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             // AZ::Component overrides ...
             void Activate() override;

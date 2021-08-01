@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 
 #include <Atom/Feature/Utils/FrameCaptureBus.h>

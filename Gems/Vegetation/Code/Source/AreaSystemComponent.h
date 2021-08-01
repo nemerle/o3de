@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Vegetation/Ebuses/AreaSystemRequestBus.h>
 #include <Vegetation/Ebuses/AreaRequestBus.h>
 #include <Vegetation/Ebuses/SystemConfigurationBus.h>
@@ -90,9 +91,9 @@ namespace Vegetation
     public:
         friend class EditorAreaSystemComponent;
         AZ_COMPONENT(AreaSystemComponent, "{7CE8E791-6BC6-4C88-8727-A476DE00F9A1}");
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         AreaSystemComponent(const AreaSystemConfig& configuration);

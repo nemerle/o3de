@@ -12,6 +12,7 @@
 #include <AzToolsFramework/Slice/SliceUtilities.h>
 #include <AzFramework/IO/FileOperations.h>
 #include <AzFramework/StringFunc/StringFunc.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -19,6 +20,9 @@
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SliceRequestComponent)
+
     void SliceRequestComponent::Reflect(AZ::ReflectContext* context)
     {
         if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))

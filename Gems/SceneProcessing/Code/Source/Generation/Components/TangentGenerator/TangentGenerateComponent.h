@@ -10,6 +10,7 @@
 
 #include <SceneAPI/SceneCore/Components/GenerationComponent.h>
 #include <SceneAPI/SceneCore/Containers/Scene.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/RTTI.h>
 
 namespace AZ::SceneAPI::DataTypes { class IMeshData; }

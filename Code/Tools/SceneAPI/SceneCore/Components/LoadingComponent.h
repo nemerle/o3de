@@ -28,7 +28,7 @@ namespace AZ
                 , public Events::CallProcessorBinder
             {
             public:
-                AZ_COMPONENT(LoadingComponent, "{335A696D-38DA-4A4F-B3F3-DBAD1FE86888}", Events::CallProcessorBinder);
+                AZ_COMPONENT_SPLIT(LoadingComponent, "{335A696D-38DA-4A4F-B3F3-DBAD1FE86888}", Events::CallProcessorBinder);
 
                 LoadingComponent() = default;
                 ~LoadingComponent() override = default;

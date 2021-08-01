@@ -590,18 +590,4 @@ namespace spline
     };
 }; // namespace spline
 
-namespace AZ 
-{
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfo<spline::SplineKeyEx<T>, void> : SerializeGenericTypeInfoImpl<spline::SplineKeyEx<T>>
-    {
-    };
-    template< typename T>
-    struct SerializeGenericTypeInfo<spline::TrackSplineInterpolator<T>, void> : SerializeGenericTypeInfoImpl<spline::TrackSplineInterpolator<T>>
-    {
-    };
-    
-} // namespace AZ
-
 #endif // CRYINCLUDE_CRYMOVIE_2DSPLINE_H

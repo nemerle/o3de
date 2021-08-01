@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/numeric.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -29,6 +30,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpTangentStreamImporter)
+
             const char* AssImpTangentStreamImporter::m_defaultNodeName = "Tangent";
 
             AssImpTangentStreamImporter::AssImpTangentStreamImporter()
@@ -54,7 +58,7 @@ namespace AZ
                 }
                 const aiNode* currentNode = context.m_sourceNode.GetAssImpNode();
                 const aiScene* scene = context.m_sourceScene.GetAssImpScene();
-                
+
                 const auto meshHasTangentsAndBitangents = [&scene](const unsigned int meshIndex)
                 {
                     return scene->mMeshes[meshIndex]->HasTangentsAndBitangents();

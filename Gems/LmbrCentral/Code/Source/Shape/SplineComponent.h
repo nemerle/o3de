@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/std/smart_ptr/shared_ptr.h>
 #include <LmbrCentral/Shape/SplineComponentBus.h>
@@ -87,14 +88,14 @@ namespace LmbrCentral
         void OnTransformChanged(const AZ::Transform& local, const AZ::Transform& world) override;
 
     protected:
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("SplineService", 0x2b674d3c));
             provided.push_back(AZ_CRC("VariableVertexContainerService", 0x70c58740));
             provided.push_back(AZ_CRC("FixedVertexContainerService", 0x83f1bbf2));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("SplineService", 0x2b674d3c));
             incompatible.push_back(AZ_CRC("VariableVertexContainerService", 0x70c58740));
@@ -102,7 +103,7 @@ namespace LmbrCentral
             incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }

@@ -148,22 +148,22 @@ namespace ExpressionEvaluation
         }
     }
 
-    void ExpressionEvaluationSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ExpressionEvaluationSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ExpressionEvaluationGemService", 0xad59526b));
     }
 
-    void ExpressionEvaluationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void ExpressionEvaluationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ExpressionEvaluationGemService", 0xad59526b));
     }
 
-    void ExpressionEvaluationSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void ExpressionEvaluationSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
 
-    void ExpressionEvaluationSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void ExpressionEvaluationSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

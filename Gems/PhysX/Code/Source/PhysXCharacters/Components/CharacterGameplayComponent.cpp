@@ -40,23 +40,23 @@ namespace PhysX
         }
     }
 
-    void CharacterGameplayComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void CharacterGameplayComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("PhysXCharacterGameplayService", 0xfacd7876));
     }
 
-    void CharacterGameplayComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void CharacterGameplayComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("PhysXCharacterGameplayService", 0xfacd7876));
         incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }
 
-    void CharacterGameplayComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void CharacterGameplayComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("PhysXCharacterControllerService", 0x428de4fa));
     }
 
-    void CharacterGameplayComponent::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void CharacterGameplayComponent::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
     }
 

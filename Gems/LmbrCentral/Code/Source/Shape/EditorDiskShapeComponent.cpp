@@ -44,13 +44,13 @@ namespace LmbrCentral
         }
     }
 
-    void EditorDiskShapeComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorDiskShapeComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         EditorBaseShapeComponent::GetProvidedServices(provided);
         provided.push_back(AZ_CRC("DiskShapeService", 0xd90c482b));
     }
 
-    void EditorDiskShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorDiskShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         EditorBaseShapeComponent::GetIncompatibleServices(incompatible);
         incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));

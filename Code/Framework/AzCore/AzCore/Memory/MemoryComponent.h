@@ -23,7 +23,7 @@ namespace AZ
         : public Component
     {
     public:
-        AZ_COMPONENT(AZ::MemoryComponent, "{6F450DDA-6F4D-40fd-A93B-E5CCCDBC72AB}")
+        AZ_COMPONENT_SPLIT(AZ::MemoryComponent, "{6F450DDA-6F4D-40fd-A93B-E5CCCDBC72AB}")
 
         MemoryComponent();
         virtual ~MemoryComponent();
@@ -38,9 +38,9 @@ namespace AZ
     private:
 
         /// \ref ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
         /// \ref ComponentDescriptor::GetIncompatibleServices
-        static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
         /// \ref ComponentDescriptor::Reflect
         static void Reflect(ReflectContext* reflection);
 

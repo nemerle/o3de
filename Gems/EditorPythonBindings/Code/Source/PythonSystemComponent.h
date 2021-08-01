@@ -10,6 +10,7 @@
 #include <EditorPythonBindings/EditorPythonBindingsSymbols.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/containers/unordered_set.h>
 #include <AzToolsFramework/API/EditorPythonConsoleBus.h>
 #include <AzToolsFramework/API/EditorPythonRunnerRequestsBus.h>
@@ -20,7 +21,7 @@ namespace EditorPythonBindings
     /**
       * Manages the Python interpreter inside this Gem (Editor only)
       * - redirects the Python standard output and error streams to AZ_TracePrintf and AZ_Warning, respectively
-      */      
+      */
     class PythonSystemComponent
         : public AZ::Component
         , protected AzToolsFramework::EditorPythonEventsInterface
@@ -31,8 +32,8 @@ namespace EditorPythonBindings
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
     protected:
         ////////////////////////////////////////////////////////////////////////
@@ -57,13 +58,13 @@ namespace EditorPythonBindings
         void ExecuteByFilenameWithArgs(AZStd::string_view filename, const AZStd::vector<AZStd::string_view>& args) override;
         void ExecuteByFilenameAsTest(AZStd::string_view filename, AZStd::string_view testCase, const AZStd::vector<AZStd::string_view>& args) override;
         ////////////////////////////////////////////////////////////////////////
-        
+
     private:
         // handle multiple Python initializers and threads
         AZStd::atomic_int m_initalizeWaiterCount {0};
         AZStd::semaphore m_initalizeWaiter;
         AZStd::recursive_mutex m_lock;
-    
+
         enum class Result
         {
             Okay,
@@ -82,7 +83,7 @@ namespace EditorPythonBindings
         void ExecuteBootstrapScripts(const PythonPathStack& pythonPathStack);
         bool ExtendSysPath(const AZStd::unordered_set<AZStd::string>& extendPaths);
 
-        // starts the Python interpreter 
+        // starts the Python interpreter
         bool StartPythonInterpreter(const PythonPathStack& pythonPathStack);
         bool StopPythonInterpreter();
     };

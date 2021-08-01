@@ -29,7 +29,7 @@ namespace AzToolsFramework
         , private AssetBundleCommands::Bus::Handler
     {
     public:
-        AZ_COMPONENT(AssetBundleComponent, "{4DF6D9CF-2393-4C86-8A35-8F85543E8B8A}")
+        AZ_COMPONENT_SPLIT(AssetBundleComponent, "{4DF6D9CF-2393-4C86-8A35-8F85543E8B8A}")
 
         AssetBundleComponent() = default;
         ~AssetBundleComponent() override = default;

@@ -19,23 +19,23 @@
 
 namespace Blast
 {
-    void EditorBlastMeshDataComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorBlastMeshDataComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("BlastMeshDataService"));
     }
 
-    void EditorBlastMeshDataComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void EditorBlastMeshDataComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
     }
 
-    void EditorBlastMeshDataComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void EditorBlastMeshDataComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("EditorVisibilityService", 0x90888caf));
     }
 
     void EditorBlastMeshDataComponent::GetIncompatibleServices(
-        AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("BlastMeshDataService"));
         incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));

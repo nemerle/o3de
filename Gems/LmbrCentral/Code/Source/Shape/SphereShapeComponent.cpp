@@ -14,20 +14,20 @@
 
 namespace LmbrCentral
 {
-    void SphereShapeComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SphereShapeComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
         provided.push_back(AZ_CRC("SphereShapeService", 0x90c8dc80));
     }
 
-    void SphereShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void SphereShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
         incompatible.push_back(AZ_CRC("SphereShapeService", 0x90c8dc80));
         incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }
 
-    void SphereShapeComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void SphereShapeComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
     }

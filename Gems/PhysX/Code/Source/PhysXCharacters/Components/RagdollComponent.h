@@ -10,6 +10,7 @@
 
 #include <PhysXCharacters/API/Ragdoll.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Physics/CharacterPhysicsDataBus.h>
 #include <AzFramework/Physics/Components/SimulatedBodyComponentBus.h>
 
@@ -35,25 +36,25 @@ namespace PhysX
         RagdollComponent() = default;
         ~RagdollComponent() override = default;
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("PhysicsWorldBodyService", 0x944da0cc));
             provided.push_back(AZ_CRC("PhysXRagdollService", 0x6d889c70));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("PhysXRagdollService", 0x6d889c70));
             incompatible.push_back(AZ_CRC("LegacyCryPhysicsService", 0xbb370351));
             incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("PhysXColliderService", 0x4ff43f7c));
             dependent.push_back(AZ_CRC("CharacterPhysicsDataService", 0x34757927));
@@ -109,12 +110,12 @@ namespace PhysX
         AzPhysics::SceneHandle m_attachedSceneHandle = AzPhysics::InvalidSceneHandle;
         /// Minimum number of position iterations to perform in the PhysX solver.
         /// Lower iteration counts are less expensive but may behave less realistically.
-        AZ::u32 m_positionIterations = 16; 
+        AZ::u32 m_positionIterations = 16;
         /// Minimum number of velocity iterations to perform in the PhysX solver.
         AZ::u32 m_velocityIterations = 8;
         /// Whether to use joint projection to preserve joint constraints in demanding
         /// situations at the expense of potentially reducing physical correctness.
-        bool m_enableJointProjection = true; 
+        bool m_enableJointProjection = true;
         /// Linear joint error above which projection will be applied.
         float m_jointProjectionLinearTolerance = 1e-3f;
         /// Angular joint error (in degrees) above which projection will be applied.

@@ -9,6 +9,7 @@
 
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/containers/stack.h>
 #include <AzCore/std/containers/map.h>
@@ -34,7 +35,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(TestComponent, "{94D5C952-FD65-4997-B517-F36003F8018A}");
+        AZ_COMPONENT_SPLIT(TestComponent, "{94D5C952-FD65-4997-B517-F36003F8018A}");
 
         struct SubData
         {
@@ -139,11 +140,14 @@ namespace UnitTest
         size_t m_serializeOnWriteBegin = 0;
         size_t m_serializeOnWriteEnd = 0;
     };
-    
+
     bool operator==(const TestComponent::SubData& lhs, const TestComponent::SubData& rhs)
     {
         return lhs.m_int == rhs.m_int;
     }
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(TestComponent)
 
     /**
     * InstanceDataHierarchyBasicTest
@@ -1032,8 +1036,8 @@ namespace UnitTest
                 {"D", 3}
             };
 
-            auto testComparison = [&](Container& baseInstance, 
-                Container& compareInstance, 
+            auto testComparison = [&](Container& baseInstance,
+                Container& compareInstance,
                 AZStd::unordered_set<AZStd::string> expectedAdds,
                 AZStd::unordered_set<AZStd::string> expectedRemoves,
                 AZStd::unordered_set<AZStd::string> expectedChanges)
@@ -1065,8 +1069,8 @@ namespace UnitTest
                     actualChanges.insert(sourceNode->GetParent()->GetElementEditMetadata()->m_name);
                 };
 
-                InstanceDataHierarchy::CompareHierarchies(&idhBase, 
-                    &idhCompare, 
+                InstanceDataHierarchy::CompareHierarchies(&idhBase,
+                    &idhCompare,
                     &InstanceDataHierarchy::DefaultValueComparisonFunction,
                     &serializeContext,
                     newNodeCB,
@@ -1271,7 +1275,7 @@ namespace UnitTest
         AZStd::vector<double> keyRemovalContainer;
         keyRemovalContainer.reserve(valuesToInsert.size());
         for (const AZStd::pair<double, double>& valueToInsert : valuesToInsert)
-        {   
+        {
             void* newElement = mapDataContainer->ReserveElement(&testMap, &classElement);
             *reinterpret_cast<typename TestMap::value_type*>(newElement) = valueToInsert;
             mapDataContainer->StoreElement(&testMap, newElement);
@@ -1286,7 +1290,7 @@ namespace UnitTest
             EXPECT_NE(nullptr, lookupValue);
 
         }
-        
+
         // Shuffle the keys around and attempt to remove the keys using IDataContainer::RemoveElement
         SerializeContext serializeContext;
         const uint32_t rngSeed = std::random_device{}();

@@ -222,22 +222,22 @@ namespace LandscapeCanvas
 
 #undef LANDSCAPE_CANVAS_NODE_TABLE
 
-    void LandscapeCanvasSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void LandscapeCanvasSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("LandscapeCanvasService", 0x31668887));
     }
 
-    void LandscapeCanvasSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void LandscapeCanvasSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("LandscapeCanvasService", 0x31668887));
     }
 
-    void LandscapeCanvasSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void LandscapeCanvasSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
 
-    void LandscapeCanvasSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void LandscapeCanvasSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

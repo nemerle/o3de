@@ -11,6 +11,7 @@
 #include <Atom/Feature/Automation/AtomAutomationBus.h>
 #include <Atom/RPI.Edit/Material/MaterialConverterBus.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <SceneAPI/SceneCore/Components/ExportingComponent.h>
 #include <SceneAPI/SceneCore/DataTypes/GraphData/IMaterialData.h>
 

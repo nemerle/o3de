@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <API/EditorAssetSystemAPI.h>
 #include <SceneAPI/SceneBuilder/Importers/AssImpMaterialImporter.h>
 #include <AzCore/IO/FileIO.h>
@@ -31,6 +32,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpMaterialImporter)
+
             AssImpMaterialImporter::AssImpMaterialImporter()
             {
                 BindToCall(&AssImpMaterialImporter::ImportMaterials);

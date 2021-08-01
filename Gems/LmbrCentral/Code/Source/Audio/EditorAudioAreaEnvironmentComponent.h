@@ -32,17 +32,17 @@ namespace LmbrCentral
         void BuildGameEntity(AZ::Entity* gameEntity) override;
 
     protected:
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             LmbrCentral::AudioAreaEnvironmentComponent::GetProvidedServices(provided);
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             LmbrCentral::AudioAreaEnvironmentComponent::GetRequiredServices(required);
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             LmbrCentral::AudioAreaEnvironmentComponent::GetIncompatibleServices(incompatible);
         }

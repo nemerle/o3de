@@ -33,9 +33,9 @@ namespace NvCloth
         EditorClothComponent();
         ~EditorClothComponent();
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         const MeshNodeList& GetMeshNodeList() const;
         const AZStd::unordered_set<AZStd::string>& GetMeshNodesWithBackstopData() const;

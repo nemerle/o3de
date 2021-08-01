@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/UnitTest/TestTypes.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/UserSettings/UserSettingsComponent.h>
 #include <AzFramework/Application/Application.h>
 #include <AzFramework/Spawnable/SpawnableAssetHandler.h>
@@ -32,7 +33,7 @@ namespace UnitTest
     class ComponentWithEntityReference : public AZ::Component
     {
     public:
-        AZ_COMPONENT(ComponentWithEntityReference, "{CF5FDE59-86E5-40B6-9272-BBC1C4AFD061}");
+        AZ_COMPONENT_SPLIT(ComponentWithEntityReference, "{CF5FDE59-86E5-40B6-9272-BBC1C4AFD061}");
 
         void Activate() override
         {
@@ -55,6 +56,9 @@ namespace UnitTest
         AZ::EntityId m_entityReference;
     };
 
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(ComponentWithEntityReference)
+
     class SpawnableEntitiesManagerTest : public AllocatorsFixture
     {
     public:
@@ -71,7 +75,7 @@ namespace UnitTest
             // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
             // in the unit tests.
             AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
-            
+
             m_spawnable = aznew AzFramework::Spawnable(
                 AZ::Data::AssetId::CreateString("{EB2E8A2B-F253-4A90-BBF4-55F2EED786B8}:0"), AZ::Data::AssetData::AssetStatus::Ready);
             m_spawnableAsset = new AZ::Data::Asset<AzFramework::Spawnable>(m_spawnable, AZ::Data::AssetLoadBehavior::Default);
@@ -126,7 +130,7 @@ namespace UnitTest
                 {
                     component->SetParent(parent);
                 }
-                parent = entity->GetId();     
+                parent = entity->GetId();
             }
         }
 
@@ -305,7 +309,7 @@ namespace UnitTest
         // in the list, backwards referencing, or self-referencing.  The circular tests are to ensure the implementation works regardless
         // of entity ordering.
         for (EntityReferenceScheme refScheme : {
-                EntityReferenceScheme::AllReferenceFirst, EntityReferenceScheme::AllReferenceLast, 
+                EntityReferenceScheme::AllReferenceFirst, EntityReferenceScheme::AllReferenceLast,
                 EntityReferenceScheme::AllReferenceThemselves, EntityReferenceScheme::AllReferenceNextCircular,
                 EntityReferenceScheme::AllReferencePreviousCircular })
         {
@@ -520,7 +524,7 @@ namespace UnitTest
             ASSERT_NE(entities.begin(), entities.end());
             parent = (*AZStd::prev(entities.end()))->GetId();
         };
-        
+
         AzFramework::SpawnEntitiesOptionalArgs optionalArgsFirstBatch;
         optionalArgsFirstBatch.m_completionCallback = AZStd::move(getParent);
         optionalArgsFirstBatch.m_referencePreviouslySpawnedEntities = true;

@@ -8,6 +8,7 @@
 
 #include <AzToolsFramework/Prefab/EditorPrefabComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzToolsFramework/Prefab/PrefabPublicInterface.h>
@@ -18,6 +19,9 @@ namespace AzToolsFramework
 {
     namespace Prefab
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorPrefabComponent)
+
         void EditorPrefabComponent::Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -39,12 +43,12 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorPrefabComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorPrefabComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorPrefabInstanceContainerService"));
         }
 
-        void EditorPrefabComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorPrefabComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorPrefabInstanceContainerService"));
         }

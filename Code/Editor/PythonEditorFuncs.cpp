@@ -22,6 +22,7 @@
 #include <AzToolsFramework/UI/UICore/WidgetHelpers.h>
 
 // AzCore
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
@@ -939,6 +940,9 @@ struct PyDumpBindings
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(PythonEditorComponent)
+
     void PythonEditorComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
@@ -1137,6 +1141,9 @@ namespace AzToolsFramework
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(PythonEditorFuncsHandler)
+
     void PythonEditorFuncsHandler::Reflect(AZ::ReflectContext* context)
     {
         if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))

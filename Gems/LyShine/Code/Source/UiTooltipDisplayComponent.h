@@ -14,6 +14,7 @@
 #include <LyShine/UiComponentTypes.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,18 +78,18 @@ public: // member functions
 
 public:  // static member functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiTooltipDisplayService", 0xb2f093fd));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiTooltipService", 0x78437544));
         incompatible.push_back(AZ_CRC("UiTooltipDisplayService", 0xb2f093fd));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiElementService", 0x3dca7ad4));
         required.push_back(AZ_CRC("UiTransformService", 0x3a838e34));

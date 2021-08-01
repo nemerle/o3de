@@ -544,7 +544,7 @@ namespace AzToolsFramework
                 EBUS_EVENT_ID_RESULT(componentDescriptor, componentClass->m_typeId, AZ::ComponentDescriptorBus, GetDescriptor);
                 if (componentDescriptor)
                 {
-                    AZ::ComponentDescriptor::DependencyArrayType providedServices;
+                    AZ::ComponentDescriptorDependencyArrayType providedServices;
                     componentDescriptor->GetProvidedServices(providedServices, nullptr);
 
                     if (AZStd::find(providedServices.begin(), providedServices.end(), serviceId) != providedServices.end())

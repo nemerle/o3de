@@ -12,6 +12,7 @@
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/EntityUtils.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Component/ComponentExport.h>
 #include <AzCore/Debug/Profiler.h>
@@ -75,6 +76,9 @@ namespace AzToolsFramework
             }
         };
     }
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(EditorEntityContextComponent)
 
     //=========================================================================
     // Reflect
@@ -445,12 +449,12 @@ namespace AzToolsFramework
                 stream, AZStd::string_view(levelPakFile.toUtf8(), levelPakFile.size()) );
 
         }
-        
+
         LoadFromStreamComplete(loadedSuccessfully);
-        
+
         return loadedSuccessfully;
     }
-    
+
     void EditorEntityContextComponent::LoadFromStreamComplete(bool loadedSuccessfully)
     {
         if (loadedSuccessfully)
@@ -749,7 +753,7 @@ namespace AzToolsFramework
                 m_undoCacheInterface = AZ::Interface<UndoSystem::UndoCacheInterface>::Get();
             }
 
-            // After activating all the entities, refresh their entries in the undo cache.  
+            // After activating all the entities, refresh their entries in the undo cache.
             // We need to wait until after all the activations are complete.  Otherwise, it's possible that the data for an entity
             // will change based on other activations.  For example, if we activate a child entity before its parent, the Transform
             // component on the child will refresh its cache state on the parent activation.  This would cause the undo cache to be
@@ -779,7 +783,7 @@ namespace AzToolsFramework
     {
         EditorEntityContextNotificationBus::Broadcast(&EditorEntityContextNotification::OnSaveStreamForGameFailure, failureString);
     }
-    
+
     void EditorEntityContextComponent::OnStartGameModeRequest()
     {
         m_isRequestingGame = true;

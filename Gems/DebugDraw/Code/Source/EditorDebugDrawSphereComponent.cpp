@@ -53,22 +53,22 @@ namespace DebugDraw
         }
     }
 
-    void EditorDebugDrawSphereComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorDebugDrawSphereComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         DebugDrawSphereComponent::GetProvidedServices(provided);
     }
 
-    void EditorDebugDrawSphereComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorDebugDrawSphereComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         DebugDrawSphereComponent::GetIncompatibleServices(incompatible);
     }
 
-    void EditorDebugDrawSphereComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void EditorDebugDrawSphereComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         DebugDrawSphereComponent::GetRequiredServices(required);
     }
 
-    void EditorDebugDrawSphereComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void EditorDebugDrawSphereComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         DebugDrawSphereComponent::GetDependentServices(dependent);
     }

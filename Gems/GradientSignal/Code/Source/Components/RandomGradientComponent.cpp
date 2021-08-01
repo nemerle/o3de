@@ -55,17 +55,17 @@ namespace GradientSignal
         }
     }
 
-    void RandomGradientComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void RandomGradientComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
     }
 
-    void RandomGradientComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void RandomGradientComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
     }
 
-    void RandomGradientComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void RandomGradientComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientTransformService", 0x8c8c5ecc));
     }

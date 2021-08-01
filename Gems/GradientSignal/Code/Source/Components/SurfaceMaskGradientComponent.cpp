@@ -81,12 +81,12 @@ namespace GradientSignal
         m_surfaceTagList.push_back(SurfaceData::SurfaceTag(tag));
     }
 
-    void SurfaceMaskGradientComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceMaskGradientComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
     }
 
-    void SurfaceMaskGradientComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceMaskGradientComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
         services.push_back(AZ_CRC("GradientTransformService", 0x8c8c5ecc));

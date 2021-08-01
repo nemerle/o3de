@@ -56,7 +56,7 @@ namespace ScriptCanvas
             using GetActiveEntitiesRequest = TaggedRequest<GetActiveEntitiesTag>;
             using GetActiveGraphsRequest = TaggedRequest<GetActiveGraphsTag>;
             using StepOverRequest = TaggedRequest<StepOverTag>;
-            
+
             class AddBreakpointRequest;
             class ConnectRequest;
             class DisconnectRequest;
@@ -68,7 +68,7 @@ namespace ScriptCanvas
             class StopLoggingRequest;
 
             class RemoveBreakpointRequest;
-            
+
             class RequestVisitor
             {
             public:
@@ -91,7 +91,7 @@ namespace ScriptCanvas
                 virtual void Visit(RemoveBreakpointRequest& request) = 0;
                 virtual void Visit(StepOverRequest& request) = 0;
             };
-                 
+
             class AddBreakpointRequest final
                 : public Request
             {
@@ -110,7 +110,7 @@ namespace ScriptCanvas
 
                 void Visit(RequestVisitor& visitor) override { visitor.Visit(*this);  }
             };
-            
+
             class ConnectRequest final
                 : public Request
             {
@@ -228,7 +228,7 @@ namespace ScriptCanvas
 
                 void Visit(RequestVisitor& visitor) override { visitor.Visit(*this); }
             };
-                        
+
             template<typename t_Tag>
             void TaggedRequest<t_Tag>::Visit(RequestVisitor& visitor)
             {
@@ -237,17 +237,3 @@ namespace ScriptCanvas
         }
     }
 }
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template<typename T>
-    struct SerializeGenericTypeInfo<ScriptCanvas::Debugger::Message::TaggedRequest<T>, void> : SerializeGenericTypeInfoImpl<ScriptCanvas::Debugger::Message::TaggedRequest<T>>
-    {
-        // treat TaggedRequest template as generic value type
-    };
-} // namespace AZ

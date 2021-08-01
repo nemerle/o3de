@@ -218,12 +218,12 @@ namespace LmbrCentral
         }
     }
 
-    void AssetSystemDebugComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AssetSystemDebugComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("AssetSystemDebug"));
     }
 
-    void AssetSystemDebugComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AssetSystemDebugComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("AssetSystemDebug"));
     }

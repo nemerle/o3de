@@ -40,9 +40,9 @@ namespace AzToolsFramework
             void RegisterScaleChangedEvent(AZ::NonUniformScaleChangedEvent::Handler& handler);
 
         private:
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
             void OnScaleChanged();
 

@@ -20,7 +20,7 @@ namespace AzFramework
         , public SceneSystemInterface::Registrar
     {
     public:
-        AZ_COMPONENT(SceneSystemComponent, "{7AC53AF0-BE1A-437C-BE3E-4D6A998DA945}", AZ::Component, ISceneSystem);
+        AZ_COMPONENT_SPLIT(SceneSystemComponent, "{7AC53AF0-BE1A-437C-BE3E-4D6A998DA945}", AZ::Component, ISceneSystem);
 
         SceneSystemComponent();
         ~SceneSystemComponent() override;
@@ -33,8 +33,8 @@ namespace AzFramework
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         //////////////////////////////////////////////////////////////////////////
         // SceneSystemInterface overrides

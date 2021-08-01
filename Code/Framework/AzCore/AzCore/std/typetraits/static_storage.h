@@ -9,11 +9,12 @@
 
 #include <AzCore/std/typetraits/aligned_storage.h>
 #include <AzCore/std/typetraits/alignment_of.h>
-#include <AzCore/std/utils.h>
+#include <AzCore/std/typetraits/conditional.h>
 #include <AzCore/std/parallel/atomic.h>
 
 namespace AZStd
 {
+    using std::forward;
     // Extension: static_storage: Used to initialize statics in a thread-safe manner
     // These are similar to default_delete/no_delete, except they just invoke the destructor (or not)
     template <class T>
@@ -67,7 +68,7 @@ namespace AZStd
             T* obj = nullptr;
             do {
                 obj = m_object.load();
-            } while (obj != reinterpret_cast<T*>(&m_storage)); 
+            } while (obj != reinterpret_cast<T*>(&m_storage));
             return *obj;
         }
 

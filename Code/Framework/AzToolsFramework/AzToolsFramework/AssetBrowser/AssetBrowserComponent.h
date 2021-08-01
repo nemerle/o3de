@@ -52,7 +52,7 @@ namespace AzToolsFramework
             , public AssetBrowserInteractionNotificationBus::Handler
         {
         public:
-            AZ_COMPONENT(AssetBrowserComponent, "{4BC5F93F-2F9E-412E-B00A-396C68CFB5FB}")
+            AZ_COMPONENT_SPLIT(AssetBrowserComponent, "{4BC5F93F-2F9E-412E-B00A-396C68CFB5FB}")
 
             AssetBrowserComponent();
             virtual ~AssetBrowserComponent();
@@ -63,9 +63,9 @@ namespace AzToolsFramework
             void Activate() override;
             void Deactivate() override;
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             //////////////////////////////////////////////////////////////////////////
             // AssetDatabaseLocationNotificationBus

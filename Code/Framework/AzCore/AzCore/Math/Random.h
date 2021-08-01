@@ -11,6 +11,8 @@
 #include <AzCore/base.h>
 #include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/Math/Random_Platform.h>
+#include <AzCore/Casting/numeric_cast.h>
+#include <AzCore/std/algorithm.h>
 
 namespace AZ
 {
@@ -122,7 +124,7 @@ namespace AZ
             m_offsets.fill(1); // Halton sequences start at index 1.
             m_increments.fill(1); // By default increment by 1 between each number.
         }
-        
+
         //! Fills a provided container from begin to end with a Halton sequence.
         //! Entries are expected to be, or implicitly converted to, AZStd::array<float, Dimensions>.
         template<typename Iterator>
@@ -144,7 +146,7 @@ namespace AZ
 
             AZStd::generate(begin, end, f);
         }
-        
+
         //! Returns a Halton sequence in an array of N length.
         template<uint32_t N>
         AZStd::array<AZStd::array<float, Dimensions>, N> GetHaltonSequence()

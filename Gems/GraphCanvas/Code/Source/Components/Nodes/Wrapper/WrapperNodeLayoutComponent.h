@@ -130,26 +130,26 @@ namespace GraphCanvas
         ~WrapperNodeLayoutComponent() override;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(NodeLayoutServiceCrc);
             provided.push_back(WrapperNodeLayoutServiceCrc);
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(NodeLayoutServiceCrc);
             incompatible.push_back(WrapperNodeLayoutServiceCrc);
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("GraphCanvas_NodeLayoutSupportService", 0xa8b639be));
             dependent.push_back(AZ_CRC("GraphCanvas_TitleService", 0xfe6d63bc));
             dependent.push_back(AZ_CRC("GraphCanvas_SlotsContainerService", 0x948b6696));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("GraphCanvas_NodeService", 0xcc0f32cc));
             required.push_back(AZ_CRC("GraphCanvas_StyledGraphicItemService", 0xeae4cdf4));

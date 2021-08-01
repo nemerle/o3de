@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/StringFunc/StringFunc.h>
@@ -27,6 +28,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpBoneImporter)
+
             AssImpBoneImporter::AssImpBoneImporter()
             {
                 BindToCall(&AssImpBoneImporter::ImportBone);
@@ -84,7 +88,7 @@ namespace AZ
             {
                 aiMatrix4x4 transform = {};
                 const aiNode* iteratingNode = currentNode;
-                
+
                 while (iteratingNode)
                 {
                     transform = iteratingNode->mTransformation * transform;
@@ -107,7 +111,7 @@ namespace AZ
                 }
 
                 bool isBone = false;
-                
+
                 {
                     AZStd::unordered_map<AZStd::string, const aiBone*> boneLookup;
                     MakeBoneMap(scene, boneLookup);
@@ -157,9 +161,9 @@ namespace AZ
                 {
                     createdBoneData = AZStd::make_shared<SceneData::GraphData::RootBoneData>();
                 }
-                
+
                 aiMatrix4x4 transform = CalculateWorldTransform(currentNode);
-                
+
                 SceneAPI::DataTypes::MatrixType globalTransform = AssImpSDKWrapper::AssImpTypeConverter::ToTransform(transform);
 
                 context.m_sourceSceneSystem.SwapTransformForUpAxis(globalTransform);

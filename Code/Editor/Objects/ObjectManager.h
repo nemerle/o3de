@@ -455,7 +455,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(ObjectManagerFuncsHandler, "{D79B69EE-A2CC-43C0-AA5C-47DCFCCBC955}")
+        AZ_COMPONENT_SPLIT(ObjectManagerFuncsHandler, "{D79B69EE-A2CC-43C0-AA5C-47DCFCCBC955}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 

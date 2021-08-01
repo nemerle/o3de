@@ -37,26 +37,26 @@ namespace GraphCanvas
         ~GeneralNodeFrameComponent() override;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_NodeVisualService", 0x39c4e7f3));
             provided.push_back(AZ_CRC("GraphCanvas_RootVisualService", 0x9ec46d3b));
             provided.push_back(AZ_CRC("GraphCanvas_VisualService", 0xfbb2c871));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("GraphCanvas_NodeVisualService", 0x39c4e7f3));
             incompatible.push_back(AZ_CRC("GraphCanvas_RootVisualService", 0x9ec46d3b));
             incompatible.push_back(AZ_CRC("GraphCanvas_VisualService", 0xfbb2c871));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("GraphCanvas_NodeService", 0xcc0f32cc));
             required.push_back(AZ_CRC("GraphCanvas_StyledGraphicItemService", 0xeae4cdf4));

@@ -29,10 +29,10 @@ namespace Blast
             EditorBlastMeshDataComponent, "{2DA6B11A-5091-423A-AC1D-7F03C46DBF43}",
             AzToolsFramework::Components::EditorComponentBase);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         static void Reflect(AZ::ReflectContext* context);
 

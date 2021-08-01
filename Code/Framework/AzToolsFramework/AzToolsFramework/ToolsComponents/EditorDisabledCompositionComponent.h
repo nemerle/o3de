@@ -22,10 +22,10 @@ namespace AzToolsFramework
             , public EditorDisabledCompositionRequestBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorDisabledCompositionComponent, "{E77AE6AC-897D-4035-8353-637449B6DCFB}", EditorComponentBase);
+            AZ_COMPONENT_SPLIT(EditorDisabledCompositionComponent, "{E77AE6AC-897D-4035-8353-637449B6DCFB}", EditorComponentBase);
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
             ////////////////////////////////////////////////////////////////////
             // EditorDisabledCompositionRequestBus
             void GetDisabledComponents(AZStd::vector<AZ::Component*>& components) override;

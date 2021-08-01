@@ -107,12 +107,12 @@ namespace AZ
                 FatalError,
             };
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
             {
                 services.push_back(AZ_CRC("AssetCollectionAsyncLoaderTest", 0xdd5ab934));
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
             {
                 services.push_back(AZ_CRC("AssetCollectionAsyncLoaderTest", 0xdd5ab934));
             }

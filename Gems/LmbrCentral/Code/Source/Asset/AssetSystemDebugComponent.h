@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Entity/EntityDebugDisplayBus.h>
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Asset/AssetManager.h>
@@ -43,9 +44,9 @@ namespace LmbrCentral
         //////////////////////////////////////////////////////////////////////////
 
         /// \ref ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
         /// \ref ComponentDescriptor::GetIncompatibleServices
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
         /// \ref ComponentDescriptor::Reflect
         static void Reflect(AZ::ReflectContext* reflection);
 

@@ -8,12 +8,16 @@
 
 #include <AzCore/UserSettings/UserSettingsComponent.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Math/Crc.h>
 
 namespace AZ
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(UserSettingsComponent)
+
     //-----------------------------------------------------------------------------
     UserSettingsComponent::UserSettingsComponent(u32 providerId)
         : m_providerId(providerId)
@@ -81,13 +85,13 @@ namespace AZ
     }
 
     //-----------------------------------------------------------------------------
-    void UserSettingsComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+    void UserSettingsComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UserSettingsService", 0xa0eadff5));
     }
 
     //-----------------------------------------------------------------------------
-    void UserSettingsComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent)
+    void UserSettingsComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("MemoryService", 0x5c4d473c));
     }

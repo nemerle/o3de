@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Component/TransformBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Viewport/CameraState.h>
 #include <AzFramework/Visibility/BoundsBus.h>
 #include <AzFramework/Visibility/EntityBoundsUnionBus.h>
@@ -181,7 +182,7 @@ namespace UnitTest
         , public AzFramework::BoundsRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(TestBoundComponent, "{20BB6DB0-B6C0-4D11-A963-B2884F764C4E}");
+        AZ_COMPONENT_SPLIT(TestBoundComponent, "{20BB6DB0-B6C0-4D11-A963-B2884F764C4E}");
         static void Reflect(AZ::ReflectContext* context);
 
         TestBoundComponent() = default;
@@ -200,6 +201,9 @@ namespace UnitTest
     private:
         AZ::Aabb m_localAabb = AZ::Aabb::CreateNull();
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(TestBoundComponent)
 
     void TestBoundComponent::Reflect(AZ::ReflectContext* context)
     {

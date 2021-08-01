@@ -34,9 +34,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::LookModificationComponentController, "{66912D19-CAB2-457C-A4EF-88FE4AF592B1}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             LookModificationComponentController() = default;
             LookModificationComponentController(const LookModificationComponentConfig& config);

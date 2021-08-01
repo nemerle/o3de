@@ -31,7 +31,7 @@ namespace AZ
                 , public Events::AssetImportRequestBus::Handler
             {
             public:
-                AZ_COMPONENT(MeshAdvancedRule, "{4217B46E-87A6-438E-8ACE-0397828AE889}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(MeshAdvancedRule, "{4217B46E-87A6-438E-8ACE-0397828AE889}", SceneCore::BehaviorComponent);
 
                 ~MeshAdvancedRule() override = default;
 

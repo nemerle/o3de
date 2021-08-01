@@ -24,7 +24,7 @@ namespace AZ
                 , public Events::AssetImportRequestBus::Handler
             {
             public:
-                AZ_COMPONENT(MeshGroup, "{52DD90C2-81F5-4763-AC64-6DB2294BE50A}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(MeshGroup, "{52DD90C2-81F5-4763-AC64-6DB2294BE50A}", SceneCore::BehaviorComponent);
 
                 ~MeshGroup() override = default;
 

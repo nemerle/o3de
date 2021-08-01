@@ -9,14 +9,13 @@
 
 #include <AzCore/std/typetraits/integral_constant.h>
 #include <AzCore/std/typetraits/decay.h>
-#include <functional>
 
 namespace AZStd
 {
     using std::reference_wrapper;
-    using std::ref;
-    using std::cref;
-    
+//    using std::ref;
+//    using std::cref;
+
     template<typename T>
     class is_reference_wrapper
         : public AZStd::false_type

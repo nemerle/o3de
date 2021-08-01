@@ -23,10 +23,10 @@ namespace DebugDraw
         AZ_EDITOR_COMPONENT(EditorDebugDrawObbComponent, "{602AF187-693F-4E04-96A7-0B2D2028A937}", AzToolsFramework::Components::EditorComponentBase);
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         ////////////////////////////////////////////////////////////////////////
         // EditorComponentBase

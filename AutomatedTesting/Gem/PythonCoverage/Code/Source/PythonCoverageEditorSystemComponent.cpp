@@ -12,12 +12,15 @@
 #include <AzCore/Module/Module.h>
 #include <AzCore/Module/DynamicModuleHandle.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <PythonCoverageEditorSystemComponent.h>
 
 namespace PythonCoverage
 {
     static constexpr char* const LogCallSite = "PythonCoverageEditorSystemComponent";
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(PythonCoverageEditorSystemComponent)
 
     void PythonCoverageEditorSystemComponent::Reflect(AZ::ReflectContext* context)
     {
@@ -91,7 +94,7 @@ namespace PythonCoverage
             AZ_Error(LogCallSite, false, "Could not read contents of test impact analysis framework config file '%s'", configFilePath.c_str());
             return m_coverageState;
         }
-        
+
         const AZStd::string configurationData = AZStd::string(buffer.begin(), buffer.end());
         rapidjson::Document configurationFile;
         if (configurationFile.Parse(configurationData.c_str()).HasParseError())
@@ -113,7 +116,7 @@ namespace PythonCoverage
         m_coverageState = CoverageState::Idle;
         return m_coverageState;
     }
-    
+
     void PythonCoverageEditorSystemComponent::WriteCoverageFile()
     {
         AZStd::string contents;
@@ -133,7 +136,7 @@ namespace PythonCoverage
                 contents += AZStd::string::format(" %s\n", coveringModule.c_str());
             }
         }
-    
+
         AZ::IO::SystemFile file;
         const AZStd::vector<char> bytes(contents.begin(), contents.end());
         if (!file.Open(
@@ -143,14 +146,14 @@ namespace PythonCoverage
             AZ_Error(LogCallSite, false, "Couldn't open file '%s' for writing", m_coverageFile.c_str());
             return;
         }
-    
+
         if (!file.Write(bytes.data(), bytes.size()))
         {
             AZ_Error(LogCallSite, false, "Couldn't write contents for file '%s'", m_coverageFile.c_str());
             return;
         }
     }
-    
+
     void PythonCoverageEditorSystemComponent::EnumerateAllModuleComponents()
     {
         AZ::ModuleManagerRequestBus::Broadcast(
@@ -165,16 +168,16 @@ namespace PythonCoverage
                         m_moduleComponents[moduleComponentDescriptor->GetUuid()] = moduleData.GetDebugName();
                     }
                 }
-    
+
                 return true;
             });
     }
-    
+
     void PythonCoverageEditorSystemComponent::EnumerateComponentsForEntity(const AZ::EntityId& entityId)
     {
         AZ::Entity* entity = nullptr;
         AZ::ComponentApplicationBus::BroadcastResult(entity, &AZ::ComponentApplicationBus::Events::FindEntity, AZ::EntityId(entityId));
-    
+
         if (entity)
         {
             auto& entityComponents = m_entityComponentMap[m_testCase];
@@ -188,7 +191,7 @@ namespace PythonCoverage
             }
         }
     }
-    
+
     AZStd::unordered_set<AZStd::string> PythonCoverageEditorSystemComponent::GetParentComponentModulesForAllActivatedEntities(
         const AZStd::unordered_map<AZ::Uuid, AZ::ComponentDescriptor*>& entityComponents) const
     {
@@ -200,10 +203,10 @@ namespace PythonCoverage
                 coveringModuleOutputNames.insert(moduleComponent->second);
             }
         }
-    
+
         return coveringModuleOutputNames;
     }
-    
+
     void PythonCoverageEditorSystemComponent::OnStartExecuteByFilenameAsTest(AZStd::string_view filename, AZStd::string_view testCase, [[maybe_unused]] const AZStd::vector<AZStd::string_view>& args)
     {
         if (m_coverageState == CoverageState::Disabled)
@@ -217,7 +220,7 @@ namespace PythonCoverage
             WriteCoverageFile();
             m_coverageState = CoverageState::Idle;
         }
-        
+
         if (testCase.empty())
         {
             // We need to be able to pinpoint the coverage data to the specific test case names otherwise we will not be able

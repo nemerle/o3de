@@ -8,6 +8,7 @@
 #include <AzCore/std/sort.h>
 #include <AzToolsFramework/Fingerprinting/TypeFingerprinter.h>
 #include "AzCore/Component/Component.h"
+#include "AzCore/Component/ComponentDescriptor.h"
 
 namespace AzToolsFramework
 {
@@ -41,7 +42,7 @@ namespace AzToolsFramework
 
             if(isComponentObject)
             {
-                AZ::ComponentDescriptor::DependencyArrayType services;
+                AZ::ComponentDescriptorDependencyArrayType services;
                 AZ::ComponentDescriptor* componentDescriptor = nullptr;
                 AZ::ComponentDescriptorBus::EventResult(componentDescriptor, classData.m_azRtti->GetTypeId(), &AZ::ComponentDescriptorBus::Events::GetDescriptor);
 

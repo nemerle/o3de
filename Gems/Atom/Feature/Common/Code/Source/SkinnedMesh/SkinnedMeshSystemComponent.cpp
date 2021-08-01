@@ -38,17 +38,17 @@ namespace AZ
             SkinnedMeshFeatureProcessor::Reflect(context);
         }
 
-        void SkinnedMeshSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void SkinnedMeshSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("SkinnedMeshService", 0xac7cea96));
         }
 
-        void SkinnedMeshSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+        void SkinnedMeshSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("SkinnedMeshService", 0xac7cea96));
         }
 
-        void SkinnedMeshSystemComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+        void SkinnedMeshSystemComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("RPISystem", 0xf2add773));
         }

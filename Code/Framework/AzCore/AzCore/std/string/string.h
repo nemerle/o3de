@@ -18,7 +18,7 @@
 #include <AzCore/std/allocator.h>
 #include <AzCore/std/typetraits/alignment_of.h>
 #include <AzCore/std/typetraits/is_integral.h>
-
+#include <AzCore/std/algorithm.h>
 #include <AzCore/std/string/string_view.h>
 
 namespace AZStd

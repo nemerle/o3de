@@ -45,19 +45,19 @@ namespace PhysX
         }
     }
 
-    void EditorHingeJointComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorHingeJointComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("PhysXJointService", 0x0d2f906f));
     }
 
-    void EditorHingeJointComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void EditorHingeJointComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         required.push_back(AZ_CRC("PhysXColliderService", 0x4ff43f7c));
         required.push_back(AZ_CRC("PhysXRigidBodyService", 0x1d4c64a8));
     }
 
-    void EditorHingeJointComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorHingeJointComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }

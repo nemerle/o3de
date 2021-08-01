@@ -22,7 +22,7 @@ namespace Multiplayer
         }
     }
 
-    void MultiplayerComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void MultiplayerComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC_CE("NetBindService"));
     }

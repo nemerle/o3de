@@ -68,7 +68,7 @@ namespace SceneBuilder
         m_sceneBuilder.BusDisconnect();
     }
 
-    void BuilderPluginComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void BuilderPluginComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.emplace_back(AZ_CRC_CE("AssetImportRequestHandler"));
     }

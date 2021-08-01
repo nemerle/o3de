@@ -27,7 +27,7 @@ namespace AZ
                 , public Events::ManifestMetaInfoBus::Handler
             {
             public:
-                AZ_COMPONENT(MaterialRuleBehavior, "{14FD7ECE-195D-46A7-85AB-135F77D757DC}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(MaterialRuleBehavior, "{14FD7ECE-195D-46A7-85AB-135F77D757DC}", SceneCore::BehaviorComponent);
 
                 ~MaterialRuleBehavior() override = default;
 

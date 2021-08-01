@@ -68,18 +68,18 @@ namespace AZ
                 }
             }
 
-            void BootstrapSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+            void BootstrapSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("BootstrapSystemComponent", 0xb8f32711));
             }
 
-            void BootstrapSystemComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+            void BootstrapSystemComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
             {
                 required.push_back(AZ_CRC("RPISystem", 0xf2add773));
                 required.push_back(AZ_CRC("SceneSystemComponentService", 0xd8975435));
             }
 
-            void BootstrapSystemComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent)
+            void BootstrapSystemComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& dependent)
             {
                 dependent.push_back(AZ_CRC("ImGuiSystemComponent", 0x2f08b9a7));
                 dependent.push_back(AZ_CRC("PrimitiveSystemComponent", 0xc860fa59));
@@ -89,7 +89,7 @@ namespace AZ
                 dependent.push_back(AZ_CRC("CommonService", 0x6398eec4));
             }
 
-            void BootstrapSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+            void BootstrapSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("BootstrapSystemComponent", 0xb8f32711));
             }

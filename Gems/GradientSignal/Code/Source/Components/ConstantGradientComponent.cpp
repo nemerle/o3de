@@ -49,18 +49,18 @@ namespace GradientSignal
         }
     }
 
-    void ConstantGradientComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void ConstantGradientComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
     }
 
-    void ConstantGradientComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void ConstantGradientComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
         services.push_back(AZ_CRC("GradientTransformService", 0x8c8c5ecc));
     }
 
-    void ConstantGradientComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& services)
+    void ConstantGradientComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& services)
     {
     }
 

@@ -10,6 +10,7 @@
 
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <GraphCanvas/Components/MimeDataHandlerBus.h>
 
 namespace ScriptCanvasEditor
@@ -32,7 +33,7 @@ namespace ScriptCanvasEditor
         void HandleDrop(const AZ::EntityId& sceneId, const QPointF& dropPoint, const QMimeData* mimeData) override;
         void HandleLeave(const AZ::EntityId& sceneId, const QMimeData* mimeData) override;
         ////
-        
+
 
         //AZ::Component
         void Activate() override;

@@ -9,6 +9,7 @@
 
 #include "UIFramework.hxx"
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/PlatformIncl.h>
@@ -149,6 +150,8 @@ namespace AzToolsFramework
             qInstallMessageHandler(NULL);
         }
     };
+
+    AZ_COMPONENT_IMPL(Framework)
 
     void Framework::Reflect(AZ::ReflectContext* context)
     {

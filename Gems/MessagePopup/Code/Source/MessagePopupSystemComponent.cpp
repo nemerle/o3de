@@ -89,25 +89,25 @@ namespace MessagePopup
     }
 
     //-------------------------------------------------------------------------
-    void MessagePopupSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void MessagePopupSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("MessagePopupSystemComponentService"));
     }
 
     //-------------------------------------------------------------------------
-    void MessagePopupSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void MessagePopupSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("MessagePopupSystemComponentService"));
     }
 
     //-------------------------------------------------------------------------
-    void MessagePopupSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void MessagePopupSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         (void)required;
     }
 
     //-------------------------------------------------------------------------
-    void MessagePopupSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void MessagePopupSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         (void)dependent;
     }

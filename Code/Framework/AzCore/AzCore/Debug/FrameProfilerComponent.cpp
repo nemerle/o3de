@@ -9,6 +9,7 @@
 #include <AzCore/Debug/FrameProfilerComponent.h>
 #include <AzCore/Debug/FrameProfilerBus.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 
@@ -18,6 +19,9 @@ namespace AZ
 {
     namespace Debug
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(FrameProfilerComponent)
+
         //=========================================================================
         // FrameProfilerComponent
         // [12/5/2012]
@@ -198,7 +202,7 @@ namespace AZ
         //=========================================================================
         // GetProvidedServices
         //=========================================================================
-        void FrameProfilerComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void FrameProfilerComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("FrameProfilerService", 0x05d1bb90));
         }
@@ -206,7 +210,7 @@ namespace AZ
         //=========================================================================
         // GetIncompatibleServices
         //=========================================================================
-        void FrameProfilerComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+        void FrameProfilerComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("FrameProfilerService", 0x05d1bb90));
         }
@@ -214,7 +218,7 @@ namespace AZ
         //=========================================================================
         // GetDependentServices
         //=========================================================================
-        void FrameProfilerComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent)
+        void FrameProfilerComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("MemoryService", 0x5c4d473c));
         }

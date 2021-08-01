@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/smart_ptr/shared_ptr.h>
 #include <AzCore/Component/TickBus.h>
 
@@ -54,10 +55,10 @@ namespace AZ
 
                 static void Reflect(ReflectContext* context);
 
-                static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-                static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
-                static void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required);
-                static void GetDependentServices(ComponentDescriptor::DependencyArrayType& required);
+                static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+                static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
+                static void GetRequiredServices(ComponentDescriptorDependencyArrayType& required);
+                static void GetDependentServices(ComponentDescriptorDependencyArrayType& required);
 
                 // AzFramework::WindowSystemRequestBus::Handler overrides ...
                 AzFramework::NativeWindowHandle GetDefaultWindowHandle() override;

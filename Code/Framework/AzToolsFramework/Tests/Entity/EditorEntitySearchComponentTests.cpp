@@ -9,6 +9,7 @@
 #include <AzTest/AzTest.h>
 #include <AzCore/Math/Aabb.h>
 #include <AzCore/UserSettings/UserSettingsComponent.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzToolsFramework/Component/EditorComponentAPIBus.h>
 #include <AzToolsFramework/Entity/EditorEntitySearchComponent.h>
@@ -27,7 +28,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(EntitySearch_TestComponent1, "{D8ABC8F6-E43B-4ED9-AABE-BA8905D4099D}", AZ::Component);
+        AZ_COMPONENT_SPLIT(EntitySearch_TestComponent1, "{D8ABC8F6-E43B-4ED9-AABE-BA8905D4099D}", AZ::Component);
         static void Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -82,12 +83,14 @@ namespace AzToolsFramework
         int m_intValue = 0;
         bool m_boolValue = DefaultBoolValue;
     };
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(EntitySearch_TestComponent1)
 
     class EntitySearch_TestComponent2
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(EntitySearch_TestComponent2, "{E50A848D-64C3-4445-A21B-D8F9C96972FE}", AZ::Component);
+        AZ_COMPONENT_SPLIT(EntitySearch_TestComponent2, "{E50A848D-64C3-4445-A21B-D8F9C96972FE}", AZ::Component);
         static void Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -138,6 +141,8 @@ namespace AzToolsFramework
 
         float m_floatValue = DefaultFloatValue;
     };
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(EntitySearch_TestComponent2)
 
     const float EntitySearch_TestComponent2::DefaultFloatValue = 5.0f;
 
@@ -150,7 +155,7 @@ namespace AzToolsFramework
             m_app.Start(m_descriptor);
 
             // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
             // in the unit tests.
             AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
 
@@ -171,7 +176,7 @@ namespace AzToolsFramework
             m_testComponentType2 = azrtti_typeid<EntitySearch_TestComponent2>();
         }
 
-        void GenerateTestHierarchy() 
+        void GenerateTestHierarchy()
         {
             /*
             *   City
@@ -315,7 +320,7 @@ namespace AzToolsFramework
             EXPECT_EQ(searchResults.size(), 1);
             EXPECT_EQ(searchResults[0], m_entityMap["streetId"]);
         }
-        
+
         {
             EntitySearchFilter filter;
             filter.m_names.push_back("St*t");
@@ -597,7 +602,7 @@ namespace AzToolsFramework
             EntityIdList searchResults;
             AzToolsFramework::EditorEntitySearchBus::BroadcastResult(searchResults, &AzToolsFramework::EditorEntitySearchRequests::SearchEntities, filter);
 
-            
+
             EXPECT_EQ(searchResults.size(), 2);
         }
 

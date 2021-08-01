@@ -9,6 +9,7 @@
 #include <AzCore/Module/Module.h>
 
 #include <AzFramework/Metrics/MetricsPlainTextNameRegistration.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 namespace StartingPointMovement

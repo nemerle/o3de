@@ -11,6 +11,7 @@
 #include <AzFramework/Components/ComponentAdapter.h>
 #include <CoreLights/AreaLightComponentController.h>
 #include <AtomLyIntegration/CommonFeatures/CoreLights/CoreLightsConstants.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

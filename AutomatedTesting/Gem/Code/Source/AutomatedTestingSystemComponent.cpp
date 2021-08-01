@@ -9,11 +9,14 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
-
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AutomatedTestingSystemComponent.h>
 
 namespace AutomatedTesting
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(AutomatedTestingSystemComponent)
+
     void AutomatedTestingSystemComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context))
@@ -33,22 +36,22 @@ namespace AutomatedTesting
         }
     }
 
-    void AutomatedTestingSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AutomatedTestingSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("AutomatedTestingService"));
     }
 
-    void AutomatedTestingSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AutomatedTestingSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("AutomatedTestingService"));
     }
 
-    void AutomatedTestingSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void AutomatedTestingSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
 
-    void AutomatedTestingSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void AutomatedTestingSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 
 #include <GraphCanvas/Components/SceneBus.h>
@@ -60,7 +61,7 @@ namespace GraphCanvas
     private:
 
         bool m_isGroupable;
-        
+
         AZ::EntityId m_sceneId;
 
         AZ::EntityId m_groupId;

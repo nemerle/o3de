@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/containers/bitset.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -31,6 +32,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpBlendShapeImporter)
+
             AssImpBlendShapeImporter::AssImpBlendShapeImporter()
             {
                 BindToCall(&AssImpBlendShapeImporter::ImportBlendShapes);
@@ -134,7 +138,7 @@ namespace AZ
                         for (int vertIdx = 0; vertIdx < aiAnimMesh->mNumVertices; ++vertIdx)
                         {
                             AZ::Vector3 vertex(AssImpSDKWrapper::AssImpTypeConverter::ToVector3(aiAnimMesh->mVertices[vertIdx]));
-                   
+
                             context.m_sourceSceneSystem.SwapVec3ForUpAxis(vertex);
                             context.m_sourceSceneSystem.ConvertUnit(vertex);
 

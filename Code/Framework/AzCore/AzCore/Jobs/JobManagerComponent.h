@@ -22,7 +22,7 @@ namespace AZ
         , public JobManagerBus::Handler
     {
     public:
-        AZ_COMPONENT(AZ::JobManagerComponent, "{CAE3A025-FAC9-4537-B39E-0A800A2326DF}")
+        AZ_COMPONENT_SPLIT(AZ::JobManagerComponent, "{CAE3A025-FAC9-4537-B39E-0A800A2326DF}")
 
         JobManagerComponent();
 
@@ -40,11 +40,11 @@ namespace AZ
         //////////////////////////////////////////////////////////////////////////
 
         /// \ref ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
         /// \ref ComponentDescriptor::GetIncompatibleServices
-        static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
         /// \ref ComponentDescriptor::GetDependentServices
-        static void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetDependentServices(ComponentDescriptorDependencyArrayType& dependent);
         /// \red ComponentDescriptor::Reflect
         static void Reflect(ReflectContext* reflection);
 

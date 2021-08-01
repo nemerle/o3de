@@ -2630,7 +2630,7 @@ namespace LandscapeCanvasEditor
 
             // Find what (if any) services are provided by the Component we are about to add,
             // and remove them from the list of missing required services are are tracking
-            AZ::ComponentDescriptor::DependencyArrayType providedServices;
+            AZ::ComponentDescriptorDependencyArrayType providedServices;
             componentDescriptor->GetProvidedServices(providedServices, nullptr);
             for (const auto& service : providedServices)
             {

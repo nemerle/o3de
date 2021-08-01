@@ -11,6 +11,7 @@
 #include <LmbrCentral/Dependency/DependencyMonitor.h>
 #include <GradientSignal/GradientSampler.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <GradientSignal/Ebuses/GradientRequestBus.h>
 #include <GradientSignal/Ebuses/SurfaceMaskGradientRequestBus.h>
 #include <SurfaceData/SurfaceDataTypes.h>
@@ -43,7 +44,7 @@ namespace GradientSignal
 
     /**
     * calculates a gradient value based on percent contribution from surface tags
-    */      
+    */
     class SurfaceMaskGradientComponent
         : public AZ::Component
         , private GradientRequestBus::Handler
@@ -52,8 +53,8 @@ namespace GradientSignal
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(SurfaceMaskGradientComponent, SurfaceMaskGradientComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         SurfaceMaskGradientComponent(const SurfaceMaskGradientConfig& configuration);

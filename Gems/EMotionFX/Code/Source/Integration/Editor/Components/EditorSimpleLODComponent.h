@@ -37,22 +37,22 @@ namespace EMotionFX
             void Activate() override;
             void Deactivate() override;
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 SimpleLODComponent::GetProvidedServices(provided);
             }
 
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
             {
                 SimpleLODComponent::GetDependentServices(dependent);
             }
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
             {
                 SimpleLODComponent::GetRequiredServices(required);
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 SimpleLODComponent::GetIncompatibleServices(incompatible);
             }

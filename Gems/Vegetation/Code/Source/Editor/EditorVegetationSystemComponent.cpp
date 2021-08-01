@@ -13,17 +13,17 @@
 
 namespace Vegetation
 {
-    void EditorVegetationSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorVegetationSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("EditorVegetationSystemService", 0xfc666830));
     }
 
-    void EditorVegetationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorVegetationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("EditorVegetationSystemService", 0xfc666830));
     }
 
-    void EditorVegetationSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorVegetationSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& services)
     {
     }
 

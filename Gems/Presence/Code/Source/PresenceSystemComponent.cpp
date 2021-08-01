@@ -124,13 +124,13 @@ namespace Presence
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    void PresenceSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void PresenceSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("PresenceService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    void PresenceSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void PresenceSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("PresenceService"));
     }

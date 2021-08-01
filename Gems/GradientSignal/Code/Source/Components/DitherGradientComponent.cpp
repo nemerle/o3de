@@ -79,17 +79,17 @@ namespace GradientSignal
         return m_useSystemPointsPerUnit;
     }
 
-    void DitherGradientComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DitherGradientComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
     }
 
-    void DitherGradientComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DitherGradientComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
     }
 
-    void DitherGradientComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DitherGradientComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& services)
     {
     }
 

@@ -18,14 +18,14 @@ namespace AutomatedTesting
         , protected AutomatedTestingRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(AutomatedTestingSystemComponent, "{81E31A03-5C09-41C5-BDF6-5E33456C7C2B}");
+        AZ_COMPONENT_SPLIT(AutomatedTestingSystemComponent, "{81E31A03-5C09-41C5-BDF6-5E33456C7C2B}");
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
     protected:
         ////////////////////////////////////////////////////////////////////////

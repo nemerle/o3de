@@ -48,6 +48,9 @@ namespace AZStd
 
 namespace AZ
 {
+    template <class ValueT, class ErrorT>
+    class Outcome;
+
     namespace ScriptCanvasOnDemandReflection
     {
          template<typename T>

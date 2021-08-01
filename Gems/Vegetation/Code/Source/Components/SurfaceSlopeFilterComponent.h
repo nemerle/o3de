@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Vegetation/Ebuses/FilterRequestBus.h>
 #include <Vegetation/Ebuses/SurfaceSlopeFilterRequestBus.h>
 
@@ -37,7 +38,7 @@ namespace Vegetation
 
     /**
     * Component implementing VegetationFilterRequestBus that accepts/rejects based on slope
-    */      
+    */
     class SurfaceSlopeFilterComponent
         : public AZ::Component
         , public FilterRequestBus::Handler
@@ -46,9 +47,9 @@ namespace Vegetation
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(SurfaceSlopeFilterComponent, SurfaceSlopeFilterComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         SurfaceSlopeFilterComponent(const SurfaceSlopeFilterConfig& configuration);

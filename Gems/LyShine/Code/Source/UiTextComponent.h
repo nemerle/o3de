@@ -21,6 +21,7 @@
 #include <LyShine/UiAssetTypes.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/containers/set.h>
 
@@ -153,8 +154,8 @@ public: //types
 
         InlineImage* image = nullptr;
 
-        AZ::Vector2 size; //!< The size in pixels of the batch content 
-        
+        AZ::Vector2 size; //!< The size in pixels of the batch content
+
         float yOffset; //!< While calculating, the yOffset is set to the offset from the text draw y position.
                        //!< Once all batches in the line are calculated, the yOffset will become the offset
                        //!< from the y draw position of the batch line
@@ -341,19 +342,19 @@ public: // member functions
 
 public:  // static member functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiVisualService", 0xa864fdf8));
         provided.push_back(AZ_CRC("UiTextService"));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiVisualService", 0xa864fdf8));
         incompatible.push_back(AZ_CRC("UiTextService"));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiElementService", 0x3dca7ad4));
         required.push_back(AZ_CRC("UiTransformService", 0x3a838e34));
@@ -475,7 +476,7 @@ protected: // member functions
     //! Handles overflow and shrink-to-text settings to text
     void HandleOverflowText(UiTextComponent::DrawBatchLines& drawBatchLinesOut);
 
-    //! Handles shrink-to-fit for text, if applicable. 
+    //! Handles shrink-to-fit for text, if applicable.
     void HandleShrinkToFit(UiTextComponent::DrawBatchLines& drawBatchLinesOut, float availableHeight = -1.0f);
 
     //! Handles the "uniform" shrink-to-fit setting.
@@ -506,18 +507,18 @@ protected: // member functions
     void GetDrawBatchStartPositions(DrawBatchStartPositions& startPositions, DrawBatchLine* lineToEllipsis, const AZ::Vector2& currentElementSize);
 
     //! Returns the draw batch that will have ellipsis inserted, along with required position information to do so.
-    DrawBatch* GetDrawBatchToEllipseAndPositions(const char* ellipseText, 
-        const STextDrawContext& ctx, 
-        const AZ::Vector2& currentElementSize, 
+    DrawBatch* GetDrawBatchToEllipseAndPositions(const char* ellipseText,
+        const STextDrawContext& ctx,
+        const AZ::Vector2& currentElementSize,
         DrawBatchStartPositions* startPositions,
-        float* drawBatchStartPos, 
+        float* drawBatchStartPos,
         float* ellipsisPos);
 
     //! Removes all draw batches following the given DrawBatch on the given DrawBatchLine.
     void TruncateDrawBatches(DrawBatchLine* lineToTruncate, const DrawBatch* truncateAfterBatch);
 
     //! Given a draw batch, get the character index where ellipsis should be inserted in the string.
-    int GetStartEllipseIndexInDrawBatch(const DrawBatch* drawBatchToEllipse, 
+    int GetStartEllipseIndexInDrawBatch(const DrawBatch* drawBatchToEllipse,
         const STextDrawContext& ctx,
         const float drawBatchStartPos,
         const float ellipsePos);
@@ -546,7 +547,7 @@ protected: // member functions
     //! Given rect points and number of lines of text to display, returns the position to display text.
     //!
     //! The number of lines of text determines the Y offset of the first line to display. For
-    //! top-aligned text, this offset will be zero (regardless of the number of lines of text) 
+    //! top-aligned text, this offset will be zero (regardless of the number of lines of text)
     //! because the first line to display will always be displayed at the top of the rect, while
     //! bottom-aligned text will be offset by the number of lines to display, and vertically
     //! centered text will be offset by half of that amount.
@@ -642,11 +643,11 @@ private: // data
                                                     //!< font size. In GetTextDrawContextPrototype, this value ultimately gets converted to pixels and
                                                     //!< stored in STextDrawContext::m_tracking. This value and STextDrawContext::m_tracking aren't
                                                     //!< necessarily 1:1, just as m_fontSize and STextDrawContext::m_size aren't necessarily 1:1.
-                                                    //!< Although the component values of m_charSpacing and m_fontSize are unaffected by scaling, 
-                                                    //!< scaling (such as scaling performed by shrink-to-fit overflow handling) is applied to these 
+                                                    //!< Although the component values of m_charSpacing and m_fontSize are unaffected by scaling,
+                                                    //!< scaling (such as scaling performed by shrink-to-fit overflow handling) is applied to these
                                                     //!< values and the resulting scaled value is stored in STextDrawContext for rendering. As a result,
                                                     //!< it's possible for the value of m_charSpacing to never change, but STextDrawContext::m_tracking
-                                                    //!< can vary in value independently of m_charSpacing as the font size (and/or scaled font size) 
+                                                    //!< can vary in value independently of m_charSpacing as the font size (and/or scaled font size)
                                                     //!< changes over time. See also DrawBatchLines::fontSizeScale.
     float m_lineSpacing;
 

@@ -10,6 +10,8 @@
 #include <AzCore/Component/EntityBus.h>
 #include <AzFramework/Slice/SliceInstantiationBus.h>
 #include <LmbrCentral/Scripting/SpawnerComponentBus.h>
+#include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace LmbrCentral
 {
@@ -35,9 +37,9 @@ namespace LmbrCentral
         //////////////////////////////////////////////////////////////////////////
         // Component descriptor
         static void Reflect(AZ::ReflectContext* context);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
         //////////////////////////////////////////////////////////////////////////
 
         //////////////////////////////////////////////////////////////////////////

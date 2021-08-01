@@ -69,6 +69,14 @@ namespace ScriptEventData
         }
     }
 
+    void VoidType::Reflect(AZ::ReflectContext *context)
+    {
+        if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
+        {
+            serializeContext->Class<VoidType>();
+        }
+    }
+
     VersionedProperty::VersionedProperty(AZ::ScriptDataContext& dc)
     {
         Internal::VersionedPropertyConstructor(this, dc);
@@ -101,7 +109,7 @@ namespace ScriptEventData
                     ;
             }
         }
-         
+
         if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
         {
             behaviorContext->Class<ScriptEventData::VersionedProperty>()

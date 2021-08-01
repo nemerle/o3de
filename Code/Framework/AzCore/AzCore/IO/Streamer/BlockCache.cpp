@@ -81,11 +81,11 @@ namespace AZ
             if (m_used)
             {
                 AZ_Assert(m_blockOffset == 0, "Unable to add a block cache to this one as this block requires an offset upon completion.");
-                
+
                 AZ_Assert(section.m_readOffset < m_readOffset, "The block that's being merged needs to come before this block.");
                 m_readOffset = section.m_readOffset + section.m_blockOffset; // Remove any alignment that might have been added.
                 m_readSize += section.m_readSize - section.m_blockOffset;
-                
+
                 AZ_Assert(section.m_output < m_output, "The block that's being merged needs to come before this block.");
                 m_output = section.m_output;
                 m_copySize += section.m_copySize;
@@ -100,7 +100,7 @@ namespace AZ
             }
             m_blockOffset = 0; // Two merged sections do not support caching.
         }
-        
+
         BlockCache::BlockCache(u64 cacheSize, u32 blockSize, u32 alignment, bool onlyEpilogWrites)
             : StreamStackEntry("Block cache")
             , m_alignment(alignment)
@@ -108,7 +108,7 @@ namespace AZ
         {
             AZ_Assert(IStreamerTypes::IsPowerOf2(alignment), "Alignment needs to be a power of 2.");
             AZ_Assert(IStreamerTypes::IsAlignedTo(blockSize, alignment), "Block size needs to be a multiple of the alignment.");
-            
+
             m_numBlocks = aznumeric_caster(cacheSize / blockSize);
             m_cacheSize = cacheSize - (cacheSize % blockSize); // Only use the amount needed for the cache.
             m_blockSize = blockSize;
@@ -116,14 +116,14 @@ namespace AZ
             {
                 m_onlyEpilogWrites = true;
             }
-            
+
             m_cache = reinterpret_cast<u8*>(AZ::AllocatorInstance<AZ::SystemAllocator>::Get().Allocate(
                 m_cacheSize, alignment, 0, "AZ::IO::Streamer BlockCache", __FILE__, __LINE__));
             m_cachedPaths = AZStd::unique_ptr<RequestPath[]>(new RequestPath[m_numBlocks]);
             m_cachedOffsets = AZStd::unique_ptr<u64[]>(new u64[m_numBlocks]);
             m_blockLastTouched = AZStd::unique_ptr<TimePoint[]>(new TimePoint[m_numBlocks]);
             m_inFlightRequests = AZStd::unique_ptr<FileRequest*[]>(new FileRequest*[m_numBlocks]);
-            
+
             ResetCache();
         }
 
@@ -139,7 +139,7 @@ namespace AZ
             AZStd::visit([this, request](auto&& args)
             {
                 using Command = AZStd::decay_t<decltype(args)>;
-                if constexpr (AZStd::is_same_v<Command, FileRequest::ReadData>)
+                if constexpr (AZStd::is_same_v<Command, RequestCommands::ReadData>)
                 {
                     ReadFile(request, args);
                     return;
@@ -162,13 +162,13 @@ namespace AZ
         bool BlockCache::ExecuteRequests()
         {
             size_t delayedCount = m_delayedSections.size();
-            
+
             bool delayedRequestProcessed = false;
             for (size_t i = 0; i < delayedCount; ++i)
             {
                 Section& delayed = m_delayedSections.front();
                 AZ_Assert(delayed.m_parent, "Delayed section doesn't have a reference to the original request.");
-                auto data = AZStd::get_if<FileRequest::ReadData>(&delayed.m_parent->GetCommand());
+                auto data = AZStd::get_if<RequestCommands::ReadData>(&delayed.m_parent->GetCommand());
                 AZ_Assert(data, "A request in the delayed queue of the BlockCache didn't have a parent with read data.");
                 // This call can add the same section to the back of the queue if there's not
                 // enough space. Because of this the entry needs to be removed from the delayed
@@ -235,7 +235,7 @@ namespace AZ
             }
         }
 
-        void BlockCache::ReadFile(FileRequest* request, FileRequest::ReadData& data)
+        void BlockCache::ReadFile(FileRequest* request, RequestCommands::ReadData& data)
         {
             if (!m_next)
             {
@@ -274,7 +274,7 @@ namespace AZ
             Section main;
             Section epilog;
 
-            auto& data = AZStd::get<FileRequest::ReadData>(request->GetCommand());
+            auto& data = AZStd::get<RequestCommands::ReadData>(request->GetCommand());
 
             if (!SplitRequest(prolog, main, epilog, data.m_path, fileLength, data.m_offset, data.m_size,
                 reinterpret_cast<u8*>(data.m_output)))
@@ -308,7 +308,7 @@ namespace AZ
                     if (ReadFromCache(request, prolog, data.m_path) == CacheResult::CacheMiss)
                     {
                         // The data isn't cached so put the prolog in front of the main section
-                        // so it's read in one read request. If main wasn't used, prefixing the prolog 
+                        // so it's read in one read request. If main wasn't used, prefixing the prolog
                         // will cause it to be filled in and used.
                         main.Prefix(prolog);
                         m_hitRateStat.PushSample(0.0);
@@ -322,7 +322,7 @@ namespace AZ
                 }
                 else
                 {
-                    // If m_onlyEpilogWrites is set but main and epilog are not filled in, it means that 
+                    // If m_onlyEpilogWrites is set but main and epilog are not filled in, it means that
                     // the request was so small it fits in one cache block, in which case the prolog and
                     // epilog are practically the same. Or this code is reached because both prolog and
                     // epilog are allowed to write.
@@ -461,7 +461,7 @@ namespace AZ
                     section.m_cacheBlockIndex = cacheLocation;
                     m_inFlightRequests[cacheLocation] = readRequest;
                     m_numInFlightRequests++;
-                    
+
                     // If set, this is the wait added by the delay.
                     if (section.m_wait)
                     {
@@ -475,7 +475,7 @@ namespace AZ
                 }
                 else
                 {
-                    // There's no more space in the cache to store this request to. This is because there are more in-flight requests than 
+                    // There's no more space in the cache to store this request to. This is because there are more in-flight requests than
                     // there are slots in the cache. Delay the request until there's a slot available but add a wait for the section to
                     // make sure the request can't complete if some parts are read.
                     if (!section.m_wait)
@@ -557,7 +557,7 @@ namespace AZ
             // left after the file as well that could be cached.
             //
             u64 roundedOffsetStart = AZ_SIZE_ALIGN_DOWN(offset, aznumeric_cast<u64>(m_blockSize));
-            
+
             u64 blockReadSizeStart = AZStd::min(fileLength - roundedOffsetStart, aznumeric_cast<u64>(m_blockSize));
             // Check if the request is on the left edge of the cache block, which means there's nothing in front of it
             // that could be cached.

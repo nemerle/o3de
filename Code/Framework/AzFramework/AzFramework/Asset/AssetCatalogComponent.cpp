@@ -11,11 +11,15 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/API/ApplicationAPI.h>
 #include <AzFramework/Asset/AssetCatalog.h>
 
 namespace AzFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(AssetCatalogComponent)
+
     //=========================================================================
     // DataVersionConverter
     //=========================================================================

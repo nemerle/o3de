@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Console/IConsole.h>
 #include <AzCore/Debug/ProfilerBus.h>
 #include <AzCore/Math/Crc.h>
@@ -14,6 +15,7 @@
 #include <AzCore/IO/Streamer/BlockCache.h>
 #include <AzCore/IO/Streamer/DedicatedCache.h>
 #include <AzCore/IO/Streamer/FullFileDecompressor.h>
+#include <AzCore/IO/Streamer/FileRequest.h>
 #include <AzCore/IO/Streamer/Scheduler.h>
 #include <AzCore/IO/Streamer/StreamerComponent.h>
 #include <AzCore/IO/Streamer/StreamerConfiguration.h>
@@ -34,6 +36,9 @@ namespace AZ
         "This includes optimizations to run from loose files and repeatedly reading the same files.");
     AZ_CVAR(AZ::CVarFixedString, cl_streamerProfile, "", nullptr, ConsoleFunctorFlags::Null,
         "Overrides the profile provided by the hardware.");
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(StreamerComponent)
 
     StreamerComponent::StreamerComponent()
     {
@@ -164,17 +169,17 @@ namespace AZ
         }
     }
 
-    void StreamerComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+    void StreamerComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("DataStreamingService"));
     }
 
-    void StreamerComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+    void StreamerComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("DataStreamingService"));
     }
 
-    void StreamerComponent::GetDependentServices([[maybe_unused]] ComponentDescriptor::DependencyArrayType& dependent)
+    void StreamerComponent::GetDependentServices([[maybe_unused]] ComponentDescriptorDependencyArrayType& dependent)
     {
     }
 
@@ -204,7 +209,7 @@ namespace AZ
     {
         if (m_streamer)
         {
-            m_streamer->QueueRequest(m_streamer->Report(AZ::IO::FileRequest::ReportData::ReportType::FileLocks));
+            m_streamer->QueueRequest(m_streamer->Report(AZ::IO::FileRequestReportType::FileLocks));
         }
     }
 

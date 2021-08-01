@@ -10,6 +10,7 @@
 #include <qgraphicswidget.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <GraphCanvas/Components/VisualBus.h>
 
@@ -22,32 +23,32 @@ namespace GraphCanvas
         , public VisualRequestBus::Handler
     {
     public:
-    
+
         AZ_COMPONENT(SlotLayoutComponent , "{77518A10-3443-4668-ADCB-D6EFC3BF9907}");
         static void Reflect(AZ::ReflectContext* context);
-    
+
         SlotLayoutComponent();
         virtual ~SlotLayoutComponent();
-    
+
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_SlotVisualService", 0x30aa128a));
             provided.push_back(AZ_CRC("GraphCanvas_RootVisualService", 0x9ec46d3b));
         }
-        
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("GraphCanvas_SlotVisualService", 0x30aa128a));
             incompatible.push_back(AZ_CRC("GraphCanvas_RootVisualService", 0x9ec46d3b));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("GraphCanvas_SlotService", 0x701eaf6b));
         }
@@ -56,7 +57,7 @@ namespace GraphCanvas
         void Activate();
         void Deactivate();
         ////
-        
+
         // VisualRequestBus
         QGraphicsItem* AsGraphicsItem() override;
         QGraphicsLayoutItem* AsGraphicsLayoutItem() override;
@@ -65,12 +66,12 @@ namespace GraphCanvas
         void SetVisible(bool visible) override;
         bool IsVisible() const override;
         ////
-    
+
     protected:
-    
+
         void SetLayout(QGraphicsLayout* layout);
         QGraphicsLayout* GetLayout();
-        
+
     private:
         QGraphicsWidget* m_layoutWidget;
         QGraphicsLayout* m_layout;

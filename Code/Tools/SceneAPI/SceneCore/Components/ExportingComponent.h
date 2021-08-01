@@ -28,7 +28,7 @@ namespace AZ
                 , public Events::CallProcessorBinder
             {
             public:
-                AZ_COMPONENT(ExportingComponent, "{0CB2327A-EAB7-4F16-8204-861530C3A077}", Events::CallProcessorBinder);
+                AZ_COMPONENT_SPLIT(ExportingComponent, "{0CB2327A-EAB7-4F16-8204-861530C3A077}", Events::CallProcessorBinder);
 
                 ExportingComponent() = default;
 

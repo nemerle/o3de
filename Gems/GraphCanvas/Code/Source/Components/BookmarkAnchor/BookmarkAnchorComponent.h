@@ -12,6 +12,7 @@
 #include <qcolor.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Color.h>
 
 #include <GraphCanvas/Components/Bookmarks/BookmarkBus.h>
@@ -79,7 +80,7 @@ namespace GraphCanvas
         ////
 
     protected:
-        
+
         // SaveDataCallback
         void OnBookmarkNameChanged() override;
         void OnBookmarkColorChanged() override;

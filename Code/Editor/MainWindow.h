@@ -278,7 +278,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(MainWindowEditorFuncsHandler, "{C879102B-C767-4349-8F06-B69119CAC462}")
+        AZ_COMPONENT_SPLIT(MainWindowEditorFuncsHandler, "{C879102B-C767-4349-8F06-B69119CAC462}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 

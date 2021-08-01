@@ -21,7 +21,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpBoneImporter, "{E7A62DE7-B660-4920-BF91-32738175D5A7}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpBoneImporter, "{E7A62DE7-B660-4920-BF91-32738175D5A7}", SceneCore::LoadingComponent);
 
                 AssImpBoneImporter();
                 ~AssImpBoneImporter() override = default;

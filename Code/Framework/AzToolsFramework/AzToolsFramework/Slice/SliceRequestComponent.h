@@ -21,7 +21,7 @@ namespace AzToolsFramework
         , protected SliceRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(SliceRequestComponent, "{7E3DFACD-DC40-45EE-9B66-DBE73A8553CF}");
+        AZ_COMPONENT_SPLIT(SliceRequestComponent, "{7E3DFACD-DC40-45EE-9B66-DBE73A8553CF}");
 
         static void Reflect(AZ::ReflectContext* context);
 

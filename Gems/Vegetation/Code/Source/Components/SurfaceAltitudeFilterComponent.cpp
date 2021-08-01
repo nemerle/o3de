@@ -80,18 +80,18 @@ namespace Vegetation
         return m_shapeEntityId.IsValid();
     }
 
-    void SurfaceAltitudeFilterComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceAltitudeFilterComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationFilterService", 0x9f97cc97));
         services.push_back(AZ_CRC("VegetationSurfaceAltitudeFilterService", 0xac586965));
     }
 
-    void SurfaceAltitudeFilterComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceAltitudeFilterComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationSurfaceAltitudeFilterService", 0xac586965));
     }
 
-    void SurfaceAltitudeFilterComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceAltitudeFilterComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
     }

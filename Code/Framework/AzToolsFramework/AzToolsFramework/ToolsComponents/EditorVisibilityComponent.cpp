@@ -7,6 +7,7 @@
  */
 #include "EditorVisibilityComponent.h"
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
 #include <AzToolsFramework/Entity/EditorEntityHelpers.h>
@@ -16,6 +17,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorVisibilityComponent)
+
         void EditorVisibilityComponent::Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -35,12 +39,12 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorVisibilityComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorVisibilityComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorVisibilityService", 0x90888caf));
         }
 
-        void EditorVisibilityComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorVisibilityComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorVisibilityService", 0x90888caf));
         }

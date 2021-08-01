@@ -62,17 +62,17 @@ namespace AZ
             }
         }
 
-        void DecalComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void DecalComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("DecalService"));
         }
 
-        void DecalComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void DecalComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("DecalService"));
         }
 
-        void DecalComponentController::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void DecalComponentController::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC_CE("TransformService"));
             dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));

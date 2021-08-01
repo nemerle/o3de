@@ -137,23 +137,23 @@ namespace Blast
         }
     }
 
-    void BlastFamilyComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void BlastFamilyComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("BlastFamilyService"));
     }
 
-    void BlastFamilyComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void BlastFamilyComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("BlastFamilyService"));
         incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }
 
-    void BlastFamilyComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void BlastFamilyComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
     }
 
-    void BlastFamilyComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void BlastFamilyComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("BlastMeshDataService"));
     }

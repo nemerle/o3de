@@ -131,15 +131,15 @@ namespace AzFramework
         , public TargetManagerClient::Bus::Handler
     {
     public:
-        AZ_COMPONENT(DrillerNetworkAgentComponent, "{B587A74D-6190-4149-91CB-0EA69936BD59}")
+        AZ_COMPONENT_SPLIT(DrillerNetworkAgentComponent, "{B587A74D-6190-4149-91CB-0EA69936BD59}")
 
         //////////////////////////////////////////////////////////////////////////
         // AZ::Component
         virtual void Init();
         virtual void Activate();
         virtual void Deactivate();
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
         static void Reflect(AZ::ReflectContext* context);
         //////////////////////////////////////////////////////////////////////////
 
@@ -173,15 +173,15 @@ namespace AzFramework
         , public TargetManagerClient::Bus::Handler
     {
     public:
-        AZ_COMPONENT(DrillerNetworkConsoleComponent, "{78ACADA4-F2C7-4320-8E97-59DD8B9BE33A}")
+        AZ_COMPONENT_SPLIT(DrillerNetworkConsoleComponent, "{78ACADA4-F2C7-4320-8E97-59DD8B9BE33A}")
 
         //////////////////////////////////////////////////////////////////////////
         // AZ::Component
         virtual void Init();
         virtual void Activate();
         virtual void Deactivate();
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
         static void Reflect(AZ::ReflectContext* context);
         //////////////////////////////////////////////////////////////////////////
 

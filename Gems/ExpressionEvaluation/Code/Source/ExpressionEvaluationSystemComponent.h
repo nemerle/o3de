@@ -8,6 +8,8 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <ExpressionEvaluation/ExpressionEvaluationBus.h>
 
@@ -25,13 +27,13 @@ namespace ExpressionEvaluation
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         ~ExpressionEvaluationSystemComponent();
-        
+
         // AZ::Component
         void Init() override;
         void Activate() override;
@@ -40,7 +42,7 @@ namespace ExpressionEvaluation
 
         void RegisterExpressionInterface(ExpressionElementParser* elementInterface);
         void RemoveExpressionInterface(ExpressionParserId interfaceId);
-        
+
         // ExpressionEvaluationRequestBus
         ParseOutcome ParseExpression(AZStd::string_view expressionString) const override;
         ParseInPlaceOutcome ParseExpressionInPlace(AZStd::string_view expressionString, ExpressionTree& expressionTree) const override;
@@ -51,7 +53,7 @@ namespace ExpressionEvaluation
         EvaluateStringOutcome EvaluateExpression(AZStd::string_view expression) const override;
         ExpressionResult Evaluate(const ExpressionTree& expressionTree) const override;
         ////
-        
+
     private:
 
         AZ::Outcome<void, ParsingError> ReportMissingValue(size_t offset) const;
@@ -62,7 +64,7 @@ namespace ExpressionEvaluation
         AZ::Outcome<void, ParsingError> ReportUnbalancedParen(size_t offset, const AZStd::string& offsetsString) const;
 
         AZStd::vector<ExpressionElementParser*> m_internalParsers;
-    
+
         AZStd::unordered_map<ExpressionParserId, ExpressionElementParser*> m_elementInterfaces;
     };
 }

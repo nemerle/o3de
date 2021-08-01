@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzNetworking/Framework/ICompressor.h>
 
@@ -16,10 +17,10 @@ namespace MultiplayerCompression
     static const char* CompressorName = "LZ4";
     static const AzNetworking::CompressorType CompressorType = aznumeric_cast<AzNetworking::CompressorType>(static_cast<AZ::u32>(AZ::Crc32(CompressorName)));
 
-    /** 
+    /**
     * Implements an LZ4 Compressor against GridMate's Compressor interface for use with the Multiplayer Gem.
-    * Handles edge and error cases specific to LZ4 that are otherwise not covered in GridMate Carrier 
-    * (where a Compressor is applied). 
+    * Handles edge and error cases specific to LZ4 that are otherwise not covered in GridMate Carrier
+    * (where a Compressor is applied).
     */
     class LZ4Compressor
         : public AzNetworking::ICompressor

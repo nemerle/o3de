@@ -83,10 +83,10 @@ namespace AZ
             AZ_RTTI(AZ::Render::ReflectionProbeComponentController, "{EFFA88F1-7ED2-4552-B6F6-5E6B2B6D9311}");
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             ReflectionProbeComponentController() = default;
             ReflectionProbeComponentController(const ReflectionProbeComponentConfig& config);

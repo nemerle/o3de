@@ -349,7 +349,7 @@ namespace AzToolsFramework
                 {
                     AZ::ComponentDescriptor* componentDescriptor = nullptr;
                     EBUS_EVENT_ID_RESULT(componentDescriptor, component->RTTI_GetType(), AZ::ComponentDescriptorBus, GetDescriptor);
-                    AZ::ComponentDescriptor::DependencyArrayType providedServices;
+                    AZ::ComponentDescriptorDependencyArrayType providedServices;
                     componentDescriptor->GetProvidedServices(providedServices, component);
                     for (int serviceIdx = azlossy_cast<int>(unmatchedServices.size() - 1); serviceIdx >= 0; --serviceIdx)
                     {

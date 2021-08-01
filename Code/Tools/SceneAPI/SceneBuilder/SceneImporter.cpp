@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Casting/numeric_cast.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Debug/Trace.h>
 #include <AzCore/Math/Transform.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -32,6 +33,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(SceneImporter)
+
             struct QueueNode
             {
                 std::shared_ptr<SDKNode::NodeWrapper> m_node;
@@ -79,7 +83,7 @@ namespace AZ
                 }
 
                 convertFunc = AZStd::bind(&SceneImporter::ConvertScene, this, AZStd::placeholders::_1);
-                
+
                 if (convertFunc(context.GetScene()))
                 {
                     return Events::ProcessingResult::Success;

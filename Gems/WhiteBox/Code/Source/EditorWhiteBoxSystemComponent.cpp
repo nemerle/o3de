@@ -42,7 +42,7 @@ namespace WhiteBox
         RegisterAsset<Pipeline::WhiteBoxMeshAssetHandler, Pipeline::WhiteBoxMeshAsset>(m_assetHandlers);
     }
 
-    void EditorWhiteBoxSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void EditorWhiteBoxSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC_CE("AssetDatabaseService"));
     }

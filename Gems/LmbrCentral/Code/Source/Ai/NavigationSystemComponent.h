@@ -9,6 +9,7 @@
 
 #include <LmbrCentral/Ai/NavigationSystemBus.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <CrySystemBus.h>
 
 namespace LmbrCentral
@@ -26,12 +27,12 @@ namespace LmbrCentral
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("NavigationSystemService", 0x48446078));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("NavigationSystemService", 0x48446078));
         }

@@ -7,6 +7,7 @@
  */
 
 #include <AzFramework/Visibility/OctreeSystemComponent.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/ShapeIntersection.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
@@ -524,6 +525,8 @@ namespace AzFramework
         return &(*m_nodeCache[childPage])[childOffset];
     }
 
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(OctreeSystemComponent)
 
     void OctreeSystemComponent::Reflect(AZ::ReflectContext* context)
     {
@@ -535,19 +538,19 @@ namespace AzFramework
     }
 
 
-    void OctreeSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void OctreeSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("OctreeService"));
     }
 
 
-    void OctreeSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void OctreeSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("OctreeService"));
     }
 
 
-    OctreeSystemComponent::OctreeSystemComponent()        
+    OctreeSystemComponent::OctreeSystemComponent()
     {
         AZ::Interface<IVisibilitySystem>::Register(this);
         IVisibilitySystemRequestBus::Handler::BusConnect();
@@ -563,7 +566,7 @@ namespace AzFramework
         delete m_defaultScene;
 
         IVisibilitySystemRequestBus::Handler::BusDisconnect();
-        AZ::Interface<IVisibilitySystem>::Unregister(this);        
+        AZ::Interface<IVisibilitySystem>::Unregister(this);
     }
 
 

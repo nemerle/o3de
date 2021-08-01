@@ -320,7 +320,7 @@ namespace AzToolsFramework
                 GenericComponentWrapper::Reflect(reflection);
             }
 
-            void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided, const AZ::Component* instance) const override
+            void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided, const AZ::Component* instance) const override
             {
                 const AZ::ComponentDescriptor* templateDescriptor = GetTemplateDescriptor(instance);
                 if (templateDescriptor)
@@ -329,7 +329,7 @@ namespace AzToolsFramework
                 }
             }
 
-            void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent, const AZ::Component* instance) const override
+            void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent, const AZ::Component* instance) const override
             {
                 const AZ::ComponentDescriptor* templateDescriptor = GetTemplateDescriptor(instance);
                 if (templateDescriptor)
@@ -338,7 +338,7 @@ namespace AzToolsFramework
                 }
             }
 
-            void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required, const AZ::Component* instance) const override
+            void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required, const AZ::Component* instance) const override
             {
                 const AZ::ComponentDescriptor* templateDescriptor = GetTemplateDescriptor(instance);
                 if (templateDescriptor)
@@ -347,7 +347,7 @@ namespace AzToolsFramework
                 }
             }
 
-            void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible, const AZ::Component* instance) const override
+            void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible, const AZ::Component* instance) const override
             {
                 const AZ::ComponentDescriptor* templateDescriptor = GetTemplateDescriptor(instance);
                 if (templateDescriptor)

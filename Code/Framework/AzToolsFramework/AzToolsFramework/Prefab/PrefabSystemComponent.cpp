@@ -8,6 +8,7 @@
 
 #include <AzToolsFramework/Prefab/PrefabSystemComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
@@ -24,6 +25,9 @@ namespace AzToolsFramework
 {
     namespace Prefab
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(PrefabSystemComponent)
+
         void PrefabSystemComponent::Init()
         {
         }
@@ -69,16 +73,16 @@ namespace AzToolsFramework
             }
         }
 
-        void PrefabSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void PrefabSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("PrefabSystem"));
         }
 
-        void PrefabSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+        void PrefabSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
         {
         }
 
-        void PrefabSystemComponent::GetIncompatibleServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void PrefabSystemComponent::GetIncompatibleServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
         }
 
@@ -415,7 +419,7 @@ namespace AzToolsFramework
             }
 
             m_templateFilePathToIdMap.emplace(AZStd::make_pair(filePath, newTemplateId));
-            
+
             return newTemplateId;
         }
 
@@ -431,7 +435,7 @@ namespace AzToolsFramework
 
                 return;
             }
-            
+
             //Remove all Links owned by the Template from TemplateToLinkIdsMap.
             Template& templateToDelete = findTemplateResult->get();
             const Template::Links& linkIdsToDelete = templateToDelete.GetLinks();
@@ -477,7 +481,7 @@ namespace AzToolsFramework
                 templateId, templateToDelete.GetFilePath().c_str());
 
             m_templateInstanceMapper.UnregisterTemplate(templateId);
-            
+
             result = m_templateIdMap.erase(templateId) != 0;
             AZ_Assert(result,
                 "Prefab - PrefabSystemComponent::RemoveTemplate - "

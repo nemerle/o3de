@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Module/Module.h>
 #include <Multiplayer/IMultiplayerTools.h>
 

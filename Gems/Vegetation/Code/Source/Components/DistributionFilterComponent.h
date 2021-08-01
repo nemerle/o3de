@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Vegetation/Ebuses/FilterRequestBus.h>
 #include <Vegetation/Ebuses/DistributionFilterRequestBus.h>
 #include <GradientSignal/GradientSampler.h>
@@ -29,7 +30,7 @@ namespace Vegetation
         AZ_CLASS_ALLOCATOR(DistributionFilterConfig, AZ::SystemAllocator, 0);
         AZ_RTTI(DistributionFilterConfig, "{7E304208-5FDF-4384-BC28-E7CDD2A15BEC}", AZ::ComponentConfig);
         static void Reflect(AZ::ReflectContext* context);
-        
+
         FilterStage m_filterStage = FilterStage::Default;
         float m_thresholdMin = 0.1f;
         float m_thresholdMax = 1.0f;
@@ -44,7 +45,7 @@ namespace Vegetation
 
     /**
     * Component implementing VegetationFilterRequestBus that accepts/rejects based on noise generator passing threshold
-    */      
+    */
     class DistributionFilterComponent
         : public AZ::Component
         , public FilterRequestBus::Handler
@@ -53,9 +54,9 @@ namespace Vegetation
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(DistributionFilterComponent, DistributionFilterComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         DistributionFilterComponent(const DistributionFilterConfig& configuration);

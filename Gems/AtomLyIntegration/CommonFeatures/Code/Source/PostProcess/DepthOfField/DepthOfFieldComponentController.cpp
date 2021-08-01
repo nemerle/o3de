@@ -42,17 +42,17 @@ namespace AZ
             }
         }
 
-        void DepthOfFieldComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void DepthOfFieldComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("DepthOfFieldService"));
         }
 
-        void DepthOfFieldComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void DepthOfFieldComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("DepthOfFieldService"));
         }
 
-        void DepthOfFieldComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void DepthOfFieldComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("PostFXLayerService"));
         }

@@ -19,6 +19,7 @@
 #include <LyShine/UiComponentTypes.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 #include <LmbrCentral/Rendering/MaterialAsset.h>
@@ -97,18 +98,18 @@ public: // static member functions
 
     static void Reflect(AZ::ReflectContext* context);
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiVisualService", 0xa864fdf8));
         provided.push_back(AZ_CRC("UiIndexableImageService"));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiVisualService", 0xa864fdf8));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiElementService", 0x3dca7ad4));
         required.push_back(AZ_CRC("UiTransformService", 0x3a838e34));
@@ -149,7 +150,7 @@ private: // static member functions
 
 private: // data
 
-    ImageList m_imageList;                          //!< List of image files to load 
+    ImageList m_imageList;                          //!< List of image files to load
     SpriteList m_spriteList;                        //!< List of loaded sprites
 
     AZStd::string m_imageSequenceDirectory;         //!< Used to populate m_imageList, only populated from the editor

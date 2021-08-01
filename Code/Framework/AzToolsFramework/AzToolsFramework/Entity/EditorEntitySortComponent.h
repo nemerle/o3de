@@ -22,11 +22,11 @@ namespace AzToolsFramework
             , public EditorEntityContextNotificationBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorEntitySortComponent, "{6EA1E03D-68B2-466D-97F7-83998C8C27F0}", EditorComponentBase);
+            AZ_COMPONENT_SPLIT(EditorEntitySortComponent, "{6EA1E03D-68B2-466D-97F7-83998C8C27F0}", EditorComponentBase);
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
             static bool SerializationConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
 
             ~EditorEntitySortComponent();

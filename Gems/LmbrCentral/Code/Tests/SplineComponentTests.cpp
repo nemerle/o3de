@@ -9,6 +9,7 @@
 #include <AzTest/AzTest.h>
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Spline.h>
 #include <AzCore/Math/VertexContainerInterface.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -165,7 +166,7 @@ namespace UnitTest
 
             // change spline type to CatmullRom
             LmbrCentral::SplineComponentRequestBus::Event(entity.GetId(), &LmbrCentral::SplineComponentRequests::ChangeSplineType, AZ::CatmullRomSpline::RTTI_Type().GetHash());
-            
+
             AZ::ConstSplinePtr catmullRomSplinePtr;
             LmbrCentral::SplineComponentRequestBus::EventResult(catmullRomSplinePtr, entity.GetId(), &LmbrCentral::SplineComponentRequests::GetSpline);
             if (const AZ::CatmullRomSpline* catmullRomSpline = azrtti_cast<const AZ::CatmullRomSpline*>(catmullRomSplinePtr.get()))

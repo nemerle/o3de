@@ -77,10 +77,10 @@ namespace AzToolsFramework
             auto componentDescriptor1 = AzToolsFramework::GetComponentDescriptor(component1);
             if (componentDescriptor1)
             {
-                AZ::ComponentDescriptor::DependencyArrayType providedServices1;
-                AZ::ComponentDescriptor::DependencyArrayType providedServices2;
-                AZ::ComponentDescriptor::DependencyArrayType incompatibleServices1;
-                AZ::ComponentDescriptor::DependencyArrayType incompatibleServices2;
+                AZ::ComponentDescriptorDependencyArrayType providedServices1;
+                AZ::ComponentDescriptorDependencyArrayType providedServices2;
+                AZ::ComponentDescriptorDependencyArrayType incompatibleServices1;
+                AZ::ComponentDescriptorDependencyArrayType incompatibleServices2;
 
                 //get the list of required and incompatible services from the primary component
                 componentDescriptor1->GetProvidedServices(providedServices1, nullptr);
@@ -644,7 +644,7 @@ namespace AzToolsFramework
         const AZStd::vector<AZ::Component*>& components = entity->GetComponents();
 
         // Gather required services for the component.
-        AZ::ComponentDescriptor::DependencyArrayType requiredServices;
+        AZ::ComponentDescriptorDependencyArrayType requiredServices;
         componentDescriptor->GetRequiredServices(requiredServices, thisComponent);
 
         QString tooltip;
@@ -666,7 +666,7 @@ namespace AzToolsFramework
 
                 if (otherDescriptor)
                 {
-                    AZ::ComponentDescriptor::DependencyArrayType providedServices;
+                    AZ::ComponentDescriptorDependencyArrayType providedServices;
                     otherDescriptor->GetProvidedServices(providedServices, otherComponent);
 
                     if (AZStd::find(providedServices.begin(), providedServices.end(), service) != providedServices.end())

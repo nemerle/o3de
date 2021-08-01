@@ -63,17 +63,17 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorNonUniformScaleComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void EditorNonUniformScaleComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC_CE("TransformService"));
         }
 
-        void EditorNonUniformScaleComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void EditorNonUniformScaleComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }
 
-        void EditorNonUniformScaleComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void EditorNonUniformScaleComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }

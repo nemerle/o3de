@@ -11,6 +11,7 @@
 #include <AzCore/Memory/Memory.h>
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <AzFramework/Asset/AssetCatalogBus.h>
 
@@ -30,28 +31,28 @@ namespace GraphCanvas
         // Serialized this out to continue to function.
         class StyleSheetComponent
             : public AZ::Component
-        {        
+        {
         public:
             AZ_COMPONENT(StyleSheetComponent, "{34B81206-2C69-4886-945B-4A9ECC0FDAEE}");
             static void Reflect(AZ::ReflectContext* context);
-            
+
             // AZ::Component
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("GraphCanvas_StyleService", 0x1a69884f));
             }
 
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
             {
                 (void)dependent;
             }
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
             {
                 (void)required;
             }
             ////
-            
+
             void Activate() {}
             void Deactivate() {}
         };
@@ -78,7 +79,7 @@ namespace GraphCanvas
         AZStd::vector< QColor > m_paletteSwatches;
         QPixmap* m_sourcePixmap;
     };
-    
+
     class StyleManager
         : protected StyleManagerRequestBus::Handler
         , private AzFramework::AssetCatalogEventBus::Handler
@@ -93,7 +94,7 @@ namespace GraphCanvas
         StyleManager(const EditorId& editorId, AZStd::string_view assetPath);
         virtual ~StyleManager();
 
-       
+
         // AzFramework::AssetCatalogEventBus
         void OnCatalogAssetChanged(const AZ::Data::AssetId& asset) override;
         ////
@@ -163,7 +164,7 @@ namespace GraphCanvas
 
         EditorId m_editorId;
         Styling::StyleVector m_styles;
-        
+
         AZStd::string m_assetPath;
         AZ::Data::AssetId m_styleAssetId;
 

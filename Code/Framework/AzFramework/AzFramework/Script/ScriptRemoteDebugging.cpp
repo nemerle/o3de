@@ -13,6 +13,7 @@
 #include <AzFramework/Metrics/MetricsPlainTextNameRegistration.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Script/ScriptSystemBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -170,7 +171,7 @@ namespace AzFramework
         , AZ::SystemTickBus::Handler
     {
     public:
-        AZ_COMPONENT(ScriptDebugAgent, "{624a7be2-3c7e-4119-aee2-1db2bdb6cc89}");
+        AZ_COMPONENT_SPLIT(ScriptDebugAgent, "{624a7be2-3c7e-4119-aee2-1db2bdb6cc89}");
         ScriptDebugAgent() = default;
         //////////////////////////////////////////////////////////////////////////
         // Component base
@@ -197,9 +198,9 @@ namespace AzFramework
 
     protected:
         ScriptDebugAgent(const ScriptDebugAgent&) = delete;
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
         static void Reflect(AZ::ReflectContext* context);
 
         void Attach(const TargetInfo& ti, const char* scriptContextName);
@@ -233,6 +234,10 @@ namespace AzFramework
         };
         AZStd::atomic_uint      m_executionState;
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(ScriptDebugAgent)
+
     //-------------------------------------------------------------------------
     void ScriptDebugAgent::Init()
     {
@@ -704,17 +709,17 @@ namespace AzFramework
         }
     }
     //-------------------------------------------------------------------------
-    void ScriptDebugAgent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ScriptDebugAgent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptDebugService", 0x5b0c3898));
     }
     //-------------------------------------------------------------------------
-    void ScriptDebugAgent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void ScriptDebugAgent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ScriptDebugService", 0x5b0c3898));
     }
     //-------------------------------------------------------------------------
-    void ScriptDebugAgent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void ScriptDebugAgent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("ScriptService", 0x787235ab));
     }

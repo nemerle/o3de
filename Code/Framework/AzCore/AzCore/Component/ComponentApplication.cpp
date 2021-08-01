@@ -14,6 +14,7 @@
 #include <AzCore/Casting/lossy_cast.h>
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 
 #include <AzCore/Debug/LocalFileEventLogger.h>

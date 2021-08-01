@@ -19,9 +19,9 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(DisplaySettingsPythonFuncsHandler, "{517AC40C-4A1F-4E02-ABA2-5A927582ECB4}")
+        AZ_COMPONENT_SPLIT(DisplaySettingsPythonFuncsHandler, "{517AC40C-4A1F-4E02-ABA2-5A927582ECB4}")
 
-            static void Reflect(AZ::ReflectContext* context);
+        static void Reflect(AZ::ReflectContext* context);
 
         // AZ::Component ...
         void Activate() override {}
@@ -71,13 +71,13 @@ namespace AzToolsFramework
     };
     using DisplaySettingsBus = AZ::EBus<DisplaySettingsRequests>;
 
-    //! Component to modify Display Settings 
+    //! Component to modify Display Settings
     class DisplaySettingsComponent final
         : public AZ::Component
         , public DisplaySettingsBus::Handler
     {
     public:
-        AZ_COMPONENT(DisplaySettingsComponent, "{A7CDBF22-3904-46C6-85D2-073CD902DD7F}")
+        AZ_COMPONENT_SPLIT(DisplaySettingsComponent, "{A7CDBF22-3904-46C6-85D2-073CD902DD7F}")
 
         DisplaySettingsComponent() = default;
         ~DisplaySettingsComponent() override = default;

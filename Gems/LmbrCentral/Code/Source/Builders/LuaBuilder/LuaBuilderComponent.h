@@ -9,6 +9,7 @@
 #pragma once
 
 #include "LuaBuilderWorker.h"
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace LuaBuilder
 {

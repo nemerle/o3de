@@ -29,9 +29,9 @@ namespace AZ
             ShapeWeightModifierComponentController() = default;
             ShapeWeightModifierComponentController(const ShapeWeightModifierComponentConfig& config);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
             void Activate(EntityId entityId);
             void Deactivate();

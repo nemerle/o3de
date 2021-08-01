@@ -9,7 +9,6 @@
 
 #include <AzCore/std/parallel/atomic.h>
 #include <AzCore/std/parallel/mutex.h>
-#include <AzCore/std/function/function_fwd.h>
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Math/Uuid.h>
@@ -19,7 +18,11 @@
 #include <AzCore/std/string/string_view.h>
 #include <AzCore/std/typetraits/is_base_of.h>
 #include <AzCore/Debug/AssetTracking.h>
-#include <AzCore/IO/Streamer/FileRequest.h>
+
+namespace AZ::IO::IStreamerTypes
+{
+    using Priority = u8;
+}
 
 namespace AZ
 {

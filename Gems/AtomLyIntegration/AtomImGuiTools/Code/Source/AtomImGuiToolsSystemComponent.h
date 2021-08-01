@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Atom/RPI.Public/Pass/Pass.h>
 #include <CrySystemBus.h>
 
@@ -36,10 +37,10 @@ namespace AtomImGuiTools
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         // AZ::Component interface implementation
         void Activate() override;
@@ -53,7 +54,7 @@ namespace AtomImGuiTools
 
         // CrySystemEventBus overrides...
         void OnCryEditorInitialized() override;
-        
+
     private:
 
 #if defined(IMGUI_ENABLED)

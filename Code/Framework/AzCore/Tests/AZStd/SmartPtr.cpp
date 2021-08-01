@@ -250,7 +250,7 @@ namespace UnitTest
         };
 
         SharedPtr* m_sharedPtr = nullptr;
-    
+
         /// Special deleter for RefCountedClass to use, that will track whether the object has been deleted.
         struct TestDeleter
             : public AZStd::intrusive_default_delete
@@ -399,13 +399,13 @@ namespace UnitTest
         using X = SharedPtr::test::X;
         EXPECT_EQ(0, m_sharedPtr->m_test.m_xInstances);
         m_sharedPtr->TestValue<X>(new X(m_sharedPtr->m_test), X(m_sharedPtr->m_test));
-        
+
         EXPECT_EQ(0, m_sharedPtr->m_test.m_xInstances);
         m_sharedPtr->TestValue<X const>(new X(m_sharedPtr->m_test), X(m_sharedPtr->m_test));
-        
+
         EXPECT_EQ(0, m_sharedPtr->m_test.m_xInstances);
         m_sharedPtr->TestValue<void>(new X(m_sharedPtr->m_test), X(m_sharedPtr->m_test));
-        
+
         EXPECT_EQ(0, m_sharedPtr->m_test.m_xInstances);
         m_sharedPtr->TestValue<void const>(new X(m_sharedPtr->m_test), X(m_sharedPtr->m_test));
     }
@@ -2046,19 +2046,19 @@ namespace UnitTest
         EXPECT_TRUE(base.get() == originalDerived);
         EXPECT_TRUE(originalBaseIsDeleted);
         EXPECT_TRUE(derived.get() == nullptr);
-        EXPECT_FALSE(derivedIsDeleted); 
+        EXPECT_FALSE(derivedIsDeleted);
     }
 
-    TEST_F(SmartPtr, IntrusivePtr_DynamicCast)
-    {
-        AZStd::intrusive_ptr<RefCountedClass> basePointer = new RefCountedSubclass;
+//    TEST_F(SmartPtr, IntrusivePtr_DynamicCast)
+//    {
+//        AZStd::intrusive_ptr<RefCountedClass> basePointer = new RefCountedSubclass;
 
-        AZStd::intrusive_ptr<RefCountedSubclass> correctCast = dynamic_pointer_cast<RefCountedSubclass>(basePointer);
-        AZStd::intrusive_ptr<RefCountedSubclassB> wrongCast = dynamic_pointer_cast<RefCountedSubclassB>(basePointer);
+//        AZStd::intrusive_ptr<RefCountedSubclass> correctCast = dynamic_pointer_cast<RefCountedSubclass>(basePointer);
+//        AZStd::intrusive_ptr<RefCountedSubclassB> wrongCast = dynamic_pointer_cast<RefCountedSubclassB>(basePointer);
 
-        EXPECT_TRUE(correctCast.get() == basePointer.get());
-        EXPECT_TRUE(wrongCast.get() == nullptr);
-        EXPECT_EQ(2, basePointer->use_count());
-    }
+//        EXPECT_TRUE(correctCast.get() == basePointer.get());
+//        EXPECT_TRUE(wrongCast.get() == nullptr);
+//        EXPECT_EQ(2, basePointer->use_count());
+//    }
 
 } // namespace UnitTest

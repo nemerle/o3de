@@ -31,7 +31,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(SceneImporter, "{D5EE21B6-8B73-45BF-B711-31346E0BEDB3}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(SceneImporter, "{D5EE21B6-8B73-45BF-B711-31346E0BEDB3}", SceneCore::LoadingComponent);
 
                 SceneImporter();
                 ~SceneImporter() override = default;

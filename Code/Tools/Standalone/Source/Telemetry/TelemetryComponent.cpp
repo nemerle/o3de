@@ -7,10 +7,14 @@
  */
 #include "TelemetryComponent.h"
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 namespace Telemetry
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(TelemetryComponent)
+
     void TelemetryComponent::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context);

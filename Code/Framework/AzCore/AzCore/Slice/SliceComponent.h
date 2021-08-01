@@ -32,7 +32,7 @@ namespace AZ
         friend class SliceComponentSerializationEvents;
         friend class SliceAssetHandler;
     public:
-        AZ_COMPONENT(SliceComponent, "{AFD304E4-1773-47C8-855A-8B622398934F}", Data::AssetEvents);
+        AZ_COMPONENT_SPLIT(SliceComponent, "{AFD304E4-1773-47C8-855A-8B622398934F}", Data::AssetEvents);
 
         class SliceReference;
         class SliceInstance;
@@ -986,9 +986,9 @@ namespace AZ
         //////////////////////////////////////////////////////////////////////////
 
         /// \ref ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
         /// \ref ComponentDescriptor::GetDependentServices
-        static void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetDependentServices(ComponentDescriptorDependencyArrayType& dependent);
         /// \ref ComponentDescriptor::Reflect
         static void Reflect(ReflectContext* reflection);
 

@@ -12,6 +12,7 @@
 #include <SceneAPI/SceneCore/Components/BehaviorComponent.h>
 #include <SceneAPI/SceneCore/Events/AssetImportRequest.h>
 #include <SceneAPI/SceneCore/Events/ManifestMetaInfoBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace EMotionFX
 {

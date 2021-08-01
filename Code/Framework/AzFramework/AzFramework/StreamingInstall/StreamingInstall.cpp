@@ -9,6 +9,7 @@
 #include "StreamingInstall.h"
 
 #include <AzFramework/StreamingInstall/StreamingInstallNotifications.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
 namespace AzFramework
@@ -58,6 +59,9 @@ namespace AzFramework
                 Call(FN_OnPackageProgressChanged, progress);
             }
         };
+
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(StreamingInstallSystemComponent)
 
         ////////////////////////////////////////////////////////////////////////////////////////
         void StreamingInstallSystemComponent::Init()
@@ -124,25 +128,25 @@ namespace AzFramework
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        void StreamingInstallSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void StreamingInstallSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("StreamingInstallService", 0xb3cf7bef));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        void StreamingInstallSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void StreamingInstallSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("StreamingInstallService", 0xb3cf7bef));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        void StreamingInstallSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void StreamingInstallSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             AZ_UNUSED(required);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        void StreamingInstallSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void StreamingInstallSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             AZ_UNUSED(dependent);
         }

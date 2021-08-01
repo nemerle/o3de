@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Statistics/RunningStatistic.h>
 
 #include <Atom/RPI.Public/Pass/Pass.h>
@@ -29,7 +30,7 @@ namespace MaterialEditor
         PerformanceMonitorComponent();
         ~PerformanceMonitorComponent() = default;
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
     private:
         // AZ::Component overrides...

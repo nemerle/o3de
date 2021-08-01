@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 
 #include <AssetBuilderInfo.h>

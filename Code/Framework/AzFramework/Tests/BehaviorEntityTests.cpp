@@ -8,6 +8,7 @@
 
 #include "FrameworkApplicationFixture.h"
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Entity/BehaviorEntity.h>
 #include <AzFramework/Entity/GameEntityContextBus.h>
 
@@ -24,7 +25,7 @@ public:
 class HatComponent : public AZ::Component
 {
 public:
-    AZ_COMPONENT(HatComponent, HatComponentTypeId);
+    AZ_COMPONENT_SPLIT(HatComponent, HatComponentTypeId);
     static void Reflect(AZ::ReflectContext*) {}
     void Activate() override {}
     void Deactivate() override {}
@@ -51,24 +52,28 @@ public:
 
     HatConfig m_config;
 };
+// Implement the CreateDescriptor static method
+AZ_COMPONENT_IMPL(HatComponent)
 
 static const AZ::TypeId EarComponentTypeId = "{1F741BC1-451F-445F-891B-1204D6A434D0}";
 class EarComponent : public AZ::Component
 {
 public:
-    AZ_COMPONENT(EarComponent, EarComponentTypeId);
+    AZ_COMPONENT_SPLIT(EarComponent, EarComponentTypeId);
     static void Reflect(AZ::ReflectContext*) {}
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services) { services.push_back(AZ::Crc32("EarService")); }
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services) { services.push_back(AZ::Crc32("EarService")); }
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services) { services.push_back(AZ::Crc32("EarService")); }
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services) { services.push_back(AZ::Crc32("EarService")); }
     void Activate() override {}
     void Deactivate() override {}
 };
+// Implement the CreateDescriptor static method
+AZ_COMPONENT_IMPL(EarComponent)
 
 static const AZ::TypeId DeactivateDuringActivationComponentTypeId = "{E18A3FFE-FA61-4682-A6C2-FB065D5DDDD2}";
 class DeactivateDuringActivationComponent : public AZ::Component
 {
 public:
-    AZ_COMPONENT(DeactivateDuringActivationComponent , DeactivateDuringActivationComponentTypeId);
+    AZ_COMPONENT_SPLIT(DeactivateDuringActivationComponent , DeactivateDuringActivationComponentTypeId);
     static void Reflect(AZ::ReflectContext*) {}
     void Activate() override
     {
@@ -77,6 +82,8 @@ public:
     }
     void Deactivate() override {}
 };
+// Implement the CreateDescriptor static method
+AZ_COMPONENT_IMPL(DeactivateDuringActivationComponent)
 
 class BehaviorEntityTest
     : public UnitTest::FrameworkApplicationFixture
@@ -219,7 +226,7 @@ TEST_F(BehaviorEntityTest, DestroyComponent_Succeeds)
 {
     AZ::Component* rawComponent = m_rawEntity->CreateComponent(HatComponentTypeId);
     EXPECT_NE(nullptr, rawComponent); // sanity check
-    
+
     bool destroyed = m_behaviorEntity.DestroyComponent(rawComponent->GetId());
     EXPECT_TRUE(destroyed);
 

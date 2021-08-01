@@ -8,6 +8,7 @@
 
 #include <AzToolsFramework/Component/EditorLevelComponentAPIComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/Utils.h>
@@ -25,6 +26,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorLevelComponentAPIComponent)
+
         void EditorLevelComponentAPIComponent::Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))

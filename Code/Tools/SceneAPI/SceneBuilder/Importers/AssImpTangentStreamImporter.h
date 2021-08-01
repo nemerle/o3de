@@ -19,7 +19,7 @@ namespace AZ
             class AssImpTangentStreamImporter : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpTangentStreamImporter, "{AB2D1D1E-5A19-40AF-B4F4-C652DD578F43}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpTangentStreamImporter, "{AB2D1D1E-5A19-40AF-B4F4-C652DD578F43}", SceneCore::LoadingComponent);
 
                 AssImpTangentStreamImporter();
                 ~AssImpTangentStreamImporter() override = default;

@@ -11,6 +11,7 @@
 #include <LmbrCentral/Dependency/DependencyMonitor.h>
 #include <GradientSignal/GradientSampler.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <GradientSignal/Ebuses/GradientRequestBus.h>
 #include <GradientSignal/Ebuses/InvertGradientRequestBus.h>
 
@@ -36,7 +37,7 @@ namespace GradientSignal
 
     /**
     * calculates a gradient value by inverting values from another gradient
-    */      
+    */
     class InvertGradientComponent
         : public AZ::Component
         , private GradientRequestBus::Handler
@@ -45,9 +46,9 @@ namespace GradientSignal
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(InvertGradientComponent, InvertGradientComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         InvertGradientComponent(const InvertGradientConfig& configuration);

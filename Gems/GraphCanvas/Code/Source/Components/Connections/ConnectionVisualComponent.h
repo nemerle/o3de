@@ -15,6 +15,7 @@ AZ_PUSH_DISABLE_WARNING(4251 4800, "-Wunknown-warning-option")
 AZ_POP_DISABLE_WARNING
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
 #include <AzCore/std/chrono/chrono.h>
 
@@ -46,26 +47,26 @@ namespace GraphCanvas
         ~ConnectionVisualComponent() override = default;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_ConnectionVisualService", 0x3877d465));
             provided.push_back(AZ_CRC("GraphCanvas_RootVisualService", 0x9ec46d3b));
             provided.push_back(AZ_CRC("GraphCanvas_VisualService", 0xfbb2c871));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("GraphCanvas_ConnectionVisualService", 0x3877d465));
             incompatible.push_back(AZ_CRC("GraphCanvas_RootVisualService", 0x9ec46d3b));
             incompatible.push_back(AZ_CRC("GraphCanvas_VisualService", 0xfbb2c871));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("GraphCanvas_ConnectionService", 0x7ef98865));
         }
@@ -74,7 +75,7 @@ namespace GraphCanvas
         void Activate() override;
         void Deactivate() override;
         ////
-        
+
         // VisualRequestBus
         QGraphicsItem* AsGraphicsItem() override;
 
@@ -100,12 +101,12 @@ namespace GraphCanvas
     protected:
 
         virtual void CreateConnectionVisual();
-        
+
         friend class ConnectionVisualGraphicsItem;
         AZStd::unique_ptr<ConnectionGraphicsItem> m_connectionGraphicsItem;
 
     private:
-        ConnectionVisualComponent(const ConnectionVisualComponent&) = delete;        
+        ConnectionVisualComponent(const ConnectionVisualComponent&) = delete;
     };
 
     //! The NodeVisual is the QGraphicsItem for a given node, any components that are created
@@ -118,11 +119,11 @@ namespace GraphCanvas
         , public StyleNotificationBus::Handler
         , public AZ::SystemTickBus::Handler
         , public SceneMemberNotificationBus::Handler
-        , public AssetEditorSettingsNotificationBus::Handler        
+        , public AssetEditorSettingsNotificationBus::Handler
     {
     public:
         AZ_CLASS_ALLOCATOR(ConnectionGraphicsItem, AZ::SystemAllocator, 0);
-        
+
         // Helper function to return the length of a vector
         // (Distance from provided point to the origin)
         static qreal VectorLength(QPointF vectorPoint);
@@ -152,7 +153,7 @@ namespace GraphCanvas
         // StyleNotificationBus
         void OnStyleChanged() override;
         ////
-        
+
         // AZ::SystemTickBus
         void OnSystemTick() override;
         ////
@@ -195,7 +196,7 @@ namespace GraphCanvas
         virtual void OnActivate();
         virtual void OnDeactivate();
         virtual void OnPathChanged();
-        
+
         // QGraphicsItem
         QPainterPath shape() const override;
 
@@ -214,7 +215,7 @@ namespace GraphCanvas
 
         bool m_trackMove;
         bool m_moveSource;
-        
+
         QPointF m_initialPoint;
 
         Styling::ConnectionCurveType m_curveType;

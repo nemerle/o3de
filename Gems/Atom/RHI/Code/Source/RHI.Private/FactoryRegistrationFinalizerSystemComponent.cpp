@@ -28,17 +28,17 @@ namespace AZ
             }
         }
 
-        void FactoryRegistrationFinalizerSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void FactoryRegistrationFinalizerSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(RHI::Factory::GetComponentService());
         }
 
-        void FactoryRegistrationFinalizerSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void FactoryRegistrationFinalizerSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(RHI::Factory::GetPlatformService());
         }
 
-        void FactoryRegistrationFinalizerSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void FactoryRegistrationFinalizerSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(RHI::Factory::GetComponentService());
         }

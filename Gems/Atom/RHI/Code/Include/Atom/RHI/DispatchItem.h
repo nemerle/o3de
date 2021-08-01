@@ -9,6 +9,7 @@
 
 #include <Atom/RHI.Reflect/Limits.h>
 #include <Atom/RHI/IndirectArguments.h>
+#include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/std/containers/array.h>
 
 namespace AZ

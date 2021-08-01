@@ -43,12 +43,12 @@ namespace ScriptCanvasDeveloperEditor
         }
     }
 
-    void SystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void SystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("ScriptCanvasEditorService", 0x4fe2af98));
     }
 
-    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptCanvasDeveloperEditorService", 0x344d3e44));
     }

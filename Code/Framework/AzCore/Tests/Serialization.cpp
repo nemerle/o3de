@@ -73,21 +73,6 @@ namespace UnitTest
     template<typename T>
     class GenericsLoadInPlaceHolder;
 }
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template<typename T>
-    struct SerializeGenericTypeInfo<UnitTest::GenericsLoadInPlaceHolder<T>, void>
-        : SerializeGenericTypeInfoImpl<UnitTest::GenericsLoadInPlaceHolder<T>>
-    {
-        // treat SerializeTestClasses::GenericsLoadInPlaceHolder as generic value type
-    };
-} // namespace AZ
 
 namespace SerializeTestClasses {
     class MyClassBase1
@@ -3035,7 +3020,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
 
             ClonableMutlipleInheritanceOrderingB() = default;
             ~ClonableMutlipleInheritanceOrderingB() override = default;
-            
+
             MOCK_METHOD2(OnTick, void (float, AZ::ScriptTimePoint));
             MOCK_METHOD0(SomeVirtualFunction, void ());
 
@@ -3372,7 +3357,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
 
         void TearDown() override
         {
-            m_serializeContext->EnableRemoveReflection(); 
+            m_serializeContext->EnableRemoveReflection();
             TestCloneWrapperObject::Reflect(m_serializeContext.get());
             m_serializeContext->DisableRemoveReflection();
             m_serializeContext.reset();
@@ -4526,7 +4511,7 @@ namespace UnitTest
         TestFileUtilsFile(ObjectStream::ST_BINARY);
     }
 
-    
+
 
     /*
     *
@@ -4879,7 +4864,7 @@ namespace UnitTest
             // Binary
             IO::ByteContainerStream<const AZStd::vector<AZ::u8> > binaryStream(&binaryBuffer);
             binaryStream.Seek(0, IO::GenericStream::ST_SEEK_BEGIN);
-            
+
             AZ::ObjectStream::ClassReadyCB readyCB([&](void* classPtr, const AZ::Uuid& classId, AZ::SerializeContext* sc)
             {
                 AZ_UNUSED(classId);
@@ -6077,7 +6062,7 @@ namespace UnitTest
 
     TEST_F(ObjectStreamSerialization, UnreflectedChildElementAndDeprecatedClass_XmlTest)
     {
-        // Reflect the Deprecated class and the wrapper class 
+        // Reflect the Deprecated class and the wrapper class
         // with the deprecated class as a field
         DeprecatedClass::Reflect(m_serializeContext.get());
         ReflectedFieldNameOldVersion1::Reflect(m_serializeContext.get());
@@ -6085,7 +6070,7 @@ namespace UnitTest
         ConvertedClass::Reflect(m_serializeContext.get());
 
         RootFieldNameV1 oldDeprecatedElement;
-        // Test Saving and Loading XML 
+        // Test Saving and Loading XML
         AZStd::vector<AZ::u8> byteBuffer;
         AZ::IO::ByteContainerStream<decltype(byteBuffer)> byteStream(&byteBuffer);
         EXPECT_TRUE(AZ::Utils::SaveObjectToStream(byteStream, AZ::DataStream::ST_XML, &oldDeprecatedElement, m_serializeContext.get()));
@@ -6123,7 +6108,7 @@ namespace UnitTest
 
     TEST_F(ObjectStreamSerialization, UnreflectedChildElementAndDeprecatedClass_BinaryTest)
     {
-        // Reflect the Deprecated class and the wrapper class 
+        // Reflect the Deprecated class and the wrapper class
         // with the deprecated class as a field
         DeprecatedClass::Reflect(m_serializeContext.get());
         ReflectedFieldNameOldVersion1::Reflect(m_serializeContext.get());
@@ -6131,7 +6116,7 @@ namespace UnitTest
         ConvertedClass::Reflect(m_serializeContext.get());
 
         RootFieldNameV1 oldDeprecatedElement;
-        // Test Saving and Loading XML 
+        // Test Saving and Loading XML
         AZStd::vector<AZ::u8> byteBuffer;
         AZ::IO::ByteContainerStream<decltype(byteBuffer)> byteStream(&byteBuffer);
         EXPECT_TRUE(AZ::Utils::SaveObjectToStream(byteStream, AZ::DataStream::ST_BINARY, &oldDeprecatedElement, m_serializeContext.get()));
@@ -6169,7 +6154,7 @@ namespace UnitTest
 
     TEST_F(ObjectStreamSerialization, UnreflectedChildElementAndDeprecatedClass_JSONTest)
     {
-        // Reflect the Deprecated class and the wrapper class 
+        // Reflect the Deprecated class and the wrapper class
         // with the deprecated class as a field
         DeprecatedClass::Reflect(m_serializeContext.get());
         ReflectedFieldNameOldVersion1::Reflect(m_serializeContext.get());
@@ -6177,7 +6162,7 @@ namespace UnitTest
         ConvertedClass::Reflect(m_serializeContext.get());
 
         RootFieldNameV1 oldDeprecatedElement;
-        // Test Saving and Loading XML 
+        // Test Saving and Loading XML
         AZStd::vector<AZ::u8> byteBuffer;
         AZ::IO::ByteContainerStream<decltype(byteBuffer)> byteStream(&byteBuffer);
         EXPECT_TRUE(AZ::Utils::SaveObjectToStream(byteStream, AZ::DataStream::ST_JSON, &oldDeprecatedElement, m_serializeContext.get()));
@@ -6515,7 +6500,7 @@ namespace UnitTest
 
         ClassWithObjectStreamCallback cloneObject;
         m_serializeContext->CloneObjectInplace(cloneObject, &saveObject);
-        
+
         // Cloning the cloned object should increase the newly cloned object m_value by one again
         ClassWithObjectStreamCallback secondCloneObject;
         m_serializeContext->CloneObjectInplace(secondCloneObject, &cloneObject);
@@ -7465,9 +7450,9 @@ namespace UnitTest
         modifiedWrapper.m_vectorInts[0] = 5;
         modifiedWrapper.m_vectorInts[1] = 10;
         modifiedWrapper.m_vectorInts.push_back(15);
-        
+
         VectorWrapper initialWrapper;
-        
+
         DataPatch patch;
         patch.Create(&initialWrapper, azrtti_typeid<VectorWrapper>(), &modifiedWrapper, azrtti_typeid<VectorWrapper>(), DataPatch::FlagsMap(), DataPatch::FlagsMap(), m_serializeContext.get());
         VectorWrapper* patchedWrapper = patch.Apply(&initialWrapper, m_serializeContext.get());

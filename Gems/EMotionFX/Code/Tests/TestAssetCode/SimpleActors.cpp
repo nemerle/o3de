@@ -15,6 +15,8 @@
 #include <Tests/TestAssetCode/SimpleActors.h>
 #include <Tests/TestAssetCode/MeshFactory.h>
 
+#include <numeric> // for iota
+
 namespace EMotionFX
 {
     SimpleJointChainActor::SimpleJointChainActor(size_t jointCount, const char* name)

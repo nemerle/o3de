@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Transform.h>
 #include <AzCore/Slice/SliceAsset.h>
 #include <AzFramework/Entity/EntityContextBus.h>
@@ -59,8 +60,8 @@ private:
     //////////////////////////////////////////////////////////////////////////
     // Component descriptor
     static void Reflect(AZ::ReflectContext* context);
-    static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+    static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
     //////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////////////

@@ -10,6 +10,7 @@
 
 #include <SceneAPI/SceneCore/Components/BehaviorComponent.h>
 #include <SceneAPI/SceneCore/Events/GraphMetaInfoBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

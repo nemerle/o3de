@@ -19,6 +19,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/ComponentApplication.h>
 #include <AzCore/Serialization/ObjectStream.h>
 #include <AzCore/Serialization/Utils.h>
@@ -40,7 +41,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(MyTestComponent1, "{5D3B5B45-64DF-4F88-8003-271646B6CA27}");
+        AZ_COMPONENT_SPLIT(MyTestComponent1, "{5D3B5B45-64DF-4F88-8003-271646B6CA27}");
 
         void Activate() override
         {
@@ -65,11 +66,14 @@ namespace UnitTest
         int m_int = 0;
     };
 
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(MyTestComponent1)
+
     class MyTestComponent2
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(MyTestComponent2, "{ACD7B78D-0C30-46E8-A52E-61D4B33D5528}");
+        AZ_COMPONENT_SPLIT(MyTestComponent2, "{ACD7B78D-0C30-46E8-A52E-61D4B33D5528}");
 
         void Activate() override
         {
@@ -91,6 +95,10 @@ namespace UnitTest
 
         AZ::EntityId m_entityId;
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(MyTestComponent2)
+
 
     class SliceTest_MockCatalog
         : public AZ::Data::AssetCatalog
@@ -119,7 +127,7 @@ namespace UnitTest
             m_mockAssetIds.push_back(assetId);
             return assetId;
         }
-        
+
         //////////////////////////////////////////////////////////////////////////
         // AZ::Data::AssetCatalogRequestBus
         AZ::Data::AssetInfo GetAssetInfoById(const AZ::Data::AssetId& id) override
@@ -455,7 +463,7 @@ namespace UnitTest
             AZ::Entity* testAssetEntity = aznew AZ::Entity;
             AZ::SliceComponent* testAssetSlice = testAssetEntity->CreateComponent<AZ::SliceComponent>();
             testAssetSlice->SetSerializeContext(&serializeContext);
-                
+
             // Add a couple test entities to the prefab asset.
             AZ::Entity* testEntity1 = aznew AZ::Entity();
             testEntity1->CreateComponent<MyTestComponent1>()->m_float = 15.f;

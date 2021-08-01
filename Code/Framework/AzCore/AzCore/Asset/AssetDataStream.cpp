@@ -7,6 +7,8 @@
  */
 
 #include <AzCore/Asset/AssetDataStream.h>
+#include <AzCore/IO/Streamer/FileRequest.h>
+#include <AzCore/Math/MathUtils.h>
 
 namespace AZ::Data
 {
@@ -83,7 +85,7 @@ namespace AZ::Data
                 AZ_PROFILE_SCOPE_DYNAMIC(AZ::Debug::ProfileCategory::AzCore, "AZ::Data::LoadAssetDataStreamCallback %s",
                     m_filePath.c_str());
 
-                // Get the results 
+                // Get the results
                 auto streamer = AZ::Interface<AZ::IO::IStreamer>::Get();
                 AZ::u64 bytesRead = 0;
                 streamer->GetReadRequestResult(fileHandle, m_buffer, bytesRead,

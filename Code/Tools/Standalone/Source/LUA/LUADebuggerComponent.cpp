@@ -17,6 +17,7 @@
 #include <AzCore/std/parallel/mutex.h>
 #include <AzCore/std/parallel/lock.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Script/ScriptContext.h>
 
 #include <GridMate/Serialize/Buffer.h>
@@ -55,6 +56,9 @@ namespace LUADebugger
         }
         return true;
     }
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(Component)
 
     Component::Component()
     {

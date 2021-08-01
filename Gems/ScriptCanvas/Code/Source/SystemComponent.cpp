@@ -98,24 +98,24 @@ namespace ScriptCanvas
 #endif//defined(SC_EXECUTION_TRACE_ENABLED)
     }
 
-    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptCanvasService", 0x41fd58f3));
     }
 
-    void SystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void SystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         (void)incompatible;
     }
 
-    void SystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+    void SystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
     {
         // \todo configure the application to require these services
         // required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
         // required.push_back(AZ_CRC("ScriptService", 0x787235ab));
     }
 
-    void SystemComponent::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void SystemComponent::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
     }
 

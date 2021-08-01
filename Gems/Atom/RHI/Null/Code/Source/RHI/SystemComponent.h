@@ -10,6 +10,7 @@
 #include <Atom/RHI/Factory.h>
 #include <Atom/RHI.Reflect/Null/Base.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <RHI/Device.h>
 
 namespace AZ
@@ -23,8 +24,8 @@ namespace AZ
         public:
             AZ_COMPONENT(SystemComponent, "{0A6A246A-CB5B-4F59-99D5-629B7F1C44DD}")
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetRequiredServices(ComponentDescriptorDependencyArrayType& required);
             static void Reflect(AZ::ReflectContext* context);
 
             SystemComponent() = default;
@@ -35,7 +36,7 @@ namespace AZ
             void Activate() override;
             void Deactivate() override;
             //////////////////////////////////////////////////////////////////////////
-            
+
             ///////////////////////////////////////////////////////////////////
             // RHI::Factory
             Name GetName() override;

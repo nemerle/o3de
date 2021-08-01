@@ -24,7 +24,7 @@ namespace AZ
                 , public Events::AssetImportRequestBus::Handler
             {
             public:
-                AZ_COMPONENT(SkeletonGroup, "{9243A4BA-46BD-4961-950F-DEFAE9A919E5}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(SkeletonGroup, "{9243A4BA-46BD-4961-950F-DEFAE9A919E5}", SceneCore::BehaviorComponent);
 
                 ~SkeletonGroup() override = default;
 

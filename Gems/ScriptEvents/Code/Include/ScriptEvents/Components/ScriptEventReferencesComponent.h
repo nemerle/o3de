@@ -10,12 +10,14 @@
 
 #include <ScriptEvents/ScriptEventsAssetRef.h>
 #include <AzCore/Asset/AssetCommon.h>
+#include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace ScriptEvents
 {
     namespace Components
     {
-        class ScriptEventReferencesComponent 
+        class ScriptEventReferencesComponent
             : public AZ::Component
             , private AZ::Data::AssetBus::MultiHandler
 
@@ -31,9 +33,9 @@ namespace ScriptEvents
             void Deactivate() override;
             //////////////////////////////////////////////////////////////////////////
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
             void OnAssetReady(AZ::Data::Asset<AZ::Data::AssetData> asset) override;
             static void Reflect(AZ::ReflectContext* reflection);

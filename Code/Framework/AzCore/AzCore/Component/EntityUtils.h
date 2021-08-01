@@ -211,8 +211,8 @@ namespace AZ
         //! \param entity An optional associated entity, used in error reporting.
         //! \return True if a duplicate service was found, false if not.
         bool RemoveDuplicateServicesOfAndAfterIterator(
-            const ComponentDescriptor::DependencyArrayType::iterator& iterator,
-            ComponentDescriptor::DependencyArrayType& providedServiceArray,
+            const ComponentDescriptorDependencyArrayType::iterator& iterator,
+            ComponentDescriptorDependencyArrayType& providedServiceArray,
             const Entity* entity);
 
     } // namespace EntityUtils

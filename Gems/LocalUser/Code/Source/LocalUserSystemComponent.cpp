@@ -106,13 +106,13 @@ namespace LocalUser
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void LocalUserSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void LocalUserSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("LocalUserService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void LocalUserSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void LocalUserSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("LocalUserService"));
     }

@@ -335,7 +335,7 @@ namespace RADTelemetry
         }
     }
 
-    void ProfileTelemetryComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ProfileTelemetryComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ProfilerService"));
     }

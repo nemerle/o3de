@@ -65,18 +65,18 @@ namespace Vegetation
         }
     }
 
-    void SlopeAlignmentModifierComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SlopeAlignmentModifierComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationModifierService", 0xc551fca6));
         services.push_back(AZ_CRC("VegetationAlignmentModifierService", 0xdf9ddf2b));
     }
 
-    void SlopeAlignmentModifierComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SlopeAlignmentModifierComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAlignmentModifierService", 0xdf9ddf2b));
     }
 
-    void SlopeAlignmentModifierComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SlopeAlignmentModifierComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
     }

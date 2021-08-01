@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/numeric.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -29,6 +30,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpColorStreamImporter)
+
             const char* AssImpColorStreamImporter::m_defaultNodeName = "Col";
 
             AssImpColorStreamImporter::AssImpColorStreamImporter()

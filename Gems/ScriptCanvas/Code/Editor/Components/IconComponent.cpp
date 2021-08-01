@@ -76,22 +76,22 @@ namespace ScriptCanvasEditor
         }
     }
 
-    void IconComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void IconComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("GraphCanvas_IconService", 0x2037454a));
     }
 
-    void IconComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void IconComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("GraphCanvas_IconService", 0x2037454a));
     }
 
-    void IconComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void IconComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         (void)dependent;
     }
 
-    void IconComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void IconComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         (void)required;
     }

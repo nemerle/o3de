@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Entity.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzToolsFramework/ToolsComponents/EditorComponentBase.h>
 #include <AzToolsFramework/UnitTest/AzToolsFrameworkTestHelpers.h>
 #include <Prefab/Spawnable/EditorInfoRemover.h>
@@ -75,12 +76,13 @@ namespace UnitTest
         static void Reflect(AZ::ReflectContext* context);
 
         AZ::ExportedComponent ExportComponent(AZ::Component* thisComponent, const AZ::PlatformTagSet& /*platformTags*/);
-        
+
         void BuildGameEntity(AZ::Entity* gameEntity) override;
 
         ExportComponentType m_exportType{ ExportComponentType::ExportNullComponent };
         bool m_exportHandled{ false };
     };
+
 
     class SpawnableRemoveEditorInfoTestFixture
         : public ToolsApplicationFixture
@@ -100,7 +102,7 @@ namespace UnitTest
             const char* name,
             TestExportEditorComponent::ExportComponentType exportType,
             bool exportHandled);
-        
+
         // Locate and return an entity from the exported entities
         AZ::Entity* GetRuntimeEntity(const char* entityName);
 

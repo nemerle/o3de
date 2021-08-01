@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 
 #include <AzFramework/Physics/CollisionBus.h>
@@ -58,7 +59,7 @@ namespace PhysX
 
     protected:
         /// Class for collider's shape parameters that are cached.
-        /// Caching can also be done per WorldBody. 
+        /// Caching can also be done per WorldBody.
         /// That can be and should be achieved after m_staticRigidBody is separated from the collider component.
         class ShapeInfoCache
         {
@@ -79,26 +80,26 @@ namespace PhysX
             bool m_cacheOutdated = true;
         };
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("PhysXColliderService", 0x4ff43f7c));
             provided.push_back(AZ_CRC("PhysXTriggerService", 0x3a117d7b)); // PhysX trigger service (not cry, non-legacy)
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
             dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }
 
-        static void GetIncompatibleServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
-            
+
         }
 
         // AZ::Component

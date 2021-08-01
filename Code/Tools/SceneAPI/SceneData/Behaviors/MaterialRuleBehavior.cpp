@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <SceneAPI/SceneCore/Containers/Scene.h>
@@ -23,6 +24,9 @@ namespace AZ
     {
         namespace SceneData
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(MaterialRuleBehavior)
+
             void MaterialRuleBehavior::Activate()
             {
                 BusConnect();

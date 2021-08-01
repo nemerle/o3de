@@ -26,18 +26,6 @@
 #include <AzCore/Serialization/AZStdAnyDataContainer.inl>
 #include <AzFramework/StringFunc/StringFunc.h>
 
-// string_view is a value type in serialization
-namespace AZ
-{
-    // Serialization helpers
-    template<>
-    struct SerializeGenericTypeInfo<AZStd::string_view,void> : SerializeGenericTypeInfoImpl<AZStd::string_view>
-    {
-    };
-
-
-} // namespace AZ
-
 namespace UnitTest
 {
     //////////////////////////////////////////////////////////////////////////

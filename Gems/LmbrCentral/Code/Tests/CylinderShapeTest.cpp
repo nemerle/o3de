@@ -9,6 +9,7 @@
 #include <AzTest/AzTest.h>
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Matrix3x3.h>
 #include <AzCore/Math/Random.h>
 #include <AzFramework/Components/TransformComponent.h>
@@ -87,7 +88,7 @@ namespace UnitTest
     public:
         static const std::vector<IsPointInsideParams> ShouldPass;
         static const std::vector<IsPointInsideParams> ShouldFail;
-    }; 
+    };
 
     class CylinderShapeDistanceFromPointTest
         : public CylinderShapeTest
@@ -177,8 +178,8 @@ namespace UnitTest
             5.0f, 1.0f },
             // Result: hit, distance, epsilon
             { false, 0.0f, 0.0f }   }
-    }; 
-        
+    };
+
     const std::vector<BoundingBoxParams> CylinderShapeAABBTest::ShouldPass = {
         // Test case 0
         {   // Cylinder: transform, radius, height
@@ -248,7 +249,7 @@ namespace UnitTest
             // Local bounds: min, max
             { AZ::Vector3(-5.0f, -5.0f, -0.0f), AZ::Vector3(5.0f, 5.0f, 0.0f) } },
         // Test case 4
-        {   // Cylinder: transform, radius, height  
+        {   // Cylinder: transform, radius, height
             { AZ::Transform::CreateIdentity(),
             0.0f, 0.0f },
             // Local bounds: min, max
@@ -303,7 +304,7 @@ namespace UnitTest
             AZ::Vector3(0.0f, 0.0f, 0.0f),
             // Result
             false   }
-    }; 
+    };
 
     const std::vector<DistanceFromPointParams> CylinderShapeDistanceFromPointTest::ShouldPass = {
         // Test case 0
@@ -415,7 +416,7 @@ namespace UnitTest
     }
 
     TEST_P(CylinderShapeRayIntersectTest, GetRayIntersectCylinder)
-    {      
+    {
         const auto& [ray, cylinder, result] = GetParam();
         const auto& [src, dir] = ray;
         const auto& [transform, radius, height] = cylinder;
@@ -426,13 +427,13 @@ namespace UnitTest
 
         AZ::Transform::CreateFromQuaternionAndTranslation(
             AZ::Quaternion::CreateIdentity(), AZ::Vector3(0.0f, 0.0f, 5.0f));
-        
+
         bool rayHit = false;
         float distance;
         LmbrCentral::ShapeComponentRequestsBus::EventResult(
             rayHit, entity.GetId(), &LmbrCentral::ShapeComponentRequests::IntersectRay,
             src, dir, distance);
-        
+
         EXPECT_EQ(rayHit, expectedHit);
 
         if (expectedHit)
@@ -450,7 +451,7 @@ namespace UnitTest
         CylinderShapeRayIntersectTest,
         ::testing::ValuesIn(CylinderShapeRayIntersectTest::ShouldFail)
     );
-    
+
     TEST_P(CylinderShapeAABBTest, GetAabb)
     {
         const auto& [cylinder, AABB] = GetParam();
@@ -459,11 +460,11 @@ namespace UnitTest
 
         AZ::Entity entity;
         CreateCylinder(transform, radius, height, entity);
-    
+
         AZ::Aabb aabb;
         LmbrCentral::ShapeComponentRequestsBus::EventResult(
             aabb, entity.GetId(), &LmbrCentral::ShapeComponentRequests::GetEncompassingAabb);
-    
+
         EXPECT_TRUE(aabb.GetMin().IsClose(minExtent));
         EXPECT_TRUE(aabb.GetMax().IsClose(maxExtent));
     }

@@ -43,18 +43,18 @@ namespace PhysX
         }
     }
 
-    void StaticRigidBodyComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void StaticRigidBodyComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("PhysicsWorldBodyService", 0x944da0cc));
         provided.push_back(AZ_CRC("PhysXStaticRigidBodyService", 0xaae8973b));
     }
 
-    void StaticRigidBodyComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void StaticRigidBodyComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
     }
 
-    void StaticRigidBodyComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void StaticRigidBodyComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         // There can be only one StaticRigidBodyComponent per entity
         incompatible.push_back(AZ_CRC("PhysXStaticRigidBodyService", 0xaae8973b));
@@ -62,7 +62,7 @@ namespace PhysX
         incompatible.push_back(AZ_CRC("PhysXRigidBodyService", 0x1d4c64a8));
     }
 
-    void StaticRigidBodyComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void StaticRigidBodyComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("PhysXColliderService", 0x4ff43f7c));
     }

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzFramework/Components/ComponentAdapter.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AtomLyIntegration/CommonFeatures/Scripting/EntityReferenceComponentConfig.h>
 #include <AtomLyIntegration/CommonFeatures/Scripting/EntityReferenceConstants.h>
 #include <Scripting/EntityReferenceComponentController.h>

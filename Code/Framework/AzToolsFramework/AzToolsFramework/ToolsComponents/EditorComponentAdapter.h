@@ -50,9 +50,9 @@ namespace AzToolsFramework
         In addition, certain functions will optionally be called if they are available:
 
         @code
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
             void Init();
         @endcode
 
@@ -70,10 +70,10 @@ namespace AzToolsFramework
             EditorComponentAdapter() = default;
             explicit EditorComponentAdapter(const TConfiguration& configuration);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
             // EditorComponentBase overrides ...
             void Init() override;
@@ -98,22 +98,5 @@ namespace AzToolsFramework
         };
     } // namespace Components
 } // namespace AzToolsFramework
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template<typename R, typename S, typename T>
-    struct SerializeGenericTypeInfo<AzToolsFramework::Components::EditorComponentAdapter<R, S, T>, void>
-        : SerializeGenericTypeInfoImpl<AzToolsFramework::Components::EditorComponentAdapter<R, S, T>>
-    {
-        // treat VertexContainer as generic value type
-    };
-
-} // namespace AZ
 
 #include "EditorComponentAdapter.inl"

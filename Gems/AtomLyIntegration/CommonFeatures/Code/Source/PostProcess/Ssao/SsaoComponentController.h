@@ -30,9 +30,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::SsaoComponentController, "{B53B6F29-C803-46AD-83E1-526457BDFBAE}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             SsaoComponentController() = default;
             SsaoComponentController(const SsaoComponentConfig& config);

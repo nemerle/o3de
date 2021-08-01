@@ -11,6 +11,7 @@
 
 #include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
@@ -24,10 +25,18 @@
 #include <QtMath>
 #include <QVBoxLayout>
 
+
 namespace
 {
     static constexpr int g_propertyLabelWidth = 160;
 }
+
+// Implement the CreateDescriptor static methods
+AZ_COMPONENT_IMPL(LevelThree)
+AZ_COMPONENT_IMPL(LevelTwo)
+AZ_COMPONENT_IMPL(LevelOne)
+AZ_COMPONENT_IMPL(GalleryComponent)
+
 
 void LevelThree::Reflect(AZ::ReflectContext* context)
 {

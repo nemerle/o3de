@@ -35,7 +35,7 @@ namespace AZ
         };
 
         //! Platform agnostic version of a storage drive, such as hdd, ssd, dvd, etc.
-        //! This stream stack entry is responsible for accessing a storage drive to 
+        //! This stream stack entry is responsible for accessing a storage drive to
         //! retrieve file information and data.
         //! This entry is designed as a catch-all for any reads that weren't handled
         //! by platform specific implementations or the virtual file system. It should
@@ -74,7 +74,7 @@ namespace AZ
             void EstimateCompletionTimeForRequest(FileRequest* request, AZStd::chrono::system_clock::time_point& startTime,
                 const RequestPath*& activeFile, u64& activeOffset) const;
 
-            void Report(const FileRequest::ReportData& data) const;
+            void Report(const RequestCommands::ReportData& data) const;
 
             TimedAverageWindow<s_statisticsWindowSize> m_fileOpenCloseTimeAverage;
             TimedAverageWindow<s_statisticsWindowSize> m_getFileExistsTimeAverage;

@@ -12,6 +12,7 @@
 #include <SceneAPI/SceneCore/Components/ExportingComponent.h>
 #include <SceneAPI/SceneCore/Events/ExportProductList.h>
 #include <Integration/System/SystemCommon.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 
 namespace EMotionFX

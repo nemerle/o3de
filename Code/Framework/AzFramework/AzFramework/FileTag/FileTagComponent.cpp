@@ -13,7 +13,7 @@
 #include <AzFramework/StringFunc/StringFunc.h>
 #include "FileTagComponent.h"
 
-
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/string/wildcard.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/XML/rapidxml.h>
@@ -22,6 +22,9 @@ namespace AzFramework
 {
     namespace FileTag
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(FileTagComponent)
+
         void FileTagComponent::Activate()
         {
             m_fileTagManager.reset(aznew FileTagManager());
@@ -39,6 +42,9 @@ namespace AzFramework
                     ->Version(1);
             }
         }
+
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(FileTagQueryComponent)
 
         void FileTagQueryComponent::Activate()
         {
@@ -60,6 +66,9 @@ namespace AzFramework
                     ->Version(1);
             }
         }
+
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(ExcludeFileComponent)
 
         void ExcludeFileComponent::Activate()
         {

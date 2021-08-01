@@ -56,8 +56,8 @@ namespace AZ
             MaterialAssetDependenciesComponent() = default;
             ~MaterialAssetDependenciesComponent() override = default;
 
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
 
             // AZ::Component overrides...
             void Activate() override;

@@ -273,16 +273,3 @@ namespace EMotionFX
     // include keytrack inline code
 #include "KeyTrackLinearDynamic.inl"
 } // namespace EMotionFX
-
-namespace AZ
-{
-    class ReflectContext;
-    // Serialization helpers
-
-    template<typename S, typename T>
-    struct SerializeGenericTypeInfo<EMotionFX::KeyTrackLinearDynamic<S, T>, void>
-        : SerializeGenericTypeInfoImpl<EMotionFX::KeyTrackLinearDynamic<S, T>>
-    {
-        // treat EMotionFX::KeyTrackLinearDynamic as generic value type
-    };
-} // namespace AZ

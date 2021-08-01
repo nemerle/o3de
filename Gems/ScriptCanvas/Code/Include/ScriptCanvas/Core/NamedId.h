@@ -106,21 +106,6 @@ namespace ScriptCanvas
 
 }   // namespace ScriptCanvas
 
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T, typename>
-    struct SerializeGenericTypeInfo;
-
-    template<typename T>
-    struct SerializeGenericTypeInfo<ScriptCanvas::NamedId<T>, void> : SerializeGenericTypeInfoImpl<ScriptCanvas::NamedId<T>>
-    {
-        // treat NamedId as generic value type
-    };
-} // namespace AZ
-
 namespace AZStd
 {
     template<typename t_Id>

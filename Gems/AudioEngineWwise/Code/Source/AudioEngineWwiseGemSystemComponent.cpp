@@ -62,22 +62,22 @@ namespace AudioEngineWwiseGem
         Audio::Wwise::ConfigurationSettings::Reflect(context);
     }
 
-    void AudioEngineWwiseGemSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AudioEngineWwiseGemSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("AudioEngineService"));
     }
 
-    void AudioEngineWwiseGemSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AudioEngineWwiseGemSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("AudioEngineService"));
     }
 
-    void AudioEngineWwiseGemSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void AudioEngineWwiseGemSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AudioSystemService"));
     }
 
-    void AudioEngineWwiseGemSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void AudioEngineWwiseGemSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("AudioSystemService"));
     }

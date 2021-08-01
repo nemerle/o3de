@@ -6,6 +6,7 @@
  *
  */
 #include <AzTest/AzTest.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Slice/SliceComponent.h>
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
@@ -65,7 +66,7 @@ protected:
         m_app.Start(AZ::ComponentApplication::Descriptor());
 
         // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-        // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+        // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
         // in the unit tests.
         AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
 
@@ -130,7 +131,7 @@ class InGameOnlyComponent
     : public AZ::Component
 {
 public:
-    AZ_COMPONENT(InGameOnlyComponent, InGameOnlyComponentTypeId);
+    AZ_COMPONENT_SPLIT(InGameOnlyComponent, InGameOnlyComponentTypeId);
 
     void Activate() override {}
     void Deactivate() override {}
@@ -155,7 +156,7 @@ class NoneEditorComponent
     : public AZ::Component
 {
 public:
-    AZ_COMPONENT(NoneEditorComponent, NoneEditorComponentTypeId);
+    AZ_COMPONENT_SPLIT(NoneEditorComponent, NoneEditorComponentTypeId);
 
     void Activate() override {}
     void Deactivate() override {}
@@ -175,6 +176,10 @@ public:
     }
 };
 
+// Implement the CreateDescriptor static method
+AZ_COMPONENT_IMPL(InGameOnlyComponent)
+AZ_COMPONENT_IMPL(NoneEditorComponent)
+
 class FindWrappedComponentsTest
     : public ::testing::Test
 {
@@ -186,11 +191,11 @@ public:
             AZ::SettingsRegistryInterface::FixedValueString(AZ::SettingsRegistryMergeUtils::BootstrapSettingsRootKey) + "/project_path";
         registry->Set(projectPathKey, "AutomatedTesting");
         AZ::SettingsRegistryMergeUtils::MergeSettingsToRegistry_AddRuntimeFilePaths(*registry);
-        
+
         m_app.Start(AzFramework::Application::Descriptor());
 
         // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-        // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+        // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
         // in the unit tests.
         AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
 

@@ -32,8 +32,8 @@ namespace GraphCanvas
         AZ_COMPONENT(GraphCanvasSystemComponent, "{F9F7BE55-4C28-4B8A-A722-D47C9EF24E60}")
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
         GraphCanvasSystemComponent() = default;
         ~GraphCanvasSystemComponent() override = default;

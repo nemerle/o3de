@@ -23,8 +23,8 @@ namespace EMotionFX
         AZ_COMPONENT(MockAudioProxyComponent, "{DF130DF1-AE9D-486A-8015-3D7FD64DC4C0}");
         void Activate() override {}
         void Deactivate() override {}
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided) { provided.push_back(AZ_CRC("AudioProxyService", 0x7da4c79c)); }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible) { incompatible.push_back(AZ_CRC("AudioProxyService", 0x7da4c79c)); }
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided) { provided.push_back(AZ_CRC("AudioProxyService", 0x7da4c79c)); }
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible) { incompatible.push_back(AZ_CRC("AudioProxyService", 0x7da4c79c)); }
         static void Reflect(AZ::ReflectContext*) {}
     };
 
@@ -35,8 +35,8 @@ namespace EMotionFX
         AZ_COMPONENT(MockMeshComponent, "{876F6E19-D67A-4966-81AE-0F34931602CA}");
         void Activate() override {}
         void Deactivate() override {}
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided) { provided.push_back(AZ_CRC("MeshService", 0x71d8a455)); }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible) { incompatible.push_back(AZ_CRC("MeshService", 0x71d8a455)); }
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided) { provided.push_back(AZ_CRC("MeshService", 0x71d8a455)); }
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible) { incompatible.push_back(AZ_CRC("MeshService", 0x71d8a455)); }
         static void Reflect(AZ::ReflectContext*) {}
     };
 
@@ -47,25 +47,25 @@ namespace EMotionFX
         AZ_COMPONENT(MockActorComponent, "{6B485E07-8466-4FD1-A7F9-D3D234201F5D}");
         void Activate() override {}
         void Deactivate() override {}
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("EMotionFXActorService", 0xd6e8f48d));
             provided.push_back(AZ_CRC("MeshService", 0x71d8a455));
             provided.push_back(AZ_CRC("CharacterPhysicsDataService", 0x34757927));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("EMotionFXActorService", 0xd6e8f48d));
             incompatible.push_back(AZ_CRC("MeshService", 0x71d8a455));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("PhysicsService", 0xa7350d22));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }

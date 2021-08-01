@@ -970,11 +970,11 @@ namespace AzToolsFramework
 
                     if (componentDesc_conflictTest)
                     {
-                        AZ::ComponentDescriptor::DependencyArrayType providedServices_conflictTest;
+                        AZ::ComponentDescriptorDependencyArrayType providedServices_conflictTest;
                         const AZ::Component* conflictInstance = confictTestItem->m_node->GetNumInstances() > 0 ? static_cast<AZ::Component*>(confictTestItem->m_node->FirstInstance()) : nullptr;
                         componentDesc_conflictTest->GetProvidedServices(providedServices_conflictTest, conflictInstance);
 
-                        AZ::ComponentDescriptor::DependencyArrayType incompatibleServices;
+                        AZ::ComponentDescriptorDependencyArrayType incompatibleServices;
                         const AZ::Component* itemInstance = item->m_node->GetNumInstances() > 0 ? static_cast<AZ::Component*>(item->m_node->FirstInstance()) : nullptr;
                         componentDesc->GetIncompatibleServices(incompatibleServices, itemInstance);
 

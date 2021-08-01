@@ -10,6 +10,7 @@
 #include <AzToolsFramework/Undo/UndoSystem.h>
 #include <AzToolsFramework/ToolsComponents/ComponentMimeData.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Debug/Profiler.h>
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
@@ -35,7 +36,7 @@ namespace AzToolsFramework
             {
                 auto componentDescriptor = GetComponentDescriptor(component);
 
-                AZ::ComponentDescriptor::DependencyArrayType providedServices;
+                AZ::ComponentDescriptorDependencyArrayType providedServices;
                 componentDescriptor->GetProvidedServices(providedServices, component);
 
                 return AZStd::find(providedServices.begin(), providedServices.end(), service) != providedServices.end();
@@ -45,7 +46,7 @@ namespace AzToolsFramework
             {
                 auto componentDescriptor = GetComponentDescriptor(component);
 
-                AZ::ComponentDescriptor::DependencyArrayType incompatibleServices;
+                AZ::ComponentDescriptorDependencyArrayType incompatibleServices;
                 componentDescriptor->GetIncompatibleServices(incompatibleServices, component);
 
                 return AZStd::find(incompatibleServices.begin(), incompatibleServices.end(), service) != incompatibleServices.end();
@@ -63,7 +64,7 @@ namespace AzToolsFramework
             {
                 auto componentDescriptor = GetComponentDescriptor(component);
 
-                AZ::ComponentDescriptor::DependencyArrayType requiredServices;
+                AZ::ComponentDescriptorDependencyArrayType requiredServices;
                 componentDescriptor->GetRequiredServices(requiredServices, component);
 
                 // Check it's required dependencies are already met
@@ -94,14 +95,14 @@ namespace AzToolsFramework
             {
                 auto componentDescriptor = GetComponentDescriptor(component);
 
-                AZ::ComponentDescriptor::DependencyArrayType providedServices;
+                AZ::ComponentDescriptorDependencyArrayType providedServices;
                 componentDescriptor->GetProvidedServices(providedServices, component);
 
-                for (AZ::ComponentDescriptor::DependencyArrayType::iterator providedService = providedServices.begin();
+                for (AZ::ComponentDescriptorDependencyArrayType::iterator providedService = providedServices.begin();
                     providedService != providedServices.end(); ++providedService)
                 {
                     AZ::EntityUtils::RemoveDuplicateServicesOfAndAfterIterator(
-                        providedService, 
+                        providedService,
                         providedServices,
                         component ? component->GetEntity() : nullptr);
                     for (auto existingComponent : existingComponents)
@@ -121,7 +122,7 @@ namespace AzToolsFramework
             {
                 auto componentDescriptor = GetComponentDescriptor(component);
 
-                AZ::ComponentDescriptor::DependencyArrayType incompatibleServices;
+                AZ::ComponentDescriptorDependencyArrayType incompatibleServices;
                 componentDescriptor->GetIncompatibleServices(incompatibleServices, component);
 
                 for (auto& incompatibleService : incompatibleServices)
@@ -185,14 +186,14 @@ namespace AzToolsFramework
                 return addedAnyComponentsToList;
             }
 
-            AZ::ComponentDescriptor::DependencyArrayType GetUnsatisfiedRequiredDependencies(const AZ::Component* component, AZ::Entity::ComponentArrayType providerComponents)
+            AZ::ComponentDescriptorDependencyArrayType GetUnsatisfiedRequiredDependencies(const AZ::Component* component, AZ::Entity::ComponentArrayType providerComponents)
             {
                 AZ::ComponentDescriptor* componentDescriptor = GetComponentDescriptor(component);
 
-                AZ::ComponentDescriptor::DependencyArrayType requiredServices;
+                AZ::ComponentDescriptorDependencyArrayType requiredServices;
                 componentDescriptor->GetRequiredServices(requiredServices, component);
 
-                AZ::ComponentDescriptor::DependencyArrayType unsatisfiedRequiredDependencies;
+                AZ::ComponentDescriptorDependencyArrayType unsatisfiedRequiredDependencies;
                 for (auto requiredService : requiredServices)
                 {
                     bool serviceIsSatisfied = false;
@@ -231,6 +232,9 @@ namespace AzToolsFramework
                 return pendingCompositionHandler;
             }
         } // namespace
+
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorEntityActionComponent)
 
         void EditorEntityActionComponent::Init()
         {
@@ -504,7 +508,7 @@ namespace AzToolsFramework
                 {
                     delete removedComponent;
                 }
-                
+
                 EntityCompositionNotificationBus::Broadcast(&EntityCompositionNotificationBus::Events::OnEntityCompositionChanged, entityIds);
             }
 
@@ -623,7 +627,7 @@ namespace AzToolsFramework
                         // Repackage the single-entity result into the overall result
                         entityComponentsResult = addExistingComponentsResult.GetValue();
                     }
-                    
+
                 }
             }
 
@@ -675,7 +679,7 @@ namespace AzToolsFramework
                         skipped = true;
                     }
                 }
-                
+
                 if (!skipped)
                 {
                     // If it's not an "editor component" then wrap it in a GenericComponentWrapper.
@@ -683,7 +687,7 @@ namespace AzToolsFramework
                     {
                         component = aznew Components::GenericComponentWrapper(component);
                     }
-                
+
                     // Obliterate any existing component id to allow the entity to set the id
                     component->SetId(AZ::InvalidComponentId);
 
@@ -1061,17 +1065,17 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorEntityActionComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void EditorEntityActionComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("EntityCompositionRequests", 0x29838b44));
         }
 
-        void EditorEntityActionComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void EditorEntityActionComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("EntityCompositionRequests", 0x29838b44));
         }
 
-        void EditorEntityActionComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& /*required*/)
+        void EditorEntityActionComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& /*required*/)
         {
         }
 

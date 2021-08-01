@@ -18,7 +18,7 @@ namespace AzToolsFramework
         , private ArchiveCommands::Bus::Handler
     {
     public:
-        AZ_COMPONENT(NullArchiveComponent, "{D665B6B1-5FF4-4203-B19F-BBDB82587129}")
+        AZ_COMPONENT_SPLIT(NullArchiveComponent, "{D665B6B1-5FF4-4203-B19F-BBDB82587129}")
 
         NullArchiveComponent() = default;
         ~NullArchiveComponent() override = default;

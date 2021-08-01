@@ -22,7 +22,7 @@ namespace AZ
                 , public Events::AssetImportRequestBus::Handler
             {
             public:
-                AZ_COMPONENT(ManifestImportRequestHandler, "{6CF0520E-D5A9-4003-81A5-F20D62010E6F}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(ManifestImportRequestHandler, "{6CF0520E-D5A9-4003-81A5-F20D62010E6F}", SceneCore::BehaviorComponent);
 
                 ~ManifestImportRequestHandler() override = default;
 

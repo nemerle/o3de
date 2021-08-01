@@ -27,6 +27,7 @@
 
 #include <AzCore/std/containers/array.h>
 #include <AzCore/std/smart_ptr/intrusive_base.h>
+#include <AzCore/std/smart_ptr/shared_ptr.h>
 
 namespace AZ
 {
@@ -93,7 +94,7 @@ namespace AZ
 
             //! Whether slot is an input, output or inputOutput
             PassSlotType m_slotType = PassSlotType::Uninitialized;
-             
+
             //! ScopeAttachmentUsage used when binding the slot's attachment with the RHI
             RHI::ScopeAttachmentUsage m_scopeAttachmentUsage = RHI::ScopeAttachmentUsage::Uninitialized;
 
@@ -232,7 +233,7 @@ namespace AZ
 
             //! Used to data drive the array size of the attachment from a specified source attachment
             PassAttachmentRef m_arraySizeSource;
-            
+
             //! Used to data drive the format of the attachment from a specified source attachment
             PassAttachmentRef m_formatSource;
 

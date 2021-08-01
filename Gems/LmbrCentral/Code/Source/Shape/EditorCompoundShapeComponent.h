@@ -31,13 +31,13 @@ namespace LmbrCentral
         // EditorComponentBase
         void BuildGameEntity(AZ::Entity* gameEntity) override;
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             EditorBaseShapeComponent::GetProvidedServices(provided);
             provided.push_back(AZ_CRC("CompoundShapeService", 0x4f7c640a));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         AZ::u32 ConfigurationChanged();
 

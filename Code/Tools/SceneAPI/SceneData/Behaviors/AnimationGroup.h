@@ -24,7 +24,7 @@ namespace AZ
                 , public Events::AssetImportRequestBus::Handler
             {
             public:
-                AZ_COMPONENT(AnimationGroup, "{CE7FEBE4-ACA3-41B8-9154-9B9E09A95A06}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(AnimationGroup, "{CE7FEBE4-ACA3-41B8-9154-9B9E09A95A06}", SceneCore::BehaviorComponent);
                 
                 ~AnimationGroup() override = default;
 

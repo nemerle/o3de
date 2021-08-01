@@ -11,6 +11,7 @@
 #include "Bus.h"
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 
 #include <AzFramework/TargetManagement/TargetManagementAPI.h>
@@ -30,7 +31,7 @@ namespace ScriptCanvas
 
         //! The ScriptCanvas debugger component, this is the runtime debugger code that directly controls the execution
         //! and provides insight into a running ScriptCanvas graph.
-        class ServiceComponent 
+        class ServiceComponent
             : public AZ::Component
             , public Message::RequestVisitor
             , public AzFramework::TmMsgBus::Handler
@@ -42,9 +43,9 @@ namespace ScriptCanvas
         public:
             AZ_COMPONENT(ServiceComponent, "{794B1BA5-DE13-46C7-9149-74FFB02CB51B}");
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
             static void Reflect(AZ::ReflectContext* reflection);
 
             ServiceComponent() = default;
@@ -83,7 +84,7 @@ namespace ScriptCanvas
             //////////////////////////////////////////////////////////////////////////
 
             bool IsAssetObserved(const AZ::Data::AssetId& assetId) const;
-            
+
             //////////////////////////////////////////////////////////////////////////
             // Message processing
             void Visit(Message::AddBreakpointRequest& request) override;
@@ -148,7 +149,7 @@ namespace ScriptCanvas
             void Interact();
             bool IsAttached() const;
             void ProcessMessages();
-            
+
         private:
             enum eSCDebugState
             {

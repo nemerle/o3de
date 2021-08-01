@@ -14,6 +14,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <Atom/RPI.Public/RPISystem.h>
 
@@ -38,8 +39,8 @@ namespace AZ
             AZ_COMPONENT(RPISystemComponent, "{83E301F3-7A0C-4099-B530-9342B91B1BC0}");
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
             RPISystemComponent();
             ~RPISystemComponent() override;

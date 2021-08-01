@@ -42,21 +42,21 @@ namespace AZ
             }
         }
 
-        void AtomFontSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void AtomFontSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("AtomFontService"));
         }
 
-        void AtomFontSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void AtomFontSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("AtomFontService"));
         }
 
-        void AtomFontSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+        void AtomFontSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
         {
         }
 
-        void AtomFontSystemComponent::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void AtomFontSystemComponent::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
         }
 

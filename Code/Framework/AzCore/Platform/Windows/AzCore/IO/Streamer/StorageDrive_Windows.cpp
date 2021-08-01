@@ -72,7 +72,7 @@ namespace AZ::IO
         , m_constructionOptions(options)
     {
         AZ_Assert(!drivePaths.empty(), "StorageDrive_win requires at least one drive path to work.");
-        
+
         // Get drive paths
         m_drivePaths.reserve(drivePaths.size());
         for (AZStd::string_view drivePath : drivePaths)
@@ -171,9 +171,9 @@ namespace AZ::IO
         AZ_PROFILE_FUNCTION(AZ::Debug::ProfileCategory::AzCore);
         AZ_Assert(request, "PrepareRequest was provided a null request.");
 
-        if (AZStd::holds_alternative<FileRequest::ReadRequestData>(request->GetCommand()))
+        if (AZStd::holds_alternative<RequestCommands::ReadRequestData>(request->GetCommand()))
         {
-            auto& readRequest = AZStd::get<FileRequest::ReadRequestData>(request->GetCommand());
+            auto& readRequest = AZStd::get<RequestCommands::ReadRequestData>(request->GetCommand());
             if (IsServicedByThisDrive(readRequest.m_path.GetAbsolutePath()))
             {
                 FileRequest* read = m_context->GetNewInternalRequest();
@@ -194,7 +194,7 @@ namespace AZ::IO
         AZStd::visit([this, request](auto&& args)
         {
             using Command = AZStd::decay_t<decltype(args)>;
-            if constexpr (AZStd::is_same_v<Command, FileRequest::ReadData>)
+            if constexpr (AZStd::is_same_v<Command, RequestCommands::ReadData>)
             {
                 if (IsServicedByThisDrive(args.m_path.GetAbsolutePath()))
                 {
@@ -228,7 +228,7 @@ namespace AZ::IO
             {
                 FlushEntireCache();
             }
-            else if constexpr (AZStd::is_same_v<Command, FileRequest::ReportData>)
+            else if constexpr (AZStd::is_same_v<Command, RequestCommands::ReportData>)
             {
                 Report(args);
             }
@@ -307,7 +307,7 @@ namespace AZ::IO
                 FileReadInformation& read = m_readSlots_readInfo[i];
                 u64 totalBytesRead = m_readSizeAverage.GetTotal();
                 double totalReadTimeUSec = aznumeric_caster(m_readTimeAverage.GetTotal().count());
-                auto readCommand = AZStd::get_if<FileRequest::ReadData>(&read.m_request->GetCommand());
+                auto readCommand = AZStd::get_if<RequestCommands::ReadData>(&read.m_request->GetCommand());
                 AZ_Assert(readCommand, "Request currently reading doesn't contain a read command.");
                 auto endTime = read.m_startTime + AZStd::chrono::microseconds(aznumeric_cast<u64>((readCommand->m_size * totalReadTimeUSec) / totalBytesRead));
                 earliestSlot = AZStd::min(earliestSlot, endTime);
@@ -353,7 +353,7 @@ namespace AZ::IO
         AZStd::visit([&](auto&& args)
         {
             using Command = AZStd::decay_t<decltype(args)>;
-            if constexpr (AZStd::is_same_v<Command, FileRequest::ReadData>)
+            if constexpr (AZStd::is_same_v<Command, RequestCommands::ReadData>)
             {
                 targetFile = &args.m_path;
                 readSize = args.m_size;
@@ -410,7 +410,7 @@ namespace AZ::IO
         AZStd::visit([&, this](auto&& args)
         {
             using Command = AZStd::decay_t<decltype(args)>;
-            if constexpr (AZStd::is_same_v<Command, FileRequest::ReadData> ||
+            if constexpr (AZStd::is_same_v<Command, RequestCommands::ReadData> ||
                           AZStd::is_same_v<Command, FileRequest::FileExistsCheckData>)
             {
                 if (IsServicedByThisDrive(args.m_path.GetAbsolutePath()))
@@ -434,7 +434,7 @@ namespace AZ::IO
             aznumeric_cast<s32>(m_pendingRequests.size()) - m_activeReads_Count;
     }
 
-    auto StorageDriveWin::OpenFile(HANDLE& fileHandle, size_t& cacheSlot, FileRequest* request, const FileRequest::ReadData& data) -> OpenFileResult
+    auto StorageDriveWin::OpenFile(HANDLE& fileHandle, size_t& cacheSlot, FileRequest* request, const RequestCommands::ReadData& data) -> OpenFileResult
     {
         HANDLE file = INVALID_HANDLE_VALUE;
 
@@ -550,7 +550,7 @@ namespace AZ::IO
             return false;
         }
 
-        auto data = AZStd::get_if<FileRequest::ReadData>(&request->GetCommand());
+        auto data = AZStd::get_if<RequestCommands::ReadData>(&request->GetCommand());
         AZ_Assert(data, "Read request in StorageDriveWin doesn't contain read data.");
 
         HANDLE file = INVALID_HANDLE_VALUE;
@@ -580,7 +580,7 @@ namespace AZ::IO
             // If any are unaligned to the sector sizes, make adjustments and allocate an aligned buffer.
             const bool alignedAddr = IStreamerTypes::IsAlignedTo(data->m_output, aznumeric_caster(m_physicalSectorSize));
             const bool alignedOffs = IStreamerTypes::IsAlignedTo(data->m_offset, aznumeric_caster(m_logicalSectorSize));
-            
+
             // Adjust the offset if it's misaligned.
             // Align the offset down to next lowest sector.
             // Change the size to compensate.
@@ -653,7 +653,7 @@ namespace AZ::IO
             Statistic::PlotImmediate(m_name, DirectReadsName, m_directReadsPercentageStat.GetMostRecentSample());
 #endif // AZ_STREAMER_ADD_EXTRA_PROFILING_INFO
         }
-        
+
         FileReadStatus& readStatus = m_readSlots_statusInfo[readSlot];
         LPOVERLAPPED overlapped = &readStatus.m_overlapped;
         overlapped->Offset = aznumeric_caster(readOffs);
@@ -713,7 +713,7 @@ namespace AZ::IO
         Statistic::PlotImmediate(m_name, FileSwitchesName, m_fileSwitchPercentageStat.GetMostRecentSample());
         Statistic::PlotImmediate(m_name, SeeksName, m_seekPercentageStat.GetMostRecentSample());
 #endif // AZ_STREAMER_ADD_EXTRA_PROFILING_INFO
-        
+
         m_fileCache_activeReads[fileCacheSlot]++;
         m_activeCacheSlot = fileCacheSlot;
         m_activeOffset = readOffs + readSize;
@@ -998,9 +998,9 @@ namespace AZ::IO
 
         FileReadInformation& fileReadInfo = m_readSlots_readInfo[readSlot];
 
-        auto readCommand = AZStd::get_if<FileRequest::ReadData>(&fileReadInfo.m_request->GetCommand());
+        auto readCommand = AZStd::get_if<RequestCommands::ReadData>(&fileReadInfo.m_request->GetCommand());
         AZ_Assert(readCommand != nullptr, "Request stored with the overlapped I/O call did not contain a read request.");
-        
+
         if (fileReadInfo.m_sectorAlignedOutput && !encounteredError)
         {
             auto offsetAddress = reinterpret_cast<u8*>(fileReadInfo.m_sectorAlignedOutput) + fileReadInfo.m_copyBackOffset;
@@ -1140,11 +1140,11 @@ namespace AZ::IO
         StreamStackEntry::CollectStatistics(statistics);
     }
 
-    void StorageDriveWin::Report(const FileRequest::ReportData& data) const
+    void StorageDriveWin::Report(const RequestCommands::ReportData& data) const
     {
         switch (data.m_reportType)
         {
-        case FileRequest::ReportData::ReportType::FileLocks:
+        case RequestCommands::ReportData::ReportType::FileLocks:
             if (m_cachesInitialized)
             {
                 for (u32 i = 0; i < m_maxFileHandles; ++i)

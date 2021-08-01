@@ -28,9 +28,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::HDRiSkyboxComponentController, "{D01C123D-4EA1-4A9B-A7D9-47EF26A55CD0}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             HDRiSkyboxComponentController() = default;
             HDRiSkyboxComponentController(const HDRiSkyboxComponentConfig& config);

@@ -18,6 +18,7 @@
 // AzCore
 #include <AzCore/Component/ComponentApplication.h>
 #include <AzCore/IO/IStreamer.h>
+#include <AzCore/IO/Streamer/FileRequest.h>
 #include <AzCore/std/parallel/binary_semaphore.h>
 #include <AzCore/Console/IConsole.h>
 
@@ -459,7 +460,7 @@ AZ::Outcome<void, AZStd::string> CGameEngine::Init(
     REGISTER_COMMAND("quit", CGameEngine::HandleQuitRequest, VF_RESTRICTEDMODE, "Quit/Shutdown the engine");
 
     EBUS_EVENT(CrySystemEventBus, OnCryEditorInitialized);
-    
+
     return AZ::Success();
 }
 
@@ -482,7 +483,7 @@ void CGameEngine::SetLevelPath(const QString& path)
     const char* oldExtension = EditorUtils::LevelFile::GetOldCryFileExtension();
     const char* defaultExtension = EditorUtils::LevelFile::GetDefaultFileExtension();
 
-    // Store off if 
+    // Store off if
     if (QFileInfo(path + oldExtension).exists())
     {
         m_levelExtension = oldExtension;
@@ -566,7 +567,7 @@ void CGameEngine::SwitchToInGame()
         streamer->QueueRequest(flush);
         wait.acquire();
     }
-    
+
     GetIEditor()->Notify(eNotify_OnBeginGameMode);
 
     m_pISystem->GetIMovieSystem()->EnablePhysicsEvents(true);

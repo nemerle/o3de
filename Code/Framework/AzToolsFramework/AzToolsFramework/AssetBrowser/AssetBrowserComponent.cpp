@@ -8,6 +8,7 @@
 
 #include <AzCore/base.h>
 #include <AzCore/std/containers/vector.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/EBus/Results.h>
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -42,6 +43,9 @@ namespace AzToolsFramework
 {
     namespace AssetBrowser
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(AssetBrowserComponent)
+
         AssetBrowserComponent::AssetBrowserComponent()
             : m_databaseConnection(aznew AssetDatabase::AssetDatabaseConnection)
             , m_rootEntry(aznew RootAssetBrowserEntry)
@@ -119,17 +123,17 @@ namespace AzToolsFramework
             }
         }
 
-        void AssetBrowserComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType & services)
+        void AssetBrowserComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType & services)
         {
             services.push_back(AZ_CRC("AssetBrowserService", 0x1e54fffb));
         }
 
-        void AssetBrowserComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void AssetBrowserComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("ThumbnailerService", 0x65422b97));
         }
 
-        void AssetBrowserComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void AssetBrowserComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("AssetBrowserService", 0x1e54fffb));
         }

@@ -23,7 +23,7 @@ namespace AzFramework
         {
         public:
 
-            AZ_COMPONENT(FileTagComponent, "{43D5CE4F-C687-4CAA-9CED-54FBBC928876}");
+            AZ_COMPONENT_SPLIT(FileTagComponent, "{43D5CE4F-C687-4CAA-9CED-54FBBC928876}");
 
             void Activate() override;
             void Deactivate() override;
@@ -40,7 +40,7 @@ namespace AzFramework
         {
         public:
 
-            AZ_COMPONENT(FileTagQueryComponent, "{72DE1060-28C9-442F-9927-540E830663F6}");
+            AZ_COMPONENT_SPLIT(FileTagQueryComponent, "{72DE1060-28C9-442F-9927-540E830663F6}");
             explicit FileTagQueryComponent() = default;
             void Activate() override;
             void Deactivate() override;
@@ -59,7 +59,7 @@ namespace AzFramework
             , public AzFramework::AssetCatalogEventBus::Handler
         {
         public:
-            AZ_COMPONENT(ExcludeFileComponent, "{40CF5F1D-BE1F-46AA-9D35-11FC173DCDBC}");
+            AZ_COMPONENT_SPLIT(ExcludeFileComponent, "{40CF5F1D-BE1F-46AA-9D35-11FC173DCDBC}");
             explicit ExcludeFileComponent() = default;
             void Activate() override;
             void Deactivate() override;

@@ -8,6 +8,7 @@
 
 #include "LogFile.h"
 #include "LoggingComponent.h"
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/EditContext.h>
@@ -31,6 +32,8 @@ namespace AzFramework
         const AZStd::string defaultPrefix = "AzFramework";
     };
 
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(LogComponent)
 
     LogComponent::LogComponent()
         : m_logFileBaseName(defaultPrefix)
@@ -185,12 +188,12 @@ namespace AzFramework
         }
     }
 
-    void LogComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void LogComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("LoggingService", 0x64b9f716));
     }
 
-    void LogComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void LogComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("LoggingService", 0x64b9f716));
     }

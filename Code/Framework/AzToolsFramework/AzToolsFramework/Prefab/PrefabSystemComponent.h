@@ -55,7 +55,7 @@ namespace AzToolsFramework
 
             using TargetTemplateIdToLinkIdMap = AZStd::unordered_map<TemplateId, AZStd::pair<AZStd::unordered_set<LinkId>, bool>>;
             
-            AZ_COMPONENT(PrefabSystemComponent, "{27203AE6-A398-4614-881B-4EEB5E9B34E9}");
+            AZ_COMPONENT_SPLIT(PrefabSystemComponent, "{27203AE6-A398-4614-881B-4EEB5E9B34E9}");
 
             PrefabSystemComponent() = default;
 
@@ -69,9 +69,9 @@ namespace AzToolsFramework
             //////////////////////////////////////////////////////////////////////////
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             // SystemTickBus...
             void OnSystemTick() override;

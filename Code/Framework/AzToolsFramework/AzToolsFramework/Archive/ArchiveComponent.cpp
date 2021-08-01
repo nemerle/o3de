@@ -10,6 +10,7 @@
 
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/EditContext.h>
 
 #include <AzFramework/StringFunc/StringFunc.h>
@@ -101,6 +102,8 @@ namespace AzToolsFramework
 
         AzFramework::ProcessCommunicator* m_communicator = nullptr;
     };
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(ArchiveComponent)
 
     void ArchiveComponent::Activate()
     {
@@ -235,7 +238,7 @@ namespace AzToolsFramework
     void ArchiveComponent::ListFilesInArchive(const AZStd::string& archivePath, AZStd::vector<AZStd::string>& fileEntries, AZ::Uuid taskHandle, const ArchiveResponseOutputCallback& respCallback)
     {
         AZStd::string commandLineArgs = Platform::GetListFilesInArchiveCommand(archivePath);
-        
+
         auto parseOutput = [respCallback, taskHandle, &fileEntries](bool exitCode, AZStd::string consoleOutput)
         {
             Platform::ParseConsoleOutputFromListFilesInArchive(consoleOutput, fileEntries);
@@ -356,7 +359,7 @@ namespace AzToolsFramework
         });
         m_threadInfoMap.erase(it);
     }
-    
+
     void ArchiveComponent::LaunchZipExe(const AZStd::string& exePath, const AZStd::string& commandLineArgs, const ArchiveResponseOutputCallback& respCallback, AZ::Uuid taskHandle, const AZStd::string& workingDir, bool captureOutput)
     {
         auto sevenZJob = [=]()
@@ -370,7 +373,7 @@ namespace AzToolsFramework
 
             AzFramework::ProcessLauncher::ProcessLaunchInfo info;
             info.m_commandlineParameters = exePath + " " + commandLineArgs;
-            
+
             info.m_showWindow = false;
             if (!workingDir.empty())
             {
@@ -382,7 +385,7 @@ namespace AzToolsFramework
             AZ::u32 exitCode = static_cast<AZ::u32>(SevenZipExitCode::UserStoppedProcess);
             if (watcher)
             {
-                // callback requires output captured from 7z 
+                // callback requires output captured from 7z
                 if (captureOutput)
                 {
                     AZStd::string consoleBuffer;

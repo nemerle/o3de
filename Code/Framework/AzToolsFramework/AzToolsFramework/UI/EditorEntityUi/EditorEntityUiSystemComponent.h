@@ -24,7 +24,7 @@ namespace AzToolsFramework
             , public EditorEntityUiInterface
         {
         public:
-            AZ_COMPONENT(EditorEntityUiSystemComponent, "{65D3C8AB-7BA7-4FC1-9297-49C9602E32D2}");
+            AZ_COMPONENT_SPLIT(EditorEntityUiSystemComponent, "{65D3C8AB-7BA7-4FC1-9297-49C9602E32D2}");
 
             EditorEntityUiSystemComponent();
             ~EditorEntityUiSystemComponent() override;

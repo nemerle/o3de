@@ -12,6 +12,7 @@
 #include <QTimer>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 #include <AzCore/Math/Vector2.h>
 
@@ -47,7 +48,7 @@ namespace GraphCanvas
 {
     class GraphCanvasGraphicsScene;
 
-    class SceneHelper        
+    class SceneHelper
     {
     public:
         AZ_CLASS_ALLOCATOR(SceneHelper, AZ::SystemAllocator, 0);
@@ -63,7 +64,7 @@ namespace GraphCanvas
     protected:
         virtual void OnEditorIdSet();
 
-    private:        
+    private:
         AZ::EntityId m_sceneId;
         EditorId     m_editorId;
     };
@@ -97,7 +98,7 @@ namespace GraphCanvas
         void SignalNodeCreated(const NodeId& nodeId);
 
     private:
-        
+
         void OnTrySplice();
         void CancelSplice();
 
@@ -128,7 +129,7 @@ namespace GraphCanvas
         AZStd::vector< ConnectionEndpoints > m_opportunisticSpliceRemovals;
 
         bool m_pushedUndoBlock;
-        
+
         StateSetter<RootGraphicsItemDisplayState> m_displayStateStateSetter;
 
         AZ::EntityId m_groupTarget;
@@ -142,7 +143,7 @@ namespace GraphCanvas
     class GestureSceneHelper
         : public SceneHelper
         , public GeometryNotificationBus::Handler
-        , public SceneNotificationBus::Handler        
+        , public SceneNotificationBus::Handler
         , public AZ::SystemTickBus::Handler
     {
     public:
@@ -185,7 +186,7 @@ namespace GraphCanvas
         float m_minimumDistance = 0.0f;
 
         float m_straightnessPercent = 0.0f;
-        
+
         int m_shakeThreshold = 0;
         int m_shakeCounter = 0;
 
@@ -244,7 +245,7 @@ namespace GraphCanvas
                 BookmarkAnchor,
 
                 Unknown,
-            };            
+            };
 
             virtual ~GraphCanvasConstructSaveData() = default;
 
@@ -289,23 +290,23 @@ namespace GraphCanvas
         ~SceneComponent() override;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_SceneService", 0x8ec010e7));
             provided.push_back(AZ_CRC("GraphCanvas_MimeDataHandlerService", 0x7a6beb5a));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incombatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incombatible)
         {
             incombatible.push_back(AZ_CRC("GraphCanvas_SceneService", 0x8ec010e7));
             incombatible.push_back(AZ_CRC("GraphCanvas_MimeDataHandlerService", 0x7a6beb5a));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& /*dependent*/)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& /*dependent*/)
         {
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& /*required*/)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& /*required*/)
         {
         }
 
@@ -444,7 +445,7 @@ namespace GraphCanvas
         void DeleteSelection() override;
         void Delete(const AZStd::unordered_set<AZ::EntityId>& itemIds) override;
         void DeleteGraphData(const GraphData& graphData) override;
-        
+
         void ClearScene() override;
 
         void SuppressNextContextMenu() override;
@@ -492,7 +493,7 @@ namespace GraphCanvas
         void RemoveUnusedElements() override;
 
         void HandleProposalDaisyChainWithGroup(const NodeId& startNode, SlotType slotType, ConnectionType connectionType, const QPoint& screenPoint, const QPointF& focusPoint, AZ::EntityId targetId) override;
-        
+
         void StartNudging(const AZStd::unordered_set<AZ::EntityId>& fixedNodes) override;
         void FinalizeNudging() override;
         void CancelNudging() override;
@@ -601,11 +602,11 @@ namespace GraphCanvas
         ViewParams m_viewParams;
 
         MimeDelegateSceneHelper m_mimeDelegateSceneHelper;
-        GestureSceneHelper m_gestureSceneHelper;        
+        GestureSceneHelper m_gestureSceneHelper;
 
         AZStd::unordered_set< QGraphicsItem* > m_hiddenElements;
         GraphData m_graphData;
-        
+
         AZStd::vector< GraphicsEffectId > m_activeParticles;
 
         AZStd::unordered_set<NodeId> m_queuedEnable;
@@ -638,7 +639,7 @@ namespace GraphCanvas
         AZ::EntityId m_outputCouplingTarget;
 
         AZ::EntityId m_couplingTarget;
-        
+
         AZ::EntityId m_pressedEntity;
         AZ::Vector2  m_originalPosition;
 
@@ -650,7 +651,7 @@ namespace GraphCanvas
         // Elements for handling with the drag onto objects
         QTimer m_spliceTimer;
         bool m_enableSpliceTracking;
-        
+
         bool m_enableNodeDragConnectionSpliceTracking;
         bool m_enableNodeDragCouplingTracking;
 
@@ -658,7 +659,7 @@ namespace GraphCanvas
 
         bool m_enableNudging;
         NodeNudgingController m_nudgingController;
-        
+
         AZ::EntityId m_spliceTarget;
 
         GraphSubGraph m_selectedSubGraph;

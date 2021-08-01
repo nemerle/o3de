@@ -60,22 +60,22 @@ namespace DebugDraw
         m_element.m_owningEditorComponent = AZ::InvalidComponentId;
     }
 
-    void DebugDrawRayComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void DebugDrawRayComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("DebugDrawRayService", 0xdd79b586));
     }
 
-    void DebugDrawRayComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void DebugDrawRayComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         (void)incompatible;
     }
 
-    void DebugDrawRayComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void DebugDrawRayComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         (void)required;
     }
 
-    void DebugDrawRayComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void DebugDrawRayComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         (void)dependent;
     }

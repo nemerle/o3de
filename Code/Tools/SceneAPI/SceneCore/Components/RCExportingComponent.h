@@ -25,7 +25,7 @@ namespace AZ
                 , public Events::CallProcessorBinder
             {
             public:
-                AZ_COMPONENT(RCExportingComponent, "{128286A3-41EF-4910-8C62-E9EECA43C4EF}", Events::CallProcessorBinder);
+                AZ_COMPONENT_SPLIT(RCExportingComponent, "{128286A3-41EF-4910-8C62-E9EECA43C4EF}", Events::CallProcessorBinder);
 
                 RCExportingComponent() = default;
 

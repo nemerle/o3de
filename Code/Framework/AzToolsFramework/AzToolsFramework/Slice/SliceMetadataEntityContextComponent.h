@@ -46,7 +46,7 @@ namespace AzToolsFramework
     {
     public:
 
-        AZ_COMPONENT(SliceMetadataEntityContextComponent, "{F53BF27D-9A95-41CC-BA2F-6496F9BC0C6B}");
+        AZ_COMPONENT_SPLIT(SliceMetadataEntityContextComponent, "{F53BF27D-9A95-41CC-BA2F-6496F9BC0C6B}");
 
         /**
         * Default Constructor - Establishes required components for entities belonging to the context
@@ -87,19 +87,19 @@ namespace AzToolsFramework
         * Component Descriptor - Provided Services
         * @param provided An array to fill out with all the services this component provides
         */
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
         /**
         * Component Descriptor - Incompatible Services
         * @param incompatible An array to fill out with all the services this component is incompatible with
         */
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         /**
         * Component Descriptor - Dependent Services
         * @param dependent An array to fill out with all the services this component depends on
         */
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
     protected:
         //////////////////////////////////////////////////////////////////////////

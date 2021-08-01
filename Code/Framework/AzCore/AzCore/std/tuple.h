@@ -11,6 +11,7 @@
 #include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/std/containers/array.h>
 #include <AzCore/std/function/invoke.h>
+#include <AzCore/std/hash.h>
 #include <AzCore/std/utils.h>
 #include <AzCore/std/typetraits/is_same.h>
 #include <AzCore/std/typetraits/void_t.h>
@@ -278,7 +279,7 @@ namespace AZStd
     };
 }
 
-// AZStd::apply implemenation helper block 
+// AZStd::apply implemenation helper block
 namespace AZStd
 {
     namespace Internal

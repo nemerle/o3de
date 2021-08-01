@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AssetBuilderSDK/AssetBuilderBusses.h>
 #include <AssetBuilderSDK/AssetBuilderSDK.h>
 
@@ -17,7 +18,7 @@ namespace GradientSignal
     class ImageAsset;
     class ImageSettings;
 
-    //! Builder to process images 
+    //! Builder to process images
     class EditorImageBuilderWorker
         : public AssetBuilderSDK::AssetBuilderCommandBus::Handler
     {

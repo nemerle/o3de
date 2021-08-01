@@ -7,6 +7,7 @@
  */
 
 #include <SceneAPI/SceneData/Behaviors/ScriptProcessorRuleBehavior.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/RTTI/BehaviorContext.h>
@@ -152,6 +153,9 @@ namespace AZ::SceneAPI::Behaviors
             return m_preExportEventContextFunction(context) ? Events::ProcessingResult::Success : Events::ProcessingResult::Failure;
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(ScriptProcessorRuleBehavior)
 
     void ScriptProcessorRuleBehavior::Activate()
     {

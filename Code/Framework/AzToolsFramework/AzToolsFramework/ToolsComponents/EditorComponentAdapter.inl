@@ -48,7 +48,7 @@ namespace AzToolsFramework
 
         template<typename TController, typename TRuntimeComponent, typename TConfiguration>
         void EditorComponentAdapter<TController, TRuntimeComponent, TConfiguration>::GetProvidedServices(
-            AZ::ComponentDescriptor::DependencyArrayType& services)
+            AZ::ComponentDescriptorDependencyArrayType& services)
         {
             AzFramework::Components::GetProvidedServicesHelper<TController>(
                 services, typename AZ::HasComponentProvidedServices<TController>::type());
@@ -56,7 +56,7 @@ namespace AzToolsFramework
 
         template<typename TController, typename TRuntimeComponent, typename TConfiguration>
         void EditorComponentAdapter<TController, TRuntimeComponent, TConfiguration>::GetRequiredServices(
-            AZ::ComponentDescriptor::DependencyArrayType& services)
+            AZ::ComponentDescriptorDependencyArrayType& services)
         {
             AzFramework::Components::GetRequiredServicesHelper<TController>(
                 services, typename AZ::HasComponentRequiredServices<TController>::type());
@@ -64,7 +64,7 @@ namespace AzToolsFramework
 
         template<typename TController, typename TRuntimeComponent, typename TConfiguration>
         void EditorComponentAdapter<TController, TRuntimeComponent, TConfiguration>::GetIncompatibleServices(
-            AZ::ComponentDescriptor::DependencyArrayType& services)
+            AZ::ComponentDescriptorDependencyArrayType& services)
         {
             AzFramework::Components::GetIncompatibleServicesHelper<TController>(
                 services, typename AZ::HasComponentIncompatibleServices<TController>::type());
@@ -72,7 +72,7 @@ namespace AzToolsFramework
 
         template<typename TController, typename TRuntimeComponent, typename TConfiguration>
         void EditorComponentAdapter<TController, TRuntimeComponent, TConfiguration>::GetDependentServices(
-            AZ::ComponentDescriptor::DependencyArrayType& services)
+            AZ::ComponentDescriptorDependencyArrayType& services)
         {
             AzFramework::Components::GetDependentServicesHelper<TController>(
                 services, typename AZ::HasComponentDependentServices<TController>::type());

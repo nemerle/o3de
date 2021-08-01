@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/containers/unordered_map.h>
 
 #include <ScriptCanvas/Execution/ExecutionBus.h>
@@ -72,7 +73,7 @@ namespace ScriptCanvas
         GraphVariable* FindFirstVariableWithType(const Data::Type& dataType, const AZStd::unordered_set< ScriptCanvas::VariableId >& excludedVariableIds) override;
 
         Data::Type GetVariableType(const VariableId& variableId) override;
-        
+
         const GraphVariableMapping* GetVariables() const override;
         AZStd::string_view GetVariableName(const VariableId&) const override;
         AZ::Outcome<void, AZStd::string> RenameVariable(const VariableId&, AZStd::string_view) override;
@@ -89,11 +90,11 @@ namespace ScriptCanvas
 
     protected:
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ScriptCanvasVariableService", 0x819c8460));
         }
-        
+
         void RegisterCopiedVariableRemapping(const VariableId& originalValue, const VariableId& remappedId);
         void UnregisterUncopiedVariableRemapping(const VariableId& remappedId);
 

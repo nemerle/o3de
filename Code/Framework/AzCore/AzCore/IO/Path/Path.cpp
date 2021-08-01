@@ -10,16 +10,6 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 
-namespace AZ 
-{
-
-template<>
-struct SerializeGenericTypeInfo<AZ::IO::Path> : SerializeGenericTypeInfoImpl<AZ::IO::Path> 
-{
-};
-
-}
-
 // Explicit instantations of our support Path classes
 namespace AZ::IO
 {

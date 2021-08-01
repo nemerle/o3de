@@ -59,22 +59,22 @@ namespace DebugDraw
         m_element.m_owningEditorComponent = AZ::InvalidComponentId;
     }
 
-    void DebugDrawLineComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void DebugDrawLineComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("DebugDrawLineService", 0xca14c559));
     }
 
-    void DebugDrawLineComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void DebugDrawLineComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         (void)incompatible;
     }
 
-    void DebugDrawLineComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void DebugDrawLineComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         (void)required;
     }
 
-    void DebugDrawLineComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void DebugDrawLineComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         (void)dependent;
     }

@@ -7,7 +7,7 @@
  */
 
 #include <Atom/Utils/ImageComparison.h>
-
+#include <AzCore/Math/MathUtils.h>
 namespace AZ
 {
     namespace Utils

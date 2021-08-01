@@ -31,7 +31,7 @@ namespace LUADebugger
         , public AzFramework::TmMsgBus::Handler
     {
     public:
-        AZ_COMPONENT(Component, "{7854C9F4-D7E5-4420-A14E-FA5B19822F39}");
+        AZ_COMPONENT_SPLIT(Component, "{7854C9F4-D7E5-4420-A14E-FA5B19822F39}");
 
         Component();
         virtual ~Component();

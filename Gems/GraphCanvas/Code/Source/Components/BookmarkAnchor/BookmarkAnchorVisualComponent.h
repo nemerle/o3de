@@ -11,6 +11,7 @@
 #include <qcolor.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 #include <AzCore/Math/Color.h>
 #include <AzCore/Component/TickBus.h>
@@ -79,7 +80,7 @@ namespace GraphCanvas
 
         Styling::StyleHelper m_style;
 
-        float m_animationDuration;        
+        float m_animationDuration;
     };
 
     //! Some sort of visual indicator of a bookmark, just to help focus, and allow for easier changing of bookmark locations
@@ -101,7 +102,7 @@ namespace GraphCanvas
             BookmarkAnchorVisualComponentSaveData() = default;
         };
 
-    
+
         AZ_COMPONENT(BookmarkAnchorVisualComponent, "{AD921E77-962B-417F-88FB-500FA679DFDF}");
 
         static void Reflect(AZ::ReflectContext* reflectContext);
@@ -140,6 +141,6 @@ namespace GraphCanvas
 
         BookmarkAnchorVisualComponent(const BookmarkAnchorVisualComponent&) = delete;
         const BookmarkAnchorVisualComponent& operator=(const BookmarkAnchorVisualComponent&) = delete;
-        AZStd::unique_ptr<BookmarkAnchorVisualGraphicsWidget>  m_graphicsWidget;        
+        AZStd::unique_ptr<BookmarkAnchorVisualGraphicsWidget>  m_graphicsWidget;
     };
 }

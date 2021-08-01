@@ -10,6 +10,7 @@
 
 #include <AzCore/Component/Component.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/Module/Environment.h>
 #include <SceneAPI/SceneBuilder/SceneImportRequestHandler.h>
@@ -78,7 +79,7 @@ namespace AZ
             void Activate()
             {
             }
-            
+
             void Deactivate()
             {
             }

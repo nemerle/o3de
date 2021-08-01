@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Achievements/AchievementRequestBus.h>
 #include <AzCore/std/parallel/atomic.h>
 #include <AzCore/std/string/string.h>
@@ -30,8 +31,8 @@ namespace Achievements
         // Component overrides
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
     protected:
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -43,7 +44,7 @@ namespace Achievements
         // AchievementsRequestBus interface implementation
         void UnlockAchievement(const UnlockAchievementParams& params) override;
         void QueryAchievementDetails(const QueryAchievementParams& params);
-    
+
     public:
         ////////////////////////////////////////////////////////////////////////////////////////
         // Base class for platform specific implementations

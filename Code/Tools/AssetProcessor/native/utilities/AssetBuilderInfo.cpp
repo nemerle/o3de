@@ -9,6 +9,7 @@
 #include <native/utilities/AssetBuilderInfo.h>
 
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 
 

@@ -20,7 +20,7 @@ namespace Telemetry
         , public TelemetryEventsBus::Handler
     {
     public:
-        AZ_COMPONENT(TelemetryComponent, "{CE41EE3C-AF98-4B22-BA7C-2D425D1F468A}")
+        AZ_COMPONENT_SPLIT(TelemetryComponent, "{CE41EE3C-AF98-4B22-BA7C-2D425D1F468A}")
 
         TelemetryComponent() = default;
 

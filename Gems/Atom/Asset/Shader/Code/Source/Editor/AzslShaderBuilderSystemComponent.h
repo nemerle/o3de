@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <Atom/RHI.Edit/ShaderPlatformInterfaceBus.h>
 
@@ -23,7 +24,7 @@ namespace AZ
 {
     namespace ShaderBuilder
     {
-        
+
         class AzslShaderBuilderSystemComponent
             : public Component
             , public RHI::ShaderPlatformInterfaceRegisterBus::Handler
@@ -34,10 +35,10 @@ namespace AZ
 
             static void Reflect(ReflectContext* context);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         protected:
             ////////////////////////////////////////////////////////////////////////
@@ -67,6 +68,6 @@ namespace AZ
             /// Contains the ShaderPlatformInterface for all registered RHIs
             AZStd::unordered_map<RHI::APIType, RHI::ShaderPlatformInterface*> m_shaderPlatformInterfaces;
         };
-        
+
     } // ShaderBuilder
 } //AZ

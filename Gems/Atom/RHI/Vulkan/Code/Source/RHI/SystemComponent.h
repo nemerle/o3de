@@ -11,6 +11,7 @@
 #include <Atom/RHI/Factory.h>
 #include <Atom/RHI.Reflect/Vulkan/Base.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {
@@ -23,8 +24,8 @@ namespace AZ
         public:
             AZ_COMPONENT(SystemComponent, "{63A5BE62-43F4-45B9-93FE-E1C6371C457D}");
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetRequiredServices(ComponentDescriptorDependencyArrayType& required);
             static void Reflect(AZ::ReflectContext* context);
 
             SystemComponent() = default;

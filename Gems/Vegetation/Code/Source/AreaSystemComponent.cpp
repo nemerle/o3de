@@ -273,17 +273,17 @@ namespace Vegetation
     //////////////////////////////////////////////////////////////////////////
     // AreaSystemComponent
 
-    void AreaSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaSystemService", 0x36da2b62));
     }
 
-    void AreaSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaSystemService", 0x36da2b62));
     }
 
-    void AreaSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationDebugSystemService", 0x8cac3d67));
         services.push_back(AZ_CRC("VegetationInstanceSystemService", 0x823a6007));

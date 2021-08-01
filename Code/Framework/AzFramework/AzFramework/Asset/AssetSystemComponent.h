@@ -38,7 +38,7 @@ namespace AzFramework
             , private AZ::SystemTickBus::Handler
         {
         public:
-            AZ_COMPONENT(AssetSystemComponent, "{42C58BBF-0C15-4DF9-9351-4639B36F122A}")
+            AZ_COMPONENT_SPLIT(AssetSystemComponent, "{42C58BBF-0C15-4DF9-9351-4639B36F122A}")
 
             AssetSystemComponent() = default;
             virtual ~AssetSystemComponent() = default;
@@ -56,8 +56,8 @@ namespace AzFramework
             //////////////////////////////////////////////////////////////////////////
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
             
         private:
             AssetSystemComponent(const AssetSystemComponent&) = delete;

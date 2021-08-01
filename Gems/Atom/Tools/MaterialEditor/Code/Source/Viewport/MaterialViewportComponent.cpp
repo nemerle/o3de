@@ -138,18 +138,18 @@ namespace MaterialEditor
         }
     }
 
-    void MaterialViewportComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+    void MaterialViewportComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("PerformanceMonitorService", 0x6a44241a));
         required.push_back(AZ_CRC("AtomImageBuilderService", 0x76ded592));
     }
 
-    void MaterialViewportComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void MaterialViewportComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("MaterialViewportService", 0xed9b44d7));
     }
 
-    void MaterialViewportComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void MaterialViewportComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("MaterialViewportService", 0xed9b44d7));
     }

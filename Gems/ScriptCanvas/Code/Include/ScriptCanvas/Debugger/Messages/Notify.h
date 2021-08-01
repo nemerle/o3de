@@ -38,7 +38,7 @@ namespace ScriptCanvas
             };
 
             template<typename t_Payload>
-            class NotificationPayload 
+            class NotificationPayload
                 : public Notification
             {
             public:
@@ -67,7 +67,7 @@ namespace ScriptCanvas
                     }
                 }
             };
-            
+
             class BreakpointAdded;
             class BreakpointHit;
             class Connected;
@@ -76,7 +76,7 @@ namespace ScriptCanvas
             class SignaledInput;
             class SignaledOutput;
             class VariableChanged;
-            
+
             using ActiveEntitiesResult = NotificationPayload<ActiveEntityStatusMap>;
             using ActiveGraphsResult = NotificationPayload<ActiveGraphStatusMap>;
             using AvailableScriptTargetsResult = NotificationPayload<ActiveEntitiesAndGraphs>;
@@ -88,7 +88,7 @@ namespace ScriptCanvas
             {
             public:
                 virtual ~NotificationVisitor() = default;
-                
+
                 virtual void Visit(ActiveEntitiesResult& notification) = 0;
                 virtual void Visit(ActiveGraphsResult& notification) = 0;
                 virtual void Visit(AnnotateNode& notification) = 0;
@@ -134,7 +134,7 @@ namespace ScriptCanvas
                 Breakpoint m_breakpoint;
 
                 BreakpointHit() = default;
-                
+
                 BreakpointHit(const Breakpoint& breakpoint)
                     : Notification()
                     , m_breakpoint(breakpoint)
@@ -142,7 +142,7 @@ namespace ScriptCanvas
 
                 void Visit(NotificationVisitor& visitor) override { visitor.Visit(*this); }
             };
-                            
+
             class Connected final
                 : public Notification
             {
@@ -172,7 +172,7 @@ namespace ScriptCanvas
 
                 void Visit(NotificationVisitor& visitor) override { visitor.Visit(*this); }
             };
-            
+
             class Continued
                 : public Notification
             {
@@ -191,7 +191,7 @@ namespace ScriptCanvas
                 AZ_RTTI(SignaledInput, "{1FFD4CF1-4D3A-4FA7-8D57-5C178EFE9CA7}", Notification);
 
                 InputSignal m_signal;
-                
+
                 SignaledInput() = default;
 
                 SignaledInput(const InputSignal& nodeSignalInput)
@@ -218,7 +218,7 @@ namespace ScriptCanvas
 
                 virtual void Visit(NotificationVisitor& visitor) { visitor.Visit(*this); }
             };
-            
+
             class VariableChanged
                 : public Notification
             {
@@ -235,7 +235,7 @@ namespace ScriptCanvas
                 {}
 
                 virtual void Visit(NotificationVisitor& visitor) { visitor.Visit(*this); }
-            };            
+            };
 
             template<typename t_Payload>
             void NotificationPayload<t_Payload>::Visit(NotificationVisitor& visitor)
@@ -245,19 +245,3 @@ namespace ScriptCanvas
         }
     }
 }
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template<typename T>
-    struct SerializeGenericTypeInfo<ScriptCanvas::Debugger::Message::NotificationPayload<T>, void>
-        : SerializeGenericTypeInfoImpl<ScriptCanvas::Debugger::Message::NotificationPayload<T>>
-    {
-        // treat NotificationPayload template as generic value type
-    };
-} // namespace AZ

@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/std/string/string.h>
+#include <AzCore/Casting/numeric_cast.h>
 #include <GemCatalog/GemModel.h>
 
 namespace O3DE::ProjectManager

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <AWSCoreBus.h>
 
@@ -38,10 +39,10 @@ namespace AWSCore
         AWSCoreSystemComponent();
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         ////////////////////////////////////////////////////////////////////////
         // AWSCoreRequestBus interface implementation
@@ -68,7 +69,7 @@ namespace AWSCore
         int m_threadPriority;       ///! Priority size for AWS threads, defaults to platform value
         int m_threadStackSize;      ///! Stack size for threads, defaults to platform value
 
-        // Order here is of importance. To be correct, JobContext needs to 
+        // Order here is of importance. To be correct, JobContext needs to
         // destruct before the JobManager and the JobCancelGroup.
         AZStd::unique_ptr<AZ::JobCancelGroup> m_jobCancelGroup;
         AZStd::unique_ptr<AZ::JobManager> m_jobManager;

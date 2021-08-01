@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/std/parallel/atomic.h>
 #include <Twitch/TwitchBus.h>
@@ -29,10 +30,10 @@ namespace Twitch
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         void OnSystemTick() override;
 
@@ -61,13 +62,13 @@ namespace Twitch
         void GetFriendRequests(ReceiptID & receipt, const AZStd::string& cursor) override;
         void CreateFriendRequest(ReceiptID & receipt, const AZStd::string& friendID) override;
         void DeclineFriendRequest(ReceiptID & receipt, const AZStd::string& friendID) override;
-        
+
         // presence
         void UpdatePresenceStatus(ReceiptID & receipt, PresenceAvailability availability, PresenceActivityType activityType, const AZStd::string& gameContext) override;
         void GetPresenceStatusofFriends(ReceiptID & receipt) override;
         void GetPresenceSettings(ReceiptID & receipt) override;
         void UpdatePresenceSettings(ReceiptID & receipt, bool isInvisible, bool shareActivity) override;
-        
+
         // channel
         void GetChannel(ReceiptID& receipt) override;
         void GetChannelbyID(ReceiptID& receipt, const AZStd::string& channelID) override;

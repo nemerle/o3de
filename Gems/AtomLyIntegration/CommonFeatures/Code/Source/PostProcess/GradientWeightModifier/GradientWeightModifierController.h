@@ -25,9 +25,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::GradientWeightModifierComponentController, "{62AB316D-8B8E-434E-8F87-C4ABC42642A6}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             GradientWeightModifierComponentController() = default;
             GradientWeightModifierComponentController(const GradientWeightModifierComponentConfig& config);

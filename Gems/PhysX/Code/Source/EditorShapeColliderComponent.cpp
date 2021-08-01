@@ -105,7 +105,7 @@ namespace PhysX
         }
     }
 
-    void EditorShapeColliderComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorShapeColliderComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("PhysicsWorldBodyService", 0x944da0cc));
         provided.push_back(AZ_CRC("PhysXColliderService", 0x4ff43f7c));
@@ -113,13 +113,13 @@ namespace PhysX
         provided.push_back(AZ_CRC("PhysXShapeColliderService", 0x98a7e779));
     }
 
-    void EditorShapeColliderComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void EditorShapeColliderComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         required.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
     }
 
-    void EditorShapeColliderComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorShapeColliderComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("LegacyCryPhysicsService", 0xbb370351));
         incompatible.push_back(AZ_CRC("PhysXShapeColliderService", 0x98a7e779));

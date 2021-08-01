@@ -10,9 +10,11 @@
 
 #include <type_traits>
 #include <AzCore/base.h>
+#include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/std/limits.h>
 #include <AzCore/std/string/string_view.h>
+#include <AzCore/std/typetraits/is_trivially_copyable.h>
 
 namespace AZ::Debug
 {

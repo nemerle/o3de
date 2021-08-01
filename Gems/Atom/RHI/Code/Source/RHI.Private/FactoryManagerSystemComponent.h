@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Atom/RHI/FactoryManagerBus.h>
 #include <Atom/RHI.Reflect/Base.h>
 #include <Atom/RHI/ValidationLayer.h>
@@ -38,8 +39,8 @@ namespace AZ
             FactoryManagerSystemComponent() = default;
             ~FactoryManagerSystemComponent() override = default;
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             // AZ::Component overrides ...
             void Activate() override;

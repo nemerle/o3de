@@ -15,7 +15,7 @@ namespace AzFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(AzFrameworkConfigurationSystemComponent, "{19BB423E-B7FD-45D3-8673-A7FA5A4C92F6}", AZ::Component);
+        AZ_COMPONENT_SPLIT(AzFrameworkConfigurationSystemComponent, "{19BB423E-B7FD-45D3-8673-A7FA5A4C92F6}", AZ::Component);
 
         AzFrameworkConfigurationSystemComponent() = default;
         ~AzFrameworkConfigurationSystemComponent() override = default;
@@ -28,9 +28,9 @@ namespace AzFramework
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
     };
 } // AzFramework

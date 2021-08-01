@@ -9,6 +9,8 @@
 #include <AzCore/Jobs/JobManagerComponent.h>
 #include <AzCore/Math/Crc.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
+
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 
@@ -20,6 +22,10 @@
 
 namespace AZ
 {
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(JobManagerComponent)
+
     //=========================================================================
     // JobManagerComponent
     // [5/29/2012]
@@ -86,7 +92,7 @@ namespace AZ
     //=========================================================================
     // GetProvidedServices
     //=========================================================================
-    void JobManagerComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+    void JobManagerComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("JobsService", 0xd5ab5a50));
     }
@@ -94,7 +100,7 @@ namespace AZ
     //=========================================================================
     // GetIncompatibleServices
     //=========================================================================
-    void JobManagerComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+    void JobManagerComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("JobsService", 0xd5ab5a50));
     }
@@ -102,7 +108,7 @@ namespace AZ
     //=========================================================================
     // GetDependentServices
     //=========================================================================
-    void JobManagerComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent)
+    void JobManagerComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("MemoryService", 0x5c4d473c));
         dependent.push_back(AZ_CRC("ProfilerService", 0x505033c9));

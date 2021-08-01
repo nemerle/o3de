@@ -7,7 +7,6 @@
  */
 #pragma once
 
-#include <AzCore/Math/MathUtils.h>
 #include <AzCore/std/containers/node_handle.h>
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/std/containers/fixed_vector.h>
@@ -582,7 +581,7 @@ namespace AZStd
             m_data.rehash_if_needed(this);
         }
 
-        
+
         //! Returns an insert_return_type with the members initialized as follows: if nh is empty, inserted is false, position is end(), and node is empty.
         //! Otherwise if the insertion took place, inserted is true, position points to the inserted element, and node is empty.
         //! If the insertion failed, inserted is false, node has the previous value of nh, and position points to an element with a key equivalent to nh.key().
@@ -1099,7 +1098,7 @@ namespace AZStd
         };
     };
 
-    
+
     template <class Traits>
     template <class InsertReturnType, class NodeHandle>
     InsertReturnType hash_table<Traits>::node_handle_insert(NodeHandle&& nodeHandle)
@@ -1108,7 +1107,7 @@ namespace AZStd
         {
             return { end(), false, NodeHandle{} };
         }
-        
+
         const key_type& valueKey = Traits::key_from_value(nodeHandle.m_node->m_value);
         size_type bucketIndex = bucket_from_hash(m_hasher(valueKey));
         vector_value_type& bucket = m_data.buckets()[bucketIndex];
@@ -1140,7 +1139,7 @@ namespace AZStd
         // The insertion has succeeded in this case so the node handle is empty
         return { insertPos, true, NodeHandle{} };
     }
-    
+
     template <class Traits>
     template <class NodeHandle>
     inline auto hash_table<Traits>::node_handle_insert(const iterator, NodeHandle&& nodeHandle) -> iterator

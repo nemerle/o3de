@@ -9,6 +9,7 @@
 
 #include <SceneAPI/SceneCore/Components/ExportingComponent.h>
 #include <SceneAPI/SceneCore/Containers/Scene.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace EMotionFX
 {

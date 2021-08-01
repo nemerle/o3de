@@ -68,18 +68,18 @@ namespace LmbrCentral
         RandomTimedSpawnerConfiguration::Reflect(context);
     }
 
-    void RandomTimedSpawnerComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided) 
+    void RandomTimedSpawnerComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided) 
     {
         provided.push_back(AZ_CRC("RandomTimedSpawnerService", 0x56f2fa36));
     }
-    void RandomTimedSpawnerComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void RandomTimedSpawnerComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         //Only compatible with Box and Cylinder shapes 
         incompatible.push_back(AZ_CRC("CapsuleShapeService", 0x9bc1122c));
         incompatible.push_back(AZ_CRC("SphereShapeService", 0x90c8dc80));
         incompatible.push_back(AZ_CRC("CompoundShapeService", 0x4f7c640a));
     }
-    void RandomTimedSpawnerComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required) 
+    void RandomTimedSpawnerComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required) 
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         required.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));

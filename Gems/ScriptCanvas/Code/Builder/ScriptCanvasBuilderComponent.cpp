@@ -59,18 +59,18 @@ namespace ScriptCanvasBuilder
         return handlers;
     }
 
-    void PluginComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void PluginComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptCanvasBuilderService", 0x4929ffcd));
     }
     
-    void PluginComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void PluginComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("ScriptCanvasService", 0x41fd58f3));
         required.push_back(AZ_CRC("ScriptCanvasReflectService", 0xb3bfe139));
     }
     
-    void PluginComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void PluginComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));
     }

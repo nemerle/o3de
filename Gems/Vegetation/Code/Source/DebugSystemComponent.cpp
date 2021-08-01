@@ -14,17 +14,17 @@
 
 namespace Vegetation
 {
-    void DebugSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DebugSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationDebugSystemService", 0x8cac3d67));
     }
 
-    void DebugSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DebugSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationDebugSystemService", 0x8cac3d67));
     }
 
-    void DebugSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DebugSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& services)
     {
 
     }

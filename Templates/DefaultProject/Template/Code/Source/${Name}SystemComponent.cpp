@@ -8,6 +8,7 @@
  */
  // {END_LICENSE}
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
@@ -16,6 +17,9 @@
 
 namespace ${SanitizedCppName}
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(${SanitizedCppName}SystemComponent)
+
     void ${SanitizedCppName}SystemComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context))
@@ -35,24 +39,24 @@ namespace ${SanitizedCppName}
         }
     }
 
-    void ${SanitizedCppName}SystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ${SanitizedCppName}SystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("${SanitizedCppName}Service"));
     }
 
-    void ${SanitizedCppName}SystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void ${SanitizedCppName}SystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("${SanitizedCppName}Service"));
     }
 
-    void ${SanitizedCppName}SystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+    void ${SanitizedCppName}SystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
     {
     }
 
-    void ${SanitizedCppName}SystemComponent::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void ${SanitizedCppName}SystemComponent::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
     }
-    
+
     ${SanitizedCppName}SystemComponent::${SanitizedCppName}SystemComponent()
     {
         if (${SanitizedCppName}Interface::Get() == nullptr)

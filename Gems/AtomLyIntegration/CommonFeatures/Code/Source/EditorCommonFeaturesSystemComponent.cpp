@@ -56,22 +56,22 @@ namespace AZ
             }
         }
 
-        void EditorCommonFeaturesSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void EditorCommonFeaturesSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("EditorCommonFeaturesService", 0x94945c0c));
         }
 
-        void EditorCommonFeaturesSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void EditorCommonFeaturesSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("EditorCommonFeaturesService", 0x94945c0c));
         }
 
-        void EditorCommonFeaturesSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void EditorCommonFeaturesSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             AZ_UNUSED(required);
         }
 
-        void EditorCommonFeaturesSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void EditorCommonFeaturesSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             AZ_UNUSED(dependent);
         }

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <SceneBuilder/SceneBuilderWorker.h>
 
 namespace AZ
@@ -27,9 +28,9 @@ namespace SceneBuilder
 
         void Activate() override;
         void Deactivate() override;
-        
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        
+
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+
     private:
         SceneBuilderWorker m_sceneBuilder;
     };

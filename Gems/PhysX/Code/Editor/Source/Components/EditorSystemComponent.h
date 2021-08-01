@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Physics/SystemBus.h>
 #include <AzFramework/Physics/Common/PhysicsEvents.h>
 #include <AzToolsFramework/Editor/EditorContextMenuBus.h>
@@ -42,12 +43,12 @@ namespace PhysX
 
     private:
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("PhysXEditorService", 0x0a61cda5));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("PhysXService", 0x75beae2d));
         }

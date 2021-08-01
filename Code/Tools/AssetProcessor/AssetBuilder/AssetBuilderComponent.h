@@ -44,7 +44,7 @@ class AssetBuilderComponent
     public AzToolsFramework::AssetDatabase::AssetDatabaseRequestsBus::Handler
 {
 public:
-    AZ_COMPONENT(AssetBuilderComponent, "{04332899-5d73-4d41-86b7-b1017d349673}")
+    AZ_COMPONENT_SPLIT(AssetBuilderComponent, "{04332899-5d73-4d41-86b7-b1017d349673}")
     static void Reflect(AZ::ReflectContext* context);
 
     AssetBuilderComponent() = default;

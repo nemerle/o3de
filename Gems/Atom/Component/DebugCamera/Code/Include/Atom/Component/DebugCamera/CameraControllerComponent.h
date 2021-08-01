@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <Atom/Component/DebugCamera/CameraControllerBus.h>
 
@@ -15,12 +16,12 @@ namespace AZ
 {
     namespace Debug
     {
-        /** 
-         * CameraControllerComponent is the base class of any camera controller component 
-         * which can modify camera's transformation or frustum. 
+        /**
+         * CameraControllerComponent is the base class of any camera controller component
+         * which can modify camera's transformation or frustum.
          * A camera controller usually processes input events and then utilizes the data to modify the entity's transformation.
-         * It's allowed to have more than one camera controller component on the same camera entity but there will 
-         * be only one controller activated at same time. 
+         * It's allowed to have more than one camera controller component on the same camera entity but there will
+         * be only one controller activated at same time.
          * The derived class should disable its event handling and updating accordingly when the controller is disabled.
         */
         class CameraControllerComponent
@@ -32,12 +33,12 @@ namespace AZ
 
             CameraControllerComponent() = default;
             virtual ~CameraControllerComponent() = default;
-            
+
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             // CameraControllerRequestBus::Handler overrides
             void Enable(TypeId typeId) override final;
@@ -47,12 +48,12 @@ namespace AZ
             // AZ::Component overrides
             void Activate() override final;
             void Deactivate() override final;
-            
+
         private:
             // The derived components implements these functions for when the controller is enabled/disabled
             virtual void OnEnabled() {}
             virtual void OnDisabled() {}
-            
+
             bool m_enabled = false;
         };
 

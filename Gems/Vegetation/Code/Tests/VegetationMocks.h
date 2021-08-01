@@ -610,7 +610,7 @@ namespace UnitTest
         void Deactivate() override {}
 
         static void Reflect(AZ::ReflectContext* reflect) { AZ_UNUSED(reflect); }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
             provided.push_back(AZ_CRC("VegetationDescriptorProviderService", 0x62e51209));
@@ -627,7 +627,7 @@ namespace UnitTest
         void Deactivate() override {}
 
         static void Reflect(AZ::ReflectContext* reflect) { AZ_UNUSED(reflect); }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
         }
@@ -643,7 +643,7 @@ namespace UnitTest
         void Deactivate() override {}
 
         static void Reflect(AZ::ReflectContext* reflect) { AZ_UNUSED(reflect); }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("MeshService", 0x71d8a455));
         }

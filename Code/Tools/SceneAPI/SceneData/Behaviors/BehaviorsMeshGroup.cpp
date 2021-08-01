@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/algorithm.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -30,6 +31,9 @@ namespace AZ
     {
         namespace Behaviors
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(MeshGroup)
+
             const int MeshGroup::s_meshGroupPreferredTabOrder = 0;
 
             void MeshGroup::Activate()
@@ -67,7 +71,7 @@ namespace AZ
                 {
                     return;
                 }
-                    
+
                 SceneData::MeshGroup* group = azrtti_cast<SceneData::MeshGroup*>(&target);
                 group->SetName(DataTypes::Utilities::CreateUniqueName<DataTypes::IMeshGroup>(scene.GetName(), scene.GetManifest()));
                 Utilities::SceneGraphSelector::SelectAll(scene.GetGraph(), group->GetSceneNodeSelectionList());
@@ -75,7 +79,7 @@ namespace AZ
                 const Containers::SceneGraph& graph = scene.GetGraph();
                 auto nameStorage = graph.GetNameStorage();
                 auto contentStorage = graph.GetContentStorage();
-                
+
                 auto keyValueView = Containers::Views::MakePairView(nameStorage, contentStorage);
                 auto filteredView = Containers::Views::MakeFilterView(keyValueView, Containers::DerivedTypeFilter<DataTypes::IMeshData>());
                 for (auto it = filteredView.begin(); it != filteredView.end(); ++it)
@@ -119,11 +123,11 @@ namespace AZ
 
                 // There are meshes but no mesh group, so add a default mesh group to the manifest.
                 AZStd::shared_ptr<SceneData::MeshGroup> group = AZStd::make_shared<SceneData::MeshGroup>();
-                
+
                 // This is a group that's generated automatically so may not be saved to disk but would need to be recreated
                 //      in the same way again. To guarantee the same uuid, generate a stable one instead.
                 group->OverrideId(DataTypes::Utilities::CreateStableUuid(scene, MeshGroup::TYPEINFO_Uuid()));
-                
+
                 EBUS_EVENT(Events::ManifestMetaInfoBus, InitializeObject, scene, *group);
                 scene.GetManifest().AddEntry(AZStd::move(group));
 
@@ -144,7 +148,7 @@ namespace AZ
                     }
                     if (group.GetId().IsNull())
                     {
-                        // When the uuid it's null is likely because the manifest has been updated from an older version. Include the 
+                        // When the uuid it's null is likely because the manifest has been updated from an older version. Include the
                         // name of the group as there could be multiple groups.
                         group.OverrideId(DataTypes::Utilities::CreateStableUuid(scene, MeshGroup::TYPEINFO_Uuid(), group.GetName()));
                     }

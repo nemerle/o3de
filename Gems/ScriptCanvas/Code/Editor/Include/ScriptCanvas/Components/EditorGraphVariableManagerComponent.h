@@ -77,13 +77,13 @@ namespace ScriptCanvasEditor
     protected:
         // prevents a second VariableComponent from being attached to the Entity in the Editor
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             ScriptCanvas::GraphVariableManagerComponent::GetProvidedServices(provided);
             provided.push_back(AZ_CRC("EditorScriptCanvasVariableService", 0x3df3d54e));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("EditorScriptCanvasVariableService", 0x3df3d54e));
         }

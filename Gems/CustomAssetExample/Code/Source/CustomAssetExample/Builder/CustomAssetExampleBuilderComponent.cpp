@@ -80,22 +80,22 @@ namespace CustomAssetExample
         }
     }
 
-    void ExampleBuilderComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ExampleBuilderComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ExampleBuilderPluginService", 0x1380f480));
     }
 
-    void ExampleBuilderComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void ExampleBuilderComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ExampleBuilderPluginService", 0x1380f480));
     }
 
-    void ExampleBuilderComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void ExampleBuilderComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
 
-    void ExampleBuilderComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void ExampleBuilderComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

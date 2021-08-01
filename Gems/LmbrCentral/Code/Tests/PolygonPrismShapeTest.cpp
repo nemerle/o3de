@@ -9,6 +9,7 @@
 #include <AzTest/AzTest.h>
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Matrix3x3.h>
 #include <AzCore/Math/VertexContainerInterface.h>
 #include <AzFramework/Components/TransformComponent.h>
@@ -95,7 +96,7 @@ namespace UnitTest
                 AZ::Vector2(0.0f, 10.0f),
                 AZ::Vector2(10.0f, 10.0f),
                 AZ::Vector2(10.0f, 0.0f)
-            }), 
+            }),
             entity);
 
         // verify point inside returns true
@@ -378,14 +379,14 @@ namespace UnitTest
     {
         AZ::Entity entity;
         CreatePolygonPrism(
-            AZ::Transform::CreateIdentity(), 
+            AZ::Transform::CreateIdentity(),
             10.0f, AZStd::vector<AZ::Vector2>(
             {
                 AZ::Vector2(0.0f, 0.0f),
                 AZ::Vector2(0.0f, 10.0f),
                 AZ::Vector2(10.0f, 10.0f),
                 AZ::Vector2(10.0f, 0.0f)
-            }), 
+            }),
             entity);
 
         {
@@ -562,7 +563,7 @@ namespace UnitTest
             AZ::Transform::CreateFromQuaternionAndTranslation(
                 AZ::Quaternion::CreateFromAxisAngle(AZ::Vector3::CreateAxisX(), AZ::Constants::HalfPi),
                 AZ::Vector3(2.0f, 0.0f, 5.0f)),
-            2.0f, 
+            2.0f,
             AZStd::vector<AZ::Vector2>(
             {
                 AZ::Vector2(1.0f, 0.0f),
@@ -817,7 +818,7 @@ namespace UnitTest
         AZ::EntityId testEntityId{ 42 };
         LmbrCentral::PolygonPrismShape sourceShape;
         sourceShape.Activate(testEntityId);
-        // The assignment shouldn't assert in the EBusEventHandler::BusConnect call 
+        // The assignment shouldn't assert in the EBusEventHandler::BusConnect call
         LmbrCentral::PolygonPrismShape targetShape;
         AZ_TEST_START_TRACE_SUPPRESSION;
         targetShape = sourceShape;

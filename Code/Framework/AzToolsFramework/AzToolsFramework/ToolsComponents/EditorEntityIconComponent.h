@@ -27,10 +27,10 @@ namespace AzToolsFramework
             , public EditorInspectorComponentNotificationBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorEntityIconComponent, "{E15D42C2-912D-466F-9547-E7E948CE2D7D}", EditorComponentBase);
+            AZ_COMPONENT_SPLIT(EditorEntityIconComponent, "{E15D42C2-912D-466F-9547-E7E948CE2D7D}", EditorComponentBase);
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
             ~EditorEntityIconComponent() override;
 

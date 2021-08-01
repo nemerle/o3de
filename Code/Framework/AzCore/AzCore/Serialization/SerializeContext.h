@@ -10,7 +10,6 @@
 
 #include <limits>
 
-#include <AzCore/Memory/OSAllocator.h>
 #include <AzCore/Memory/SystemAllocator.h>
 
 #include <AzCore/std/containers/unordered_set.h>
@@ -45,16 +44,31 @@ namespace AZStd
 {
     template<typename T, size_t Capacity>
     struct fixed_trivial_storage;
+    template< class T, AZStd::size_t Capacity>
+    class fixed_vector;
 }
 namespace AZ
 {
+    template <class ValueT, class ErrorT>
+    class Outcome;
+    namespace Internal
+    {
+        template <class TRValue>
+        struct RValueToLValueWrapper;
+    }
+    namespace Data
+    {
+        template<typename T>
+        class Asset;
+    }
+
     class EditContext;
+    class OSAllocator;
 
     class ObjectStream;
     class GenericClassInfo;
 
     struct DataPatchNodeInfo;
-
     namespace ObjectStreamInternal
     {
         class ObjectStreamImpl;
@@ -1405,8 +1419,9 @@ namespace AZ
      * as it relies that on the fact that each class field should have unique name (which is
      * required by the system, to properly identify an element anyway). At the moment
      */
+    // Generic implementation:
     template<class ValueType>
-    struct SerializeGenericTypeInfoImpl
+    struct SerializeGenericTypeInfo
     {
         // Provides a specific type alias that can be used to create GenericClassInfo of the
         // specified type. By default this is GenericClassInfo class which is abstract
@@ -1417,39 +1432,56 @@ namespace AZ
         /// By default just return the ValueTypeInfo
         static const Uuid& GetClassTypeId();
     };
-
-    template<class ValueType,typename = void>
-    struct SerializeGenericTypeInfo;
-#if 0
-    // Enums integral types and pointers type infos are all using generic impl
-    template<typename T>
-    struct SerializeGenericTypeInfo<T,typename AZStd::enable_if_t<
-            AZStd::is_arithmetic_v<T> || AZStd::is_pointer_v<T> || AZStd::is_enum_v<T>>> : SerializeGenericTypeInfoImpl<T>
-    {
-    };
-#else
-    template<typename T>
-    struct SerializeGenericTypeInfo<T,void> : SerializeGenericTypeInfoImpl<T>
-    {
-    };
-#endif
-
-
-    // All templated types *need* custom type infos
-    // This template has specializations defined for many common types in `AzCore/Serialization/AZStdContainers.inl`
-    template<template<typename... TYPES> class Container, typename ...TYPES>
-    struct SerializeGenericTypeInfo<Container<TYPES...>>;
-
-    //
-    template<AZStd::size_t N>
-    struct SerializeGenericTypeInfo<AZStd::bitset<N>>;
+    // Forward declarations for all AZStd specializations.
+    template<class T, class A>
+    struct SerializeGenericTypeInfo< AZStd::vector<T, A> >;
+    template< class T, AZStd::size_t N >
+    struct SerializeGenericTypeInfo < AZStd::fixed_vector<T, N>>;
+    template<class T, class A>
+    struct SerializeGenericTypeInfo< AZStd::list<T, A> >;
+    template<class T, class A>
+    struct SerializeGenericTypeInfo< AZStd::forward_list<T, A> >;
+    template<class T, size_t Size>
+    struct SerializeGenericTypeInfo< AZStd::array<T, Size> >;
+    template<class K, class C, class A>
+    struct SerializeGenericTypeInfo< AZStd::set<K, C, A> >;
+    template<class K, class H, class E, class A>
+    struct SerializeGenericTypeInfo< AZStd::unordered_set<K, H, E, A> >;
+    template<class K, class H, class E, class A>
+    struct SerializeGenericTypeInfo< AZStd::unordered_multiset<K, H, E, A> >;
+    template<class t_Success, class t_Failure>
+    struct SerializeGenericTypeInfo< AZ::Outcome<t_Success, t_Failure> >;
+    template<class T1, class T2>
+    struct SerializeGenericTypeInfo< AZStd::pair<T1, T2> >;
+    template<typename... Types>
+    struct SerializeGenericTypeInfo< AZStd::tuple<Types...> >;
+    template<class T>
+    struct SerializeGenericTypeInfo< Internal::RValueToLValueWrapper<T> >;
     template<typename T, AZStd::size_t N>
     struct SerializeGenericTypeInfo<AZStd::fixed_trivial_storage<T,N>>;
-    template< class T, AZStd::size_t N >
-    struct SerializeGenericTypeInfo < AZStd::array<T,N>>;
+    template<class K, class M, class C, class A>
+    struct SerializeGenericTypeInfo< AZStd::map<K, M, C, A> >;
+    template<class K, class M, class H, class E, class A>
+    struct SerializeGenericTypeInfo< AZStd::unordered_map<K, M, H, E, A> >;
+    template<class K, class M, class H, class E, class A>
+    struct SerializeGenericTypeInfo< AZStd::unordered_multimap<K, M, H, E, A> >;
+    template<class E, class T, class A>
+    struct SerializeGenericTypeInfo< AZStd::basic_string<E, T, A> >;
     template<class A>
     struct SerializeGenericTypeInfo< AZStd::vector<AZ::u8, A> >;
+    template<AZStd::size_t N>
+    struct SerializeGenericTypeInfo<AZStd::bitset<N>>;
+    template<class T>
+    struct SerializeGenericTypeInfo< AZStd::shared_ptr<T> >;
+    template<class T>
+    struct SerializeGenericTypeInfo< AZStd::intrusive_ptr<T> >;
+    template<class T, class Deleter>
+    struct SerializeGenericTypeInfo< AZStd::unique_ptr<T, Deleter> >;
+    template<class T>
+    struct SerializeGenericTypeInfo<AZStd::optional<T>>;
 
+    template<typename T>
+    struct SerializeGenericTypeInfo< Data::Asset<T> >;
     /**
     Helper structure to allow the creation of a function pointer for creating AZStd::any objects
     It takes advantage of type erasure to allow a mapping of Uuids to AZStd::any(*)() function pointers
@@ -2492,7 +2524,7 @@ namespace AZ
     // SerializeGenericTypeInfo<ValueType>::GetClassTypeId
     //=========================================================================
     template<class ValueType>
-    const Uuid& SerializeGenericTypeInfoImpl<ValueType>::GetClassTypeId()
+    const Uuid& SerializeGenericTypeInfo<ValueType>::GetClassTypeId()
     {
         // Detect the scenario when an enum type doesn't specialize AzTypeInfo
         // The underlying type Uuid is returned instead
@@ -2530,8 +2562,10 @@ namespace AZ
         AZ::GenericClassInfo* FindGenericClassInfo(const AZ::TypeId& genericTypeId) const;
     private:
         void Cleanup();
+        // calls m_moduleOSAllocator->Allocate
+        void *RawOSMemory(size_t blockSize, size_t alignment);
 
-        AZ::OSAllocator m_moduleOSAllocator;
+        AZ::OSAllocator *m_moduleOSAllocator;
 
         GenericInfoModuleMap m_moduleLocalGenericClassInfos;
         using SerializeContextSet = AZStd::unordered_set<SerializeContext*, AZStd::hash<SerializeContext*>, AZStd::equal_to<SerializeContext*>, AZ::AZStdIAllocator>;
@@ -2551,7 +2585,7 @@ namespace AZ
             return static_cast<GenericClassInfoType*>(findIt->second);
         }
 
-        void* rawMemory = m_moduleOSAllocator.Allocate(sizeof(GenericClassInfoType), alignof(GenericClassInfoType));
+        void* rawMemory = RawOSMemory(sizeof(GenericClassInfoType), alignof(GenericClassInfoType));
         new (rawMemory) GenericClassInfoType();
         auto genericClassInfo = static_cast<GenericClassInfoType*>(rawMemory);
         if (genericClassInfo)

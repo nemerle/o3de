@@ -89,13 +89,13 @@ namespace LmbrCentral
         EditorBaseShapeComponent::Deactivate();
     }
 
-    void EditorBoxShapeComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorBoxShapeComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         EditorBaseShapeComponent::GetProvidedServices(provided);
         provided.push_back(AZ_CRC_CE("BoxShapeService"));
     }
 
-    void EditorBoxShapeComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void EditorBoxShapeComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }

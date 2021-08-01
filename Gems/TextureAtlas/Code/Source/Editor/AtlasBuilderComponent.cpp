@@ -73,22 +73,22 @@ namespace TextureAtlasBuilder
         AtlasBuilderInput::Reflect(context);
     }
 
-    void AtlasBuilderComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AtlasBuilderComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("Atlas Builder Plugin Service", 0x35974d0d));
     }
 
-    void AtlasBuilderComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AtlasBuilderComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("Atlas Builder Plugin Service", 0x35974d0d));
     }
 
-    void AtlasBuilderComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void AtlasBuilderComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
 
-    void AtlasBuilderComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void AtlasBuilderComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

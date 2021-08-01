@@ -18,6 +18,7 @@
 #include "UI/ComponentPalette/ComponentPaletteWindow.h"
 
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityUtils.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/containers/vector.h>
@@ -104,7 +105,7 @@ namespace ComponentEntityEditorPluginInternal
                 "\nMake sure the Reflect function is called for all base classes as well.");
 
             // this happens during startup, and its a programmer error - so during startup, make it an error, so it shows as a pretty noisy
-            // popup box.  Its important that programmers fix this, before they submit their code, so that data corruption / data loss does 
+            // popup box.  Its important that programmers fix this, before they submit their code, so that data corruption / data loss does
             // not occur.
             AZ_Error("Serialize", false, message.c_str());
         }

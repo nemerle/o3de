@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <ScriptCanvas/Bus/ScriptCanvasBus.h>
 
 class QMainWindow;
@@ -26,10 +27,10 @@ namespace ScriptCanvasDeveloperEditor
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
-        // AZ::Component 
+        // AZ::Component
         void Init() override;
         void Activate() override;
         void Deactivate() override;

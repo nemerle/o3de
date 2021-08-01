@@ -9,6 +9,7 @@
 #include "SliceDependencyBrowserComponent.h"
 
 #include <AzCore/Asset/AssetCommon.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
@@ -22,6 +23,9 @@
 namespace AzToolsFramework
 {
     //////////////////////////////////////////////////////////////////////////
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SliceDependencyBrowserComponent)
 
     void SliceDependencyBrowserComponent::Activate()
     {

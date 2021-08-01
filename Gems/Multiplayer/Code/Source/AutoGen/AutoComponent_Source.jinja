@@ -462,7 +462,7 @@ void {{ ClassName }}::Signal{{ UpperFirst(Property.attrib['Name']) }}({{ ', '.jo
 {% endcall %}
 {% endmacro %}
 {#
- 
+
 #}
 {% macro DeclareRpcHandleCases(Component, ComponentDerived, InvokeFrom, HandleOn, ValidationFunction) %}
 {% call(Property) AutoComponentMacros.ParseRemoteProcedures(Component, InvokeFrom, HandleOn) %}
@@ -540,8 +540,8 @@ struct {{ UpperFirst(Property.attrib['Name']) }}RpcStruct
 {%    if paramNames|count > 0 %}
     {{ UpperFirst(Property.attrib['Name']) }}RpcStruct({{ ', '.join(paramDefines) }})
 {%       for paramName in paramNames %}
-    {% if loop.first %}:{% else %},{% endif %}   m_{{ LowerFirst(paramName) }}({{ paramName }}) 
-{%       endfor %} 
+    {% if loop.first %}:{% else %},{% endif %}   m_{{ LowerFirst(paramName) }}({{ paramName }})
+{%       endfor %}
     {
         ;
     }
@@ -551,7 +551,7 @@ struct {{ UpperFirst(Property.attrib['Name']) }}RpcStruct
     {
         bool ret(true);
 {%    for Param in Property.iter('Param') %}
-        ret &= serializer.Serialize(m_{{ LowerFirst(Param.attrib['Name']) }}, "{{ Param.attrib['Name'] }}"); 
+        ret &= serializer.Serialize(m_{{ LowerFirst(Param.attrib['Name']) }}, "{{ Param.attrib['Name'] }}");
 {%    endfor %}
         if (!ret)
         {
@@ -561,7 +561,7 @@ struct {{ UpperFirst(Property.attrib['Name']) }}RpcStruct
     };
 
 {%    for Param in Property.iter('Param') %}
-    {{ Param.attrib['Type'] }} m_{{ LowerFirst(Param.attrib['Name']) }}; 
+    {{ Param.attrib['Type'] }} m_{{ LowerFirst(Param.attrib['Name']) }};
 {%    endfor %}
 };
 {%    endif %}
@@ -593,7 +593,7 @@ enum class {{ ReplicateFrom }}To{{ ReplicateTo }}DirtyEnum
 {% macro GenerateModelReplicationRecordPredictableBits(Component, ClassType, ReplicateFrom, ReplicateTo) %}
 {% set networkPropertyCount = {'value' : 0} %}
 {% call(Property) AutoComponentMacros.ParseNetworkProperties(Component, ReplicateFrom, ReplicateTo) %}
-{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%} 
+{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%}
 {% endcall %}
 {% if networkPropertyCount.value > 0 %}
 {% call(Property) AutoComponentMacros.ParseNetworkProperties(Component, ReplicateFrom, ReplicateTo) %}
@@ -627,7 +627,7 @@ bool {{ ClassName }}::Serialize{{ AutoComponentMacros.GetNetPropertiesSetName(Re
 {
 {% set networkPropertyCount = {'value' : 0} %}
 {% call(Property) AutoComponentMacros.ParseNetworkProperties(Component, ReplicateFrom, ReplicateTo) %}
-{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%} 
+{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%}
 {% endcall %}
 {% if networkPropertyCount.value > 0 %}
     [[maybe_unused]] Multiplayer::MultiplayerStats& stats = Multiplayer::GetMultiplayer()->GetStats();
@@ -642,7 +642,7 @@ bool {{ ClassName }}::Serialize{{ AutoComponentMacros.GetNetPropertiesSetName(Re
 {%         else %}
         const uint32_t lastBit = static_cast<uint32_t>({{ AutoComponentMacros.GetNetPropertiesQualifiedPropertyDirtyEnum(Component.attrib['Name'], ReplicateFrom, ReplicateTo, Property, 'End') }});
 {%         endif %}
-        
+
 {% if Property.attrib['IsRewindable']|booleanTrue %}
         AzNetworking::FixedSizeBitsetView deltaRecord(replicationRecord.m_{{ LowerFirst(AutoComponentMacros.GetNetPropertiesSetName(ReplicateFrom, ReplicateTo)) }}, firstBit, lastBit - firstBit + 1);
         m_{{ LowerFirst(Property.attrib['Name']) }}.Serialize(serializer, deltaRecord);
@@ -657,14 +657,14 @@ bool {{ ClassName }}::Serialize{{ AutoComponentMacros.GetNetPropertiesSetName(Re
 {%     else %}
     Multiplayer::SerializeNetworkPropertyHelper
     (
-        serializer, 
-        modifyRecord, 
-        replicationRecord.m_{{ LowerFirst(AutoComponentMacros.GetNetPropertiesSetName(ReplicateFrom, ReplicateTo)) }}, 
-        static_cast<int32_t>({{ AutoComponentMacros.GetNetPropertiesQualifiedPropertyDirtyEnum(Component.attrib['Name'], ReplicateFrom, ReplicateTo, Property) }}), 
-        m_{{ LowerFirst(Property.attrib['Name']) }}, 
-        "{{ Property.attrib['Name'] }}", 
-        GetNetComponentId(), 
-        static_cast<Multiplayer::PropertyIndex>({{ UpperFirst(Component.attrib['Name']) }}Internal::NetworkProperties::{{ UpperFirst(Property.attrib['Name']) }}), 
+        serializer,
+        modifyRecord,
+        replicationRecord.m_{{ LowerFirst(AutoComponentMacros.GetNetPropertiesSetName(ReplicateFrom, ReplicateTo)) }},
+        static_cast<int32_t>({{ AutoComponentMacros.GetNetPropertiesQualifiedPropertyDirtyEnum(Component.attrib['Name'], ReplicateFrom, ReplicateTo, Property) }}),
+        m_{{ LowerFirst(Property.attrib['Name']) }},
+        "{{ Property.attrib['Name'] }}",
+        GetNetComponentId(),
+        static_cast<Multiplayer::PropertyIndex>({{ UpperFirst(Component.attrib['Name']) }}Internal::NetworkProperties::{{ UpperFirst(Property.attrib['Name']) }}),
         stats
     );
 {%     endif %}
@@ -674,7 +674,7 @@ bool {{ ClassName }}::Serialize{{ AutoComponentMacros.GetNetPropertiesSetName(Re
 }
 {% endmacro %}
 {#
-    
+
 #}
 {% macro DeclareNetworkPropertySetNotifyChanges(Component, ReplicateFrom, ReplicateTo, ClassName, RecordName) %}
 void {{ ClassName }}::NotifyChanges{{ AutoComponentMacros.GetNetPropertiesSetName(ReplicateFrom, ReplicateTo) }}Properties([[maybe_unused]] const {{ RecordName }}& replicationRecord) const
@@ -882,7 +882,7 @@ enum class NetworkProperties
             AZ_Warning("Network Property", false, "{{ ClassName }} Set{{ UpperFirst(Property.attrib['Name']) }} failed. The entity with id %s doesn't exist, please provide a valid entity id.", id.ToString().c_str())
             return;
         }
-        
+
         {{ ClassName }}* networkComponent = entity->FindComponent<{{ ClassName }}>();
         if (!networkComponent)
         {
@@ -952,7 +952,7 @@ enum class NetworkProperties
 {% endif %}
 {% endcall %}
 {% endmacro %}
-{# 
+{#
 
 #}
 {% macro ParseComponentServiceIncludes(Component, ClassType) %}
@@ -962,7 +962,7 @@ enum class NetworkProperties
 {%          endif %}
 {% endfor %}
 {% endmacro %}
-{# 
+{#
 
 #}
 {% macro ParseComponentServiceNames(Component, ClassType, ConstraintType) %}
@@ -1205,28 +1205,28 @@ namespace {{ Component.attrib['Namespace'] }}
 {% set comma = joiner("        ,") %}
 {% set networkPropertyCount = {'value' : 0} %}
 {% call(Property) AutoComponentMacros.ParseNetworkProperties(Component, 'Authority', 'Client') %}
-{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%} 
+{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%}
 {% endcall %}
 {% if networkPropertyCount.value > 0 %}
 {{ comma()|default("        :", true) }} m_authorityToClient(replicationRecord.m_authorityToClient, authorityToClientStartOffset, replicationRecord.ContainsAuthorityToClientBits() ? static_cast<int32_t>({{ AutoComponentMacros.GetNetPropertiesDirtyEnumName(ComponentName, 'Authority', 'Client') }}::Count) : 0)
 {% endif %}
 {% set networkPropertyCount = {'value' : 0} %}
 {% call(Property) AutoComponentMacros.ParseNetworkProperties(Component, 'Authority', 'Server') %}
-{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%} 
+{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%}
 {% endcall %}
 {% if networkPropertyCount.value > 0 %}
     {{ comma()|default("        :", true) }} m_authorityToServer(replicationRecord.m_authorityToServer, authorityToServerStartOffset, replicationRecord.ContainsAuthorityToServerBits() ? static_cast<int32_t>({{ AutoComponentMacros.GetNetPropertiesDirtyEnumName(ComponentName, 'Authority', 'Server') }}::Count) : 0)
 {% endif %}
 {% set networkPropertyCount = {'value' : 0} %}
 {% call(Property) AutoComponentMacros.ParseNetworkProperties(Component, 'Authority', 'Autonomous') %}
-{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%} 
+{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%}
 {% endcall %}
 {% if networkPropertyCount.value > 0 %}
     {{ comma()|default("        :", true) }} m_authorityToAutonomous(replicationRecord.m_authorityToAutonomous, authorityToAutonomousStartOffset, replicationRecord.ContainsAuthorityToAutonomousBits() ? static_cast<int32_t>({{ AutoComponentMacros.GetNetPropertiesDirtyEnumName(ComponentName, 'Authority', 'Autonomous') }}::Count) : 0)
 {% endif %}
 {% set networkPropertyCount = {'value' : 0} %}
 {% call(Property) AutoComponentMacros.ParseNetworkProperties(Component, 'Autonomous', 'Authority') %}
-{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%} 
+{%-      if networkPropertyCount.update({'value': networkPropertyCount.value + 1}) %}{% endif -%}
 {% endcall %}
 {% if networkPropertyCount.value > 0 %}
     {{ comma()|default("        :", true) }} m_autonomousToAuthority(replicationRecord.m_autonomousToAuthority, autonomousToAuthorityStartOffset, replicationRecord.ContainsAutonomousToAuthorityBits() ? static_cast<int32_t>({{ AutoComponentMacros.GetNetPropertiesDirtyEnumName(ComponentName, 'Autonomous', 'Authority') }}::Count) : 0)
@@ -1311,9 +1311,9 @@ namespace {{ Component.attrib['Namespace'] }}
 
     Multiplayer::IMultiplayerComponentInput& {{ ComponentName }}NetworkInput::operator =([[maybe_unused]] const Multiplayer::IMultiplayerComponentInput& rhs)
     {
-        AZ_Assert(s_netComponentId == rhs.GetNetComponentId(), "AttachNetSystemComponent was not called on the owning NetworkInput"); 
-        *this = *static_cast<const {{ ComponentName }}NetworkInput*>(&rhs); 
-        return *this; 
+        AZ_Assert(s_netComponentId == rhs.GetNetComponentId(), "AttachNetSystemComponent was not called on the owning NetworkInput");
+        *this = *static_cast<const {{ ComponentName }}NetworkInput*>(&rhs);
+        return *this;
     }
 
 {% endif %}
@@ -1446,7 +1446,7 @@ namespace {{ Component.attrib['Namespace'] }}
             {{ DefineNetworkPropertyBehaviorReflection(Component, 'Authority', 'Client', ComponentName) | indent(16) -}}
             {{ DefineNetworkPropertyBehaviorReflection(Component, 'Authority', 'Autonomous', ComponentName) | indent(16) -}}
             {{ DefineNetworkPropertyBehaviorReflection(Component, 'Autonomous', 'Authority', ComponentName) | indent(16) -}}
-                
+
             // Reflect RPCs
             {{ ReflectRpcInvocations(Component, ComponentName, 'Server', 'Authority')|indent(4) -}}
             {{ ReflectRpcInvocations(Component, ComponentName, 'Autonomous', 'Authority')|indent(4) -}}
@@ -1462,12 +1462,12 @@ namespace {{ Component.attrib['Namespace'] }}
         }
     }
 
-    void {{ ComponentBaseName }}::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void {{ ComponentBaseName }}::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("{{ ComponentName }}"));
     }
 
-    void {{ ComponentBaseName }}::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void {{ ComponentBaseName }}::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC_CE("NetBindService"));
 {% call(ComponentService) ParseComponentServiceNames(Component, ClassType, 'Required') %}
@@ -1475,14 +1475,14 @@ namespace {{ Component.attrib['Namespace'] }}
 {% endcall %}
     }
 
-    void {{ ComponentBaseName }}::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void {{ ComponentBaseName }}::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
 {% call(ComponentService) ParseComponentServiceNames(Component, ClassType, 'Dependent') %}
         dependent.push_back(AZ_CRC_CE("{{ ComponentService }}"));
 {% endcall %}
     }
 
-    void {{ ComponentBaseName }}::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void {{ ComponentBaseName }}::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("{{ ComponentName }}"));
 {% call(ComponentService) ParseComponentServiceNames(Component, ClassType, 'Incompatible') %}
@@ -1578,11 +1578,11 @@ namespace {{ Component.attrib['Namespace'] }}
     }
 
 #pragma warning(push)
-#pragma warning(disable: 4065) // switch statement contains 'default' but no 'case' labels 
+#pragma warning(disable: 4065) // switch statement contains 'default' but no 'case' labels
     bool {{ ComponentBaseName }}::HandleRpcMessage
     (
-        [[maybe_unused]] AzNetworking::IConnection* invokingConnection, 
-        [[maybe_unused]] Multiplayer::NetEntityRole remoteRole, 
+        [[maybe_unused]] AzNetworking::IConnection* invokingConnection,
+        [[maybe_unused]] Multiplayer::NetEntityRole remoteRole,
         Multiplayer::NetworkEntityRpcMessage& message
     )
     {
@@ -1722,7 +1722,7 @@ namespace {{ Component.attrib['Namespace'] }}
         return m_{{ LowerFirst(Service.attrib['Name']) }};
     }
 
-    {{ UpperFirst(Service.attrib['Namespace']) }}::{{ UpperFirst(Service.attrib['Name']) }}* {{ ComponentBaseName }}::Get{{ UpperFirst(Service.attrib['Name']) }}() 
+    {{ UpperFirst(Service.attrib['Namespace']) }}::{{ UpperFirst(Service.attrib['Name']) }}* {{ ComponentBaseName }}::Get{{ UpperFirst(Service.attrib['Name']) }}()
     {
         return m_{{ LowerFirst(Service.attrib['Name']) }};
     }

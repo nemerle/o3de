@@ -117,17 +117,17 @@ namespace ScriptCanvasEditor
         void Activate() override;
         void Deactivate() override;
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             ScriptCanvas::Graph::GetProvidedServices(provided);
             provided.push_back(AZ_CRC("EditorScriptCanvasService", 0x975114ff));
         }
 
-        static void GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
         {
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             ScriptCanvas::Graph::GetIncompatibleServices(incompatible);
             incompatible.push_back(AZ_CRC("EditorScriptCanvasService", 0x975114ff));

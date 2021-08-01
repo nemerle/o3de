@@ -50,11 +50,11 @@ namespace AZ
         , public IEventSchedulerRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(EventSchedulerSystemComponent, "{7D902EAC-A382-4530-8DE2-E7A3D7985DF9}");
+        AZ_COMPONENT_SPLIT(EventSchedulerSystemComponent, "{7D902EAC-A382-4530-8DE2-E7A3D7985DF9}");
 
         static void Reflect(ReflectContext* context);
-        static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
 
         EventSchedulerSystemComponent();
         ~EventSchedulerSystemComponent() override;

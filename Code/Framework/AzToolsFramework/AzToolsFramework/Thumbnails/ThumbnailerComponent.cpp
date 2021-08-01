@@ -8,6 +8,7 @@
 
 #include <AzCore/std/smart_ptr/make_shared.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzToolsFramework/Thumbnails/ThumbnailerComponent.h>
 #include <AzToolsFramework/Thumbnails/ThumbnailContext.h>
@@ -19,6 +20,9 @@ namespace AzToolsFramework
 {
     namespace Thumbnailer
     {
+
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(ThumbnailerComponent)
 
         ThumbnailerComponent::ThumbnailerComponent()
         {
@@ -47,12 +51,12 @@ namespace AzToolsFramework
             }
         }
 
-        void ThumbnailerComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void ThumbnailerComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ThumbnailerService", 0x65422b97));
         }
 
-        void ThumbnailerComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void ThumbnailerComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ThumbnailerService", 0x65422b97));
         }

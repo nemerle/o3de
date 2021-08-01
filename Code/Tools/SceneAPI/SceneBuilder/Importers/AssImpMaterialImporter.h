@@ -21,7 +21,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpMaterialImporter, "{CD936FA9-17B8-40B9-AA3C-5F593BEFFC94}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpMaterialImporter, "{CD936FA9-17B8-40B9-AA3C-5F593BEFFC94}", SceneCore::LoadingComponent);
 
                 AssImpMaterialImporter();
                 ~AssImpMaterialImporter() override = default;

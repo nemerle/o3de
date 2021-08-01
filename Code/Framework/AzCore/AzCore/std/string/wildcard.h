@@ -58,7 +58,7 @@ namespace AZStd
             //                                         ^                  ^                       ^
             //                                   findStartCharPos       findEndCharPos      findFilterPos
             // And than basically we will check whether the find filter character matches the EndCharPosition character and if so than see whether there is a match.
-            // This will result in checking whether ".3" matches ".pak.*", ".pak.3" matches ".pak.*" and so no untill either there is a match or we reach to the beginning of the name. 
+            // This will result in checking whether ".3" matches ".pak.*", ".pak.3" matches ".pak.*" and so no untill either there is a match or we reach to the beginning of the name.
 
             for (auto findEndCharPos = findCharPos.rbegin(); findEndCharPos != findCharPos.rend(); ++findEndCharPos)
             {
@@ -68,7 +68,7 @@ namespace AZStd
                 if (findFilterPos.front() == '?' || binaryOp(findFilterPos.front(), *findEndCharPos))
                 {
                     // Make sub string view from the found position to the end of the string
-                    AZStd::string_view startFindSubView{ findCharPos.data() + AZStd::distance(findCharPos.begin(), findEndCharPos.base()) - 1, findCharPos.data() + findCharPos.size() };
+                    AZStd::string_view startFindSubView{ findCharPos.data() + AZStd::distance(findCharPos.begin(), findEndCharPos.base()) - 1, findCharPos.size() };
                     // the character matched so move both the find view and filter view to the next character
                     if (wildcard_match(findFilterPos.substr(1), startFindSubView.substr(1), binaryOp))
                     {

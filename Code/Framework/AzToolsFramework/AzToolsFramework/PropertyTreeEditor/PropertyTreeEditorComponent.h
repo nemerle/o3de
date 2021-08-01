@@ -19,7 +19,7 @@ namespace AzToolsFramework
             : public AZ::Component
         {
         public:
-            AZ_COMPONENT(PropertyTreeEditorComponent, "{8CE26D19-2469-4E8D-A806-AC63E276B72E}")
+            AZ_COMPONENT_SPLIT(PropertyTreeEditorComponent, "{8CE26D19-2469-4E8D-A806-AC63E276B72E}")
 
             static void Reflect(AZ::ReflectContext* context);
 

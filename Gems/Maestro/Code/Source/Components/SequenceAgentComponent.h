@@ -8,6 +8,7 @@
 #pragma once
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Maestro/Bus/SequenceAgentComponentBus.h>
 #include "SequenceAgent.h"
 
@@ -48,12 +49,12 @@ namespace Maestro
         void DisconnectSequence() override;
         //~SequenceAgentComponentRequestBus::Handler Interface
         //////////////////////////////////////////////////////////////////////////
-        
+
     protected:
         // Required Reflect function.
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }

@@ -112,22 +112,22 @@ namespace PhysX
         }
     }
 
-    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("PhysXService", 0x75beae2d));
     }
 
-    void SystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void SystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("PhysXService", 0x75beae2d));
     }
 
-    void SystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void SystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
     }
 
-    void SystemComponent::GetDependentServices([[maybe_unused]]AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void SystemComponent::GetDependentServices([[maybe_unused]]AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
     }
 

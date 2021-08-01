@@ -37,7 +37,7 @@ namespace AZ::SceneAPI::Behaviors
         , public Events::AssetImportRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(ScriptProcessorRuleBehavior, "{24054E73-1B92-43B0-AC13-174B2F0E3F66}", SceneCore::BehaviorComponent);
+        AZ_COMPONENT_SPLIT(ScriptProcessorRuleBehavior, "{24054E73-1B92-43B0-AC13-174B2F0E3F66}", SceneCore::BehaviorComponent);
 
         ~ScriptProcessorRuleBehavior() override = default;
 

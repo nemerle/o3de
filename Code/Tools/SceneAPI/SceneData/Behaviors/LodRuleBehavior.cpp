@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/std/containers/fixed_vector.h>
@@ -33,6 +34,9 @@ namespace AZ
     {
         namespace SceneData
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(LodRuleBehavior)
+
             static AZStd::fixed_vector < AZ::Crc32, LodRule::m_maxLods > s_lodVirtualTypeKeys =
             {
                 AZ_CRC("LODMesh1", 0xcbea988c),
@@ -67,7 +71,7 @@ namespace AZ
 
             void LodRuleBehavior::InitializeObject(const Containers::Scene& scene, DataTypes::IManifestObject& target)
             {
-                //Initialize Mesh Groups. 
+                //Initialize Mesh Groups.
                 if (target.RTTI_IsTypeOf(DataTypes::IMeshGroup::TYPEINFO_Uuid()) || target.RTTI_IsTypeOf(DataTypes::ISkinGroup::TYPEINFO_Uuid()))
                 {
                     AZStd::shared_ptr<LodRule> lodRule = nullptr;
@@ -77,7 +81,7 @@ namespace AZ
                         size_t lodCount = SelectLodMeshes(scene, selection, lodLevel);
                         if (lodCount > 0)
                         {
-                            //Only create a lodRule if we have the first lod level. 
+                            //Only create a lodRule if we have the first lod level.
                             if (lodLevel == 0 && !lodRule)
                             {
                                 lodRule = AZStd::make_shared<LodRule>();
@@ -91,8 +95,8 @@ namespace AZ
                             break;
                         }
                     }
- 
-                    if(lodRule) 
+
+                    if(lodRule)
                     {
                         DataTypes::IGroup* group = azrtti_cast<DataTypes::IGroup*>(&target);
                         group->GetRuleContainer().AddRule(AZStd::move(lodRule));
@@ -101,7 +105,7 @@ namespace AZ
                 else if (target.RTTI_IsTypeOf(LodRule::TYPEINFO_Uuid()))
                 {
                     LodRule* rule = azrtti_cast<LodRule*>(&target);
-             
+
                     for (size_t lodLevel = 0; lodLevel < rule->GetLodCount(); ++lodLevel)
                     {
                         SelectLodMeshes(scene, rule->GetSceneNodeSelectionList(lodLevel), lodLevel);
@@ -117,7 +121,7 @@ namespace AZ
                 const Containers::SceneGraph& graph = scene.GetGraph();
                 auto contentStorage = graph.GetContentStorage();
                 auto nameStorage = graph.GetNameStorage();
-                
+
                 auto keyValueView = Containers::Views::MakePairView(nameStorage, contentStorage);
                 auto filteredView = Containers::Views::MakeFilterView(keyValueView, Containers::DerivedTypeFilter<DataTypes::IMeshData>());
                 for (auto it = filteredView.begin(); it != filteredView.end(); ++it)
@@ -154,7 +158,7 @@ namespace AZ
                 }
             }
 
-            
+
             void LodRuleBehavior::UpdateLodRules(Containers::Scene& scene) const
             {
                 Containers::SceneManifest& manifest = scene.GetManifest();

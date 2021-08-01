@@ -37,22 +37,22 @@ namespace AZ
             }
         }
 
-        void EditorMeshSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void EditorMeshSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("EditorMeshSystem"));
         }
 
-        void EditorMeshSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void EditorMeshSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("EditorMeshSystem"));
         }
 
-        void EditorMeshSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void EditorMeshSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("ThumbnailerService"));
         }
 
-        void EditorMeshSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void EditorMeshSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             AZ_UNUSED(dependent);
         }

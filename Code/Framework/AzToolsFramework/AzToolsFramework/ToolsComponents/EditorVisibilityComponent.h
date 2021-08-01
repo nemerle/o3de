@@ -20,10 +20,10 @@ namespace AzToolsFramework
             , public EditorVisibilityRequestBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorVisibilityComponent, "{88E08E78-5C2F-4943-9F73-C115E6FFAB43}", EditorComponentBase);
+            AZ_COMPONENT_SPLIT(EditorVisibilityComponent, "{88E08E78-5C2F-4943-9F73-C115E6FFAB43}", EditorComponentBase);
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
             ~EditorVisibilityComponent();
 

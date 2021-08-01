@@ -9,6 +9,7 @@
 #include "native/utilities/ApplicationManager.h"
 
 #include <AzCore/Casting/lossy_cast.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/Utils/Utils.h>

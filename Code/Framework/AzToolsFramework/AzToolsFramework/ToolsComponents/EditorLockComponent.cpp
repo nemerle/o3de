@@ -7,6 +7,7 @@
  */
 #include "EditorLockComponent.h"
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
 #include <AzToolsFramework/Viewport/ViewportMessages.h>
@@ -15,6 +16,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorLockComponent)
+
         void EditorLockComponent::Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -34,12 +38,12 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorLockComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorLockComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorLockService", 0x6b15eacf));
         }
 
-        void EditorLockComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorLockComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorLockService", 0x6b15eacf));
         }

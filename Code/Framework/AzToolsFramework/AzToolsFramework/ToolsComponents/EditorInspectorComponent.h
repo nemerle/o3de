@@ -23,10 +23,10 @@ namespace AzToolsFramework
             , public EditorInspectorComponentRequestBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorInspectorComponent, "{47DE3DDA-50C5-4F50-B1DB-BA4AE66AB056}", EditorComponentBase);
+            AZ_COMPONENT_SPLIT(EditorInspectorComponent, "{47DE3DDA-50C5-4F50-B1DB-BA4AE66AB056}", EditorComponentBase);
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
             static bool SerializationConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
             
             ~EditorInspectorComponent();

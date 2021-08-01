@@ -94,13 +94,13 @@ void DebugComponent::Reflect(AZ::ReflectContext* context)
     }
 }
 
-void DebugComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType & services)
+void DebugComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType & services)
 {
     services.push_back(AZ_CRC("DebugService", 0xb8fb15bb));
 
 }
 
-void DebugComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType & services)
+void DebugComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType & services)
 {
     services.push_back(AZ_CRC("DebugService", 0xb8fb15bb));
 }

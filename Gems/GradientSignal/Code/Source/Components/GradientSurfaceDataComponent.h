@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <GradientSignal/GradientSampler.h>
 #include <GradientSignal/Ebuses/GradientSurfaceDataRequestBus.h>
 #include <SurfaceData/SurfaceDataModifierRequestBus.h>
@@ -54,9 +55,9 @@ namespace GradientSignal
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(GradientSurfaceDataComponent, GradientSurfaceDataComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         GradientSurfaceDataComponent(const GradientSurfaceDataConfig& configuration);

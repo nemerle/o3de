@@ -52,22 +52,22 @@ namespace ScriptEvents
         ScriptEvents::ScriptEventsAssetPtr::Reflect(context);
     }
 
-    void ScriptEventsSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ScriptEventsSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptEventsService", 0x6897c23b));
     }
 
-    void ScriptEventsSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void ScriptEventsSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ScriptEventsService", 0x6897c23b));
     }
 
-    void ScriptEventsSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void ScriptEventsSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
     }
 
-    void ScriptEventsSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void ScriptEventsSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

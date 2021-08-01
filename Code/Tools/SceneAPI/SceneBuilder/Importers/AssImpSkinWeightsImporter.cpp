@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/std/string/conversions.h>
@@ -26,6 +27,8 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpSkinWeightsImporter)
             const AZStd::string AssImpSkinWeightsImporter::s_skinWeightName = "SkinWeight_";
 
             AssImpSkinWeightsImporter::AssImpSkinWeightsImporter()

@@ -8,6 +8,7 @@
 
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Settings/SettingsRegistry.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzFramework/Spawnable/SpawnableMetaData.h>
@@ -15,6 +16,9 @@
 
 namespace AzFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SpawnableSystemComponent)
+
     void SpawnableSystemComponent::Reflect(AZ::ReflectContext* context)
     {
         Spawnable::Reflect(context);
@@ -27,17 +31,17 @@ namespace AzFramework
         }
     }
 
-    void SpawnableSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SpawnableSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC_CE("SpawnableSystemService"));
     }
 
-    void SpawnableSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SpawnableSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC_CE("SpawnableSystemService"));
     }
 
-    void SpawnableSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SpawnableSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC_CE("AssetDatabaseService"));
         services.push_back(AZ_CRC_CE("AssetCatalogService"));
@@ -137,7 +141,7 @@ namespace AzFramework
         // Register with AssetDatabase
         AZ_Assert(AZ::Data::AssetManager::IsReady(), "Spawnables can't be registered because the Asset Manager is not ready yet.");
         AZ::Data::AssetManager::Instance().RegisterHandler(&m_assetHandler, AZ::AzTypeInfo<Spawnable>::Uuid());
-        
+
         // Register with AssetCatalog
         AZ::Data::AssetCatalogRequestBus::Broadcast(
             &AZ::Data::AssetCatalogRequestBus::Events::EnableCatalogForAsset, AZ::AzTypeInfo<Spawnable>::Uuid());

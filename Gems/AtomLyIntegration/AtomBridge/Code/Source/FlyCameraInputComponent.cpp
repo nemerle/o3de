@@ -63,19 +63,19 @@ namespace
 const AZ::Crc32 FlyCameraInputComponent::UnknownInputChannelId("unknown_input_channel_id");
 
 //////////////////////////////////////////////////////////////////////////////
-void FlyCameraInputComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+void FlyCameraInputComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
 {
     required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
 }
 
 //////////////////////////////////////////////////////////////////////////////
-void FlyCameraInputComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+void FlyCameraInputComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
 {
     provided.push_back(AZ_CRC("InputService", 0xd41af40c));
 }
 
 //////////////////////////////////////////////////////////////////////////////
-void FlyCameraInputComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+void FlyCameraInputComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
 {
     incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
 }

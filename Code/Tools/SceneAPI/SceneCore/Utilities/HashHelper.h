@@ -12,6 +12,7 @@
 #include <AzCore/Math/Vector3.h>
 #include <AzCore/Math/Vector4.h>
 #include <AzCore/Math/Matrix3x4.h>
+#include <AzCore/std/hash.h>
 
 namespace AZStd
 {

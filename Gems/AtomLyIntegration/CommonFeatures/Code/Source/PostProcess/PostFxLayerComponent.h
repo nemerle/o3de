@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzFramework/Components/ComponentAdapter.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AtomLyIntegration/CommonFeatures/PostProcess/PostFxLayerComponentConfig.h>
 #include <AtomLyIntegration/CommonFeatures/PostProcess/PostFxLayerComponentConstants.h>
 #include <PostProcess/PostFxLayerComponentController.h>

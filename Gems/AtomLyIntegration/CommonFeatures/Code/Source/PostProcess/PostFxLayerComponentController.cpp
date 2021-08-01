@@ -110,12 +110,12 @@ namespace AZ
             m_postProcessInterface->OnConfigChanged();
         }
 
-        void PostFxLayerComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void PostFxLayerComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("PostFXLayerService"));
         }
 
-        void PostFxLayerComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void PostFxLayerComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("PostFXLayerService"));
         }

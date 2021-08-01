@@ -32,17 +32,17 @@ namespace AZ
             }
         }
 
-        void ImguiAtomSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void ImguiAtomSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("ImguiAtomSystemComponent"));
         }
 
-        void ImguiAtomSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void ImguiAtomSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("CommonService"));
         }
 
-        void ImguiAtomSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatbile)
+        void ImguiAtomSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatbile)
         {
             incompatbile.push_back(AZ_CRC_CE("ImguiAtomSystemComponent"));
         }

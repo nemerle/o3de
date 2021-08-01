@@ -81,17 +81,17 @@ namespace Vegetation
         }
     }
 
-    void SpawnerComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SpawnerComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         AreaComponentBase::GetProvidedServices(services);
     }
 
-    void SpawnerComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SpawnerComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         AreaComponentBase::GetIncompatibleServices(services);
     }
 
-    void SpawnerComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SpawnerComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         AreaComponentBase::GetRequiredServices(services);
         services.push_back(AZ_CRC("VegetationDescriptorProviderService", 0x62e51209));

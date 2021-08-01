@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Vegetation/Ebuses/FilterRequestBus.h>
 #include <Vegetation/Ebuses/SurfaceAltitudeFilterRequestBus.h>
 #include <LmbrCentral/Dependency/DependencyMonitor.h>
@@ -41,7 +42,7 @@ namespace Vegetation
 
     /**
     * Component implementing VegetationFilterRequestBus that accepts/rejects based on altitude
-    */      
+    */
     class SurfaceAltitudeFilterComponent
         : public AZ::Component
         , public FilterRequestBus::Handler
@@ -50,9 +51,9 @@ namespace Vegetation
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(SurfaceAltitudeFilterComponent, SurfaceAltitudeFilterComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         SurfaceAltitudeFilterComponent(const SurfaceAltitudeFilterConfig& configuration);

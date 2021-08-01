@@ -13,6 +13,7 @@
 #include <SceneAPI/SceneCore/Containers/SceneGraph.h>
 #include <SceneAPI/SceneCore/DataTypes/GraphData/IBoneData.h>
 #include <SceneAPI/SceneCore/DataTypes/GraphData/ITransform.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace EMotionFX
 {

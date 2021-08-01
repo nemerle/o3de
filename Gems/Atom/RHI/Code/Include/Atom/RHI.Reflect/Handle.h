@@ -9,6 +9,7 @@
 
 #include <AzCore/base.h>
 #include <AzCore/RTTI/TypeInfo.h>
+#include <AzCore/Casting/numeric_cast.h>
 
 namespace AZ
 {
@@ -153,17 +154,6 @@ namespace AZ
 namespace AZ
 {
     AZ_TYPE_INFO_TEMPLATE(AZ::RHI::Handle, "{273A36DB-D62B-45EB-9E05-E097EE9743BB}", AZ_TYPE_INFO_TYPENAME, AZ_TYPE_INFO_TYPENAME);
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template <typename T, typename NamespaceType>
-    struct SerializeGenericTypeInfo<RHI::Handle<T, NamespaceType>, void> : SerializeGenericTypeInfoImpl<RHI::Handle<T, NamespaceType>>
-    {
-        //treat Handle as generic value type
-    };
 }
 
 namespace AZStd

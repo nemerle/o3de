@@ -23,6 +23,6 @@ namespace WhiteBox
         // AZ::Component ...
         void Activate() override;
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
     };
 } // namespace WhiteBox

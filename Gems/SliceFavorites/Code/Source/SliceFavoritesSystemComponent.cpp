@@ -33,12 +33,12 @@ namespace SliceFavorites
         }
     }
 
-    void SliceFavoritesSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SliceFavoritesSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("SliceFavoritesService", 0x2f8751fa));
     }
 
-    void SliceFavoritesSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void SliceFavoritesSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("SliceFavoritesService", 0x2f8751fa));
     }

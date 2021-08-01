@@ -9,12 +9,14 @@
 #pragma once
 
 #include <AzCore/base.h>
-#include <AzCore/std/hash.h>
-#include <AzCore/Math/MathUtils.h>
 
 #if AZ_TRAIT_UUID_SUPPORTS_GUID_CONVERSION
 struct  _GUID;
 typedef _GUID GUID;
+#endif
+
+#ifndef AZ_MATH_INLINE
+#define AZ_MATH_INLINE AZ_FORCE_INLINE
 #endif
 
 namespace AZ

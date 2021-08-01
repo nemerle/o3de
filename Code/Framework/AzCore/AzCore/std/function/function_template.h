@@ -9,6 +9,7 @@
 
 #include <AzCore/std/function/function_base.h>
 #include <AzCore/std/function/invoke.h>
+#include <AzCore/std/typetraits/is_integral.h>
 #include <AzCore/std/typetraits/remove_cvref.h>
 #include <AzCore/std/allocator.h>
 
@@ -535,7 +536,7 @@ namespace AZStd
             //! A static vtable is used to avoid the need to dynamically allocate a vtable
             //! whose purpose is to contain a function ptr that can the manage the function buffer
             //! i.e performs the copy, move and destruction operations for the function buffer
-            //! as well as to validate if a the stored function can be type_cast to the type supplied in 
+            //! as well as to validate if a the stored function can be type_cast to the type supplied in
             //! std::function::target
             //! The vtable other purpose is to store a function ptr that is used to wrap the invocation of the underlying function
             static vtable_type stored_vtable = get_invoker::template create_vtable<decay_t<Functor>>();
@@ -560,7 +561,7 @@ namespace AZStd
             //! A static vtable is used to avoid the need to dynamically allocate a vtable
             //! whose purpose is to contain a function ptr that can the manage the function buffer
             //! i.e performs the copy, move and destruction operations for the function buffer
-            //! as well as to validate if a the stored function can be type_cast to the type supplied in 
+            //! as well as to validate if a the stored function can be type_cast to the type supplied in
             //! std::function::target
             //! The vtable other purpose is to store a function ptr that is used to wrap the invocation of the underlying function
             static vtable_type stored_vtable = get_invoker::template create_vtable<decay_t<Functor>>();
@@ -682,7 +683,7 @@ namespace AZStd
             return *this;
         }
 
-        R operator()(Args... args) const 
+        R operator()(Args... args) const
         {
             return base_type::operator()(AZStd::forward<Args>(args)...);
         }

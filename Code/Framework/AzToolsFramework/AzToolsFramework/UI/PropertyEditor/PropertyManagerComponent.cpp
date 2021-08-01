@@ -10,6 +10,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzToolsFramework/ToolsComponents/EditorEntityIdContainer.h>
 #include <AzToolsFramework/UI/PropertyEditor/PropertyAudioCtrlTypes.h>
 #include <AzToolsFramework/UI/PropertyEditor/GenericComboBoxCtrl.h>
@@ -38,6 +39,9 @@ namespace AzToolsFramework
 
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(PropertyManagerComponent)
+
         PropertyManagerComponent::PropertyManagerComponent()
         {
         }

@@ -7,6 +7,7 @@
  */
 
 #include <AssetProcessor/AssetBuilderSDK/AssetBuilderSDK/AssetBuilderSDK.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
@@ -23,6 +24,9 @@ namespace AZ
 {
     namespace SceneAPI
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(SceneImportRequestHandler)
+
         void SceneImporterSettings::Reflect(AZ::ReflectContext* context)
         {
             using namespace AzToolsFramework::AssetUtils;
@@ -100,7 +104,7 @@ namespace AZ
             }
         }
 
-        void SceneImportRequestHandler::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void SceneImportRequestHandler::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.emplace_back(AZ_CRC_CE("AssetImportRequestHandler"));
         }

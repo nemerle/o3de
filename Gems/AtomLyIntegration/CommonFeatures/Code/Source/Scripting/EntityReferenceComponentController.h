@@ -25,8 +25,8 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::EntityReferenceComponentController, "{89D1D8DE-AC1F-4069-8884-5A04582C2EB1}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             EntityReferenceComponentController() = default;
             EntityReferenceComponentController(const EntityReferenceComponentConfig& config);

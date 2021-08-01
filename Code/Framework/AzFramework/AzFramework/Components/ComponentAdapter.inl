@@ -41,25 +41,25 @@ namespace AzFramework
         // Get*Services functions
 
         template<typename TController, typename TConfiguration>
-        void ComponentAdapter<TController, TConfiguration>::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void ComponentAdapter<TController, TConfiguration>::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             GetProvidedServicesHelper<TController>(services, typename AZ::HasComponentProvidedServices<TController>::type());
         }
 
         template<typename TController, typename TConfiguration>
-        void ComponentAdapter<TController, TConfiguration>::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void ComponentAdapter<TController, TConfiguration>::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             GetRequiredServicesHelper<TController>(services, typename AZ::HasComponentRequiredServices<TController>::type());
         }
 
         template<typename TController, typename TConfiguration>
-        void ComponentAdapter<TController, TConfiguration>::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void ComponentAdapter<TController, TConfiguration>::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             GetIncompatibleServicesHelper<TController>(services, typename AZ::HasComponentIncompatibleServices<TController>::type());
         }
 
         template<typename TController, typename TConfiguration>
-        void ComponentAdapter<TController, TConfiguration>::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void ComponentAdapter<TController, TConfiguration>::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             GetDependentServicesHelper<TController>(services, typename AZ::HasComponentDependentServices<TController>::type());
         }

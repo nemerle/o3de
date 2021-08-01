@@ -49,10 +49,10 @@ namespace AzFramework
         In addition, certain functions will optionally be called if they are available:
 
         @code
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services);
             void Init();
         @endcode
 
@@ -68,10 +68,10 @@ namespace AzFramework
             ComponentAdapter() = default;
             explicit ComponentAdapter(const TConfiguration& configuration);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
             // AZ::Component overrides ...
             void Init() override;
@@ -89,21 +89,5 @@ namespace AzFramework
         };
     } // namespace Components
 } // namespace AzFramework
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template<typename S, typename T>
-    struct SerializeGenericTypeInfo<AzFramework::Components::ComponentAdapter<S, T>, void>
-        : SerializeGenericTypeInfoImpl<AzFramework::Components::ComponentAdapter<S, T>>
-    {
-        // treat ComponentAdapter as generic value type
-    };
-} // namespace AZ
 
 #include "ComponentAdapter.inl"

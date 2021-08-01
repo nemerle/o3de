@@ -10,6 +10,7 @@
 
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/std/parallel/lock.h>
@@ -43,21 +44,21 @@ namespace ScriptCanvas
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         // AZ::Component...
         void Init() override;
         void Activate() override;
         void Deactivate() override;
         ////
-                 
+
         void AddOwnedObjectReference(const void* object, BehaviorContextObject* behaviorContextObject) override;
         BehaviorContextObject* FindOwnedObjectReference(const void* object) override;
         void RemoveOwnedObjectReference(const void* object) override;
-        
+
     protected:
 
         inline bool IsAnyScriptInterpreted() const { return true; }

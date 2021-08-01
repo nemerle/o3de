@@ -25,12 +25,12 @@ namespace AZ
             }
         }
 
-        void EntityReferenceComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void EntityReferenceComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("EntityReferenceService"));
         }
 
-        void EntityReferenceComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void EntityReferenceComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("EntityReferenceService"));
         }

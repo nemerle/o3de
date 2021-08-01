@@ -8,6 +8,7 @@
 
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/TickBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
@@ -21,6 +22,9 @@
 
 namespace AzFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(GameEntityContextComponent)
+
     //=========================================================================
     // Reflect
     //=========================================================================

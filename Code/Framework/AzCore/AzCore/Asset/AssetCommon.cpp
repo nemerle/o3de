@@ -13,6 +13,7 @@
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/ScriptCanvas/ScriptCanvasOnDemandNames.h>
 #include <AzCore/ScriptCanvas/ScriptCanvasAttributes.h>
+#include <AzCore/IO/Streamer/FileRequest.h>
 
 #include <AzCore/std/parallel/lock.h>
 #include <AzCore/std/string/conversions.h>

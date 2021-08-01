@@ -55,12 +55,12 @@ namespace AZ
 {
     namespace Vulkan
     {
-        void SystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void SystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(RHI::Factory::GetPlatformService());
         }
 
-        void SystemComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+        void SystemComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(RHI::Factory::GetManagerComponentService());
         }

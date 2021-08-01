@@ -23,9 +23,9 @@ namespace LmbrCentral
     public:
         AZ_EDITOR_COMPONENT(EditorSpawnerComponent, "{77CDE991-EC1A-B7C1-B112-7456ABAC81A1}", EditorComponentBase);
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType&);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType&);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType&);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType&);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType&);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType&);
 
         bool ReadInConfig(const AZ::ComponentConfig* baseConfig) override;
         bool WriteOutConfig(AZ::ComponentConfig* outBaseConfig) const override;

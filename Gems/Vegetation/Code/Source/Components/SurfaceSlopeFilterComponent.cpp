@@ -73,18 +73,18 @@ namespace Vegetation
         }
     }
 
-    void SurfaceSlopeFilterComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceSlopeFilterComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationFilterService", 0x9f97cc97));
         services.push_back(AZ_CRC("VegetationSurfaceSlopeFilterService", 0xe052c323));
     }
 
-    void SurfaceSlopeFilterComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceSlopeFilterComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationSurfaceSlopeFilterService", 0xe052c323));
     }
 
-    void SurfaceSlopeFilterComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceSlopeFilterComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
     }

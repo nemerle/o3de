@@ -9,6 +9,7 @@
 #include <Source/BallJointComponent.h>
 #include <PhysX/MathConversion.h>
 #include <PhysX/PhysXLocks.h>
+#include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzFramework/Physics/SimulatedBodies/RigidBody.h>
@@ -30,7 +31,7 @@ namespace PhysX
     }
 
     BallJointComponent::BallJointComponent(
-        const JointComponentConfiguration& configuration, 
+        const JointComponentConfiguration& configuration,
         const JointGenericProperties& genericProperties,
         const JointLimitProperties& limitProperties)
         : JointComponent(configuration, genericProperties, limitProperties)
@@ -64,8 +65,8 @@ namespace PhysX
         {
             m_jointHandle = sceneInterface->AddJoint(
                 leadFollowerInfo.m_followerBody->m_sceneOwner,
-                &configuration,  
-                leadFollowerInfo.m_leadBody->m_bodyHandle, 
+                &configuration,
+                leadFollowerInfo.m_leadBody->m_bodyHandle,
                 leadFollowerInfo.m_followerBody->m_bodyHandle);
             m_jointSceneOwner = leadFollowerInfo.m_followerBody->m_sceneOwner;
         }

@@ -38,7 +38,7 @@ namespace AzFramework
         , private AZ::TransformHierarchyInformationBus::Handler
     {
     public:
-        AZ_COMPONENT(TransformComponent, AZ::TransformComponentTypeId, AZ::TransformInterface);
+        AZ_COMPONENT_SPLIT(TransformComponent, AZ::TransformComponentTypeId, AZ::TransformInterface);
 
         friend class AzToolsFramework::Components::TransformComponent;
 
@@ -166,7 +166,7 @@ namespace AzFramework
         void GatherChildren(AZStd::vector<AZ::EntityId>& children) override;
 
         /// \ref ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
         /// \ref ComponentDescriptor::Reflect
         static void Reflect(AZ::ReflectContext* reflection);

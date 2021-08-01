@@ -11,6 +11,7 @@
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/std/string/string.h>
 #include <AzCore/std/string/string_view.h>
+#include <AzCore/std/any.h>
 
 // GraphModel
 #include <GraphModel/Model/Common.h>
@@ -22,8 +23,8 @@ namespace AZ
 
 namespace GraphModel
 {
-    //! Provides a way for client systems to describe each data type that they support, including a 
-    //! unique enum value, the AZ type Uuid, and a user-friendly display name. Client systems may 
+    //! Provides a way for client systems to describe each data type that they support, including a
+    //! unique enum value, the AZ type Uuid, and a user-friendly display name. Client systems may
     //! subclass DataType if desired, for example to provide additional name formats.
     class DataType
     {
@@ -86,7 +87,7 @@ namespace GraphModel
         AZStd::string m_displayName;
     };
 
-    
+
 } // namespace GraphModel
 
 

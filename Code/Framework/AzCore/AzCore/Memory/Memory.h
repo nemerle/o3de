@@ -8,16 +8,14 @@
 #pragma once
 
 #include <AzCore/base.h>
+#include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/Memory/AllocatorWrapper.h>
 #include <AzCore/Memory/Config.h>
 #include <AzCore/Memory/SimpleSchemaAllocator.h>
+#include <AzCore/Module/Environment.h>
 #include <AzCore/std/typetraits/alignment_of.h>
 #include <AzCore/std/typetraits/aligned_storage.h>
-
 #include <AzCore/std/typetraits/has_member_function.h>
-
-#include <AzCore/RTTI/TypeInfo.h>
-#include <AzCore/Module/Environment.h>
 
 
 // Declarations of new overloads, definitions are in NewAndDelete.inl, or you can link your own versions
@@ -654,12 +652,12 @@ namespace AZ
         */
         template<class Allocator, bool StoreAllocatorOnHeap>
         struct ModuleStoragePolicyBase;
-        
+
         template<class Allocator>
         struct ModuleStoragePolicyBase<Allocator, false>: public StoragePolicyBase<Allocator>
         {
         protected:
-            // Use a static instance to store the allocator. This is not recommended when the order of shut-down with the module matters, as the allocator could have its memory destroyed 
+            // Use a static instance to store the allocator. This is not recommended when the order of shut-down with the module matters, as the allocator could have its memory destroyed
             // before the users of it are destroyed. The primary use case for this is allocators that need to support the CRT, as they cannot allocate from the heap.
             static Allocator& GetModuleAllocatorInstance()
             {

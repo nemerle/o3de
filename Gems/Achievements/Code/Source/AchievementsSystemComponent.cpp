@@ -136,13 +136,13 @@ namespace Achievements
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
-    void AchievementsSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AchievementsSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("AchievementsService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
-    void AchievementsSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AchievementsSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("AchievementsService"));
     }

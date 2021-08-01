@@ -126,19 +126,19 @@ namespace AZ
             }
         }
 
-        void MeshComponentController::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void MeshComponentController::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("TransformService", 0x8ee22c50));
             dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }
 
-        void MeshComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void MeshComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("MaterialReceiverService", 0x0d1a6a74));
             provided.push_back(AZ_CRC("MeshService", 0x71d8a455));
         }
 
-        void MeshComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void MeshComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("MaterialReceiverService", 0x0d1a6a74));
             incompatible.push_back(AZ_CRC("MeshService", 0x71d8a455));

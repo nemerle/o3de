@@ -48,17 +48,17 @@ namespace AZ
             }
         }
 
-        void LookModificationComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void LookModificationComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("LookModificationService", 0x207b7539));
         }
 
-        void LookModificationComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void LookModificationComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("LookModificationService", 0x207b7539));
         }
 
-        void LookModificationComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void LookModificationComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("PostFXLayerService"));
         }

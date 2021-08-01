@@ -11,10 +11,12 @@
 #include <AzCore/Asset/AssetManagerBus.h>
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/IStreamer.h>
 #include <AzCore/IO/SystemFile.h>
+#include <AzCore/IO/Streamer/FileRequest.h>
 #include <AzCore/std/chrono/chrono.h>
 #include <AzCore/std/string/conversions.h>
 #include <AzCore/Debug/EventTrace.h>
@@ -50,6 +52,9 @@ namespace AzFramework
 
     namespace AssetSystem
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(AssetSystemComponent)
+
         void OnAssetSystemMessage(unsigned int /*typeId*/, const void* buffer, unsigned int bufferSize, AZ::SerializeContext* context)
         {
             AssetNotificationMessage message;
@@ -270,12 +275,12 @@ namespace AzFramework
             }
         }
 
-        void AssetSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void AssetSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("AssetProcessorConnection", 0xf0cd75cd));
         }
 
-        void AssetSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void AssetSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("AssetProcessorConnection", 0xf0cd75cd));
         }

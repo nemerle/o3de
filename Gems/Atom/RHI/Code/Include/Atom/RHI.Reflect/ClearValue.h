@@ -11,6 +11,7 @@
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/std/containers/array.h>
 #include <AzCore/Utils/TypeHash.h>
+#include <AzCore/Math/MathUtils.h>
 
 namespace AZ
 {
@@ -36,7 +37,7 @@ namespace AZ
                     AZ::IsClose(m_depth, other.m_depth, std::numeric_limits<float>::epsilon()) &&
                     m_stencil == other.m_stencil;
             }
-            
+
             float m_depth = 0.0f;
             uint8_t m_stencil = 0;
         };
@@ -60,7 +61,7 @@ namespace AZ
 
             HashValue64 GetHash(HashValue64 seed = HashValue64{ 0 }) const;
             bool operator==(const ClearValue& other) const;
-            
+
             ClearValueType m_type;
 
             // Note: these used to be a union, but unions don't allow for proper serialization, so the union was removed.

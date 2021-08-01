@@ -16,6 +16,7 @@
 #include <AzToolsFramework/UI/PropertyEditor/InstanceDataHierarchy.h>
 #include <AzToolsFramework/UI/PropertyEditor/PropertyEditorAPI.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Serialization/Utils.h>
@@ -68,6 +69,9 @@ namespace AzToolsFramework
             EditorComponentAPIRequests::EntityType Layer() { return EditorComponentAPIRequests::EntityType::Layer; }
             EditorComponentAPIRequests::EntityType Level() { return EditorComponentAPIRequests::EntityType::Level; }
         };
+
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorComponentAPIComponent)
 
         void EditorComponentAPIComponent::Reflect(AZ::ReflectContext* context)
         {

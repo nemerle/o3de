@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Vector2.h>
 
 #include <GraphCanvas/Components/EntitySaveDataBus.h>
@@ -19,7 +20,7 @@
 namespace GraphCanvas
 {
     //! A component that gives a visual coordinates.
-    class GeometryComponent 
+    class GeometryComponent
         : public AZ::Component
         , public GeometryRequestBus::Handler
         , public VisualNotificationBus::Handler
@@ -36,17 +37,17 @@ namespace GraphCanvas
         virtual ~GeometryComponent();
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_GeometryService", 0x80981600));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
         {
         }
         ////
@@ -60,7 +61,7 @@ namespace GraphCanvas
         // SceneMemberNotificationBus
         void OnSceneSet(const AZ::EntityId& scene) override;
         ////
-        
+
         // GeometryRequestBus
         AZ::Vector2 GetPosition() const override;
         void SetPosition(const AZ::Vector2& position) override;

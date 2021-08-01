@@ -27,7 +27,7 @@ namespace AzToolsFramework
         public:
             friend class PropertyManagerComponentFactory;
 
-            AZ_COMPONENT(PropertyManagerComponent, "{0BBDF87F-DDA8-460D-9861-93260BC5C5A9}")
+            AZ_COMPONENT_SPLIT(PropertyManagerComponent, "{0BBDF87F-DDA8-460D-9861-93260BC5C5A9}")
 
             PropertyManagerComponent();
             virtual ~PropertyManagerComponent();
@@ -43,12 +43,12 @@ namespace AzToolsFramework
             //////////////////////////////////////////////////////////////////////////
         private:
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("PropertyManagerService", 0x63a3d7ad));
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("PropertyManagerService", 0x63a3d7ad));
             }

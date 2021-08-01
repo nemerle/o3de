@@ -9,9 +9,13 @@
 #include "CustomAssetTypeComponent.h"
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AzFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(CustomAssetTypeComponent)
+
     //=========================================================================
     // Reflect
     //=========================================================================

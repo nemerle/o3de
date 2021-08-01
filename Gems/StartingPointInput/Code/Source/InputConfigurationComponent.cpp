@@ -30,7 +30,7 @@ namespace StartingPointInput
         m_inputEventBindings.Cleanup();
     }
 
-    void InputConfigurationComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void InputConfigurationComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("InputConfigurationService"));
     }

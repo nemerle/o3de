@@ -34,7 +34,7 @@ namespace AzToolsFramework
             , private AZ::SystemTickBus::Handler
         {
         public:
-            AZ_COMPONENT(AssetSystemComponent, "{B1352D59-945B-446A-A7E1-B2D3EB717C6D}")
+            AZ_COMPONENT_SPLIT(AssetSystemComponent, "{B1352D59-945B-446A-A7E1-B2D3EB717C6D}")
 
             AssetSystemComponent() = default;
             virtual ~AssetSystemComponent() = default;
@@ -47,9 +47,9 @@ namespace AzToolsFramework
             //////////////////////////////////////////////////////////////////////////
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
         private:
 

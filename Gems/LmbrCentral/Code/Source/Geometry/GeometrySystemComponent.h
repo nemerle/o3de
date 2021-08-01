@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <LmbrCentral/Geometry/GeometrySystemComponentBus.h>
 
 namespace LmbrCentral
@@ -27,7 +28,7 @@ namespace LmbrCentral
         GeometrySystemComponent() = default;
 
     protected:
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GeometryService", 0x5676f10b));
         }

@@ -18,7 +18,7 @@ namespace AzFramework
         , public AZ::NonUniformScaleRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(NonUniformScaleComponent, "{077A7A44-BC44-4357-840D-E8E193ADE991}");
+        AZ_COMPONENT_SPLIT(NonUniformScaleComponent, "{077A7A44-BC44-4357-840D-E8E193ADE991}");
 
         static void Reflect(AZ::ReflectContext* context);
 
@@ -36,9 +36,9 @@ namespace AzFramework
         void Deactivate() override;
 
     private:
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
         AZ::Vector3 m_scale = AZ::Vector3::CreateOne();
         AZ::NonUniformScaleChangedEvent m_scaleChangedEvent;

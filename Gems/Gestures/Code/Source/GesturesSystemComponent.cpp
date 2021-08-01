@@ -16,25 +16,25 @@
 namespace Gestures
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void GesturesSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void GesturesSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("GestureInputService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void GesturesSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void GesturesSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("GestureInputService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void GesturesSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void GesturesSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("InputSystemService", 0x5438d51a));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void GesturesSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void GesturesSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

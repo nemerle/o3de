@@ -9,9 +9,13 @@
 #include "SliceSystemComponent.h"
 #include "SliceAsset.h"
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SliceSystemComponent)
+
     void SliceSystemComponent::Reflect(ReflectContext* context)
     {
         if (SerializeContext* serializeContext = azrtti_cast<SerializeContext*>(context))
@@ -30,17 +34,17 @@ namespace AZ
         }
     }
 
-    void SliceSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& services)
+    void SliceSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SliceSystemService", 0x1a5b7aad));
     }
 
-    void SliceSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& services)
+    void SliceSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SliceSystemService", 0x1a5b7aad));
     }
 
-    void SliceSystemComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& services)
+    void SliceSystemComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
         services.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));

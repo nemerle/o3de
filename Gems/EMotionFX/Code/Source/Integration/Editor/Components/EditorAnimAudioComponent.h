@@ -75,17 +75,17 @@ namespace EMotionFX
 
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 AnimAudioComponent::GetProvidedServices(provided);
             }
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
             {
                 AnimAudioComponent::GetRequiredServices(required);
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 AnimAudioComponent::GetIncompatibleServices(incompatible);
             }

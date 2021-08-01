@@ -35,7 +35,7 @@ class MockGradientTransformComponent
 public:
     AZ_COMPONENT(MockGradientTransformComponent, "{464CF47B-7E10-4E1B-BD06-79BD2AC91399}");
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientTransformService", 0x8c8c5ecc));
     }

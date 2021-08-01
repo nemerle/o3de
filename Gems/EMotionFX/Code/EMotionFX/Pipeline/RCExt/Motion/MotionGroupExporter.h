@@ -9,6 +9,7 @@
 #pragma once
 
 #include <SceneAPI/SceneCore/Components/ExportingComponent.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace EMotionFX
 {

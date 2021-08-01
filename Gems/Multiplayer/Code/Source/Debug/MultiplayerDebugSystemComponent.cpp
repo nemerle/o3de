@@ -24,17 +24,17 @@ namespace Multiplayer
         }
     }
 
-    void MultiplayerDebugSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void MultiplayerDebugSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("MultiplayerDebugSystemComponent"));
     }
 
-    void MultiplayerDebugSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+    void MultiplayerDebugSystemComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
     {
         ;
     }
 
-    void MultiplayerDebugSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatbile)
+    void MultiplayerDebugSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatbile)
     {
         incompatbile.push_back(AZ_CRC_CE("MultiplayerDebugSystemComponent"));
     }

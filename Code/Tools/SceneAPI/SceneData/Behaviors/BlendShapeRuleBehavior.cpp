@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzToolsFramework/Debug/TraceContext.h>
@@ -31,6 +32,9 @@ namespace AZ
     {
         namespace SceneData
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(BlendShapeRuleBehavior)
+
             void BlendShapeRuleBehavior::Activate()
             {
                 Events::ManifestMetaInfoBus::Handler::BusConnect();
@@ -63,7 +67,7 @@ namespace AZ
                     {
                         AZStd::shared_ptr<SceneData::BlendShapeRule> blendShapeRule = AZStd::make_shared<SceneData::BlendShapeRule>();
                         selection.CopyTo(blendShapeRule->GetNodeSelectionList());
-                        
+
                         DataTypes::ISkinGroup* skinGroup = azrtti_cast<DataTypes::ISkinGroup*>(&target);
                         skinGroup->GetRuleContainer().AddRule(AZStd::move(blendShapeRule));
                     }
@@ -83,7 +87,7 @@ namespace AZ
                 const Containers::SceneGraph& graph = scene.GetGraph();
                 auto contentStorage = graph.GetContentStorage();
                 auto nameStorage = graph.GetNameStorage();
-                
+
                 auto keyValueView = Containers::Views::MakePairView(nameStorage, contentStorage);
                 auto filteredView = Containers::Views::MakeFilterView(keyValueView, Containers::DerivedTypeFilter<DataTypes::IBlendShapeData>());
                 for (auto it = filteredView.begin(); it != filteredView.end(); ++it)
@@ -119,7 +123,7 @@ namespace AZ
             {
                 Containers::SceneManifest& manifest = scene.GetManifest();
                 auto valueStorage = manifest.GetValueStorage();
-                
+
                 auto view = Containers::MakeDerivedFilterView<DataTypes::ISkinGroup>(valueStorage);
                 for (DataTypes::ISkinGroup& group : view)
                 {

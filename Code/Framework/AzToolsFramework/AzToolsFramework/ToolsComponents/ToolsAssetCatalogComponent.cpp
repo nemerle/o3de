@@ -13,6 +13,7 @@
 #include <AzToolsFramework/Asset/AssetProcessorMessages.h>
 #include <AzFramework/Network/AssetProcessorConnection.h>
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -20,6 +21,9 @@
 
 namespace AssetProcessor
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(ToolsAssetCatalogComponent)
+
     void ToolsAssetCatalogComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -29,12 +33,12 @@ namespace AssetProcessor
         }
     }
 
-    void ToolsAssetCatalogComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void ToolsAssetCatalogComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));
     }
 
-    void ToolsAssetCatalogComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void ToolsAssetCatalogComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
     }

@@ -23,6 +23,7 @@
 #include <QToolBar>
 
 // AzCore
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzQtComponents/Components/Style.h>
@@ -191,8 +192,8 @@ CLayoutViewPane::CLayoutViewPane(QWidget* parent)
     m_id = -1;
 }
 
-CLayoutViewPane::~CLayoutViewPane() 
-{ 
+CLayoutViewPane::~CLayoutViewPane()
+{
     if (m_viewportScrollArea)
     {
         // We only ever add m_viewport into our scroll area, which we manage separately,
@@ -201,7 +202,7 @@ CLayoutViewPane::~CLayoutViewPane()
         m_viewportScrollArea->takeWidget();
         delete m_viewportScrollArea;
     }
-    OnDestroy(); 
+    OnDestroy();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -265,7 +266,7 @@ void CLayoutViewPane::SetViewportExpansionPolicy(ViewportExpansionPolicy policy)
                 m_viewport->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
                 // For some reason, the QScrollArea is adding a margin all around our viewable area,
-                // so we'll shrink our viewport by an appropriate offset (twice the margin thickness) 
+                // so we'll shrink our viewport by an appropriate offset (twice the margin thickness)
                 // so that it continues to fit without requiring scroll bars after switching size policies.
                 m_viewport->resize(m_viewport->width() - (scrollViewport->x() * 2), m_viewport->height() - (scrollViewport->y() * 2));
                 SetMainWidget(m_viewportScrollArea);
@@ -274,7 +275,7 @@ void CLayoutViewPane::SetViewportExpansionPolicy(ViewportExpansionPolicy policy)
             }
             break;
         // If the requested policy is "AutoExpand", just put the viewport area directly in the ViewPane.
-        // It will auto-resize with the main window, but requests to change the viewport size might not 
+        // It will auto-resize with the main window, but requests to change the viewport size might not
         // result in the exact size being requested, depending on main window size and layout.
         case ViewportExpansionPolicy::AutoExpand:
             {
@@ -393,15 +394,15 @@ void CLayoutViewPane::ResizeViewport(int width, int height)
     }
 
     // Make sure our requestedSize stays within "legal" bounds.
-    const QSize requestedSize = QSize(AZ::GetClamp(width, MIN_VIEWPORT_RES, MAX_VIEWPORT_RES), 
+    const QSize requestedSize = QSize(AZ::GetClamp(width, MIN_VIEWPORT_RES, MAX_VIEWPORT_RES),
                                       AZ::GetClamp(height, MIN_VIEWPORT_RES, MAX_VIEWPORT_RES));
 
     // The delta between our current and requested size is going to be used to try and resize the main window
     // (either growing or shrinking) by the exact same amount so that the new viewport size is still completely
-    // visible without needing to adjust any other widget sizes.  
+    // visible without needing to adjust any other widget sizes.
     // Note that we're specifically taking the delta from the main widget, not the viewport.
     // In the "AutoResize" case, this will still directly take the delta from our viewport, but in the
-    // "FixedSize" case we need to take the delta from the scroll area's viewable area size, since that's actually 
+    // "FixedSize" case we need to take the delta from the scroll area's viewable area size, since that's actually
     // the one we need to grow/shrink proportional to.
     const QSize deltaSize = requestedSize - mainWidgetSize;
 
@@ -421,7 +422,7 @@ void CLayoutViewPane::ResizeViewport(int width, int height)
     }
 
     // Resize our main window by the amount that we want our viewport to change.
-    // This is intended to grow our viewport by the same amount.  However, this logic is a 
+    // This is intended to grow our viewport by the same amount.  However, this logic is a
     // little flawed and should get revisited at some point:
     // 1) It's possible that the mainWindow won't actually change to the requested size, if the requested
     // size is larger than the current display resolution (Qt::SetGeometry will fire a second resize event
@@ -599,7 +600,7 @@ void CLayoutViewPane::ShowTitleMenu()
 
 #ifdef FEATURE_ORTHOGRAPHIC_VIEW
     QMenu* viewsMenu = root.addMenu(tr("Viewport Type"));
-    
+
     QtViewPanes viewports = QtViewPaneManager::instance()->GetRegisteredViewportPanes();
 
     for (auto it = viewports.cbegin(), end = viewports.cend(); it != end; ++it)
@@ -806,6 +807,9 @@ namespace
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(ViewPanePythonFuncsHandler)
+
     void ViewPanePythonFuncsHandler::Reflect(AZ::ReflectContext* context)
     {
         if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))

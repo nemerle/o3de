@@ -95,17 +95,17 @@ namespace AZ
             }
         }
 
-        void DisplayMapperComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void DisplayMapperComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ToneMapperService", 0xb8f814e8));
         }
 
-        void DisplayMapperComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void DisplayMapperComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ToneMapperService", 0xb8f814e8));
         }
 
-        void DisplayMapperComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void DisplayMapperComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             AZ_UNUSED(required);
         }

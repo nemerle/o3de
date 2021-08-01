@@ -11,6 +11,7 @@
 #include <AssetBuilderSDK/AssetBuilderSDK.h>
 #include <AssetBuilderSDK/SerializationDependencies.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/Module/Module.h>
 #include <AzCore/Module/DynamicModuleHandle.h>
@@ -32,11 +33,11 @@ namespace AZ::Prefab
 
         AZ_COMPONENT(PrefabBuilderComponent, BuilderId);
         static void Reflect(AZ::ReflectContext* context);
-        
+
         PrefabBuilderComponent()
             : m_builderId(BuilderId)
         {
-            
+
         }
 
         //////////////////////////////////////////////////////////////////////////
@@ -67,7 +68,7 @@ namespace AZ::Prefab
             const AzToolsFramework::Prefab::PrefabConversionUtils::PrefabProcessorContext::ProcessedObjectStoreContainer& store,
             const AzToolsFramework::Prefab::PrefabConversionUtils::PrefabProcessorContext::ProductAssetDependencyContainer& registeredDependencies,
             AZStd::vector<AssetBuilderSDK::JobProduct>& outputProducts) const;
-        
+
         void ProcessJob(const AssetBuilderSDK::ProcessJobRequest& request, AssetBuilderSDK::ProcessJobResponse& response);
 
         AzToolsFramework::Prefab::PrefabConversionUtils::PrefabConversionPipeline m_pipeline;
@@ -75,5 +76,5 @@ namespace AZ::Prefab
         AZStd::atomic_bool m_isShuttingDown{ false };
         AZStd::unique_ptr<AzToolsFramework::Fingerprinting::TypeFingerprinter> m_typeFingerprinter;
     };
-    
+
 } // namespace AZ::Prefab

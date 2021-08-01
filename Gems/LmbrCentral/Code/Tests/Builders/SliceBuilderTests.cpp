@@ -587,7 +587,7 @@ namespace UnitTest
             }
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             if (m_enableServiceDependency)
             {

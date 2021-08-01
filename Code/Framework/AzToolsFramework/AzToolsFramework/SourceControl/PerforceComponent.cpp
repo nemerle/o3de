@@ -9,6 +9,7 @@
 
 #include <AzToolsFramework/SourceControl/PerforceComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/IO/SystemFile.h>
 #include <AzCore/Serialization/EditContext.h>
@@ -22,6 +23,7 @@
 
 namespace AzToolsFramework
 {
+
     namespace
     {
         PerforceConnection* s_perforceConn = nullptr;
@@ -60,6 +62,9 @@ namespace AzToolsFramework
         m_settingInfo.m_status = SourceControlSettingStatus::None;
         m_settingInfo.m_value = value;
     }
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(PerforceComponent)
 
     void PerforceComponent::Activate()
     {
@@ -122,13 +127,13 @@ namespace AzToolsFramework
         }
     }
 
-    void PerforceComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void PerforceComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("SourceControlService", 0x67f338fd));
         provided.push_back(AZ_CRC("PerforceService", 0x74b25961));
     }
 
-    void PerforceComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void PerforceComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("PerforceService", 0x74b25961));
     }

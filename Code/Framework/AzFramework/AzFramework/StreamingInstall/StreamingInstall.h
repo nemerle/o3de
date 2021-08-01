@@ -25,16 +25,16 @@ namespace AzFramework
         public:
             ////////////////////////////////////////////////////////////////////////////////////////
             //! Component setup
-            AZ_COMPONENT(StreamingInstallSystemComponent, "{F5FC13F5-D993-48F5-AD9C-C06C1B51134C}");
+            AZ_COMPONENT_SPLIT(StreamingInstallSystemComponent, "{F5FC13F5-D993-48F5-AD9C-C06C1B51134C}");
 
             ////////////////////////////////////////////////////////////////////////////////////////
             //! Component overrides
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         protected:
             ////////////////////////////////////////////////////////////////////////

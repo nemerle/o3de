@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzToolsFramework/UI/LegacyFramework/UIFrameworkAPI.h>
 #include <QtWidgets/qaction.h>
@@ -46,7 +47,7 @@ namespace LegacyFramework
         , private LegacyFramework::CustomMenusMessages::Bus::Handler
     {
     public:
-        AZ_COMPONENT(CustomMenusComponent, "{34A1245B-AA6B-41BE-8CFD-50141877081A}")
+        AZ_COMPONENT_SPLIT(CustomMenusComponent, "{34A1245B-AA6B-41BE-8CFD-50141877081A}")
 
         void Init() override {}
         void Activate() override;
@@ -69,6 +70,8 @@ namespace LegacyFramework
         AZStd::unordered_map<AZ::Crc32, QMenu*> m_registeredMenus;
         AZStd::unordered_map<AZ::Crc32, AZStd::unordered_map<AZ::Crc32, MenuEntry> > m_customMenusEntries;
     };
+    AZ_COMPONENT_IMPL(CustomMenusComponent)
+
 }
 
 namespace LegacyFramework

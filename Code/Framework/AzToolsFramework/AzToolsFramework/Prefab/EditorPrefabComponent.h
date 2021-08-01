@@ -17,11 +17,11 @@ namespace AzToolsFramework
         class EditorPrefabComponent : public AzToolsFramework::Components::EditorComponentBase
         {
         public:
-            AZ_COMPONENT(EditorPrefabComponent, "{756E5F9C-3E08-4F8D-855C-A5AEEFB6FCDD}", EditorComponentBase);
+            AZ_COMPONENT_SPLIT(EditorPrefabComponent, "{756E5F9C-3E08-4F8D-855C-A5AEEFB6FCDD}", EditorComponentBase);
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
         private:
             void Activate() override;

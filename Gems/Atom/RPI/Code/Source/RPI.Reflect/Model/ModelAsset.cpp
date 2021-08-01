@@ -14,7 +14,9 @@
 #include <AzCore/std/limits.h>
 
 #include <AzCore/RTTI/ReflectContext.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {

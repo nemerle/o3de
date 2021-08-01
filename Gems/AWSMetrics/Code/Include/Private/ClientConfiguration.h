@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/std/string/string.h>
+#include <AzCore/std/parallel/atomic.h>
 
 namespace AWSMetrics
 {
@@ -22,7 +23,7 @@ namespace AWSMetrics
         static constexpr const char AWSMetricsQueueFlushPeriodInSecondsKey[] = "/Gems/AWSMetrics/QueueFlushPeriodInSeconds";
         static constexpr const char AWSMetricsOfflineRecordingEnabledKey[] = "/Gems/AWSMetrics/OfflineRecording";
         static constexpr const char AWSMetricsMaxNumRetriesKey[] = "/Gems/AWSMetrics/MaxNumRetries";
-        
+
         ClientConfiguration();
 
         //! Initialize the client settings based on the global setting registry.
@@ -67,5 +68,5 @@ namespace AWSMetrics
 
         AZStd::string m_metricsDir;
         AZStd::string m_metricsFilePath;
-    };   
+    };
 }

@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Vector2.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/containers/array.h>
@@ -31,6 +32,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpUvMapImporter)
+
             const char* AssImpUvMapImporter::m_defaultNodeName = "UV";
 
             AssImpUvMapImporter::AssImpUvMapImporter()

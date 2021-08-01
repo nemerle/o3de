@@ -10,6 +10,7 @@
 #include <LmbrCentral/Animation/AttachmentComponentBus.h>
 #include <AtomLyIntegration/CommonFeatures/Mesh/MeshComponentBus.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Math/Transform.h>
@@ -151,18 +152,18 @@ namespace AZ
 
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("AttachmentService", 0x5aaa7b63));
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("AttachmentService", 0x5aaa7b63));
                 incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
             }
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
             {
                 required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
             }

@@ -9,11 +9,8 @@
 
 #include <Atom/RHI.Reflect/ShaderResourceGroupLayout.h>
 #include <Atom/RHI.Reflect/ConstantsLayout.h>
-
 #include <AtomCore/std/containers/array_view.h>
-
 #include <AzCore/Name/Name.h>
-#include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/containers/fixed_vector.h>
 #include <AzCore/std/containers/unordered_map.h>
 
@@ -149,7 +146,7 @@ namespace AZ
 
             /// List of layout and binding information for each Shader Resource Group that is part of this Pipeline.
             AZStd::fixed_vector<ShaderResourceGroupLayoutInfo, RHI::Limits::Pipeline::ShaderResourceGroupCountMax> m_shaderResourceGroupLayoutsInfo;
-             
+
             /// Layout info about inline constants.
             Ptr<ConstantsLayout> m_rootConstantsLayout;
 

@@ -10,6 +10,7 @@
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/string/string.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <GraphCanvas/Components/SceneBus.h>
 #include <GraphCanvas/Components/Slots/SlotBus.h>
@@ -37,17 +38,17 @@ namespace GraphCanvas
         ~SlotComponent() override = default;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(kSlotServiceProviderId);
             provided.push_back(AZ_CRC("GraphCanvas_SceneMemberService", 0xe9759a2d));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& /*dependent*/)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& /*dependent*/)
         {
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& /*required*/)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& /*required*/)
         {
         }
 

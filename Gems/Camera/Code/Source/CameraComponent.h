@@ -7,6 +7,7 @@
  */
 #pragma once
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzFramework/Components/ComponentAdapter.h>
 

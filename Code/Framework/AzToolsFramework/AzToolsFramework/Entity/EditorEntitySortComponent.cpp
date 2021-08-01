@@ -8,6 +8,7 @@
 #include "EditorEntitySortComponent.h"
 #include "EditorEntityInfoBus.h"
 #include "EditorEntityHelpers.h"
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -20,6 +21,8 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        AZ_COMPONENT_IMPL(EditorEntitySortComponent)
+
         void EditorEntitySortComponent::Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -53,12 +56,12 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorEntitySortComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorEntitySortComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorChildEntitySortService", 0x916caa82));
         }
 
-        void EditorEntitySortComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorEntitySortComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorChildEntitySortService", 0x916caa82));
         }

@@ -23,7 +23,7 @@ namespace AzFramework
         , private AZ::Debug::TraceMessageBus::Handler
     {
     public:
-        AZ_COMPONENT(LogComponent, "{04AEB2E7-7F51-4426-9423-29D66C8DE1C1}")
+        AZ_COMPONENT_SPLIT(LogComponent, "{04AEB2E7-7F51-4426-9423-29D66C8DE1C1}")
         static void Reflect(AZ::ReflectContext* context);
 
         LogComponent();
@@ -56,9 +56,9 @@ namespace AzFramework
 
     private:
         /// \ref AZ::ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
         /// \ref AZ::ComponentDescriptor::GetIncompatibleServices
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         void ActivateLogFile();
         void DeactivateLogFile();

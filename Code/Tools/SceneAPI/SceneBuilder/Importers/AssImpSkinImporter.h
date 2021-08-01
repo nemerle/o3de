@@ -21,7 +21,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpSkinImporter, "{8FBCA725-C04E-42B7-9669-82DB3BB0901F}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpSkinImporter, "{8FBCA725-C04E-42B7-9669-82DB3BB0901F}", SceneCore::LoadingComponent);
 
                 AssImpSkinImporter();
                 ~AssImpSkinImporter() override = default;

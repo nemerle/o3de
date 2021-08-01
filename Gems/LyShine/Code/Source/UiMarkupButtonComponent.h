@@ -81,21 +81,21 @@ protected: // member functions
 
 protected: // static member functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiInteractableService", 0x1d474c98));
         provided.push_back(AZ_CRC("UiNavigationService"));
         provided.push_back(AZ_CRC("UiStateActionsService"));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiInteractableService", 0x1d474c98));
         incompatible.push_back(AZ_CRC("UiNavigationService"));
         incompatible.push_back(AZ_CRC("UiStateActionsService"));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiElementService", 0x3dca7ad4));
         required.push_back(AZ_CRC("UiTransformService", 0x3a838e34));

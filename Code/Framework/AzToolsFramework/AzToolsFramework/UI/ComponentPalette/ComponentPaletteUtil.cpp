@@ -10,6 +10,7 @@
 
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Component/Component.h>
+#include "AzCore/Component/ComponentDescriptor.h"
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
 AZ_PUSH_DISABLE_WARNING(4251, "-Wunknown-warning-option") // 4251: 'QLayoutItem::align': class 'QFlags<Qt::AlignmentFlag>' needs to have dll-interface to be used by clients of class 'QLayoutItem'
@@ -46,7 +47,7 @@ namespace AzToolsFramework
                 return true;
             }
 
-            AZ::ComponentDescriptor::DependencyArrayType providedServices;
+            AZ::ComponentDescriptorDependencyArrayType providedServices;
             componentDescriptor->GetProvidedServices(providedServices, nullptr);
 
             //reject this component if it does not offer any of the required services
@@ -180,7 +181,7 @@ namespace AzToolsFramework
         )
         {
             AZ_PROFILE_FUNCTION(AZ::Debug::ProfileCategory::AzToolsFramework);
-            
+
             bool containsEditable = false;
 
             serializeContext->EnumerateDerived<AZ::Component>(

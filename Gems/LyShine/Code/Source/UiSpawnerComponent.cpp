@@ -105,13 +105,13 @@ void UiSpawnerComponent::Reflect(AZ::ReflectContext* context)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void UiSpawnerComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+void UiSpawnerComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
 {
     provided.push_back(AZ_CRC("SpawnerService", 0xd2f1d7a3));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-void UiSpawnerComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+void UiSpawnerComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
 {
     dependent.push_back(AZ_CRC("TransformService", 0x8ee22c50));
 }

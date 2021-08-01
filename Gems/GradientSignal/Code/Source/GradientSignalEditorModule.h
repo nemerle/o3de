@@ -9,6 +9,7 @@
 #pragma once
 
 #include <GradientSignalModule.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace GradientSignal
 {
@@ -31,10 +32,10 @@ namespace GradientSignal
         AZ_COMPONENT(GradientSignalEditorSystemComponent, "{A3F1E796-7C69-441C-8FA1-3A4001EF2DE3}");
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
     private:
         // AZ::Component

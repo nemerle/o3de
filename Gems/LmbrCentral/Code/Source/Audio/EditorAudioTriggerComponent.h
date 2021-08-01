@@ -34,17 +34,17 @@ namespace LmbrCentral
 
         void SetObstructionType(Audio::ObstructionType) {}
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             LmbrCentral::AudioTriggerComponent::GetProvidedServices(provided);
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             LmbrCentral::AudioTriggerComponent::GetRequiredServices(required);
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             LmbrCentral::AudioTriggerComponent::GetIncompatibleServices(incompatible);
         }

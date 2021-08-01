@@ -61,24 +61,24 @@ namespace SurfaceData
         }
     }
 
-    void SurfaceDataColliderComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceDataColliderComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SurfaceDataProviderService", 0xfe9fb95e));
         services.push_back(AZ_CRC("SurfaceDataModifierService", 0x68f8aa72));
     }
 
-    void SurfaceDataColliderComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceDataColliderComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SurfaceDataProviderService", 0xfe9fb95e));
         services.push_back(AZ_CRC("SurfaceDataModifierService", 0x68f8aa72));
     }
 
-    void SurfaceDataColliderComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceDataColliderComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("PhysXColliderService", 0x4ff43f7c));
     }
 
-    void SurfaceDataColliderComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void SurfaceDataColliderComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("PhysicsWorldBodyService", 0x944da0cc));
     }

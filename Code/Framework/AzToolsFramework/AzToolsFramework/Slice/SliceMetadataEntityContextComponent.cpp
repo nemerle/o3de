@@ -7,6 +7,7 @@
  */
 
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Slice/SliceMetadataInfoBus.h>
 
@@ -22,6 +23,9 @@
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SliceMetadataEntityContextComponent)
+
     /*!  Default Constructor
     */
     SliceMetadataEntityContextComponent::SliceMetadataEntityContextComponent()
@@ -135,7 +139,7 @@ namespace AzToolsFramework
     }
 
     /*!  Get the ID of the slice metadata entity associated with the given slice instance address.
-        /param address      A Slice Instance Address 
+        /param address      A Slice Instance Address
         /return A Component Type List of all the components that need to be added to entities in the Slice Metadata Entity Context
     */
     AZ::EntityId SliceMetadataEntityContextComponent::GetMetadataEntityIdFromSliceAddress(const AZ::SliceComponent::SliceInstanceAddress& sliceAddress)
@@ -226,21 +230,21 @@ namespace AzToolsFramework
 
     /*!  Fills out a list of the component services provided by this context
     */
-    void SliceMetadataEntityContextComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SliceMetadataEntityContextComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("SliceMetadataEntityContextService", 0xa98f0bf9));
     }
 
     /*!  Fills out a list of the component services incompatible with this context
     */
-    void SliceMetadataEntityContextComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void SliceMetadataEntityContextComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("SliceMetadataEntityContextService", 0xa98f0bf9));
     }
 
     /*!  Fills out a list of the component services required for this context to function
     */
-    void SliceMetadataEntityContextComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void SliceMetadataEntityContextComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
     }

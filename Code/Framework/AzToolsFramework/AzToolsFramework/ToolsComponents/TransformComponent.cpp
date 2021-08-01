@@ -1075,12 +1075,12 @@ namespace AzToolsFramework
             gameEntity->CreateComponent<AzFramework::TransformComponent>()->SetConfiguration(configuration);
         }
 
-        void TransformComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void TransformComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }
 
-        void TransformComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void TransformComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }

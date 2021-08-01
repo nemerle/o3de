@@ -23,19 +23,19 @@ namespace LmbrCentral
 {
     static const float s_lineWidth = 0.1f; ///< The 'virtual' width of the line (for selection)
 
-    void EditorSplineComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void EditorSplineComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
     }
 
-    void EditorSplineComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorSplineComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("SplineService", 0x2b674d3c));
         provided.push_back(AZ_CRC("VariableVertexContainerService", 0x70c58740));
         provided.push_back(AZ_CRC("FixedVertexContainerService", 0x83f1bbf2));
     }
 
-    void EditorSplineComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorSplineComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("VariableVertexContainerService", 0x70c58740));
         incompatible.push_back(AZ_CRC("FixedVertexContainerService", 0x83f1bbf2));

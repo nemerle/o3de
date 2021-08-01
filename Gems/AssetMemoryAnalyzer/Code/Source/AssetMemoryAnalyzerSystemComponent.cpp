@@ -105,22 +105,22 @@ namespace AssetMemoryAnalyzer
         }
     }
 
-    void AssetMemoryAnalyzerSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AssetMemoryAnalyzerSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("AssetMemoryAnalyzerService", 0x23c52412));
     }
 
-    void AssetMemoryAnalyzerSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AssetMemoryAnalyzerSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("AssetMemoryAnalyzerService", 0x23c52412));
     }
 
-    void AssetMemoryAnalyzerSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void AssetMemoryAnalyzerSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         (void)required;
     }
 
-    void AssetMemoryAnalyzerSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void AssetMemoryAnalyzerSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         (void)dependent;
     }

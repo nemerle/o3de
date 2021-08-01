@@ -11,6 +11,7 @@
 #include <ReflectionProbe/ReflectionProbeComponentController.h>
 #include <ReflectionProbe/ReflectionProbeComponentConstants.h>
 #include <AzFramework/Components/ComponentAdapter.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

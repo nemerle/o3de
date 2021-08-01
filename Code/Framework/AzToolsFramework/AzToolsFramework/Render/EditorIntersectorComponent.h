@@ -21,7 +21,7 @@ namespace AzToolsFramework
         {
         public:
 
-            AZ_COMPONENT(EditorIntersectorComponent, "{8496804C-2CC8-4ABF-B9B1-60845E37FB7A}");
+            AZ_COMPONENT_SPLIT(EditorIntersectorComponent, "{8496804C-2CC8-4ABF-B9B1-60845E37FB7A}");
 
             //////////////////////////////////////////////////////////////////////////
             // Component overrides
@@ -30,7 +30,7 @@ namespace AzToolsFramework
 
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
             {
                 dependent.push_back(AZ_CRC("EditorEntityContextService", 0x28d93a43));
             }

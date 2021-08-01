@@ -67,17 +67,17 @@ namespace ScriptEvents
             }
         }
 
-        void ScriptEventReferencesComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void ScriptEventReferencesComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ScriptEventReference", 0x3df92d40));
         }
 
-        void ScriptEventReferencesComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void ScriptEventReferencesComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ScriptEventReference", 0x3df92d40));
         }
 
-        void ScriptEventReferencesComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void ScriptEventReferencesComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("LuaScriptService", 0x21d76c4b));
         }

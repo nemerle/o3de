@@ -18,6 +18,7 @@
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/UserSettings/UserSettings.h>
 #include <AzCore/std/parallel/lock.h>
 #include <AzCore/Debug/Profiler.h>
@@ -264,6 +265,10 @@ namespace AzFramework
 
     const AZ::u32 k_nullNetworkId = static_cast<AZ::u32>(-1);
 
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(TargetManagementComponent)
+
+
     TargetManagementComponent::TargetManagementComponent()
         : m_serializeContext(nullptr)
         , m_networkImpl(nullptr)
@@ -404,17 +409,17 @@ namespace AzFramework
         }
     }
 
-    void TargetManagementComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void TargetManagementComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("TargetManagerService", 0x6d5708bc));
     }
 
-    void TargetManagementComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void TargetManagementComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UserSettingsService", 0xa0eadff5));
     }
 
-    void TargetManagementComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void TargetManagementComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("TargetManagerService", 0x6d5708bc));
     }
@@ -622,7 +627,7 @@ namespace AzFramework
                 m_inbox.push_back(inboxMessage);
                 m_inboxMutex.unlock();
             }
-            
+
             return;
         }
 

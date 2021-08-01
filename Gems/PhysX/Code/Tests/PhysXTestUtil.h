@@ -9,6 +9,7 @@
 #pragma once
 
 #include "AzCore/Component/Component.h"
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Physics/Collision/CollisionEvents.h>
 #include <AzFramework/Physics/Common/PhysicsSimulatedBodyEvents.h>
 #include <AzFramework/Terrain/TerrainDataRequestBus.h>
@@ -73,7 +74,7 @@ namespace PhysX
     {
     public:
         AZ_COMPONENT(DummyTestTerrainComponent, "{EE4ECA23-9C27-4D5D-9C6F-271A19C0333E}");
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("TerrainService"));
         }

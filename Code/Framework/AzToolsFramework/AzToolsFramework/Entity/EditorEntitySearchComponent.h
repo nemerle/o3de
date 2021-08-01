@@ -20,7 +20,7 @@ namespace AzToolsFramework
             , public EditorEntitySearchBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorEntitySearchComponent, "{BD1E6D92-58D5-4364-A3CE-D9BE63C0D9C8}");
+            AZ_COMPONENT_SPLIT(EditorEntitySearchComponent, "{BD1E6D92-58D5-4364-A3CE-D9BE63C0D9C8}");
 
             EditorEntitySearchComponent() = default;
             ~EditorEntitySearchComponent() override = default;

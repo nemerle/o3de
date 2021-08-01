@@ -21,7 +21,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpTransformImporter, "{A7494C53-5822-40EF-9B60-B1FF09FBFA59}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpTransformImporter, "{A7494C53-5822-40EF-9B60-B1FF09FBFA59}", SceneCore::LoadingComponent);
 
                 AssImpTransformImporter();
                 ~AssImpTransformImporter() override = default;

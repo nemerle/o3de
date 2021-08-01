@@ -13,6 +13,7 @@
 #include <AzToolsFramework/Entity/EditorEntityInfoBus.h>
 
 #include <AzFramework/StringFunc/StringFunc.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
@@ -24,6 +25,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorEntitySearchComponent)
+
         void EditorEntitySearchComponent::Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))

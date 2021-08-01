@@ -28,9 +28,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::DecalComponentController, "{95834373-5D39-4C96-B0B2-F06E6B40B5BB}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
             DecalComponentController() = default;
             DecalComponentController(const DecalComponentConfig& config);

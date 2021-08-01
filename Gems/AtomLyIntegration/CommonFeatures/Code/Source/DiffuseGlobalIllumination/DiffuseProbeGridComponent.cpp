@@ -7,6 +7,7 @@
  */
 
 #include <DiffuseGlobalIllumination/DiffuseProbeGridComponent.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 
 namespace AZ
 {

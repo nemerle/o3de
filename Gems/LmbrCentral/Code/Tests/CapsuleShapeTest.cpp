@@ -9,6 +9,7 @@
 #include <AzTest/AzTest.h>
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Random.h>
 #include <AzFramework/Components/TransformComponent.h>
 #include <Shape/CapsuleShapeComponent.h>

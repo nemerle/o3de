@@ -6,12 +6,16 @@
  *
  */
 #include <AzCore/RTTI/RTTI.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzToolsFramework/Entity/EditorEntityFixupComponent.h>
 #include <AzToolsFramework/ToolsComponents/GenericComponentWrapper.h>
 #include <AzToolsFramework/ToolsComponents/TransformComponent.h>
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(EditorEntityFixupComponent)
+
     void EditorEntityFixupComponent::Reflect(AZ::ReflectContext* context)
     {
         if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -70,7 +74,7 @@ namespace AzToolsFramework
                 // We used to store slice root entity Id, which could be our own Id.
                 // Since we don't have an entity association during data conversion,
                 // we have to fix up this case post-entity-assignment.
-                // 
+                //
                 // Can't deal with this in component's Init() because some slice
                 // functions directly access uninitialized TransformComponents.
                 else if (auto editorTransformComponent = azrtti_cast<Components::TransformComponent*>(component))

@@ -10,6 +10,7 @@
 
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
@@ -85,7 +86,7 @@ namespace EMotionFX
 
                 // Force updating the joints when it is out of camera view. By
                 // default, joints level update (beside the root joint) on
-                // actor are disabled when the actor is out of view. 
+                // actor are disabled when the actor is out of view.
                 bool m_forceUpdateJointsOOV = false;
                 BoundingBoxConfiguration m_bboxConfig; ///< Configuration for bounding box type and updates
 
@@ -140,7 +141,7 @@ namespace EMotionFX
             void OnRagdollDeactivated() override;
 
             //////////////////////////////////////////////////////////////////////////
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("EMotionFXActorService", 0xd6e8f48d));
                 provided.push_back(AZ_CRC("MeshService", 0x71d8a455));
@@ -148,19 +149,19 @@ namespace EMotionFX
                 provided.push_back(AZ_CRC("MaterialReceiverService", 0x0d1a6a74));
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("EMotionFXActorService", 0xd6e8f48d));
                 incompatible.push_back(AZ_CRC("MeshService", 0x71d8a455));
                 incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
             }
 
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
             {
                 dependent.push_back(AZ_CRC("PhysicsService", 0xa7350d22));
             }
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
             {
                 required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
             }
@@ -172,7 +173,7 @@ namespace EMotionFX
             void OnAssetReloaded(AZ::Data::Asset<AZ::Data::AssetData> asset) override;
 
             bool IsPhysicsSceneSimulationFinishEventConnected() const;
-            
+
             void SetActorAsset(AZ::Data::Asset<ActorAsset> actorAsset);
             AZ::Data::Asset<ActorAsset> GetActorAsset() const { return m_configuration.m_actorAsset; }
 

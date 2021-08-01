@@ -26,7 +26,7 @@ namespace AzToolsFramework
             , public AzToolsFramework::Thumbnailer::ThumbnailerRequestsBus::Handler
         {
         public:
-            AZ_COMPONENT(ThumbnailerNullComponent, "{8009D651-3FAA-9815-B99E-AF174A3B29D4}")
+            AZ_COMPONENT_SPLIT(ThumbnailerNullComponent, "{8009D651-3FAA-9815-B99E-AF174A3B29D4}")
 
             ThumbnailerNullComponent();
             virtual ~ThumbnailerNullComponent();
@@ -37,7 +37,7 @@ namespace AzToolsFramework
             void Activate() override;
             void Deactivate() override;
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
             //////////////////////////////////////////////////////////////////////////
             // ThumbnailerRequests

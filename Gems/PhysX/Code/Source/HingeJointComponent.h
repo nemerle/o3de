@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Source/JointComponent.h>
 
 namespace PhysX
@@ -22,7 +23,7 @@ namespace PhysX
 
         HingeJointComponent() = default;
         HingeJointComponent(
-            const JointComponentConfiguration& configuration, 
+            const JointComponentConfiguration& configuration,
             const JointGenericProperties& genericProperties,
             const JointLimitProperties& limitProperties);
         ~HingeJointComponent() = default;

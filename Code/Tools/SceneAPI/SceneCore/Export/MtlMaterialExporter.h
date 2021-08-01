@@ -63,7 +63,7 @@ namespace AZ
                 , protected BaseMaterialExporterComponent
             {
             public:
-                AZ_COMPONENT(MaterialExporterComponent, "{F49A1534-05D9-4153-A86E-BF329CAAB543}", SceneCore::ExportingComponent);
+                AZ_COMPONENT_SPLIT(MaterialExporterComponent, "{F49A1534-05D9-4153-A86E-BF329CAAB543}", SceneCore::ExportingComponent);
 
                 MaterialExporterComponent();
                 ~MaterialExporterComponent() override = default;
@@ -78,7 +78,7 @@ namespace AZ
                 , protected BaseMaterialExporterComponent
             {
             public:
-                AZ_COMPONENT(RCMaterialExporterComponent, "{EB643AB1-E68E-4297-8334-BB458383A327}", SceneCore::RCExportingComponent);
+                AZ_COMPONENT_SPLIT(RCMaterialExporterComponent, "{EB643AB1-E68E-4297-8334-BB458383A327}", SceneCore::RCExportingComponent);
 
                 RCMaterialExporterComponent();
                 ~RCMaterialExporterComponent() override = default;

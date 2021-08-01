@@ -80,18 +80,18 @@ namespace SurfaceData
     {
     }
 
-    void TerrainSurfaceDataSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void TerrainSurfaceDataSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SurfaceDataProviderService", 0xfe9fb95e));
         services.push_back(AZ_CRC("TerrainSurfaceDataProviderService", 0xa1ac7717));
     }
 
-    void TerrainSurfaceDataSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void TerrainSurfaceDataSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("TerrainSurfaceDataProviderService", 0xa1ac7717));
     }
 
-    void TerrainSurfaceDataSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void TerrainSurfaceDataSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SurfaceDataSystemService", 0x1d44d25f));
     }

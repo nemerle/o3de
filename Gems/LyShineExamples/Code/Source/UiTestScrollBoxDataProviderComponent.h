@@ -10,6 +10,7 @@
 #include <LyShine/Bus/UiDynamicScrollBoxBus.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace LyShineExamples
 {
@@ -38,17 +39,17 @@ namespace LyShineExamples
 
     protected: // static member functions
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("UiDynamicContentProviderService", 0xe25f3f73));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("UiDynamicContentProviderService", 0xe25f3f73));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("UiDynamicScrollBoxService", 0x11112f1a));
             required.push_back(AZ_CRC("UiElementService", 0x3dca7ad4));

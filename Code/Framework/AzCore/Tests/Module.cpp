@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Module/Module.h>
 #include <AzCore/PlatformIncl.h>
 #include <AzCore/Module/ModuleManagerBus.h>
@@ -43,7 +44,7 @@ namespace UnitTest
         , protected SystemComponentRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(SystemComponentFromModule, "{7CDDF71F-4D9E-41B0-8F82-4FFA86513809}")
+        AZ_COMPONENT_SPLIT(SystemComponentFromModule, "{7CDDF71F-4D9E-41B0-8F82-4FFA86513809}")
 
         void Activate() override
         {
@@ -69,6 +70,9 @@ namespace UnitTest
             return true;
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SystemComponentFromModule)
 
     class StaticModule
         : public Module
@@ -327,7 +331,7 @@ namespace UnitTest
             :m_stringToWatchFor(stringToWatchFor)
         {
             BusConnect();
-            
+
         }
         bool OnPrintf(const char* window, const char* message) override
         {
@@ -358,7 +362,7 @@ namespace UnitTest
         // unloads it (even if the operating system still has a handle to it).
         // note that the above test already tests repeated loads and unloads, so there is no
         // need to test that here.
-        
+
         ComponentApplication app;
 
         // Start up application
@@ -369,35 +373,35 @@ namespace UnitTest
         ASSERT_NE(nullptr, systemEntity);
         systemEntity->Init();
         systemEntity->Activate();
-        
+
         // we open a scope here to make sure any heap allocations made by local variables during this test
         // are destroyed before we try to stop the app.
-        { 
+        {
             // we will use the fact that DynamicModuleHandle resolves paths to operating system specific
             // paths without actually calling Load(), and capture the final name it uses to load modules so that we
             // can manually load it ourselves.
             AZ::OSString finalPath;
-            
+
             {
                 auto handle = DynamicModuleHandle::Create("AzCoreTestDLL");
                 finalPath = handle->GetFilename();
             }
 
-            // now that we know the true name of the module in a way that it could be loaded by the operating system, 
+            // now that we know the true name of the module in a way that it could be loaded by the operating system,
             // we need to actually load the module using the operating system loader so that its "already loaded" by OS.
 
             {
 #if AZ_TRAIT_TEST_SUPPORT_LOADLIBRARY
                 // expect the module to not currently be loaded.
-                EXPECT_EQ(nullptr, GetModuleHandleA(finalPath.c_str())); 
+                EXPECT_EQ(nullptr, GetModuleHandleA(finalPath.c_str()));
                 HMODULE mod = ::LoadLibraryA(finalPath.c_str());
                 ASSERT_NE(nullptr, mod);
 #elif AZ_TRAIT_TEST_SUPPORT_DLOPEN
                 void* pHandle = dlopen(finalPath.c_str(), RTLD_NOW);
                 ASSERT_NE(nullptr, pHandle);
-#endif 
+#endif
 
-                // now that the operating system has an open handle to it, we load it using the 
+                // now that the operating system has an open handle to it, we load it using the
                 // AZ functions, and make sure that the AZ library correctly attaches even though
                 // the OS already has it open:
                 PrintFCollector watchForDestruction("UninitializeDynamicModule called");
@@ -422,10 +426,10 @@ namespace UnitTest
                 ::FreeLibrary(mod);
 #elif AZ_TRAIT_TEST_SUPPORT_DLOPEN
                 dlclose(pHandle);
-#endif // platform switch statement 
+#endif // platform switch statement
             }
         }
-        
+
         // shut down application (deletes Modules, unloads DLLs)
         app.Destroy();
     }

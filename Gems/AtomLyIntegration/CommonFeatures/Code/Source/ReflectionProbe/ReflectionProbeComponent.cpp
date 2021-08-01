@@ -7,6 +7,7 @@
  */
 
 #include <ReflectionProbe/ReflectionProbeComponent.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 
 namespace AZ
 {

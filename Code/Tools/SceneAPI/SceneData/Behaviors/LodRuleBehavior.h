@@ -34,7 +34,7 @@ namespace AZ
                 , public Events::GraphMetaInfoBus::Handler
             {
             public:
-                AZ_COMPONENT(LodRuleBehavior, "{D2E19864-9A4B-41FD-8ACC-DA6756728CB3}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(LodRuleBehavior, "{D2E19864-9A4B-41FD-8ACC-DA6756728CB3}", SceneCore::BehaviorComponent);
 
                 ~LodRuleBehavior() override = default;
 

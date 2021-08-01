@@ -34,7 +34,7 @@ namespace AZ
         , protected Data::AssetBus::MultiHandler
     {
     public:
-        AZ_COMPONENT(ScriptSystemComponent, "{EE57B2C2-4CF4-4CC1-9BA0-88F3BB298B2B}", Component)
+        AZ_COMPONENT_SPLIT(ScriptSystemComponent, "{EE57B2C2-4CF4-4CC1-9BA0-88F3BB298B2B}", Component)
 
         ScriptSystemComponent();
         ~ScriptSystemComponent() override;
@@ -109,11 +109,11 @@ namespace AZ
         //////////////////////////////////////////////////////////////////////////////////////////////
 
         /// \ref ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
         /// \ref ComponentDescriptor::GetIncompatibleServices
-        static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
         /// \ref ComponentDescriptor::GetDependentServices
-        static void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetDependentServices(ComponentDescriptorDependencyArrayType& dependent);
         /// \red ComponentDescriptor::Reflect
         static void Reflect(ReflectContext* reflection);
 

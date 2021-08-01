@@ -234,7 +234,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(CryEditDocFuncsHandler, "{628CE458-72E7-4B7B-B8A2-62F95F55E738}")
+        AZ_COMPONENT_SPLIT(CryEditDocFuncsHandler, "{628CE458-72E7-4B7B-B8A2-62F95F55E738}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 

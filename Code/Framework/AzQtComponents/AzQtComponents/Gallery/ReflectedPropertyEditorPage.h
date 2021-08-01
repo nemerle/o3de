@@ -36,7 +36,7 @@ class LevelThree
     : public AZ::Component
 {
 public:
-    AZ_COMPONENT(LevelThree, "{b912dd49-bfc7-4793-bd29-2e5bba8a98dd}", AZ::Component);
+    AZ_COMPONENT_SPLIT(LevelThree, "{b912dd49-bfc7-4793-bd29-2e5bba8a98dd}", AZ::Component);
 
     // AZ::Component interface implementation.
     void Init() override {}
@@ -54,7 +54,7 @@ class LevelTwo
     : public AZ::Component
 {
 public:
-    AZ_COMPONENT(LevelTwo, "{194ad97e-2e9a-4a47-9bba-643b41283d99}", AZ::Component);
+    AZ_COMPONENT_SPLIT(LevelTwo, "{194ad97e-2e9a-4a47-9bba-643b41283d99}", AZ::Component);
 
     // AZ::Component interface implementation.
     void Init() override {}
@@ -73,7 +73,7 @@ class LevelOne
     : public AZ::Component
 {
 public:
-    AZ_COMPONENT(LevelOne, "{0648f811-77e9-45a6-99c9-caaaf326b2a7}", AZ::Component);
+    AZ_COMPONENT_SPLIT(LevelOne, "{0648f811-77e9-45a6-99c9-caaaf326b2a7}", AZ::Component);
 
     // AZ::Component interface implementation.
     void Init() override {}
@@ -92,7 +92,7 @@ class GalleryComponent
     : public AZ::Component
 {
 public:
-    AZ_COMPONENT(GalleryComponent, "{84656cb6-1148-482b-b28b-7779a259c792}", AZ::Component);
+    AZ_COMPONENT_SPLIT(GalleryComponent, "{84656cb6-1148-482b-b28b-7779a259c792}", AZ::Component);
 
     enum class Mode : AZ::u8
         {

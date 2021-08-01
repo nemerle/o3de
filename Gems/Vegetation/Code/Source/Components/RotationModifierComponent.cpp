@@ -140,18 +140,18 @@ namespace Vegetation
         }
     }
 
-    void RotationModifierComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void RotationModifierComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationModifierService", 0xc551fca6));
         services.push_back(AZ_CRC("VegetationRotationModifierService", 0xfe7daa3d));
     }
 
-    void RotationModifierComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void RotationModifierComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationRotationModifierService", 0xfe7daa3d));
     }
 
-    void RotationModifierComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void RotationModifierComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
     }

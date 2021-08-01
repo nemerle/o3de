@@ -44,8 +44,8 @@ namespace Internal
         const AZ::Entity::ComponentArrayType components = entity->GetComponents();
         AZ::Entity::ComponentArrayType validComponents;
         AZ::Entity::ComponentArrayType incompatibleComponents;
-        AZ::ComponentDescriptor::DependencyArrayType incompatibleServices;
-        AZ::ComponentDescriptor::DependencyArrayType providedServices;
+        AZ::ComponentDescriptorDependencyArrayType incompatibleServices;
+        AZ::ComponentDescriptorDependencyArrayType providedServices;
         AZStd::string incompatibleNames;
         for (auto component : components)
         {

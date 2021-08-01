@@ -29,9 +29,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::PhysicalSkyComponentController, "{C3EEB94D-AEB9-4727-9493-791F86924804}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             PhysicalSkyComponentController() = default;
             PhysicalSkyComponentController(const PhysicalSkyComponentConfig& config);

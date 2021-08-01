@@ -9,6 +9,7 @@
 #include <AzTest/AzTest.h>
 #include <Builders/LevelBuilder/LevelBuilderWorker.h>
 #include <AzTest/Utils.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/Slice/SliceAssetHandler.h>
@@ -104,7 +105,7 @@ namespace UnitTest
 
             m_app.Start(m_descriptor);
             // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
             // in the unit tests.
             AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
             AZ::Debug::TraceMessageBus::Handler::BusConnect();

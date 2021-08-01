@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/IO/IStreamerTypes.h>
+#include <AzCore/IO/Streamer/RequestPath.h>
 #include <AzCore/IO/Streamer/Statistics.h>
 #include <AzCore/IO/Streamer/StreamerConfiguration.h>
 #include <AzCore/IO/Streamer/StreamerContext.h>
@@ -18,17 +19,23 @@
 #include <AzCore/std/parallel/mutex.h>
 #include <AzCore/std/parallel/thread.h>
 #include <AzCore/std/smart_ptr/shared_ptr.h>
+#include <AzCore/std/smart_ptr/intrusive_ptr.h>
 #include <AzCore/Statistics/RunningStatistic.h>
 
 namespace AZ::IO
 {
     class FileRequest;
-    
+    class ExternalFileRequest;
+    class FileRequestHandle;
+    using FileRequestPtr = AZStd::intrusive_ptr<ExternalFileRequest>;
+    class FileRequest;
+
     class Scheduler final
     {
     public:
         explicit Scheduler(AZStd::shared_ptr<StreamStackEntry> streamStack, u64 memoryAlignment = AZCORE_GLOBAL_NEW_ALIGNMENT,
             u64 sizeAlignment = 1, u64 granularity = 1_mib);
+        ~Scheduler();
         void Start(const AZStd::thread_desc& threadDesc);
         void Stop();
 
@@ -61,9 +68,7 @@ namespace AZ::IO
         bool Thread_ExecuteRequests();
         bool Thread_PrepareRequests(AZStd::vector<FileRequestPtr>& outstandingRequests);
         void Thread_ProcessTillIdle();
-        void Thread_ProcessCancelRequest(FileRequest* request, FileRequest::CancelData& data);
-        void Thread_ProcessRescheduleRequest(FileRequest* request, FileRequest::RescheduleData& data);
-        
+
         enum class Order
         {
             FirstRequest, //< The first request is the most important to process next.

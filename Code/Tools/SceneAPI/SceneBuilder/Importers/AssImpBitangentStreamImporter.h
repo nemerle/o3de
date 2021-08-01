@@ -19,7 +19,7 @@ namespace AZ
             class AssImpBitangentStreamImporter : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpBitangentStreamImporter, "{49FC818A-956F-43DA-BBAC-73198E0C5A1F}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpBitangentStreamImporter, "{49FC818A-956F-43DA-BBAC-73198E0C5A1F}", SceneCore::LoadingComponent);
 
                 AssImpBitangentStreamImporter();
                 ~AssImpBitangentStreamImporter() override = default;

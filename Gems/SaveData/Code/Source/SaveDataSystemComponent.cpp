@@ -45,13 +45,13 @@ namespace SaveData
     }
     
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void SaveDataSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SaveDataSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("SaveDataService"));
     }
     
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void SaveDataSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void SaveDataSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("SaveDataService"));
     }

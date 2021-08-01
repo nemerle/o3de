@@ -79,7 +79,7 @@ namespace JsonSerializationTests
         static void Reflect(AZStd::unique_ptr<AZ::SerializeContext>& context, bool fullReflection);
         static InstanceWithSomeDefaults<MultipleInheritence> GetInstanceWithSomeDefaults();
         static InstanceWithoutDefaults<MultipleInheritence> GetInstanceWithoutDefaults();
-        
+
         int m_var1{ 42 };
         float m_var2{ 42.0f };
     };
@@ -115,7 +115,7 @@ namespace JsonSerializationTests
         };
         AZ_CLASS_ALLOCATOR(SimpleEnumWrapper, AZ::SystemAllocator, 0);
         AZ_RTTI(SimpleEnumWrapper, "{CC95FF00-8D04-437A-9849-80D5AD7AD5DC}");
-        
+
         static constexpr bool SupportsPartialDefaults = true;
 
         SimpleEnumWrapper() = default;
@@ -144,7 +144,7 @@ namespace JsonSerializationTests
         };
         AZ_CLASS_ALLOCATOR(NonReflectedEnumWrapper, AZ::SystemAllocator, 0);
         AZ_RTTI(NonReflectedEnumWrapper, "{A80D5B6B-2FD1-46E9-A7A9-44C5E2650526}");
-        
+
         static constexpr bool SupportsPartialDefaults = true;
 
         NonReflectedEnumWrapper() = default;
@@ -186,16 +186,4 @@ namespace AZ
     AZ_TYPE_INFO_SPECIALIZE(JsonSerializationTests::NonReflectedEnumWrapper::SimpleEnumClass, "{E80E4A41-B29E-4B7C-B630-3B599172C837}");
     AZ_TYPE_INFO_SPECIALIZE(JsonSerializationTests::NonReflectedEnumWrapper::SimpleRawEnum, "{C42AF28D-4F84-4540-972A-5B6EEFAB13FF}");
     AZ_TYPE_INFO_TEMPLATE(JsonSerializationTests::TemplatedClass, "{CA4ADF74-66E7-4D16-B4AC-F71278C60EC7}", AZ_TYPE_INFO_TYPENAME);
-    
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-    
-    template< typename T>
-    struct SerializeGenericTypeInfo<JsonSerializationTests::TemplatedClass<T>, void> : SerializeGenericTypeInfoImpl<JsonSerializationTests::TemplatedClass<T>>
-    {
-        //treat JsonSerializationTests::TemplatedClass template as generic value type
-    };
 }

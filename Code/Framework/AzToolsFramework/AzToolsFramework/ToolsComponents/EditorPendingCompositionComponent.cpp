@@ -7,6 +7,7 @@
  */
 #include "EditorPendingCompositionComponent.h"
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
@@ -16,6 +17,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorPendingCompositionComponent)
+
         void EditorPendingCompositionComponent::Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -37,12 +41,12 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorPendingCompositionComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorPendingCompositionComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorPendingCompositionService", 0x6b5b794f));
         }
 
-        void EditorPendingCompositionComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorPendingCompositionComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorPendingCompositionService", 0x6b5b794f));
         }

@@ -46,22 +46,22 @@ namespace ImageProcessingAtom
             }
         }
 
-        void ImageThumbnailSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void ImageThumbnailSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("ImageThumbnailSystem"));
         }
 
-        void ImageThumbnailSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void ImageThumbnailSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("ImageThumbnailSystem"));
         }
 
-        void ImageThumbnailSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void ImageThumbnailSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("ThumbnailerService"));
         }
 
-        void ImageThumbnailSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void ImageThumbnailSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             AZ_UNUSED(dependent);
         }

@@ -18,6 +18,7 @@
 #include "CameraTransformBehaviors/FaceTarget.h"
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Module/Module.h>
 
 #include <AzFramework/Metrics/MetricsPlainTextNameRegistration.h>

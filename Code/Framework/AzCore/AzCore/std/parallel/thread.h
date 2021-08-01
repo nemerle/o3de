@@ -9,6 +9,7 @@
 
 #include <AzCore/std/parallel/config.h>
 #include <AzCore/std/allocator.h>
+#include <AzCore/std/utils.h>
 #include <AzCore/std/typetraits/alignment_of.h>
 #include <AzCore/std/chrono/types.h>
 
@@ -55,7 +56,7 @@ namespace AZStd
 
         //! Thread stack size. Default is -1, which means we will use the default stack size for each platform.
         int             m_stackSize{ -1 };
-        
+
         //! Windows: One of the following values:
         //!     THREAD_PRIORITY_IDLE
         //!     THREAD_PRIORITY_LOWEST
@@ -137,7 +138,7 @@ namespace AZStd
 
         // Extensions
         //thread(AZStd::delegate<void ()> d,const thread_desc* desc = 0);
-        
+
     private:
         thread(thread&);
         thread& operator=(thread&);
@@ -250,7 +251,7 @@ namespace AZStd
             }
         }
     }
-    
+
     template <>
     struct hash<thread_id>
     {

@@ -150,14 +150,14 @@ namespace AzFramework
         , public IVisibilitySystemRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(OctreeSystemComponent, "{CD4FF1C5-BAF4-421D-951B-1E05DAEEF67B}");
+        AZ_COMPONENT_SPLIT(OctreeSystemComponent, "{CD4FF1C5-BAF4-421D-951B-1E05DAEEF67B}");
 
         // Bind the DumpStats member function to the console as 'OctreeSystemComponent.DumpStats'
         AZ_CONSOLEFUNC(OctreeSystemComponent, DumpStats, AZ::ConsoleFunctorFlags::Null, "Dump octreeSystemComponent stats to the console window");
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         OctreeSystemComponent();
         virtual ~OctreeSystemComponent();

@@ -98,7 +98,7 @@ class GridHubComponent
 {
     friend class GridHubComponentFactory;
 public:
-    AZ_COMPONENT(GridHubComponent, "{11E4BB35-F135-4720-A890-979195A6B74E}");
+    AZ_COMPONENT_SPLIT(GridHubComponent, "{11E4BB35-F135-4720-A890-979195A6B74E}");
 
     GridHubComponent();
     ~GridHubComponent() override;

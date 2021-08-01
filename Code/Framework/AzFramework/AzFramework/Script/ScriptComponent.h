@@ -91,7 +91,7 @@ namespace AzFramework
     public:
         static const char* DefaultFieldName;
 
-        AZ_COMPONENT(AzFramework::ScriptComponent, "{8D1BC97E-C55D-4D34-A460-E63C57CD0D4B}", AZ::Component);
+        AZ_COMPONENT_SPLIT(AzFramework::ScriptComponent, "{8D1BC97E-C55D-4D34-A460-E63C57CD0D4B}", AZ::Component);
 
         /// \red ComponentDescriptor::Reflect
         static void Reflect(AZ::ReflectContext* reflection);

@@ -8,6 +8,7 @@
 
 #include <AzCore/IO/Streamer/Statistics.h>
 #include <AzCore/Debug/Profiler.h>
+#include <AzCore/std/utils.h>
 
 namespace AZ
 {

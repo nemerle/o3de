@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/std/smart_ptr/make_shared.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Component/NonUniformScaleBus.h>
 #include <AzCore/EBus/Results.h>
@@ -1501,7 +1502,7 @@ namespace PhysX
                     AZ::ComponentDescriptorBus::EventResult(
                         componentDescriptor, azrtti_typeid(component), &AZ::ComponentDescriptorBus::Events::GetDescriptor);
 
-                    AZ::ComponentDescriptor::DependencyArrayType services;
+                    AZ::ComponentDescriptorDependencyArrayType services;
                     componentDescriptor->GetDependentServices(services, nullptr);
 
                     return AZStd::find(services.begin(), services.end(), service) != services.end();

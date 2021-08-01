@@ -48,12 +48,12 @@ namespace AZ
             }
         }
 
-        void MaterialAssetDependenciesComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void MaterialAssetDependenciesComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("MaterialAssetDependenciesService", 0x28bbd0f3));
         }
 
-        void MaterialAssetDependenciesComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void MaterialAssetDependenciesComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("MaterialAssetDependenciesService", 0x28bbd0f3));
         }

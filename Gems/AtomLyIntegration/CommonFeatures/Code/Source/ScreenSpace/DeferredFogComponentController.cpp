@@ -50,17 +50,17 @@ namespace AZ
             }
         }
 
-        void DeferredFogComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void DeferredFogComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("DeferredFogService"));
         }
 
-        void DeferredFogComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void DeferredFogComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("DeferredFogService"));
         }
 
-        void DeferredFogComponentController::GetRequiredServices( [[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+        void DeferredFogComponentController::GetRequiredServices( [[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
         {   // In the future deferred fog might be required to be anchored to activation locations
             required.push_back(AZ_CRC_CE("PostFXLayerService"));   // For aggregated settings, otherwise settings are not updated
         }

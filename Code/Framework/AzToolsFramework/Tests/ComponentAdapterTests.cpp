@@ -8,6 +8,7 @@
 
 #include <AzTest/AzTest.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
@@ -69,13 +70,16 @@ namespace UnitTest
     {
     public:
         using BaseClass = AzFramework::Components::ComponentAdapter<TestController, TestConfig>;
-        AZ_COMPONENT(TestRuntimeComponent, "{136104E4-36A6-4778-AE65-065D33F87E76}", BaseClass);
+        AZ_COMPONENT_SPLIT(TestRuntimeComponent, "{136104E4-36A6-4778-AE65-065D33F87E76}", BaseClass);
         TestRuntimeComponent() = default;
         TestRuntimeComponent(const TestConfig& config)
             : BaseClass(config)
         {
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(TestRuntimeComponent)
 
     class TestEditorComponent
         : public AzToolsFramework::Components::EditorComponentAdapter<TestController, TestRuntimeComponent, TestConfig>

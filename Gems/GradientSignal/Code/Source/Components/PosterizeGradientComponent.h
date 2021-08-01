@@ -11,6 +11,7 @@
 #include <LmbrCentral/Dependency/DependencyMonitor.h>
 #include <GradientSignal/GradientSampler.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <GradientSignal/Ebuses/GradientRequestBus.h>
 #include <GradientSignal/Ebuses/PosterizeGradientRequestBus.h>
 
@@ -45,7 +46,7 @@ namespace GradientSignal
 
     /**
     * calculates a gradient value by converting values from another gradient to another's range
-    */      
+    */
     class PosterizeGradientComponent
         : public AZ::Component
         , private GradientRequestBus::Handler
@@ -54,9 +55,9 @@ namespace GradientSignal
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(PosterizeGradientComponent, PosterizeGradientComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         PosterizeGradientComponent(const PosterizeGradientConfig& configuration);

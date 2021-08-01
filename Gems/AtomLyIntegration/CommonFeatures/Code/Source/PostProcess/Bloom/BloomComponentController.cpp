@@ -43,17 +43,17 @@ namespace AZ
             }
         }
 
-        void BloomComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void BloomComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("BloomService"));
         }
 
-        void BloomComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void BloomComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("BloomService"));
         }
 
-        void BloomComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void BloomComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("PostFXLayerService"));
         }

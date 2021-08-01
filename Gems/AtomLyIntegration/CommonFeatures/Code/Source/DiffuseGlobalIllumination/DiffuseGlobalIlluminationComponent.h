@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Components/ComponentAdapter.h>
 #include <DiffuseGlobalIllumination/DiffuseGlobalIlluminationComponentConfig.h>
 #include <DiffuseGlobalIllumination/DiffuseGlobalIlluminationComponentConstants.h>

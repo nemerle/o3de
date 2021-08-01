@@ -38,7 +38,7 @@ namespace Driller
     {
         friend class ContextFactory;
     public:
-        AZ_COMPONENT(Driller::Context, "{60EC92BD-1D96-4E37-AB46-DF89A5497617}")
+        AZ_COMPONENT_SPLIT(Driller::Context, "{60EC92BD-1D96-4E37-AB46-DF89A5497617}")
 
         Context();
         virtual ~Context();

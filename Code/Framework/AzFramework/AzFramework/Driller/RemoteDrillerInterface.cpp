@@ -8,6 +8,7 @@
 
 #include <AzFramework/Driller/RemoteDrillerInterface.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -423,6 +424,10 @@ namespace AzFramework
     //---------------------------------------------------------------------
     // DrillerNetworkAgent
     //---------------------------------------------------------------------
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(DrillerNetworkAgentComponent)
+
     void DrillerNetworkAgentComponent::Init()
     {
         m_cbDrillerEnumRequest = TmMsgCallback(AZStd::bind(&DrillerNetworkAgentComponent::OnRequestDrillerEnum, this, AZStd::placeholders::_1));
@@ -458,12 +463,12 @@ namespace AzFramework
         m_activeSessions.clear();
     }
     //---------------------------------------------------------------------
-    void DrillerNetworkAgentComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void DrillerNetworkAgentComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("DrillerNetworkAgentService", 0xcd2ab821));
     }
     //---------------------------------------------------------------------
-    void DrillerNetworkAgentComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void DrillerNetworkAgentComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("DrillerNetworkAgentService", 0xcd2ab821));
     }
@@ -585,6 +590,10 @@ namespace AzFramework
     //---------------------------------------------------------------------
     // DrillerRemoteConsole
     //---------------------------------------------------------------------
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(DrillerNetworkConsoleComponent)
+
     void DrillerNetworkConsoleComponent::Init()
     {
         m_cbDrillerEnum = TmMsgCallback(AZStd::bind(&DrillerNetworkConsoleComponent::OnReceivedDrillerEnum, this, AZStd::placeholders::_1));
@@ -611,12 +620,12 @@ namespace AzFramework
         m_activeSessions.clear();
     }
     //---------------------------------------------------------------------
-    void DrillerNetworkConsoleComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void DrillerNetworkConsoleComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("DrillerNetworkConsoleService", 0x2286125d));
     }
     //---------------------------------------------------------------------
-    void DrillerNetworkConsoleComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void DrillerNetworkConsoleComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("DrillerNetworkConsoleService", 0x2286125d));
     }

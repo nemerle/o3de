@@ -29,12 +29,12 @@ namespace LyShine
         }
     }
 
-    void LyShineLoadScreenComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void LyShineLoadScreenComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.emplace_back(AZ_CRC("LyShineLoadScreenService", 0xBB5EAB17));
     }
 
-    void LyShineLoadScreenComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void LyShineLoadScreenComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.emplace_back(AZ_CRC("LyShineLoadScreenService", 0xBB5EAB17));
     }

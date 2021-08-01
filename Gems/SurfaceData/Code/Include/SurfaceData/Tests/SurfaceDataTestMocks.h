@@ -10,7 +10,9 @@
 #include <AzTest/AzTest.h>
 #include <AzCore/std/hash.h>
 #include <AzCore/Component/Entity.h>
+#include <AzCore/Component/Component.h>
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 
 #include <LmbrCentral/Shape/ShapeComponentBus.h>
@@ -123,7 +125,7 @@ namespace UnitTest
         void Deactivate() override {}
 
         static void Reflect(AZ::ReflectContext* reflect) { AZ_UNUSED(reflect); }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
         }

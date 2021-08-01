@@ -11,6 +11,7 @@
 #include <AzCore/Component/ComponentApplication.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Memory/AllocationRecords.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Slice/SliceComponent.h>
@@ -51,7 +52,7 @@ namespace UnitTest
             : public AZ::Component
         {
         public:
-            AZ_COMPONENT(TestComponent1, "{54BA51C3-41BD-4BB6-B1ED-7F6CEFAC2F9F}");
+            AZ_COMPONENT_SPLIT(TestComponent1, "{54BA51C3-41BD-4BB6-B1ED-7F6CEFAC2F9F}");
 
             void Init() override
             {
@@ -85,7 +86,7 @@ namespace UnitTest
             : public AZ::Component
         {
         public:
-            AZ_COMPONENT(TestComponent, "{F146074C-152E-483C-AD33-6D1945B4261A}");
+            AZ_COMPONENT_SPLIT(TestComponent, "{F146074C-152E-483C-AD33-6D1945B4261A}");
 
             void Init() override
             {
@@ -122,6 +123,7 @@ namespace UnitTest
             int m_drawOrder = 0;
             bool m_isPixelAligned = false;
         };
+
 
         AZ::Data::AssetId m_instantiatingSliceAsset;
         AZStd::atomic_int m_stressLoadPending;
@@ -630,6 +632,12 @@ namespace UnitTest
         }
     }; // class SliceInteractiveWorkflowTest
 
+
+    // Implement the CreateDescriptor static methods
+    AZ_COMPONENT_IMPL(SliceInteractiveWorkflowTest::TestComponent1)
+    AZ_COMPONENT_IMPL(SliceInteractiveWorkflowTest::TestComponent)
+
+
     TEST_F(SliceInteractiveWorkflowTest, DISABLED_Test)
     {
         run();
@@ -657,7 +665,7 @@ namespace UnitTest
     {
         run();
     }
-    
+
     class SortTransformParentsBeforeChildrenTest
         : public ScopedAllocatorSetupFixture
     {
@@ -914,7 +922,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(TestExportRuntimeComponent, "{C984534F-C907-4968-B9D3-AF2A99CBD678}", AZ::Component);
+        AZ_COMPONENT_SPLIT(TestExportRuntimeComponent, "{C984534F-C907-4968-B9D3-AF2A99CBD678}", AZ::Component);
 
         TestExportRuntimeComponent() {}
 
@@ -957,7 +965,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(TestExportOtherRuntimeComponent, "{7EEDCE0A-2D5F-4017-A20B-9224E52D75B8}");
+        AZ_COMPONENT_SPLIT(TestExportOtherRuntimeComponent, "{7EEDCE0A-2D5F-4017-A20B-9224E52D75B8}");
 
         void Activate() override {}
         void Deactivate() override {}
@@ -972,12 +980,15 @@ namespace UnitTest
         }
     };
 
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(TestExportRuntimeComponent)
+    AZ_COMPONENT_IMPL(TestExportOtherRuntimeComponent)
 
     class SliceTestExportEditorComponent
         : public AzToolsFramework::Components::EditorComponentBase
     {
     public:
-        AZ_COMPONENT(SliceTestExportEditorComponent, "{8FA877A2-38E6-49AD-B31E-71B86DC8BB03}", AzToolsFramework::Components::EditorComponentBase);
+        AZ_COMPONENT_SPLIT(SliceTestExportEditorComponent, "{8FA877A2-38E6-49AD-B31E-71B86DC8BB03}", AzToolsFramework::Components::EditorComponentBase);
 
         enum ExportComponentType
         {
@@ -1019,13 +1030,13 @@ namespace UnitTest
         {
             switch (m_exportType)
             {
-                case EXPORT_EDITOR_COMPONENT:    
+                case EXPORT_EDITOR_COMPONENT:
                     return AZ::ExportedComponent(thisComponent, false, m_exportHandled);
-                case EXPORT_RUNTIME_COMPONENT:   
+                case EXPORT_RUNTIME_COMPONENT:
                     return AZ::ExportedComponent(aznew TestExportRuntimeComponent(true, true), true, m_exportHandled);
                 case EXPORT_OTHER_RUNTIME_COMPONENT:
                     return AZ::ExportedComponent(aznew TestExportOtherRuntimeComponent(), true, m_exportHandled);
-                case EXPORT_NULL_COMPONENT:      
+                case EXPORT_NULL_COMPONENT:
                     return AZ::ExportedComponent(nullptr, false, m_exportHandled);
             }
 
@@ -1041,6 +1052,7 @@ namespace UnitTest
         bool m_exportHandled = false;
     };
 
+    AZ_COMPONENT_IMPL(SliceTestExportEditorComponent)
 
     class SliceCompilerTest
         : public ::testing::Test
@@ -1065,7 +1077,7 @@ namespace UnitTest
             m_app.Start(AzFramework::Application::Descriptor());
 
             // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
             // in the unit tests.
             AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
 

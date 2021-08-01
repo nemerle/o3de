@@ -74,10 +74,10 @@ namespace UnitTest
         template <typename ComponentA, typename ComponentB>
         bool IsComponentCompatible()
         {
-            AZ::ComponentDescriptor::DependencyArrayType providedServicesA;
+            AZ::ComponentDescriptorDependencyArrayType providedServicesA;
             ComponentA::GetProvidedServices(providedServicesA);
 
-            AZ::ComponentDescriptor::DependencyArrayType incompatibleServicesB;
+            AZ::ComponentDescriptorDependencyArrayType incompatibleServicesB;
             ComponentB::GetIncompatibleServices(incompatibleServicesB);
 
             for (auto providedServiceA : providedServicesA)

@@ -24,7 +24,7 @@ namespace AzToolsFramework
         friend class PerforceComponent;
 
     public:
-        AZ_COMPONENT(LocalFileSCComponent, "{5AE6565F-046D-42F4-8E95-77C163A98420}");
+        AZ_COMPONENT_SPLIT(LocalFileSCComponent, "{5AE6565F-046D-42F4-8E95-77C163A98420}");
 
         // Resolves an absolute wildcard path to a list of all matching files
         // Note that wildcards will not match across a directory level.  EX:  C:\some*\file.txt will NOT match C:\something\folder\file.txt.  It WILL match C:\something\file.txt

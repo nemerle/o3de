@@ -7,6 +7,7 @@
  */
 
 #include <OcclusionCullingPlane/OcclusionCullingPlaneComponent.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 
 namespace AZ
 {

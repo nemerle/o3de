@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 #include <AzCore/Outcome/Outcome.h>
 #include <AzCore/std/containers/stack.h>
@@ -76,7 +77,7 @@ namespace ScriptCanvas
         bool RemoveNode(const AZ::EntityId& nodeId) override;
         Node* FindNode(AZ::EntityId nodeID) const override;
 
-        AZStd::vector<AZ::EntityId> GetNodes() const override;        
+        AZStd::vector<AZ::EntityId> GetNodes() const override;
 
         Slot* FindSlot(const Endpoint& endpoint) const override;
 
@@ -140,17 +141,17 @@ namespace ScriptCanvas
         virtual void ReportError(const Node& node, const AZStd::string& errorSource, const AZStd::string& errorMessage);
 
     protected:
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ScriptCanvasRuntimeService", 0x776e1e3a));;
         }
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ScriptCanvasService", 0x41fd58f3));
         }
@@ -178,9 +179,9 @@ namespace ScriptCanvas
         VariableId FindAssetVariableIdByRuntimeVariableId(VariableId runtimeId) const override { return runtimeId; }
         AZ::EntityId FindAssetNodeIdByRuntimeNodeId(AZ::EntityId editorNode) const override { return editorNode; }
         AZ::EntityId FindRuntimeNodeIdByAssetNodeId(AZ::EntityId runtimeNode) const override { return runtimeNode; }
-        
+
         VariableData* GetVariableData() override;
-        
+
         const GraphVariableMapping* GetVariables() const override;
         GraphVariable* FindVariable(AZStd::string_view propName) override;
         GraphVariable* FindVariableById(const VariableId& variableId) override;
@@ -211,7 +212,7 @@ namespace ScriptCanvas
         // Keeps a mapping of the Node EntityId -> NodeComponent.
         // Saves looking up the NodeComponent everytime we need the Node.
         AZStd::unordered_map<AZ::EntityId, Node* > m_nodeMapping;
-        
+
         bool m_isObserved;
         bool m_batchAddingData;
 

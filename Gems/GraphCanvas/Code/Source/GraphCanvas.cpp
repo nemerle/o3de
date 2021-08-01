@@ -177,12 +177,12 @@ namespace GraphCanvas
         }
     }
 
-    void GraphCanvasSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void GraphCanvasSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
     }
 
-    void GraphCanvasSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void GraphCanvasSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(GraphCanvasRequestsServiceId);
     }

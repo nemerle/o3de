@@ -31,18 +31,18 @@ namespace NvCloth
     {
     }
     
-    void ClothComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ClothComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ClothMeshService", 0x6ffcbca5));
     }
     
-    void ClothComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void ClothComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("MeshService", 0x71d8a455));
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
     }
 
-    void ClothComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void ClothComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }

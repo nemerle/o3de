@@ -31,17 +31,17 @@ namespace AZ
             }
         }
 
-        void ShapeWeightModifierComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void ShapeWeightModifierComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("PostFXWeightModifierService"));
         }
 
-        void ShapeWeightModifierComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void ShapeWeightModifierComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("PostFXWeightModifierService"));
         }
 
-        void ShapeWeightModifierComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void ShapeWeightModifierComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("PostFXLayerService"));
             required.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));

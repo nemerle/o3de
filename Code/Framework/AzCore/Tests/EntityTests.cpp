@@ -9,6 +9,7 @@
 
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/Utils.h>
 
@@ -20,7 +21,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(SortOrderTestFirstComponent, "{00000000-0000-0000-0000-000000000010}");
+        AZ_COMPONENT_SPLIT(SortOrderTestFirstComponent, "{00000000-0000-0000-0000-000000000010}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -33,22 +34,25 @@ namespace UnitTest
             AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(reflection);
             if (serializeContext)
             {
-                serializeContext->Class<SortOrderTestFirstComponent, AZ::Component>(); 
+                serializeContext->Class<SortOrderTestFirstComponent, AZ::Component>();
             }
         }
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("SortOrderTestFirstService"));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SortOrderTestFirstComponent)
 
     // This component has the UUID with the second smallest value.
     class SortOrderTestSecondComponent
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(SortOrderTestSecondComponent, "{00000000-0000-0000-0000-000000000020}");
+        AZ_COMPONENT_SPLIT(SortOrderTestSecondComponent, "{00000000-0000-0000-0000-000000000020}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -64,18 +68,21 @@ namespace UnitTest
                 serializeContext->Class<SortOrderTestSecondComponent, AZ::Component>();
             }
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("SortOrderTestSecondService"));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SortOrderTestSecondComponent)
 
     // This component has the UUID with the largest value.
     class SortOrderTestThirdComponent
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(SortOrderTestThirdComponent, "{00000000-0000-0000-0000-000000000030}");
+        AZ_COMPONENT_SPLIT(SortOrderTestThirdComponent, "{00000000-0000-0000-0000-000000000030}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -91,11 +98,14 @@ namespace UnitTest
                 serializeContext->Class<SortOrderTestThirdComponent, AZ::Component>();
             }
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("SortOrderTestThirdService"));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SortOrderTestThirdComponent)
 
     // Used to verify that components are always sorted after their dependencies.
     class SortOrderTestRequiresFirstComponent
@@ -103,7 +113,7 @@ namespace UnitTest
     {
     public:
         // Purposely give this a UUID lower than its dependency.
-        AZ_COMPONENT(SortOrderTestRequiresFirstComponent, "{00000000-0000-0000-0000-000000000001}");
+        AZ_COMPONENT_SPLIT(SortOrderTestRequiresFirstComponent, "{00000000-0000-0000-0000-000000000001}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -120,11 +130,14 @@ namespace UnitTest
             }
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("SortOrderTestFirstService"));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SortOrderTestRequiresFirstComponent)
 
     // Used to verify that components are always sorted after their dependencies.
     class SortOrderTestRequiresSecondComponent
@@ -132,7 +145,7 @@ namespace UnitTest
     {
     public:
         // Purposely give this a UUID lower than its dependency.
-        AZ_COMPONENT(SortOrderTestRequiresSecondComponent, "{00000000-0000-0000-0000-000000000002}");
+        AZ_COMPONENT_SPLIT(SortOrderTestRequiresSecondComponent, "{00000000-0000-0000-0000-000000000002}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -149,11 +162,14 @@ namespace UnitTest
             }
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("SortOrderTestSecondService"));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SortOrderTestRequiresSecondComponent)
 
     // Used to verify that components are always sorted after their dependencies.
     class SortOrderTestRequiresSecondAndThirdComponent
@@ -161,7 +177,7 @@ namespace UnitTest
     {
     public:
         // Purposely give this a UUID between its dependencies.
-        AZ_COMPONENT(SortOrderTestRequiresSecondAndThirdComponent, "{00000000-0000-0000-0000-000000000025}");
+        AZ_COMPONENT_SPLIT(SortOrderTestRequiresSecondAndThirdComponent, "{00000000-0000-0000-0000-000000000025}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -178,12 +194,15 @@ namespace UnitTest
             }
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("SortOrderTestThirdService"));
             services.push_back(AZ_CRC("SortOrderTestSecondService"));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SortOrderTestRequiresSecondAndThirdComponent)
 
     // Used to verify that components that do not provide services are sorted after components that do.
     class SortOrderTestNoService
@@ -191,7 +210,7 @@ namespace UnitTest
     {
     public:
         // Purposely give this a UUID lower than the test components that provide services.
-        AZ_COMPONENT(SortOrderTestNoService, "{00000000-0000-0000-0000-000000000003}");
+        AZ_COMPONENT_SPLIT(SortOrderTestNoService, "{00000000-0000-0000-0000-000000000003}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -208,6 +227,9 @@ namespace UnitTest
             }
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SortOrderTestNoService)
 
     // This component wraps the component base class, like GenericComponentWrapper.
     // GenericComponentWrapper is used in the editor for components that don't have specific editor representations.
@@ -268,7 +290,7 @@ namespace UnitTest
         // Provide a service so that this component sorts with all other components that provide services.
         // This is used to test that the wrapped component sorts with what it wraps, and it is used
         // here to wrap components that provide services.
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("TestWrapperService"));
         }
@@ -305,7 +327,7 @@ namespace UnitTest
             SortOrderTestComponentWrapper::Reflect(reflection);
         }
 
-        void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided, const AZ::Component* instance) const override
+        void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided, const AZ::Component* instance) const override
         {
             const AZ::ComponentDescriptor* templateDescriptor = GetTemplateDescriptor(instance);
             if (templateDescriptor)
@@ -314,7 +336,7 @@ namespace UnitTest
             }
         }
 
-        void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent, const AZ::Component* instance) const override
+        void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent, const AZ::Component* instance) const override
         {
             const AZ::ComponentDescriptor* templateDescriptor = GetTemplateDescriptor(instance);
             if (templateDescriptor)
@@ -323,7 +345,7 @@ namespace UnitTest
             }
         }
 
-        void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required, const AZ::Component* instance) const override
+        void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required, const AZ::Component* instance) const override
         {
             const AZ::ComponentDescriptor* templateDescriptor = GetTemplateDescriptor(instance);
             if (templateDescriptor)
@@ -332,7 +354,7 @@ namespace UnitTest
             }
         }
 
-        void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible, const AZ::Component* instance) const override
+        void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible, const AZ::Component* instance) const override
         {
             const AZ::ComponentDescriptor* templateDescriptor = GetTemplateDescriptor(instance);
             if (templateDescriptor)
@@ -356,7 +378,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(DuplicateProvidedServiceComponent, "{D39D65A9-6A26-40A6-99FB-586E3AC14B56}");
+        AZ_COMPONENT_SPLIT(DuplicateProvidedServiceComponent, "{D39D65A9-6A26-40A6-99FB-586E3AC14B56}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -373,12 +395,15 @@ namespace UnitTest
             }
         }
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("DuplicatedService"));
             services.push_back(AZ_CRC("DuplicatedService"));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(DuplicateProvidedServiceComponent)
 
     // Used to verify that components that accidentally provide the same service twice initialize correctly and ignore the duplication.
     // Previously, a crash occured when a component depended on a service that was provided multiple times by another component.
@@ -386,7 +411,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(DependsOnDuplicateProvidedServiceComponent, "{1B78B608-AECB-44CE-9060-53A1998AB1D4}");
+        AZ_COMPONENT_SPLIT(DependsOnDuplicateProvidedServiceComponent, "{1B78B608-AECB-44CE-9060-53A1998AB1D4}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -403,11 +428,14 @@ namespace UnitTest
             }
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("DuplicatedService"));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(DependsOnDuplicateProvidedServiceComponent)
 
     // Used to verify that components that accidentally provide the same service twice initialize correctly and ignore the duplication.
     // Previously, a crash occured when a component required a service that was provided multiple times by another component.
@@ -415,7 +443,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(RequiresDuplicateProvidedServiceComponent, "{9AACE495-0E45-4DF0-B362-43CE12AE2F33}");
+        AZ_COMPONENT_SPLIT(RequiresDuplicateProvidedServiceComponent, "{9AACE495-0E45-4DF0-B362-43CE12AE2F33}");
 
         ///////////////////////////////////////
         // Component overrides
@@ -432,11 +460,14 @@ namespace UnitTest
             }
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("DuplicatedService"));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(RequiresDuplicateProvidedServiceComponent)
 
     class EntityTests : public UnitTest::SerializeContextFixture
     {

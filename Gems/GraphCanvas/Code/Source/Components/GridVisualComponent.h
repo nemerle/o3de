@@ -10,6 +10,7 @@
 #include <QGraphicsItem>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <GraphCanvas/Components/GridBus.h>
 #include <GraphCanvas/Components/StyleBus.h>
@@ -35,26 +36,26 @@ namespace GraphCanvas
         ~GridVisualComponent() override = default;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_GridVisualService", 0xd61e8c93));
             provided.push_back(AZ_CRC("GraphCanvas_RootVisualService", 0x9ec46d3b));
             provided.push_back(AZ_CRC("GraphCanvas_VisualService", 0xfbb2c871));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("GraphCanvas_GridVisualService", 0xd61e8c93));
             incompatible.push_back(AZ_CRC("GraphCanvas_RootVisualService", 0x9ec46d3b));
             incompatible.push_back(AZ_CRC("GraphCanvas_VisualService", 0xfbb2c871));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("GraphCanvas_GridService", 0x58f7e1d8));
         }
@@ -100,7 +101,7 @@ namespace GraphCanvas
         friend class GridGraphicsItem;
         AZStd::unique_ptr<GridGraphicsItem> m_gridVisualUi;
     };
-    
+
     class GridGraphicsItem
         : public RootGraphicsItem<QGraphicsItem>
         , protected StyleNotificationBus::Handler

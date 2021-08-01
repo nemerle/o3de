@@ -17,6 +17,7 @@
 // AzCore
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Console/IConsole.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
@@ -412,6 +413,9 @@ inline namespace Commands
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(CryEditPythonHandler)
+
     void CryEditPythonHandler::Reflect(AZ::ReflectContext* context)
     {
         if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))

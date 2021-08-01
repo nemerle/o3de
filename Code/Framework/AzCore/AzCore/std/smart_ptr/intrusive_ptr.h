@@ -21,8 +21,8 @@
 //
 
 #include <AzCore/std/smart_ptr/sp_convertible.h>
-#include <AzCore/RTTI/RTTI.h>
 #include <AzCore/std/typetraits/is_abstract.h>
+#include <AzCore/std/typetraits/typetraits.h>
 
 namespace AZStd
 {
@@ -112,7 +112,7 @@ namespace AZStd
                 CountPolicy::add_ref(px);
             }
         }
-        
+
         ~intrusive_ptr()
         {
             if (px != 0)
@@ -120,7 +120,7 @@ namespace AZStd
                 CountPolicy::release(px);
             }
         }
-        
+
         template<class U>
         enable_if_t<is_convertible<U*, T*>::value, intrusive_ptr&> operator=(intrusive_ptr<U> const& rhs)
         {
@@ -157,28 +157,28 @@ namespace AZStd
             this_type(rhs).swap(*this);
             return *this;
         }
-        
+
         intrusive_ptr& operator=(T* rhs)
         {
             this_type(rhs).swap(*this);
             return *this;
         }
-        
+
         void reset()
         {
             this_type().swap(*this);
         }
-        
+
         void reset(T* rhs)
         {
             this_type(rhs).swap(*this);
         }
-        
+
         T* get() const
         {
             return px;
         }
-        
+
         T& operator*() const
         {
             AZ_Assert(px != 0, "You can't dereference a null pointer");
@@ -277,11 +277,11 @@ namespace AZStd
         return const_cast<T*>(p.get());
     }
 
-    template<class T, class U>
-    intrusive_ptr<T> dynamic_pointer_cast(intrusive_ptr<U> const& p)
-    {
-        return azdynamic_cast<T*>(p.get());
-    }
+//    template<class T, class U>
+//    intrusive_ptr<T> dynamic_pointer_cast(intrusive_ptr<U> const& p)
+//    {
+//        return azdynamic_cast<T*>(p.get());
+//    }
 
     template <typename T>
     struct hash;

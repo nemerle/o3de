@@ -7,6 +7,7 @@
  */
 
 #include <Material/MaterialComponent.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 
 namespace AZ
 {

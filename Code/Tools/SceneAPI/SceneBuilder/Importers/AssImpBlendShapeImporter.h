@@ -21,7 +21,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpBlendShapeImporter, "{B0F7174B-9863-4C03-BFB2-83BF29B1A2DD}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpBlendShapeImporter, "{B0F7174B-9863-4C03-BFB2-83BF29B1A2DD}", SceneCore::LoadingComponent);
 
                 AssImpBlendShapeImporter();
                 ~AssImpBlendShapeImporter() override = default;

@@ -62,7 +62,7 @@ namespace AZ
         size_type       Capacity() const override                { return m_custom ? m_custom->Capacity() : AZ_CORE_MAX_ALLOCATOR_SIZE; } // custom size or unlimited
         size_type       GetMaxAllocationSize() const override    { return m_custom ? m_custom->GetMaxAllocationSize() : AZ_CORE_MAX_ALLOCATOR_SIZE; } // custom size or unlimited
         IAllocatorAllocate*  GetSubAllocator() override          { return m_custom ? m_custom : NULL; }
-         
+
     protected:
         OSAllocator(const OSAllocator&);
         OSAllocator& operator=(const OSAllocator&);

@@ -30,11 +30,11 @@ namespace AzNetworking
         , public INetworking
     {
     public:
-        AZ_COMPONENT(NetworkingSystemComponent, "{29914D25-5E8F-49C9-8C57-5125ABD3D489}");
+        AZ_COMPONENT_SPLIT(NetworkingSystemComponent, "{29914D25-5E8F-49C9-8C57-5125ABD3D489}");
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         NetworkingSystemComponent();
         ~NetworkingSystemComponent() override;

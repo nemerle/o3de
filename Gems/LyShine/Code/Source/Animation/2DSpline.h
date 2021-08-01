@@ -999,38 +999,3 @@ namespace UiSpline
         }
     };
 }; // namespace spline
-
-namespace AZ
-{
-    // Serialization helpers
-
-    template<typename S, typename T>
-    struct SerializeGenericTypeInfo<UiSpline::TSpline<S, T>, void> : SerializeGenericTypeInfoImpl<UiSpline::TSpline<S, T>>
-    {
-        // treat templated TSpline values as generic value types
-    };
-
-    template<typename S, typename T>
-    struct SerializeGenericTypeInfo<UiSpline::BezierSpline<S, T>, void> : SerializeGenericTypeInfoImpl<UiSpline::BezierSpline<S, T>>
-    {
-        // treat templated BezierSpline values as generic value types
-    };
-
-    template<typename T>
-    struct SerializeGenericTypeInfo<UiSpline::SplineKey<T>, void> : SerializeGenericTypeInfoImpl<UiSpline::SplineKey<T>>
-    {
-        // treat templated SplineKey values as generic value types
-    };
-
-    template<typename T>
-    struct SerializeGenericTypeInfo<UiSpline::SplineKeyEx<T>, void> : SerializeGenericTypeInfoImpl<UiSpline::SplineKeyEx<T>>
-    {
-        // treat templated SplineKeyEx values as generic value types
-    };
-    template<typename T>
-    struct SerializeGenericTypeInfo<UiSpline::TrackSplineInterpolator<T>, void>
-        : SerializeGenericTypeInfoImpl<UiSpline::TrackSplineInterpolator<T>>
-    {
-        // treat templated SplineKeyEx values as generic value types
-    };
-} // namespace AZ

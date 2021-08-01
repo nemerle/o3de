@@ -67,37 +67,37 @@ namespace AzFramework
         // Make GetProvidedServices, GetDependentServicesHelper, GetRequiredServices and GetIncompatibleServices optional.
 
         template<typename T>
-        void GetProvidedServicesHelper(AZ::ComponentDescriptor::DependencyArrayType&, const AZStd::false_type&) {}
+        void GetProvidedServicesHelper(AZ::ComponentDescriptorDependencyArrayType&, const AZStd::false_type&) {}
 
         template<typename T>
-        void GetProvidedServicesHelper(AZ::ComponentDescriptor::DependencyArrayType& services, const AZStd::true_type&)
+        void GetProvidedServicesHelper(AZ::ComponentDescriptorDependencyArrayType& services, const AZStd::true_type&)
         {
             T::GetProvidedServices(services);
         }
 
         template<typename T>
-        void GetDependentServicesHelper(AZ::ComponentDescriptor::DependencyArrayType&, const AZStd::false_type&) {}
+        void GetDependentServicesHelper(AZ::ComponentDescriptorDependencyArrayType&, const AZStd::false_type&) {}
 
         template<typename T>
-        void GetDependentServicesHelper(AZ::ComponentDescriptor::DependencyArrayType& services, const AZStd::true_type&)
+        void GetDependentServicesHelper(AZ::ComponentDescriptorDependencyArrayType& services, const AZStd::true_type&)
         {
             T::GetDependentServices(services);
         }
 
         template<typename T>
-        void GetRequiredServicesHelper(AZ::ComponentDescriptor::DependencyArrayType&, const AZStd::false_type&) {}
+        void GetRequiredServicesHelper(AZ::ComponentDescriptorDependencyArrayType&, const AZStd::false_type&) {}
 
         template<typename T>
-        void GetRequiredServicesHelper(AZ::ComponentDescriptor::DependencyArrayType& services, const AZStd::true_type&)
+        void GetRequiredServicesHelper(AZ::ComponentDescriptorDependencyArrayType& services, const AZStd::true_type&)
         {
             T::GetRequiredServices(services);
         }
 
         template<typename T>
-        void GetIncompatibleServicesHelper(AZ::ComponentDescriptor::DependencyArrayType&, const AZStd::false_type&) {}
+        void GetIncompatibleServicesHelper(AZ::ComponentDescriptorDependencyArrayType&, const AZStd::false_type&) {}
 
         template<typename T>
-        void GetIncompatibleServicesHelper(AZ::ComponentDescriptor::DependencyArrayType& services, const AZStd::true_type&)
+        void GetIncompatibleServicesHelper(AZ::ComponentDescriptorDependencyArrayType& services, const AZStd::true_type&)
         {
             T::GetIncompatibleServices(services);
         }

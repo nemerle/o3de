@@ -7,10 +7,13 @@
  */
 
 #include <AzCore/Slice/SliceMetadataInfoComponent.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 
 namespace AZ
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SliceMetadataInfoComponent)
 
     SliceMetadataInfoComponent::SliceMetadataInfoComponent(bool persistent)
         : m_persistent(persistent)
@@ -33,7 +36,7 @@ namespace AZ
         SliceMetadataInfoRequestBus::Handler::BusConnect(GetEntityId());
 
         // Application Events used to maintain synchronization
-        for (EntityId entityId : m_children) 
+        for (EntityId entityId : m_children)
         {
             EntityBus::MultiHandler::BusConnect(entityId);
         }
@@ -234,12 +237,12 @@ namespace AZ
     }
 
 
-    void SliceMetadataInfoComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SliceMetadataInfoComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("SliceMetadataInfoService", 0xdaaa6bb4));
     }
 
-    void SliceMetadataInfoComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void SliceMetadataInfoComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("SliceMetadataInfoService", 0xdaaa6bb4));
     }

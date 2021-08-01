@@ -8,11 +8,15 @@
 
 #include "IPCComponent.h"
 #include <AzCore/std/parallel/thread.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Serialization/EditContext.h>
 
 namespace LegacyFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(IPCComponent)
+
     void IPCComponent::Reflect(AZ::ReflectContext* reflection)
     {
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(reflection);

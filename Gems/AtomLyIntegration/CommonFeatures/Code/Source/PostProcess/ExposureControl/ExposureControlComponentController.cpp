@@ -43,17 +43,17 @@ namespace AZ
             }
         }
 
-        void ExposureControlComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void ExposureControlComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("ExposureControlService"));
         }
 
-        void ExposureControlComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void ExposureControlComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("ExposureControlService"));
         }
 
-        void ExposureControlComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void ExposureControlComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("PostFXLayerService"));
         }

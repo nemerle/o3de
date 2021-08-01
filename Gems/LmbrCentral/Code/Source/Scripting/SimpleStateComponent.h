@@ -9,6 +9,7 @@
 
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 #include <LmbrCentral/Scripting/SimpleStateComponentBus.h>
 
@@ -105,7 +106,7 @@ namespace LmbrCentral
         // Component descriptor
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("SimpleStateService", 0xbfba531e));
         }

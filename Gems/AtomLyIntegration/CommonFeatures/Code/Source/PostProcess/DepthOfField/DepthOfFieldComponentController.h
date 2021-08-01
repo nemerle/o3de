@@ -30,9 +30,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::DepthOfFieldComponentController, "{D0E1675C-7E6F-472D-B037-E0D7ED5AFBE8}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             DepthOfFieldComponentController() = default;
             DepthOfFieldComponentController(const DepthOfFieldComponentConfig& config);

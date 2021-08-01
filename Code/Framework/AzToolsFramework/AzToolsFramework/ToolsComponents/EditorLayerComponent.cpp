@@ -130,17 +130,17 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorLayerComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorLayerComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorLayerService", 0x3e120934));
         }
 
-        void EditorLayerComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorLayerComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorLayerService", 0x3e120934));
         }
 
-        void EditorLayerComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorLayerComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             // Even though Layers hide their position and rotation, layers require access to the transform service
             // for hierarchy information.

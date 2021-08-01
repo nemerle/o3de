@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/algorithm.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -27,10 +28,13 @@ namespace AZ
     {
         namespace Behaviors
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AnimationGroup)
+
             const int AnimationGroup::s_animationsPreferredTabOrder = 2;
 
             void AnimationGroup::Activate()
-            {       
+            {
             }
 
             void AnimationGroup::Deactivate()
@@ -66,7 +70,7 @@ namespace AZ
                 const Containers::SceneGraph &graph = scene.GetGraph();
                 auto nameStorage = graph.GetNameStorage();
                 auto contentStorage = graph.GetContentStorage();
-                
+
                 auto nameContentView = Containers::Views::MakePairView(nameStorage, contentStorage);
                 AZStd::string shallowestRootBoneName;
                 auto graphDownwardsView = Containers::Views::MakeSceneGraphDownwardsView<Containers::Views::BreadthFirst>(graph, graph.GetRoot(), nameContentView.begin(), true);
@@ -148,7 +152,7 @@ namespace AZ
                     }
                     if (group.GetId().IsNull())
                     {
-                        // When the uuid is null it's likely because the manifest has been updated from an older version. Include the 
+                        // When the uuid is null it's likely because the manifest has been updated from an older version. Include the
                         // name of the group as there could be multiple groups.
                         group.OverrideId(DataTypes::Utilities::CreateStableUuid(scene, SceneData::AnimationGroup::TYPEINFO_Uuid(), group.GetName()));
                         updated = true;

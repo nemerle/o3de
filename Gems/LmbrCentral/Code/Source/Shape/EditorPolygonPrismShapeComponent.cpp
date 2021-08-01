@@ -21,7 +21,7 @@
 
 namespace LmbrCentral
 {
-    void EditorPolygonPrismShapeComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorPolygonPrismShapeComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         EditorBaseShapeComponent::GetProvidedServices(provided);
         provided.push_back(AZ_CRC("PolygonPrismShapeService", 0x1cbc4ed4));
@@ -29,14 +29,14 @@ namespace LmbrCentral
         provided.push_back(AZ_CRC("FixedVertexContainerService", 0x83f1bbf2));
     }
 
-    void EditorPolygonPrismShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorPolygonPrismShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         EditorBaseShapeComponent::GetIncompatibleServices(incompatible);
         incompatible.push_back(AZ_CRC("VariableVertexContainerService", 0x70c58740));
         incompatible.push_back(AZ_CRC("FixedVertexContainerService", 0x83f1bbf2));
     }
 
-    void EditorPolygonPrismShapeComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void EditorPolygonPrismShapeComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }

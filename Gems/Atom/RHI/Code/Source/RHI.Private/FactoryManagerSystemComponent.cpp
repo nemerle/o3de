@@ -60,12 +60,12 @@ namespace AZ
             }
         }
 
-        void FactoryManagerSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void FactoryManagerSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(Factory::GetManagerComponentService());
         }
 
-        void FactoryManagerSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void FactoryManagerSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(Factory::GetManagerComponentService());
         }

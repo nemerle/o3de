@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <CoreLights/LtcCommon.h>
 
 namespace AZ
@@ -22,12 +23,12 @@ namespace AZ
 
             static void Reflect(ReflectContext* context);
 
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(ComponentDescriptorDependencyArrayType& required);
 
         protected:
-        
+
             // Component overrides ...
             void Init() override;
             void Activate() override;

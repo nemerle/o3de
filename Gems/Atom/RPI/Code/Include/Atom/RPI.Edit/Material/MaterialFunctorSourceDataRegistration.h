@@ -11,6 +11,7 @@
 #include <AzCore/base.h>
 #include <AzCore/Name/Name.h>
 #include <AzCore/Math/Uuid.h>
+#include <AzCore/RTTI/RTTI.h>
 #include <AzCore/std/containers/unordered_map.h>
 
 namespace AZ

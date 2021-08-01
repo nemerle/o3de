@@ -547,7 +547,7 @@ def create_template(source_path: pathlib.Path,
 
         # See if this file has the SysCompClassId
         try:
-            pattern = r'.*AZ_COMPONENT\(\$\{SanitizedCppName\}SystemComponent, \"(?P<SysCompClassId>\{.*-.*-.*-.*-.*\})\"'
+            pattern = r'.*AZ_COMPONENT(_SPLIT|_IMPL)?\(\$\{SanitizedCppName\}SystemComponent, \"(?P<SysCompClassId>\{.*-.*-.*-.*-.*\})\"'
             sys_comp_class_id = re.search(pattern, t_data).group('SysCompClassId')
             replacements.append((sys_comp_class_id, '${SysCompClassId}'))
             t_data = t_data.replace(sys_comp_class_id, '${SysCompClassId}')
@@ -556,7 +556,7 @@ def create_template(source_path: pathlib.Path,
 
         # See if this file has the EditorSysCompClassId
         try:
-            pattern = r'.*AZ_COMPONENT\(\$\{SanitizedCppName\}EditorSystemComponent, \"(?P<EditorSysCompClassId>\{.*-.*-.*-.*-.*\})\"'
+            pattern = r'.*AZ_COMPONENT(_SPLIT|_IMPL)?\(\$\{SanitizedCppName\}EditorSystemComponent, \"(?P<EditorSysCompClassId>\{.*-.*-.*-.*-.*\})\"'
             editor_sys_comp_class_id = re.search(pattern, t_data).group('EditorSysCompClassId')
             replacements.append((editor_sys_comp_class_id, '${EditorSysCompClassId}'))
             t_data = t_data.replace(editor_sys_comp_class_id, '${EditorSysCompClassId}')
@@ -1306,7 +1306,7 @@ def create_project(project_path: pathlib.Path,
     Template instantiation specialization that makes all default assumptions for a Project template instantiation,
      reducing the effort needed in instancing a project
     :param project_path: the project path, can be absolute or relative to default projects path
-    :param project_name: the project name, defaults to project_path basename if not provided 
+    :param project_name: the project name, defaults to project_path basename if not provided
     :param template_path: the path to the template you want to instance, can be absolute or relative to default templates path
     :param template_name: the name the registered template you want to instance, defaults to DefaultProject, resolves template_path
     :param project_restricted_path: path to the projects restricted folder, can be absolute or relative to the restricted='projects'
@@ -1922,7 +1922,7 @@ def create_gem(gem_path: pathlib.Path,
     replacements.append(("${NameUpper}", gem_name.upper()))
     replacements.append(("${NameLower}", gem_name.lower()))
     replacements.append(("${SanitizedCppName}", sanitized_cpp_name))
-    
+
 
     # module id is a uuid with { and -
     if module_id:

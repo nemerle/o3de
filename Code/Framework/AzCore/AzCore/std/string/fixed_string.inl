@@ -12,7 +12,7 @@
 #include <cstring>
 
 #include <AzCore/std/typetraits/is_integral.h>
-
+#include <AzCore/std/utils.h>
 #include <AzCore/std/string/fixed_string_Platform.inl>
 
 namespace AZStd

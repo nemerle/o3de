@@ -13,6 +13,7 @@
 #include <PhysX/ComponentTypeIds.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <AzFramework/Physics/Common/PhysicsEvents.h>
 #include <AzFramework/Physics/Common/PhysicsSimulatedBodyEvents.h>
@@ -27,7 +28,7 @@ namespace PhysX
 {
     /// ForceRegionComponent
     /// Applies a forces to objects within a region.
-    /// Uses a PhysX trigger collider to receive notifications about entities entering and exiting the region. 
+    /// Uses a PhysX trigger collider to receive notifications about entities entering and exiting the region.
     /// A net force will be calculated per entity by summing all the attached forces on each tick.
     class ForceRegionComponent
         : public AZ::Component
@@ -42,8 +43,8 @@ namespace PhysX
         ~ForceRegionComponent() = default;
 
     protected:
-        
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
             required.push_back(AZ_CRC("PhysXTriggerService", 0x3a117d7b));

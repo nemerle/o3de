@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 
 #include <AzCore/Math/Transform.h>
@@ -36,7 +37,7 @@ namespace AZ
             virtual ~ArcBallControllerComponent() = default;
 
             static void Reflect(AZ::ReflectContext* reflection);
-            
+
         private:
             /// CameraControllerComponent
             void OnEnabled() override;

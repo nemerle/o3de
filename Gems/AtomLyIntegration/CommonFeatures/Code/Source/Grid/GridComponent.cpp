@@ -8,6 +8,7 @@
 
 #include <Grid/GridComponent.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

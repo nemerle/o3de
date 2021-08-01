@@ -13,16 +13,20 @@
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/std/containers/vector.h>
 #include <AzCore/std/smart_ptr/shared_ptr.h>
+#include <AzCore/std/smart_ptr/intrusive_ptr.h>
 #include <AzCore/std/string/string.h>
 #include <AzCore/std/string/string_view.h>
-
+#include <AzCore/std/any.h>
 // These Streamer includes need to be moved to Streamer internals/implementation,
 // and pull out only what we need for visibility at IStreamer.h interface declaration.
 #include <AzCore/IO/Streamer/Statistics.h>
-#include <AzCore/IO/Streamer/FileRequest.h>
 
 namespace AZ::IO
 {
+    class ExternalFileRequest;
+    class FileRequestHandle;
+    using FileRequestPtr = AZStd::intrusive_ptr<ExternalFileRequest>;
+    enum class FileRequestReportType : int;
     /**
      * Data Streamer Interface
      */
@@ -42,7 +46,7 @@ namespace AZ::IO
         // These functions can't be called after a request has been queued.
         //
 
-        //! Creates a request to read a file. 
+        //! Creates a request to read a file.
         //! @param relativePath Relative path to the file to load. This can include aliases such as @assets@.
         //! @param outputBuffer The buffer that will hold the loaded data. This must be able to at least hold "size" number of bytes.
         //! @param outputBufferSize The size of the buffer that will hold the loaded data. This must be equal or larger than "size" number of bytes.
@@ -62,7 +66,7 @@ namespace AZ::IO
             IStreamerTypes::Priority priority = IStreamerTypes::s_priorityMedium,
             size_t offset = 0) = 0;
 
-        //! Sets a request to the read command. 
+        //! Sets a request to the read command.
         //! @param request The request that will store the read command.
         //! @param relativePath Relative path to the file to load. This can include aliases such as @assets@.
         //! @param outputBuffer The buffer that will hold the loaded data. This must be able to at least hold "size" number of bytes.
@@ -84,7 +88,7 @@ namespace AZ::IO
             IStreamerTypes::Priority priority = IStreamerTypes::s_priorityMedium,
             size_t offset = 0) = 0;
 
-        //! Creates a request to the read command. 
+        //! Creates a request to the read command.
         //! @param relativePath Relative path to the file to load. This can include aliases such as @assets@.
         //! @param allocator The allocator used to reserve and release memory for the read request. Memory allocated this way will
         //!         be automatically freed when there are no more references to the FileRequestPtr. To avoid this, use GetReadRequestResult
@@ -106,7 +110,7 @@ namespace AZ::IO
             IStreamerTypes::Priority priority = IStreamerTypes::s_priorityMedium,
             size_t offset = 0) = 0;
 
-        //! Sets a request to the read command. 
+        //! Sets a request to the read command.
         //! @param request The request that will store the read command.
         //! @param relativePath Relative path to the file to load. This can include aliases such as @assets@.
         //! @param allocator The allocator used to reserve and release memory for the read request. Memory allocated this way will
@@ -138,7 +142,7 @@ namespace AZ::IO
         //! @result A smart pointer to the newly created request with the cancel command.
         virtual FileRequestPtr Cancel(FileRequestPtr target) = 0;
 
-        //! Sets a request to the cancel command. 
+        //! Sets a request to the cancel command.
         //! When this request completes it's not guaranteed to have canceled the target request. Not all requests can be canceled and requests
         //! that already processing may complete. It's recommended to let the target request handle the completion of the request as normal
         //! and handle cancellation by checking the status on the target request is set to IStreamerTypes::RequestStatus::Canceled.
@@ -334,7 +338,7 @@ namespace AZ::IO
         //
 
         //! Collect statistics from all the components that make up Streamer.
-        //! This is thread safe in the sense that it won't crash. 
+        //! This is thread safe in the sense that it won't crash.
         //! Data is collected lockless from involved threads and might be slightly
         //! out of date in some cases.
         //! @param statistics The container where statistics will be added to.

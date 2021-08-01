@@ -9,6 +9,7 @@
 #include "EditorEntityIconComponent.h"
 
 #include <AzCore/RTTI/TypeInfo.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Asset/AssetManagerBus.h>
@@ -24,6 +25,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorEntityIconComponent)
+
         void EditorEntityIconComponent::Reflect(AZ::ReflectContext* context)
         {
             AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);
@@ -46,12 +50,12 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorEntityIconComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorEntityIconComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorEntityIconService", 0x94dff5d7));
         }
 
-        void EditorEntityIconComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorEntityIconComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorEntityIconService", 0x94dff5d7));
         }

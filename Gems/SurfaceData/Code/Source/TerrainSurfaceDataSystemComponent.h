@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/EBus/EBus.h>
 #include <CrySystemBus.h>
@@ -44,9 +45,9 @@ namespace SurfaceData
         //////////////////////////////////////////////////////////////////////////
         // Component static
         AZ_COMPONENT(TerrainSurfaceDataSystemComponent, "{0C821DA4-6DB1-4860-BE25-CB57B3E3F4D4}", AZ::Component);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         //////////////////////////////////////////////////////////////////////////

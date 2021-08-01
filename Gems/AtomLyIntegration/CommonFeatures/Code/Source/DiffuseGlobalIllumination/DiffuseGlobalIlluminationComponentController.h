@@ -24,9 +24,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::DiffuseGlobalIlluminationComponentController, "{7DE7D2A0-2526-447C-A11F-C31EE1332C26}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             DiffuseGlobalIlluminationComponentController() = default;
             DiffuseGlobalIlluminationComponentController(const DiffuseGlobalIlluminationComponentConfig& config);

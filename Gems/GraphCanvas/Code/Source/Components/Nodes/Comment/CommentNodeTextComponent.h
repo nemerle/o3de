@@ -17,6 +17,7 @@ AZ_PUSH_DISABLE_WARNING(4251 4800 4244, "-Wunknown-warning-option")
 AZ_POP_DISABLE_WARNING
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Color.h>
 #include <AzCore/RTTI/TypeInfo.h>
 
@@ -55,22 +56,22 @@ namespace GraphCanvas
         ~CommentNodeTextComponent() = default;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_CommentTextService", 0xb650db99));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incombatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incombatible)
         {
             incombatible.push_back(AZ_CRC("GraphCanvas_CommentTextService", 0xb650db99));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("GraphCanvas_StyledGraphicItemService", 0xeae4cdf4));
             required.push_back(AZ_CRC("GraphCanvas_SceneMemberService", 0xe9759a2d));

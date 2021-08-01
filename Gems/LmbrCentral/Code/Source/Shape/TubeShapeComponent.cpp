@@ -14,20 +14,20 @@
 
 namespace LmbrCentral
 {
-    void TubeShapeComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void TubeShapeComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
         provided.push_back(AZ_CRC("TubeShapeService", 0x3fe791b4));
     }
 
-    void TubeShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void TubeShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
         incompatible.push_back(AZ_CRC("TubeShapeService", 0x3fe791b4));
         incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }
 
-    void TubeShapeComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void TubeShapeComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         required.push_back(AZ_CRC("SplineService", 0x2b674d3c));

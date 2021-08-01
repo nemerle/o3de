@@ -136,7 +136,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(ViewPanePythonFuncsHandler, "{25C99C8F-4440-4656-ABC4-32134F496CC1}")
+        AZ_COMPONENT_SPLIT(ViewPanePythonFuncsHandler, "{25C99C8F-4440-4656-ABC4-32134F496CC1}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 

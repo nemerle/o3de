@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <ScriptCanvas/PerformanceStatistician.h>
 
@@ -32,7 +33,7 @@ namespace ScriptCanvasDeveloper
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
         ////////////////////////////////////////////////////////////////////////
         // AZ::Component...

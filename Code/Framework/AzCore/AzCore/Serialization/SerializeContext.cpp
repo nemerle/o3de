@@ -13,6 +13,7 @@
 #include <AzCore/Serialization/Utils.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/Memory/OSAllocator.h>
 
 /// include AZStd any serializer support
 #include <AzCore/Serialization/AZStdAnyDataContainer.inl>
@@ -1704,7 +1705,7 @@ namespace AZ
 
         m_classData->second.m_serializer = AZStd::move(serializer);
         return this;
-        
+
     }
 
     //=========================================================================
@@ -1802,7 +1803,7 @@ namespace AZ
         void* objectPtr = ptr;
         const AZ::Uuid* classIdPtr = &classId;
         const SerializeContext::ClassData* dataClassInfo = classData;
-        
+
         if (classElement)
         {
             // if we are a pointer, then we may be pointing to a derived type.
@@ -2193,8 +2194,8 @@ namespace AZ
                 }
             }
         }
-    }           
-    
+    }
+
     void AZ::SerializeContext::DataPatchUpgradeHandler::AddFieldUpgrade(DataPatchUpgrade* upgrade)
     {
         // Find the field
@@ -2449,7 +2450,7 @@ namespace AZ
             classData->m_eventHandler->OnWriteEnd(dataPtr);
             classData->m_eventHandler->OnObjectCloned(dataPtr);
         }
-        
+
         if (classData->m_serializer)
         {
             classData->m_serializer->PostClone(dataPtr);
@@ -2587,8 +2588,8 @@ namespace AZ
     void SerializeContext::RegisterDataContainer(AZStd::unique_ptr<IDataContainer> dataContainer)
     {
         m_dataContainers.push_back(AZStd::move(dataContainer));
-    } 
-    
+    }
+
     //=========================================================================
     // EnumerateBaseRTTIEnumCallback
     // [11/13/2012]
@@ -3151,8 +3152,9 @@ namespace AZ
 
     // Create the member OSAllocator and construct the unordered_map with that allocator
     SerializeContext::PerModuleGenericClassInfo::PerModuleGenericClassInfo()
-        : m_moduleLocalGenericClassInfos(AZ::AZStdIAllocator(&m_moduleOSAllocator))
-        , m_serializeContextSet(AZ::AZStdIAllocator(&m_moduleOSAllocator))
+        : m_moduleOSAllocator(new OSAllocator)
+        , m_moduleLocalGenericClassInfos(AZ::AZStdIAllocator(m_moduleOSAllocator))
+        , m_serializeContextSet(AZ::AZStdIAllocator(m_moduleOSAllocator))
     {
     }
 
@@ -3163,9 +3165,10 @@ namespace AZ
         // Reconstructs the module generic info map with the OSAllocator so that it the previous allocated memory is cleared
         // Afterwards destroy the OSAllocator
         {
-            m_moduleLocalGenericClassInfos = GenericInfoModuleMap(AZ::AZStdIAllocator(&m_moduleOSAllocator));
-            m_serializeContextSet = SerializeContextSet(AZ::AZStdIAllocator(&m_moduleOSAllocator));
+            m_moduleLocalGenericClassInfos = GenericInfoModuleMap(AZ::AZStdIAllocator(m_moduleOSAllocator));
+            m_serializeContextSet = SerializeContextSet(AZ::AZStdIAllocator(m_moduleOSAllocator));
         }
+        delete m_moduleOSAllocator;
     }
 
     void SerializeContext::PerModuleGenericClassInfo::Cleanup()
@@ -3194,8 +3197,13 @@ namespace AZ
             GenericClassInfo* genericClassInfo = moduleGenericClassInfoPair.second;
             // Explicitly invoke the destructor and clear the memory from the module OSAllocator
             genericClassInfo->~GenericClassInfo();
-            m_moduleOSAllocator.DeAllocate(genericClassInfo);
+            m_moduleOSAllocator->DeAllocate(genericClassInfo);
         }
+    }
+
+    void *SerializeContext::PerModuleGenericClassInfo::RawOSMemory(size_t blockSize, size_t alignment)
+    {
+        return m_moduleOSAllocator->Allocate(blockSize, alignment);
     }
 
     void SerializeContext::PerModuleGenericClassInfo::RegisterSerializeContext(AZ::SerializeContext* serializeContext)
@@ -3248,10 +3256,10 @@ namespace AZ
 
     AZ::IAllocatorAllocate& SerializeContext::PerModuleGenericClassInfo::GetAllocator()
     {
-        return m_moduleOSAllocator;
+        return *m_moduleOSAllocator;
     }
 
-    // Take advantage of static variables being unique per dll module to clean up module specific registered classes when the module unloads 
+    // Take advantage of static variables being unique per dll module to clean up module specific registered classes when the module unloads
     SerializeContext::PerModuleGenericClassInfo& GetCurrentSerializeContextModule()
     {
         static SerializeContext::PerModuleGenericClassInfo s_ModuleCleanupInstance;

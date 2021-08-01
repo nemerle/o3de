@@ -106,7 +106,7 @@ namespace StartingPointInput
     public:
         AZ_COMPONENT(StartingPointInputSystemComponent, "{95DE3485-5E51-42A9-899D-433EC3448AA3}");
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("AssetDatabaseService"));
             required.push_back(AZ_CRC("AssetCatalogService"));

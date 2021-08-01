@@ -14,12 +14,10 @@
 #include <AzCore/std/typetraits/is_integral.h>
 #include <AzCore/std/typetraits/is_signed.h>
 #include <AzCore/std/typetraits/is_unsigned.h>
-#include <AzCore/std/utils.h>
 
 #include <float.h>
 #include <limits>
 #include <math.h>
-#include <utility>
 
 // We have a separate inline define for math functions.
 // The performance of these functions is very sensitive to inlining, and some compilers don't deal well with this.
@@ -38,6 +36,13 @@ namespace AZ
 {
     class Quaternion;
     class SimpleLcgRandom;
+
+    template< typename T>
+    struct ClampResult
+    {
+        T value;
+        bool clamped;
+    };
 
     //! Important constants.
     namespace Constants
@@ -255,12 +260,12 @@ namespace AZ
     template<typename SourceType, typename ClampType>
     struct ClampedIntegralLimits
     {
-        //! If SourceType and ClampType are different, returns the greater value of 
+        //! If SourceType and ClampType are different, returns the greater value of
         //! std::numeric_limits<SourceType>::lowest() and std::numeric_limits<ClampType>::lowest(),
         //! otherwise returns std::numeric_limits<SourceType>::lowest().
         static constexpr SourceType Min();
 
-        //! If SourceType and ClampType are different, returns the lesser value of 
+        //! If SourceType and ClampType are different, returns the lesser value of
         //! std::numeric_limits<SourceType>::max() and std::numeric_limits<ClampType>::max(),
         //! otherwise returns std::numeric_limits<SourceType>::max().
         static constexpr SourceType Max();
@@ -271,7 +276,7 @@ namespace AZ
         //! @param second is a Boolean flag signifying whether or not the the value was required to be clamped
         //! in order to stay within ClampType's numerical range.
         template<typename ValueType>
-        static constexpr AZStd::pair<SourceType, bool> Clamp(ValueType value);        
+        static constexpr ClampResult<SourceType> Clamp(ValueType value);
     };
 
     //! Converts radians to degrees.
@@ -449,7 +454,7 @@ namespace AZ
     }
 
     // This wrapper function exists here to ensure the correct version of isnormal is used on certain platforms (namely Android) because of the
-    // math.h and cmath include order can be somewhat dangerous.  For example, cmath undefines isnormal (and a number of other C99 math macros 
+    // math.h and cmath include order can be somewhat dangerous.  For example, cmath undefines isnormal (and a number of other C99 math macros
     // defined in math.h) in favor of their std:: variants.
     AZ_MATH_INLINE bool IsNormalDouble(double x)
     {
@@ -462,7 +467,7 @@ namespace AZ
     }
 
     //! Returns the maximum value for SourceType as constrained by the numerical range of ClampType.
-    template <typename SourceType, typename ClampType>    
+    template <typename SourceType, typename ClampType>
     constexpr SourceType ClampedIntegralLimits<SourceType, ClampType>::Min()
     {
         if constexpr (AZStd::is_unsigned<ClampType>::value || AZStd::is_unsigned<SourceType>::value)
@@ -473,8 +478,8 @@ namespace AZ
         else
         {
             // Both SourceType and ClampType are signed, take the greater of the lower limits of each type
-            return sizeof(SourceType) < sizeof(ClampType) ? 
-                (std::numeric_limits<SourceType>::lowest)() : 
+            return sizeof(SourceType) < sizeof(ClampType) ?
+                (std::numeric_limits<SourceType>::lowest)() :
                 static_cast<SourceType>((std::numeric_limits<ClampType>::lowest)());
         }
     }
@@ -500,7 +505,7 @@ namespace AZ
                 // SourceType and ClampType are the same width, ClampType is signed
                 // so our upper limit will be ClampType
                 return static_cast<SourceType>((std::numeric_limits<ClampType>::max)());
-            }       
+            }
             else
             {
                 // SourceType and ClampType are the same width, ClampType is unsigned
@@ -512,7 +517,7 @@ namespace AZ
 
     template <typename SourceType, typename ClampType>
     template <typename ValueType>
-    constexpr AZStd::pair<SourceType, bool> ClampedIntegralLimits<SourceType, ClampType>::Clamp(ValueType value)
+    constexpr ClampResult<SourceType> ClampedIntegralLimits<SourceType, ClampType>::Clamp(ValueType value)
     {
         if (SafeIntegralCompare(value, Min()) == IntegralCompare::LessThan)
         {

@@ -186,14 +186,3 @@ namespace ScriptCanvas
 
     }
 }
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfo<ScriptCanvas::Nodes::LerpBetweenNodeable<T>>
-        : SerializeGenericTypeInfoImpl<ScriptCanvas::Nodes::LerpBetweenNodeable<T>>
-    {
-        // treat LerpBetweenNodeable as generic value type
-    };
-} // namespace AZ

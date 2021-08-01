@@ -26,7 +26,7 @@ namespace AZ
                 , public Events::AssetImportRequestBus::Handler
             {
             public:
-                AZ_COMPONENT(SkinGroup, "{348566F7-7113-4CEB-ADF8-C1CC686CD3BD}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(SkinGroup, "{348566F7-7113-4CEB-ADF8-C1CC686CD3BD}", SceneCore::BehaviorComponent);
 
                 static Crc32 s_skinVirtualType;
                 static const char* s_skinVirtualTypeName;

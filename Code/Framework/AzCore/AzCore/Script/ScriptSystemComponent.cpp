@@ -14,6 +14,7 @@
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Debug/TraceReflection.h>
@@ -53,6 +54,9 @@ namespace
         return 1;
     }
 }
+
+// Implement the CreateDescriptor static method
+AZ_COMPONENT_IMPL(ScriptSystemComponent)
 
 //=========================================================================
 // ScriptSystemComponent
@@ -728,7 +732,7 @@ void ScriptSystemComponent::GetHandledAssetTypes(AZStd::vector<Data::AssetType>&
 //=========================================================================
 // GetProvidedServices
 //=========================================================================
-void ScriptSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+void ScriptSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
 {
     provided.push_back(AZ_CRC("ScriptService", 0x787235ab));
 }
@@ -736,7 +740,7 @@ void ScriptSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyA
 //=========================================================================
 // GetIncompatibleServices
 //=========================================================================
-void ScriptSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+void ScriptSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
 {
     incompatible.push_back(AZ_CRC("ScriptService", 0x787235ab));
 }
@@ -744,7 +748,7 @@ void ScriptSystemComponent::GetIncompatibleServices(ComponentDescriptor::Depende
 //=========================================================================
 // GetDependentServices
 //=========================================================================
-void ScriptSystemComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent)
+void ScriptSystemComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& dependent)
 {
     dependent.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
 }
@@ -773,7 +777,7 @@ void ScriptSystemComponent::OnAssetPreReload(Data::Asset<Data::AssetData> asset)
 // #TEMP: Remove when asset dependencies are in place
 // This function will only be called for the asset that triggered the reload.
 //
-// Track all reload requests and remove them from the map one by one as they are handled. 
+// Track all reload requests and remove them from the map one by one as they are handled.
 // Once all queued reloads are handled, another full reload can be triggered.
 //=========================================================================
 void ScriptSystemComponent::OnAssetReloaded(Data::Asset<Data::AssetData> asset)
@@ -806,14 +810,14 @@ void ScriptSystemComponent::OnAssetReloaded(Data::Asset<Data::AssetData> asset)
                                 // Reload the asset from it's current data
                                 otherAsset.Reload();
 
-                                // Store the ID of the asset that we started reloading. We will use it to detect the moment 
+                                // Store the ID of the asset that we started reloading. We will use it to detect the moment
                                 // when all current reload requests are handled, and reloadFn can be called again.
                                 m_queuedReloads.insert(id);
                                 // the 'this->' in the following line is intentional.
                                 // the C++ standard requires the use of this-> on baseclass calls that are templated classes
                                 // most of the time you can get away with it, but in some cases MSVC will not correctly adjust the offset of this
                                 // during the call
-                                this->Data::AssetBus::MultiHandler::BusConnect(id); 
+                                this->Data::AssetBus::MultiHandler::BusConnect(id);
                             }
                         }
                     }
@@ -903,7 +907,7 @@ void ScriptSystemComponent::Reflect(ReflectContext* reflection)
 
     if (SerializeContext* serializeContext = azrtti_cast<SerializeContext*>(reflection))
     {
-        
+
         serializeContext->Class<ScriptSystemComponent, AZ::Component>()
             ->Version(1)
             // ->Attribute(AZ::Edit::Attributes::SystemComponentTags, AZStd::vector<AZ::Crc32>({ AZ_CRC("AssetBuilder", 0xc739c7d7) }))

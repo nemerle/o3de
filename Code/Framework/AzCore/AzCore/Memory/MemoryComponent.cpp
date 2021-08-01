@@ -11,11 +11,16 @@
 
 #include <AzCore/Memory/PoolAllocator.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
+
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 
 namespace AZ
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(MemoryComponent)
+
     //=========================================================================
     // MemoryComponent
     // [5/29/2012]
@@ -89,7 +94,7 @@ namespace AZ
     //=========================================================================
     // GetProvidedServices
     //=========================================================================
-    void MemoryComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+    void MemoryComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("MemoryService", 0x5c4d473c));
     }
@@ -97,7 +102,7 @@ namespace AZ
     //=========================================================================
     // GetIncompatibleServices
     //=========================================================================
-    void MemoryComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+    void MemoryComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("MemoryService", 0x5c4d473c));
     }

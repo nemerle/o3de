@@ -77,7 +77,7 @@ namespace AzToolsFramework
         friend class AZPreferencesView;
         friend class AZPreferencesItem;
 
-        AZ_COMPONENT(Framework, "{7E1721AE-5324-40ea-9E6E-8EDBF3BC7B2C}")
+        AZ_COMPONENT_SPLIT(Framework, "{7E1721AE-5324-40ea-9E6E-8EDBF3BC7B2C}")
 
         Framework();
         virtual ~Framework(void);

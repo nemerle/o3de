@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 
 #include <AzCore/Math/Matrix4x4.h>
@@ -63,9 +64,9 @@ namespace AZ
             AZ_COMPONENT(CameraComponent, "{2BAFDA24-B354-4C5C-95BE-D7254B4BD415}", AZ::Component);
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             CameraComponent() = default;
             virtual ~CameraComponent() override = default;
@@ -108,7 +109,7 @@ namespace AZ
             void UpdateViewToClipMatrix();
 
             RPI::ViewPtr m_view = nullptr;
-            
+
             // Work around the EntityContext being detached before the camera component is deactivated.
             // Without EntityContext class can't get AuxGeomFeatureProcessor to clean up per view draw interface.
             RPI::AuxGeomFeatureProcessorInterface* m_auxGeomFeatureProcessor = nullptr;

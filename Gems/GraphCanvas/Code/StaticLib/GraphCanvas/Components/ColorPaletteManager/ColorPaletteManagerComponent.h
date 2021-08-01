@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace GraphCanvas
 {
@@ -24,22 +25,22 @@ namespace GraphCanvas
             static void Reflect(AZ::ReflectContext* reflectContext);
 
             // Component
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("GraphCanvas_ColorPaletteManagerService", 0x6495addb));
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("GraphCanvas_ColorPaletteManagerService", 0x6495addb));
             }
 
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
             {
                 (void)dependent;
             }
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
             {
                 (void)required;
             }

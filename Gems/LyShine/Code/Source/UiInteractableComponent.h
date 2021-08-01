@@ -17,6 +17,7 @@
 #include "UiNavigationSettings.h"
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 
@@ -150,7 +151,7 @@ protected: // data members
     LyShine::ActionName m_releasedActionName;
 
     //! If true, the interactable automatically becomes active when navigated to via gamepad/keyboard.
-    //! Otherwise, a key press is needed to put the interactable in an active state 
+    //! Otherwise, a key press is needed to put the interactable in an active state
     bool m_isAutoActivationEnabled;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////

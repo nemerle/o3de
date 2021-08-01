@@ -74,17 +74,17 @@ namespace LandscapeCanvas
         return QObject::tr("Edit").toUtf8().constData();
     }
 
-    void EditorLandscapeCanvasComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void EditorLandscapeCanvasComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
 
-    void EditorLandscapeCanvasComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorLandscapeCanvasComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("LandscapeGraphService", 0x22fb2cc5));
     }
 
-    void EditorLandscapeCanvasComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorLandscapeCanvasComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("LandscapeGraphService", 0x22fb2cc5));
     }

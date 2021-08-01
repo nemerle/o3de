@@ -19,7 +19,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(PythonEditorFuncsHandler, "{0F470E7E-9741-4608-84B1-7E4735FDA526}")
+        AZ_COMPONENT_SPLIT(PythonEditorFuncsHandler, "{0F470E7E-9741-4608-84B1-7E4735FDA526}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 
@@ -34,7 +34,7 @@ namespace AzToolsFramework
         , public EditorLayerPythonRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(PythonEditorComponent, "{B06810A1-E3C0-4A63-8DDD-3A01C5299DD3}")
+        AZ_COMPONENT_SPLIT(PythonEditorComponent, "{B06810A1-E3C0-4A63-8DDD-3A01C5299DD3}")
 
         PythonEditorComponent() = default;
         ~PythonEditorComponent() override = default;

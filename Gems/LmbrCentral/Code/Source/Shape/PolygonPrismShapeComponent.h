@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/PolygonPrism.h>
 
 #include "PolygonPrismShape.h"
@@ -35,7 +36,7 @@ namespace LmbrCentral
         void Deactivate() override;
 
     protected:
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
             provided.push_back(AZ_CRC("PolygonPrismShapeService", 0x1cbc4ed4));
@@ -43,7 +44,7 @@ namespace LmbrCentral
             provided.push_back(AZ_CRC("FixedVertexContainerService", 0x83f1bbf2));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
             incompatible.push_back(AZ_CRC("PolygonPrismShapeService", 0x1cbc4ed4));
@@ -51,12 +52,12 @@ namespace LmbrCentral
             incompatible.push_back(AZ_CRC("FixedVertexContainerService", 0x83f1bbf2));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }

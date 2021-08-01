@@ -7,16 +7,17 @@
  */
 #pragma once
 
-#include <AzCore/Casting/numeric_cast.h>
-#include <AzCore/std/algorithm.h>
-#include <AzCore/std/createdestroy.h>
 #include <AzCore/std/iterator.h>
-#include <AzCore/std/hash.h>
+#include <AzCore/std/typetraits/conditional.h>
+#include <limits>
 
 namespace AZStd
 {
+
     namespace StringInternal
     {
+        constexpr size_t minSize(size_t left, size_t right) { return (left < right) ? left : right; }
+
         template<class Traits, class CharT, class SizeT>
         constexpr SizeT char_find(const CharT* s, size_t count, CharT ch, SizeT npos = static_cast<SizeT>(-1)) noexcept
         {
@@ -83,7 +84,7 @@ namespace AZStd
             }
 
             // Add one to offset so that for loop condition can check against 0 as the breakout condition
-            size_t lastIndex = (AZStd::min)(offset, size - count) + 1;
+            size_t lastIndex = StringInternal::minSize(offset, size - count) + 1;
 
             for (; lastIndex; --lastIndex)
             {
@@ -257,6 +258,7 @@ namespace AZStd
             }
             return npos;
         }
+
     }
 
     template<class Element>
@@ -481,16 +483,19 @@ namespace AZStd
             , m_size(count)
         {}
 
-        template <typename It, typename End, typename = AZStd::enable_if_t<
-            Internal::satisfies_contiguous_iterator_concept_v<It>
-            && is_same_v<typename AZStd::iterator_traits<It>::value_type, value_type>
-            && !is_convertible_v<End, size_type>>
-        >
-        constexpr basic_string_view(It first, End last)
-            : m_begin(AZStd::to_address(first))
-            , m_size(AZStd::to_address(last) - AZStd::to_address(first))
+        constexpr basic_string_view(const_pointer first, const_pointer last)
+            : m_begin(first)
+            , m_size(last - first)
         {}
-
+//        template <typename It, typename End, typename = AZStd::enable_if_t<
+//            Internal::satisfies_contiguous_iterator_concept_v<It>
+//            && is_same_v<typename AZStd::iterator_traits<It>::value_type, value_type>
+//            && !is_convertible_v<End, size_type>>
+//        >
+//        constexpr basic_string_view(It first, End last)
+//            : m_begin(AZStd::to_address(first))
+//            , m_size(AZStd::to_address(last) - AZStd::to_address(first))
+//        {}
         constexpr basic_string_view(const basic_string_view&) noexcept = default;
         constexpr basic_string_view(basic_string_view&& other)
         {
@@ -576,7 +581,7 @@ namespace AZStd
             {
                 return 0;
             }
-            size_type rlen = AZStd::min<size_type>(count, size() - pos);
+            size_type rlen = StringInternal::minSize(count, size() - pos);
             Traits::copy(dest, data() + pos, rlen);
             return rlen;
         }
@@ -584,12 +589,12 @@ namespace AZStd
         constexpr basic_string_view substr(size_type pos = 0, size_type count = npos) const
         {
             AZ_Assert(pos <= size(), "Cannot create substring where position is larger than size");
-            return pos > size() ? basic_string_view() : basic_string_view(data() + pos, AZStd::min<size_type>(count, size() - pos));
+            return pos > size() ? basic_string_view() : basic_string_view(data() + pos, StringInternal::minSize(count, size() - pos));
         }
 
         constexpr int compare(basic_string_view other) const
         {
-            size_t cmpSize = AZStd::min<size_type>(size(), other.size());
+            size_t cmpSize = StringInternal::minSize(size(), other.size());
             int cmpval = cmpSize == 0 ? 0 : Traits::compare(data(), other.data(), cmpSize);
             if (cmpval == 0)
             {
@@ -890,7 +895,8 @@ namespace AZStd
         }
         return hash;
     }
-
+    template<class T>
+    struct hash;
     template<class Element, class Traits>
     struct hash<basic_string_view<Element, Traits>>
     {

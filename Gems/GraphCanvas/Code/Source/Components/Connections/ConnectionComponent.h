@@ -16,6 +16,7 @@ AZ_PUSH_DISABLE_WARNING(4251, "-Wunknown-warning-option")
 AZ_POP_DISABLE_WARNING
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 #include <AzCore/std/string/string.h>
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
@@ -101,23 +102,23 @@ namespace GraphCanvas
         ~ConnectionComponent() override = default;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_ConnectionService", 0x7ef98865));
             provided.push_back(AZ_CRC("GraphCanvas_SceneMemberService", 0xe9759a2d));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("GraphCanvas_ConnectionService", 0x7ef98865));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
         {
         }
 
@@ -185,7 +186,7 @@ namespace GraphCanvas
         const ConnectionComponent& operator=(const ConnectionComponent&) = delete;
 
         void SetGroupTarget(AZ::EntityId groupTarget);
-        
+
         void FinalizeMove();
 
         virtual void OnConnectionMoveStart();
@@ -243,7 +244,7 @@ namespace GraphCanvas
         AZ::EntityId m_groupTarget;
         StateSetter< RootGraphicsItemDisplayState > m_forcedGroupDisplayStateStateSetter;
         StateSetter< AZStd::string > m_forcedLayerStateSetter;
-    }; 
+    };
 
     class ConnectionEventFilter
         : public SceneEventFilter

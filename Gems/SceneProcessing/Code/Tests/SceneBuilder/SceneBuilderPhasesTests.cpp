@@ -10,6 +10,7 @@
 
 #include <AzCore/Component/Component.h>
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Module/Environment.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
@@ -145,7 +146,7 @@ public:
         m_app.Start(AZ::ComponentApplication::Descriptor());
 
         // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-        // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+        // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
         // in the unit tests.
         AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
 

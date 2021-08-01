@@ -27,7 +27,7 @@ namespace AzFramework
     {
     public:
 
-        AZ_COMPONENT(AssetCatalogComponent, "{35D9C27B-CD07-4333-89BB-3D077444E10A}");
+        AZ_COMPONENT_SPLIT(AssetCatalogComponent, "{35D9C27B-CD07-4333-89BB-3D077444E10A}");
 
         AssetCatalogComponent();
         ~AssetCatalogComponent() override;
@@ -38,19 +38,19 @@ namespace AzFramework
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ScannerCatalogService", 0x74e0c82c));
             provided.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ScannerCatalogService", 0x74e0c82c));
             incompatible.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
         }

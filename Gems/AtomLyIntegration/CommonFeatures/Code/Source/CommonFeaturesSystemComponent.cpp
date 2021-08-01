@@ -41,22 +41,22 @@ namespace AZ
             CoreLightConstantsReflect(context);
         }
 
-        void AtomLyIntegrationCommonFeaturesSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void AtomLyIntegrationCommonFeaturesSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("LyIntegrationCommonFeaturesService", 0x9083ee7d));
         }
 
-        void AtomLyIntegrationCommonFeaturesSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+        void AtomLyIntegrationCommonFeaturesSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("LyIntegrationCommonFeaturesService", 0x9083ee7d));
         }
 
-        void AtomLyIntegrationCommonFeaturesSystemComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+        void AtomLyIntegrationCommonFeaturesSystemComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("CommonService", 0x6398eec4));
         }
 
-        void AtomLyIntegrationCommonFeaturesSystemComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent)
+        void AtomLyIntegrationCommonFeaturesSystemComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& dependent)
         {
             AZ_UNUSED(dependent);
         }

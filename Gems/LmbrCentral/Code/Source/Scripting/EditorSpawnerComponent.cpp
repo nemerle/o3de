@@ -54,17 +54,17 @@ namespace LmbrCentral
         }
     }
 
-    void EditorSpawnerComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorSpawnerComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         SpawnerComponent::GetProvidedServices(services);
     }
 
-    void EditorSpawnerComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorSpawnerComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         SpawnerComponent::GetRequiredServices(services);
     }
 
-    void EditorSpawnerComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorSpawnerComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         SpawnerComponent::GetDependentServices(services);
     }

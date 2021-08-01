@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Transform.h>
 #include <AzCore/Slice/SliceAsset.h>
 #include <AzFramework/Entity/EntityContextBus.h>
@@ -33,17 +34,17 @@ class UiFlipbookAnimationComponent
 {
 public: // static functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiFlipbookService"));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiFlipbookService"));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiIndexableImageService"));
     }
@@ -159,7 +160,7 @@ protected: // variables
     float   m_startDelay = 0.0f;    //!< Number of seconds to wait before playing the flipbook (applied only once during playback).
 
     float   m_loopDelay = 0.0f;     //!< Number of seconds to wait before playing the loop sequence
-    
+
     float   m_reverseDelay = 0.0f;  //!< Number of seconds to wait before playing the reverse loop sequence (PingPong loop types)
 
     bool    m_isAutoPlay = true;    //!< Whether the animation should automatically start playing.

@@ -30,7 +30,7 @@ namespace AzFramework
         , public RootSpawnableNotificationBus::Handler
     {
     public:
-        AZ_COMPONENT(SpawnableSystemComponent, "{12D0DA52-BB86-4AC3-8862-9493E0D0E207}");
+        AZ_COMPONENT_SPLIT(SpawnableSystemComponent, "{12D0DA52-BB86-4AC3-8862-9493E0D0E207}");
 
         inline static constexpr const char* RootSpawnableRegistryKey = "/Amazon/AzCore/Bootstrap/RootSpawnable";
             
@@ -46,9 +46,9 @@ namespace AzFramework
         //
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
         //
         // TickBus

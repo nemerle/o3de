@@ -34,7 +34,7 @@ namespace AzFramework
         friend TargetManagementNetworkImpl;
 
     public:
-        AZ_COMPONENT(TargetManagementComponent, "{39899133-42B3-4e92-A579-CDDC85A23277}")
+        AZ_COMPONENT_SPLIT(TargetManagementComponent, "{39899133-42B3-4e92-A579-CDDC85A23277}")
 
         TargetManagementComponent();
         ~TargetManagementComponent() override;
@@ -44,9 +44,9 @@ namespace AzFramework
         void Activate() override;
         void Deactivate() override;
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
         //////////////////////////////////////////////////////////////////////////
 
     protected:

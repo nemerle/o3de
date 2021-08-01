@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/std/iterator.h>
+#include <AzCore/std/utils.h>
 #include <AzCore/std/typetraits/integral_constant.h>
 #include <AzCore/std/typetraits/is_array.h>
 #include <AzCore/std/typetraits/is_assignable.h>
@@ -19,7 +20,7 @@
 
 namespace AZStd
 {
-    // alias std::pointer_traits into the AZStd::namespace 
+    // alias std::pointer_traits into the AZStd::namespace
     using std::pointer_traits;
 }
 namespace AZStd::Internal
@@ -576,7 +577,7 @@ namespace AZStd
 {
     //! Implements the C++17 uninitialized_move function
     //! The functions accepts two input iterators and an output iterator
-    //! It performs an AZStd::move on each in in the range of the input iterator 
+    //! It performs an AZStd::move on each in in the range of the input iterator
     //! and stores the result in location pointed by the output iterator
     template <typename InputIt, typename ForwardIt>
     ForwardIt uninitialized_move(InputIt first, InputIt last, ForwardIt result)

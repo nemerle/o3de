@@ -638,7 +638,7 @@ namespace spline
         //////////////////////////////////////////////////////////////////////////
 
         static void Reflect(AZ::SerializeContext* serializeContext) {}
-     
+
         inline void add_ref()
         {
             ++m_refCount;
@@ -1255,26 +1255,6 @@ namespace spline
 namespace AZ
 {
     AZ_TYPE_INFO_SPECIALIZE(spline::SplineKey<Vec2>, "{24A4D7E5-C36D-427D-AB49-CD86573B7288}");
-
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-    
-    //treat templated spline types as generic value types
-    template< typename T>
-    struct SerializeGenericTypeInfo<spline::SplineKey<T>, void> : SerializeGenericTypeInfoImpl<spline::SplineKey<T>>
-    {
-    };
-    
-    template <class T, class Key>
-    struct SerializeGenericTypeInfo<spline::BezierSpline<T,Key>, void> : SerializeGenericTypeInfoImpl<spline::BezierSpline<T,Key>>
-    {
-    };
-    template <class KeyType,class BasisType>
-    struct SerializeGenericTypeInfo<spline::TSpline<KeyType,BasisType>, void> : SerializeGenericTypeInfoImpl<spline::TSpline<KeyType,BasisType>>
-    {
-    };
 }
+
 #endif // CRYINCLUDE_CRYCOMMON_ISPLINES_H

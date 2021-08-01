@@ -35,8 +35,8 @@ namespace LmbrCentral
         void BuildGameEntity(AZ::Entity* gameEntity) override;
 
     protected:
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
     private:
         AZ_DISABLE_COPY_MOVE(EditorQuadShapeComponent);

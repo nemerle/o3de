@@ -52,22 +52,22 @@ namespace AZ
             }
         }
 
-        void OcclusionCullingPlaneComponentController::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void OcclusionCullingPlaneComponentController::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }
 
-        void OcclusionCullingPlaneComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void OcclusionCullingPlaneComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("OcclusionCullingPlaneService", 0x9123f33d));
         }
 
-        void OcclusionCullingPlaneComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void OcclusionCullingPlaneComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("OcclusionCullingPlaneService", 0x9123f33d));
         }
 
-        void OcclusionCullingPlaneComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void OcclusionCullingPlaneComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService"));
         }

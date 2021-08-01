@@ -10,12 +10,16 @@
 #include <AzNetworking/TcpTransport/TcpNetworkInterface.h>
 #include <AzNetworking/UdpTransport/UdpNetworkInterface.h>
 #include <AzCore/Interface/Interface.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Console/IConsole.h>
 #include <AzCore/Console/ILogger.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 namespace AzNetworking
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(NetworkingSystemComponent)
+
     void NetworkingSystemComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -25,12 +29,12 @@ namespace AzNetworking
         }
     }
 
-    void NetworkingSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void NetworkingSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("NetworkingService"));
     }
 
-    void NetworkingSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void NetworkingSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("NetworkingService"));
     }

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/containers/unordered_map.h>
 
 #include <GraphCanvas/Components/Nodes/NodeBus.h>
@@ -61,23 +62,23 @@ namespace ScriptCanvasEditor
     {
     public:
         AZ_COMPONENT(SlotMappingComponent, "{94DBC04C-964D-46A0-AD66-6A779FE4DC61}");
-        
+
         static void Reflect(AZ::ReflectContext* context);
-        
+
         SlotMappingComponent() = default;
         SlotMappingComponent(const AZ::EntityId& sourceId);
         ~SlotMappingComponent() = default;
-        
+
         void Activate();
         void Deactivate();
-        
+
         // GraphCanvas::NodeNotificationBus
         void OnAddedToScene(const AZ::EntityId&) override;
-        
+
         void OnSlotAddedToNode(const AZ::EntityId& slotId) override;
         void OnSlotRemovedFromNode(const AZ::EntityId& slotId) override;
         ////
-        
+
         // ScriptCanvasSlotRemappingBus
         AZ::EntityId MapToGraphCanvasId(const ScriptCanvas::SlotId& slotId) override;
         ////
@@ -90,12 +91,12 @@ namespace ScriptCanvasEditor
         // SceneMemberMappingConfigurationRequestBus
         void ConfigureMapping(const AZ::EntityId& scriptCanvasMemberId) override;
         ////
-        
+
     private:
 
         AZ::EntityId m_sourceId;
         AZStd::unordered_map< ScriptCanvas::SlotId, AZ::EntityId > m_slotMapping;
 
         AZStd::unordered_set< ScriptCanvas::SlotId > m_ignoreRenameSlots;
-    };    
+    };
 }

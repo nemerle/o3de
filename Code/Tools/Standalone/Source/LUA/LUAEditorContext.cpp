@@ -12,6 +12,7 @@
 
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Script/ScriptAsset.h>
@@ -53,6 +54,9 @@ namespace LUAEditor
     const char* LUAEditorInfoName = "Lua Editor";
 
     LUAEditor::Context* s_pLUAEditorScriptPtr = nullptr; // for script access
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(LUAEditor::Context)
 
     class BreakpointSavedState
         : public AZ::UserSettings
@@ -198,7 +202,7 @@ namespace LUAEditor
 
     }
 
-    void Context::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void Context::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AssetProcessorToolsConnection", 0x734669bc));
     }

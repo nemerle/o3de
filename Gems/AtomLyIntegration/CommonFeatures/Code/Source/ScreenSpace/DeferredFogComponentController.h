@@ -33,9 +33,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::DeferredFogComponentController, "{60B71D4C-1655-4C3A-BF14-CF6639B018CA}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             DeferredFogComponentController() = default;
             DeferredFogComponentController(const DeferredFogComponentConfig& config);

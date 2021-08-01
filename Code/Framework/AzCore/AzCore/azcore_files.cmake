@@ -38,6 +38,7 @@ set(FILES
     Casting/numeric_cast.h
     Component/Component.cpp
     Component/Component.h
+    Component/ComponentDescriptor.h
     Component/ComponentApplication.cpp
     Component/ComponentApplication.h
     Component/ComponentApplicationBus.h
@@ -442,6 +443,7 @@ set(FILES
     RTTI/AttributeReader.h
     RTTI/AzStdOnDemandPrettyName.inl
     RTTI/AzStdOnDemandReflection.inl
+    RTTI/AzStdOnDemandReflectionSpecializations.cpp
     RTTI/AzStdOnDemandReflectionLuaFunctions.inl
     RTTI/BehaviorContext.cpp
     RTTI/BehaviorContext.h

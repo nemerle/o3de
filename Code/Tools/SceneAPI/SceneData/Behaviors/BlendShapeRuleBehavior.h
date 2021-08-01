@@ -30,7 +30,7 @@ namespace AZ
                 , public Events::AssetImportRequestBus::Handler
             {
             public:
-                AZ_COMPONENT(BlendShapeRuleBehavior, "{D07DABE6-D731-4F4F-B55E-019EDE5B435E}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(BlendShapeRuleBehavior, "{D07DABE6-D731-4F4F-B55E-019EDE5B435E}", SceneCore::BehaviorComponent);
 
                 ~BlendShapeRuleBehavior() override = default;
 

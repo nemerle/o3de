@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <SceneAPI/SceneCore/Export/MtlMaterialExporter.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/containers/queue.h>
 #include <AzCore/std/containers/unordered_map.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -50,6 +51,10 @@ namespace AZ
     {
         namespace Export
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(MaterialExporterComponent)
+            AZ_COMPONENT_IMPL(RCMaterialExporterComponent)
+
             //
             // BaseMaterialExporterComponent
             //

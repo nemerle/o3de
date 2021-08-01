@@ -34,12 +34,12 @@ namespace Blast
         }
     }
 
-    void BlastMeshDataComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void BlastMeshDataComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("BlastMeshDataService"));
     }
 
-    void BlastMeshDataComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void BlastMeshDataComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("BlastMeshDataService"));
     }

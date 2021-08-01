@@ -29,10 +29,10 @@ namespace LmbrCentral
 
         AZ_RTTI((EditorWrappedComponentBase, "{059BC2AF-B086-4D5E-8F6C-2827AB69ED16}", TComponent, TConfiguration), EditorComponentBase);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
         //////////////////////////////////////////////////////////////////////////
         // AZ::Component interface implementation
@@ -59,22 +59,5 @@ namespace LmbrCentral
     };
 
 } // namespace LmbrCentral
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template<typename S,typename T>
-    struct SerializeGenericTypeInfo<LmbrCentral::EditorWrappedComponentBase<S,T>, void>
-        : SerializeGenericTypeInfoImpl<LmbrCentral::EditorWrappedComponentBase<S,T>>
-    {
-        // treat EditorWrappedComponentBase as generic value type
-    };
-
-} // namespace AZ
 
 #include "EditorWrappedComponentBase.inl"

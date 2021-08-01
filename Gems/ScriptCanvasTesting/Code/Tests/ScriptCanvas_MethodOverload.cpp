@@ -22,21 +22,6 @@
 using namespace ScriptCanvasTests;
 
 template<typename Type>
-class SingleTypeNodeable;
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfo<SingleTypeNodeable<T>> : SerializeGenericTypeInfoImpl<SingleTypeNodeable<T>>
-    {
-        // treat SingleTypeNodeable as generic value type
-    };
-
-} // namespace AZ
-
-
-template<typename Type>
 class SingleTypeNodeable
     : public ScriptCanvas::Nodeable
 {

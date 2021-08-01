@@ -58,17 +58,17 @@ namespace Vegetation
         }
     }
 
-    void DescriptorWeightSelectorComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DescriptorWeightSelectorComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationDescriptorSelectorService", 0xe684eeec));
     }
 
-    void DescriptorWeightSelectorComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DescriptorWeightSelectorComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationDescriptorSelectorService", 0xe684eeec));
     }
 
-    void DescriptorWeightSelectorComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DescriptorWeightSelectorComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& services)
     {
     }
 

@@ -12,6 +12,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/Serialization/DataPatch.h>
+#include <AzCore/EBus/EBus.h>
 #include <AzCore/Serialization/DataPatchBus.h>
 #include <AzCore/Serialization/DataPatchUpgradeManager.h>
 #include <AzCore/Serialization/Utils.h>
@@ -317,9 +318,9 @@ namespace AZ
             {
                 SerializeContext::ClassPersistentId sourcePersistentIdFunction = sourceElementNode.m_classData->GetPersistentId(*context);
 
-                tempPair.first = 
-                    sourcePersistentIdFunction 
-                    ? sourcePersistentIdFunction(sourceElementNode.m_data) 
+                tempPair.first =
+                    sourcePersistentIdFunction
+                    ? sourcePersistentIdFunction(sourceElementNode.m_data)
                     : elementIndex;
 
                 nodesToRemove[&sourceElementNode] = tempPair;
@@ -361,7 +362,7 @@ namespace AZ
                     elementId = elementIndex; // use index as an ID
                 }
 
-                address.emplace_back(elementId, 
+                address.emplace_back(elementId,
                                      targetElementNode.m_classData,
                                      nullptr,
                                      AddressTypeElement::ElementType::Index);
@@ -398,7 +399,7 @@ namespace AZ
                 ++elementIndex;
             }
 
-            // find elements we have removed 
+            // find elements we have removed
             for (auto& node : nodesToRemove)
             {
                 //do not need to remove this node
@@ -1428,7 +1429,7 @@ namespace AZ
             const AZStd::string_view pathElementView(pathElement);
             const size_t typeIdOpen = pathElementView.find(typeIdOpenDelim);
 
-            // Early out on the legacy case. 
+            // Early out on the legacy case.
             // If no expected formatting is found then check for <someNumber>/.
             // if found then use <someNumber> as the addressElement
             if (typeIdOpen == AZStd::string::npos)
@@ -2065,7 +2066,7 @@ namespace AZ
         // Convert the bytestream map into an AZStd::any map
         AZStd::unordered_map<AddressType, AZStd::any> anyPatchMap;
         AZ::Outcome<void, AZStd::string> mapConversionResult = ConvertByteStreamMapToAnyMap(context, classElement, anyPatchMap);
-        
+
         if (!mapConversionResult.IsSuccess())
         {
             DataPatchNotificationBus::Broadcast(&DataPatchNotificationBus::Events::OnLegacyDataPatchLoadFailed);

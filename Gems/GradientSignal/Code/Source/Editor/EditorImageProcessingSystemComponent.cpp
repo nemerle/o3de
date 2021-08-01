@@ -48,22 +48,22 @@ namespace GradientSignal
         }
     }
 
-    void EditorImageProcessingSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorImageProcessingSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientImageBuilderService", 0x00cea88a));
     }
 
-    void EditorImageProcessingSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorImageProcessingSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientImageBuilderService", 0x00cea88a));
     }
 
-    void EditorImageProcessingSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorImageProcessingSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         (void)services;
     }
 
-    void EditorImageProcessingSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void EditorImageProcessingSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         (void)services;
     }

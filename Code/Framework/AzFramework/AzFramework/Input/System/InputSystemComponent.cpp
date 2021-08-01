@@ -20,6 +20,7 @@
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace AzFramework
@@ -75,6 +76,9 @@ namespace AzFramework
             Call(FN_OnPostInputUpdate);
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(InputSystemComponent)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     void InputSystemComponent::Reflect(AZ::ReflectContext* context)
@@ -151,13 +155,13 @@ namespace AzFramework
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void InputSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void InputSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("InputSystemService", 0x5438d51a));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void InputSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void InputSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("InputSystemService", 0x5438d51a));
     }

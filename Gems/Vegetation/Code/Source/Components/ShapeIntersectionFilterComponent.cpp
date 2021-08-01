@@ -63,18 +63,18 @@ namespace Vegetation
         }
     }
 
-    void ShapeIntersectionFilterComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void ShapeIntersectionFilterComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationFilterService", 0x9f97cc97));
         services.push_back(AZ_CRC("VegetationShapeInersectionFilterService", 0x36dcda80));
     }
 
-    void ShapeIntersectionFilterComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void ShapeIntersectionFilterComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationShapeInersectionFilterService", 0x36dcda80));
     }
 
-    void ShapeIntersectionFilterComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void ShapeIntersectionFilterComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
     }

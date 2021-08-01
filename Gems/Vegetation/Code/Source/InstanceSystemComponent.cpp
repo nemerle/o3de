@@ -114,17 +114,17 @@ namespace Vegetation
         Cleanup();
     }
 
-    void InstanceSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void InstanceSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationInstanceSystemService", 0x823a6007));
     }
 
-    void InstanceSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void InstanceSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationInstanceSystemService", 0x823a6007));
     }
 
-    void InstanceSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void InstanceSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationDebugSystemService", 0x8cac3d67));
     }

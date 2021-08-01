@@ -24,7 +24,7 @@ namespace AZ::SceneAPI::SceneCore
         , public Events::CallProcessorBinder
     {
     public:
-        AZ_COMPONENT(GenerationComponent, "{3DBA42C1-894E-4437-B046-BC399E34366B}", Events::CallProcessorBinder);
+        AZ_COMPONENT_SPLIT(GenerationComponent, "{3DBA42C1-894E-4437-B046-BC399E34366B}", Events::CallProcessorBinder);
 
         SCENE_CORE_API void Activate() override;
         SCENE_CORE_API void Deactivate() override;

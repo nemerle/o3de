@@ -17,7 +17,7 @@ namespace AZ
         : public Component
     {
     public:
-        AZ_COMPONENT(JsonSystemComponent, "{3C2C7234-9512-4E24-86F0-C40865D7EECE}", Component);
+        AZ_COMPONENT_SPLIT(JsonSystemComponent, "{3C2C7234-9512-4E24-86F0-C40865D7EECE}", Component);
 
         void Activate();
         void Deactivate();

@@ -9,6 +9,7 @@
 #include <AzTest/AzTest.h>
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Components/TransformComponent.h>
 #include <LmbrCentral/Shape/SphereShapeComponentBus.h>
 #include <Shape/SphereShapeComponent.h>
@@ -67,7 +68,7 @@ namespace UnitTest
         CreateUnitSphere(AZ::Vector3::CreateZero(), entity);
     }
 
-    /** 
+    /**
      * @brief Creates a point in a sphere using spherical coordinates
      * @radius The radial distance from the center of the sphere
      * @verticalAngle The angle around the sphere vertically - think top to bottom

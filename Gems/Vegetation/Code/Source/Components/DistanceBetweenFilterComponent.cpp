@@ -76,18 +76,18 @@ namespace Vegetation
         return m_boundMode != BoundMode::Radius;
     }
 
-    void DistanceBetweenFilterComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DistanceBetweenFilterComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationFilterService", 0x9f97cc97));
         services.push_back(AZ_CRC("VegetationDistanceBetweenFilterService", 0xd9654a5b));
     }
 
-    void DistanceBetweenFilterComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DistanceBetweenFilterComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationDistanceBetweenFilterService", 0xd9654a5b));
     }
 
-    void DistanceBetweenFilterComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DistanceBetweenFilterComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
     }

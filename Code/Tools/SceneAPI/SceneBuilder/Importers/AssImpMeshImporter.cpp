@@ -7,6 +7,8 @@
  */
 
 #include <assimp/scene.h>
+
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzToolsFramework/Debug/TraceContext.h>
@@ -23,6 +25,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpMeshImporter)
+
             AssImpMeshImporter::AssImpMeshImporter()
             {
                 BindToCall(&AssImpMeshImporter::ImportMesh);

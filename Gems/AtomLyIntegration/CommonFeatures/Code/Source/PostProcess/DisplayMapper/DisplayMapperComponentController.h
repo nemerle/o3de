@@ -32,9 +32,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::DisplayMapperComponentController, "{85E5AE10-68AD-462D-B389-B8748BB1A19C}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             DisplayMapperComponentController() = default;
             DisplayMapperComponentController(const DisplayMapperComponentConfig& config);

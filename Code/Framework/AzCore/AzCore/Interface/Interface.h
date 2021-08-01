@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Module/Environment.h>
+#include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/std/parallel/shared_mutex.h>
 #include <AzCore/std/typetraits/is_constructible.h>
 #include <AzCore/std/typetraits/is_assignable.h>
@@ -22,7 +23,7 @@ namespace AZ
      * pointer is handed to you; the assumption is that the registered system will outlive cached
      * references. A system must register itself with the interface at initialization time by calling
      * @ref Register(); and unregister at shutdown by calling @ref Unregister(). The provided Registrar
-     * class will do this for you automatically.  Registration will only succeed after the 
+     * class will do this for you automatically.  Registration will only succeed after the
      * AZ::Environment has been attached and is ready.
      *
      * Example Usage:

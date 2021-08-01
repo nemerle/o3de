@@ -9,6 +9,7 @@
 #include <PhysX/MathConversion.h>
 #include <PhysX/PhysXLocks.h>
 #include <AzCore/Component/TransformBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
 #include <AzFramework/Physics/SimulatedBodies/RigidBody.h>
 #include <AzFramework/Physics/RigidBodyBus.h>
 #include <PhysX/Joint/Configuration/PhysXJointConfiguration.h>
@@ -31,14 +32,14 @@ namespace PhysX
     }
 
     FixedJointComponent::FixedJointComponent(
-        const JointComponentConfiguration& configuration, 
+        const JointComponentConfiguration& configuration,
         const JointGenericProperties& genericProperties)
         : JointComponent(configuration, genericProperties)
     {
     }
 
     FixedJointComponent::FixedJointComponent(
-        const JointComponentConfiguration& configuration, 
+        const JointComponentConfiguration& configuration,
         const JointGenericProperties& genericProperties,
         const JointLimitProperties& limitProperties)
         : JointComponent(configuration, genericProperties, limitProperties)
@@ -71,8 +72,8 @@ namespace PhysX
         {
             m_jointHandle = sceneInterface->AddJoint(
                 leadFollowerInfo.m_followerBody->m_sceneOwner,
-                &configuration,  
-                leadFollowerInfo.m_leadBody->m_bodyHandle, 
+                &configuration,
+                leadFollowerInfo.m_leadBody->m_bodyHandle,
                 leadFollowerInfo.m_followerBody->m_bodyHandle);
             m_jointSceneOwner = leadFollowerInfo.m_followerBody->m_sceneOwner;
         }

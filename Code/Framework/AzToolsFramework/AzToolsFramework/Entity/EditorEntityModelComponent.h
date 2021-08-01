@@ -20,12 +20,12 @@ namespace AzToolsFramework
             : public AZ::Component
         {
         public:
-            AZ_COMPONENT(EditorEntityModelComponent, "{DD029F2E-63E0-41BD-A6BE-B447FDF11A60}")
+            AZ_COMPONENT_SPLIT(EditorEntityModelComponent, "{DD029F2E-63E0-41BD-A6BE-B447FDF11A60}")
             
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
             EditorEntityModelComponent();
             ~EditorEntityModelComponent();

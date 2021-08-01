@@ -68,17 +68,17 @@ namespace Vegetation
         }
     }
 
-    void AreaDebugComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaDebugComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaDebugService", 0x2c6f3c5c));
     }
 
-    void AreaDebugComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaDebugComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaDebugService", 0x2c6f3c5c));
     }
 
-    void AreaDebugComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaDebugComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& services)
     {
     }
 

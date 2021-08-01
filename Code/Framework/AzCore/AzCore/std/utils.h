@@ -23,7 +23,7 @@
 #include <AzCore/std/typetraits/is_lvalue_reference.h>
 #include <AzCore/std/typetraits/void_t.h>
 
-#include <memory>
+#include <utility>
 
 namespace AZStd
 {
@@ -43,7 +43,7 @@ namespace AZStd
     template <class T>
     struct default_delete
     {
-        template <class U, 
+        template <class U,
             class = typename enable_if<is_convertible<U*, T*>::value, void>::type>
         void operator()(U* ptr) const
         {
@@ -503,7 +503,7 @@ namespace AZStd
         explicit constexpr in_place_index_t() = default;
     };
     template<size_t I>
-    constexpr in_place_index_t<I> in_place_index{}; 
+    constexpr in_place_index_t<I> in_place_index{};
 
     namespace Internal
     {

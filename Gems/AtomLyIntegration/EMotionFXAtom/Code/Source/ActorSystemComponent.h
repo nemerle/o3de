@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {
@@ -21,12 +22,12 @@ namespace AZ
 
             ActorSystemComponent();
             ~ActorSystemComponent();
-            
+
             static void Reflect(ReflectContext* context);
 
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(ComponentDescriptorDependencyArrayType& required);
 
         protected:
 

@@ -7,6 +7,7 @@
  */
 #include <AzCore/Module/Module.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

@@ -70,11 +70,11 @@ namespace LmbrCentral
         EditorRandomTimedSpawnerConfiguration::Reflect(context);
     }
 
-    void EditorRandomTimedSpawnerComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorRandomTimedSpawnerComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("RandomTimedSpawnerService", 0x56f2fa36));
     }
-    void EditorRandomTimedSpawnerComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorRandomTimedSpawnerComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         //Only compatible with Box and Cylinder shapes 
         incompatible.push_back(AZ_CRC("CapsuleShapeService", 0x9bc1122c));
@@ -84,7 +84,7 @@ namespace LmbrCentral
         incompatible.push_back(AZ_CRC("PrismShapeService", 0x8dbfb417));
         incompatible.push_back(AZ_CRC("PolygonPrismShapeService", 0x1cbc4ed4));
     }
-    void EditorRandomTimedSpawnerComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void EditorRandomTimedSpawnerComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         required.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));

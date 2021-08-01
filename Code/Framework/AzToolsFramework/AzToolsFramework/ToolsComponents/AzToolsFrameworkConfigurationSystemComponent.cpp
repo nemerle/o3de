@@ -8,6 +8,7 @@
 
 #include <AzToolsFramework/ToolsComponents/AzToolsFrameworkConfigurationSystemComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
@@ -21,6 +22,9 @@
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(AzToolsFrameworkConfigurationSystemComponent)
+
     void AzToolsFrameworkConfigurationSystemComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -97,17 +101,17 @@ namespace AzToolsFramework
         AZ_Assert(success, "Unable to remove the main editor scene.");
     }
 
-    void AzToolsFrameworkConfigurationSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AzToolsFrameworkConfigurationSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("AzToolsFrameworkConfigurationSystemComponentService", 0xfc4f9667));
     }
 
-    void AzToolsFrameworkConfigurationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AzToolsFrameworkConfigurationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("AzToolsFrameworkConfigurationSystemComponentService", 0xfc4f9667));
     }
 
-    void AzToolsFrameworkConfigurationSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void AzToolsFrameworkConfigurationSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("AzFrameworkConfigurationSystemComponentService", 0xcc49c96e));
         dependent.push_back(AZ_CRC("SceneSystemComponentService", 0xd8975435));

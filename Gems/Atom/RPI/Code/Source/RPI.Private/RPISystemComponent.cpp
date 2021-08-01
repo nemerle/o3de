@@ -51,12 +51,12 @@ namespace AZ
             RPISystem::Reflect(context);
         }
 
-        void RPISystemComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+        void RPISystemComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(RHI::Factory::GetComponentService());
         }
 
-        void RPISystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void RPISystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("RPISystem", 0xf2add773));
         }

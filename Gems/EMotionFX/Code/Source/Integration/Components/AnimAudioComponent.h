@@ -7,6 +7,7 @@
  */
 #pragma once
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Component/TransformBus.h>
@@ -91,18 +92,18 @@ namespace EMotionFX
 
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("AnimationAudioService", 0xaed4f3ea));
             }
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
             {
                 required.push_back(AZ_CRC("EMotionFXActorService", 0xd6e8f48d));
                 required.push_back(AZ_CRC("AudioProxyService", 0x7da4c79c));
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("AnimationAudioService", 0xaed4f3ea));
             }

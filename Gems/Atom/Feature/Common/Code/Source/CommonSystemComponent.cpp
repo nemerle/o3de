@@ -158,22 +158,22 @@ namespace AZ
             }
         }
 
-        void CommonSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void CommonSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("CommonService", 0x6398eec4));
         }
 
-        void CommonSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+        void CommonSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("CommonService", 0x6398eec4));
         }
 
-        void CommonSystemComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+        void CommonSystemComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("RPISystem", 0xf2add773));
         }
 
-        void CommonSystemComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent)
+        void CommonSystemComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& dependent)
         {
             AZ_UNUSED(dependent);
         }

@@ -9,6 +9,7 @@
 
 #include <AzCore/std/any.h>
 #include <AzCore/Casting/numeric_cast.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <AzCore/Math/VectorFloat.h>
 #include <AzCore/RTTI/AttributeReader.h>
@@ -188,6 +189,9 @@ namespace AZ
             return true;
         }
     }
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(AzStdReflectionComponent)
 
     void AzStdReflectionComponent::Reflect(ReflectContext* context)
     {

@@ -224,17 +224,17 @@ namespace ScriptCanvas
             }
         }
 
-        void ServiceComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void ServiceComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ScriptCanvasDebugService", 0x7ece424b));
         }
 
-        void ServiceComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void ServiceComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ScriptCanvasDebugService", 0x7ece424b));
         }
 
-        void ServiceComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void ServiceComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("ScriptCanvasService", 0x41fd58f3));
         }

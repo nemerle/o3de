@@ -11,6 +11,7 @@
 #include <AzCore/IO/Path/Path_fwd.h>
 #include <AzCore/std/string/fixed_string.h>
 #include <AzCore/std/string/string.h>
+#include <AzCore/RTTI/TypeInfo.h>
 
 namespace AZ::IO
 {
@@ -637,18 +638,6 @@ namespace AZ::IO
 namespace AZ
 {
     AZ_TYPE_INFO_SPECIALIZE(AZ::IO::Path, "{88E0A40F-3085-4CAB-8B11-EF5A2659C71A}");
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template< typename T>
-    struct SerializeGenericTypeInfo<AZ::IO::BasicPath<T>, void> : SerializeGenericTypeInfoImpl<AZ::IO::BasicPath<T>>
-    {
-        //treat BasicPath as generic value type
-    };
-
 }
 
 namespace AZ::IO

@@ -13,6 +13,7 @@ AZ_PUSH_DISABLE_WARNING(, "-Wdelete-non-virtual-dtor")
 #include <AzCore/Component/ComponentApplication.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Scene/SceneSystemComponent.h>
 #include <AzFramework/Scene/Scene.h>
 #include <AzCore/Asset/AssetManagerComponent.h>
@@ -49,7 +50,7 @@ namespace SceneUnitTest
     class TestComponent : public AZ::Component
     {
     public:
-        AZ_COMPONENT(TestComponent, TestComponentTypeId);
+        AZ_COMPONENT_SPLIT(TestComponent, TestComponentTypeId);
 
         static void Reflect(AZ::ReflectContext*) {};
 
@@ -91,6 +92,8 @@ namespace SceneUnitTest
 
         TestComponentConfig m_config;
     };
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(TestComponent)
 
     // Fixture that creates a bare-bones app with only the system components necesary.
 
@@ -148,11 +151,11 @@ namespace SceneUnitTest
     };
 
     TEST_F(SceneTest, CreateScene)
-    {   
+    {
         // A scene should be able to be created with a given name.
         AZ::Outcome<AZStd::shared_ptr<Scene>, AZStd::string> createSceneOutcome = m_sceneSystem->CreateScene("TestScene");
         EXPECT_TRUE(createSceneOutcome.IsSuccess()) << "Unable to create a scene.";
-    
+
         // The scene pointer returned should be valid
         AZStd::shared_ptr<Scene> scene = createSceneOutcome.TakeValue();
         EXPECT_NE(scene, nullptr) << "Scene creation reported success, but no scene actually was actually returned.";

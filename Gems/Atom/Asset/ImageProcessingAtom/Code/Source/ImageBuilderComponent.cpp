@@ -116,12 +116,12 @@ namespace ImageProcessingAtom
         TextureSettings::Reflect(context);
     }
 
-    void BuilderPluginComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void BuilderPluginComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ImagerBuilderPluginService", 0x6dc0db6e));
     }
 
-    void BuilderPluginComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void BuilderPluginComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ImagerBuilderPluginService", 0x6dc0db6e));
     }

@@ -103,12 +103,12 @@ namespace AZ
             AZStd::visit([this, request](auto&& args)
             {
                 using Command = AZStd::decay_t<decltype(args)>;
-                if constexpr (AZStd::is_same_v<Command, FileRequest::CreateDedicatedCacheData>)
+                if constexpr (AZStd::is_same_v<Command, RequestCommands::CreateDedicatedCacheData>)
                 {
                     args.m_range = FileRange::CreateRangeForEntireFile();
                     m_context->PushPreparedRequest(request);
                 }
-                else if constexpr (AZStd::is_same_v<Command, FileRequest::DestroyDedicatedCacheData>)
+                else if constexpr (AZStd::is_same_v<Command, RequestCommands::DestroyDedicatedCacheData>)
                 {
                     args.m_range = FileRange::CreateRangeForEntireFile();
                     m_context->PushPreparedRequest(request);
@@ -127,17 +127,17 @@ namespace AZ
             AZStd::visit([this, request](auto&& args)
             {
                 using Command = AZStd::decay_t<decltype(args)>;
-                if constexpr (AZStd::is_same_v<Command, FileRequest::ReadData>)
+                if constexpr (AZStd::is_same_v<Command, RequestCommands::ReadData>)
                 {
                     ReadFile(request, args);
                     return;
                 }
-                else if constexpr (AZStd::is_same_v<Command, FileRequest::CreateDedicatedCacheData>)
+                else if constexpr (AZStd::is_same_v<Command, RequestCommands::CreateDedicatedCacheData>)
                 {
                     CreateDedicatedCache(request, args);
                     return;
                 }
-                else if constexpr (AZStd::is_same_v<Command, FileRequest::DestroyDedicatedCacheData>)
+                else if constexpr (AZStd::is_same_v<Command, RequestCommands::DestroyDedicatedCacheData>)
                 {
                     DestroyDedicatedCache(request, args);
                     return;
@@ -202,7 +202,7 @@ namespace AZ
             }
         }
 
-        void DedicatedCache::ReadFile(FileRequest* request, FileRequest::ReadData& data)
+        void DedicatedCache::ReadFile(FileRequest* request, RequestCommands::ReadData& data)
         {
             size_t index = FindCache(data.m_path, data.m_offset);
             if (index == s_fileNotFound)
@@ -257,7 +257,7 @@ namespace AZ
             StreamStackEntry::CollectStatistics(statistics);
         }
 
-        void DedicatedCache::CreateDedicatedCache(FileRequest* request, FileRequest::CreateDedicatedCacheData& data)
+        void DedicatedCache::CreateDedicatedCache(FileRequest* request, RequestCommands::CreateDedicatedCacheData& data)
         {
             size_t index = FindCache(data.m_path, data.m_range);
             if (index == s_fileNotFound)
@@ -278,7 +278,7 @@ namespace AZ
             m_context->MarkRequestAsCompleted(request);
         }
 
-        void DedicatedCache::DestroyDedicatedCache(FileRequest* request, FileRequest::DestroyDedicatedCacheData& data)
+        void DedicatedCache::DestroyDedicatedCache(FileRequest* request, RequestCommands::DestroyDedicatedCacheData& data)
         {
             size_t index = FindCache(data.m_path, data.m_range);
             if (index != s_fileNotFound)

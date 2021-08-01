@@ -128,17 +128,17 @@ namespace Internal
         }
 
         // Get the incompatible, provided and required services from the descriptor
-        AZ::ComponentDescriptor::DependencyArrayType incompatibleServices;
+        AZ::ComponentDescriptorDependencyArrayType incompatibleServices;
         componentDescriptor->GetIncompatibleServices(incompatibleServices, nullptr);
 
-        AZ::ComponentDescriptor::DependencyArrayType providedServices;
+        AZ::ComponentDescriptorDependencyArrayType providedServices;
         componentDescriptor->GetProvidedServices(providedServices, nullptr);
 
-        AZ::ComponentDescriptor::DependencyArrayType requiredServices;
+        AZ::ComponentDescriptorDependencyArrayType requiredServices;
         componentDescriptor->GetRequiredServices(requiredServices, nullptr);
 
         // Check if component is compatible with other components
-        AZ::ComponentDescriptor::DependencyArrayType services;
+        AZ::ComponentDescriptorDependencyArrayType services;
         for (const AZ::TypeId& otherComponentType : otherComponentTypes)
         {
             AZ::ComponentDescriptor* otherComponentDescriptor = nullptr;
@@ -320,9 +320,9 @@ namespace Internal
 
         // Go through all the components on the entity (except the ones to remove) and collect all the required services
         // and all the provided services
-        AZ::ComponentDescriptor::DependencyArrayType allRequiredServices;
-        AZ::ComponentDescriptor::DependencyArrayType allProvidedServices;
-        AZ::ComponentDescriptor::DependencyArrayType services;
+        AZ::ComponentDescriptorDependencyArrayType allRequiredServices;
+        AZ::ComponentDescriptorDependencyArrayType allProvidedServices;
+        AZ::ComponentDescriptorDependencyArrayType services;
         for (const AZ::Component* component : entity->GetComponents())
         {
             if (AZStd::find(componentsToRemove.begin(), componentsToRemove.end(), component) != componentsToRemove.end())
@@ -391,7 +391,7 @@ namespace Internal
                 }
 
                 // Get the services provided by the component to be deleted
-                AZ::ComponentDescriptor::DependencyArrayType providedServices;
+                AZ::ComponentDescriptorDependencyArrayType providedServices;
                 componentDescriptor->GetProvidedServices(providedServices, nullptr);
 
                 for (auto requiredService : allRequiredServices)

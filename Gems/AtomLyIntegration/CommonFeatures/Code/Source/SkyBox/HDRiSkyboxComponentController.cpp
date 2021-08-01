@@ -39,18 +39,18 @@ namespace AZ
             }
         }
 
-        void HDRiSkyboxComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void HDRiSkyboxComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("SkyBoxService", 0x8169a709));
         }
 
-        void HDRiSkyboxComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void HDRiSkyboxComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("SkyBoxService", 0x8169a709));
             incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }
 
-        void HDRiSkyboxComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void HDRiSkyboxComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService"));
         }

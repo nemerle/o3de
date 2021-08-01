@@ -51,8 +51,8 @@ namespace AzToolsFramework
 
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             // AZ::Component ...
             void Activate() override;
@@ -92,8 +92,8 @@ namespace AzToolsFramework
 
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             // AZ::Component ...
             void Activate() override;
@@ -259,19 +259,3 @@ namespace AzToolsFramework
 
     } // namespace ComponentModeFramework
 } // namespace AzToolsFramework
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-    template<typename T>
-    struct SerializeGenericTypeInfo<AzToolsFramework::ComponentModeFramework::TestComponentModeComponent<T>, void>
-        : SerializeGenericTypeInfoImpl<AzToolsFramework::ComponentModeFramework::TestComponentModeComponent<T>>
-    {
-        // treat TestComponentModeComponent as generic value type
-    };
-
-} // namespace AZ

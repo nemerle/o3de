@@ -15,6 +15,7 @@
 #include <LyShine/UiSerializeHelpers.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 // Only needed for internal unit-testing
 #include <LyShine.h>
@@ -124,17 +125,17 @@ public: // member functions
 
 public:  // static member functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiTransformService", 0x3a838e34));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiTransformService", 0x3a838e34));
     }
 
-    static void GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& required)
     {
     }
 

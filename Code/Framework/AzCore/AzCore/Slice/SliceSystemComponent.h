@@ -20,13 +20,13 @@ namespace AZ
     class SliceSystemComponent : public Component
     {
     public:
-        AZ_COMPONENT(SliceSystemComponent, "{1712C054-1C84-4995-BA06-AFE99CCFE08B}");
+        AZ_COMPONENT_SPLIT(SliceSystemComponent, "{1712C054-1C84-4995-BA06-AFE99CCFE08B}");
         SliceSystemComponent() = default;
         static void Reflect(ReflectContext* context);
 
-        static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& services);
-        static void GetDependentServices(ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& services);
+        static void GetDependentServices(ComponentDescriptorDependencyArrayType& services);
 
     protected:
         SliceSystemComponent(const SliceSystemComponent&) = delete;

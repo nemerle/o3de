@@ -7,6 +7,7 @@
  */
 #include <SceneAPI/SceneBuilder/Importers/AssImpTransformImporter.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzToolsFramework/Debug/TraceContext.h>
@@ -27,6 +28,10 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpTransformImporter)
+
             const char* AssImpTransformImporter::s_transformNodeName = "transform";
 
             AssImpTransformImporter::AssImpTransformImporter()
@@ -42,7 +47,7 @@ namespace AZ
                     serializeContext->Class<AssImpTransformImporter, SceneCore::LoadingComponent>()->Version(1);
                 }
             }
-            
+
             void GetAllBones(const aiScene* scene, AZStd::unordered_multimap<AZStd::string, const aiBone*>& boneLookup)
             {
                 AZStd::queue<const aiNode*> queue;
@@ -98,7 +103,7 @@ namespace AZ
 
                 auto boneIterator = boneLookup.find(currentNode->mName.C_Str());
                 const bool isBone = boneIterator != boneLookup.end();
-                
+
                 DataTypes::MatrixType localTransform;
 
                 if (isBone)

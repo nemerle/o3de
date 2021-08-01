@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/algorithm.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -28,6 +29,9 @@ namespace AZ
     {
         namespace Behaviors
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(SkinGroup)
+
             const char* SkinGroup::s_skinVirtualTypeName = "Skin";
             Crc32 SkinGroup::s_skinVirtualType = AZ_CRC(SkinGroup::s_skinVirtualTypeName, 0x0279681e);
             const int SkinGroup::s_rigsPreferredTabOrder = 1;
@@ -64,7 +68,7 @@ namespace AZ
                 {
                     return;
                 }
-                
+
                 group->SetName(DataTypes::Utilities::CreateUniqueName<DataTypes::ISkinGroup>(scene.GetName(), scene.GetManifest()));
 
                 Utilities::SceneGraphSelector::UnselectAll(scene.GetGraph(), group->GetSceneNodeSelectionList());
@@ -114,7 +118,7 @@ namespace AZ
 
                 const Containers::SceneGraph& graph = scene.GetGraph();
                 auto children = Containers::Views::MakeSceneGraphChildView(graph, node, graph.GetContentStorage().begin(), true);
-                if (AZStd::find_if(children.begin(), children.end(), 
+                if (AZStd::find_if(children.begin(), children.end(),
                     Containers::DerivedTypeFilter<DataTypes::ISkinWeightData>()) != children.end())
                 {
                     types.insert(s_skinVirtualType);
@@ -161,7 +165,7 @@ namespace AZ
             {
                 bool updated = false;
                 Containers::SceneManifest& manifest = scene.GetManifest();
-                auto valueStorage = manifest.GetValueStorage();                
+                auto valueStorage = manifest.GetValueStorage();
                 auto view = Containers::MakeDerivedFilterView<SceneData::SkinGroup>(valueStorage);
                 for (SceneData::SkinGroup& group : view)
                 {
@@ -171,7 +175,7 @@ namespace AZ
                     }
                     if (group.GetId().IsNull())
                     {
-                        // When the uuid is null it's likely because the manifest has been updated from an older version. Include the 
+                        // When the uuid is null it's likely because the manifest has been updated from an older version. Include the
                         // name of the group as there could be multiple groups.
                         group.OverrideId(DataTypes::Utilities::CreateStableUuid(scene, SceneData::SkinGroup::TYPEINFO_Uuid(), group.GetName()));
                     }

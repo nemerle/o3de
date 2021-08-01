@@ -19,6 +19,7 @@
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/IO/SystemFile.h>
+#include <AzCore/IO/Streamer/FileRequest.h>
 #include <AzCore/UserSettings/UserSettingsProvider.h>
 
 #include <AzFramework/Asset/AssetSystemBus.h>
@@ -796,7 +797,7 @@ namespace ScriptCanvasEditor
 
     }
 
-    // 
+    //
 
     void VersionExplorer::FlushLogs()
     {

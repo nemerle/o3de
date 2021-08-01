@@ -9,6 +9,7 @@
 
 #include <Atom/RHI.Reflect/AttachmentEnums.h>
 
+#include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/Debug/Timer.h>
 #include <AzCore/Name/Name.h>
 #include <AzCore/std/containers/vector.h>

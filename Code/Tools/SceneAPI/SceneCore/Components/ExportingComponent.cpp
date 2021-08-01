@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <SceneAPI/SceneCore/Components/ExportingComponent.h>
 #include <SceneAPI/SceneCore/Events/ExportProductList.h>
 #include <AzCore/RTTI/BehaviorContext.h>
@@ -17,6 +18,9 @@ namespace AZ
     {
         namespace SceneCore
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(ExportingComponent)
+
             void ExportingComponent::Activate()
             {
                 ActivateBindings();

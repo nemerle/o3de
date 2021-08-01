@@ -49,13 +49,13 @@ namespace PhysX
             AzToolsFramework::Components::EditorComponentBase);
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("PhysicsWorldBodyService", 0x944da0cc));
             provided.push_back(AZ_CRC("PhysXCharacterControllerService", 0x428de4fa));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("PhysXCharacterControllerService", 0x428de4fa));
             incompatible.push_back(AZ_CRC("LegacyCryPhysicsService", 0xbb370351));
@@ -63,12 +63,12 @@ namespace PhysX
             incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             // 'PhysXColliderService' is not actually used here, it is set as dependency to not have 
             // StaticRigidBodyComponent (PhysX gem) created when this component is attached to editor entity

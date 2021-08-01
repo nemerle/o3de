@@ -22,25 +22,25 @@
 namespace VirtualGamepad
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadButtonComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void VirtualGamepadButtonComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("VirtualGamepadButtonService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadButtonComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void VirtualGamepadButtonComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("VirtualGamepadButtonService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadButtonComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void VirtualGamepadButtonComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiInteractableService", 0x1d474c98));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadButtonComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void VirtualGamepadButtonComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

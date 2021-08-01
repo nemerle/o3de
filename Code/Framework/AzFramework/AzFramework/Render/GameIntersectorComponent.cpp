@@ -8,6 +8,7 @@
 
 #include <AzFramework/Render/GameIntersectorComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Entity/EntityContext.h>
 #include <AzFramework/Render/Intersector.h>
 #include <AzFramework/Entity/GameEntityContextBus.h>
@@ -16,6 +17,9 @@ namespace AzFramework
 {
     namespace RenderGeometry
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(GameIntersectorComponent)
+
         void GameIntersectorComponent::Activate()
         {
             AzFramework::EntityContextId gameContextId;

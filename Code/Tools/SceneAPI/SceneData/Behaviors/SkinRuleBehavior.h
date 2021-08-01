@@ -23,7 +23,7 @@ namespace AZ
                 , public Events::ManifestMetaInfoBus::Handler
             {
             public:
-                AZ_COMPONENT(SkinRuleBehavior, "{B212A863-32DD-4F92-948C-FC0ADAEEAB4A}", SceneCore::BehaviorComponent);
+                AZ_COMPONENT_SPLIT(SkinRuleBehavior, "{B212A863-32DD-4F92-948C-FC0ADAEEAB4A}", SceneCore::BehaviorComponent);
 
                 ~SkinRuleBehavior() override = default;
 

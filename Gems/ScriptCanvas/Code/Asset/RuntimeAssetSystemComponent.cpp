@@ -34,18 +34,18 @@ namespace ScriptCanvas
         }
     }
 
-    void RuntimeAssetSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void RuntimeAssetSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptCanvasRuntimeAssetService", 0x1a85bf2b));
     }
 
-    void RuntimeAssetSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void RuntimeAssetSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
         required.push_back(AZ_CRC("ScriptCanvasService", 0x41fd58f3));
     }
 
-    void RuntimeAssetSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void RuntimeAssetSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));
     }

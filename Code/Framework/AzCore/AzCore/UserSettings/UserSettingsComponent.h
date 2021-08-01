@@ -32,7 +32,7 @@ namespace AZ
         , protected UserSettingsComponentRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(UserSettingsComponent, "{A316662A-6C3E-43E6-BC61-4B375D0D83B4}");
+        AZ_COMPONENT_SPLIT(UserSettingsComponent, "{A316662A-6C3E-43E6-BC61-4B375D0D83B4}");
 
         UserSettingsComponent(u32 providerId = UserSettings::CT_GLOBAL);
         ~UserSettingsComponent();
@@ -56,9 +56,9 @@ namespace AZ
         //////////////////////////////////////////////////////////////////////////
 
         /// \ref ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
         /// \ref ComponentDescriptor::GetDependentServices
-        static void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetDependentServices(ComponentDescriptorDependencyArrayType& dependent);
         /// \red ComponentDescriptor::Reflect
         static void Reflect(ReflectContext* reflection);
 

@@ -8,6 +8,7 @@
 
 #include <AzToolsFramework/UI/EditorEntityUi/EditorEntityUiSystemComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
@@ -15,6 +16,8 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorEntityUiSystemComponent)
 
         EditorEntityUiSystemComponent::EditorEntityUiSystemComponent()
         {

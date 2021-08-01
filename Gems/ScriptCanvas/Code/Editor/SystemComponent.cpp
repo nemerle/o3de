@@ -88,17 +88,17 @@ namespace ScriptCanvasEditor
         }
     }
 
-    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptCanvasEditorService", 0x4fe2af98));
     }
 
-    void SystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void SystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         (void)incompatible;
     }
 
-    void SystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void SystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("MemoryService", 0x5c4d473c)); // AZ::JobManager needs the thread pool allocator
         required.push_back(AZ_CRC("ScriptCanvasService", 0x41fd58f3));
@@ -106,7 +106,7 @@ namespace ScriptCanvasEditor
         required.push_back(AZ_CRC("ScriptCanvasReflectService", 0xb3bfe139));
     }
 
-    void SystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void SystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         (void)dependent;
     }

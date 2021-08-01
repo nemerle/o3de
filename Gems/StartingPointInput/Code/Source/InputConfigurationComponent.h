@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Asset/AssetBus.h>
 #include <AzFramework/Components/EditorEntityEvents.h>
@@ -34,7 +35,7 @@ namespace StartingPointInput
         AZ_COMPONENT(InputConfigurationComponent, "{3106EE2A-4816-433E-B855-D17A6484D5EC}", AzFramework::EditorEntityEvents);
         virtual ~InputConfigurationComponent();
         InputConfigurationComponent() = default;
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
         static void Reflect(AZ::ReflectContext* reflection);
 
         //////////////////////////////////////////////////////////////////////////

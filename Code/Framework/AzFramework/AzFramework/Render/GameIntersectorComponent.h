@@ -21,7 +21,7 @@ namespace AzFramework
         {
         public:
 
-            AZ_COMPONENT(GameIntersectorComponent, "{F32B0E3E-23D6-48EA-BC33-A6DE2F4495C6}");
+            AZ_COMPONENT_SPLIT(GameIntersectorComponent, "{F32B0E3E-23D6-48EA-BC33-A6DE2F4495C6}");
 
             //////////////////////////////////////////////////////////////////////////
             // Component overrides
@@ -30,7 +30,7 @@ namespace AzFramework
 
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
             {
                 dependent.push_back(AZ_CRC("GameEntityContextService", 0xa6f2c885));
             }

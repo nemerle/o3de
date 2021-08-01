@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Math/Aabb.h>
 #include <AzCore/std/containers/map.h>
@@ -46,8 +47,8 @@ namespace Multiplayer
         AZ_COMPONENT(NetBindComponent, "{DAA076B3-1A1C-4FEF-8583-1DF696971604}");
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         NetBindComponent();
         ~NetBindComponent() override = default;
@@ -60,13 +61,13 @@ namespace Multiplayer
         //! @}
 
         NetEntityRole GetNetEntityRole() const;
-        
+
         //! IsNetEntityRoleAuthority
         //! @return true if this network entity is an authoritative proxy on a server (full authority); otherwise false.
         bool IsNetEntityRoleAuthority() const;
-        
+
         //! IsNetEntityRoleAutonomous
-        //! @return true if this network entity is an autonomous proxy on a client (can execute local prediction) or if this network entity is an authoritative proxy on a server but has autonomous privileges (ie: a host who is also a player); otherwise false.   
+        //! @return true if this network entity is an autonomous proxy on a client (can execute local prediction) or if this network entity is an authoritative proxy on a server but has autonomous privileges (ie: a host who is also a player); otherwise false.
         bool IsNetEntityRoleAutonomous() const;
 
         //! IsNetEntityRoleServer
@@ -76,7 +77,7 @@ namespace Multiplayer
         //! IsNetEntityRoleClient
         //! @return true if this network entity is a simulated proxy on a client; otherwise false.
         bool IsNetEntityRoleClient() const;
-        
+
         bool HasController() const;
         NetEntityId GetNetEntityId() const;
         const PrefabEntityId& GetPrefabEntityId() const;

@@ -35,7 +35,7 @@ namespace LmbrCentral
         static void Reflect(AZ::ReflectContext* context);
 
     protected:
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }

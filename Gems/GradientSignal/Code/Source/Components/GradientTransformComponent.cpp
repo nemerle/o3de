@@ -187,18 +187,18 @@ namespace GradientSignal
         return !m_overrideScale || !m_advancedMode;
     }
 
-    void GradientTransformComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void GradientTransformComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientTransformService", 0x8c8c5ecc));
     }
 
-    void GradientTransformComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void GradientTransformComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientTransformService", 0x8c8c5ecc));
         services.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }
 
-    void GradientTransformComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void GradientTransformComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("ShapeService", 0xe86aa5fe));
     }

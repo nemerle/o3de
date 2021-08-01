@@ -122,12 +122,12 @@ namespace Multiplayer
         }
     }
 
-    void NetBindComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void NetBindComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("NetBindService"));
     }
 
-    void NetBindComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void NetBindComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("NetBindService"));
     }

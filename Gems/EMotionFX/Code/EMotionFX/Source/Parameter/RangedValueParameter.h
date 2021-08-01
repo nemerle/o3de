@@ -143,16 +143,3 @@ namespace EMotionFX
             ;
     }
 }
-
-namespace AZ
-{
-    // Serialization helpers
-
-    template<typename S, typename T>
-    struct SerializeGenericTypeInfo<EMotionFX::RangedValueParameter<S, T>, void>
-        : SerializeGenericTypeInfoImpl<EMotionFX::RangedValueParameter<S, T>>
-    {
-        // treat RangedValueParameter as generic value type
-    };
-
-} // namespace AZ

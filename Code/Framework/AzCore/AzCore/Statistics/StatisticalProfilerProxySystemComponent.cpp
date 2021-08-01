@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include "StatisticalProfilerProxySystemComponent.h"
@@ -16,6 +17,9 @@ namespace AZ
 {
     namespace Statistics
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(StatisticalProfilerProxySystemComponent)
+
         StatisticalProfilerProxy* StatisticalProfilerProxy::TimedScope::m_profilerProxy = nullptr;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,13 +33,13 @@ namespace AZ
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        void StatisticalProfilerProxySystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void StatisticalProfilerProxySystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("StatisticalProfilerService", 0x20066f73));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        void StatisticalProfilerProxySystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void StatisticalProfilerProxySystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("StatisticalProfilerService", 0x20066f73));
         }

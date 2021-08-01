@@ -22,7 +22,7 @@ namespace AZ
         , public SystemTickBus::Handler
     {
     public:
-        AZ_COMPONENT(AssetManagerComponent, "{D5A73BCC-0098-4d1e-8FE4-C86101E374AC}", Component)
+        AZ_COMPONENT_SPLIT(AssetManagerComponent, "{D5A73BCC-0098-4d1e-8FE4-C86101E374AC}", Component)
 
         AssetManagerComponent();
 
@@ -39,11 +39,11 @@ namespace AZ
         //////////////////////////////////////////////////////////////////////////
 
         /// \ref ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
         /// \ref ComponentDescriptor::GetIncompatibleServices
-        static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
         /// \ref ComponentDescriptor::GetRequiredServices
-        static void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required);
+        static void GetRequiredServices(ComponentDescriptorDependencyArrayType& required);
         /// \ref ComponentDescriptor::Reflect
         static void Reflect(ReflectContext* reflection);
     };

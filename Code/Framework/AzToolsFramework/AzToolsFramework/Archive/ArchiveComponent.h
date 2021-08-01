@@ -36,7 +36,7 @@ namespace AzToolsFramework
         , private ArchiveCommands::Bus::Handler
     {
     public:
-        AZ_COMPONENT(ArchiveComponent, "{A19EEA33-3736-447F-ACF7-DAA4B6A179AA}")
+        AZ_COMPONENT_SPLIT(ArchiveComponent, "{A19EEA33-3736-447F-ACF7-DAA4B6A179AA}")
 
         ArchiveComponent() = default;
         ~ArchiveComponent() override = default;

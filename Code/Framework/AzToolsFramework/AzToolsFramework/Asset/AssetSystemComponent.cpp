@@ -13,6 +13,7 @@
 #include <AzToolsFramework/AssetEditor/AssetEditorBus.h>
 #include <AzFramework/Asset/AssetProcessorMessages.h>
 #include <AzFramework/Network/AssetProcessorConnection.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/PlatformIncl.h>
 #include <AzCore/RTTI/BehaviorContext.h>
@@ -101,6 +102,9 @@ namespace AzToolsFramework
 
             return AZ::Failure();
         }
+
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(AssetSystemComponent)
 
         void AssetSystemComponent::Activate()
         {
@@ -225,17 +229,17 @@ namespace AzToolsFramework
             }
         }
 
-        void AssetSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void AssetSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("AssetProcessorToolsConnection", 0x734669bc));
         }
 
-        void AssetSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void AssetSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("AssetProcessorToolsConnection", 0x734669bc));
         }
 
-        void AssetSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void AssetSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("AssetProcessorConnection", 0xf0cd75cd));
         }

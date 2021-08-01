@@ -70,17 +70,17 @@ namespace PythonAssetBuilder
         }
     }
 
-    void PythonAssetBuilderSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void PythonAssetBuilderSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("PythonAssetBuilderService"));
     }
 
-    void PythonAssetBuilderSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void PythonAssetBuilderSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("PythonAssetBuilderService"));
     }
 
-    void PythonAssetBuilderSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void PythonAssetBuilderSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(EditorPythonBindings::PythonMarshalingService);
         dependent.push_back(EditorPythonBindings::PythonReflectionService);

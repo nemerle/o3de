@@ -25,7 +25,7 @@ namespace AZ
                 : public AZ::Component
             {
             public:
-                AZ_COMPONENT(SceneSystemComponent, "{480FE393-A6BE-4AB9-AF91-11468AAFDB36}");
+                AZ_COMPONENT_SPLIT(SceneSystemComponent, "{480FE393-A6BE-4AB9-AF91-11468AAFDB36}");
 
                 ~SceneSystemComponent() override = default;
 

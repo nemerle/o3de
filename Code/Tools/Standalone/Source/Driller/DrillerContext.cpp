@@ -10,6 +10,7 @@
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/StringFunc/StringFunc.h>
@@ -54,6 +55,8 @@ namespace Driller
 
     AZ::Uuid ContextID("FB8B7094-63FF-4CD1-9857-3AEFA8E2CFDC");
 
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(Driller::Context)
 
     //////////////////////////////////////////////////////////////////////////
     //Context

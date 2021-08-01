@@ -9,6 +9,7 @@
 
 #include <AzToolsFramework/SourceControl/LocalFileSCComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Jobs/JobFunction.h>
 #include <AzCore/IO/SystemFile.h>
@@ -48,6 +49,9 @@ namespace AzToolsFramework
             AZ::IO::SystemFile::SetWritable(fileInfo.m_filePath.c_str(), true);
         }
     }
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(LocalFileSCComponent)
 
     void LocalFileSCComponent::Activate()
     {
@@ -263,7 +267,7 @@ namespace AzToolsFramework
         {
             result = QStringList{};
         }
-        
+
         return !remaining.isEmpty();
     }
 
@@ -410,7 +414,7 @@ namespace AzToolsFramework
                 {
                     fileInfoDst.m_status = SCS_ProviderError;
                 }
-                
+
                 AZ::TickBus::QueueFunction(respCallback, succeeded, fileInfoDst);
             }, true);
         job->Start();

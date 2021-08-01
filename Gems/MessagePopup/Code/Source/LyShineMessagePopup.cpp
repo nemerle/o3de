@@ -44,25 +44,25 @@ namespace MessagePopup
     }
 
     //-------------------------------------------------------------------------
-    void LyShineMessagePopup::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void LyShineMessagePopup::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("MessagePopupService"));
     }
 
     //-------------------------------------------------------------------------
-    void LyShineMessagePopup::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void LyShineMessagePopup::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("MessagePopupService"));
     }
 
     //-------------------------------------------------------------------------
-    void LyShineMessagePopup::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void LyShineMessagePopup::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         (void)required;
     }
 
     //-------------------------------------------------------------------------
-    void LyShineMessagePopup::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void LyShineMessagePopup::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         (void)dependent;
     }

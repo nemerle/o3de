@@ -13,6 +13,7 @@
 #include <Editor/MultiplayerEditorConnection.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Console/IConsole.h>
 #include <AzCore/Console/ILogger.h>
@@ -38,9 +39,9 @@ namespace Multiplayer
         AZ_COMPONENT(MultiplayerEditorSystemComponent, "{9F335CC0-5574-4AD3-A2D8-2FAEF356946C}");
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         MultiplayerEditorSystemComponent();
         ~MultiplayerEditorSystemComponent() override = default;
@@ -56,12 +57,12 @@ namespace Multiplayer
         void NotifyRegisterViews() override;
         //! @}
 
-    private:    
+    private:
         //! EditorEvents::Handler overrides
         //! @{
         void OnEditorNotifyEvent(EEditorNotifyEvent event) override;
         //! @}
-        
+
         //!  GameEntityContextEventBus::Handler overrides
         //! @{
         void OnGameEntitiesStarted() override;

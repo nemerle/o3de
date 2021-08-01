@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Outcome/Outcome.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/UnitTest/TestTypes.h>
@@ -41,7 +42,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(LeatherBootsComponent, "{C2852908-0FC6-4BF6-9907-E390840F9897}");
+        AZ_COMPONENT_SPLIT(LeatherBootsComponent, "{C2852908-0FC6-4BF6-9907-E390840F9897}");
         void Activate() override {}
         void Deactivate() override {}
         static void Reflect(AZ::ReflectContext* reflection)
@@ -57,19 +58,21 @@ namespace UnitTest
                 }
             }
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ShoesService", 0xaa20aadf));
         }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ShoesService", 0xaa20aadf));
         }
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("SocksService", 0x51e58440));
         }
     };
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(LeatherBootsComponent)
 
     // Note that WoolSocksComponent is an "editor component".
     // This is just to make sure we are testing with both "editor"
@@ -78,7 +81,7 @@ namespace UnitTest
         : public AzToolsFramework::Components::EditorComponentBase
     {
     public:
-        AZ_COMPONENT(WoolSocksComponent, "{6436A9A1-701E-4275-AF6F-82F53C7916C8}", EditorComponentBase);
+        AZ_COMPONENT_SPLIT(WoolSocksComponent, "{6436A9A1-701E-4275-AF6F-82F53C7916C8}", EditorComponentBase);
         void Activate() override {}
         void Deactivate() override {}
         static void Reflect(AZ::ReflectContext* reflection)
@@ -94,25 +97,28 @@ namespace UnitTest
                 }
             }
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("SocksService", 0x51e58440));
         }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("SocksService", 0x51e58440));
         }
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& /*required*/)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& /*required*/)
         {
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(WoolSocksComponent)
 
     // Incompatible with socks
     class HatesSocksComponent
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(HatesSocksComponent, "{D359D446-A172-4854-8EA9-B95073FF5709}");
+        AZ_COMPONENT_SPLIT(HatesSocksComponent, "{D359D446-A172-4854-8EA9-B95073FF5709}");
         void Activate() override {}
         void Deactivate() override {}
         static void Reflect(AZ::ReflectContext* reflection)
@@ -128,24 +134,27 @@ namespace UnitTest
                 }
             }
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& /*provided*/)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& /*provided*/)
         {
         }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("SocksService", 0x51e58440));
         }
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& /*required*/)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& /*required*/)
         {
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(HatesSocksComponent)
 
     // Pants require underwear
     class BlueJeansComponent
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(BlueJeansComponent, "{AEA4D69E-F02B-4F6D-A793-8DEE0C0E54E3}");
+        AZ_COMPONENT_SPLIT(BlueJeansComponent, "{AEA4D69E-F02B-4F6D-A793-8DEE0C0E54E3}");
         void Activate() override {}
         void Deactivate() override {}
         static void Reflect(AZ::ReflectContext* reflection)
@@ -161,26 +170,29 @@ namespace UnitTest
                 }
             }
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("TrousersService", 0x15edf105));
         }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("TrousersService", 0x15edf105));
         }
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("UnderwearService", 0x915ec03a));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(BlueJeansComponent)
 
     // 1 of 2 underwear styles
     class WhiteBriefsComponent
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(WhiteBriefsComponent, "{8B095E11-082B-4EB1-A119-D1534323C956}");
+        AZ_COMPONENT_SPLIT(WhiteBriefsComponent, "{8B095E11-082B-4EB1-A119-D1534323C956}");
         void Activate() override {}
         void Deactivate() override {}
         static void Reflect(AZ::ReflectContext* reflection)
@@ -196,25 +208,28 @@ namespace UnitTest
                 }
             }
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("UnderwearService", 0x915ec03a));
         }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("UnderwearService", 0x915ec03a));
         }
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& /*required*/)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& /*required*/)
         {
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(WhiteBriefsComponent)
 
     // 2 of 2 underwear styles
     class HeartBoxersComponent
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(HeartBoxersComponent, "{06071955-CC65-4C32-A4D8-1125D827C10B}");
+        AZ_COMPONENT_SPLIT(HeartBoxersComponent, "{06071955-CC65-4C32-A4D8-1125D827C10B}");
         void Activate() override {}
         void Deactivate() override {}
         static void Reflect(AZ::ReflectContext* reflection)
@@ -230,25 +245,28 @@ namespace UnitTest
                 }
             }
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("UnderwearService", 0x915ec03a));
         }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("UnderwearService", 0x915ec03a));
         }
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& /*required*/)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& /*required*/)
         {
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(HeartBoxersComponent)
 
     // Requires a belt (but no belt exists)
     class KnifeSheathComponent
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(KnifeSheathComponent, "{D99C3EF1-592F-4744-9D07-A5F2CE679870}");
+        AZ_COMPONENT_SPLIT(KnifeSheathComponent, "{D99C3EF1-592F-4744-9D07-A5F2CE679870}");
         void Activate() override {}
         void Deactivate() override {}
         static void Reflect(AZ::ReflectContext* reflection)
@@ -264,17 +282,20 @@ namespace UnitTest
                 }
             }
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& /*provided*/)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& /*provided*/)
         {
         }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& /*incompatible*/)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& /*incompatible*/)
         {
         }
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("BeltService", 0xba4df957));
         }
     };
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(KnifeSheathComponent)
 
     // Count components of given type
     template <typename ComponentType>
@@ -580,7 +601,7 @@ namespace UnitTest
             m_app.Start(descriptor);
 
             // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
             // in the unit tests.
             AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
 
@@ -1165,17 +1186,17 @@ namespace UnitTest
             : public AzToolsFramework::Components::EditorComponentBase
         {
         public:
-            AZ_COMPONENT(VisibleComponent, "{6CEC2D1E-08CF-4609-9BEE-BA9D32B4C223}", AzToolsFramework::Components::EditorComponentBase);
+            AZ_COMPONENT_SPLIT(VisibleComponent, "{6CEC2D1E-08CF-4609-9BEE-BA9D32B4C223}", AzToolsFramework::Components::EditorComponentBase);
 
             void Activate() override {}
             void Deactivate() override {}
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("ValidComponentService"));
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("ValidComponentService"));
             }
@@ -1200,7 +1221,7 @@ namespace UnitTest
             : public AzToolsFramework::Components::EditorComponentBase
         {
         public:
-            AZ_COMPONENT(HiddenComponent, "{E4D2AD8B-3930-46FC-837A-8DDFCA0FB1AF}", AzToolsFramework::Components::EditorComponentBase);
+            AZ_COMPONENT_SPLIT(HiddenComponent, "{E4D2AD8B-3930-46FC-837A-8DDFCA0FB1AF}", AzToolsFramework::Components::EditorComponentBase);
 
             static Component* s_wasDeleted;
             virtual ~HiddenComponent()
@@ -1211,12 +1232,12 @@ namespace UnitTest
             void Activate() override {}
             void Deactivate() override {}
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("HiddenComponentService"));
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("HiddenComponentService"));
             }
@@ -1261,6 +1282,10 @@ namespace UnitTest
         }
     };
 
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(EntityTest_Scrubbing::VisibleComponent)
+    AZ_COMPONENT_IMPL(EntityTest_Scrubbing::HiddenComponent)
+
     Component* EntityTest_Scrubbing::HiddenComponent::s_wasDeleted = nullptr;
 
     TEST_F(EntityTest_Scrubbing, ConflictingVisibleComponents_AreInvalidated)
@@ -1285,7 +1310,7 @@ namespace UnitTest
         ASSERT_EQ(resultValue.GetValue().size(), 1);
 
         EntityCompositionRequests::ScrubEntityResults& resultForThisEntity = resultValue.GetValue()[entities[0]->GetId()];
-        
+
         EXPECT_EQ(resultForThisEntity.m_invalidatedComponents.size(), 1);
         EXPECT_TRUE(AZStd::find(resultForThisEntity.m_invalidatedComponents.begin(), resultForThisEntity.m_invalidatedComponents.end(), conflictingVisibleComponent) != resultForThisEntity.m_invalidatedComponents.end());
 
@@ -1330,10 +1355,10 @@ namespace UnitTest
 
         // The "Validated components" array should be empty becuase it should only list previously invalid components that were somehow validated by the scrubbing.
         EXPECT_EQ(resultForThisEntity.m_validatedComponents.size(), 0);
-        // make sure the remaining component on the entity is the correct hidden component 
+        // make sure the remaining component on the entity is the correct hidden component
         EXPECT_EQ(newEntity.FindComponents(azrtti_typeid<HiddenComponent>()).size(), 1); // there should only be one of them.
         EXPECT_EQ(newEntity.FindComponent(azrtti_typeid<HiddenComponent>()), validHiddenComponent);
-        
+
     }
 
     TEST_F(EntityTest_Scrubbing, NonConflictingVisibleComponents_AreReinstated)

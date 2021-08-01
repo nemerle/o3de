@@ -21,11 +21,11 @@ namespace AZ
     {
     public:
 
-        AZ_COMPONENT(TimeSystemComponent, "{CE1C5E4F-7DC1-4248-B10C-AC55E8924A48}");
+        AZ_COMPONENT_SPLIT(TimeSystemComponent, "{CE1C5E4F-7DC1-4248-B10C-AC55E8924A48}");
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         TimeSystemComponent();
         virtual ~TimeSystemComponent();

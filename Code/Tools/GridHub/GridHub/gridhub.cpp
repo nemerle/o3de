@@ -23,6 +23,7 @@ AZ_POP_DISABLE_WARNING
 #include <GridHub/moc_gridhub.cpp>
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/PlatformId/PlatformId.h>
 #include <AzCore/std/parallel/lock.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -67,11 +68,11 @@ GridHub::GridHub(AZ::ComponentApplication* componentApp, GridHubComponent* hubCo
     m_trayIcon->setContextMenu(m_trayIconMenu);
     m_trayIcon->setToolTip(QString("Amazon Debug Connection Hub - GridHub"));
     m_trayIcon->setIcon(QIcon(":/GridHub/Resources/Disconnected.png"));
-    
+
     connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),   this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
     m_trayIcon->show();
-    
+
     setWindowFlags(Qt::Dialog);
     ui.setupUi(this);
 
@@ -93,7 +94,7 @@ GridHub::GridHub(AZ::ComponentApplication* componentApp, GridHubComponent* hubCo
     QObject::connect(ui.disconnectionTimeout, SIGNAL(valueChanged(int)),this,SLOT(OnDisconnectTimeOutChange(int)));
 
     SanityCheckDetectionTimeout();
-    
+
     // start at XX ms update interval
     startTimer(30);
 
@@ -217,7 +218,7 @@ void GridHub::UpdateMembers()
     lastUpdate = now;
 
     const GridMate::GridSession* session = m_hubComponent->GetSession();
-    if( m_hubComponent == nullptr || session == nullptr || !session->IsReady()  ) 
+    if( m_hubComponent == nullptr || session == nullptr || !session->IsReady()  )
     {
         ui.members->setRowCount(0);
     }
@@ -342,11 +343,14 @@ void GridHub::SetHubName(const QString & name)
 //////////////////////////////////////////////////////////////////////////
 //
 
+// Implement the CreateDescriptor static method
+AZ_COMPONENT_IMPL(GridHubComponent)
+
 //=========================================================================
 // GridHubComponent
 // [7/6/2012]
 //=========================================================================
-GridHubComponent::GridHubComponent() 
+GridHubComponent::GridHubComponent()
     : m_ui(nullptr)
     , m_gridMate(nullptr)
     , m_session(nullptr)
@@ -357,11 +361,11 @@ GridHubComponent::GridHubComponent()
     m_disconnectionTimeout = 5000;
     m_isAddToStartupFolder = false;
     m_isLogToFile = false;
-    
+
 #ifdef AZ_PLATFORM_WINDOWS
     TCHAR name[MAX_COMPUTERNAME_LENGTH + 1];
     DWORD dwCompNameLen = AZ_ARRAY_SIZE(name);
-    if ( GetComputerName(name, &dwCompNameLen) != 0 ) 
+    if ( GetComputerName(name, &dwCompNameLen) != 0 )
     {
 #ifdef _UNICODE
         char c[MAX_COMPUTERNAME_LENGTH + 1];
@@ -410,7 +414,7 @@ void GridHubComponent::Deactivate()
 {
     if( IsInSession() )
         StopSession();
-    
+
     AZ_Assert(m_monitored.empty(),"We should have removed all monitored members already!");
 
     AZ::Debug::TraceMessageBus::Handler::BusDisconnect();
@@ -425,7 +429,7 @@ void GridHubComponent::OnSystemTick()
     {
         m_gridMate->Update();
 
-        if( m_session == nullptr ) 
+        if( m_session == nullptr )
         {
             // It does have in certain condition that the PC was locked and we did not receive OnTick for a long time
             // GridMate will detect that and delete the session in the update. If that happens we should just restart the entire gridmate.
@@ -497,12 +501,12 @@ void GridHubComponent::OnSystemTick()
 // [7/2/2013]
 //=========================================================================
 void GridHubComponent::LogToFile(bool enable)
-{ 
+{
     if( m_isLogToFile && !enable )
     {
         AZ_Printf("GridHub","Logging stopped!"); // indicate in the log that the user stopped logging.
     }
-    m_isLogToFile = enable; 
+    m_isLogToFile = enable;
 }
 
 //=========================================================================
@@ -538,10 +542,10 @@ bool GridHubComponent::OnOutput(const char* window, const char* message)
 // OnMemberJoined
 // [5/25/2011]
 //=========================================================================
-void 
+void
 GridHubComponent::OnMemberJoined([[maybe_unused]] GridMate::GridSession* session, GridMate::GridMember* member)
 {
-    if( member->IsLocal() ) return; 
+    if( member->IsLocal() ) return;
 
     // add non local member for process monitoring.
     GridMate::MemberIDCompact id = member->GetId().Compact();
@@ -572,7 +576,7 @@ GridHubComponent::OnMemberJoined([[maybe_unused]] GridMate::GridSession* session
 // OnMemberLeaving
 // [5/25/2011]
 //=========================================================================
-void 
+void
 GridHubComponent::OnMemberLeaving([[maybe_unused]] GridMate::GridSession* session, GridMate::GridMember* member)
 {
     GridMate::MemberIDCompact id = member->GetId().Compact();
@@ -607,7 +611,7 @@ GridHubComponent::OnSessionCreated(GridMate::GridSession* session)
 // OnSessionDelete
 // [5/24/2011]
 //=========================================================================
-void 
+void
 GridHubComponent::OnSessionDelete([[maybe_unused]] GridMate::GridSession* session)
 {
     AZ_Assert(m_session==session,"Session missmatch!");
@@ -623,14 +627,14 @@ bool GridHubComponent::StartSession(bool isRestarting)
     AZ_Assert(m_gridMate==nullptr,"Session was ALREADY started!");
     m_gridMate = GridMate::GridMateCreate(GridMate::GridMateDesc());
     AZ_Assert(m_gridMate,"Failed to create a gridmate instance!");
-    
+
     // Connect for session events
     GridMate::SessionEventBus::Handler::BusConnect(m_gridMate);
     if (!isRestarting)
     {
         AZ::SystemTickBus::Handler::BusConnect();
     }
-    
+
     // start the multiplayer service (session mgr, extra allocator, etc.)
     GridMate::StartGridMateService<GridMate::LANSessionService>(m_gridMate, GridMate::SessionServiceDesc());
     AZ_Assert(GridMate::HasGridMateService<GridMate::LANSessionService>(m_gridMate), "Failed to start multiplayer service for LAN!");
@@ -641,18 +645,18 @@ bool GridHubComponent::StartSession(bool isRestarting)
     {
         AZ_Warning("GridHub", false, "\nCurrent IP %s might be invalid.\n",machineIP.c_str());
     }
-    
+
     GridMate::CarrierDesc carrierDesc;
-    //carrierDesc.m_port = 0; 
-    carrierDesc.m_enableDisconnectDetection = m_isDisconnectDetection;    
+    //carrierDesc.m_port = 0;
+    carrierDesc.m_enableDisconnectDetection = m_isDisconnectDetection;
     carrierDesc.m_driverIsCrossPlatform = true;
     carrierDesc.m_connectionTimeoutMS = m_disconnectionTimeout;
     //carrierDesc.m_driverIsFullPackets = true;
 
-    // host session 
+    // host session
     GridMate::LANSessionParams sp;
     sp.m_topology = GridMate::ST_PEER_TO_PEER;
-    
+
     // Until an authentication connection can be established between peers only supporting
     // local connections (i.e. binding to localhost).
     sp.m_address = "127.0.0.1";
@@ -680,7 +684,7 @@ bool GridHubComponent::StartSession(bool isRestarting)
 void GridHubComponent::StopSession(bool isRestarting)
 {
     AZ_Assert(m_gridMate!=nullptr,"Session was NOT started!");
-    
+
     // disconnect from events
     if (!isRestarting)
     {
@@ -738,6 +742,6 @@ void GridHubComponent::Reflect(AZ::ReflectContext* reflection)
             Field("IsLogToFile", &GridHubComponent::m_isLogToFile)->
             Field("DisconnectionTimeOut", &GridHubComponent::m_disconnectionTimeout)
         ;
-            
+
     }
 }

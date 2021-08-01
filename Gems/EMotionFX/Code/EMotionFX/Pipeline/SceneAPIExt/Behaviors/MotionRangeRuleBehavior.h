@@ -9,6 +9,7 @@
  */
 
 #include <AzCore/Memory/Memory.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <SceneAPI/SceneCore/Events/ManifestMetaInfoBus.h>
 #include <SceneAPI/SceneCore/Components/BehaviorComponent.h>
 #include <SceneAPI/SceneCore/Events/AssetImportRequest.h>

@@ -20,10 +20,10 @@ namespace AzToolsFramework
             , public EditorLockComponentRequestBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorLockComponent, "{C3A169C9-7EFB-4D6C-8710-3591680D0936}", EditorComponentBase);
+            AZ_COMPONENT_SPLIT(EditorLockComponent, "{C3A169C9-7EFB-4D6C-8710-3591680D0936}", EditorComponentBase);
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
             ~EditorLockComponent();
 

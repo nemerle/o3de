@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzToolsFramework/Debug/TraceContext.h>
@@ -27,6 +28,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpBitangentStreamImporter)
+
             const char* AssImpBitangentStreamImporter::m_defaultNodeName = "Bitangent";
 
             AssImpBitangentStreamImporter::AssImpBitangentStreamImporter()

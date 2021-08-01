@@ -37,7 +37,7 @@ namespace Multiplayer
         AZ_RTTI(MultiplayerComponent, "{B7F5B743-CCD3-4981-8F1A-FC2B95CE22D7}", AZ::Component);
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
         MultiplayerComponent() = default;
         ~MultiplayerComponent() override = default;

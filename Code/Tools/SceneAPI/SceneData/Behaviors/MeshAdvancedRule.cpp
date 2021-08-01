@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/algorithm.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -30,6 +31,9 @@ namespace AZ
     {
         namespace Behaviors
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(MeshAdvancedRule)
+
             void MeshAdvancedRule::Activate()
             {
                 Events::ManifestMetaInfoBus::Handler::BusConnect();
@@ -109,7 +113,7 @@ namespace AZ
             void MeshAdvancedRule::UpdateMeshAdvancedRules(Containers::Scene& scene) const
             {
                 Containers::SceneManifest& manifest = scene.GetManifest();
-                auto valueStorage = manifest.GetValueStorage();                
+                auto valueStorage = manifest.GetValueStorage();
                 auto view = Containers::MakeDerivedFilterView<DataTypes::ISceneNodeGroup>(valueStorage);
                 for (DataTypes::ISceneNodeGroup& group : view)
                 {
@@ -141,7 +145,7 @@ namespace AZ
                     // Remove in reversed order, as otherwise the indices will be wrong. For example if we remove index 3, then index 6 would really be 5 afterwards.
                     // By doing this in reversed order we remove items at the end of the list first so it won't impact the indices of previous ones.
                     for (AZStd::vector<size_t>::reverse_iterator it = rulesToRemove.rbegin(); it != rulesToRemove.rend(); ++it)
-                    { 
+                    {
                         rules.RemoveRule(*it);
                     }
                 }

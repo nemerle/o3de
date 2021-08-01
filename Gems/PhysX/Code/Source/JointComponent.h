@@ -10,6 +10,7 @@
 #include <PxPhysicsAPI.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/Component/TransformBus.h>
@@ -52,10 +53,10 @@ namespace PhysX
 
         JointComponent() = default;
         JointComponent(
-            const JointComponentConfiguration& configuration, 
+            const JointComponentConfiguration& configuration,
             const JointGenericProperties& genericProperties);
         JointComponent(
-            const JointComponentConfiguration& configuration, 
+            const JointComponentConfiguration& configuration,
             const JointGenericProperties& genericProperties,
             const JointLimitProperties& limitProperties);
 

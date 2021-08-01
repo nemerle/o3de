@@ -10,6 +10,7 @@
 
 #include <BaseColliderComponent.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace PhysX
 {

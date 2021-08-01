@@ -85,12 +85,12 @@ namespace Vegetation
         }
     }
 
-    void LevelSettingsComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void LevelSettingsComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationLevelSettingsService", 0x7466472a));
     }
 
-    void LevelSettingsComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void LevelSettingsComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationLevelSettingsService", 0x7466472a));
     }

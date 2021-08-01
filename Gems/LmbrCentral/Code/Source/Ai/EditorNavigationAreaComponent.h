@@ -87,12 +87,12 @@ namespace LmbrCentral
         // TickBus
         void OnTick(float deltaTime, AZ::ScriptTimePoint time) override;
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("NavigationAreaService", 0xd6ec6566));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("PolygonPrismShapeService", 0x1cbc4ed4));
         }

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 
 #include <ScriptCanvas/Asset/RuntimeAsset.h>
@@ -29,7 +30,7 @@ namespace ScriptCanvas
     //! exist in this component.
     //! It is assumed that the graph has runtime graph has already been validated and compiled
     //! at this point.
-    //! This component should only be used at runtime 
+    //! This component should only be used at runtime
     class RuntimeComponent
         : public AZ::Component
         , public AZ::EntityBus::Handler
@@ -57,14 +58,14 @@ namespace ScriptCanvas
         void SetRuntimeDataOverrides(const RuntimeDataOverrides& overrideData);
 
     protected:
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             // Cannot be used with either the GraphComponent or the VariableManager Component
             incompatible.push_back(AZ_CRC("ScriptCanvasService", 0x41fd58f3));
             incompatible.push_back(AZ_CRC("ScriptCanvasVariableService", 0x819c8460));
         }
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ScriptCanvasRuntimeService", 0x776e1e3a));
         }

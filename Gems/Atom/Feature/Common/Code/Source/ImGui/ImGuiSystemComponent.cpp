@@ -29,17 +29,17 @@ namespace AZ
             }
         }
 
-        void ImGuiSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void ImGuiSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ImGuiSystemComponent", 0x2f08b9a7));
         }
 
-        void ImGuiSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void ImGuiSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("RPISystem", 0xf2add773));
         }
 
-        void ImGuiSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatbile)
+        void ImGuiSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatbile)
         {
             incompatbile.push_back(AZ_CRC("ImGuiSystemComponent", 0x2f08b9a7));
         }

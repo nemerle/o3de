@@ -13,12 +13,13 @@
 #include <EMotionFX/Source/EMotionFXAllocatorInitializer.h>
 
 #include <AzCore/Module/Environment.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace EMotionFX
 {
     namespace Pipeline
     {
-        class PipelineComponent 
+        class PipelineComponent
             : public AZ::SceneAPI::SceneCore::SceneSystemComponent
         {
         public:

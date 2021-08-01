@@ -7,6 +7,7 @@
  */
 #pragma once
 
+#include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/Math/Crc.h>
 #include <AzCore/Math/Vector3.h>
 #include <AzCore/std/tuple.h>
@@ -51,7 +52,7 @@ namespace AzPhysics
     static_assert(std::is_signed<SceneIndex>::value
         && std::is_signed<SimulatedBodyIndex>::value
         && std::is_signed<JointIndex>::value, "SceneIndex, SimulatedBodyIndex and JointIndex must be signed integers.");
-    
+
 
     //! A handle to a Scene within the physics simulation.
     //! A SceneHandle is a tuple of a Crc of the scenes name and the index in the Scene list.
@@ -113,25 +114,25 @@ namespace AzPhysics
     {
         return aznumeric_cast<MassComputeFlags>(aznumeric_cast<AZ::u8>(lhs) & aznumeric_cast<AZ::u8>(rhs));
     }
-    
+
     //! Variant to allow support for the system to either create the Shape(s) or use the provide Shape(s) that have been created externally.
     //! Can be one of the following.
     //! @code{ .cpp }
     //! // A ShapeColliderPair, which contains a ColliderConfiguration and ShapeConfiguration.
     //! AzPhysics::StaticRigidBodyConfiguration staticRigidBodyConfig;
     //! staticRigidBodyConfig.m_colliderAndShapeData = AzPhysics::ShapeColliderPair(&colliderConfig, &shapeConfig);
-    //! 
+    //!
     //! // A pointer to a Physics::Shape. The Simulated Body will take ownership of the pointer.
     //! AZStd::shared_ptr<Physics::Shape> shapePtr /*Created through other means*/;
     //! AzPhysics::StaticRigidBodyConfiguration staticRigidBodyConfig;
     //! staticRigidBodyConfig.m_colliderAndShapeData = shapePtr;
-    //! 
+    //!
     //! // A list of ShapeColliderPairs.
     //! AZStd::vector<AzPhysics::ShapeColliderPair> shapeColliderPairList;
     //! shapeColliderPairList.emplace_back(&colliderConfig, &shapeConfig); //add as many configs as required.
     //! AzPhysics::StaticRigidBodyConfiguration staticRigidBodyConfig;
     //! staticRigidBodyConfig.m_colliderAndShapeData = shapeColliderPairList;
-    //! 
+    //!
     //! // A list of Physics::Shape pointers. The Simulated Body will take ownership of these pointers.
     //! AZStd::vector<AZStd::shared_ptr<Physics::Shape>> shapePtrList;
     //! shapePtrList.emplace_back(/*Shape created through other means*/);

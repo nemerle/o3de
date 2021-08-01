@@ -21,7 +21,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpMeshImporter, "{41611339-1D32-474A-A6A4-25CE4430AAFB}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpMeshImporter, "{41611339-1D32-474A-A6A4-25CE4430AAFB}", SceneCore::LoadingComponent);
 
                 AssImpMeshImporter();
                 ~AssImpMeshImporter() override = default;

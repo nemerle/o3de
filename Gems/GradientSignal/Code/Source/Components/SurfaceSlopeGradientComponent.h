@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <GradientSignal/Ebuses/GradientRequestBus.h>
 #include <GradientSignal/Ebuses/SmoothStepRequestBus.h>
 #include <GradientSignal/Ebuses/SurfaceSlopeGradientRequestBus.h>
@@ -47,7 +48,7 @@ namespace GradientSignal
         AZ::Crc32 GetTag(int tagIndex) const;
         void RemoveTag(int tagIndex);
         void AddTag(AZStd::string tag);
- 
+
         bool IsSmoothStepReadOnly() const
         {
             return (m_rampType != RampType::SMOOTH_STEP);
@@ -62,7 +63,7 @@ namespace GradientSignal
 
     /**
     * Component implementing GradientRequestBus based on slope
-    */      
+    */
     class SurfaceSlopeGradientComponent
         : public AZ::Component
         , public GradientRequestBus::Handler
@@ -72,9 +73,9 @@ namespace GradientSignal
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(SurfaceSlopeGradientComponent, SurfaceSlopeGradientComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         SurfaceSlopeGradientComponent(const SurfaceSlopeGradientConfig& configuration);

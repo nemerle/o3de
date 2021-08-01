@@ -37,6 +37,8 @@
 #include <AzCore/Math/Transform.h>
 #include <AzCore/base.h>
 
+#include <numeric> // for iota
+
 namespace AZ
 {
     namespace Render
@@ -404,7 +406,7 @@ namespace AZ
         {
             return m_meshFeatureProcessor->GetSortKey(*m_meshHandle);
         }
-        
+
         void AtomActorInstance::SetLodOverride(RPI::Cullable::LodOverride lodOverride)
         {
             m_meshFeatureProcessor->SetLodOverride(*m_meshHandle, lodOverride);

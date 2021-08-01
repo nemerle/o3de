@@ -113,9 +113,9 @@ namespace PhysX
         friend class EditorColliderComponentDescriptor;
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
         static AZ::ComponentDescriptor* CreateDescriptor();
 
         EditorColliderComponent() = default;
@@ -270,9 +270,9 @@ namespace PhysX
 
         void Reflect(AZ::ReflectContext* reflection) const override;
 
-        void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided, const AZ::Component* instance) const override;
-        void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent, const AZ::Component* instance) const override;
-        void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required, const AZ::Component* instance) const override;
+        void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided, const AZ::Component* instance) const override;
+        void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent, const AZ::Component* instance) const override;
+        void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required, const AZ::Component* instance) const override;
         void GetWarnings(AZ::ComponentDescriptor::StringWarningArray& warnings, const AZ::Component* instance) const override;
 
     };

@@ -29,27 +29,27 @@ namespace VirtualGamepad
     static const int PrimaryTouchIndex = 0;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadThumbStickComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void VirtualGamepadThumbStickComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("VirtualGamepadThumbStickService"));
         provided.push_back(AZ_CRC("UiInteractableService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadThumbStickComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void VirtualGamepadThumbStickComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("VirtualGamepadThumbStickService"));
         incompatible.push_back(AZ_CRC("UiInteractableService"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadThumbStickComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void VirtualGamepadThumbStickComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiTransformService", 0x3a838e34));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void VirtualGamepadThumbStickComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void VirtualGamepadThumbStickComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         AZ_UNUSED(dependent);
     }

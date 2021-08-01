@@ -26,7 +26,7 @@ namespace AZ
                 : public AZ::Component
             {
             public:
-                AZ_COMPONENT(BehaviorComponent, "{DA66AE07-9ECF-4108-9CCC-9BFF618DD4AD}");
+                AZ_COMPONENT_SPLIT(BehaviorComponent, "{DA66AE07-9ECF-4108-9CCC-9BFF618DD4AD}");
 
                 ~BehaviorComponent() override = default;
 

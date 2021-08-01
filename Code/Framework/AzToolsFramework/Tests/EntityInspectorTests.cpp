@@ -17,6 +17,7 @@
 // Test Environment
 #include <AzCore/UnitTest/TestTypes.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/UserSettings/UserSettingsComponent.h>
 #include <AzToolsFramework/Application/ToolsApplication.h>
@@ -36,7 +37,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(Inspector_TestComponent1, "{BD25A077-DF38-4B67-BEA5-F4587A747A36}", AZ::Component);
+        AZ_COMPONENT_SPLIT(Inspector_TestComponent1, "{BD25A077-DF38-4B67-BEA5-F4587A747A36}", AZ::Component);
         static void Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -57,12 +58,12 @@ namespace UnitTest
             }
         }
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("InspectorTestService1"));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("InspectorTestService1"));
         }
@@ -101,7 +102,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(Inspector_TestComponent2, "{57D1C818-FD31-4FCD-A4DB-705EABF4E98B}", AZ::Component);
+        AZ_COMPONENT_SPLIT(Inspector_TestComponent2, "{57D1C818-FD31-4FCD-A4DB-705EABF4E98B}", AZ::Component);
         static void Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -126,12 +127,12 @@ namespace UnitTest
             }
         }
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("InspectorTestService2"));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("InspectorTestService2"));
         }
@@ -170,7 +171,7 @@ namespace UnitTest
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(Inspector_TestComponent3, "{552CCFB1-135E-4B02-A492-25A3BBDFA381}", AZ::Component);
+        AZ_COMPONENT_SPLIT(Inspector_TestComponent3, "{552CCFB1-135E-4B02-A492-25A3BBDFA381}", AZ::Component);
         static void Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -195,12 +196,12 @@ namespace UnitTest
             }
         }
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("InspectorTestService3"));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("InspectorTestService3"));
         }
@@ -232,6 +233,11 @@ namespace UnitTest
         /// Whether this entity is locked
         int m_data = 0;
     };
+
+    // Implement the CreateDescriptor static methods
+    AZ_COMPONENT_IMPL(Inspector_TestComponent1)
+    AZ_COMPONENT_IMPL(Inspector_TestComponent2)
+    AZ_COMPONENT_IMPL(Inspector_TestComponent3)
 
     // Component Filters for Testing
     bool Filter_IsTestComponent1(const AZ::SerializeContext::ClassData& classData)
@@ -269,7 +275,7 @@ namespace UnitTest
             m_application = aznew ToolsTestApplication("ComponentPaletteTests");
             m_application->Start(componentApplicationDesc);
             // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
             // in the unit tests.
             AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
         }
@@ -284,7 +290,7 @@ namespace UnitTest
         ToolsTestApplication* m_application = nullptr;
     };
 
-    // Test pushing slices to create news slices that could result in cyclic 
+    // Test pushing slices to create news slices that could result in cyclic
     // dependency, e.g. push slice1 => slice2 and slice2 => slice1 at the same
     // time.
     TEST_F(ComponentPaletteTests, TestComponentPalleteUtilities)
@@ -308,7 +314,7 @@ namespace UnitTest
         //////////////////////////////////////////////////////////////////////////
 
         // Verify that OffersRequiredServices returns true with the services provided by the component.
-        AZ::ComponentDescriptor::DependencyArrayType testComponent1_ProvidedServices;
+        AZ::ComponentDescriptorDependencyArrayType testComponent1_ProvidedServices;
         Inspector_TestComponent1::GetProvidedServices(testComponent1_ProvidedServices);
         AZ_TEST_ASSERT(testComponent1_ProvidedServices.size() == 1);
         const AZ::SerializeContext::ClassData* testComponent1_ClassData = context->FindClassData(testComponent1_typeId);
@@ -316,14 +322,14 @@ namespace UnitTest
         EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::OffersRequiredServices(testComponent1_ClassData, testComponent1_ProvidedServices));
 
         // Verify that OffersRequiredServices returns when given services provided by a different component
-        AZ::ComponentDescriptor::DependencyArrayType testComponent2_ProvidedServices;
+        AZ::ComponentDescriptorDependencyArrayType testComponent2_ProvidedServices;
         Inspector_TestComponent2::GetProvidedServices(testComponent2_ProvidedServices);
         AZ_TEST_ASSERT(testComponent2_ProvidedServices.size() == 1);
         AZ_TEST_ASSERT(testComponent1_ProvidedServices != testComponent2_ProvidedServices);
         EXPECT_FALSE(AzToolsFramework::ComponentPaletteUtil::OffersRequiredServices(testComponent1_ClassData, testComponent2_ProvidedServices));
 
         // verify that OffersRequiredServices returns true when provided with an empty list of services
-        EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::OffersRequiredServices(testComponent1_ClassData, AZ::ComponentDescriptor::DependencyArrayType()));
+        EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::OffersRequiredServices(testComponent1_ClassData, AZ::ComponentDescriptorDependencyArrayType()));
 
         //////////////////////////////////////////////////////////////////////////
         // TEST IsAddableByUser()
@@ -347,13 +353,13 @@ namespace UnitTest
         context->DisableRemoveReflection();
 
         // Verify that there are no components that satisfy the AppearsInGameComponentMenu filter without service dependency conditions
-        EXPECT_FALSE(AzToolsFramework::ComponentPaletteUtil::ContainsEditableComponents(context, &Filter_IsTestComponent2, AZ::ComponentDescriptor::DependencyArrayType()));
+        EXPECT_FALSE(AzToolsFramework::ComponentPaletteUtil::ContainsEditableComponents(context, &Filter_IsTestComponent2, AZ::ComponentDescriptorDependencyArrayType()));
 
         // Reflect Test Component 2 for subsequent tests
         m_application->RegisterComponentDescriptor(Inspector_TestComponent2Descriptor);
 
         // Verify that there is now a component that satisfies the AppearsInGameComponentMenu filter without service dependency conditions
-        EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::ContainsEditableComponents(context, &Filter_IsTestComponent2, AZ::ComponentDescriptor::DependencyArrayType()));
+        EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::ContainsEditableComponents(context, &Filter_IsTestComponent2, AZ::ComponentDescriptorDependencyArrayType()));
 
         // Verify that true is returned here because test component 2 is editable and provides test component 2 services
         EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::ContainsEditableComponents(context, &Filter_IsTestComponent2, testComponent2_ProvidedServices));
@@ -363,9 +369,9 @@ namespace UnitTest
 
         // Verify that even though Test Component 1 exists and is returned by the filter and there are no services to match, false is returned
         // because Test Component 1 is not editable.
-        EXPECT_FALSE(AzToolsFramework::ComponentPaletteUtil::ContainsEditableComponents(context, &Filter_IsTestComponent1, AZ::ComponentDescriptor::DependencyArrayType()));
+        EXPECT_FALSE(AzToolsFramework::ComponentPaletteUtil::ContainsEditableComponents(context, &Filter_IsTestComponent1, AZ::ComponentDescriptorDependencyArrayType()));
 
         // Verify that true is returned here when a system component is editable
-        EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::ContainsEditableComponents(context, &Filter_IsTestComponent3, AZ::ComponentDescriptor::DependencyArrayType()));
+        EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::ContainsEditableComponents(context, &Filter_IsTestComponent3, AZ::ComponentDescriptorDependencyArrayType()));
     }
 }

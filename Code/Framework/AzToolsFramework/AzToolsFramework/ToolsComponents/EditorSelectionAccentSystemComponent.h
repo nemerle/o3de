@@ -31,7 +31,7 @@ namespace AzToolsFramework
                 SliceSelected
             };
 
-            AZ_COMPONENT(EditorSelectionAccentSystemComponent, "{6E0F0E2C-1FE5-4AFB-9672-DC92B3D2D844}");
+            AZ_COMPONENT_SPLIT(EditorSelectionAccentSystemComponent, "{6E0F0E2C-1FE5-4AFB-9672-DC92B3D2D844}");
 
             ~EditorSelectionAccentSystemComponent() override = default;
 
@@ -57,7 +57,7 @@ namespace AzToolsFramework
 
         protected:
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("EditorSelectionAccentingSelectionService", 0x8b5253cf));
             }

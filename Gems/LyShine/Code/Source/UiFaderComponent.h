@@ -17,6 +17,7 @@
 #include <LyShine/IRenderGraph.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Color.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,19 +71,19 @@ public: // member functions
 
 public:  // static member functions
 
-    static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("UiFaderService", 0x3c5847e9));
         provided.push_back(AZ_CRC("UiRenderControlService", 0x4e302454));
     }
 
-    static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("UiFaderService", 0x3c5847e9));
         incompatible.push_back(AZ_CRC("UiRenderControlService", 0x4e302454));
     }
 
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("UiElementService", 0x3dca7ad4));
         required.push_back(AZ_CRC("UiTransformService", 0x3a838e34));
@@ -161,7 +162,7 @@ private: // data
 
     //! When rendering to a texture this is our depth surface
     SDepthTexture* m_renderTargetDepthSurface = nullptr;
-    
+
     //! The positions used for the render to texture viewport and to render the render target to the screen
     AZ::Vector2 m_viewportTopLeft;
     AZ::Vector2 m_viewportSize;

@@ -100,7 +100,7 @@ protected:
         void Activate() override {};
         void Deactivate() override {};
     protected:
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }

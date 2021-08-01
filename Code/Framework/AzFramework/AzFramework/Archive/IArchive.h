@@ -11,6 +11,7 @@
 
 #include <AzCore/EBus/Event.h>
 #include <AzCore/IO/FileIO.h>
+#include <AzCore/RTTI/RTTI.h>
 #include <AzCore/std/containers/map.h>
 #include <AzCore/std/smart_ptr/intrusive_base.h>
 #include <AzCore/std/smart_ptr/intrusive_ptr.h>
@@ -209,7 +210,7 @@ namespace AZ::IO
         * given the source relative path, constructs the full path to the file according to the flags
         * returns the pointer to the constructed path (can be either szSourcePath, or szDestPath, or NULL in case of error
         */
-        // 
+        //
         virtual const char* AdjustFileName(AZStd::string_view src, char* dst, size_t dstSize, uint32_t nFlags, bool skipMods = false) = 0;
 
         virtual bool Init(AZStd::string_view szBasePath) = 0;

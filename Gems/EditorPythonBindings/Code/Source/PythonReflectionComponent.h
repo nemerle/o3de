@@ -10,6 +10,7 @@
 #include <EditorPythonBindings/EditorPythonBindingsSymbols.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <EditorPythonBindings/EditorPythonBindingsBus.h>
 #include <Source/PythonCommon.h>
 #include <pybind11/pybind11.h>
@@ -30,9 +31,9 @@ namespace EditorPythonBindings
         AZ_COMPONENT(PythonReflectionComponent, PythonReflectionComponentTypeId, AZ::Component);
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
     protected:
         ////////////////////////////////////////////////////////////////////////

@@ -9,6 +9,7 @@
 
 #include <Components/Slots/SlotComponent.h>
 #include <GraphCanvas/Components/Slots/Property/PropertySlotBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace GraphCanvas
 {
@@ -21,11 +22,11 @@ namespace GraphCanvas
         static void Reflect(AZ::ReflectContext* reflectContext);
 
         static AZ::Entity* CreatePropertySlot(const AZ::EntityId& nodeId, const AZ::Crc32& propertyId, const SlotConfiguration& slotConfiguration);
-        
+
         PropertySlotComponent();
         PropertySlotComponent(const AZ::Crc32& propertyId, const SlotConfiguration& slotConfiguration);
         ~PropertySlotComponent();
-        
+
         // Component
         void Init();
         void Activate();
@@ -45,7 +46,7 @@ namespace GraphCanvas
         PropertySlotComponent(const PropertySlotComponent&) = delete;
         PropertySlotComponent& operator=(const PropertySlotComponent&) = delete;
         AZ::Entity* ConstructConnectionEntity(const Endpoint& sourceEndpoint, const Endpoint& targetEndpoint, bool createModelConnection) override;
-        
+
         AZ::Crc32 m_propertyId;
     };
 }

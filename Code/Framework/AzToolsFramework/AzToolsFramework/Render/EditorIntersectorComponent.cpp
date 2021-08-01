@@ -8,6 +8,7 @@
 
 #include <AzToolsFramework/Render/EditorIntersectorComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Entity/EntityContext.h>
 #include <AzFramework/Render/Intersector.h>
 #include <AzToolsFramework/Entity/EditorEntityContextBus.h>
@@ -16,6 +17,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorIntersectorComponent)
+
         void EditorIntersectorComponent::Activate()
         {
             AzFramework::EntityContextId editorContextId;

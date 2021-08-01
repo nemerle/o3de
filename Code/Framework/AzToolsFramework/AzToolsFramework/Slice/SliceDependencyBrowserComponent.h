@@ -26,7 +26,7 @@ namespace AzToolsFramework
     {
 
     public:
-        AZ_COMPONENT(SliceDependencyBrowserComponent, "{D5D7D1BB-CACB-4B42-8FDA-F6C46F52418A}");
+        AZ_COMPONENT_SPLIT(SliceDependencyBrowserComponent, "{D5D7D1BB-CACB-4B42-8FDA-F6C46F52418A}");
 
         SliceDependencyBrowserComponent()
             : m_databaseConnection(aznew AssetDatabase::AssetDatabaseConnection())
@@ -61,12 +61,12 @@ namespace AzToolsFramework
 
     protected:
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("SliceDependencyBrowserService", 0xe8f1ed19));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("SliceDependencyBrowserService", 0xe8f1ed19));
         }

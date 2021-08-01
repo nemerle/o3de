@@ -27,7 +27,7 @@ namespace LegacyFramework
         , private IPCCommandBus::Handler
     {
     public:
-        AZ_COMPONENT(LegacyFramework::IPCComponent, "{798D5FE3-034B-406A-9830-A6ED2AF05E26}")
+        AZ_COMPONENT_SPLIT(LegacyFramework::IPCComponent, "{798D5FE3-034B-406A-9830-A6ED2AF05E26}")
 
         IPCComponent();
         virtual ~IPCComponent();

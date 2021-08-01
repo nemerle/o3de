@@ -10,11 +10,11 @@
 
 #include <SceneAPI/SceneCore/Components/LoadingComponent.h>
 #include <SceneAPI/SceneCore/Events/AssetImportRequest.h>
-
+#include <AzCore/Component/ComponentDescriptor.h>
 namespace SceneLoggingExample
 {
-    // The LoadingTrackingProcessor class demonstrates how to listen to EBus events that start  
-    // and finalize the loading of scene files (such as .fbx files) and the manifest (.assetinfo  
+    // The LoadingTrackingProcessor class demonstrates how to listen to EBus events that start
+    // and finalize the loading of scene files (such as .fbx files) and the manifest (.assetinfo
     // file). It also shows the Call Processor events that can be fired during loading.
     class LoadingTrackingProcessor
         : public AZ::SceneAPI::SceneCore::LoadingComponent
@@ -30,9 +30,9 @@ namespace SceneLoggingExample
         void Deactivate() override;
         static void Reflect(AZ::ReflectContext* context);
 
-        AZ::SceneAPI::Events::ProcessingResult PrepareForAssetLoading(AZ::SceneAPI::Containers::Scene& scene, 
+        AZ::SceneAPI::Events::ProcessingResult PrepareForAssetLoading(AZ::SceneAPI::Containers::Scene& scene,
             RequestingApplication requester) override;
-        AZ::SceneAPI::Events::LoadingResult LoadAsset(AZ::SceneAPI::Containers::Scene& scene, 
+        AZ::SceneAPI::Events::LoadingResult LoadAsset(AZ::SceneAPI::Containers::Scene& scene,
             const AZStd::string& path, const AZ::Uuid& guid, RequestingApplication requester) override;
         void FinalizeAssetLoading(AZ::SceneAPI::Containers::Scene& scene, RequestingApplication requester);
         AZ::SceneAPI::Events::ProcessingResult UpdateManifest(AZ::SceneAPI::Containers::Scene& scene, ManifestAction action,

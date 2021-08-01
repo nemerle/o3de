@@ -110,19 +110,19 @@ namespace Vegetation
         return selectableLayers;
     }
 
-    void AreaComponentBase::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaComponentBase::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
     }
 
-    void AreaComponentBase::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaComponentBase::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationAreaService", 0x6a859504));
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
         services.push_back(AZ_CRC("GradientTransformService", 0x8c8c5ecc));
     }
 
-    void AreaComponentBase::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaComponentBase::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& services)
     {
     }
 

@@ -10,6 +10,7 @@
 
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/containers/map.h>
 
 #include <QMenu>
@@ -32,8 +33,8 @@ namespace SliceFavorites
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
     protected:
         ////////////////////////////////////////////////////////////////////////
@@ -42,7 +43,7 @@ namespace SliceFavorites
         void Activate() override;
         void Deactivate() override;
         ////////////////////////////////////////////////////////////////////////
- 
+
         ////////////////////////////////////////////////////////////////////////
         //  SliceFavoritesRequestBus::Handler
         size_t GetNumFavorites() override;

@@ -7,6 +7,7 @@
  */
 #include "EditorSelectionAccentSystemComponent.h"
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Debug/Trace.h>
 #include <AzCore/Component/TickBus.h>
@@ -19,6 +20,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorSelectionAccentSystemComponent)
+
         void EditorSelectionAccentSystemComponent::Reflect(AZ::ReflectContext* context)
         {
             if (AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context))

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzToolsFramework/Entity/EditorEntityContextComponent.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AzToolsFramework
 {

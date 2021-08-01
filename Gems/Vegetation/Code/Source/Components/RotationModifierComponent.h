@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Vector3.h>
 #include <Vegetation/Ebuses/ModifierRequestBus.h>
 #include <Vegetation/Ebuses/RotationModifierRequestBus.h>
@@ -49,7 +50,7 @@ namespace Vegetation
 
     /**
     * Component implementing VegetationModifierRequestBus that offsets rotation
-    */      
+    */
     class RotationModifierComponent
         : public AZ::Component
         , public ModifierRequestBus::Handler
@@ -58,9 +59,9 @@ namespace Vegetation
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(RotationModifierComponent, RotationModifierComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         RotationModifierComponent(const RotationModifierConfig& configuration);

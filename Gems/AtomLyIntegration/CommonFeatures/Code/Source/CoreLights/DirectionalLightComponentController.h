@@ -33,9 +33,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::DirectionalLightComponentController, "60A9DFF4-6A05-4D83-81BD-13ADEB95B29C");
             static void Reflect(ReflectContext* context);
-            static void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent);
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetDependentServices(ComponentDescriptorDependencyArrayType& dependent);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
 
             DirectionalLightComponentController() = default;
             DirectionalLightComponentController(const DirectionalLightComponentConfig& config);

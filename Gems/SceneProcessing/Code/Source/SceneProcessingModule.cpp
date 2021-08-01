@@ -73,12 +73,12 @@ namespace AZ
                 };
             }
 
-            void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("SceneConfiguration", 0x2a3785fb));
             }
 
-            void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("SceneConfiguration", 0x2a3785fb));
             }

@@ -229,17 +229,17 @@ namespace EditorPythonBindings
         }
     }
 
-    void PythonReflectionComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void PythonReflectionComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(PythonReflectionService);
     }
 
-    void PythonReflectionComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void PythonReflectionComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(PythonReflectionService);
     }
 
-    void PythonReflectionComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void PythonReflectionComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(PythonEmbeddedService);
     }

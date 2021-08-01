@@ -38,15 +38,15 @@ namespace AssetProcessor
     {
     public:
         
-        AZ_COMPONENT(ToolsAssetCatalogComponent, "{AE68E46B-0E21-499A-8309-41408BCBE4BF}");
+        AZ_COMPONENT_SPLIT(ToolsAssetCatalogComponent, "{AE68E46B-0E21-499A-8309-41408BCBE4BF}");
 
         ToolsAssetCatalogComponent() = default;
         ~ToolsAssetCatalogComponent() override = default;
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
         void Activate() override;
         void Deactivate() override;

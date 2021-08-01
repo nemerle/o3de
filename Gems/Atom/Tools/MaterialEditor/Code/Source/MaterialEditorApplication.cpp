@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/IO/Path/Path.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzFramework/IO/LocalFileIO.h>
@@ -243,8 +244,8 @@ namespace MaterialEditor
         QStringList failedAssets;
 
         // Forced asset processor to synchronously process all critical assets
-        // Note: with AssetManager's current implementation, a compiled asset won't be added in asset registry until next system tick. 
-        // So the asset id won't be found right after CompileAssetSync call. 
+        // Note: with AssetManager's current implementation, a compiled asset won't be added in asset registry until next system tick.
+        // So the asset id won't be found right after CompileAssetSync call.
         for (const AZStd::string& assetFilters : assetFiltersArray)
         {
             AZ_TracePrintf("MaterialEditor", "Compiling critical asset matching: %s.\n", assetFilters.c_str());

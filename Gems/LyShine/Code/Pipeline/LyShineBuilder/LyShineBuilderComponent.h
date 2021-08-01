@@ -9,6 +9,7 @@
 
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Pipeline/LyShineBuilder/UiCanvasBuilderWorker.h>
 
 namespace LyShine

@@ -29,6 +29,7 @@ AZ_POP_DISABLE_WARNING
 // AzCore
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
@@ -1941,6 +1942,9 @@ bool MainWindow::focusNextPrevChild(bool next)
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(MainWindowEditorFuncsHandler)
+
     void MainWindowEditorFuncsHandler::Reflect(AZ::ReflectContext* context)
     {
         if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))

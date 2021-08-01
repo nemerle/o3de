@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/std/smart_ptr/make_shared.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzToolsFramework/Thumbnails/ThumbnailerNullComponent.h>
 #include <AzToolsFramework/Thumbnails/ThumbnailContext.h>
@@ -16,6 +17,9 @@ namespace AzToolsFramework
 {
     namespace Thumbnailer
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(ThumbnailerNullComponent)
+
         ThumbnailerNullComponent::ThumbnailerNullComponent() :
             m_nullThumbnail()
         {
@@ -42,7 +46,7 @@ namespace AzToolsFramework
             }
         }
 
-        void ThumbnailerNullComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void ThumbnailerNullComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("ThumbnailerService", 0x65422b97));
         }

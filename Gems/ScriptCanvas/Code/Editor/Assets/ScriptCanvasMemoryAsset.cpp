@@ -14,6 +14,7 @@
 #include <ScriptCanvas/Asset/ScriptCanvasAssetBase.h>
 #include <ScriptCanvas/Assets/ScriptCanvasAssetHandler.h>
 #include <ScriptCanvas/Components/EditorGraph.h>
+#include <AzCore/IO/Streamer/FileRequest.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/AZStdContainers.inl>
 #include <AzCore/std/smart_ptr/make_shared.h>

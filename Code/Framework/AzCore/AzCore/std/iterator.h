@@ -8,8 +8,9 @@
 #pragma once
 
 #include <AzCore/std/base.h>
-#include <AzCore/std/utils.h>
 #include <AzCore/std/typetraits/integral_constant.h>
+#include <AzCore/std/typetraits/void_t.h>
+#include <AzCore/std/typetraits/is_convertible.h>
 
 #include <AzCore/std/typetraits/is_base_of.h> // use by ConstIteratorCast
 #include <AzCore/std/typetraits/remove_cv.h>
@@ -171,7 +172,7 @@ namespace AZStd
     using std::front_inserter;
     using std::insert_iterator;
     using std::inserter;
-  
+
     enum iterator_status_flag
     {
         isf_none = 0x00,     ///< Iterator is invalid.
@@ -199,7 +200,7 @@ namespace AZStd
     // Both functions are constexpr as of C++17
     using std::next;
     using std::prev;
-    
+
     //////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////////////
@@ -221,7 +222,7 @@ namespace AZStd
     using std::size;
     using std::empty;
     using std::data;
-   
+
     namespace Debug
     {
         // Keep macros around for backwards compatibility

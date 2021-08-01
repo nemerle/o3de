@@ -31,8 +31,8 @@ namespace AZ
             AZ_RTTI(AZ::Render::ImageBasedLightComponentController, "{73DBD008-4E77-471C-B7DE-F2217A256FE2}");
 
             static void Reflect(ReflectContext* context);
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
 
             ImageBasedLightComponentController() = default;
             ImageBasedLightComponentController(const ImageBasedLightComponentConfig& config);

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AreaSystemComponent.h>
 #include <InstanceSystemComponent.h>
 #include <Vegetation/Ebuses/LevelSettingsRequestBus.h>
@@ -48,8 +49,8 @@ namespace Vegetation
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(LevelSettingsComponent, LevelSettingsComponentTypeId);
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
         LevelSettingsComponent(const LevelSettingsConfig& configuration);
         LevelSettingsComponent() = default;

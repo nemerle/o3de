@@ -26,8 +26,8 @@ namespace AzToolsFramework
             AZ_EDITOR_COMPONENT(EditorOnlyEntityComponent, "{22A16F1D-6D49-422D-AAE9-91AE45B5D3E7}");
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
 
             ////////////////////////////////////////////////////////////////////
             // EditorOnlyEntityComponentRequestBus

@@ -287,7 +287,7 @@ namespace AZ
             // Check if there is already a shape components and remove it.
             for (Component* component : GetEntity()->GetComponents())
             {
-                ComponentDescriptor::DependencyArrayType provided;
+                ComponentDescriptorDependencyArrayType provided;
                 ComponentDescriptor* componentDescriptor = nullptr;
                 EBUS_EVENT_ID_RESULT(componentDescriptor, component->RTTI_GetType(), ComponentDescriptorBus, GetDescriptor);
                 AZ_Assert(componentDescriptor, "Component class %s descriptor is not created! It must be before you can use it!", component->RTTI_GetTypeName());

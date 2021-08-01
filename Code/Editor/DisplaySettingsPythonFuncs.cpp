@@ -11,6 +11,7 @@
 #include "DisplaySettingsPythonFuncs.h"
 
 // AzCore
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
@@ -33,6 +34,7 @@ namespace
 
 namespace AzToolsFramework
 {
+
     bool DisplaySettingsState::operator==(const DisplaySettingsState& rhs) const
     {
         return this->m_noCollision == rhs.m_noCollision &&
@@ -61,6 +63,9 @@ namespace AzToolsFramework
             boolToPyString(this->m_showDimensionFigures)
             );
     }
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(DisplaySettingsPythonFuncsHandler)
 
     void DisplaySettingsPythonFuncsHandler::Reflect(AZ::ReflectContext* context)
     {
@@ -94,6 +99,9 @@ namespace AzToolsFramework
                 ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Automation);
         }
     }
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(DisplaySettingsComponent)
 
     void DisplaySettingsComponent::Reflect(AZ::ReflectContext* context)
     {

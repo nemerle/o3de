@@ -58,7 +58,7 @@ namespace AzToolsFramework
     {
     public:
 
-        AZ_COMPONENT(EditorEntityContextComponent, "{92E3029B-6F4E-4628-8306-45D51EE59B8C}");
+        AZ_COMPONENT_SPLIT(EditorEntityContextComponent, "{92E3029B-6F4E-4628-8306-45D51EE59B8C}");
 
         EditorEntityContextComponent();
         ~EditorEntityContextComponent() override;
@@ -124,17 +124,17 @@ namespace AzToolsFramework
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("EditorEntityContextService"));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("EditorEntityContextService"));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC_CE("AssetDatabaseService"));
             dependent.push_back(AZ_CRC_CE("SliceSystemService"));

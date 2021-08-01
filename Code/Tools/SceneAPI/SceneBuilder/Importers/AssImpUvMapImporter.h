@@ -21,7 +21,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpUvMapImporter, "{BF02F231-848B-4CDB-9B11-55EEE15CFAA6}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpUvMapImporter, "{BF02F231-848B-4CDB-9B11-55EEE15CFAA6}", SceneCore::LoadingComponent);
 
                 AssImpUvMapImporter();
                 ~AssImpUvMapImporter() override = default;

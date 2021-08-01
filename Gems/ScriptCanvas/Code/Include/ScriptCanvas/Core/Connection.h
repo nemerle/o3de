@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Outcome/Outcome.h>
 
 #include "Core.h"
@@ -63,7 +64,7 @@ namespace ScriptCanvas
 
     protected:
         //-------------------------------------------------------------------------
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ScriptCanvasConnectionService", 0x028dc06e));
         }

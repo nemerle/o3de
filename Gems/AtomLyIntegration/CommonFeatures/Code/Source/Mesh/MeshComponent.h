@@ -11,7 +11,7 @@
 #include <Mesh/MeshComponentController.h>
 #include <AtomLyIntegration/CommonFeatures/Mesh/MeshComponentConstants.h>
 #include <AzFramework/Components/ComponentAdapter.h>
-
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

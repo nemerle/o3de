@@ -10,6 +10,8 @@
 
 #include <AzCore/std/containers/array.h>
 #include <AzCore/std/string/wildcard.h>
+#include <AzCore/std/hash.h>
+#include <AzCore/Casting/numeric_cast.h>
 
 // extern instantiations of Path templates to prevent implicit instantiations
 namespace AZ::IO
@@ -180,7 +182,7 @@ namespace AZ::IO::Internal
     //! Check if a path is absolute on a OS basis
     //! If the preferred separator is '/' just checks if the path starts with a '/
     //! Otherwise a check for a Windows absolute path occurs
-    //! Windows absolute paths can include a RootName 
+    //! Windows absolute paths can include a RootName
     template <typename InputIt, typename EndIt, typename = AZStd::enable_if_t<AZStd::Internal::is_input_iterator_v<InputIt>>>
     static constexpr bool IsAbsolute(InputIt first, EndIt last, const char preferredSeparator)
     {
@@ -1706,7 +1708,7 @@ namespace AZ::IO
     }
 
     template <typename StringType>
-    constexpr BasicPath<StringType>::operator string_type() const 
+    constexpr BasicPath<StringType>::operator string_type() const
     {
         return m_path;
     }

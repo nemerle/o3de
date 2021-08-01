@@ -7,12 +7,16 @@
  */
 
 #include <AzCore/Time/TimeSystemComponent.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Console/IConsole.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 namespace AZ
 {
     AZ_CVAR(float, t_scale, 1.0f, nullptr, AZ::ConsoleFunctorFlags::Null, "A scalar amount to adjust time passage by, 1.0 == realtime, 0.5 == half realtime, 2.0 == doubletime");
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(TimeSystemComponent)
 
     void TimeSystemComponent::Reflect(AZ::ReflectContext* context)
     {
@@ -23,12 +27,12 @@ namespace AZ
         }
     }
 
-    void TimeSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void TimeSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("TimeService"));
     }
 
-    void TimeSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void TimeSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("TimeService"));
     }

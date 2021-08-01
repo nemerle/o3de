@@ -92,17 +92,17 @@ namespace Vegetation
         m_vegetationAreaIds.push_back(entityId);
     }
 
-    void AreaBlenderComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaBlenderComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         AreaComponentBase::GetProvidedServices(services);
     }
 
-    void AreaBlenderComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaBlenderComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         AreaComponentBase::GetIncompatibleServices(services);
     }
 
-    void AreaBlenderComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void AreaBlenderComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         AreaComponentBase::GetRequiredServices(services);
     }

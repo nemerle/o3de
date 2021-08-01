@@ -31,8 +31,8 @@ namespace AZ
             AZ_RTTI(AZ::Render::GridComponentController, "{D2FF04F5-2F8D-44C5-99CA-A6FF800187DD}");
 
             static void Reflect(ReflectContext* context);
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
 
             GridComponentController() = default;
             GridComponentController(const GridComponentConfig& config);

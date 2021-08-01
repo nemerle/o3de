@@ -11,12 +11,13 @@
 #include <SceneAPI/SceneCore/Components/BehaviorComponent.h>
 #include <SceneAPI/SceneCore/Events/ManifestMetaInfoBus.h>
 #include <SceneAPI/SceneCore/Events/AssetImportRequest.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace SceneLoggingExample
 {
     // The LoggingGroupBehavior shows how a behavior can be written that monitors
-    // manifest activity and reacts to it in order to setup default values for 
-    // manifest entries. It also demonstrates how to register new UI elements with 
+    // manifest activity and reacts to it in order to setup default values for
+    // manifest entries. It also demonstrates how to register new UI elements with
     // the SceneAPI.
     class LoggingGroupBehavior
         : public AZ::SceneAPI::SceneCore::BehaviorComponent
@@ -33,7 +34,7 @@ namespace SceneLoggingExample
         static void Reflect(AZ::ReflectContext* context);
 
         void GetCategoryAssignments(CategoryRegistrationList& categories, const AZ::SceneAPI::Containers::Scene& scene) override;
-        AZ::SceneAPI::Events::ProcessingResult UpdateManifest(AZ::SceneAPI::Containers::Scene& scene, 
+        AZ::SceneAPI::Events::ProcessingResult UpdateManifest(AZ::SceneAPI::Containers::Scene& scene,
             ManifestAction action, RequestingApplication requester) override;
         void InitializeObject(const AZ::SceneAPI::Containers::Scene& scene, AZ::SceneAPI::DataTypes::IManifestObject& target) override;
     };

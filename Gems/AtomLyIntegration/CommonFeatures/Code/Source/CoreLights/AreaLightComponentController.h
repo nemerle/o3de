@@ -32,9 +32,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::AreaLightComponentController, "{C185C0F7-0923-4EF7-94F7-B41D60FE535B}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
             AreaLightComponentController() = default;
             AreaLightComponentController(const AreaLightComponentConfig& config);

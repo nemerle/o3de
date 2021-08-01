@@ -13,6 +13,7 @@
 
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace EMotionFX
 {

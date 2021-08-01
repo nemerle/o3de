@@ -33,9 +33,9 @@ namespace LmbrCentral
     private:
         AZ_DISABLE_COPY_MOVE(EditorPolygonPrismShapeComponent)
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         // AZ::Component
         void Init() override;

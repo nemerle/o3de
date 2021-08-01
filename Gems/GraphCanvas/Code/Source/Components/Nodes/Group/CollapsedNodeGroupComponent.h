@@ -11,6 +11,7 @@
 #include <QPropertyAnimation>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <GraphCanvas/Components/GeometryBus.h>
 #include <GraphCanvas/Components/GraphCanvasPropertyBus.h>
@@ -71,9 +72,9 @@ namespace GraphCanvas
     public:
         AZ_COMPONENT(CollapsedNodeGroupComponent, "{FFA874A1-0D14-4BF9-932D-FE1A285506E6}", GraphCanvasPropertyComponent);
         static void Reflect(AZ::ReflectContext*);
-        
+
         static AZ::Entity* CreateCollapsedNodeGroupEntity(const CollapsedNodeGroupConfiguration& config);
-        
+
         CollapsedNodeGroupComponent();
         CollapsedNodeGroupComponent(const CollapsedNodeGroupConfiguration& config);
         ~CollapsedNodeGroupComponent() override;
@@ -87,7 +88,7 @@ namespace GraphCanvas
         // SystemTickBus
         void OnSystemTick() override;
         ////
-        
+
         // NodeNotifications
         void OnAddedToScene(const GraphId& graphId) override;
         void OnRemovedFromScene(const GraphId& graphId) override;
@@ -129,7 +130,7 @@ namespace GraphCanvas
         void OnSceneMemberHidden() override;
         void OnSceneMemberShown() override;
         ////
-        
+
     private:
 
         void SetupGroupPosition(const GraphId& graphId);
@@ -157,7 +158,7 @@ namespace GraphCanvas
         AZStd::unordered_set< Endpoint > m_forcedRedirections;
         AZStd::vector< SlotRedirectionConfiguration > m_redirections;
         SubGraphParsingResult m_containedSubGraphs;
-    
+
         AZ::EntityId m_nodeGroupId;
 
         // Counter for how many frames to delay before beginning animations

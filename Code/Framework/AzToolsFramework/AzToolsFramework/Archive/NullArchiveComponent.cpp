@@ -8,11 +8,14 @@
 
 #include "NullArchiveComponent.h"
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(NullArchiveComponent)
 
     void NullArchiveComponent::Activate()
     {

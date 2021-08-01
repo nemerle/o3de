@@ -8,6 +8,7 @@
 
 #include <AzCore/EBus/EventSchedulerSystemComponent.h>
 #include <AzCore/Interface/Interface.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Console/ILogger.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
@@ -16,6 +17,9 @@ AZ_TYPE_SAFE_INTEGRAL_CVARBINDING(TimeMs);
 namespace AZ
 {
     AZ_CVAR(TimeMs, bg_maxScheduledEventProcessTimeMs, TimeMs{ 0 }, nullptr, AZ::ConsoleFunctorFlags::DontReplicate, "The maximum number of milliseconds per frame to allow scheduled event execution. 0 means unlimited");
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(EventSchedulerSystemComponent)
 
     void EventSchedulerSystemComponent::Reflect(ReflectContext* context)
     {
@@ -26,12 +30,12 @@ namespace AZ
         }
     }
 
-    void EventSchedulerSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+    void EventSchedulerSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("EventSchedulerService"));
     }
 
-    void EventSchedulerSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+    void EventSchedulerSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("EventSchedulerService"));
     }

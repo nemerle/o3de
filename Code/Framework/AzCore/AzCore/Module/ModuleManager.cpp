@@ -18,6 +18,7 @@
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/NativeUI/NativeUIRequests.h>
 #include <AzCore/Script/ScriptSystemBus.h>
 #include <AzCore/Script/ScriptContext.h>
@@ -726,7 +727,7 @@ namespace AZ
         for (auto componentIt = componentsToActivate.begin(); componentIt != componentsToActivate.end(); )
         {
             Component* component = *componentIt;
-        
+
             // Remove the system entity and already activated components, we don't need to activate or store those
             if (component->GetEntityId() == SystemEntityId ||
                 AZStd::find(m_systemComponents.begin(), m_systemComponents.end(), component) != m_systemComponents.end())

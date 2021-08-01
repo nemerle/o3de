@@ -24,7 +24,7 @@ namespace AzToolsFramework
         , private EditorEventsBus::Handler
     {
     public:
-        AZ_COMPONENT(EditorInteractionSystemComponent, "{146D0317-AF42-45AB-A953-F54198525DD5}")
+        AZ_COMPONENT_SPLIT(EditorInteractionSystemComponent, "{146D0317-AF42-45AB-A953-F54198525DD5}")
 
         static void Reflect(AZ::ReflectContext* context);
 

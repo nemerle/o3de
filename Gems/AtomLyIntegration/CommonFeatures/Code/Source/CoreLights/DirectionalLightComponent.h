@@ -12,6 +12,7 @@
 #include <AtomLyIntegration/CommonFeatures/CoreLights/CoreLightsConstants.h>
 #include <AtomLyIntegration/CommonFeatures/CoreLights/DirectionalLightComponentConfig.h>
 #include <AzFramework/Components/ComponentAdapter.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

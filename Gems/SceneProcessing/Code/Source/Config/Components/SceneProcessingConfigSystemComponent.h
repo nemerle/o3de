@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <SceneAPI/SceneCore/Components/SceneSystemComponent.h>
@@ -60,10 +61,10 @@ namespace AZ
 
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required);
-            static void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(ComponentDescriptorDependencyArrayType& required);
+            static void GetDependentServices(ComponentDescriptorDependencyArrayType& dependent);
 
         private:
             /// It is the responsibility of the caller to delete newSoftname if this method returns

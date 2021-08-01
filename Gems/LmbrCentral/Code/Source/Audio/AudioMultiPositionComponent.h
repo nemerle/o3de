@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 
 #include <IAudioInterfacesCommonData.h>
@@ -29,7 +30,7 @@ namespace LmbrCentral
      * audio system and treated as one sound.
      * Example: A hallway lined with torches.  The torches are individual sources, but they
      * can all use the same resources via this component.
-     * 
+     *
      * Note: This component doesn't yet support full orientation of the entities, only position.
      * Note: This component doesn't yet support tracking movement of the entities.
      */
@@ -58,22 +59,22 @@ namespace LmbrCentral
         void OnEntityActivated(const AZ::EntityId& entityId) override;
         void OnEntityDeactivated(const AZ::EntityId& entityId) override;
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("AudioTriggerService", 0xeba17b52));
         }
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("AudioMultiPositionService", 0x2cc67a6e));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("AudioTriggerService", 0xeba17b52));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("AudioMultiPositionService", 0x2cc67a6e));
         }

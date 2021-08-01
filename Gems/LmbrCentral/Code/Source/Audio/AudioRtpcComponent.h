@@ -9,6 +9,7 @@
 
 #include <AzCore/std/string/string.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <LmbrCentral/Audio/AudioRtpcComponentBus.h>
 
 #include <IAudioInterfacesCommonData.h>
@@ -42,22 +43,22 @@ namespace LmbrCentral
         void SetValue(float value) override;
         void SetRtpcValue(const char* rtpcName, float value) override;
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("AudioRtpcService", 0x8342ff68));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("AudioProxyService", 0x7da4c79c));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("AudioPreloadService", 0x20c917d8));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("AudioRtpcService", 0x8342ff68));
         }

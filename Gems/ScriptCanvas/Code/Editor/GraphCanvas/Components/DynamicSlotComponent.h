@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <GraphCanvas/Components/Slots/SlotBus.h>
 #include <GraphCanvas/Components/SceneBus.h>
@@ -27,11 +28,11 @@ namespace ScriptCanvasEditor
     public:
         AZ_COMPONENT(DynamicSlotComponent, "{977152B6-1A7D-49A4-8E70-644AFAD1586A}");
         static void Reflect(AZ::ReflectContext* serializeContext);
-         
+
         DynamicSlotComponent();
         DynamicSlotComponent(GraphCanvas::SlotGroup slotGroup);
         ~DynamicSlotComponent() override = default;
-        
+
         // AZ::Component
         void Init();
         void Activate();
@@ -41,7 +42,7 @@ namespace ScriptCanvasEditor
         // GraphCanvas::SceneMemberNotificationBus
         void OnSceneSet(const AZ::EntityId& sceneId) override;
         ////
-        
+
         // ScriptCanvas::EditorNodeNotificationBus
         void OnSlotAdded(const ScriptCanvas::SlotId& slotId) override;
         void OnSlotRemoved(const ScriptCanvas::SlotId& slotId) override;

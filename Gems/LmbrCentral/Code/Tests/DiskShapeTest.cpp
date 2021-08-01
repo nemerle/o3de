@@ -9,6 +9,7 @@
 #include <AzTest/AzTest.h>
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/UnitTest/TestTypes.h>
 #include <AzFramework/Components/TransformComponent.h>
 #include <LmbrCentral/Shape/DiskShapeComponentBus.h>
@@ -158,7 +159,7 @@ namespace UnitTest
         LmbrCentral::ShapeComponentRequestsBus::EventResult(isInside, entity.GetId(), &LmbrCentral::ShapeComponentRequestsBus::Events::IsPointInside, center);
         EXPECT_FALSE(isInside);
     }
-    
+
     TEST_F(DiskShapeTest, GetRayIntersectDiskSuccess)
     {
         // Check simple case - a disk with normal facing down the Z axis intesecting with a ray going down the Z axis

@@ -120,7 +120,7 @@ namespace AZ
                 return;
             }
 
-            auto data = AZStd::get_if<FileRequest::ReadData>(&request->GetCommand());
+            auto data = AZStd::get_if<RequestCommands::ReadData>(&request->GetCommand());
             if (data == nullptr)
             {
                 StreamStackEntry::QueueRequest(request);
@@ -158,7 +158,7 @@ namespace AZ
 
         void ReadSplitter::QueueAlignedRead(FileRequest* request)
         {
-            auto data = AZStd::get_if<FileRequest::ReadData>(&request->GetCommand());
+            auto data = AZStd::get_if<RequestCommands::ReadData>(&request->GetCommand());
             AZ_Assert(data != nullptr, "Provided request to queue by the Read Splitter did not contain a read command.");
 
             if (data->m_size <= m_maxReadSize)
@@ -189,7 +189,7 @@ namespace AZ
 
         bool ReadSplitter::QueueAlignedRead(PendingRead& pending)
         {
-            auto data = AZStd::get_if<FileRequest::ReadData>(&pending.m_request->GetCommand());
+            auto data = AZStd::get_if<RequestCommands::ReadData>(&pending.m_request->GetCommand());
             AZ_Assert(data != nullptr, "Provided request to queue by the Read Splitter did not contain a read command.");
 
             while (pending.m_readSize > 0)
@@ -239,7 +239,7 @@ namespace AZ
 
         void ReadSplitter::QueueBufferedRead(FileRequest* request)
         {
-            auto data = AZStd::get_if<FileRequest::ReadData>(&request->GetCommand());
+            auto data = AZStd::get_if<RequestCommands::ReadData>(&request->GetCommand());
             AZ_Assert(data != nullptr, "Provided request to queue by the Read Splitter did not contain a read command.");
 
             PendingRead pendingRead;
@@ -264,7 +264,7 @@ namespace AZ
 
         bool ReadSplitter::QueueBufferedRead(PendingRead& pending)
         {
-            auto data = AZStd::get_if<FileRequest::ReadData>(&pending.m_request->GetCommand());
+            auto data = AZStd::get_if<RequestCommands::ReadData>(&pending.m_request->GetCommand());
             AZ_Assert(data != nullptr, "Provided request to queue by the Read Splitter did not contain a read command.");
 
             while (pending.m_readSize > 0)

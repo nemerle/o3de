@@ -31,8 +31,8 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::PostFxLayerComponentController, "{A3285A02-944B-4339-95B1-15E0F410BD1D}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             PostFxLayerComponentController() = default;
             PostFxLayerComponentController(const PostFxLayerComponentConfig& config);

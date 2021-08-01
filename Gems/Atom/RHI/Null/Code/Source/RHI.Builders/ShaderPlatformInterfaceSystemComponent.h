@@ -10,6 +10,7 @@
 
 #include <Atom/RHI.Edit/ShaderPlatformInterfaceBus.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
 #include <RHI.Builders/ShaderPlatformInterface.h>
 
@@ -27,7 +28,7 @@ namespace AZ
             ShaderPlatformInterfaceSystemComponent() = default;
             ~ShaderPlatformInterfaceSystemComponent() override = default;
 
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
             // AZ::Component
             void Activate() override;

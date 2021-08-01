@@ -20,7 +20,7 @@ namespace AzToolsFramework
         , protected AZ::SliceAssetSerializationNotificationBus::Handler
     {
     public:
-        AZ_COMPONENT(EditorEntityFixupComponent, "{7D00B08D-DC26-465A-949B-8DAC7787E607}");
+        AZ_COMPONENT_SPLIT(EditorEntityFixupComponent, "{7D00B08D-DC26-465A-949B-8DAC7787E607}");
         static void Reflect(AZ::ReflectContext* context);
 
     protected:

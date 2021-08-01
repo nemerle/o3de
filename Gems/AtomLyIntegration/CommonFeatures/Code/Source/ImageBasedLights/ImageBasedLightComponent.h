@@ -11,6 +11,7 @@
 #include <ImageBasedLights/ImageBasedLightComponentController.h>
 #include <AtomLyIntegration/CommonFeatures/ImageBasedLights/ImageBasedLightComponentConstants.h>
 #include <AzFramework/Components/ComponentAdapter.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

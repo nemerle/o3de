@@ -19,13 +19,7 @@ namespace ScriptEventData
     struct VoidType
     {
         AZ_TYPE_INFO(VoidType, "{BFF11497-FBD1-460A-B21F-D4519B9123ED}");
-        static void Reflect(AZ::ReflectContext* context)
-        {
-            if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
-            {
-                serializeContext->Class<VoidType>();
-            }
-        }
+        static void Reflect(AZ::ReflectContext* context);
     };
 
     class VersionedProperty;
@@ -109,7 +103,7 @@ namespace ScriptEventData
         {
             VersionedProperty property = VersionedProperty("Void");
             property.Set<const VoidType>(VoidType {});
-            return AZStd::ref(property);
+            return property;
         }
 
         template <typename T>
@@ -150,7 +144,7 @@ namespace ScriptEventData
         void Get(AZ::ScriptDataContext& dc);
         void Set(AZ::ScriptDataContext& dc);
 
-        bool IsEmpty() const 
+        bool IsEmpty() const
         {
             return m_data.empty();
         }
@@ -284,14 +278,14 @@ namespace ScriptEventData
         VersionedProperty* m_backup = nullptr;
     };
 
-    //! Given a class that may hold any VersionedProperties, iterate over its elements and 
+    //! Given a class that may hold any VersionedProperties, iterate over its elements and
     //! if any elements are VersionedProperty, they will be flattened.
     template <typename T>
     void FlattenVersionedPropertiesInObject(AZ::SerializeContext* serializeContext, T* obj)
     {
-        serializeContext->EnumerateObject(obj, 
-            [](void *instance, 
-               const AZ::SerializeContext::ClassData *classData, 
+        serializeContext->EnumerateObject(obj,
+            [](void *instance,
+               const AZ::SerializeContext::ClassData *classData,
                [[maybe_unused]] const AZ::SerializeContext::ClassElement *classElement) -> bool
             {
                 if (classData->m_typeId == azrtti_typeid<VersionedProperty>())

@@ -11,7 +11,9 @@
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/IO/IStreamer.h>
+#include <AzCore/IO/Streamer/FileRequest.h>
 #include <AzCore/IO/Path/Path.h>
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/Serialization/Utils.h>
@@ -134,6 +136,9 @@ struct ScopedAliasSetter
 };
 
 //////////////////////////////////////////////////////////////////////////
+
+// Implement the CreateDescriptor static method
+AZ_COMPONENT_IMPL(AssetBuilderComponent)
 
 void AssetBuilderComponent::PrintHelp()
 {

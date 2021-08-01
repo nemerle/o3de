@@ -64,19 +64,19 @@ namespace ShaderManagementConsole
         }
     }
 
-    void ShaderManagementConsoleWindowComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void ShaderManagementConsoleWindowComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AssetBrowserService", 0x1e54fffb));
         required.push_back(AZ_CRC("PropertyManagerService", 0x63a3d7ad));
         required.push_back(AZ_CRC("SourceControlService", 0x67f338fd));
     }
 
-    void ShaderManagementConsoleWindowComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ShaderManagementConsoleWindowComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ShaderManagementConsoleWindowService", 0xb6e7d922));
     }
 
-    void ShaderManagementConsoleWindowComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void ShaderManagementConsoleWindowComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ShaderManagementConsoleWindowService", 0xb6e7d922));
     }

@@ -23,11 +23,11 @@ namespace AZ
     {
     public:
 
-        AZ_COMPONENT(LoggerSystemComponent, "{56746640-9258-4D41-B255-663737493811}");
+        AZ_COMPONENT_SPLIT(LoggerSystemComponent, "{56746640-9258-4D41-B255-663737493811}");
 
         static void Reflect(AZ::ReflectContext* context);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         LoggerSystemComponent();
         virtual ~LoggerSystemComponent();

@@ -12,6 +12,7 @@
 #include "WhiteBox/WhiteBoxComponentBus.h"
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Math/Transform.h>
 

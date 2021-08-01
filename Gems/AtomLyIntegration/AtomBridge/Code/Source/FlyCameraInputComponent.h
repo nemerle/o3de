@@ -7,6 +7,7 @@
  */
 #pragma once
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzFramework/Input/Events/InputChannelEventListener.h>
 #include <Cry_Math.h>
@@ -24,9 +25,9 @@ namespace AZ
             , public FlyCameraInputBus::Handler
         {
         public:
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
             static void Reflect(AZ::ReflectContext* reflection);
 
             AZ_COMPONENT(FlyCameraInputComponent, "{7AE0D6AD-691C-41B6-9DD5-F23F78B1A02E}");

@@ -59,17 +59,6 @@ namespace AZ
     };
 
     AZ_TYPE_INFO_TEMPLATE(CustomTest::MyTemplate, "{82B9D060-F077-4FAA-9EF4-EF4C3A2A6332}", AZ_TYPE_INFO_CLASS);
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    template< typename T>
-    struct SerializeGenericTypeInfo<CustomTest::MyTemplate<T>, void> : SerializeGenericTypeInfoImpl<CustomTest::MyTemplate<T>>
-    {
-        //treat CustomTest::MyTemplate as generic value type
-    };
 }
 
 namespace UnitTest

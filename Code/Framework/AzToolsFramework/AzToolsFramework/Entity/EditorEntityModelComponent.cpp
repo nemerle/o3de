@@ -12,11 +12,15 @@
 
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(EditorEntityModelComponent)
+
         EditorEntityModelComponent::EditorEntityModelComponent() = default;
         EditorEntityModelComponent::~EditorEntityModelComponent() = default;
 
@@ -65,17 +69,17 @@ namespace AzToolsFramework
             }
         }
 
-        void EditorEntityModelComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorEntityModelComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorEntityModelService", 0x9d215543));
         }
 
-        void EditorEntityModelComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorEntityModelComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorEntityModelService", 0x9d215543));
         }
 
-        void EditorEntityModelComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+        void EditorEntityModelComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
         {
             services.push_back(AZ_CRC("EditorEntityContextService", 0x28d93a43));
         }

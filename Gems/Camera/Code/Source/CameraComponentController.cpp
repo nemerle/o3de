@@ -141,17 +141,17 @@ namespace Camera
         }
     }
 
-    void CameraComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void CameraComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
     }
 
-    void CameraComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void CameraComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("CameraService", 0x1dd1caa4));
     }
 
-    void CameraComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void CameraComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("CameraService", 0x1dd1caa4));
     }

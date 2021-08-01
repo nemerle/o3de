@@ -45,7 +45,7 @@ namespace UnitTest
             Vegetation::PrefabInstanceSpawner::Reflect(reflect);
             Vegetation::EmptyInstanceSpawner::Reflect(reflect);
         }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("VegetationSystemService"));
         }

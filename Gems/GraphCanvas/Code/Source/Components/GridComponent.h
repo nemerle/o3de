@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Vector2.h>
 
 #include <GraphCanvas/Components/GridBus.h>
@@ -31,17 +32,17 @@ namespace GraphCanvas
         ~GridComponent() = default;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_GridService", 0x58f7e1d8));
             provided.push_back(AZ_CRC("GraphCanvas_SceneMemberService", 0xe9759a2d));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& /*dependent*/)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& /*dependent*/)
         {
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& /*required*/)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& /*required*/)
         {
         }
 

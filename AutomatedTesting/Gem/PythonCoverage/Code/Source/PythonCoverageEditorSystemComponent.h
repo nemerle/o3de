@@ -29,7 +29,7 @@ namespace PythonCoverage
         , private AzToolsFramework::EditorPythonScriptNotificationsBus::Handler
     {
     public:
-        AZ_COMPONENT(PythonCoverageEditorSystemComponent, "{33370075-3aea-49c4-823d-476f8ac95b6f}");
+        AZ_COMPONENT_SPLIT(PythonCoverageEditorSystemComponent, "{33370075-3aea-49c4-823d-476f8ac95b6f}");
         static void Reflect(AZ::ReflectContext* context);
 
         PythonCoverageEditorSystemComponent() = default;

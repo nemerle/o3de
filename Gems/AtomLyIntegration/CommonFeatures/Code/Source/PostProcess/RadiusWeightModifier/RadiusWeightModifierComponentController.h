@@ -25,9 +25,9 @@ namespace AZ
 
             AZ_TYPE_INFO(AZ::Render::RadiusWeightModifierComponentController, "{29565EC9-8DE1-46A5-B20C-328AA6ED23C6}");
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             RadiusWeightModifierComponentController() = default;
             RadiusWeightModifierComponentController(const RadiusWeightModifierComponentConfig& config);

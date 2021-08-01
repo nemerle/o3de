@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzFramework/Components/ComponentAdapter.h>
 #include <AtomLyIntegration/CommonFeatures/PostProcess/DepthOfField/DepthOfFieldComponentConfig.h>
 #include <Atom/Feature/PostProcess/DepthOfField/DepthOfFieldConstants.h>

@@ -33,7 +33,7 @@ namespace AzFramework
     {
     public:
 
-        AZ_COMPONENT(GameEntityContextComponent, "{DA235454-DD9C-468C-AE70-404E415BAA6C}");
+        AZ_COMPONENT_SPLIT(GameEntityContextComponent, "{DA235454-DD9C-468C-AE70-404E415BAA6C}");
 
         GameEntityContextComponent();
         ~GameEntityContextComponent() override;
@@ -76,15 +76,15 @@ namespace AzFramework
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GameEntityContextService", 0xa6f2c885));
         }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("GameEntityContextService", 0xa6f2c885));
         }
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("SliceSystemService", 0x1a5b7aad));
         }

@@ -244,7 +244,7 @@ namespace AZ
      * This macro is typically included in other macros, such as AZ_COMPONENT, to
      * create a component.
      */
-    #define AZ_COMPONENT_BASE(_ComponentClass, ...)                                                                                     \
+    #define AZ_COMPONENT_INLINE_BASE(_ComponentClass, ...)                                                                              \
     AZ_CLASS_ALLOCATOR(_ComponentClass, AZ::SystemAllocator, 0)                                                                         \
     friend class AZ::HasComponentReflect<_ComponentClass>;                                                                              \
     friend class AZ::HasComponentProvidedServices<_ComponentClass>;                                                                     \
@@ -257,12 +257,57 @@ namespace AZ
             AZ::ComponentDescriptorBus::EventResult(descriptor, _ComponentClass::RTTI_Type(), &AZ::ComponentDescriptor::GetDescriptor); \
             if (descriptor)                                                                                                             \
             {                                                                                                                           \
-                /* Compare strings first, then pointers.  If we compare pointers first, different strings will give the wrong error message */ \
+                /* Compare strings first, then pointers.  */                                                                            \
+                /*If we compare pointers first, different strings will give the wrong error message */                                  \
                 if (strcmp(descriptor->GetName(), _ComponentClass::RTTI_TypeName()) != 0)                                               \
                 {                                                                                                                       \
                     AZ_Error("Component", false, "Two different components have the same UUID (%s), which is not allowed.\n"            \
                         "Change the UUID on one of them.\nComponent A: %s\nComponent B: %s",                                            \
-                        _ComponentClass::RTTI_Type().ToString<AZStd::string>().c_str(), descriptor->GetName(), _ComponentClass::RTTI_TypeName());          \
+                        _ComponentClass::RTTI_Type().ToString<AZStd::string>().c_str(), descriptor->GetName(),                          \
+                        _ComponentClass::RTTI_TypeName());                                                                              \
+                    return nullptr;                                                                                                     \
+                }                                                                                                                       \
+                else if (descriptor->GetName() != _ComponentClass::RTTI_TypeName())                                                     \
+                {                                                                                                                       \
+                    AZ_Error("Component", false, "The same component UUID (%s) / name (%s) was registered twice.  This isn't allowed, " \
+                             "it can cause lifetime management issues / crashes.\nThis situation can happen by declaring a component "  \
+                             "in a header and registering it from two different Gems.\n",                                               \
+                        _ComponentClass::RTTI_Type().ToString<AZStd::string>().c_str(), descriptor->GetName());                         \
+                    return nullptr;                                                                                                     \
+                }                                                                                                                       \
+                return descriptor;                                                                                                      \
+            }                                                                                                                           \
+            return aznew DescriptorType;                                                                                                \
+    }
+    /**
+     * Splits the core component code between header and implementation.
+     * This macro is typically included in other macros, such as AZ_COMPONENT_SPLIT, to
+     * create a component.
+     */
+    #define AZ_COMPONENT_BASE(_ComponentClass, ...)                                                                                     \
+    AZ_CLASS_ALLOCATOR(_ComponentClass, AZ::SystemAllocator, 0)                                                                         \
+    friend class AZ::HasComponentReflect<_ComponentClass>;                                                                              \
+    friend class AZ::HasComponentProvidedServices<_ComponentClass>;                                                                     \
+    friend class AZ::HasComponentDependentServices<_ComponentClass>;                                                                    \
+    friend class AZ::HasComponentRequiredServices<_ComponentClass>;                                                                     \
+    friend class AZ::HasComponentIncompatibleServices<_ComponentClass>;                                                                 \
+    static AZ::ComponentDescriptor* CreateDescriptor();
+
+    #define AZ_COMPONENT_IMPL(_ComponentClass)                                                                                          \
+    AZ::ComponentDescriptor* _ComponentClass::CreateDescriptor()                                                                        \
+    {                                                                                                                                   \
+            AZ::ComponentDescriptor* descriptor = nullptr;                                                                              \
+            AZ::ComponentDescriptorBus::EventResult(descriptor, _ComponentClass::RTTI_Type(), &AZ::ComponentDescriptor::GetDescriptor); \
+            if (descriptor)                                                                                                             \
+            {                                                                                                                           \
+                /* Compare strings first, then pointers.  */                                                                            \
+                /*If we compare pointers first, different strings will give the wrong error message */                                  \
+                if (strcmp(descriptor->GetName(), _ComponentClass::RTTI_TypeName()) != 0)                                               \
+                {                                                                                                                       \
+                    AZ_Error("Component", false, "Two different components have the same UUID (%s), which is not allowed.\n"            \
+                        "Change the UUID on one of them.\nComponent A: %s\nComponent B: %s",                                            \
+                        _ComponentClass::RTTI_Type().ToString<AZStd::string>().c_str(), descriptor->GetName(),                          \
+                        _ComponentClass::RTTI_TypeName());                                                                              \
                     return nullptr;                                                                                                     \
                 }                                                                                                                       \
                 else if (descriptor->GetName() != _ComponentClass::RTTI_TypeName())                                                     \
@@ -305,313 +350,35 @@ namespace AZ
      *
      * You are not required to use the AZ_COMPONENT macro if you want to implement your own creation
      * functions by calling AZ_CLASS_ALLOCATOR, AZ_RTTI, and so on.
+     * @note using AZ_COMPONENT macro requires including ComponentDescriptor.h header.
      */
     #define AZ_COMPONENT(_ComponentClass, ...)                  \
     AZ_RTTI(_ComponentClass, __VA_ARGS__, AZ::Component)        \
     AZ_COMPONENT_INTRUSIVE_DESCRIPTOR_TYPE(_ComponentClass)     \
+    AZ_COMPONENT_INLINE_BASE(_ComponentClass, __VA_ARGS__)
+
+    #define AZ_COMPONENT_SPLIT(_ComponentClass, ...)                  \
+    AZ_RTTI(_ComponentClass, __VA_ARGS__, AZ::Component)        \
+    AZ_COMPONENT_INTRUSIVE_DESCRIPTOR_TYPE(_ComponentClass)     \
     AZ_COMPONENT_BASE(_ComponentClass, __VA_ARGS__)
 
-    /**
-     * Provides an interface through which the system can get the details of a component
-     * and reflect the component data to a variety of contexts.
-     * If you implement a component descriptor, inherit from ComponentDescriptorHelper
-     * to implement additional functionality.
-     */
-    class ComponentDescriptor
-    {
-    public:
-
-        /**
-         * The type of array that components use to specify provided, required, dependent,
-         * and incompatible services.
-         */
-        typedef AZStd::vector<ComponentServiceType> DependencyArrayType;
-
-        /**
-        * This type of array is used by the warning
-        */
-        typedef AZStd::vector<AZStd::string> StringWarningArray;
-
-         /**
-          * Creates an instance of the component.
-          * @return Returns a pointer to the component.
-          */
-        virtual Component* CreateComponent() = 0;
-
-        /**
-         * Gets the name of the component.
-         * @return Returns a pointer to the name of the component.
-         */
-        virtual const char* GetName() const = 0;
-
-        /**
-         * Gets the ID of the component.
-         * @return Returns a pointer to the component ID.
-         */
-        virtual const Uuid& GetUuid() const = 0;
-
-        /**
-         * Reflects component data into a variety of contexts (script, serialize, edit, and so on).
-         * @param reflection A pointer to the reflection context.
-         */
-        virtual void Reflect(ReflectContext* reflection) const = 0;
-
-        /**
-         * Specifies the services that the component provides.
-         * The system uses this information to determine when to create the component.
-         * @param provided Array of provided services.
-         * @param instance Optional parameter with which you can refine services for each instance. This value is null if no instance exists.
-         */
-        virtual void GetProvidedServices(DependencyArrayType& provided, const Component* instance) const    { (void)provided; (void)instance; }
-
-        /**
-         * Specifies the services that the component depends on, but does not require.
-         * The system activates the dependent services before it activates this component.
-         * It also deactivates the dependent services after it deactivates this component.
-         * If a dependent service is missing before this component is activated, the system
-         * does not return an error and still activates this component.
-         * @param provided Array of dependent services.
-         * @param instance Optional parameter with which you can refine services for each instance. This value is null if no instance exists.
-         */
-        virtual void GetDependentServices(DependencyArrayType& dependent, const Component* instance) const  { (void)dependent;  (void)instance; }
-
-       /**
-         * Specifies the services that the component requires.
-         * The system activates the required services before it activates this component.
-         * It also deactivates the required services after it deactivates this component.
-         * If a required service is missing before this component is activated, the system
-         * returns an error and does not activate this component.
-         * @param provided Array of required services.
-         * @param instance Optional parameter with which you can refine services for each instance. This value is null if no instance exists.
-         */
-        virtual void GetRequiredServices(DependencyArrayType& required, const Component* instance) const    { (void)required;  (void)instance; }
-
-        /**
-         * Specifies the services that the component cannot operate with.
-         * For example, if two components provide a similar service and the system cannot use the services simultaneously,
-         * each of those components would specify the other component as an incompatible service.
-         * @param provided Array to fill with incompatible services.
-         * @param instance Optional parameter with which you can refine services for each instance. This value is null if no instance exists.
-         */
-        virtual void GetIncompatibleServices(DependencyArrayType& incompatible, const Component* instance) const    { (void)incompatible;  (void)instance; }
-
-        /**
-         * Specifies warnings that you want in the component (will put a warning and a continue button).
-         * @param warnings provided array of strings that would be the actual warnings.
-         * @param instance Optional parameter with which you can refine services for each instance. This value is null if no instance exists.
-         */
-        virtual void GetWarnings([[maybe_unused]] StringWarningArray& warnings, [[maybe_unused]] const Component* instance) const { }
-
-        /**
-         * Gets the current descriptor.
-         * @param instance The current descriptor.
-         */
-        virtual ComponentDescriptor* GetDescriptor() { return this; }
-
-        /**
-         * Calls ComponentApplicationBus::UnregisterComponentDescriptor and deletes the descriptor.
-         */
-        virtual void ReleaseDescriptor();
-
-        /**
-         * Destroys the descriptor, but you should call ReleaseDescriptor() instead of using this function.
-         */
-        virtual ~ComponentDescriptor() = default;
-    };
+    class ComponentDescriptor;
+    // Allow access to DependencyArrayType without including whole ComponentDescriptor.h
+    using ComponentDescriptorDependencyArrayType = AZStd::vector<ComponentServiceType>;
 
     /**
-     * Describes the properties of the component descriptor event bus.
-     * This bus uses AzTypeInfo::Uuid as the ID for the specific descriptor. Open 3D Engine allows only one
-     * descriptor for each component type. When you call functions on the bus for a specific component
-     * type, you can safely pass only one result variable because aggregating or overwriting results
-     * is impossible.
-     */
-    struct ComponentDescriptorBusTraits
-        : public EBusTraits
-    {
-        // We have one bus for each entity bus ID.
-        static const AZ::EBusAddressPolicy AddressPolicy = AZ::EBusAddressPolicy::ById;
-        // We can have only one descriptor per component type.
-        static const AZ::EBusHandlerPolicy HandlerPolicy = AZ::EBusHandlerPolicy::Single;
-        typedef Uuid BusIdType;
-
-        using MutexType = AZStd::recursive_mutex;
-    };
-    typedef AZ::EBus<ComponentDescriptor, ComponentDescriptorBusTraits> ComponentDescriptorBus;
-
-    /**
-     * Helps you create a custom implementation of a descriptor.
-     * For most cases we recommend using AZ_COMPONENT and ComponentDescriptorDefault instead.
+     * Forward declaration of default descriptor implementation.
+     * The implementation is available in ComponentDescriptor.h
      */
     template<class ComponentClass>
-    class ComponentDescriptorHelper
-        : public ComponentDescriptorBus::Handler
-    {
-    public:
-        /**
-         * Connects to the component descriptor bus.
-         */
-        ComponentDescriptorHelper()
-        {
-            BusConnect(AzTypeInfo<ComponentClass>::Uuid());
-        }
-
-        ~ComponentDescriptorHelper()
-        {
-            BusDisconnect();
-        }
-
-        /**
-         * Creates an instance of the component.
-         * @return Returns a pointer to the component.
-         */
-        Component* CreateComponent() override
-        {
-            return aznew ComponentClass;
-        }
-
-        /**
-         * Gets the name of the component.
-         * @return Returns a pointer to the name of the component.
-         */
-        const char* GetName() const override
-        {
-            return AzTypeInfo<ComponentClass>::Name();
-        }
-
-        /**
-         * Gets the ID of the component.
-         * @return Returns a pointer to the component ID.
-         */
-        const Uuid& GetUuid() const override
-        {
-            return AzTypeInfo<ComponentClass>::Uuid();
-        }
-    };
+    class ComponentDescriptorDefault;
 
     /// @cond EXCLUDE_DOCS
     AZ_HAS_STATIC_MEMBER(ComponentReflect, Reflect, void, (ReflectContext*));
-    AZ_HAS_STATIC_MEMBER(ComponentProvidedServices, GetProvidedServices, void, (ComponentDescriptor::DependencyArrayType &));
-    AZ_HAS_STATIC_MEMBER(ComponentDependentServices, GetDependentServices, void, (ComponentDescriptor::DependencyArrayType &));
-    AZ_HAS_STATIC_MEMBER(ComponentRequiredServices, GetRequiredServices, void, (ComponentDescriptor::DependencyArrayType &));
-    AZ_HAS_STATIC_MEMBER(ComponentIncompatibleServices, GetIncompatibleServices, void, (ComponentDescriptor::DependencyArrayType &));
+    AZ_HAS_STATIC_MEMBER(ComponentProvidedServices, GetProvidedServices, void, (ComponentDescriptorDependencyArrayType &));
+    AZ_HAS_STATIC_MEMBER(ComponentDependentServices, GetDependentServices, void, (ComponentDescriptorDependencyArrayType &));
+    AZ_HAS_STATIC_MEMBER(ComponentRequiredServices, GetRequiredServices, void, (ComponentDescriptorDependencyArrayType &));
+    AZ_HAS_STATIC_MEMBER(ComponentIncompatibleServices, GetIncompatibleServices, void, (ComponentDescriptorDependencyArrayType &));
     /// @endcond
 
-    /**
-     * Default descriptor implementation.
-     * This implementation forwards all descriptor calls to a static function inside the class.
-     */
-    template<class ComponentClass>
-    class ComponentDescriptorDefault
-        : public ComponentDescriptorHelper<ComponentClass>
-    {
-    public:
-
-        /**
-         * Specifies that this class should use the AZ::SystemAllocator for memory
-         * management by default.
-         */
-        AZ_CLASS_ALLOCATOR(ComponentDescriptorDefault<ComponentClass>, SystemAllocator, 0);
-
-        /**
-         * Calls the static function AZ::ComponentDescriptor::Reflect if the user provided it.
-         * @param A pointer to the reflection context.
-         */
-        void Reflect(ReflectContext* reflection) const override
-        {
-            static_assert(HasComponentReflect<ComponentClass>::value, "All components using ComponentDescriptorDefault (AZ_COMPONENT macro) should implement 'static void Reflect(ReflectContext* reflection)' function!");
-            CallReflect(reflection, typename HasComponentReflect<ComponentClass>::type());
-        }
-
-        /**
-         * Calls the static function AZ::ComponentDescriptor::GetProvidedServices, if the user provided it.
-         * @param provided Array of provided services.
-         * @param instance Optional parameter with which you can refine services for each instance. This value is null if no instance exists.
-         */
-        void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided, const Component* instance) const override
-        {
-            (void)instance; // Not used by default because most components have static (not instance-dependent) services.
-            CallProvidedServices(provided, typename HasComponentProvidedServices<ComponentClass>::type());
-        }
-
-        /**
-         * Calls the static function AZ::ComponentDescriptor::GetDependentServices, if the user provided it.
-         * @param provided Array of dependent services.
-         * @param instance Optional parameter with which you can refine services for each instance. This value is null if no instance exists.
-         */
-        void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent, const Component* instance) const override
-        {
-            (void)instance; // Not used by default because most components have static (not instance-dependent) services.
-            CallDependentServices(dependent, typename HasComponentDependentServices<ComponentClass>::type());
-        }
-
-        /**
-         * Calls the static function AZ::ComponentDescriptor::GetRequiredServices, if the user provided it.
-         * @param provided Array of required services.
-         * @param instance Optional parameter with which you can refine services for each instance. This value is null if no instance exists.
-         */
-        void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required, const Component* instance) const override
-        {
-            (void)instance; // Not used by default because most components have static (not instance-dependent) services.
-            CallRequiredServices(required, typename HasComponentRequiredServices<ComponentClass>::type());
-        }
-
-        /**
-         * Calls the static function AZ::ComponentDescriptor::GetIncompatibleServices, if the user provided it.
-         * @param provided Array of incompatible services.
-         * @param instance Optional parameter with which you can refine services for each instance. This value is null if no instance exists.
-         */
-        void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible, const Component* instance) const override
-        {
-            (void)instance; // Not used by default because most components have static (not instance-dependent) services.
-            CallIncompatibleServices(incompatible, typename HasComponentIncompatibleServices<ComponentClass>::type());
-        }
-
-    private:
-
-        void CallReflect(ReflectContext* reflection, const AZStd::true_type&) const
-        {
-            ComponentClass::Reflect(reflection);
-        }
-
-        void CallReflect(ReflectContext*, const AZStd::false_type&) const
-        {
-        }
-
-        void CallProvidedServices(ComponentDescriptor::DependencyArrayType& provided, const AZStd::true_type&) const
-        {
-            ComponentClass::GetProvidedServices(provided);
-        }
-
-        void CallProvidedServices(ComponentDescriptor::DependencyArrayType&, const AZStd::false_type&) const
-        {
-        }
-
-        void CallDependentServices(ComponentDescriptor::DependencyArrayType& dependent, const AZStd::true_type&) const
-        {
-            ComponentClass::GetDependentServices(dependent);
-        }
-
-        void CallDependentServices(ComponentDescriptor::DependencyArrayType&, const AZStd::false_type&) const
-        {
-        }
-
-        void CallRequiredServices(ComponentDescriptor::DependencyArrayType& required, const AZStd::true_type&) const
-        {
-            ComponentClass::GetRequiredServices(required);
-        }
-
-        void CallRequiredServices(ComponentDescriptor::DependencyArrayType&, const AZStd::false_type&) const
-        {
-        }
-
-        void CallIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible, const AZStd::true_type&) const
-        {
-            ComponentClass::GetIncompatibleServices(incompatible);
-        }
-
-        void CallIncompatibleServices(ComponentDescriptor::DependencyArrayType&, const AZStd::false_type&) const
-        {
-        }
-    };
 }

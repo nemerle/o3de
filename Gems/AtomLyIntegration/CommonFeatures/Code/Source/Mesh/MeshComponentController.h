@@ -67,9 +67,9 @@ namespace AZ
             ~MeshComponentController();
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             MeshComponentController() = default;
             MeshComponentController(const MeshComponentConfig& config);

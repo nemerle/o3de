@@ -22,10 +22,10 @@ namespace AzToolsFramework
             , public EditorPendingCompositionRequestBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorPendingCompositionComponent, "{D40FCB35-153D-45B3-AF6D-7BA576D8AFBB}", EditorComponentBase);
+            AZ_COMPONENT_SPLIT(EditorPendingCompositionComponent, "{D40FCB35-153D-45B3-AF6D-7BA576D8AFBB}", EditorComponentBase);
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
             ////////////////////////////////////////////////////////////////////
             // EditorPendingCompositionRequestBus
             void GetPendingComponents(AZStd::vector<AZ::Component*>& components) override;

@@ -73,7 +73,7 @@ namespace LmbrCentral
         EditorBaseShapeComponent::Deactivate();
     }
 
-    void EditorCapsuleShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorCapsuleShapeComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         EditorBaseShapeComponent::GetIncompatibleServices(incompatible);
         incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));

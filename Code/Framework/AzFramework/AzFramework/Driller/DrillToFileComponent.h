@@ -36,7 +36,7 @@ namespace AzFramework
         , public DrillerConsoleCommandBus::Handler
     {
     public:
-        AZ_COMPONENT(DrillToFileComponent, "{42BAA25D-7CEB-4A37-8BD4-4A1FE2253894}")
+        AZ_COMPONENT_SPLIT(DrillToFileComponent, "{42BAA25D-7CEB-4A37-8BD4-4A1FE2253894}")
 
         //////////////////////////////////////////////////////////////////////////
         // AZ::Component

@@ -6,6 +6,7 @@
  *
  */
 #include "SelectionComponent.h"
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzToolsFramework/UI/PropertyEditor/PropertyEditorAPI.h>
 
@@ -13,6 +14,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(SelectionComponent)
+
         SelectionComponent::SelectionComponent()
         {
             m_currentSelectionFlag = SF_Unselected;
@@ -86,7 +90,7 @@ namespace AzToolsFramework
             }
         }
 
-        void SelectionComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void SelectionComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("EditorSelectionService", 0x03ef9aae));
         }

@@ -11,6 +11,7 @@
 #include <DiffuseGlobalIllumination/DiffuseProbeGridComponentController.h>
 #include <DiffuseGlobalIllumination/DiffuseProbeGridComponentConstants.h>
 #include <AzFramework/Components/ComponentAdapter.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

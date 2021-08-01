@@ -12,6 +12,7 @@
 #include <AtomLyIntegration/CommonFeatures/Material/MaterialComponentConstants.h>
 
 #include <AzFramework/Components/ComponentAdapter.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {

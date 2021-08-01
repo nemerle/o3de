@@ -25,7 +25,7 @@ namespace AzToolsFramework
             , public EntityCompositionRequestBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorEntityActionComponent, "{2E26C7DF-544E-4A2A-8D0D-D7A6595C8BBD}");
+            AZ_COMPONENT_SPLIT(EditorEntityActionComponent, "{2E26C7DF-544E-4A2A-8D0D-D7A6595C8BBD}");
 
             EditorEntityActionComponent() = default;
             virtual ~EditorEntityActionComponent() = default;
@@ -71,9 +71,9 @@ namespace AzToolsFramework
             AddPendingComponentsOutcome AddPendingComponentsToEntity(AZ::Entity* entity);
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
         };
     } // namespace Components
 } // namespace AzToolsFramework

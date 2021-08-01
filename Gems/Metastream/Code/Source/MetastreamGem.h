@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Metastream/MetastreamBus.h>
 #include <AzCore/Memory/AllocatorScope.h>
 #include <LegacyAllocator.h>
@@ -40,7 +41,7 @@ namespace Metastream
         , public MetastreamAllocatorScope
     {
         AZ_RTTI(MetastreamGem, "{0BACF38B-9774-4771-89E2-B099EA9E3FE7}", CryHooksModule);
-        
+
     public:
         MetastreamGem();
         ~MetastreamGem() override;

@@ -145,8 +145,11 @@ void TestProfiler::PrintProfilingTotal(const char* systemId)
     }
 
     ProfilerSet profilers;
-    AZ::Debug::Profiler::Instance().ReadRegisterValues(AZStd::bind(&CollectPerformanceCounters, AZStd::placeholders::_1, AZStd::placeholders::_2, AZStd::ref(profilers), systemId));
-
+    AZ::Debug::Profiler::Instance().ReadRegisterValues(
+        [&](const AZ::Debug::ProfilerRegister& reg, const AZStd::thread_id& tid) -> bool
+        {
+            return CollectPerformanceCounters(reg, tid, profilers, systemId);
+        });
     // Validate we wont get stuck in an infinite loop
     TotalSortContainer root;
     for (auto i = profilers.begin(); i != profilers.end(); )
@@ -211,7 +214,11 @@ void TestProfiler::PrintProfilingSelf(const char* systemId)
     }
 
     ProfilerSet profilers;
-    AZ::Debug::Profiler::Instance().ReadRegisterValues(AZStd::bind(&CollectPerformanceCounters, AZStd::placeholders::_1, AZStd::placeholders::_2, AZStd::ref(profilers), systemId));
+    AZ::Debug::Profiler::Instance().ReadRegisterValues(
+        [&](const AZ::Debug::ProfilerRegister& reg, const AZStd::thread_id& tid) -> bool
+        {
+            return CollectPerformanceCounters(reg, tid, profilers, systemId);
+        });
 
     struct SelfSorter
     {

@@ -106,21 +106,3 @@ namespace GraphModelIntegration
         AZStd::shared_ptr<GraphModel::DataType> m_dataType;
     };
 }
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfo<GraphModelIntegration::CreateInputOutputNodeMimeEvent<T>, void>
-        : SerializeGenericTypeInfoImpl<GraphModelIntegration::CreateInputOutputNodeMimeEvent<T>>
-    {
-        // treat CreateInputOutputNodeMimeEvent as generic value type
-    };
-    template<typename T>
-    struct SerializeGenericTypeInfo<GraphModelIntegration::InputOutputNodePaletteItem<T>, void>
-        : SerializeGenericTypeInfoImpl<GraphModelIntegration::InputOutputNodePaletteItem<T>>
-    {
-        // treat InputOutputNodePaletteItem as generic value type
-    };
-
-} // namespace AZ

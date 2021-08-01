@@ -10,6 +10,7 @@
 
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Module/Environment.h>
 #include <EMotionFX/Source/EMotionFXAllocatorInitializer.h>
 

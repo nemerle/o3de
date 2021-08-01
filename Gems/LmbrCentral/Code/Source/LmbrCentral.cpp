@@ -109,7 +109,7 @@ namespace LmbrCentral
             LmbrCentralAllocatorScope::DeactivateAllocators();
         }
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("MemoryAllocators", 0xd59acbcc));
         }
@@ -144,7 +144,7 @@ namespace LmbrCentral
         LmbrCentralAssetBuilderAllocatorComponent() = default;
         ~LmbrCentralAssetBuilderAllocatorComponent() override = default;
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("MemoryAllocators", 0xd59acbcc));
         }
@@ -319,22 +319,22 @@ namespace LmbrCentral
         ReflectScriptableEvents::Reflect(context);
     }
 
-    void LmbrCentralSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void LmbrCentralSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("LmbrCentralService", 0xc3a02410));
     }
 
-    void LmbrCentralSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void LmbrCentralSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("LmbrCentralService", 0xc3a02410));
     }
 
-    void LmbrCentralSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void LmbrCentralSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
     }
 
-    void LmbrCentralSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void LmbrCentralSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("MemoryAllocators", 0xd59acbcc));
         dependent.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));

@@ -9,6 +9,7 @@
 #include <AzCore/Memory/Memory.h>
 #include <AzCore/Memory/AllocatorManager.h>
 #include <AzCore/Memory/MemoryDrillerBus.h>
+#include <AzCore/Debug/Profiler.h>
 
 using namespace AZ;
 
@@ -127,6 +128,7 @@ void AllocatorBase::ProfileAllocation(void* ptr, size_t byteSize, size_t alignme
 #if defined(AZ_HAS_VARIADIC_TEMPLATES) && defined(AZ_DEBUG_BUILD)
     ++suppressStackRecord; // one more for the fact the ebus is a function
 #endif // AZ_HAS_VARIADIC_TEMPLATES
+    AZ_PROFILE_MEMORY_ALLOC_EX(AZ::Debug::ProfileCategory::MemoryReserved, fileName, lineNum, ptr, byteSize, name ? name : GetName());
 
     if (m_isProfilingActive)
     {
@@ -140,6 +142,8 @@ void AllocatorBase::ProfileAllocation(void* ptr, size_t byteSize, size_t alignme
 
 void AllocatorBase::ProfileDeallocation(void* ptr, size_t byteSize, size_t alignment, Debug::AllocationInfo* info)
 {
+    AZ_PROFILE_MEMORY_FREE(AZ::Debug::ProfileCategory::MemoryReserved, ptr);
+
     if (m_isProfilingActive)
     {
 #if PLATFORM_MEMORY_INSTRUMENTATION_ENABLED
@@ -154,6 +158,7 @@ void AllocatorBase::ProfileReallocationBegin(void* ptr, size_t newSize)
 {
     if (m_isProfilingActive)
     {
+        AZ_PROFILE_MEMORY_FREE(AZ::Debug::ProfileCategory::MemoryReserved, ptr);
 #if PLATFORM_MEMORY_INSTRUMENTATION_ENABLED
         AZ::PlatformMemoryInstrumentation::ReallocBegin(ptr, newSize, m_platformMemoryInstrumentationGroupId);
 #else
@@ -168,6 +173,7 @@ void AllocatorBase::ProfileReallocationEnd(void* ptr, void* newPtr, size_t newSi
 {
     if (m_isProfilingActive)
     {
+        AZ_PROFILE_MEMORY_ALLOC(AZ::Debug::ProfileCategory::MemoryReserved, newPtr, newSize, GetName());
 #if PLATFORM_MEMORY_INSTRUMENTATION_ENABLED
         AZ::PlatformMemoryInstrumentation::ReallocEnd(newPtr, newSize, 0);
 #else

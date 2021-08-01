@@ -1,0 +1,79 @@
+/*
+ * Copyright (c) Contributors to the Open 3D Engine Project.
+ * For complete copyright and license terms please see the LICENSE at the root of this distribution.
+ *
+ * SPDX-License-Identifier: Apache-2.0 OR MIT
+ *
+ * This file is generated automatically at compile time, DO NOT EDIT BY HAND
+ * Template Source /fast_drive/development/Hobby/Games/o3de/Gems/ScriptCanvas/Code/Include/ScriptCanvas/AutoGen/ScriptCanvasGrammar_Source.jinja; Data Sources /fast_drive/development/Hobby/Games/o3de/Gems/ScriptCanvas/Code/Include/ScriptCanvas/Libraries/Core/Start.ScriptCanvasGrammar.xml
+ */
+
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/AZStdContainers.inl>
+#include <AzCore/RTTI/TypeInfo.h>
+
+#include <ScriptCanvas/Core/Slot.h>
+#include <ScriptCanvas/Core/Datum.h>
+#include <ScriptCanvas/Core/Attributes.h>
+#include <ScriptCanvas/Core/Contracts.h>
+#include <ScriptCanvas/Core/DatumBus.h>
+
+#include <ScriptCanvas/Utils/VersionConverters.h>
+
+#include "Include/ScriptCanvas/Libraries/Core/Start.h"
+
+void ScriptCanvas::Nodes::Core::Start::ConfigureSlots()
+{
+    ScriptCanvas::Node::ConfigureSlots();
+
+    // Out
+    {
+        ScriptCanvas::ExecutionSlotConfiguration slotConfiguration;
+        slotConfiguration.m_name = "Out";
+        slotConfiguration.m_toolTip = "Signaled when the entity that owns this graph is fully activated.";
+                    slotConfiguration.SetConnectionType(ScriptCanvas::ConnectionType::Output);
+        AddSlot(slotConfiguration);
+    }
+}
+
+
+bool ScriptCanvas::Nodes::Core::Start::RequiresDynamicSlotOrdering() const
+{
+    return false;
+}
+
+
+bool ScriptCanvas::Nodes::Core::Start::IsDeprecated() const
+{
+    return false;
+}
+
+
+void ScriptCanvas::Nodes::Core::Start::Reflect(AZ::ReflectContext* context)
+{
+    static_assert((std::is_base_of<ScriptCanvas::Node, ScriptCanvas::Node>::value), "Script Canvas nodes require the first base class to be derived from ScriptCanvas::Node");
+
+    if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
+    {
+        serializeContext->Class<ScriptCanvas::Nodes::Core::Start, ScriptCanvas::Node>()
+            ->Version(2)
+        ;
+
+        if (AZ::EditContext* editContext = serializeContext->GetEditContext())
+        {
+            editContext->Class<ScriptCanvas::Nodes::Core::Start>("On Graph Start", "Starts executing the graph when the entity that owns the graph is fully activated.")
+                ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+                    ->Attribute(AZ::Edit::Attributes::Visibility, AZ::Edit::PropertyVisibility::ShowChildrenOnly)
+                    ->Attribute(AZ::Edit::Attributes::Category, "Timing")
+                    ->Attribute(AZ::Edit::Attributes::AutoExpand, true)
+                    ->Attribute(AZ::Edit::Attributes::Icon, "Icons/ScriptCanvas/Start.png")
+            ;
+        }
+    }
+}
+
+
+

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <AssetValidation/AssetValidationBus.h>
 #include <AzCore/std/containers/set.h>
@@ -21,7 +22,7 @@
 #include <CrySystemBus.h>
 #include <AzFramework/Archive/ArchiveBus.h>
 
-struct IConsoleCmdArgs; 
+struct IConsoleCmdArgs;
 
 namespace AssetValidation
 {
@@ -36,10 +37,10 @@ namespace AssetValidation
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
     protected:
         ////////////////////////////////////////////////////////////////////////
@@ -58,7 +59,7 @@ namespace AssetValidation
         void SeedMode() override;
 
         bool AddSeedPath(const char* fileName) override;
-       
+
         bool RemoveSeedPath(const char* fileName) override;
 
         void ListKnownAssets() override;
@@ -106,7 +107,7 @@ namespace AssetValidation
         bool RemoveSeedsFor(const AzFramework::AssetSeedList& seedList, AZ::u32 sourceId);
         bool AddSeedListHelper(const char* seedPath);
     private:
-        
+
         bool m_seedMode{ false };
         bool m_printExcluded{ false };
 

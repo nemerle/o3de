@@ -25,9 +25,9 @@ namespace AZ
     class Transform;
     class TransformInterface;
 
-    //! An addressable container for a group of components. 
-    //! An entity creates, initializes, activates, and deactivates its components.  
-    //! An entity has an ID and, optionally, a name.  
+    //! An addressable container for a group of components.
+    //! An entity creates, initializes, activates, and deactivates its components.
+    //! An entity has an ID and, optionally, a name.
     class Entity
     {
         friend class JsonEntitySerializer;
@@ -40,7 +40,7 @@ namespace AZ
         //! Adds run-time type information to this class.
         AZ_RTTI(AZ::Entity, "{75651658-8663-478D-9090-2432DFCAFA44}");
 
-        //! The type of array that contains the entity's components. 
+        //! The type of array that contains the entity's components.
         //! Used when iterating over components.
         typedef AZStd::vector<Component*> ComponentArrayType;
 
@@ -52,9 +52,9 @@ namespace AZ
         enum class State : u8
         {
             Constructed,         ///< The entity was constructed but is not initialized or active. This is the default state after an entity is created.
-            Initializing,        ///< The entity is initializing itself and its components. This state is the transition between State::Constructed and State::Init. 
+            Initializing,        ///< The entity is initializing itself and its components. This state is the transition between State::Constructed and State::Init.
             Init,                ///< The entity and its components are initialized. You can add and remove components from the entity when it is in this state.
-            Activating,          ///< The entity is activating itself and its components. This state is the transition between State::Init and State::Active. 
+            Activating,          ///< The entity is activating itself and its components. This state is the transition between State::Init and State::Active.
             Active,              ///< The entity and its components are active and fully operational. You cannot add or remove components from the entity unless you first deactivate the entity.
             Deactivating,        ///< The entity is deactivating itself and its components. This state is the transition between State::Active and State::Init.
             Destroying,          ///< The entity is in the process of being destroyed. This state is the transition between State::Init and State::Destroyed.
@@ -64,8 +64,8 @@ namespace AZ
         //! An event that signals old state and new state during entity state changes.
         using EntityStateEvent = Event<State, State>;
 
-        //! Represents whether an entity can be activated. 
-        //! An entity cannot be activated unless all component dependency requirements are met, and 
+        //! Represents whether an entity can be activated.
+        //! An entity cannot be activated unless all component dependency requirements are met, and
         //! components are sorted so that each can be activated before the components that depend on it.
         enum class DependencySortResult
         {
@@ -82,8 +82,8 @@ namespace AZ
         };
 
         /**
-         * Constructs an entity and automatically generates an entity ID. 
-         * @param name (Optional) A name for the entity. The entity ID is used for addressing and identification, 
+         * Constructs an entity and automatically generates an entity ID.
+         * @param name (Optional) A name for the entity. The entity ID is used for addressing and identification,
          * but a name is useful for debugging.
          */
         explicit Entity(AZStd::string name = {});
@@ -91,7 +91,7 @@ namespace AZ
         /**
          * Constructs an entity with the entity ID that you specify.
          * @param id An ID for the entity.
-         * @param name (Optional) A name for the entity. The entity ID is used for addressing and identification, 
+         * @param name (Optional) A name for the entity. The entity ID is used for addressing and identification,
          * but a name is useful for debugging.
          */
         explicit Entity(const EntityId& id, AZStd::string name = {});
@@ -109,7 +109,7 @@ namespace AZ
         Entity& operator=(Entity&& other) = default;
 
         //! Destroys an entity and its components.
-        //! Do not destroy an entity when it is in a transition state. 
+        //! Do not destroy an entity when it is in a transition state.
         //! If the entity is in a transition state, this function asserts.
         virtual ~Entity();
 
@@ -117,11 +117,11 @@ namespace AZ
         void Reset();
 
         //! Gets the ID of the entity.
-        //! @return The ID of the entity. 
+        //! @return The ID of the entity.
         EntityId GetId() const { return m_id; }
 
         //! Gets the name of the entity.
-        //! @return The name of the entity. 
+        //! @return The name of the entity.
         const AZStd::string& GetName() const { return m_name; }
 
         //! Sets the name of the entity.
@@ -144,18 +144,18 @@ namespace AZ
         void SetId(const EntityId& id);
 
         //! Initializes the entity and its components.
-        //! This function is called only once in an entity's lifetime, whereas an entity  
+        //! This function is called only once in an entity's lifetime, whereas an entity
         //! can be activated and deactivated multiple times.
-        //! This function calls each component's Init function and provides its entity ID 
+        //! This function calls each component's Init function and provides its entity ID
         //! to each component.
         virtual void Init();
 
         //! Activates the entity and its components.
-        //! This function can be called multiple times throughout the lifetime of an 
-        //! entity. Before activating the components, this function verifies that all 
-        //! component dependency requirements are met, and that components are sorted 
-        //! so that each can be activated before the components that depend on it. 
-        //! If these requirements are met, this function calls the Activate function 
+        //! This function can be called multiple times throughout the lifetime of an
+        //! entity. Before activating the components, this function verifies that all
+        //! component dependency requirements are met, and that components are sorted
+        //! so that each can be activated before the components that depend on it.
+        //! If these requirements are met, this function calls the Activate function
         //! of each component.
         virtual void Activate();
 
@@ -164,10 +164,10 @@ namespace AZ
         //! entity. This function calls the Deactivate function of each component.
         virtual void Deactivate();
 
-        //! Creates a component and attaches the component to the entity. 
-        //! You cannot add a component to an entity when the entity is 
-        //! active or in a transition state. After the component is attached 
-        //! to the entity, the entity owns the component. If you destroy the 
+        //! Creates a component and attaches the component to the entity.
+        //! You cannot add a component to an entity when the entity is
+        //! active or in a transition state. After the component is attached
+        //! to the entity, the entity owns the component. If you destroy the
         //! entity, the component is destroyed along with the entity.
         //! To release ownership without destroying the component, use RemoveComponent().
         //! @return A pointer to the component. Returns a null pointer if
@@ -179,15 +179,15 @@ namespace AZ
         //! You cannot add a component to an entity when the entity is
         //! active or in a transition state. After the component is attached
         //! to the entity, the entity owns the component. If you destroy the
-        //! entity, the component is destroyed along with the entity. 
+        //! entity, the component is destroyed along with the entity.
         //! To release ownership without destroying the component, use RemoveComponent().
         //! @param componentTypeId The UUID of the component type.
         //! @return A pointer to the component. Returns a null pointer if the component could not be created.
         Component* CreateComponent(const Uuid& componentTypeId);
 
-        /// @cond EXCLUDE_DOCS 
-        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus 
-        //! to ensure component requirements are met. 
+        /// @cond EXCLUDE_DOCS
+        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus
+        //! to ensure component requirements are met.
         template<class ComponentType>
         ComponentType* CreateComponentIfReady()
         {
@@ -195,17 +195,17 @@ namespace AZ
         }
         /// @endcond
 
-        /// @cond EXCLUDE_DOCS 
-        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus 
+        /// @cond EXCLUDE_DOCS
+        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus
         //! to ensure component requirements are met.
         Component* CreateComponentIfReady(const Uuid& componentTypeId);
         /// @endcond
 
-        //! Attaches an existing component to the entity.        
+        //! Attaches an existing component to the entity.
         //! You cannot attach a component to an entity when the entity is active
-        //! or in a transition state. After the component is attached 
-        //! to the entity, the entity owns the component. If you destroy the 
-        //! entity, the component is destroyed along with the entity. 
+        //! or in a transition state. After the component is attached
+        //! to the entity, the entity owns the component. If you destroy the
+        //! entity, the component is destroyed along with the entity.
         //! To release ownership without destroying the component, use RemoveComponent().
         //! The component can be attached to only one entity at a time.
         //! If the component is already attached to an entity, this code asserts.
@@ -213,19 +213,19 @@ namespace AZ
         //! @return True if the component was successfully attached to the entity. Otherwise, false.
         bool AddComponent(Component* component);
 
-        /// @cond EXCLUDE_DOCS 
-        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus 
+        /// @cond EXCLUDE_DOCS
+        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus
         //! to ensure component requirements are met.
-        bool IsComponentReadyToAdd(const Component* component, ComponentDescriptor::DependencyArrayType* servicesNeededToBeAdded = nullptr, ComponentArrayType* incompatibleComponents = nullptr)
+        bool IsComponentReadyToAdd(const Component* component, ComponentDescriptorDependencyArrayType* servicesNeededToBeAdded = nullptr, ComponentArrayType* incompatibleComponents = nullptr)
         {
             return IsComponentReadyToAdd(component->RTTI_GetType(), component, servicesNeededToBeAdded, incompatibleComponents);
         }
         /// @endcond
 
-        /// @cond EXCLUDE_DOCS 
-        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus 
+        /// @cond EXCLUDE_DOCS
+        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus
         //! to ensure component requirements are met.
-        bool IsComponentReadyToAdd(const Uuid& componentTypeId, ComponentDescriptor::DependencyArrayType* servicesNeededToBeAdded = nullptr, ComponentArrayType* incompatibleComponents = nullptr)
+        bool IsComponentReadyToAdd(const Uuid& componentTypeId, ComponentDescriptorDependencyArrayType* servicesNeededToBeAdded = nullptr, ComponentArrayType* incompatibleComponents = nullptr)
         {
             return IsComponentReadyToAdd(componentTypeId, nullptr, servicesNeededToBeAdded, incompatibleComponents);
         }
@@ -237,13 +237,13 @@ namespace AZ
         //! @return True if the component was removed from the entity. False if the component could not be removed.
         bool RemoveComponent(Component* component);
 
-        /// @cond EXCLUDE_DOCS 
-        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus 
+        /// @cond EXCLUDE_DOCS
+        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus
         //! to ensure component requirements are met.
         bool IsComponentReadyToRemove(Component* component, ComponentArrayType* componentsNeededToBeRemoved = nullptr);
         /// @endcond
 
-        /// @cond EXCLUDE_DOCS 
+        /// @cond EXCLUDE_DOCS
         //! Replaces one of an entity's components with another component.
         //! The entity takes ownership of the added component and relinquishes ownership of the removed component.
         //! The added component is assigned the component ID of the removed component.
@@ -353,7 +353,7 @@ namespace AZ
         //! @return The Process Signature of the local machine.
         static AZ::u32 GetProcessSignature();
 
-        /// @cond EXCLUDE_DOCS 
+        /// @cond EXCLUDE_DOCS
         //! @deprecated Use the TransformBus to communicate with the TransformInterface.
         inline TransformInterface* GetTransform() const { return m_transform; }
         /// @endcond
@@ -369,10 +369,10 @@ namespace AZ
 
     protected:
 
-        /// @cond EXCLUDE_DOCS 
-        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus 
+        /// @cond EXCLUDE_DOCS
+        //! @deprecated In tools, use AzToolsFramework::EntityCompositionRequestBus
         //! to ensure component requirements are met.
-        bool IsComponentReadyToAdd(const Uuid& componentTypeId, const Component* instance, ComponentDescriptor::DependencyArrayType* servicesNeededToBeAdded, ComponentArrayType* incompatibleComponents);
+        bool IsComponentReadyToAdd(const Uuid& componentTypeId, const Component* instance, ComponentDescriptorDependencyArrayType* servicesNeededToBeAdded, ComponentArrayType* incompatibleComponents);
         /// @endcond
 
         //! Sets the entities internal state to the provided value.
@@ -392,7 +392,7 @@ namespace AZ
         static void DeactivateComponent(Component& component) { component.Deactivate(); }
 
         //! The ID that the system uses to identify and address the entity.
-        //! The serializer determines whether this is an entity ID or an entity reference ID. 
+        //! The serializer determines whether this is an entity ID or an entity reference ID.
         //! IMPORTANT: This must be the only EntityId member of the Entity class.
         EntityId m_id;
 
@@ -402,7 +402,7 @@ namespace AZ
         //! An event used to signal all entity state changes.
         EntityStateEvent m_stateEvent;
 
-        //! A cached pointer to the transform interface. 
+        //! A cached pointer to the transform interface.
         //! We recommend using AZ::TransformBus and caching locally instead of accessing
         //! the transform interface directly through this pointer.
         TransformInterface* m_transform;

@@ -8,11 +8,15 @@
 
 #include "EditorInteractionSystemComponent.h"
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzToolsFramework/ViewportSelection/EditorDefaultSelection.h>
 #include <AzToolsFramework/ViewportSelection/EditorVisibleEntityDataCache.h>
 
 namespace AzToolsFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(EditorInteractionSystemComponent)
+
     void EditorInteractionSystemComponent::Activate()
     {
         EditorInteractionSystemViewportSelectionRequestBus::Handler::BusConnect(GetEntityContextId());

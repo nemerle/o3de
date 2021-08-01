@@ -11,6 +11,7 @@
 #include <Atom/Feature/ImGui/SystemBus.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 
 #include <AzFramework/Input/Events/InputTextEventListener.h>
@@ -32,9 +33,9 @@ namespace AZ
             AZ_COMPONENT(ImGuiSystemComponent, "1A8549B6-B8CC-4C45-9312-DD8A032DA71F");
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatbile);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatbile);
 
             ImGuiSystemComponent();
             ~ImGuiSystemComponent() override = default;
@@ -60,7 +61,7 @@ namespace AZ
             bool PopActiveContext() override;
             ImGuiContext* GetActiveContext() override;
 
-            bool RenderImGuiBuffersToCurrentViewport(const ImDrawData& drawData) override;                        
+            bool RenderImGuiBuffersToCurrentViewport(const ImDrawData& drawData) override;
 
             using PassFunction = AZStd::function<void(ImGuiPass* pass)>;
             void ForAllImGuiPasses(PassFunction func);

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <OtherActiveImGuiBus.h>
 #include <DebugConsole.h>
@@ -33,9 +34,9 @@ namespace AZ
             AZ_COMPONENT(ImguiAtomSystemComponent, "{D423E075-D971-435A-A9C1-57C3B0623A9B}");
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatbile);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatbile);
 
             ~ImguiAtomSystemComponent() override = default;
 

@@ -10,6 +10,7 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Asset/AssetCommon.h>
@@ -93,7 +94,7 @@ namespace EMotionFX
 
             AnimGraphComponent(const Configuration* config = nullptr);
             ~AnimGraphComponent() override;
-            
+
             //////////////////////////////////////////////////////////////////////////
             // AZ::Component interface implementation
             void Init() override;
@@ -166,24 +167,24 @@ namespace EMotionFX
             //////////////////////////////////////////////////////////////////////////
 
             //////////////////////////////////////////////////////////////////////////
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 provided.push_back(AZ_CRC("EMotionFXAnimGraphService", 0x9ec3c819));
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 incompatible.push_back(AZ_CRC("EMotionFXAnimGraphService", 0x9ec3c819));
                 incompatible.push_back(AZ_CRC("EMotionFXSimpleMotionService", 0xea7a05d8));
             }
 
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
             {
                 dependent.push_back(AZ_CRC("PhysicsService", 0xa7350d22));
                 dependent.push_back(AZ_CRC("MeshService", 0x71d8a455));
             }
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
             {
                 required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
                 required.push_back(AZ_CRC("EMotionFXActorService", 0xd6e8f48d));

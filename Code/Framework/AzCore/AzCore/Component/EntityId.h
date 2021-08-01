@@ -11,9 +11,10 @@
 #include <AzCore/base.h>
 #include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/std/string/string.h>
+#include <AzCore/std/hash.h>
 
 /** @file
-  * Header file for the entity ID type. 
+  * Header file for the entity ID type.
   * Entity IDs are used to uniquely identify entities.
   */
 
@@ -21,8 +22,8 @@ namespace AZ
 {
     /**
      * Entity ID type.
-     * Entity IDs are used to uniquely identify entities. Each component that is 
-     * attached to an entity is tagged with the entity's ID, and component buses 
+     * Entity IDs are used to uniquely identify entities. Each component that is
+     * attached to an entity is tagged with the entity's ID, and component buses
      * are typically addressed by entity ID.
      */
     class EntityId
@@ -35,8 +36,8 @@ namespace AZ
          /**
           * Invalid entity ID with a machine ID of 0 and the maximum timestamp.
           */
-         static const u64 InvalidEntityId = 0x00000000FFFFFFFFull; 
-                 
+         static const u64 InvalidEntityId = 0x00000000FFFFFFFFull;
+
          /**
           * Enables this class to be identified across modules and serialized into
           * different contexts.
@@ -44,8 +45,8 @@ namespace AZ
          AZ_TYPE_INFO(EntityId, "{6383F1D3-BB27-4E6B-A49A-6409B2059EAA}");
 
         /**
-         * Creates an entity ID instance. 
-         * If you do not provide a value for the entity ID, 
+         * Creates an entity ID instance.
+         * If you do not provide a value for the entity ID,
          * the entity ID is set to an invalid value.
          * @param id (Optional) An ID for the entity.
          */
@@ -63,8 +64,8 @@ namespace AZ
         }
 
         /**
-         * Determines whether this entity ID is valid. 
-         * An entity ID is invalid if you did not provide an argument 
+         * Determines whether this entity ID is valid.
+         * An entity ID is invalid if you did not provide an argument
          * to the entity ID constructor.
          * @return Returns true if the entity ID is valid. Otherwise, false.
          */
@@ -72,7 +73,7 @@ namespace AZ
         {
             return m_id != InvalidEntityId;
         }
-        
+
         /**
          * Sets the entity ID to an invalid value.
          */
@@ -88,7 +89,7 @@ namespace AZ
         {
             return AZStd::string::format("[%llu]", m_id);
         }
-        
+
         /**
          * Compares two entity IDs for equality.
          * @param rhs An entity ID whose value you want to compare to the
@@ -101,7 +102,7 @@ namespace AZ
         }
         /**
          * Compares two entity IDs.
-         * @param rhs An entity ID whose value you want to compare to the 
+         * @param rhs An entity ID whose value you want to compare to the
          * given entity ID.
          * @return True if the entity IDs are different. Otherwise, false.
          */
@@ -112,7 +113,7 @@ namespace AZ
 
         /**
          * Evaluates whether the entity ID is less than a given entity ID.
-         * @param rhs An entity ID whose size you want to compare to the given 
+         * @param rhs An entity ID whose size you want to compare to the given
          * entity ID.
          * @return True if the entity ID is less than the given entity ID.
          * Otherwise, false.
@@ -145,12 +146,11 @@ namespace AZ
     /// @cond EXCLUDE_DOCS
     static const EntityId SystemEntityId = EntityId(0);
     /// @endcond
-  
+
 }   // namespace AZ
 
 namespace AZStd
 {
-
     /**
      * Enables entity IDs to be keys in hashed data structures.
      */

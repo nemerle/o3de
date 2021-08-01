@@ -11,6 +11,7 @@
 #include <AZTestShared/Math/MathTestHelpers.h>
 #include <AzFramework/Components/TransformComponent.h>
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Shape/SplineComponent.h>
 #include <Shape/TubeShapeComponent.h>
 #include <AzCore/UnitTest/TestTypes.h>
@@ -44,7 +45,7 @@ namespace UnitTest
             m_transformComponentDescriptor.reset();
             m_tubeShapeComponentDescriptor.reset();
             m_splineComponentDescriptor.reset();
-            m_serializeContext.reset(); 
+            m_serializeContext.reset();
             AllocatorsFixture::TearDown();
         }
     };

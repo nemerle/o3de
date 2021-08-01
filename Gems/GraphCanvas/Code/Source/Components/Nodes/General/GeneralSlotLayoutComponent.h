@@ -11,6 +11,7 @@
 #include <QGraphicsWidget>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <GraphCanvas/Components/Nodes/NodeBus.h>
 #include <GraphCanvas/Components/Nodes/NodeLayoutBus.h>
@@ -35,22 +36,22 @@ namespace GraphCanvas
         ~GeneralSlotLayoutComponent();
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("GraphCanvas_SlotsContainerService", 0x948b6696));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incombatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incombatible)
         {
             incombatible.push_back(AZ_CRC("GraphCanvas_SlotsContainerService", 0x948b6696));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("GraphCanvas_StyledGraphicItemService", 0xeae4cdf4));
             required.push_back(AZ_CRC("GraphCanvas_SceneMemberService", 0xe9759a2d));
@@ -149,7 +150,7 @@ namespace GraphCanvas
         // NodeNotificationBus
         void OnNodeActivated() override;
 
-        void OnSlotAddedToNode(const AZ::EntityId& slot) override;        
+        void OnSlotAddedToNode(const AZ::EntityId& slot) override;
         void OnSlotRemovedFromNode(const AZ::EntityId& slot) override;
         ////
 
@@ -176,7 +177,7 @@ namespace GraphCanvas
         ////
 
     protected:
-        
+
         const AZ::EntityId& GetEntityId() const { return m_entityId; }
 
     private:

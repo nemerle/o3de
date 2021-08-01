@@ -66,23 +66,23 @@ namespace AZ
             }
         }
 
-        void ReflectionProbeComponentController::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        void ReflectionProbeComponentController::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }
 
-        void ReflectionProbeComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void ReflectionProbeComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ReflectionProbeService", 0xa5b919ce));
         }
 
-        void ReflectionProbeComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void ReflectionProbeComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ReflectionProbeService", 0xa5b919ce));
             incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }
 
-        void ReflectionProbeComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void ReflectionProbeComponentController::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("BoxShapeService", 0x946a0032));
         }

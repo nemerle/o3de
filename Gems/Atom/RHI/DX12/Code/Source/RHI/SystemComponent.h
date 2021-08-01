@@ -12,6 +12,7 @@
 #include <Atom/RHI/Factory.h>
 #include <Atom/RHI.Reflect/DX12/Base.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {
@@ -24,8 +25,8 @@ namespace AZ
         public:
             AZ_COMPONENT(SystemComponent, "{17665B3D-940C-44F5-935C-1FB27EF0FFD7}");
 
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
-            static void GetRequiredServices(ComponentDescriptor::DependencyArrayType& required);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
+            static void GetRequiredServices(ComponentDescriptorDependencyArrayType& required);
             static void Reflect(ReflectContext* context);
 
             SystemComponent() = default;

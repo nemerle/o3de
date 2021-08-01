@@ -10,6 +10,7 @@
 #include <AzCore/base.h>
 
 #include <AzCore/std/string/string_view.h>
+#include <AzCore/std/hash.h>
 
 //////////////////////////////////////////////////////////////////////////
 // Macros for pre-processor Crc32 conversion

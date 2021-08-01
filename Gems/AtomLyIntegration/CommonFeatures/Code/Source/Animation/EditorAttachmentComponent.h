@@ -27,17 +27,17 @@ namespace AZ
             AZ_COMPONENT(EditorAttachmentComponent, "{DA6072FD-E696-47D8-81D9-1F77D3464200}", Base);
             static void Reflect(AZ::ReflectContext* context);
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
             {
                 AttachmentComponent::GetProvidedServices(provided);
             }
 
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
             {
                 AttachmentComponent::GetIncompatibleServices(incompatible);
             }
 
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
             {
                 AttachmentComponent::GetRequiredServices(required);
             }

@@ -266,8 +266,8 @@ namespace AZ
         }
 
         bool RemoveDuplicateServicesOfAndAfterIterator(
-            const ComponentDescriptor::DependencyArrayType::iterator& iterator,
-            ComponentDescriptor::DependencyArrayType& providedServiceArray,
+            const ComponentDescriptorDependencyArrayType::iterator& iterator,
+            ComponentDescriptorDependencyArrayType& providedServiceArray,
             const Entity* entity)
         {
             // Build types that strip out AZ_Warnings will complain that entity is unused without this.
@@ -279,7 +279,7 @@ namespace AZ
 
             bool duplicateFound = false;
 
-            for (ComponentDescriptor::DependencyArrayType::iterator duplicateCheckIter = AZStd::next(iterator);
+            for (ComponentDescriptorDependencyArrayType::iterator duplicateCheckIter = AZStd::next(iterator);
                 duplicateCheckIter != providedServiceArray.end();)
             {
                 if (*iterator == *duplicateCheckIter)

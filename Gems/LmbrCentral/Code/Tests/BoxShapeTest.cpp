@@ -9,6 +9,7 @@
 #include <AzTest/AzTest.h>
 
 #include <AzCore/Component/ComponentApplication.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Math/Matrix3x3.h>
 #include <AzCore/Math/Random.h>
 #include <AzFramework/Components/TransformComponent.h>
@@ -225,7 +226,7 @@ namespace UnitTest
         LmbrCentral::ShapeComponentRequestsBus::EventResult(
             rayHit, entity.GetId(), &LmbrCentral::ShapeComponentRequests::IntersectRay,
             AZ::Vector3(-10.0f, -10.0f, 0.0f), AZ::Vector3(0.0f, 0.0f, -1.0f), distance);
-        
+
         // 0.70710678 * 4 = 2.8284271
         // 10.0 - 2.8284271 ~= 7.17157287
         EXPECT_TRUE(rayHit);

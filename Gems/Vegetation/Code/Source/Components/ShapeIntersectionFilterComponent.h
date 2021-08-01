@@ -10,6 +10,7 @@
 
 #include <LmbrCentral/Dependency/DependencyMonitor.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityId.h>
 #include <Vegetation/Ebuses/FilterRequestBus.h>
 #include <Vegetation/Ebuses/ShapeIntersectionFilterRequestBus.h>
@@ -37,7 +38,7 @@ namespace Vegetation
 
     /**
     * Component implementing VegetationFilterRequestBus that accepts/rejects vegetation based on shape intersection
-    */      
+    */
     class ShapeIntersectionFilterComponent
         : public AZ::Component
         , public FilterRequestBus::Handler
@@ -46,9 +47,9 @@ namespace Vegetation
     public:
         template<typename, typename> friend class LmbrCentral::EditorWrappedComponentBase;
         AZ_COMPONENT(ShapeIntersectionFilterComponent, ShapeIntersectionFilterComponentTypeId);
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services);
         static void Reflect(AZ::ReflectContext* context);
 
         ShapeIntersectionFilterComponent(const ShapeIntersectionFilterConfig& configuration);

@@ -10,6 +10,7 @@
 
 #include "InAppPurchases/InAppPurchasesBus.h"
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace InAppPurchases
 {
@@ -23,10 +24,10 @@ namespace InAppPurchases
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
 
         ////////////////////////////////////////////////////////////////////////
         // InAppPurchasesRequestBus interface implementation
@@ -45,13 +46,13 @@ namespace InAppPurchases
 
         void PurchaseProductWithDeveloperPayload(const AZStd::string& productId, const AZStd::string& developerPayload) const override;
         void PurchaseProduct(const AZStd::string& productId) const override;
-        
+
         void QueryPurchasedProducts() const override;
-        
+
         void RestorePurchasedProducts() const override;
-        
+
         void ConsumePurchase(const AZStd::string& purchaseToken) const override;
-        
+
         void FinishTransaction(const AZStd::string& transactionId, bool downloadHostedContent) const override;
 
         void ClearCachedProductDetails() override;
@@ -62,14 +63,14 @@ namespace InAppPurchases
         bool GetPreviousProduct() override;
         bool GetNextPurchasedProduct() override;
         bool GetPreviousPurchasedProduct() override;
-        
+
         AZStd::string GetProductId() override;
         AZStd::string GetProductTitle() override;
         AZStd::string GetProductDescription() override;
         AZStd::string GetProductPrice() override;
         AZStd::string GetProductCurrencyCode() override;
         AZ::u64 GetProductPriceMicro() override;
-        
+
         AZStd::string GetPurchasedProductId() override;
         AZStd::string GetOrderId() override;
         AZStd::string GetDeveloperPayload() override;
@@ -83,7 +84,7 @@ namespace InAppPurchases
         AZ::u64 GetRestoredPurchaseTime() override;
         bool HasDownloads() override;
         bool IsProductOwned() override;
-        
+
         void ResetIndices() override;
 
     protected:

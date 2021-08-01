@@ -12,6 +12,7 @@
 #include <AzCore/Memory/Memory.h>
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <GraphCanvas/Styling/definitions.h>
 #include <GraphCanvas/Styling/Selector.h>

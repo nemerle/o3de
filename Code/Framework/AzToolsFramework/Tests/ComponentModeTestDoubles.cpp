@@ -55,13 +55,13 @@ namespace AzToolsFramework
         }
 
         void AnotherPlaceholderEditorComponent::GetProvidedServices(
-            AZ::ComponentDescriptor::DependencyArrayType& provided)
+            AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("InterestingService"));
         }
 
         void AnotherPlaceholderEditorComponent::GetIncompatibleServices(
-            AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("InterestingService"));
         }
@@ -142,13 +142,13 @@ namespace AzToolsFramework
         }
 
         void IncompatiblePlaceholderEditorComponent::GetProvidedServices(
-            AZ::ComponentDescriptor::DependencyArrayType& provided)
+            AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC_CE("InterestingService"));
         }
 
         void IncompatiblePlaceholderEditorComponent::GetIncompatibleServices(
-            AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+            AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("InterestingService"));
         }

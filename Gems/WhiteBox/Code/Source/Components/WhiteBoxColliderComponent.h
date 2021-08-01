@@ -11,6 +11,7 @@
 #include "WhiteBoxColliderConfiguration.h"
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzFramework/Physics/Shape.h>
 #include <AzFramework/Physics/Common/PhysicsTypes.h>
@@ -36,8 +37,8 @@ namespace WhiteBox
         WhiteBoxColliderComponent& operator=(const WhiteBoxColliderComponent&) = delete;
 
     private:
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         // AZ::Component ...
         void Activate() override;

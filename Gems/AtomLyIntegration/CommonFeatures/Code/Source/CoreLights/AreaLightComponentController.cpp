@@ -105,17 +105,17 @@ namespace AZ::Render
         }
     }
 
-    void AreaLightComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AreaLightComponentController::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("AreaLightService"));
     }
 
-    void AreaLightComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AreaLightComponentController::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("AreaLightService"));
     }
     
-    void AreaLightComponentController::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void AreaLightComponentController::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC_CE("ShapeService"));
     }

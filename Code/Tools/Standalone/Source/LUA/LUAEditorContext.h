@@ -74,7 +74,7 @@ namespace LUAEditor
         friend class ContextFactory;
     public:
 
-        AZ_COMPONENT(Context, "{8F606ADE-8D29-4239-9DF4-53E5E42D9685}");
+        AZ_COMPONENT_SPLIT(Context, "{8F606ADE-8D29-4239-9DF4-53E5E42D9685}");
 
         Context();
         virtual ~Context();
@@ -89,7 +89,7 @@ namespace LUAEditor
         virtual void Deactivate();
         //////////////////////////////////////////////////////////////////////////
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
         //////////////////////////////////////////////////////////////////////////
         // EditorFramework::CoreMessageBus::Handler

@@ -35,19 +35,19 @@ namespace WhiteBox
     WhiteBoxSystemComponent::WhiteBoxSystemComponent() = default;
     WhiteBoxSystemComponent::~WhiteBoxSystemComponent() = default;
 
-    void WhiteBoxSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void WhiteBoxSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("WhiteBoxService", 0x2f2f42b8));
     }
 
-    void WhiteBoxSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void WhiteBoxSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("WhiteBoxService", 0x2f2f42b8));
     }
 
-    void WhiteBoxSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& /*required*/) {}
+    void WhiteBoxSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& /*required*/) {}
 
-    void WhiteBoxSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& /*dependent*/) {}
+    void WhiteBoxSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& /*dependent*/) {}
 
     void WhiteBoxSystemComponent::Activate()
     {

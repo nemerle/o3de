@@ -39,7 +39,7 @@ namespace AZ
     public:
         using EntityIdSet = AZStd::unordered_set<AZ::EntityId>;
 
-        AZ_COMPONENT(SliceMetadataInfoComponent, "{25EE4D75-8A17-4449-81F4-E561005BAABD}");
+        AZ_COMPONENT_SPLIT(SliceMetadataInfoComponent, "{25EE4D75-8A17-4449-81F4-E561005BAABD}");
 
         /**
         * Metadata Info Component Constructor
@@ -98,13 +98,13 @@ namespace AZ
         * Component Descriptor - Provided Services
         * @param provided An array to fill out with all the services this component is dependent on
         */
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
         /**
         * Component Descriptor - Incompatible Services
         * @param incompatible An array to fill out with all the services this component is incompatible with
         */
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         /**
         * Gets the number of objects that are attached to this metadata entity. This includes both associated

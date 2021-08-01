@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/RTTI/TypeInfo.h>
@@ -27,35 +28,35 @@
 
 /**
  * NodeFunctionGeneric.h
- * 
+ *
  * This file makes it really easy to take a single function and make into a ScriptCanvas node
  * with all of the necessary plumbing, by using a macro, and adding the result to a node registry.
- * 
- * Use SCRIPT_CANVAS_GENERIC_FUNCTION_MULTI_RESULTS_NODE for a function of any arity that returns [0, N] 
+ *
+ * Use SCRIPT_CANVAS_GENERIC_FUNCTION_MULTI_RESULTS_NODE for a function of any arity that returns [0, N]
  * arguments, wrapped in a tuple.
- * 
+ *
  * The macros will turn the function name into a ScriptCanvas node with name of the function
  * with "Node" appended to it.
- * 
- * \note As much as possible, it best to wrap functions that use 'native' ScriptCanvas types, 
+ *
+ * \note As much as possible, it best to wrap functions that use 'native' ScriptCanvas types,
  * and to pass them in/out by value.
- 
+
  * You will need to add the nodes to the registry like any other node, and get a component description
  * from it, in order to have it show up in the editor, etc.
- * 
+ *
  * It is preferable to use this method for any node that provides ScriptCanvas-only functionality.
  * If you are creating a node that represents functionality that would be useful in Lua, or any other
- * client of BehaviorContext, it may be better to expose your functionality to BehaviorContext, unless 
- * performance in ScriptCanvas is an issue. This method will almost certainly provide faster run-time 
+ * client of BehaviorContext, it may be better to expose your functionality to BehaviorContext, unless
+ * performance in ScriptCanvas is an issue. This method will almost certainly provide faster run-time
  * performance than a node that calls into BehaviorContext.
- * 
+ *
  * A good faith effort to support reference return types has been made. Pointers and references, even in
  * tuples, are supported. However, if your input or return values is T** or T*&, it won't work, and there
  * are no plans to support them. If your tuple return value is made up of references remember to return it with
  * std::forward_as_tuple, and not std::make_tuple.
- * 
+ *
  * \see MathGenerics.h and Math.cpp for example usage of the macros and generic registrar defined below.
- *  
+ *
  */
 
 // this defines helps provide type safe static asserts in the results of the macros below
@@ -187,7 +188,7 @@ namespace ScriptCanvas
     public:
         AZ_RTTI(((NodeFunctionGenericMultiReturn<t_Func, t_Traits, function>), "{DC5B1799-6C5B-4190-8D90-EF0C2D1BCE4E}", t_Func, t_Traits), Node);
         AZ_COMPONENT_INTRUSIVE_DESCRIPTOR_TYPE(NodeFunctionGenericMultiReturn);
-        AZ_COMPONENT_BASE(NodeFunctionGenericMultiReturn, Node);
+        AZ_COMPONENT_INLINE_BASE(NodeFunctionGenericMultiReturn, Node);
 
         static const char* GetNodeFunctionName()
         {
@@ -238,7 +239,7 @@ namespace ScriptCanvas
         }
 
         AZ::Outcome<AZStd::string, void> GetFunctionCallName(const Slot*) const override
-        { 
+        {
             return AZ::Success(AZStd::string(GetNodeFunctionName()));
         }
 
@@ -273,7 +274,7 @@ namespace ScriptCanvas
             SCRIPT_CANVAS_CALL_ON_INDEX_SEQUENCE(
                 (CreateDataSlot<t_Args, Is>(ConnectionType::Input))
             );
-        } 
+        }
 
         void ConfigureSlots() override
         {
@@ -286,7 +287,7 @@ namespace ScriptCanvas
                 ExecutionSlotConfiguration slotConfiguration("Out", ConnectionType::Output);
                 AddSlot(slotConfiguration);
             }
-            
+
             AddInputDatumSlotHelper(typename AZStd::function_traits<t_Func>::arg_sequence{}, AZStd::make_index_sequence<AZStd::function_traits<t_Func>::arity>{});
 
             if (!m_initialized)

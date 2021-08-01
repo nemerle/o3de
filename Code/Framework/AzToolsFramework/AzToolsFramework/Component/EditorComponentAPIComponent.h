@@ -22,7 +22,7 @@ namespace AzToolsFramework
             , public EditorComponentAPIBus::Handler
         {
         public:
-            AZ_COMPONENT(EditorComponentAPIComponent, "{AC1A53C9-25BE-47D8-B9B5-60199AC73C2B}");
+            AZ_COMPONENT_SPLIT(EditorComponentAPIComponent, "{AC1A53C9-25BE-47D8-B9B5-60199AC73C2B}");
 
             EditorComponentAPIComponent() = default;
             ~EditorComponentAPIComponent() = default;

@@ -16,17 +16,17 @@
 
 namespace ScriptEventsBuilder
 {
-    void ScriptEventsBuilderComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void ScriptEventsBuilderComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptEventsBuilderService", 0x049e945c));
     }
 
-    void ScriptEventsBuilderComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void ScriptEventsBuilderComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         AZ_UNUSED(required);
     }
 
-    void ScriptEventsBuilderComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void ScriptEventsBuilderComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));
     }

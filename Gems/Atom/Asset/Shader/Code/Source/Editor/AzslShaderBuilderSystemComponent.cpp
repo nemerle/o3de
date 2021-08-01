@@ -49,22 +49,22 @@ namespace AZ
             RHI::ShaderCompilerArguments::Reflect(context);
         }
 
-        void AzslShaderBuilderSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void AzslShaderBuilderSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("AzslShaderBuilderService", 0x09315a40));
         }
 
-        void AzslShaderBuilderSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+        void AzslShaderBuilderSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("AzslShaderBuilderService", 0x09315a40));
         }
 
-        void AzslShaderBuilderSystemComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+        void AzslShaderBuilderSystemComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
         {
             (void)required;
         }
 
-        void AzslShaderBuilderSystemComponent::GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent)
+        void AzslShaderBuilderSystemComponent::GetDependentServices(ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));
         }

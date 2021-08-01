@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Math/MathReflection.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/Json/ArraySerializer.h>
 #include <AzCore/Serialization/Json/BasicContainerSerializer.h>
 #include <AzCore/Serialization/Json/BoolSerializer.h>
@@ -42,6 +43,9 @@
 
 namespace AZ
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(JsonSystemComponent)
+
     void JsonSystemComponent::Activate()
     {}
 
@@ -112,5 +116,5 @@ namespace AZ
             serializeContext->Class<JsonSystemComponent, AZ::Component>();
         }
     }
-    
+
 } // namespace AZ

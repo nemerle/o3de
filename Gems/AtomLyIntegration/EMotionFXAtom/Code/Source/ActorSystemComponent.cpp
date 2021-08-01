@@ -30,17 +30,17 @@ namespace AZ
             }
         }
 
-        void ActorSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void ActorSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("ActorSystemService", 0x5e493d6c));
         }
 
-        void ActorSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+        void ActorSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("ActorSystemService", 0x5e493d6c));
         }
 
-        void ActorSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void ActorSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("SkinnedMeshService", 0xac7cea96));
             required.push_back(AZ_CRC("EMotionFXAnimationService", 0x3f8a6369));

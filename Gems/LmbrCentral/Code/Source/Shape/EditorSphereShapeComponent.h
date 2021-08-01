@@ -34,13 +34,13 @@ namespace LmbrCentral
         void BuildGameEntity(AZ::Entity* gameEntity) override;
 
     protected:
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             EditorBaseShapeComponent::GetProvidedServices(provided);
             provided.push_back(AZ_CRC("SphereShapeService", 0x90c8dc80));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
     private:
         AZ_DISABLE_COPY_MOVE(EditorSphereShapeComponent)

@@ -43,7 +43,7 @@ namespace ScriptCanvasDeveloper
         ScriptCanvas::Execution::PerformanceStatistician::Reflect(context);
     }
 
-    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ScriptCanvasDeveloperService", 0xd2edba67));
     }

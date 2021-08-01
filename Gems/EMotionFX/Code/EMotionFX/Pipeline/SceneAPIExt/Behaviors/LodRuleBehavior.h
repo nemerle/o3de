@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/std/string/string.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzSceneDef.h>
 #include <SceneAPI/SceneCore/Components/BehaviorComponent.h>
 #include <SceneAPI/SceneCore/Events/AssetImportRequest.h>

@@ -10,6 +10,7 @@
 
 #include <AzCore/Math/Transform.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/EntityBus.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Component/TransformBus.h>
@@ -21,7 +22,7 @@ namespace LmbrCentral
         : public AZ::ComponentBus
     {
     public:
-        
+
         //! Set the target entity to look at
         virtual void SetTarget([[maybe_unused]] AZ::EntityId targetEntity) {}
 
@@ -92,17 +93,17 @@ namespace LmbrCentral
     protected:
         static void Reflect(AZ::ReflectContext* context);
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("LookAtService", 0x34230406));
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("LookAtService", 0x34230406));
         }

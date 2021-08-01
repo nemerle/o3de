@@ -94,17 +94,17 @@ namespace GradientSignal
         m_modifierTags.push_back(SurfaceData::SurfaceTag(tag));
     }
 
-    void GradientSurfaceDataComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void GradientSurfaceDataComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SurfaceDataModifierService", 0x68f8aa72));
     }
 
-    void GradientSurfaceDataComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void GradientSurfaceDataComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("SurfaceDataModifierService", 0x68f8aa72));
     }
 
-    void GradientSurfaceDataComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void GradientSurfaceDataComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("GradientService", 0x21c18d23));
     }

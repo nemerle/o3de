@@ -8,6 +8,7 @@
 
 #include <AzCore/Console/LoggerSystemComponent.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {
@@ -35,6 +36,9 @@ namespace AZ
         return "UNKNOWN";
     }
 
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(LoggerSystemComponent)
+
     void LoggerSystemComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -44,12 +48,12 @@ namespace AZ
         }
     }
 
-    void LoggerSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void LoggerSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("LoggerService"));
     }
 
-    void LoggerSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void LoggerSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC_CE("LoggerService"));
     }

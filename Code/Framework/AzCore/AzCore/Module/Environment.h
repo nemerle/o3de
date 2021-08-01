@@ -8,6 +8,7 @@
 #ifndef AZCORE_ENVIRONMENT_INCLUDE_H
 #define AZCORE_ENVIRONMENT_INCLUDE_H 1
 
+#include <AzCore/Math/Crc.h>
 #include <AzCore/std/smart_ptr/sp_convertible.h>
 #include <AzCore/std/parallel/mutex.h>
 #include <AzCore/std/parallel/spin_mutex.h>
@@ -15,7 +16,6 @@
 #include <AzCore/std/typetraits/alignment_of.h>
 #include <AzCore/std/typetraits/has_virtual_destructor.h>
 #include <AzCore/std/typetraits/aligned_storage.h>
-
 namespace AZ
 {
     namespace Internal
@@ -325,7 +325,7 @@ namespace AZ
                     allocator->DeAllocate(this);
                     return;
                 }
-                
+
                 m_mutex.unlock();
             }
 

@@ -428,27 +428,4 @@ public:
     AZ::Data::AssetId m_assetId;
 };
 
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfo<CReflectedVarEnum<T>> : SerializeGenericTypeInfoImpl<CReflectedVarEnum<T>>
-    {
-        // treat CReflectedVarEnum as generic value type
-    };
-
-    template<typename T>
-    struct SerializeGenericTypeInfo<CReflectedVarAny<T>> : SerializeGenericTypeInfoImpl<CReflectedVarAny<T>>
-    {
-        // treat CReflectedVarEnum as generic value type
-    };
-
-    template<typename S, typename T>
-    struct SerializeGenericTypeInfo<CReflectedVarRanged<S, T>> : SerializeGenericTypeInfoImpl<CReflectedVarRanged<S, T>>
-    {
-        // treat CReflectedVarRanged as generic value type
-    };
-
-} // namespace AZ
-
 #endif // CRYINCLUDE_EDITOR_UTILS_REFLECTEDVAR_H

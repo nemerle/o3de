@@ -8,6 +8,7 @@
 #include <AssImpTypeConverter.h>
 #include <assimp/mesh.h>
 #include <assimp/scene.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/algorithm.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
@@ -29,6 +30,9 @@ namespace AZ
     {
         namespace SceneBuilder
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(AssImpAnimationImporter)
+
             const char* AssImpAnimationImporter::s_animationNodeName = "animation";
 
             // Downstream only supports 30 frames per second sample rate. Adjusting to 60 doubles the
@@ -213,13 +217,13 @@ namespace AZ
                 // These variables are named using AssImp naming convention for consistency
                 AZ::u32 mNumPositionKeys{};
                 aiVectorKey* mPositionKeys{};
-                
+
                 AZ::u32 mNumRotationKeys{};
                 aiQuatKey* mRotationKeys{};
 
                 AZ::u32 mNumScalingKeys{};
                 aiVectorKey* mScalingKeys{};
-                
+
                 AZStd::vector<aiVectorKey> m_ownedPositionKeys{};
                 AZStd::vector<aiVectorKey> m_ownedScalingKeys{};
                 AZStd::vector<aiQuatKey> m_ownedRotationKeys{};
@@ -238,7 +242,7 @@ namespace AZ
                 consolidatedNodeAnim.mRotationKeys = anim->mRotationKeys;
                 consolidatedNodeAnim.mPositionKeys = anim->mPositionKeys;
                 consolidatedNodeAnim.mScalingKeys = anim->mScalingKeys;
-                
+
                 return {animation, AZStd::move(consolidatedNodeAnim)};
             }
 
@@ -259,7 +263,7 @@ namespace AZ
                 const aiScene* scene = context.m_sourceScene.GetAssImpScene();
 
                 // Add check for animation layers at the scene level.
-                
+
                 if (!scene->HasAnimations() || IsPivotNode(currentNode->mName))
                 {
                     return Events::ProcessingResult::Ignored;
@@ -299,7 +303,7 @@ namespace AZ
                             animation->mName.C_Str());
                         return Events::ProcessingResult::Failure;
                     }
-                    
+
                     mapAnimationsFunc(animation->mNumChannels, animation->mChannels, animation, boneAnimations);
 
                     for (AZ::u32 channelIndex = 0; channelIndex < animation->mNumMorphMeshChannels; ++channelIndex)
@@ -338,25 +342,25 @@ namespace AZ
                 for (auto&& animation : boneAnimations)
                 {
                     size_t pos = AZ::StringFunc::Find(animation.first, PivotNodeMarker, 0);
-                    
+
                     if (pos != animation.first.npos)
                     {
                         AZStd::string_view name, part;
                         SplitPivotNodeName(aiString(animation.first.c_str()), pos, name, part);
-                        
+
                         auto&& iterator = combinedAnimations.find(name);
-                    
+
                         if (iterator == combinedAnimations.end())
                         {
                             combinedAnimations.emplace(AZStd::string(name), AZStd::move(animation.second));
                             iterator = combinedAnimations.find(name);
                         }
-                    
+
                         if (iterator != combinedAnimations.end())
                         {
                             auto& existingNode = iterator->second.second;
                             auto&& src = animation.second.second;
-                            
+
                             if (part == "Translation")
                             {
                                 existingNode.mNumPositionKeys = src.mNumPositionKeys;
@@ -439,7 +443,7 @@ namespace AZ
                             context.m_currentGraphPosition, stubBoneAnimForMorphName.c_str(), AZStd::move(createdAnimationData));
                         context.m_scene.GetGraph().MakeEndPoint(addNode);
                     }
-                    
+
                     return combinedAnimationResult.GetResult();
                 }
 
@@ -489,7 +493,7 @@ namespace AZ
 
                                 emptyAnimation.m_ownedScalingKeys.emplace_back(0, scale);
                                 emptyAnimation.mScalingKeys = emptyAnimation.m_ownedScalingKeys.data();
-                                
+
                                 fillerAnimations.insert(
                                     AZStd::make_pair(boneName, AZStd::make_pair(anim.second.first, AZStd::move(emptyAnimation))));
                             }
@@ -505,7 +509,7 @@ namespace AZ
                 {
                     return combinedAnimationResult.GetResult();
                 }
-                
+
                 bool onlyOne = false;
 
                 for (auto it = animItr.first; it != animItr.second; ++it)
@@ -563,23 +567,23 @@ namespace AZ
                         {
                             return Events::ProcessingResult::Failure;
                         }
-                        
+
                         aiMatrix4x4 transform(scale, rotation, position);
                         DataTypes::MatrixType animTransform = AssImpSDKWrapper::AssImpTypeConverter::ToTransform(transform);
 
                         context.m_sourceSceneSystem.SwapTransformForUpAxis(animTransform);
                         context.m_sourceSceneSystem.ConvertBoneUnit(animTransform);
-                        
+
                         createdAnimationData->AddKeyFrame(animTransform);
                     }
 
                     Containers::SceneGraph::NodeIndex addNode = context.m_scene.GetGraph().AddChild(
                         context.m_currentGraphPosition, nodeName.c_str(), AZStd::move(createdAnimationData));
                     context.m_scene.GetGraph().MakeEndPoint(addNode);
-                    
+
                     onlyOne = true;
                 }
-                
+
                 combinedAnimationResult += Events::ProcessingResult::Success;
                 return combinedAnimationResult.GetResult();
             }

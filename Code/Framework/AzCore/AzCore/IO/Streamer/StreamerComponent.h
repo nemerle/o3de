@@ -27,7 +27,7 @@ namespace AZ
         , public TickBus::Handler
     {
     public:
-        AZ_COMPONENT(StreamerComponent, "{DA47D715-2710-49e2-BC94-EF81C311D89C}")
+        AZ_COMPONENT_SPLIT(StreamerComponent, "{DA47D715-2710-49e2-BC94-EF81C311D89C}")
 
         StreamerComponent();
 
@@ -44,11 +44,11 @@ namespace AZ
         void OnTick(float deltaTime, AZ::ScriptTimePoint time) override;
 
         /// \ref ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
         /// \ref ComponentDescriptor::GetIncompatibleServices
-        static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
         /// \ref ComponentDescriptor::GetDependentServices
-        static void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent);
+        static void GetDependentServices(ComponentDescriptorDependencyArrayType& dependent);
         /// \red ComponentDescriptor::Reflect
         static void Reflect(ReflectContext* reflection);
 

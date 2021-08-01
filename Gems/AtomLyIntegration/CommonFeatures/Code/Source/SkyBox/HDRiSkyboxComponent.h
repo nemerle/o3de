@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzFramework/Components/ComponentAdapter.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Atom/Feature/SkyBox/SkyboxConstants.h>
 #include <AtomLyIntegration/CommonFeatures/SkyBox/HDRiSkyboxComponentConfig.h>
 #include <SkyBox/HDRiSkyboxComponentController.h>

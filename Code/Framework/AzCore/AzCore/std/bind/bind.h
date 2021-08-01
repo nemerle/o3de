@@ -26,6 +26,8 @@ namespace AZStd
     }
 
     using std::bind;
+    using std::ref;
+    using std::cref;
 
     using std::is_bind_expression;
     template<class T>

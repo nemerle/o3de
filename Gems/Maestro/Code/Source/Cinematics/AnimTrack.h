@@ -44,7 +44,7 @@ public:
     virtual void SetParameterType(CAnimParamType type) { m_nParamType = type; };
 
     //////////////////////////////////////////////////////////////////////////
-    // for intrusive_ptr support 
+    // for intrusive_ptr support
     void add_ref() override;
     void release() override;
     //////////////////////////////////////////////////////////////////////////
@@ -224,7 +224,7 @@ public:
     {
         m_trackMultiplier = trackMultiplier;
     }
- 
+
     void SetExpanded([[maybe_unused]] bool expanded)
     {
         AZ_Assert(false, "Not expected to be used.");
@@ -662,12 +662,4 @@ inline int TAnimTrack<KeyType>::GetActiveKey(float time, KeyType* key)
     return m_currKey;
 }
 
-namespace AZ 
-{
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfo<TAnimTrack<T>, void> : SerializeGenericTypeInfoImpl<TAnimTrack<T>>
-    {
-    };
-} // namespace AZ
 #endif // CRYINCLUDE_CRYMOVIE_ANIMTRACK_H

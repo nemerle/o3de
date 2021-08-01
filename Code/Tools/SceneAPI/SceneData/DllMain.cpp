@@ -10,6 +10,7 @@
 
 #include <AzCore/Component/Component.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/EBus/EBus.h>
 #include <AzCore/Module/Environment.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -72,7 +73,7 @@ namespace AZ {
             void Activate()
             {
             }
-            
+
             void Deactivate()
             {
             }

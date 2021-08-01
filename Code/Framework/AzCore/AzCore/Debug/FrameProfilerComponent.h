@@ -28,7 +28,7 @@ namespace AZ
             , public AZ::TickBus::Handler
         {
         public:
-            AZ_COMPONENT(AZ::Debug::FrameProfilerComponent, "{B81739EF-ED77-4F67-9D05-6ADF94F0431A}")
+            AZ_COMPONENT_SPLIT(AZ::Debug::FrameProfilerComponent, "{B81739EF-ED77-4F67-9D05-6ADF94F0431A}")
 
             FrameProfilerComponent();
             virtual ~FrameProfilerComponent();
@@ -47,11 +47,11 @@ namespace AZ
             //////////////////////////////////////////////////////////////////////////
 
             /// \ref ComponentDescriptor::GetProvidedServices
-            static void GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided);
+            static void GetProvidedServices(ComponentDescriptorDependencyArrayType& provided);
             /// \ref ComponentDescriptor::GetIncompatibleServices
-            static void GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible);
             /// \ref ComponentDescriptor::GetDependentServices
-            static void GetDependentServices(ComponentDescriptor::DependencyArrayType& dependent);
+            static void GetDependentServices(ComponentDescriptorDependencyArrayType& dependent);
             /// \red ComponentDescriptor::Reflect
             static void Reflect(ReflectContext* reflection);
 

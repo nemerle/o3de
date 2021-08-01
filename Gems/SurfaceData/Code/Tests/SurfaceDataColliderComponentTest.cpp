@@ -34,7 +34,7 @@ namespace UnitTest
         void Deactivate() override {}
 
         static void Reflect(AZ::ReflectContext* reflect) { AZ_UNUSED(reflect); }
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("PhysXColliderService", 0x4ff43f7c));
         }

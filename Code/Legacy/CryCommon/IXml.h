@@ -44,41 +44,6 @@ template <typename F>
 struct Ang3_tpl;
 typedef Ang3_tpl<f32>       Ang3;
 
-namespace AZ 
-{
-    // Serialization helpers
-    template< typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-    
-    //treat templated tuple values as generic value types
-    template< typename T>
-    struct SerializeGenericTypeInfo<Color_tpl<T>, void> : SerializeGenericTypeInfoImpl<Color_tpl<T>>
-    {
-    };
-    template< typename T>
-    struct SerializeGenericTypeInfo<Vec2_tpl<T>, void> : SerializeGenericTypeInfoImpl<Vec2_tpl<T>>
-    {
-    };
-    template< typename T>
-    struct SerializeGenericTypeInfo<Vec3_tpl<T>, void> : SerializeGenericTypeInfoImpl<Vec3_tpl<T>>
-    {
-    };
-    template< typename T>
-    struct SerializeGenericTypeInfo<Vec4_tpl<T>, void> : SerializeGenericTypeInfoImpl<Vec4_tpl<T>>
-    {
-    };
-    template< typename T>
-    struct SerializeGenericTypeInfo<Quat_tpl<T>, void> : SerializeGenericTypeInfoImpl<Quat_tpl<T>>
-    {
-    };
-    template< typename T>
-    struct SerializeGenericTypeInfo<Ang3_tpl<T>, void> : SerializeGenericTypeInfoImpl<Ang3_tpl<T>>
-    {
-    };
-} // namespace AZ
-
 #if defined(QT_VERSION)
 #include <QColor>
 #include <QString>
@@ -732,7 +697,7 @@ public:
 
     XmlNodeRefIterator& operator=(const XmlNodeRefIterator& other) = default;
 
-    XmlNodeRefIterator& operator++() 
+    XmlNodeRefIterator& operator++()
     {
         ++m_index;
         Update();
@@ -746,7 +711,7 @@ public:
         return ret;
     }
 
-    IXmlNode* operator*() const 
+    IXmlNode* operator*() const
     {
         return m_currentChildNode;
     }

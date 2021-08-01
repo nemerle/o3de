@@ -18,6 +18,7 @@
 // Component utilization
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/ComponentBus.h>
 
 // Other buses used
@@ -106,12 +107,12 @@ namespace LmbrCentral
 
         const AZ::Vector3& GetNextPathPosition() const;
         void SetNextPathPosition(const AZ::Vector3& newPosition);
-        
+
         const AZ::Vector3& GetInflectionPosition() const;
         void SetInflectionPosition(const AZ::Vector3& newPosition);
 
         IPathFollowerPtr GetPathFollower();
-        
+
         //! Invalid request id
         static const PathfindRequest::NavigationRequestId kInvalidRequestId = 0;
 
@@ -271,7 +272,7 @@ namespace LmbrCentral
         //! Indicates whether the entity being moved is a character
         bool m_usesCharacterPhysics;
 
-        //! Indicates whether vertical navigation is allowed 
+        //! Indicates whether vertical navigation is allowed
         bool m_allowVerticalNavigation;
 
         //! Indicates how the agent is moved
@@ -304,12 +305,12 @@ namespace LmbrCentral
         */
         void Reset();
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("NavigationService", 0xf31e77fe));
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("PhysicsService", 0xa7350d22));
             dependent.push_back(AZ_CRC("PhysXRigidBodyService", 0x1d4c64a8));
@@ -319,7 +320,7 @@ namespace LmbrCentral
         //////////////////////////////////////////////////////////////////////////
         // This component will require the services of the transform component in
         // the short term and the physics component in the long term
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }

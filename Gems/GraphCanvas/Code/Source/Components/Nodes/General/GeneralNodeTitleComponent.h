@@ -11,6 +11,7 @@
 #include <QGraphicsWidget>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <GraphCanvas/Components/GraphCanvasPropertyBus.h>
 #include <GraphCanvas/Components/Nodes/NodeBus.h>
@@ -41,27 +42,27 @@ namespace GraphCanvas
         ~GeneralNodeTitleComponent() = default;
 
         // AZ::Component
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(NodeTitleServiceCrc);
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(NodeTitleServiceCrc);
         }
 
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             (void)dependent;
         }
 
-        static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("GraphCanvas_StyledGraphicItemService", 0xeae4cdf4));
             required.push_back(AZ_CRC("GraphCanvas_SceneMemberService", 0xe9759a2d));
         }
-        
+
         void Init() override;
         void Activate() override;
         void Deactivate() override;
@@ -102,9 +103,9 @@ namespace GraphCanvas
         AZStd::string          m_basePalette;
 
         GeneralNodeTitleComponentSaveData m_saveData;
-        
+
         GeneralNodeTitleGraphicsWidget* m_generalNodeTitleWidget = nullptr;
-    };    
+    };
 
     //! The Title QGraphicsWidget for displaying a title
     class GeneralNodeTitleGraphicsWidget
@@ -116,14 +117,14 @@ namespace GraphCanvas
     {
     public:
         AZ_TYPE_INFO(GeneralNodeTitleGraphicsWidget, "{9DE7D3C0-D88C-47D8-85D4-5E0F619E60CB}");
-        AZ_CLASS_ALLOCATOR(GeneralNodeTitleGraphicsWidget, AZ::SystemAllocator, 0);        
+        AZ_CLASS_ALLOCATOR(GeneralNodeTitleGraphicsWidget, AZ::SystemAllocator, 0);
 
         GeneralNodeTitleGraphicsWidget(const AZ::EntityId& entityId);
         ~GeneralNodeTitleGraphicsWidget() override;
 
         void Activate();
         void Deactivate();
-        
+
         void SetTitle(const TranslationKeyedString& title);
         void SetSubTitle(const TranslationKeyedString& subtitle);
 
@@ -139,7 +140,7 @@ namespace GraphCanvas
 
         void UpdateStyles();
         void RefreshDisplay();
-    
+
         // SceneNotificationBus
         void OnStylesChanged() override;
         ////
@@ -175,8 +176,8 @@ namespace GraphCanvas
 
         const Styling::StyleHelper* m_disabledPalette;
         const Styling::StyleHelper* m_paletteOverride;
-        Styling::StyleHelper* m_colorOverride;        
+        Styling::StyleHelper* m_colorOverride;
 
-        Styling::StyleHelper m_styleHelper;        
+        Styling::StyleHelper m_styleHelper;
     };
 }

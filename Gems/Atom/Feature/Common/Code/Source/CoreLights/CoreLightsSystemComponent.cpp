@@ -89,17 +89,17 @@ namespace AZ
             }
         }
 
-        void CoreLightsSystemComponent::GetProvidedServices(ComponentDescriptor::DependencyArrayType& provided)
+        void CoreLightsSystemComponent::GetProvidedServices(ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("CoreLightsService", 0x91932ef6));
         }
 
-        void CoreLightsSystemComponent::GetIncompatibleServices(ComponentDescriptor::DependencyArrayType& incompatible)
+        void CoreLightsSystemComponent::GetIncompatibleServices(ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC("CoreLightsService", 0x91932ef6));
         }
 
-        void CoreLightsSystemComponent::GetRequiredServices(ComponentDescriptor::DependencyArrayType& required)
+        void CoreLightsSystemComponent::GetRequiredServices(ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("RPISystem", 0xf2add773));
         }

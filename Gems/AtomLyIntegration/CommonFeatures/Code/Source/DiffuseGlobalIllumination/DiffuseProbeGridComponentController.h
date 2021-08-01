@@ -64,10 +64,10 @@ namespace AZ
             AZ_RTTI(AZ::Render::DiffuseProbeGridComponentController, "{108588E8-355E-4A19-94AC-955E64A37CE2}");
 
             static void Reflect(AZ::ReflectContext* context);
-            static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
-            static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+            static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
+            static void GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required);
 
             DiffuseProbeGridComponentController() = default;
             DiffuseProbeGridComponentController(const DiffuseProbeGridComponentConfig& config);

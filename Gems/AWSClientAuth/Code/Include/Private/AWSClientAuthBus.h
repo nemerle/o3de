@@ -8,6 +8,7 @@
 #pragma once
 
 #include <AzCore/EBus/EBus.h>
+#include <AzCore/std/smart_ptr/shared_ptr.h>
 
 namespace Aws
 {

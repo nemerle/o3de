@@ -32,7 +32,7 @@ namespace AzToolsFramework
 
             friend class SelectionComponentFactory;
 
-            AZ_COMPONENT(SelectionComponent, "{73B724FC-43D1-4C75-ACF5-79AA8A3BF89D}", EditorComponentBase)
+            AZ_COMPONENT_SPLIT(SelectionComponent, "{73B724FC-43D1-4C75-ACF5-79AA8A3BF89D}", EditorComponentBase)
 
             SelectionComponent();
             virtual ~SelectionComponent();
@@ -50,7 +50,7 @@ namespace AzToolsFramework
 
         private:
 
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
             static void Reflect(AZ::ReflectContext* context);
 
             AZ::Aabb m_currentSelectionAABB;

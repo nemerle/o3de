@@ -102,25 +102,25 @@ namespace LyShine
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void LyShineSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void LyShineSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("LyShineService", 0xae98ab29));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void LyShineSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void LyShineSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("LyShineService", 0xae98ab29));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void LyShineSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void LyShineSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         (void)required;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void LyShineSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void LyShineSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
         dependent.push_back(AZ_CRC("AssetCatalogService", 0xc68ffc57));

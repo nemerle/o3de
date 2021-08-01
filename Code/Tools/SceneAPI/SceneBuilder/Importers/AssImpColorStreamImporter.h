@@ -19,7 +19,7 @@ namespace AZ
             class AssImpColorStreamImporter : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpColorStreamImporter, "{071F4764-F3B0-438A-9CB7-19A1248F3B54}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpColorStreamImporter, "{071F4764-F3B0-438A-9CB7-19A1248F3B54}", SceneCore::LoadingComponent);
 
                 AssImpColorStreamImporter();
                 ~AssImpColorStreamImporter() override = default;

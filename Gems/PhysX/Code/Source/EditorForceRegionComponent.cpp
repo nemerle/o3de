@@ -220,24 +220,24 @@ namespace PhysX
         gameEntity->CreateComponent<ForceRegionComponent>(std::move(forceRegion), m_debugForces);
     }
 
-    void EditorForceRegionComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void EditorForceRegionComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("ForceRegionService", 0x3c3e4061));
         incompatible.push_back(AZ_CRC("LegacyCryPhysicsService", 0xbb370351));
     }
 
-    void EditorForceRegionComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorForceRegionComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ForceRegionService", 0x3c3e4061));
     }
 
-    void EditorForceRegionComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void EditorForceRegionComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         required.push_back(AZ_CRC("PhysXTriggerService", 0x3a117d7b));
     }
 
-    void EditorForceRegionComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void EditorForceRegionComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }

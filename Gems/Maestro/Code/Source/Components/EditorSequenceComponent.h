@@ -86,11 +86,11 @@ namespace Maestro
 
     protected:
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("SequenceService", 0x7cbe5938));
         }
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             // This guarantees that only one SequenceComponent will ever be on an entity
             incompatible.push_back(AZ_CRC("SequenceService", 0x7cbe5938));

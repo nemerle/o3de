@@ -23,18 +23,18 @@ namespace AZ
             }
         }
 
-        void CameraControllerComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void CameraControllerComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
         {
             required.push_back(AZ_CRC("TransformService", 0x8ee22c50));
             required.push_back(AZ_CRC("CameraService", 0x1dd1caa4));
         }
 
-        void CameraControllerComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void CameraControllerComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("CameraControllerService", 0xc35788f9));
         }
 
-        void CameraControllerComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void CameraControllerComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
         {
             incompatible.push_back(AZ_CRC_CE("NonUniformScaleService"));
         }

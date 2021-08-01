@@ -23,7 +23,7 @@ namespace AZ
         public:
             ////////////////////////////////////////////////////////////////////////////////////////////
             // AZ::Component Setup
-            AZ_COMPONENT(StatisticalProfilerProxySystemComponent, "{1E15565F-A5C1-4BF2-8AEE-D3880AC9E1EB}")
+            AZ_COMPONENT_SPLIT(StatisticalProfilerProxySystemComponent, "{1E15565F-A5C1-4BF2-8AEE-D3880AC9E1EB}")
 
             ////////////////////////////////////////////////////////////////////////////////////////////
             //! \ref AZ::ComponentDescriptor::Reflect
@@ -31,11 +31,11 @@ namespace AZ
 
             ////////////////////////////////////////////////////////////////////////////////////////////
             //! \ref AZ::ComponentDescriptor::GetProvidedServices
-            static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+            static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
             ////////////////////////////////////////////////////////////////////////////////////////////
             //! \ref AZ::ComponentDescriptor::GetIncompatibleServices
-            static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+            static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
             ////////////////////////////////////////////////////////////////////////////////////////////
             //! Constructor

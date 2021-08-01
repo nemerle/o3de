@@ -9,6 +9,7 @@
 #include <IMovieSystem.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <Maestro/Bus/SequenceComponentBus.h>
 
 namespace Maestro
@@ -38,7 +39,7 @@ namespace Maestro
         AZ_COMPONENT(SequenceComponent, "{027CE988-CF48-4589-A73A-73CD8D02F783}");
 
         SequenceComponent();
-        
+
         //////////////////////////////////////////////////////////////////////////
         // AZ::Component interface implementation
         void Init() override;
@@ -88,12 +89,12 @@ namespace Maestro
         //////////////////////////////////////////////////////////////////////////
 
     protected:
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("SequenceService", 0x7cbe5938));
         }
 
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         // Required Reflect function.
         static void Reflect(AZ::ReflectContext* context);

@@ -106,7 +106,7 @@ namespace MaterialEditor
         }
     }
 
-    void MaterialDocumentSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void MaterialDocumentSystemComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC("AssetProcessorToolsConnection", 0x734669bc));
         required.push_back(AZ_CRC("AssetDatabaseService", 0x3abf5601));
@@ -114,12 +114,12 @@ namespace MaterialEditor
         required.push_back(AZ_CRC("RPISystem", 0xf2add773));
     }
 
-    void MaterialDocumentSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void MaterialDocumentSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("MaterialDocumentSystemService"));
     }
 
-    void MaterialDocumentSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void MaterialDocumentSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("MaterialDocumentSystemService"));
     }

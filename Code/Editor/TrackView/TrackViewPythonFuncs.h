@@ -19,7 +19,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT(TrackViewFuncsHandler, "{5315678D-2951-4CF6-A9DC-CE21CD23C9C9}")
+        AZ_COMPONENT_SPLIT(TrackViewFuncsHandler, "{5315678D-2951-4CF6-A9DC-CE21CD23C9C9}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 
@@ -38,7 +38,7 @@ namespace AzToolsFramework
     AZ_PUSH_DISABLE_DLL_EXPORT_MEMBER_WARNING
     AZ_POP_DISABLE_DLL_EXPORT_BASECLASS_WARNING
     public:
-        AZ_COMPONENT(TrackViewComponent, "{3CF943CC-6F10-4B19-88FC-CFB697558FFD}")
+        AZ_COMPONENT_SPLIT(TrackViewComponent, "{3CF943CC-6F10-4B19-88FC-CFB697558FFD}")
 
         TrackViewComponent() = default;
         ~TrackViewComponent() override = default;

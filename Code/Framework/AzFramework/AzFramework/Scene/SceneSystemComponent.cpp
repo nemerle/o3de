@@ -8,12 +8,17 @@
 
 #include <AzFramework/Scene/SceneSystemComponent.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 
 namespace AzFramework
 {
+
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(SceneSystemComponent)
+
     void SceneSystemComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -43,12 +48,12 @@ namespace AzFramework
     {
     }
 
-    void SceneSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void SceneSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("SceneSystemComponentService", 0xd8975435));
     }
 
-    void SceneSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void SceneSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("SceneSystemComponentService", 0xd8975435));
     }

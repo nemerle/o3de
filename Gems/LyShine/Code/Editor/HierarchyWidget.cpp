@@ -9,6 +9,7 @@
 #include "AssetDropHelpers.h"
 #include "QtHelpers.h"
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzToolsFramework/ToolsComponents/EditorEntityIdContainer.h>
 #include <AzToolsFramework/AssetBrowser/AssetBrowserEntry.h>
 #include <AzToolsFramework/ToolsComponents/EditorOnlyEntityComponentBus.h>
@@ -482,7 +483,7 @@ void HierarchyWidget::dropEvent(QDropEvent* ev)
         QTreeWidgetItemRawPtrQList selection = selectedItems();
 
         // Change current selection to only contain top level items. This avoids
-        // the default drop behavior from changing the internal hierarchy of 
+        // the default drop behavior from changing the internal hierarchy of
         // the dragged elements
         QTreeWidgetItemRawPtrQList topLevelSelection;
         SelectionHelpers::GetListOfTopLevelSelectedItems(this, selection, topLevelSelection);

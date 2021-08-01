@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <SceneAPI/SceneCore/Components/SceneSystemComponent.h>
 
@@ -15,6 +16,9 @@ namespace AZ
     {
         namespace SceneCore
         {
+            // Implement the CreateDescriptor static method
+            AZ_COMPONENT_IMPL(SceneSystemComponent)
+
             void SceneSystemComponent::Activate()
             {
             }

@@ -9,6 +9,7 @@
 #include <AzToolsFramework/PropertyTreeEditor/PropertyTreeEditorComponent.h>
 #include <AzToolsFramework/PropertyTreeEditor/PropertyTreeEditor.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/RTTI/AzStdOnDemandReflection.inl>
 
@@ -16,6 +17,9 @@ namespace AzToolsFramework
 {
     namespace Components
     {
+        // Implement the CreateDescriptor static method
+        AZ_COMPONENT_IMPL(PropertyTreeEditorComponent)
+
         void PropertyTreeEditorComponent::Reflect(AZ::ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))

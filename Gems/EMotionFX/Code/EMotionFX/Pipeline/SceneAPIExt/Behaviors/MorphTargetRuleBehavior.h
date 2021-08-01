@@ -10,6 +10,7 @@
 #include <SceneAPI/SceneCore/Components/BehaviorComponent.h>
 #include <SceneAPI/SceneCore/Events/ManifestMetaInfoBus.h>
 #include <SceneAPI/SceneCore/Events/AssetImportRequest.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 namespace AZ
 {
@@ -28,7 +29,7 @@ namespace EMotionFX
     {
         namespace Behavior
         {
-            class MorphTargetRuleBehavior 
+            class MorphTargetRuleBehavior
                 : public AZ::SceneAPI::SceneCore::BehaviorComponent
                 , public AZ::SceneAPI::Events::ManifestMetaInfoBus::Handler
                 , public AZ::SceneAPI::Events::AssetImportRequestBus::Handler

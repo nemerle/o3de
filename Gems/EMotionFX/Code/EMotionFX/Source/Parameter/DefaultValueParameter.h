@@ -66,20 +66,3 @@ namespace EMotionFX
         ;
     }
 }
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<typename T, typename >
-    struct SerializeGenericTypeInfo;
-
-    template<typename S, typename T>
-    struct SerializeGenericTypeInfo<EMotionFX::DefaultValueParameter<S, T>, void>
-        : SerializeGenericTypeInfoImpl<EMotionFX::DefaultValueParameter<S, T>>
-    {
-        // treat DefaultValueParameter as generic value type
-    };
-
-} // namespace AZ

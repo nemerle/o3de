@@ -8,10 +8,11 @@
 
 #pragma once
 
-#include <AzCore/RTTI/TypeInfo.h>
 #include <AzFramework/Components/ComponentAdapter.h>
 #include <Decals/DecalComponentController.h>
+#include <AzCore/RTTI/TypeInfo.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AtomLyIntegration/CommonFeatures/Decals/DecalConstants.h>
 
 namespace AZ

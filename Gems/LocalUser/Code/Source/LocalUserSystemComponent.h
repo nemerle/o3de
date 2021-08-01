@@ -10,6 +10,7 @@
 #include <LocalUser/LocalUserRequestBus.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,11 +35,11 @@ namespace LocalUser
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //! \ref AZ::ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //! \ref AZ::ComponentDescriptor::GetIncompatibleServices
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //! Constructor

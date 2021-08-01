@@ -25,7 +25,7 @@ namespace AZ
                 : public SceneCore::LoadingComponent
             {
             public:
-                AZ_COMPONENT(AssImpAnimationImporter, "{93b3f4e3-6fcd-42b9-a74e-5923f76d25c7}", SceneCore::LoadingComponent);
+                AZ_COMPONENT_SPLIT(AssImpAnimationImporter, "{93b3f4e3-6fcd-42b9-a74e-5923f76d25c7}", SceneCore::LoadingComponent);
 
                 AssImpAnimationImporter();
                 ~AssImpAnimationImporter() override = default;

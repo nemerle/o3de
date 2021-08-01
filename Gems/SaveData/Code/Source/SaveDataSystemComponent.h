@@ -11,6 +11,7 @@
 #include <SaveData_Traits_Platform.h>
 
 #include <AzCore/Component/Component.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/std/containers/list.h>
 #include <AzCore/std/parallel/atomic.h>
@@ -36,11 +37,11 @@ namespace SaveData
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //! \ref AZ::ComponentDescriptor::GetProvidedServices
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided);
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //! \ref AZ::ComponentDescriptor::GetIncompatibleServices
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
+        static void GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible);
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //! Default constructor

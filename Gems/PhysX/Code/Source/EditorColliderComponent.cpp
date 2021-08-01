@@ -124,19 +124,19 @@ namespace PhysX
         return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
     }
 
-    void EditorColliderComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void EditorColliderComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC_CE("PhysicsWorldBodyService"));
         provided.push_back(AZ_CRC_CE("PhysXColliderService"));
         provided.push_back(AZ_CRC_CE("PhysXTriggerService"));
     }
 
-    void EditorColliderComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    void EditorColliderComponent::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required)
     {
         required.push_back(AZ_CRC_CE("TransformService"));
     }
 
-    void EditorColliderComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void EditorColliderComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC_CE("NonUniformScaleService"));
     }
@@ -1348,17 +1348,17 @@ namespace PhysX
         EditorColliderComponent::Reflect(reflection);
     }
 
-    void EditorColliderComponentDescriptor::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided, [[maybe_unused]] const AZ::Component* instance) const
+    void EditorColliderComponentDescriptor::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided, [[maybe_unused]] const AZ::Component* instance) const
     {
         EditorColliderComponent::GetProvidedServices(provided);
     }
 
-    void EditorColliderComponentDescriptor::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& dependent, [[maybe_unused]] const AZ::Component* instance) const
+    void EditorColliderComponentDescriptor::GetDependentServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& dependent, [[maybe_unused]] const AZ::Component* instance) const
     {
         EditorColliderComponent::GetDependentServices(dependent);
     }
 
-    void EditorColliderComponentDescriptor::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required, [[maybe_unused]] const AZ::Component* instance) const
+    void EditorColliderComponentDescriptor::GetRequiredServices(AZ::ComponentDescriptorDependencyArrayType& required, [[maybe_unused]] const AZ::Component* instance) const
     {
         EditorColliderComponent::GetRequiredServices(required);
     }

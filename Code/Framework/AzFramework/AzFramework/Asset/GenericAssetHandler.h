@@ -66,7 +66,7 @@ namespace AzFramework
      *
      */
 
-    /** 
+    /**
     * Just a base class to assign concrete RTTI to these classes - Don't derive from this - use GenericAssetHandler<T> instead.
     * This being in the heirarchy allows you to easily ask whether a particular handler derives from this type and thus is a
     * GenericAssetHandler.
@@ -238,20 +238,5 @@ namespace AzFramework
         GenericAssetHandler(const GenericAssetHandler&) = delete;
     };
 } // namespace AzFramework
-
-namespace AZ
-{
-    // Serialization helpers
-    template<typename T>
-    struct SerializeGenericTypeInfoImpl;
-    template<class ValueType, typename>
-    struct SerializeGenericTypeInfo;
-
-    // treat templated AzFramework::GenericAssetHandler values as generic value types
-    template<typename T>
-    struct SerializeGenericTypeInfo<AzFramework::GenericAssetHandler<T>, void> : SerializeGenericTypeInfoImpl<AzFramework::GenericAssetHandler<T>>
-    {
-    };
-} // namespace AZ
 
 #endif // AZFRAMEWORK_ASSET_GENERICASSETHANDLER_H

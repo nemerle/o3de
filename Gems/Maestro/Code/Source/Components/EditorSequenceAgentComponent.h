@@ -61,7 +61,7 @@ namespace Maestro
         static void Reflect(AZ::ReflectContext* context);
 
         // Optional functions for defining provided and dependent services.
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+        static void GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
         {
             dependent.push_back(AZ_CRC("TransformService", 0x8ee22c50));
         }

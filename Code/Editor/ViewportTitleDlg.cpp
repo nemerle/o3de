@@ -41,6 +41,7 @@
 
 #include <AzCore/std/algorithm.h>
 #include <AzCore/Casting/numeric_cast.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzToolsFramework/Viewport/ViewportMessages.h>
 
@@ -779,8 +780,8 @@ void CViewportTitleDlg::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_
             const int eventHeight = static_cast<int>(lparam);
             const QWidget* viewport = m_pViewPane->GetViewport();
 
-            // This should eventually be converted to an EBus to make it easy to connect to the correct viewport 
-            // sending the event.  But for now, just detect that we've gotten width/height values that match our 
+            // This should eventually be converted to an EBus to make it easy to connect to the correct viewport
+            // sending the event.  But for now, just detect that we've gotten width/height values that match our
             // associated viewport
             if (viewport && (eventWidth == viewport->width()) && (eventHeight == viewport->height()))
             {
@@ -1011,6 +1012,8 @@ namespace
 
 namespace AzToolsFramework
 {
+    AZ_COMPONENT_IMPL(ViewportTitleDlgPythonFuncsHandler)
+
     void ViewportTitleDlgPythonFuncsHandler::Reflect(AZ::ReflectContext* context)
     {
         if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))

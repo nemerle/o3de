@@ -145,17 +145,17 @@ namespace Vegetation
         m_descriptors.push_back(descriptor ? *descriptor : Descriptor());
     }
 
-    void DescriptorListComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DescriptorListComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationDescriptorProviderService", 0x62e51209));
     }
 
-    void DescriptorListComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DescriptorListComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& services)
     {
         services.push_back(AZ_CRC("VegetationDescriptorProviderService", 0x62e51209));
     }
 
-    void DescriptorListComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptor::DependencyArrayType& services)
+    void DescriptorListComponent::GetRequiredServices([[maybe_unused]] AZ::ComponentDescriptorDependencyArrayType& services)
     {
     }
 

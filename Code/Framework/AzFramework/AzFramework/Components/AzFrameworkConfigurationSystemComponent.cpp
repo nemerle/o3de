@@ -8,8 +8,9 @@
 
 #include <AzFramework/Components/AzFrameworkConfigurationSystemComponent.h>
 
-#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Debug/Trace.h>
 #include <AzFramework/Scene/Scene.h>
@@ -18,6 +19,9 @@
 
 namespace AzFramework
 {
+    // Implement the CreateDescriptor static method
+    AZ_COMPONENT_IMPL(AzFrameworkConfigurationSystemComponent)
+
     void AzFrameworkConfigurationSystemComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -76,17 +80,17 @@ namespace AzFramework
         AZ_Assert(success, "Unable to remove the main scene.");
     }
 
-    void AzFrameworkConfigurationSystemComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    void AzFrameworkConfigurationSystemComponent::GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("AzFrameworkConfigurationSystemComponentService", 0xcc49c96e));
     }
 
-    void AzFrameworkConfigurationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+    void AzFrameworkConfigurationSystemComponent::GetIncompatibleServices(AZ::ComponentDescriptorDependencyArrayType& incompatible)
     {
         incompatible.push_back(AZ_CRC("AzFrameworkConfigurationSystemComponentService", 0xcc49c96e));
     }
 
-    void AzFrameworkConfigurationSystemComponent::GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent)
+    void AzFrameworkConfigurationSystemComponent::GetDependentServices(AZ::ComponentDescriptorDependencyArrayType& dependent)
     {
         dependent.push_back(AZ_CRC("SceneSystemComponentService", 0xd8975435));
         dependent.push_back(AZ_CRC("GameEntityContextService", 0xa6f2c885));

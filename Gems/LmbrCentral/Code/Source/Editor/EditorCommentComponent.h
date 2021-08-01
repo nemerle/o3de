@@ -27,7 +27,7 @@ namespace LmbrCentral
 
     protected:
 
-        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        static void GetProvidedServices(AZ::ComponentDescriptorDependencyArrayType& provided)
         {
             provided.push_back(AZ_CRC("EditorCommentingService", 0xdd5ab934));
         }
