@@ -9,6 +9,7 @@
 #pragma once
 
 #include <AzCore/Serialization/Utils.h>
+#include <AzCore/Component/ComponentDescriptor.h>
 
 #include <SceneAPI/SceneCore/Components/ExportingComponent.h>
 

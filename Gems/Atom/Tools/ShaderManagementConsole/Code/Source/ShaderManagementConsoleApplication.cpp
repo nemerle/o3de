@@ -6,6 +6,7 @@
  *
  */
 
+
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzFramework/IO/LocalFileIO.h>
 #include <AzFramework/Network/AssetProcessorConnection.h>
@@ -37,6 +38,8 @@
 #include <Atom/Window/ShaderManagementConsoleWindowModule.h>
 #include <Atom/Window/ShaderManagementConsoleWindowRequestBus.h>
 #include <AzCore/IO/Path/Path.h>
+#include <AzCore/Script/ScriptContextAttributes.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/Utils/Utils.h>
 

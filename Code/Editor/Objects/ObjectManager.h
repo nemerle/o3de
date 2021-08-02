@@ -203,11 +203,11 @@ public:
     void FindObjectsInRect(CViewport* view, const QRect& rect, std::vector<GUID>& guids);
 
     //! Clear default selection set.
-    //! @Return number of objects removed from selection.
+    //! @return number of objects removed from selection.
     int ClearSelection();
 
     //! Deselect all current selected objects and selects object that were unselected.
-    //! @Return number of selected objects.
+    //! @return number of selected objects.
     int InvertSelection();
 
     //! Get current selection.
@@ -455,7 +455,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT_SPLIT(ObjectManagerFuncsHandler, "{D79B69EE-A2CC-43C0-AA5C-47DCFCCBC955}")
+        AZ_COMPONENT_SPLIT_EXPORT(SANDBOX_API, ObjectManagerFuncsHandler, "{D79B69EE-A2CC-43C0-AA5C-47DCFCCBC955}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 

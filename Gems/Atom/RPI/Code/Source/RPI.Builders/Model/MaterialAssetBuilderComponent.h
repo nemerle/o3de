@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/Serialization/Utils.h>
 #include <SceneAPI/SceneCore/Components/ExportingComponent.h>
 #include <SceneAPI/SceneCore/SceneBuilderDependencyBus.h>

@@ -13,6 +13,7 @@
 #include <AzCore/IO/Streamer/FileRequest.h>
 #include <AzCore/IO/Streamer/StreamerContext.h>
 #include <AzCore/IO/Streamer/StorageDrive_Windows.h>
+#include <AzCore/Math/MathUtils.h>
 #include <AzCore/std/typetraits/decay.h>
 #include <AzCore/std/typetraits/is_unsigned.h>
 #include <AzCore/StringFunc/StringFunc.h>

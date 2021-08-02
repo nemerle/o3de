@@ -19,7 +19,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT_SPLIT(TrackViewFuncsHandler, "{5315678D-2951-4CF6-A9DC-CE21CD23C9C9}")
+        AZ_COMPONENT_SPLIT_EXPORT(SANDBOX_API, TrackViewFuncsHandler, "{5315678D-2951-4CF6-A9DC-CE21CD23C9C9}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 

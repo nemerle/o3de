@@ -195,7 +195,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT_SPLIT(ViewportTitleDlgPythonFuncsHandler, "{2D686C2D-04F0-4C96-B432-0702E774062E}")
+        AZ_COMPONENT_SPLIT_EXPORT(SANDBOX_API, ViewportTitleDlgPythonFuncsHandler, "{2D686C2D-04F0-4C96-B432-0702E774062E}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 

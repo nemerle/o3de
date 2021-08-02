@@ -26,6 +26,7 @@
 
 #include <Model/ModelExporterContexts.h>
 
+#include <AzCore/Component/ComponentDescriptor.h>
 #include <AzCore/std/containers/map.h>
 
 namespace AZ

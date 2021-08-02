@@ -9,7 +9,7 @@
 #pragma once
 
 #include <AzCore/Asset/AssetCommon.h>
-
+#include <AzCore/EBus/EBus.h>
 namespace WhiteBox
 {
     //! Notification bus for white box mesh asset modifications.

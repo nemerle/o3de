@@ -30,6 +30,7 @@
 #include <Cry_Quat.h>
 #include <Cry_Color.h>
 #include <smartptr.h>
+#include <memory>
 
 // forward declarations for overloads
 struct AABB;

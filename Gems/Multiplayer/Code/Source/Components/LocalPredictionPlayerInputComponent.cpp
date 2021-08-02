@@ -44,7 +44,7 @@ namespace Multiplayer
         netBindComponent->SerializeEntityCorrection(serializer);
         return serializer.GetString();
     }
-
+    AZ_COMPONENT_IMPL(LocalPredictionPlayerInputComponent)
     void LocalPredictionPlayerInputComponent::LocalPredictionPlayerInputComponent::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);

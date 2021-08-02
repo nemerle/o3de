@@ -10,6 +10,7 @@
 #include <AzCore/Casting/numeric_cast.h>
 #include <../Common/WinAPI/AzCore/IO/Streamer/StreamerContext_WinAPI.h>
 #include <AzCore/Debug/Profiler.h>
+#include <AzCore/std/utils.h>
 
 namespace AZ::Platform
 {

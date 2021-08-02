@@ -292,6 +292,14 @@ namespace AZ
     friend class AZ::HasComponentRequiredServices<_ComponentClass>;                                                                     \
     friend class AZ::HasComponentIncompatibleServices<_ComponentClass>;                                                                 \
     static AZ::ComponentDescriptor* CreateDescriptor();
+    #define AZ_COMPONENT_BASE_EXPORTED(EXP_MACRO,_ComponentClass, ...)                                                                  \
+    AZ_CLASS_ALLOCATOR(_ComponentClass, AZ::SystemAllocator, 0)                                                                         \
+    friend class AZ::HasComponentReflect<_ComponentClass>;                                                                              \
+    friend class AZ::HasComponentProvidedServices<_ComponentClass>;                                                                     \
+    friend class AZ::HasComponentDependentServices<_ComponentClass>;                                                                    \
+    friend class AZ::HasComponentRequiredServices<_ComponentClass>;                                                                     \
+    friend class AZ::HasComponentIncompatibleServices<_ComponentClass>;                                                                 \
+    EXP_MACRO static AZ::ComponentDescriptor* CreateDescriptor();
 
     #define AZ_COMPONENT_IMPL(_ComponentClass)                                                                                          \
     AZ::ComponentDescriptor* _ComponentClass::CreateDescriptor()                                                                        \
@@ -361,6 +369,11 @@ namespace AZ
     AZ_RTTI(_ComponentClass, __VA_ARGS__, AZ::Component)        \
     AZ_COMPONENT_INTRUSIVE_DESCRIPTOR_TYPE(_ComponentClass)     \
     AZ_COMPONENT_BASE(_ComponentClass, __VA_ARGS__)
+
+    #define AZ_COMPONENT_SPLIT_EXPORT(EXPORT_MACRO,_ComponentClass, ...)          \
+    AZ_RTTI(_ComponentClass, __VA_ARGS__, AZ::Component)        \
+    AZ_COMPONENT_INTRUSIVE_DESCRIPTOR_TYPE(_ComponentClass)     \
+    AZ_COMPONENT_BASE_EXPORTED(EXPORT_MACRO,_ComponentClass, __VA_ARGS__)
 
     class ComponentDescriptor;
     // Allow access to DependencyArrayType without including whole ComponentDescriptor.h

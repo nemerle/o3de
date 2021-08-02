@@ -487,7 +487,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT_SPLIT(CryEditPythonHandler, "{D4B19973-54D9-44BD-9E70-6069462A0CDC}")
+        AZ_COMPONENT_SPLIT_EXPORT(SANDBOX_API,CryEditPythonHandler, "{D4B19973-54D9-44BD-9E70-6069462A0CDC}")
         virtual ~CryEditPythonHandler() = default;
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);

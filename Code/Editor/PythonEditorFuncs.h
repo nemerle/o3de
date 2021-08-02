@@ -19,7 +19,7 @@ namespace AzToolsFramework
         : public AZ::Component
     {
     public:
-        AZ_COMPONENT_SPLIT(PythonEditorFuncsHandler, "{0F470E7E-9741-4608-84B1-7E4735FDA526}")
+        AZ_COMPONENT_SPLIT_EXPORT(SANDBOX_API, PythonEditorFuncsHandler, "{0F470E7E-9741-4608-84B1-7E4735FDA526}")
 
         SANDBOX_API static void Reflect(AZ::ReflectContext* context);
 

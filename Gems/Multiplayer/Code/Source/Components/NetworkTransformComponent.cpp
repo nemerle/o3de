@@ -14,6 +14,8 @@
 
 namespace Multiplayer
 {
+    AZ_COMPONENT_IMPL(NetworkTransformComponent)
+
     void NetworkTransformComponent::NetworkTransformComponent::Reflect(AZ::ReflectContext* context)
     {
         AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context);

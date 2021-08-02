@@ -21,6 +21,7 @@
 
 namespace AZ::IO
 {
+    class RequestPath;
     class StorageDriveWin
         : public StreamStackEntry
     {
