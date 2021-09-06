@@ -206,7 +206,7 @@ namespace ScriptCanvas
             }
         }
 
-        static bool ComparisonExpressionVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+        static bool ComparisonExpressionVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
         {
             if (rootElement.GetVersion() == 0)
             {
@@ -220,8 +220,8 @@ namespace ScriptCanvas
                 // There was change to the ComparisonExpression Base Class type from BooleanExpression to ComparisonExpression.
                 // Because the version was not incremented when this change took place version 0 instances of ComparisonExpression class will fail to load when the base class
                 // is BinaryExpression
-                // Explicitly making a copy of the baseNodeElement notice there is no "&" after AZ::SerializeContext::DataElementNode
-                AZ::SerializeContext::DataElementNode baseNodeElement = rootElement.GetSubElement(nodeElementIndex);
+                // Explicitly making a copy of the baseNodeElement notice there is no "&" after AZ::Serialization::DataElementNode
+                AZ::Serialization::DataElementNode baseNodeElement = rootElement.GetSubElement(nodeElementIndex);
                 if (baseNodeElement.GetId() == azrtti_typeid<BooleanExpression>())
                 {
                     rootElement.RemoveElement(nodeElementIndex);

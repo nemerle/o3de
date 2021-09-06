@@ -8,6 +8,7 @@
 #include <Atom/RPI.Reflect/Shader/ShaderAsset.h>
 #include <Atom/RPI.Reflect/Shader/ShaderCommonTypes.h>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Casting/numeric_cast.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/algorithm.h>
@@ -399,7 +400,7 @@ namespace AZ
             return supervariant->m_srgLayoutList;
         }
 
-        
+
         const RHI::Ptr<RHI::ShaderResourceGroupLayout>& ShaderAsset::GetDrawSrgLayout(SupervariantIndex supervariantIndex) const
         {
             return FindShaderResourceGroupLayout(SrgBindingSlot::Draw, supervariantIndex);
@@ -531,7 +532,7 @@ namespace AZ
         {
             // Use the current RHI that is active to select which shader data to use.
             // We don't assert if the Factory is not available because this method could be called during build time,
-            // when no Factory is available. Some assets (like the material asset) need to load the ShaderAsset 
+            // when no Factory is available. Some assets (like the material asset) need to load the ShaderAsset
             // in order to get some non API specific data (like a ShaderResourceGroup) during their build
             // process. If they try to access any RHI API specific data, an assert will be trigger because the
             // correct API index will not set.
@@ -577,12 +578,12 @@ namespace AZ
             // Once the ShaderAsset is loaded, it is necessary to listen for changes in the Root Variant Asset.
             Data::AssetBus::Handler::BusConnect(GetRootVariant().GetId());
             ShaderVariantFinderNotificationBus::Handler::BusConnect(GetId());
-                        
+
             AssetInitBus::Handler::BusDisconnect();
 
             return true;
         }
-        
+
         void ShaderAsset::ReinitializeRootShaderVariant(Data::Asset<Data::AssetData> asset)
         {
             Data::Asset<ShaderVariantAsset> shaderVariantAsset = { asset.GetAs<ShaderVariantAsset>(), AZ::Data::AssetLoadBehavior::PreLoad };
@@ -605,16 +606,16 @@ namespace AZ
             // The user changes a .shader file, which causes the AP to rebuild the ShaderAsset and root ShaderVariantAsset.
             // 1) Thread A creates the new ShaderAsset, loads it, and gets the old ShaderVariantAsset.
             // 2) Thread B creates the new ShaderVariantAsset, loads it, and calls OnAssetReloaded.
-            // 3) Main thread calls ShaderAsset::PostLoadInit which connects to the AssetBus but it's too late to receive OnAssetReloaded, 
+            // 3) Main thread calls ShaderAsset::PostLoadInit which connects to the AssetBus but it's too late to receive OnAssetReloaded,
             //    so it continues using the old ShaderVariantAsset instead of the new one.
             // The OnAssetReady bus function is called automatically whenever a connection to AssetBus is made, so listening to this gives
             // us the opportunity to assign the appropriate ShaderVariantAsset.
-            
+
             ShaderReloadDebugTracker::ScopedSection reloadSection("{%p}->ShaderAsset::OnAssetReady %s", this, asset.GetHint().c_str());
             ReinitializeRootShaderVariant(asset);
         }
         ///////////////////////////////////////////////////////////////////////
-        
+
         ///////////////////////////////////////////////////////////////////
         /// ShaderVariantFinderNotificationBus overrides
         void ShaderAsset::OnShaderVariantTreeAssetReady(Data::Asset<ShaderVariantTreeAsset> shaderVariantTreeAsset, bool isError)
@@ -666,7 +667,7 @@ namespace AZ
 
             return Data::AssetHandler::LoadResult::Error;
         }
-        
+
         ///////////////////////////////////////////////////////////////////////
 
     } // namespace RPI

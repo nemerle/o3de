@@ -8,6 +8,7 @@
 
 #include <cinttypes>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/DataPatch.h>
 #include <AzCore/Serialization/DataPatchBus.h>
 #include <AzCore/Serialization/DataPatchUpgradeManager.h>
@@ -26,11 +27,11 @@ namespace AZ
     using LegacyPatchMap = AZStd::unordered_map<AddressType, AZStd::vector<AZ::u8>>;
 
     // Helper method for converting Legacy Data Patches
-    static AZ::Outcome<void, AZStd::string> ConvertByteStreamMapToAnyMap(SerializeContext& context, AZ::SerializeContext::DataElementNode& dataPatchElement, PatchMap& anyPatchMap);
+    static AZ::Outcome<void, AZStd::string> ConvertByteStreamMapToAnyMap(SerializeContext& context, AZ::Serialization::DataElementNode& dataPatchElement, PatchMap& anyPatchMap);
 
     // Deprecation Converter for Legacy Data Patches of typeId {3A8D5EC9-D70E-41CB-879C-DEF6A6D6ED03}
-    static bool LegacyDataPatchConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-    static AZ::Outcome<void, AZStd::string> LegacyDataPatchConverter_Impl(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+    static bool LegacyDataPatchConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+    static AZ::Outcome<void, AZStd::string> LegacyDataPatchConverter_Impl(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
     class DataNode
     {
@@ -55,8 +56,8 @@ namespace AZ
         DataNode*       m_parent;
         ChildDataNodes  m_children;
 
-        const SerializeContext::ClassData*      m_classData;
-        const SerializeContext::ClassElement*   m_classElement;
+        const Serialization::ClassData*      m_classData;
+        const Serialization::ClassElement*   m_classElement;
     };
 
     class DataNodeTree
@@ -71,8 +72,8 @@ namespace AZ
 
         bool BeginNode(
             void* ptr,
-            const SerializeContext::ClassData* classData,
-            const SerializeContext::ClassElement* classElement);
+            const Serialization::ClassData* classData,
+            const Serialization::ClassElement* classElement);
         bool EndNode();
 
         /// Compare two nodes and fill the patch structure
@@ -105,7 +106,7 @@ namespace AZ
             DataPatch::Flags parentAddressFlags,
             AddressType& address,
             void* parentPointer,
-            const SerializeContext::ClassData* parentClassData,
+            const Serialization::ClassData* parentClassData,
             AZStd::vector<AZ::u8>& tmpSourceBuffer,
             SerializeContext* context,
             const AZ::ObjectStream::FilterDescriptor& filterDesc,
@@ -126,16 +127,16 @@ namespace AZ
         static bool LoadInPlaceStreamWrapper(AZ::SerializeContext& context,
             AZStd::any& patchAny,
             const DataNode& sourceNode,
-            const AZ::SerializeContext::ClassData* parentClassData,
+            const AZ::Serialization::ClassData* parentClassData,
             const AZ::ObjectStream::FilterDescriptor& filterDesc);
 
         DataNode m_root;
         DataNode* m_currentNode;        ///< Used as temp during tree building
         SerializeContext* m_context;
-        AZStd::list<SerializeContext::ClassElement> m_dynamicClassElements; ///< Storage for class elements that represent dynamic serializable fields.
+        AZStd::list<Serialization::ClassElement> m_dynamicClassElements; ///< Storage for class elements that represent dynamic serializable fields.
     };
 
-    static void ReportDataPatchMismatch(SerializeContext* context, const SerializeContext::ClassElement* classElement, const TypeId& patchDataTypeId);
+    static void ReportDataPatchMismatch(SerializeContext* context, const Serialization::ClassElement* classElement, const TypeId& patchDataTypeId);
 
     //=========================================================================
     // DataNodeTree::Build
@@ -149,7 +150,7 @@ namespace AZ
 
         if (m_context && rootClassPtr)
         {
-            SerializeContext::EnumerateInstanceCallContext callContext(
+            Serialization::EnumerateInstanceCallContext callContext(
                 AZStd::bind(&DataNodeTree::BeginNode, this, AZStd::placeholders::_1, AZStd::placeholders::_2, AZStd::placeholders::_3),
                 AZStd::bind(&DataNodeTree::EndNode, this),
                 m_context,
@@ -174,8 +175,8 @@ namespace AZ
     //=========================================================================
     bool DataNodeTree::BeginNode(
         void* ptr,
-        const SerializeContext::ClassData* classData,
-        const SerializeContext::ClassElement* classElement)
+        const Serialization::ClassData* classData,
+        const Serialization::ClassElement* classElement)
     {
         DataNode* newNode;
         if (m_currentNode)
@@ -195,7 +196,7 @@ namespace AZ
         // to maintain it locally.
         if (classElement)
         {
-            if (classElement->m_flags & SerializeContext::ClassElement::FLG_DYNAMIC_FIELD)
+            if (classElement->m_flags & Serialization::ClassElement::FLG_DYNAMIC_FIELD)
             {
                 m_dynamicClassElements.push_back(*classElement);
                 classElement = &m_dynamicClassElements.back();
@@ -204,7 +205,7 @@ namespace AZ
 
         newNode->m_classElement = classElement;
 
-        if (classElement && (classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER))
+        if (classElement && (classElement->m_flags & Serialization::ClassElement::FLG_POINTER))
         {
             // we always store the value address
             newNode->m_data = *(void**)(ptr);
@@ -307,11 +308,11 @@ namespace AZ
             AZStd::pair<u64, bool> tempPair(0, true);
             for (auto& sourceElementNode : sourceNode->m_children)
             {
-                SerializeContext::ClassPersistentId sourcePersistentIdFunction = sourceElementNode.m_classData->GetPersistentId(*context);
+                Serialization::ClassPersistentId sourcePersistentIdFunction = sourceElementNode.m_classData->GetPersistentId(*context);
 
-                tempPair.first = 
-                    sourcePersistentIdFunction 
-                    ? sourcePersistentIdFunction(sourceElementNode.m_data) 
+                tempPair.first =
+                    sourcePersistentIdFunction
+                    ? sourcePersistentIdFunction(sourceElementNode.m_data)
                     : elementIndex;
 
                 nodesToRemove[&sourceElementNode] = tempPair;
@@ -325,14 +326,14 @@ namespace AZ
             for (const DataNode& targetElementNode : targetNode->m_children)
             {
                 const DataNode* sourceNodeMatch = nullptr;
-                SerializeContext::ClassPersistentId targetPersistentIdFunction = targetElementNode.m_classData->GetPersistentId(*context);
+                Serialization::ClassPersistentId targetPersistentIdFunction = targetElementNode.m_classData->GetPersistentId(*context);
                 if (targetPersistentIdFunction)
                 {
                     u64 targetElementId = targetPersistentIdFunction(targetElementNode.m_data);
 
                     for (const DataNode& sourceElementNode : sourceNode->m_children)
                     {
-                        SerializeContext::ClassPersistentId sourcePersistentIdFunction = sourceElementNode.m_classData->GetPersistentId(*context);
+                        Serialization::ClassPersistentId sourcePersistentIdFunction = sourceElementNode.m_classData->GetPersistentId(*context);
                         if (sourcePersistentIdFunction && targetElementId == sourcePersistentIdFunction(sourceElementNode.m_data))
                         {
                             sourceNodeMatch = &sourceElementNode;
@@ -353,7 +354,7 @@ namespace AZ
                     elementId = elementIndex; // use index as an ID
                 }
 
-                address.emplace_back(elementId, 
+                address.emplace_back(elementId,
                                      targetElementNode.m_classData,
                                      nullptr,
                                      AddressTypeElement::ElementType::Index);
@@ -390,7 +391,7 @@ namespace AZ
                 ++elementIndex;
             }
 
-            // find elements we have removed 
+            // find elements we have removed
             for (auto& node : nodesToRemove)
             {
                 //do not need to remove this node
@@ -531,7 +532,7 @@ namespace AZ
         DataPatch::Flags parentAddressFlags,
         AddressType& address,
         void* parentPointer,
-        const SerializeContext::ClassData* parentClassData,
+        const Serialization::ClassData* parentClassData,
         AZStd::vector<AZ::u8>& tmpSourceBuffer,
         SerializeContext* context,
         const AZ::ObjectStream::FilterDescriptor& filterDesc,
@@ -616,9 +617,9 @@ namespace AZ
 
             const TypeId& underlyingTypeId = context->GetUnderlyingTypeId(sourceNode->m_classElement->m_typeId);
 
-            if (sourceNode->m_classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER)
+            if (sourceNode->m_classElement->m_flags & Serialization::ClassElement::FLG_POINTER)
             {
-                const SerializeContext::ClassData* patchClassData = context->FindClassData(patchDataTypeId);
+                const Serialization::ClassData* patchClassData = context->FindClassData(patchDataTypeId);
                 AZ::IRttiHelper* patchRtti = patchClassData ? patchClassData->m_azRtti : nullptr;
                 bool canCastPatchTypeToSourceType = sourceNode->m_classElement->m_typeId == patchDataTypeId || underlyingTypeId == patchDataTypeId;
                 canCastPatchTypeToSourceType = canCastPatchTypeToSourceType || (patchRtti && patchRtti->IsTypeOf(sourceNode->m_classElement->m_typeId));
@@ -651,7 +652,7 @@ namespace AZ
             if (parentClassData->m_container)
             {
                 bool failedToLoad = false;
-                if (sourceNode->m_classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER)
+                if (sourceNode->m_classElement->m_flags & Serialization::ClassElement::FLG_POINTER)
                 {
                     failedToLoad = (*reinterpret_cast<void**>(reservePointer)) == nullptr;
                 }
@@ -697,7 +698,7 @@ namespace AZ
 
                 reservePointer = targetPointer;
                 // create a new instance if needed
-                if (sourceNode->m_classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER)
+                if (sourceNode->m_classElement->m_flags & Serialization::ClassElement::FLG_POINTER)
                 {
                     // create a new instance if we are referencing it by pointer
                     AZ_Assert(
@@ -759,7 +760,7 @@ namespace AZ
                 u64 elementId = 0;
                 for (DataNode& sourceElementNode : sourceNode->m_children)
                 {
-                    SerializeContext::ClassPersistentId sourcePersistentIdFunction = sourceElementNode.m_classData->GetPersistentId(*context);
+                    Serialization::ClassPersistentId sourcePersistentIdFunction = sourceElementNode.m_classData->GetPersistentId(*context);
                     if (sourcePersistentIdFunction)
                     {
                         // we use persistent ID for an id
@@ -822,7 +823,7 @@ namespace AZ
                                 bool isFound = false;
                                 for (DataNode& sourceElementNode : sourceNode->m_children)
                                 {
-                                    SerializeContext::ClassPersistentId sourcePersistentIdFunction = sourceElementNode.m_classData->GetPersistentId(*context);
+                                    Serialization::ClassPersistentId sourcePersistentIdFunction = sourceElementNode.m_classData->GetPersistentId(*context);
                                     if (sourcePersistentIdFunction)
                                     {
                                         // we use persistent ID for an id
@@ -858,11 +859,11 @@ namespace AZ
                     {
                         // pick any child element for a classElement sample
                         DataNode defaultSourceNode;
-                        SerializeContext::ClassElement patchClassElement;
+                        Serialization::ClassElement patchClassElement;
 
                         // Build a DataElement representing the type owned by the container
                         // so we can query for its ClassElement
-                        SerializeContext::DataElement patchDataElement;
+                        Serialization::DataElement patchDataElement;
                         patchDataElement.m_id = newElementId.second;
                         patchDataElement.m_nameCrc = sourceNode->m_classData->m_container->GetElementNameCrC();
 
@@ -892,7 +893,7 @@ namespace AZ
                         }
 
                         // Attempt to add version and typeId information to address based on classElement
-                        const AZ::SerializeContext::ClassData* elementClassData = context->FindClassData(defaultSourceNode.m_classElement->m_typeId, parentClassData, defaultSourceNode.m_classElement->m_nameCrc);
+                        const AZ::Serialization::ClassData* elementClassData = context->FindClassData(defaultSourceNode.m_classElement->m_typeId, parentClassData, defaultSourceNode.m_classElement->m_nameCrc);
 
                         // Failed to find classData for container element
                         // We will be unable to version this patch element
@@ -1001,7 +1002,7 @@ namespace AZ
                                 defaultSourceNode.m_classElement = &classElement;
 
                                 // Attempt to add version and typeId information to address based on classElement
-                                const AZ::SerializeContext::ClassData* elementClassData = context->FindClassData(defaultSourceNode.m_classElement->m_typeId, parentClassData, defaultSourceNode.m_classElement->m_nameCrc);
+                                const AZ::Serialization::ClassData* elementClassData = context->FindClassData(defaultSourceNode.m_classElement->m_typeId, parentClassData, defaultSourceNode.m_classElement->m_nameCrc);
 
                                 // Failed to find classData for container element
                                 // We will be unable to version this patch element
@@ -1051,7 +1052,7 @@ namespace AZ
             if (parentPointer && parentClassData->m_container)
             {
                 bool failedToLoad = false;
-                if (sourceNode->m_classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER)
+                if (sourceNode->m_classElement->m_flags & Serialization::ClassElement::FLG_POINTER)
                 {
                     failedToLoad = (*reinterpret_cast<void**>(reservePointer)) == nullptr;
                 }
@@ -1154,7 +1155,7 @@ namespace AZ
     //=========================================================================
     // LoadStreamWrapper
     //=========================================================================
-    bool DataNodeTree::LoadInPlaceStreamWrapper(AZ::SerializeContext& context, AZStd::any& patchAny, const DataNode& sourceNode, const AZ::SerializeContext::ClassData* parentClassData, const AZ::ObjectStream::FilterDescriptor& filterDesc)
+    bool DataNodeTree::LoadInPlaceStreamWrapper(AZ::SerializeContext& context, AZStd::any& patchAny, const DataNode& sourceNode, const AZ::Serialization::ClassData* parentClassData, const AZ::ObjectStream::FilterDescriptor& filterDesc)
     {
         // Pull the StreamWrapper object out of the provided AZStd::any
         const DataPatch::LegacyStreamWrapper* wrapper = AZStd::any_cast<DataPatch::LegacyStreamWrapper>(&patchAny);
@@ -1170,7 +1171,7 @@ namespace AZ
 
             bool classDataRequested = false;
             loadSuccess = ObjectStream::LoadBlocking(&stream, context, ObjectStream::ClassReadyCB(), filterDesc,
-                [&sourceNode, parentClassData, &loadedTypeId, &classDataRequested, &patchAny](void** rootAddress, const SerializeContext::ClassData** classData, const Uuid& typeId, SerializeContext* sc)
+                [&sourceNode, parentClassData, &loadedTypeId, &classDataRequested, &patchAny](void** rootAddress, const Serialization::ClassData** classData, const Uuid& typeId, SerializeContext* sc)
             {
                 if (!classDataRequested)
                 {
@@ -1292,7 +1293,7 @@ namespace AZ
             m_addressClassTypeId = Uuid::CreateNull();
         }
 
-        AddressTypeElement::AddressTypeElement(const AZ::Crc32 addressElement, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* classElement, AddressTypeElement::ElementType elementType)
+        AddressTypeElement::AddressTypeElement(const AZ::Crc32 addressElement, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* classElement, AddressTypeElement::ElementType elementType)
             : AddressTypeElement(static_cast<AZ::u64>(addressElement), classData, classElement, elementType)
         {
         }
@@ -1300,7 +1301,7 @@ namespace AZ
         //=========================================================================
         // AddressTypeElement u64 constructor
         //=========================================================================
-        AddressTypeElement::AddressTypeElement(const AZ::u64 addressElement, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* classElement, AddressTypeElement::ElementType elementType)
+        AddressTypeElement::AddressTypeElement(const AZ::u64 addressElement, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* classElement, AddressTypeElement::ElementType elementType)
             : m_addressElement(addressElement)
         {
             m_addressClassVersion = classData ? classData->m_version : std::numeric_limits<AZ::u32>::max();
@@ -1420,7 +1421,7 @@ namespace AZ
             const AZStd::string_view pathElementView(pathElement);
             const size_t typeIdOpen = pathElementView.find(typeIdOpenDelim);
 
-            // Early out on the legacy case. 
+            // Early out on the legacy case.
             // If no expected formatting is found then check for <someNumber>/.
             // if found then use <someNumber> as the addressElement
             if (typeIdOpen == AZStd::string::npos)
@@ -1772,7 +1773,7 @@ namespace AZ
             return false;
         }
 
-        const SerializeContext::ClassData* targetClassData = context->FindClassData(targetClassId);
+        const Serialization::ClassData* targetClassData = context->FindClassData(targetClassId);
         if (!targetClassData)
         {
             AZ_Error("Serialization", false, "Can't find class data for the target type Uuid %s.", sourceClassId.ToString<AZStd::string>().c_str());
@@ -1944,18 +1945,18 @@ namespace AZ
     /**
     * Helper method to convert over the legacy bytestream format to using AZStd::any to store patch data
     */
-    AZ::Outcome<void, AZStd::string> ConvertByteStreamMapToAnyMap(SerializeContext& context, AZ::SerializeContext::DataElementNode& dataPatchElement, PatchMap& anyPatchMap)
+    AZ::Outcome<void, AZStd::string> ConvertByteStreamMapToAnyMap(SerializeContext& context, AZ::Serialization::DataElementNode& dataPatchElement, PatchMap& anyPatchMap)
     {
         // Find all pair elements within the legacy DataPatch
-        AZStd::vector<AZ::SerializeContext::DataElementNode*> pairElements = Utils::FindDescendantElements(context,
+        AZStd::vector<AZ::Serialization::DataElementNode*> pairElements = Utils::FindDescendantElements(context,
             dataPatchElement,
             AZStd::vector<AZ::Crc32>({ AZ_CRC("m_patch", 0xaedc2952), AZ_CRC("element", 0x41405e39) }));
 
-        for (AZ::SerializeContext::DataElementNode* pairElement : pairElements)
+        for (AZ::Serialization::DataElementNode* pairElement : pairElements)
         {
             // Pull out the first and second elements from each pair
-            AZ::SerializeContext::DataElementNode* first = pairElement->FindSubElement(AZ_CRC("value1", 0xa2756c5a));
-            AZ::SerializeContext::DataElementNode* second = pairElement->FindSubElement(AZ_CRC("value2", 0x3b7c3de0));
+            AZ::Serialization::DataElementNode* first = pairElement->FindSubElement(AZ_CRC("value1", 0xa2756c5a));
+            AZ::Serialization::DataElementNode* second = pairElement->FindSubElement(AZ_CRC("value2", 0x3b7c3de0));
 
             if (!first || !second)
             {
@@ -1974,7 +1975,7 @@ namespace AZ
             // Preserve the original DataElement of the bytestream before conversion as well as set its typeId to the conversion type
             // The DataElement contains the byteStream data itself
             // Conversion will overwrite ClassData and clear the underlying DataElement
-            AZ::SerializeContext::DataElement byteStreamRawElement = second->GetRawDataElement();
+            AZ::Serialization::DataElement byteStreamRawElement = second->GetRawDataElement();
             byteStreamRawElement.m_id = azrtti_typeid<LegacyPatchMap::mapped_type>();
 
             if (!second->Convert<LegacyPatchMap::mapped_type>(context))
@@ -2012,7 +2013,7 @@ namespace AZ
     /**
     * Wrapper around our deprecation converter logic to better handle various error states returned
     */
-    bool LegacyDataPatchConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool LegacyDataPatchConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         AZ_PROFILE_FUNCTION(AzCore);
         AZ::Outcome<void, AZStd::string> conversionResult = LegacyDataPatchConverter_Impl(context, classElement);
@@ -2040,7 +2041,7 @@ namespace AZ
     * Manipulates the provided DataElementNode containing a legacy DataPatch representation so that its PatchMap represents its data in an AZStd::any instead of a bytestream
     * Storing the data in an AZStd::any allows us to organically serialize the patch out in XML
     */
-    AZ::Outcome<void, AZStd::string> LegacyDataPatchConverter_Impl(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Outcome<void, AZStd::string> LegacyDataPatchConverter_Impl(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         AZ_PROFILE_FUNCTION(AzCore);
         // Pull the targetClassId value out of the class element before it gets cleared when converting the DataPatch TypeId
@@ -2057,7 +2058,7 @@ namespace AZ
         // Convert the bytestream map into an AZStd::any map
         AZStd::unordered_map<AddressType, AZStd::any> anyPatchMap;
         AZ::Outcome<void, AZStd::string> mapConversionResult = ConvertByteStreamMapToAnyMap(context, classElement, anyPatchMap);
-        
+
         if (!mapConversionResult.IsSuccess())
         {
             DataPatchNotificationBus::Broadcast(&DataPatchNotificationBus::Events::OnLegacyDataPatchLoadFailed);
@@ -2143,7 +2144,7 @@ namespace AZ
         }
     }
 
-    void ReportDataPatchMismatch(SerializeContext* context, const SerializeContext::ClassElement* classElement, const TypeId& patchDataTypeId)
+    void ReportDataPatchMismatch(SerializeContext* context, const Serialization::ClassElement* classElement, const TypeId& patchDataTypeId)
     {
         AZStd::string patchTypeIdName;
         if (auto classData = context->FindClassData(patchDataTypeId))

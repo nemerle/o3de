@@ -95,7 +95,7 @@ namespace PhysX
         void ExitRagdoll() override;
 
         // version converters
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
     private:
         void CreateRagdoll(const Physics::RagdollConfiguration& ragdollConfiguration);

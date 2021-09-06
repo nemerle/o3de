@@ -24,7 +24,7 @@ namespace Vegetation
 {
     namespace EditorDebugComponentVersionUtility
     {
-        bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             EditorVegetationComponentBaseVersionConverter<DebugComponent, DebugConfig>(context, classElement);
 

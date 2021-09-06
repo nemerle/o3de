@@ -14,10 +14,10 @@
 
 namespace MCore
 {
-    const AZ::SerializeContext::ClassElement* RecursivelyFindClassElement(const AZ::SerializeContext* context, const AZ::SerializeContext::ClassData* parentClassData, const AZ::Crc32 nameCrc)
+    const AZ::Serialization::ClassElement* RecursivelyFindClassElement(const AZ::SerializeContext* context, const AZ::Serialization::ClassData* parentClassData, const AZ::Crc32 nameCrc)
     {
         // Find in parentClassData
-        for (const AZ::SerializeContext::ClassElement& classElement : parentClassData->m_elements)
+        for (const AZ::Serialization::ClassElement& classElement : parentClassData->m_elements)
         {
             if (classElement.m_nameCrc == nameCrc)
             {
@@ -25,12 +25,12 @@ namespace MCore
             }
         }
         // Check in base classes
-        for (const AZ::SerializeContext::ClassElement& classElement : parentClassData->m_elements)
+        for (const AZ::Serialization::ClassElement& classElement : parentClassData->m_elements)
         {
-            if (classElement.m_flags & AZ::SerializeContext::ClassElement::FLG_BASE_CLASS)
+            if (classElement.m_flags & AZ::Serialization::ClassElement::FLG_BASE_CLASS)
             {
-                const AZ::SerializeContext::ClassData* baseClassData = context->FindClassData(classElement.m_typeId);
-                const AZ::SerializeContext::ClassElement* baseResult = RecursivelyFindClassElement(context, baseClassData, nameCrc);
+                const AZ::Serialization::ClassData* baseClassData = context->FindClassData(classElement.m_typeId);
+                const AZ::Serialization::ClassElement* baseResult = RecursivelyFindClassElement(context, baseClassData, nameCrc);
                 if (baseResult)
                 {
                     return baseResult;
@@ -41,15 +41,15 @@ namespace MCore
         return nullptr;
     }
 
-    const AZStd::vector<const AZ::SerializeContext::ClassElement*> GetChildClassElements(const AZ::SerializeContext* context, const AZ::SerializeContext::ClassData* parentClassData)
+    const AZStd::vector<const AZ::Serialization::ClassElement*> GetChildClassElements(const AZ::SerializeContext* context, const AZ::Serialization::ClassData* parentClassData)
     {
-        AZStd::vector<const AZ::SerializeContext::ClassElement*> childClassElements;
-        for (const AZ::SerializeContext::ClassElement& classElement : parentClassData->m_elements)
+        AZStd::vector<const AZ::Serialization::ClassElement*> childClassElements;
+        for (const AZ::Serialization::ClassElement& classElement : parentClassData->m_elements)
         {
-            if (classElement.m_flags & AZ::SerializeContext::ClassElement::FLG_BASE_CLASS)
+            if (classElement.m_flags & AZ::Serialization::ClassElement::FLG_BASE_CLASS)
             {
-                const AZ::SerializeContext::ClassData* baseClassData = context->FindClassData(classElement.m_typeId);
-                AZStd::vector<const AZ::SerializeContext::ClassElement*> classElements = GetChildClassElements(context, baseClassData);
+                const AZ::Serialization::ClassData* baseClassData = context->FindClassData(classElement.m_typeId);
+                AZStd::vector<const AZ::Serialization::ClassElement*> classElements = GetChildClassElements(context, baseClassData);
                 AZStd::copy(classElements.begin(), classElements.end(), AZStd::back_inserter(childClassElements));
             }
             else
@@ -70,14 +70,14 @@ namespace MCore
             return AZ::Failure();
         }
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(classTypeId);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(classTypeId);
         AZ_Assert(classData, "Expected valid class data, is the type reflected?");
 
         const AZ::Crc32 nameCrc(memberName);
-        const AZ::SerializeContext::ClassElement* classElement = RecursivelyFindClassElement(context, classData, nameCrc);
+        const AZ::Serialization::ClassElement* classElement = RecursivelyFindClassElement(context, classData, nameCrc);
         if (classElement)
         {
-            const AZ::SerializeContext::ClassData* classDataElement = context->FindClassData(classElement->m_typeId);
+            const AZ::Serialization::ClassData* classDataElement = context->FindClassData(classElement->m_typeId);
             if (classDataElement)
             {
                 if (classDataElement->m_serializer)
@@ -120,7 +120,7 @@ namespace MCore
             return AZ::Failure();
         }
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(classTypeId);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(classTypeId);
         AZ_Assert(classData, "Expected valid class data, is the type reflected?");
 
         AZStd::unordered_set<AZ::Crc32> excludedMemberCrcs;
@@ -128,12 +128,12 @@ namespace MCore
         {
             excludedMemberCrcs.emplace(AZ::Crc32(memberName.c_str()));
         }
-        const AZStd::vector<const AZ::SerializeContext::ClassElement*> childMembers = GetChildClassElements(context, classData);
-        for (const AZ::SerializeContext::ClassElement* classElement : childMembers)
+        const AZStd::vector<const AZ::Serialization::ClassElement*> childMembers = GetChildClassElements(context, classData);
+        for (const AZ::Serialization::ClassElement* classElement : childMembers)
         {
             if (excludedMemberCrcs.find(classElement->m_nameCrc) == excludedMemberCrcs.end())
             {
-                const AZ::SerializeContext::ClassData* classDataElement = context->FindClassData(classElement->m_typeId);
+                const AZ::Serialization::ClassData* classDataElement = context->FindClassData(classElement->m_typeId);
                 if (!classDataElement && classElement->m_genericClassInfo)
                 {
                     classDataElement = classElement->m_genericClassInfo->GetClassData();
@@ -181,14 +181,14 @@ namespace MCore
             return false;
         }
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(classTypeId);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(classTypeId);
         AZ_Assert(classData, "Expected valid class data, is the type reflected?");
 
         const AZ::Crc32 nameCrc(memberName);
-        const AZ::SerializeContext::ClassElement* classElement = RecursivelyFindClassElement(context, classData, nameCrc);
+        const AZ::Serialization::ClassElement* classElement = RecursivelyFindClassElement(context, classData, nameCrc);
         if (classElement)
         {
-            const AZ::SerializeContext::ClassData* classDataElement = context->FindClassData(classElement->m_typeId);
+            const AZ::Serialization::ClassData* classDataElement = context->FindClassData(classElement->m_typeId);
             if (!classDataElement && classElement->m_genericClassInfo)
             {
                 classDataElement = classElement->m_genericClassInfo->GetClassData();
@@ -231,14 +231,14 @@ namespace MCore
         return AZ::Utils::LoadObjectFromStreamInPlace(byteStream, nullptr, classTypeId, classPtr);
     }
 
-    void RecursivelyGetClassElement(AZStd::vector<const AZ::SerializeContext::ClassElement*>& elements, const AZ::SerializeContext* context, const AZ::SerializeContext::ClassData* parentClassData)
+    void RecursivelyGetClassElement(AZStd::vector<const AZ::Serialization::ClassElement*>& elements, const AZ::SerializeContext* context, const AZ::Serialization::ClassData* parentClassData)
     {
         // Check in base classes
-        for (const AZ::SerializeContext::ClassElement& classElement : parentClassData->m_elements)
+        for (const AZ::Serialization::ClassElement& classElement : parentClassData->m_elements)
         {
-            if (classElement.m_flags & AZ::SerializeContext::ClassElement::FLG_BASE_CLASS)
+            if (classElement.m_flags & AZ::Serialization::ClassElement::FLG_BASE_CLASS)
             {
-                const AZ::SerializeContext::ClassData* baseClassData = context->FindClassData(classElement.m_typeId);
+                const AZ::Serialization::ClassData* baseClassData = context->FindClassData(classElement.m_typeId);
                 RecursivelyGetClassElement(elements, context, baseClassData);
             }
             else
@@ -258,17 +258,17 @@ namespace MCore
             return AZ::Failure();
         }
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(classTypeId);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(classTypeId);
         AZ_Assert(classData, "Expected valid class data, is the type reflected?");
 
-        AZStd::vector<const AZ::SerializeContext::ClassElement*> elements;
+        AZStd::vector<const AZ::Serialization::ClassElement*> elements;
         RecursivelyGetClassElement(elements, context, classData);
 
         AZ::Outcome<AZStd::unordered_map<AZStd::string, AZStd::string>> result {AZStd::unordered_map<AZStd::string, AZStd::string>(elements.size())};
 
-        for (const AZ::SerializeContext::ClassElement* element : elements)
+        for (const AZ::Serialization::ClassElement* element : elements)
         {
-            const AZ::SerializeContext::ClassData* classDataElement = context->FindClassData(element->m_typeId);
+            const AZ::Serialization::ClassData* classDataElement = context->FindClassData(element->m_typeId);
 
             if (classDataElement)
             {
@@ -332,7 +332,7 @@ namespace MCore
             return AZ::Failure();
         }
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(classTypeId);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(classTypeId);
         AZ_Assert(classData, "Expected valid class data, is the type reflected?");
 
         AZStd::string outBuffer;
@@ -418,11 +418,11 @@ namespace MCore
     {
         AZ_Assert(context, "Invalid serialize context.");
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(classTypeId);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(classTypeId);
         AZ_Assert(classData, "Expected valid class data, is the type reflected?");
 
         const AZ::Crc32 nameCrc(memberName);
-        const AZ::SerializeContext::ClassElement* classElement = RecursivelyFindClassElement(context, classData, nameCrc);
+        const AZ::Serialization::ClassElement* classElement = RecursivelyFindClassElement(context, classData, nameCrc);
         if (classElement)
         {
             return static_cast<char*>(classPtr) + classElement->m_offset;

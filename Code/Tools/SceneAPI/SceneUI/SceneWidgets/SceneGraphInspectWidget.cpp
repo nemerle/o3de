@@ -59,7 +59,7 @@ namespace AZ
                     if (m_context)
                     {
                         // Only try to show if there's a registered editor for the class.
-                        const SerializeContext::ClassData* classData = m_context->FindClassData(item->RTTI_GetType());
+                        const Serialization::ClassData* classData = m_context->FindClassData(item->RTTI_GetType());
                         if (classData && classData->m_editData)
                         {
                             // The reflected property editor is made for editing (as the name suggest) not inspecting, 

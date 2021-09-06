@@ -28,19 +28,19 @@ namespace AZ
         return this;
     }
 
-    auto SerializeContext::EnumBuilder::Version(unsigned int version, VersionConverter converter) -> EnumBuilder*
+    auto SerializeContext::EnumBuilder::Version(unsigned int version, Serialization::VersionConverter converter) -> EnumBuilder*
     {
         if (m_context->IsRemovingReflection())
         {
             return this; // we have already removed the class data.
         }
-        AZ_Assert(version != VersionClassDeprecated, "You cannot use %u as the version, it is reserved by the system!", version);
+        AZ_Assert(version != Serialization::VersionClassDeprecated, "You cannot use %u as the version, it is reserved by the system!", version);
         m_classData->second.m_version = version;
         m_classData->second.m_converter = converter;
         return this;
     }
 
-    auto SerializeContext::EnumBuilder::Serializer(IDataSerializerPtr serializer) -> EnumBuilder*
+    auto SerializeContext::EnumBuilder::Serializer(Serialization::IDataSerializerPtr serializer) -> EnumBuilder*
     {
         if (m_context->IsRemovingReflection())
         {
@@ -55,7 +55,7 @@ namespace AZ
         return this;
     }
 
-    auto SerializeContext::EnumBuilder::EventHandler(IEventHandler* eventHandler) -> EnumBuilder*
+    auto SerializeContext::EnumBuilder::EventHandler(Serialization::IEventHandler* eventHandler) -> EnumBuilder*
     {
         if (m_context->IsRemovingReflection())
         {
@@ -65,7 +65,7 @@ namespace AZ
         return this;
     }
 
-    auto SerializeContext::EnumBuilder::DataContainer(IDataContainer* dataContainer) -> EnumBuilder*
+    auto SerializeContext::EnumBuilder::DataContainer(Serialization::IDataContainer *dataContainer) -> EnumBuilder*
     {
         if (m_context->IsRemovingReflection())
         {
@@ -75,7 +75,7 @@ namespace AZ
         return this;
     }
 
-    auto SerializeContext::EnumBuilder::PersistentId(ClassPersistentId persistentId) -> EnumBuilder*
+    auto SerializeContext::EnumBuilder::PersistentId(Serialization::ClassPersistentId persistentId) -> EnumBuilder*
     {
         if (m_context->IsRemovingReflection())
         {

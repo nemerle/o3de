@@ -565,7 +565,7 @@ void UiLayoutRowComponent::ApplyLayoutHeight(float availableHeight)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiLayoutRowComponent::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1 to 2:
     // - Need to convert default m_ignoreDefaultLayoutCells to true

@@ -601,7 +601,7 @@ void CCompoundSplineTrack::SetId(unsigned int id)
 //////////////////////////////////////////////////////////////////////////
 static bool CompoundSplineTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 4)
     {

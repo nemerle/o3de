@@ -41,9 +41,9 @@ class ComponentDataModel
 public:
     AZ_CLASS_ALLOCATOR(ComponentDataModel, AZ::SystemAllocator, 0);
 
-    using ComponentClassList = AZStd::vector<const AZ::SerializeContext::ClassData*>;
+    using ComponentClassList = AZStd::vector<const AZ::Serialization::ClassData*>;
     using ComponentCategorySet = AZStd::set<AZStd::string>;
-    using ComponentClassMap = AZStd::unordered_map<AZStd::string, AZStd::vector<const AZ::SerializeContext::ClassData*>>;
+    using ComponentClassMap = AZStd::unordered_map<AZStd::string, AZStd::vector<const AZ::Serialization::ClassData*>>;
     using ComponentIconMap = AZStd::unordered_map<AZ::Uuid, QIcon>;
 
     enum ColumnIndex
@@ -72,11 +72,11 @@ public:
 
     QMimeData* mimeData(const QModelIndexList& indexes) const override;
 
-    const AZ::SerializeContext::ClassData* GetClassData(const QModelIndex&) const;
+    const AZ::Serialization::ClassData* GetClassData(const QModelIndex&) const;
 
     AZ::EntityId NewEntityFromSelection(const QModelIndexList& selection);
 
-    static const char* GetCategory(const AZ::SerializeContext::ClassData* classData);
+    static const char* GetCategory(const AZ::Serialization::ClassData* classData);
 
     ComponentClassList& GetComponents() { return m_componentList; }
     ComponentCategorySet& GetCategories() { return m_categories; }

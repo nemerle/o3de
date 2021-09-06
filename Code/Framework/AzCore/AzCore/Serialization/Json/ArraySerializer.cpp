@@ -61,14 +61,14 @@ namespace AZ
     {
         namespace JSR = JsonSerializationResult; // Used to remove name conflicts in AzCore in uber builds.
 
-        const SerializeContext::ClassData* containerClass = context.GetSerializeContext()->FindClassData(valueTypeId);
+        const Serialization::ClassData* containerClass = context.GetSerializeContext()->FindClassData(valueTypeId);
         if (!containerClass)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve information for definition of the AZStd::array instance.");
         }
 
-        SerializeContext::IDataContainer* container = containerClass->m_container;
+        Serialization::IDataContainer* container = containerClass->m_container;
         if (!container)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
@@ -83,11 +83,11 @@ namespace AZ
 
         ContinuationFlags flags = ContinuationFlags::None;
         Uuid elementTypeId = Uuid::CreateNull();
-        auto typeEnumCallback = [&elementTypeId, &flags](const Uuid&, const SerializeContext::ClassElement* genericClassElement)
+        auto typeEnumCallback = [&elementTypeId, &flags](const Uuid&, const Serialization::ClassElement* genericClassElement)
         {
             AZ_Assert(genericClassElement, "No generic class element found during storing of a AZStd::array to json.");
             elementTypeId = genericClassElement->m_typeId;
-            if (genericClassElement->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER)
+            if (genericClassElement->m_flags & Serialization::ClassElement::Flags::FLG_POINTER)
             {
                 flags = ContinuationFlags::ResolvePointer;
             }
@@ -150,14 +150,14 @@ namespace AZ
     {
         namespace JSR = JsonSerializationResult; // Used to remove name conflicts in AzCore in uber builds.
 
-        const SerializeContext::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
+        const Serialization::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
         if (!containerClass)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve information for definition of the AZStd::array instance.");
         }
 
-        SerializeContext::IDataContainer* container = containerClass->m_container;
+        Serialization::IDataContainer* container = containerClass->m_container;
         if (!container)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
@@ -172,11 +172,11 @@ namespace AZ
 
         ContinuationFlags flags = isNewInstance ? ContinuationFlags::LoadAsNewInstance : ContinuationFlags::None;
         Uuid elementTypeId = Uuid::CreateNull();
-        auto typeEnumCallback = [&elementTypeId, &flags](const Uuid&, const SerializeContext::ClassElement* genericClassElement)
+        auto typeEnumCallback = [&elementTypeId, &flags](const Uuid&, const Serialization::ClassElement* genericClassElement)
         {
             AZ_Assert(genericClassElement, "No generic class element found during storing of a AZStd::array to json.");
             elementTypeId = genericClassElement->m_typeId;
-            if (genericClassElement->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER)
+            if (genericClassElement->m_flags & Serialization::ClassElement::Flags::FLG_POINTER)
             {
                 flags = ContinuationFlags::ResolvePointer;
             }

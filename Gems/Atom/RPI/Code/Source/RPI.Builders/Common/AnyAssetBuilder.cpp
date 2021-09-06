@@ -130,7 +130,7 @@ namespace AZ
             // Apply converter if the source data class is a ConvertibleSource
             bool isConvertible = false;
             context->EnumerateBase(
-                [&isConvertible](const AZ::SerializeContext::ClassData* classData, AZ::Uuid)
+                [&isConvertible](const AZ::Serialization::ClassData* classData, AZ::Uuid)
                 {
                     if (classData && classData->m_typeId == ConvertibleSource::TYPEINFO_Uuid())
                     {

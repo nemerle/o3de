@@ -9,13 +9,14 @@
 #pragma once
 
 #include <AzCore/JSON/document.h>
-#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/SerializationInterfaces.h>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
 #include <AzCore/std/utils.h>
 
 namespace AZ
 {
     struct Uuid;
+    class JsonDeserializerContext;
 
     class JsonDeserializer final
     {
@@ -48,7 +49,7 @@ namespace AZ
         struct ElementDataResult
         {
             void* m_data{ nullptr };
-            const SerializeContext::ClassElement* m_info{ nullptr };
+            const Serialization::ClassElement* m_info{ nullptr };
             bool m_found{ false };
         };
 
@@ -67,29 +68,29 @@ namespace AZ
             UseTypeDeserializer useCustom, JsonDeserializerContext& context);
 
         static JsonSerializationResult::ResultCode LoadWithClassElement(void* object, const rapidjson::Value& value,
-            const SerializeContext::ClassElement& classElement, JsonDeserializerContext& context);
-        
-        static JsonSerializationResult::ResultCode LoadClass(void* object, const SerializeContext::ClassData& classData, const rapidjson::Value& value,
+            const Serialization::ClassElement& classElement, JsonDeserializerContext& context);
+
+        static JsonSerializationResult::ResultCode LoadClass(void* object, const Serialization::ClassData& classData, const rapidjson::Value& value,
             JsonDeserializerContext& context);
 
-        static JsonSerializationResult::ResultCode LoadEnum(void* object, const SerializeContext::ClassData& classData, const rapidjson::Value& value,
+        static JsonSerializationResult::ResultCode LoadEnum(void* object, const Serialization::ClassData& classData, const rapidjson::Value& value,
             JsonDeserializerContext& context);
 
         template<typename UnderlyingType>
         static JsonSerializationResult::Result LoadUnderlyingEnumType(UnderlyingType& outputValue,
-            const SerializeContext::ClassData& classData, const rapidjson::Value& inputValue, JsonDeserializerContext& context);
+            const Serialization::ClassData& classData, const rapidjson::Value& inputValue, JsonDeserializerContext& context);
 
         template<typename UnderlyingType>
         static JsonSerializationResult::Result LoadEnumFromNumber(UnderlyingType& outputValue,
-            const SerializeContext::ClassData& classData, const rapidjson::Value& inputValue, JsonDeserializerContext& context);
+            const Serialization::ClassData& classData, const rapidjson::Value& inputValue, JsonDeserializerContext& context);
 
         template<typename UnderlyingType>
         static JsonSerializationResult::Result LoadEnumFromString(UnderlyingType& outputValue,
-            const SerializeContext::ClassData& classData, const rapidjson::Value& inputValue, JsonDeserializerContext& context);
+            const Serialization::ClassData& classData, const rapidjson::Value& inputValue, JsonDeserializerContext& context);
 
         template<typename UnderlyingType>
         static JsonSerializationResult::Result LoadEnumFromContainer(UnderlyingType& outputValue,
-            const SerializeContext::ClassData& classData, const rapidjson::Value& inputValue, JsonDeserializerContext& context);
+            const Serialization::ClassData& classData, const rapidjson::Value& inputValue, JsonDeserializerContext& context);
 
         static AZStd::string ReportAvailableEnumOptions(AZStd::string_view message,
             const AZStd::vector<AttributeSharedPair, AZStdFunctorAllocator>& attributes, bool signedValues);
@@ -107,11 +108,11 @@ namespace AZ
         //! Searches the class data matching typeId at object for a child element that matches nameCrc
         //! Sets the outSubclassTypeId to the found element data's typeId, and returns the offset pointer within storageClass to the found element.
         //! If nullptr is returned, outSubclassTypeId is invalid.
-        static ElementDataResult FindElementByNameCrc(SerializeContext& serializeContext, void* object, 
-            const SerializeContext::ClassData& classData, const Crc32 nameCrc);
+        static ElementDataResult FindElementByNameCrc(SerializeContext& serializeContext, void* object,
+            const Serialization::ClassData& classData, const Crc32 nameCrc);
 
         //! Counts the total number of elements that would be at the root of a json object.
-        static size_t CountElements(SerializeContext& serializeContext, const SerializeContext::ClassData& classData);
+        static size_t CountElements(SerializeContext& serializeContext, const Serialization::ClassData& classData);
 
         //! Checks if a value is an explicit default. This means the value is an object with no members.
         static bool IsExplicitDefault(const rapidjson::Value& value);

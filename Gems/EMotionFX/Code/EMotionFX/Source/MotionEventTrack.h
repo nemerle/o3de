@@ -194,6 +194,6 @@ namespace EMotionFX
         template <typename Functor>
         void ExtractEvents(float startTime, float endTime, const MotionInstance* motionInstance, const Functor& processFunc, bool handleLoops = true) const;
 
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     };
 } // namespace EMotionFX

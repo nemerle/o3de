@@ -177,7 +177,7 @@ namespace AZ
             }
 
 
-            bool AnimationGroup::VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement)
+            bool AnimationGroup::VersionConverter(SerializeContext& context, Serialization::DataElementNode& classElement)
             {
                 const unsigned int version = classElement.GetVersion();
 

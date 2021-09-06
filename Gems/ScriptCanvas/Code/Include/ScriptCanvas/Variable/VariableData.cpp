@@ -20,7 +20,7 @@ namespace ScriptCanvas
     // VariableData
     /////////////////
 
-    static bool VariableDataVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElementNode)
+    static bool VariableDataVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElementNode)
     {
         if (rootElementNode.GetVersion() < VariableData::Version::UUID_To_Variable)
         {
@@ -192,7 +192,7 @@ namespace ScriptCanvas
     // EditableVariableDataCovnerter
     //////////////////////////////////
 
-    static bool EditableVariableDataConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElementNode)
+    static bool EditableVariableDataConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElementNode)
     {
         if (rootElementNode.GetVersion() <= 1)
         {
@@ -324,7 +324,7 @@ namespace ScriptCanvas
     // EditableVariableConfiguration
     //////////////////////////////////
 
-    bool EditableVariableConfiguration::VersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElementNode)
+    bool EditableVariableConfiguration::VersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElementNode)
     {
         if (rootElementNode.GetVersion() < Version::VariableDatumSimplification)
         {

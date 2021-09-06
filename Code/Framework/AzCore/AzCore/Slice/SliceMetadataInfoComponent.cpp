@@ -195,7 +195,7 @@ namespace AZ
         }
     }
 
-    bool SliceMetadataInfoComponent::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool SliceMetadataInfoComponent::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         // Conversion from version 1:
         // - Change AssociatedIds(m_associatedEntities) to be a set of entityIds instead of an unordered_set
@@ -208,7 +208,7 @@ namespace AZ
                 return false;
             }
 
-            AZ::SerializeContext::DataElementNode& associatedIds = classElement.GetSubElement(associatedIdsIndex);
+            AZ::Serialization::DataElementNode& associatedIds = classElement.GetSubElement(associatedIdsIndex);
             AZStd::unordered_set<AZ::EntityId> associatedIdsUnorderedSet;
             AZStd::set<AZ::EntityId> associatedIdsOrderedSet;
             if (!associatedIds.GetData<AZStd::unordered_set<AZ::EntityId>>(associatedIdsUnorderedSet))

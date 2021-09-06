@@ -64,7 +64,7 @@ namespace
                 QVariant classDataVariant = model->data(index, ComponentDataModel::ClassDataRole);
                 if (classDataVariant.isValid())
                 {
-                    const AZ::SerializeContext::ClassData* classData = reinterpret_cast<const AZ::SerializeContext::ClassData*>(classDataVariant.value<void*>());
+                    const AZ::Serialization::ClassData* classData = reinterpret_cast<const AZ::Serialization::ClassData*>(classDataVariant.value<void*>());
                     componentsToAdd.push_back(classData->m_typeId);
                 }
             }
@@ -106,7 +106,7 @@ namespace ComponentDataUtilities
             QVariant classDataVariant = model->data(index, ComponentDataModel::ClassDataRole);
             if (classDataVariant.isValid())
             {
-                const AZ::SerializeContext::ClassData* classData = reinterpret_cast<const AZ::SerializeContext::ClassData*>(classDataVariant.value<void*>());
+                const AZ::Serialization::ClassData* classData = reinterpret_cast<const AZ::Serialization::ClassData*>(classDataVariant.value<void*>());
                 componentsToAdd.push_back(classData->m_typeId);
             }
         }
@@ -126,7 +126,7 @@ ComponentDataModel::ComponentDataModel(QObject* parent)
     EBUS_EVENT_RESULT(serializeContext, AZ::ComponentApplicationBus, GetSerializeContext);
     AZ_Assert(serializeContext, "Failed to acquire application serialize context.");
 
-    serializeContext->EnumerateDerived<AZ::Component>([this](const AZ::SerializeContext::ClassData* classData, const AZ::Uuid&) -> bool
+    serializeContext->EnumerateDerived<AZ::Component>([this](const AZ::Serialization::ClassData* classData, const AZ::Uuid&) -> bool
     {
         bool allowed = false;
         bool hidden = false;
@@ -210,7 +210,7 @@ Qt::ItemFlags ComponentDataModel::flags([[maybe_unused]] const QModelIndex &inde
         Qt::ItemIsSelectable);
 }
 
-const AZ::SerializeContext::ClassData* ComponentDataModel::GetClassData(const QModelIndex& index) const
+const AZ::Serialization::ClassData* ComponentDataModel::GetClassData(const QModelIndex& index) const
 {
     int row = index.row();
     if (row < 0 || row >= m_componentList.size())
@@ -221,7 +221,7 @@ const AZ::SerializeContext::ClassData* ComponentDataModel::GetClassData(const QM
     return m_componentList[row];
 }
 
-const char* ComponentDataModel::GetCategory(const AZ::SerializeContext::ClassData* classData)
+const char* ComponentDataModel::GetCategory(const AZ::Serialization::ClassData* classData)
 {
     if (classData)
     {
@@ -274,7 +274,7 @@ QVariant ComponentDataModel::data(const QModelIndex &index, int role /*= Qt::Dis
 {
     if (index.isValid())
     {
-        const AZ::SerializeContext::ClassData* classData = m_componentList[index.row()];
+        const AZ::Serialization::ClassData* classData = m_componentList[index.row()];
         if (!classData)
         {
             return QVariant();
@@ -285,7 +285,7 @@ QVariant ComponentDataModel::data(const QModelIndex &index, int role /*= Qt::Dis
         case ClassDataRole:
             if (index.column() == 0) // Only get data for one column
             {
-                return QVariant::fromValue<void*>(reinterpret_cast<void*>(const_cast<AZ::SerializeContext::ClassData*>(classData)));
+                return QVariant::fromValue<void*>(reinterpret_cast<void*>(const_cast<AZ::Serialization::ClassData*>(classData)));
             }
             break;
 
@@ -352,13 +352,13 @@ QMimeData* ComponentDataModel::mimeData(const QModelIndexList& indices) const
         }
     }
 
-    AZStd::vector<const AZ::SerializeContext::ClassData*> sortedList;
+    AZStd::vector<const AZ::Serialization::ClassData*> sortedList;
     for (QModelIndex index : list)
     {
         QVariant classDataVariant = index.data(ComponentDataModel::ClassDataRole);
         if (classDataVariant.isValid())
         {
-            const AZ::SerializeContext::ClassData* classData = reinterpret_cast<const AZ::SerializeContext::ClassData*>(classDataVariant.value<void*>());
+            const AZ::Serialization::ClassData* classData = reinterpret_cast<const AZ::Serialization::ClassData*>(classDataVariant.value<void*>());
             sortedList.push_back(classData);
         }
     }
@@ -390,7 +390,7 @@ bool ComponentDataModel::CanAcceptDragAndDropEvent(QDropEvent* event, AzQtCompon
         return false;
     }
 
-    AZStd::vector<const AZ::SerializeContext::ClassData*> componentClassDataList;
+    AZStd::vector<const AZ::Serialization::ClassData*> componentClassDataList;
     return AzToolsFramework::ComponentTypeMimeData::Get(event->mimeData(), componentClassDataList);
 }
 
@@ -463,7 +463,7 @@ void ComponentDataModel::Drop(QDropEvent* event, AzQtComponents::DragAndDropCont
         // Only need to add components to the new entity
         AzToolsFramework::EntityIdList entities = { newEntity->GetId() };
 
-        AZStd::vector<const AZ::SerializeContext::ClassData*> componentClassDataList;
+        AZStd::vector<const AZ::Serialization::ClassData*> componentClassDataList;
         AzToolsFramework::ComponentTypeMimeData::Get(event->mimeData(), componentClassDataList);
 
         AZ::ComponentTypeList componentsToAdd;
@@ -506,7 +506,7 @@ bool ComponentDataProxyModel::filterAcceptsRow(int sourceRow, [[maybe_unused]] c
         return false;
     }
 
-    const AZ::SerializeContext::ClassData* classData = dataModel->GetComponents()[sourceRow];
+    const AZ::Serialization::ClassData* classData = dataModel->GetComponents()[sourceRow];
     if (!classData)
     {
         return false;

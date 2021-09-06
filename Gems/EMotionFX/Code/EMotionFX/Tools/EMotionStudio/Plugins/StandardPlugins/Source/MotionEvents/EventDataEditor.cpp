@@ -73,7 +73,7 @@ namespace EMStudio
         // Populate the event data selection menu with derived classes of
         // EMotionFX::EventData
         context->EnumerateDerived<EMotionFX::EventData>(
-            [this](const AZ::SerializeContext::ClassData* classData, const AZ::Uuid&)
+            [this](const AZ::Serialization::ClassData* classData, const AZ::Uuid&)
             {
                 // Only add this type if it has the "Creatable" class attribute
                 // set to true
@@ -249,7 +249,7 @@ namespace EMStudio
         AZ::SerializeContext* context;
         AZ::ComponentApplicationBus::BroadcastResult(context, &AZ::ComponentApplicationBus::Events::GetSerializeContext);
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(newTypeId);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(newTypeId);
 
         EMotionFX::EventData* newData {static_cast<EMotionFX::EventData*>(classData->m_factory->Create(classData->m_name))};
 

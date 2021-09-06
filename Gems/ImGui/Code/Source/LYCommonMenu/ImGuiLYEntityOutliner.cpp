@@ -11,6 +11,7 @@
 #ifdef IMGUI_ENABLED
 
 #include <AzCore/Component/TransformBus.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/std/sort.h>
 #include <AzCore/std/string/conversions.h>
 #include <AzFramework/Entity/EntityContext.h>
@@ -21,7 +22,7 @@
 
 namespace ImGui
 {
-    // Text and Color Consts 
+    // Text and Color Consts
     static const char* s_OnText =           "On:";
     static const char* s_ColorText =        "Color:";
 
@@ -82,18 +83,18 @@ namespace ImGui
 
         // Options for view entity entries
         ImGui::Columns(3);
-        ImGui::TextColored(m_displayName.m_color, "Display Name"); 
+        ImGui::TextColored(m_displayName.m_color, "Display Name");
         ImGui::NextColumn();
-        ImGui::TextColored(ImGui::Colors::s_PlainLabelColor, s_OnText); 
+        ImGui::TextColored(ImGui::Colors::s_PlainLabelColor, s_OnText);
         ImGui::SameLine();
-        ImGui::Checkbox("##DisplayNameCB", &m_displayName.m_enabled); 
+        ImGui::Checkbox("##DisplayNameCB", &m_displayName.m_enabled);
         ImGui::NextColumn();
         ImGui::TextColored(ImGui::Colors::s_PlainLabelColor, s_ColorText);
         ImGui::SameLine();
         ImGui::ColorEdit4("##DisplayNameCol", reinterpret_cast<float*>(&m_displayName.m_color));
         ImGui::NextColumn();
 
-        ImGui::TextColored(m_displayChildCount.m_color, "Display Child Count"); 
+        ImGui::TextColored(m_displayChildCount.m_color, "Display Child Count");
         ImGui::NextColumn();
         ImGui::TextColored(ImGui::Colors::s_PlainLabelColor, s_OnText);
         ImGui::SameLine();
@@ -133,11 +134,11 @@ namespace ImGui
         ImGui::Checkbox("##DisplayParentInfoCB", &m_displayParentInfo.m_enabled);
         ImGui::NextColumn();
         ImGui::TextColored(ImGui::Colors::s_PlainLabelColor, s_ColorText);
-        ImGui::SameLine(); 
+        ImGui::SameLine();
         ImGui::ColorEdit4("##DisplayParentInfoCol", reinterpret_cast<float*>(&m_displayParentInfo.m_color));
         ImGui::NextColumn();
 
-        ImGui::TextColored(m_displayLocalPos.m_color, "Display Local Position"); 
+        ImGui::TextColored(m_displayLocalPos.m_color, "Display Local Position");
         ImGui::NextColumn();
         ImGui::TextColored(ImGui::Colors::s_PlainLabelColor, s_OnText);
         ImGui::SameLine();
@@ -159,7 +160,7 @@ namespace ImGui
         ImGui::ColorEdit4("##DisplayLocalRotationCol", reinterpret_cast<float*>(&m_displayLocalRotation.m_color));
         ImGui::NextColumn();
 
-        ImGui::TextColored(m_displayWorldPos.m_color, "Display World Position"); 
+        ImGui::TextColored(m_displayWorldPos.m_color, "Display World Position");
         ImGui::NextColumn();
         ImGui::TextColored(ImGui::Colors::s_PlainLabelColor, s_OnText);
         ImGui::SameLine();
@@ -170,7 +171,7 @@ namespace ImGui
         ImGui::ColorEdit4("##DisplayWorldPosCol", reinterpret_cast<float*>(&m_displayWorldPos.m_color));
         ImGui::NextColumn();
 
-        ImGui::TextColored(m_displayWorldRotation.m_color, "Display World Rotation"); 
+        ImGui::TextColored(m_displayWorldRotation.m_color, "Display World Rotation");
         ImGui::NextColumn();
         ImGui::TextColored(ImGui::Colors::s_PlainLabelColor, s_OnText);
         ImGui::SameLine();
@@ -216,7 +217,7 @@ namespace ImGui
             for (const AZ::TypeId& comDebugInfoEntry : m_componentDebugSortedList)
             {
                 AZStd::string componentName("**name_not_found**");
-                const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(comDebugInfoEntry);
+                const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(comDebugInfoEntry);
                 if (classData != nullptr)
                 {
                     componentName = classData->m_name;
@@ -256,7 +257,7 @@ namespace ImGui
             }
             ImGui::Columns(1);
             ImGui::EndChild();
-        
+
             // Add Search String
             static char searchCharArray[128] = "";
             ImGui::InputText("", searchCharArray, sizeof(searchCharArray));
@@ -293,12 +294,12 @@ namespace ImGui
                 for (const AZ::TypeId& comDebugInfoEntry : m_componentDebugSortedList)
                 {
                     AZStd::string componentName("**name_not_found**");
-                    const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(comDebugInfoEntry);
+                    const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(comDebugInfoEntry);
                     if (classData != nullptr)
                     {
                         componentName = classData->m_name;
                     }
-                
+
                     // Component Name
                     ImGui::TextColored(ImGui::Colors::s_PlainLabelColor, "%s", componentName.c_str());
                     ImGui::NextColumn();
@@ -424,7 +425,7 @@ namespace ImGui
 
     bool ImGuiLYEntityOutliner::ImGuiUpdate_DrawEntityView(const AZ::EntityId &ent)
     {
-        // Check to make sure the entity is still valid.. 
+        // Check to make sure the entity is still valid..
         AZ::Entity* entity = nullptr;
         AZ::ComponentApplicationBus::BroadcastResult(entity, &AZ::ComponentApplicationBus::Events::FindEntity, ent);
         bool viewWindow = (entity != nullptr);
@@ -450,7 +451,7 @@ namespace ImGui
 
     bool ImGuiLYEntityOutliner::ImGuiUpdate_DrawComponentView(const ImGui::ImGuiEntComponentId &entCom)
     {
-        // Check to make sure the entity is still valid.. 
+        // Check to make sure the entity is still valid..
         AZ::Entity* entity = nullptr;
         AZ::ComponentApplicationBus::BroadcastResult(entity, &AZ::ComponentApplicationBus::Events::FindEntity, entCom.first);
         bool viewWindow = (entity != nullptr);
@@ -461,13 +462,13 @@ namespace ImGui
             AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
             if (serializeContext != nullptr)
             {
-                const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(entCom.second);
+                const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(entCom.second);
                 if (classData != nullptr )
                 {
                     componentName = classData->m_name;
                 }
             }
-            
+
             ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(250.0f, 200.0f));
             AZStd::string windowLabel = AZStd::string::format("Component View - %s - on Entity %s%s", componentName.c_str(), entity->GetName().c_str(), entCom.first.ToString().c_str());
 
@@ -490,7 +491,7 @@ namespace ImGui
         return viewWindow;
     }
 
-    void ImGuiLYEntityOutliner::ImGuiUpdate_RecursivelyDisplayEntityInfoAndDecendants(EntityInfoNodePtr node, bool justDrawChildren /*= false*/, bool drawInspectButton /*= true*/, 
+    void ImGuiLYEntityOutliner::ImGuiUpdate_RecursivelyDisplayEntityInfoAndDecendants(EntityInfoNodePtr node, bool justDrawChildren /*= false*/, bool drawInspectButton /*= true*/,
             bool drawTargetButton /*= true*/, bool drawDebugButton /*= true*/, bool sameLine /*= true*/, bool drawComponents /*= false*/)
     {
         if (node != nullptr)
@@ -516,7 +517,7 @@ namespace ImGui
                         {
                             ImGuiUpdate_RecursivelyDisplayEntityInfoAndDecendants(node->m_children[i]);
                         }
-                        
+
                         ImGui::TreePop();
                     }
                     else
@@ -638,9 +639,9 @@ namespace ImGui
 
                 AZ::Entity* entity(nullptr);
                 AZ::ComponentApplicationBus::BroadcastResult(entity, &AZ::ComponentApplicationBus::Events::FindEntity, node->m_entityId);
-                
+
                 AZStd::string stateString;
-                
+
                 if (entity == nullptr)
                 {
                     stateString = "*invalid_entity_found*";
@@ -701,7 +702,7 @@ namespace ImGui
                 ImGui::TextColored(m_displayParentInfo.m_color, "Parent: %s%s", parentName.c_str(), parentId.ToString().c_str());
             }
 
-            // Local Position 
+            // Local Position
             if (m_displayLocalPos.m_enabled)
             {
                 AZ::Vector3 localPos = AZ::Vector3::CreateOne();
@@ -714,7 +715,7 @@ namespace ImGui
                 ImGui::TextColored(m_displayLocalPos.m_color, "localPos: (%.02f, %.02f, %.02f)", (float)localPos.GetX(), (float)localPos.GetY(), (float)localPos.GetZ());
             }
 
-            // Local Rotation 
+            // Local Rotation
             if (m_displayLocalRotation.m_enabled)
             {
                 AZ::Vector3 localRotation = AZ::Vector3::CreateOne();
@@ -727,7 +728,7 @@ namespace ImGui
                 ImGui::TextColored(m_displayLocalRotation.m_color, "localRot: (%.02f, %.02f, %.02f)", (float)localRotation.GetX(), (float)localRotation.GetY(), (float)localRotation.GetZ());
             }
 
-            // World Position 
+            // World Position
             if (m_displayWorldPos.m_enabled)
             {
                 AZ::Vector3 worldPos = AZ::Vector3::CreateOne();
@@ -740,7 +741,7 @@ namespace ImGui
                 ImGui::TextColored(m_displayWorldPos.m_color, "WorldPos: (%.02f, %.02f, %.02f)", (float)worldPos.GetX(), (float)worldPos.GetY(), (float)worldPos.GetZ());
             }
 
-            // World Rotation 
+            // World Rotation
             if (m_displayWorldRotation.m_enabled)
             {
                 AZ::Vector3 worldRotation = AZ::Vector3::CreateOne();
@@ -765,7 +766,7 @@ namespace ImGui
                     if (ImGui::TreeNode(uiLabel.c_str(), uiLabel.c_str()))
                     {
                         AZ::Entity::ComponentArrayType components = entity->GetComponents();
-                        // we should sort our array of components based on their names. 
+                        // we should sort our array of components based on their names.
                         static auto sortByComponentName = [](AZ::Component* com1, AZ::Component* com2)
                         {
                             AZStd::string name1 = com1->RTTI_GetTypeName();
@@ -801,7 +802,7 @@ namespace ImGui
                                     AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
                                     serializeContext->EnumerateObject(const_cast<AZ::Component *>(component),
                                         // beginElemCB
-                                        [this](void *instance, const AZ::SerializeContext::ClassData *classData, const AZ::SerializeContext::ClassElement *classElement) -> bool
+                                        [this](void *instance, const AZ::Serialization::ClassData *classData, const AZ::Serialization::ClassElement *classElement) -> bool
                                         {
                                             if (classElement != nullptr)
                                             {
@@ -812,11 +813,11 @@ namespace ImGui
                                         // endElemCB
                                         []() -> bool { return true; },
                                         AZ::SerializeContext::ENUM_ACCESS_FOR_READ, nullptr/* errorHandler */);
-                                    
+
                                     ImGui::TreePop();
                                 }
 
-                                // Draw a collapsible menu for any potential component debuging stuff. 
+                                // Draw a collapsible menu for any potential component debuging stuff.
                                 if (hasDebug)
                                 {
                                     uiLabel = AZStd::string::format("Debug##%s", node->m_entityId.ToString().c_str());
@@ -850,7 +851,7 @@ namespace ImGui
         }
     }
 
-    void ImGuiLYEntityOutliner::ImGuiUpdate_DrawComponent(void *instance, const AZ::SerializeContext::ClassData *classData, const AZ::SerializeContext::ClassElement *classElement)
+    void ImGuiLYEntityOutliner::ImGuiUpdate_DrawComponent(void *instance, const AZ::Serialization::ClassData *classData, const AZ::Serialization::ClassElement *classElement)
     {
         const char *typeName = classData->m_name;
         AZStd::string value;
@@ -894,7 +895,7 @@ namespace ImGui
 #if 0
             if (classElement->m_genericClassInfo != nullptr)
             {
-                AZ::SerializeContext::ClassData* cd = classElement->m_genericClassInfo->GetClassData();
+                AZ::Serialization::ClassData* cd = classElement->m_genericClassInfo->GetClassData();
                 size_t numArgs = classElement->m_genericClassInfo->GetNumTemplatedArguments();
                 const AZ::Uuid& sId = classElement->m_genericClassInfo->GetSpecializedTypeId();
                 for (size_t i = 0; i < numArgs; i++)
@@ -945,7 +946,7 @@ namespace ImGui
             // Clear the entityId to InfoNodePtr Map.
             m_entityIdToInfoNodePtrMap.clear();
 
-            // Delete the root Entity Info node and all children recursively 
+            // Delete the root Entity Info node and all children recursively
             DeleteEntityInfoAndDecendants(m_rootEntityInfo);
             m_rootEntityInfo.reset(); // Don't really have to do this, but will further ensure all nodes are deleted
 
@@ -1004,14 +1005,14 @@ namespace ImGui
         int descendantCount = 0;
         for (int i = 0; i < entityInfo->m_children.size(); i++)
         {
-            // Add one count for each of this entities children... 
+            // Add one count for each of this entities children...
             descendantCount++;
 
             // .. and additional counts for their children's decendants!
             descendantCount += RefreshEntityHierarchy_FillCacheAndSort(entityInfo->m_children[i]);
         }
 
-        // we should sort our array of children as well, based on their names. 
+        // we should sort our array of children as well, based on their names.
         static auto sortByEntityName = [](const EntityInfoNodePtr& ent1, const EntityInfoNodePtr& ent2)
         {
             AZStd::string name1, name2;
@@ -1039,7 +1040,7 @@ namespace ImGui
                     entityInfo->m_highestPriorityComponentDebug = c->RTTI_GetType();
                 }
             }
-            
+
             // if we didn't find any debug components, create a null TypeId for highest priority component
             if (highestPriority == -1)
             {
@@ -1099,7 +1100,7 @@ namespace ImGui
     {
         m_entitiesToView.insert(entity);
     }
-    
+
     void ImGuiLYEntityOutliner::RemoveEntityView(AZ::EntityId entity)
     {
         m_entitiesToView.erase(entity);
@@ -1132,7 +1133,7 @@ namespace ImGui
             return true;
         });
     }
-    
+
     void ImGuiLYEntityOutliner::EnableTargetViewMode(bool enabled)
     {
         m_drawTargetViewButton = enabled;
@@ -1168,7 +1169,7 @@ namespace ImGui
                 if (!m_componentDebugInfoMap[componentDebugInfoEntry].m_autoLaunchEnabled)
                 {
                     AZStd::string componentName("**name_not_found**");
-                    const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(componentDebugInfoEntry);
+                    const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(componentDebugInfoEntry);
                     if (classData != nullptr)
                     {
                         componentName = classData->m_name;
@@ -1206,7 +1207,7 @@ namespace ImGui
             static auto sortByComponentPriority = [this](const AZ::TypeId& type1, const AZ::TypeId& type2)
             {
                 return m_componentDebugInfoMap[type1].m_priority > m_componentDebugInfoMap[type2].m_priority;
-            };            
+            };
             m_componentDebugSortedList.sort(sortByComponentPriority);
 
             // Loop through the Search Strings and see if we should enable any components

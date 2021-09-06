@@ -12,7 +12,7 @@
 
 namespace ScriptCanvas
 {
-    static bool OldEntityIdIsValidNodeVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootNodeElement)
+    static bool OldEntityIdIsValidNodeVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootNodeElement)
     {
         int nodeElementIndex = rootNodeElement.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
         if (nodeElementIndex == -1)
@@ -22,7 +22,7 @@ namespace ScriptCanvas
         }
 
         // The DataElementNode is being copied purposefully in this statement to clone the data
-        AZ::SerializeContext::DataElementNode baseNodeElement = rootNodeElement.GetSubElement(nodeElementIndex);
+        AZ::Serialization::DataElementNode baseNodeElement = rootNodeElement.GetSubElement(nodeElementIndex);
         if (!rootNodeElement.Convert(context, azrtti_typeid<EntityNodes::IsValidNode>()))
         {
             AZ_Error("Script Canvas", false, "Unable to convert old Entity::IsValid function node(%s) to new EntityId::IsValid function node(%s)",

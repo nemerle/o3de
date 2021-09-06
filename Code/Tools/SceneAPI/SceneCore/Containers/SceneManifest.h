@@ -94,7 +94,7 @@ namespace AZ
                     JsonRegistrationContext* registrationContext = nullptr, bool loadXml = false);
 
                 static void Reflect(ReflectContext* context);
-                static bool VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& node);
+                static bool VersionConverter(SerializeContext& context, Serialization::DataElementNode& node);
 
             protected:
                 AZ::Outcome<rapidjson::Document, AZStd::string> SaveToJsonDocument(SerializeContext* context = nullptr, JsonRegistrationContext* registrationContext = nullptr);

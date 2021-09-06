@@ -126,7 +126,7 @@ namespace Physics
         virtual bool IsNameReadOnly() const { return false; }
 
     private:
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
         static AZ::Color GenerateDebugColor(const char* materialName);
     };
 

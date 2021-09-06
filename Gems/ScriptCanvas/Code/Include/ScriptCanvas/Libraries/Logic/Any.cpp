@@ -14,7 +14,7 @@ namespace ScriptCanvas
     {
         namespace Logic
         {
-            bool Any::AnyNodeVersionConverter([[maybe_unused]] AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+            bool Any::AnyNodeVersionConverter([[maybe_unused]] AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
             {
                 if (rootElement.GetVersion() < Version::RemoveInputsContainers)
                 {

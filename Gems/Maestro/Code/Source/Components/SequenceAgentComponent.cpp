@@ -14,7 +14,7 @@ namespace Maestro
     //=========================================================================
     namespace ClassConverters
     {
-        static bool UpgradeSequenceAgentComponent(AZ::SerializeContext&, AZ::SerializeContext::DataElementNode&);
+        static bool UpgradeSequenceAgentComponent(AZ::SerializeContext&, AZ::Serialization::DataElementNode&);
     } // namespace ClassConverters
 
     /*static*/ void SequenceAgentComponent::Reflect(AZ::ReflectContext* context)
@@ -148,7 +148,7 @@ namespace Maestro
     //=========================================================================
     namespace ClassConverters
     {
-        static bool UpgradeSequenceAgentComponent([[maybe_unused]] AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool UpgradeSequenceAgentComponent([[maybe_unused]] AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() == 1)
             {

@@ -12,14 +12,14 @@ namespace PhysX
 {
     namespace ClassConverters
     {
-        bool DeprecateEditorCapsuleColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool DeprecateEditorBoxColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool DeprecateEditorSphereColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool DeprecateEditorMeshColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        bool DeprecateEditorCapsuleColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool DeprecateEditorBoxColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool DeprecateEditorSphereColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool DeprecateEditorMeshColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
-        bool UpgradeEditorColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool EditorProxyShapeConfigVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool EditorRigidBodyConfigVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool EditorTerrainComponentConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        bool UpgradeEditorColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool EditorProxyShapeConfigVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool EditorRigidBodyConfigVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool EditorTerrainComponentConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     } // namespace ClassConverters
 } // namespace PhysX

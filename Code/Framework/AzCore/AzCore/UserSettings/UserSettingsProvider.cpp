@@ -15,16 +15,16 @@ namespace AZ
 {
     //-----------------------------------------------------------------------------
     //-----------------------------------------------------------------------------
-    static bool UserSettingsContainerVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    static bool UserSettingsContainerVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() == 2)
         {
-            AZ::SerializeContext::DataElementNode& mapNode = classElement.GetSubElement(0);
+            AZ::Serialization::DataElementNode& mapNode = classElement.GetSubElement(0);
             for (int i = 0; i < mapNode.GetNumSubElements(); ++i)
             {
-                AZ::SerializeContext::DataElementNode& pairNode = mapNode.GetSubElement(i);
-                AZ::SerializeContext::DataElementNode pointerNode = pairNode.GetSubElement(1);  // copy
-                pairNode.GetSubElement(1) = AZ::SerializeContext::DataElementNode();
+                AZ::Serialization::DataElementNode& pairNode = mapNode.GetSubElement(i);
+                AZ::Serialization::DataElementNode pointerNode = pairNode.GetSubElement(1);  // copy
+                pairNode.GetSubElement(1) = AZ::Serialization::DataElementNode();
                 pairNode.RemoveElement(1);
                 pairNode.AddElement<AZStd::intrusive_ptr<UserSettings> >(context, "value2");
                 pointerNode.SetName("element");

@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Script/ScriptProperty.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -146,7 +147,7 @@ namespace EMotionFX
                     // Only activate if we have a valid anim graph and a valid motion set. An empty m_motionSetName will use
                     // the root motionset from the motion set asset
                     if (m_animGraphAsset.IsReady() && m_motionSetAsset.IsReady())
-                    {   
+                    {
                         AnimGraphAsset* animGraphAsset = m_animGraphAsset.GetAs<AnimGraphAsset>();
                         AZ_Assert(animGraphAsset, "Expected anim graph asset");
                         EMotionFX::AnimGraph* animGraph = animGraphAsset->GetAnimGraph();
@@ -167,14 +168,14 @@ namespace EMotionFX
                                 motionSet = rootMotionSet;
                             }
                         }
-                        
+
                         mainWindow->Activate(actorAssetId, animGraph, motionSet);
                     }
                 }
             }
         }
 
-        //////////////////////////////////////////////////////////////////////////       
+        //////////////////////////////////////////////////////////////////////////
         AZ::u32 EditorAnimGraphComponent::OnAnimGraphAssetSelected()
         {
             AZ::Data::AssetBus::MultiHandler::BusDisconnect();
@@ -199,7 +200,7 @@ namespace EMotionFX
         AZ::u32 EditorAnimGraphComponent::OnMotionSetAssetSelected()
         {
             AZ::Data::AssetBus::MultiHandler::BusDisconnect();
-            
+
             if (m_animGraphAsset.GetId().IsValid())
             {
                 AZ::Data::AssetBus::MultiHandler::BusConnect(m_animGraphAsset.GetId());
@@ -383,7 +384,7 @@ namespace EMotionFX
             gameEntity->AddComponent(aznew AnimGraphComponent(&cfg));
         }
 
-       
+
     } //namespace Integration
 } // namespace EMotionFX
 

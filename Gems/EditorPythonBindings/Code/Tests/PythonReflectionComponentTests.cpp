@@ -16,6 +16,7 @@
 #include <Source/PythonReflectionComponent.h>
 #include <Source/PythonMarshalComponent.h>
 
+#include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Math/Vector4.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzFramework/StringFunc/StringFunc.h>
@@ -160,7 +161,7 @@ namespace UnitTest
                     ->Method("accept_vector_of_floats", &PythonReflectionContainerSimpleTypes::AcceptVectorOfFloats, nullptr, "")
                     ->Method("return_vector_of_doubles", &PythonReflectionContainerSimpleTypes::ReturnVectorOfDoubles, nullptr, "")
                     ->Method("accept_vector_of_doubles", &PythonReflectionContainerSimpleTypes::AcceptVectorOfDoubles, nullptr, "")
-                    ->Property("vector_of_s8", 
+                    ->Property("vector_of_s8",
                         [](PythonReflectionContainerSimpleTypes* self) { return self->m_s8ValueValues.ReturnValues(); },
                         [](PythonReflectionContainerSimpleTypes* self, const AZStd::vector<AZ::s8>& values) { return self->m_s8ValueValues.AcceptValues(values); })
                     ->Property("vector_of_u8",
@@ -791,7 +792,7 @@ namespace UnitTest
                 theAsset = reflectAny.access_any_ref()
                 if( reflectAny.compare_asset_ids(theAsset,testObject.theAsset) ):
                     print ('MutateAssetId')
-    
+
             )");
         }
         catch ([[maybe_unused]] const std::exception& e)

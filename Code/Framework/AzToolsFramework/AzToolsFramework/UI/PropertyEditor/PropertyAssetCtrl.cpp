@@ -33,6 +33,7 @@ AZ_POP_DISABLE_WARNING
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Asset/AssetTypeInfoBus.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Utils/Utils.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzFramework/Asset/SimpleAsset.h>
@@ -733,7 +734,7 @@ namespace AzToolsFramework
             EBUS_EVENT_RESULT(serializeContext, AZ::ComponentApplicationBus, GetSerializeContext);
             if (serializeContext)
             {
-                const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(GetCurrentAssetType());
+                const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(GetCurrentAssetType());
                 if (classData && classData->m_editData)
                 {
                     if (!assetID.IsValid())

@@ -13,6 +13,7 @@
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Debug/Profiler.h>
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/std/algorithm.h>
@@ -28,7 +29,7 @@ namespace AZ
     {
         // SliceReference Version 1 -> 2
         // SliceReference::m_instances converted from AZStd::list<SliceInstance> to AZStd::unordered_set<SliceInstance>.
-        bool SliceReferenceVersionConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement)
+        bool SliceReferenceVersionConverter(SerializeContext& context, Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 2)
             {
@@ -38,7 +39,7 @@ namespace AZ
                     auto& instancesElement = classElement.GetSubElement(instancesIndex);
 
                     // Extract sub-elements, which we can just re-add under the set.
-                    AZStd::vector<SerializeContext::DataElementNode> subElements;
+                    AZStd::vector<Serialization::DataElementNode> subElements;
                     subElements.reserve(instancesElement.GetNumSubElements());
                     for (int i = 0, n = instancesElement.GetNumSubElements(); i < n; ++i)
                     {
@@ -49,7 +50,7 @@ namespace AZ
                     using SetType = AZStd::unordered_set<SliceComponent::SliceInstance>;
                     if (instancesElement.Convert<SetType>(context))
                     {
-                        for (const SerializeContext::DataElementNode& subElement : subElements)
+                        for (const Serialization::DataElementNode& subElement : subElements)
                         {
                             instancesElement.AddElement(subElement);
                         }
@@ -653,7 +654,7 @@ namespace AZ
         , m_component(nullptr)
     {
     }
-    
+
     //=========================================================================
     // SliceComponent::SliceReference::CreateEmptyInstance
     //=========================================================================
@@ -805,7 +806,7 @@ namespace AZ
     //=========================================================================
     // SliceComponent::SliceReference::CreateInstance
     //=========================================================================
-    SliceComponent::SliceInstance* SliceComponent::SliceReference::CreateInstance(const AZ::IdUtils::Remapper<AZ::EntityId>::IdMapper& customMapper, 
+    SliceComponent::SliceInstance* SliceComponent::SliceReference::CreateInstance(const AZ::IdUtils::Remapper<AZ::EntityId>::IdMapper& customMapper,
         SliceInstanceId sliceInstanceId)
     {
         AZ_PROFILE_FUNCTION(AzCore);
@@ -880,7 +881,7 @@ namespace AZ
     //=========================================================================
     // SliceComponent::SliceReference::CloneInstance
     //=========================================================================
-    SliceComponent::SliceInstance* SliceComponent::SliceReference::CloneInstance(SliceComponent::SliceInstance* instance, 
+    SliceComponent::SliceInstance* SliceComponent::SliceReference::CloneInstance(SliceComponent::SliceInstance* instance,
                                                                                  SliceComponent::EntityIdToEntityIdMap& sourceToCloneEntityIdMap)
     {
         AZ_PROFILE_FUNCTION(AzCore);
@@ -949,7 +950,7 @@ namespace AZ
     //=========================================================================
     SliceComponent::SliceInstance* SliceComponent::SliceReference::FindInstance(const SliceInstanceId& instanceId)
     {
-        auto iter = m_instances.find_as(instanceId, AZStd::hash<SliceInstanceId>(), 
+        auto iter = m_instances.find_as(instanceId, AZStd::hash<SliceInstanceId>(),
             [](const SliceInstanceId& id, const SliceInstance& instance)
             {
                 return (id == instance.GetId());
@@ -1010,7 +1011,7 @@ namespace AZ
             // RemoveEntity will be invoked again recursively if invoked with isDeleteEntity = true as the deleting the found entity
             // would cause the Entity destructor to send a ComponentApplicationRequests::RemoveEntity event causing the ComponentApplication
             // to send an ComponentApplicationEvents::OnEntityRemoved event that is handled by the EntityContext::OnEntityRemoved function which finally
-            // calls this function again with isDeleteEntity = false. Therefore the EntityInfoMap and the container of Entities needs to have the 
+            // calls this function again with isDeleteEntity = false. Therefore the EntityInfoMap and the container of Entities needs to have the
             // current entity removed from it before deleting it
             AZStd::unique_ptr<AZ::Entity> entityToDelete(isDeleteEntity ? *entityIt : nullptr);
             instance->m_instantiated->m_entities.erase(entityIt);
@@ -1391,7 +1392,7 @@ namespace AZ
     }
 
     void SliceComponent::SliceReference::ComputeDataPatchForInstanceKnownToReference(SliceInstance& instance, SerializeContext* serializeContext, InstantiatedContainer& sourceContainer)
-    {            
+    {
         // remap entity ids to the "original"
         const EntityIdToEntityIdMap& reverseLookUp = instance.GetEntityIdToBaseMap();
         IdUtils::Remapper<EntityId>::ReplaceIdsAndIdRefs(instance.m_instantiated, [&reverseLookUp](const EntityId& sourceId, bool /*isEntityId*/, const AZStd::function<EntityId()>& /*idGenerator*/) -> EntityId
@@ -1671,12 +1672,12 @@ namespace AZ
         {
             PushInstantiateCycle(m_myAsset->GetId());
         }
-        
+
         for (SliceReference& slice : m_slices)
         {
             slice.m_component = this;
             AZ::Data::AssetId sliceAssetId = slice.m_asset.GetId();
-            
+
             if (CheckContainsInstantiateCycle(sliceAssetId))
             {
                 result = InstantiateResult::CyclicalDependency;
@@ -1740,8 +1741,8 @@ namespace AZ
                             ? Data::Asset<SliceAsset>(Data::AssetManager::Instance().FindAsset(
                                   GetMyAsset()->GetId(), AZ::Data::AssetLoadBehavior::Default))
                             : Data::Asset<SliceAsset>();
-                        AZ_Warning("Slice", false, "Removing %d instances of slice asset %s from parent asset %s due to failed instantiation. " 
-                            "Saving parent asset will result in loss of slice data.", 
+                        AZ_Warning("Slice", false, "Removing %d instances of slice asset %s from parent asset %s due to failed instantiation. "
+                            "Saving parent asset will result in loss of slice data.",
                             iter->GetInstances().size(),
                             iter->GetSliceAsset().ToString<AZStd::string>().c_str(),
                             thisAsset.ToString<AZStd::string>().c_str());
@@ -1846,7 +1847,7 @@ namespace AZ
     //=========================================================================
     // SliceComponent::AddSlice
     //=========================================================================
-    SliceComponent::SliceInstanceAddress SliceComponent::AddSlice(const Data::Asset<SliceAsset>& sliceAsset, const AZ::IdUtils::Remapper<AZ::EntityId>::IdMapper& customMapper, 
+    SliceComponent::SliceInstanceAddress SliceComponent::AddSlice(const Data::Asset<SliceAsset>& sliceAsset, const AZ::IdUtils::Remapper<AZ::EntityId>::IdMapper& customMapper,
         SliceInstanceId sliceInstanceId)
     {
         SliceReference* slice = AddOrGetSliceReference(sliceAsset);
@@ -1956,7 +1957,7 @@ namespace AZ
 
         return slice;
     }
-    
+
     //=========================================================================
     // SliceComponent::GetEntityRestoreInfo
     //=========================================================================
@@ -1972,7 +1973,7 @@ namespace AZ
             if (reference)
             {
                 const SliceInstance* instance = entityInfoIter->second.m_sliceAddress.GetInstance();
-                AZ_Assert(instance, "Entity %llu was found to belong to reference %s, but instance is invalid.", 
+                AZ_Assert(instance, "Entity %llu was found to belong to reference %s, but instance is invalid.",
                           entityId, reference->GetSliceAsset().ToString<AZStd::string>().c_str());
 
                 EntityAncestorList ancestors;
@@ -2010,7 +2011,7 @@ namespace AZ
             AZ_Error("Slice", false, "Cannot add entities to existing instances if the slice hasn't yet been instantiated.");
             return SliceInstanceAddress();
         }
-        
+
         SliceComponent* sourceSlice = asset.GetAs<SliceAsset>()->GetComponent();
         sourceSlice->Instantiate();
 
@@ -2043,7 +2044,7 @@ namespace AZ
             {
                 AZ_Assert(false, "Restore info attempted to restore SliceInstanceId: %s which is already in use", restoreInfo.m_instanceId.ToString<AZStd::string>().c_str());
             }
-            
+
             // Make sure the appropriate metadata entities are created with the instance
             InstantiatedContainer sourceObjects(false);
             sourceSlice->GetAllMetadataEntities(sourceObjects.m_metadataEntities);
@@ -2195,7 +2196,7 @@ namespace AZ
         AZ::SliceComponent::EntityIdToEntityIdMap* out_sourceToCloneEntityIdMap /*= nullptr*/, bool preserveIds /*= false*/)
     {
         // Check if sourceSliceInstance belongs to this SliceComponent.
-        if (sourceSliceInstance->m_instantiated->m_entities.empty() 
+        if (sourceSliceInstance->m_instantiated->m_entities.empty()
             || !FindEntity(sourceSliceInstance->m_instantiated->m_entities[0]->GetId()))
         {
             return SliceComponent::SliceInstanceAddress();
@@ -2263,7 +2264,7 @@ namespace AZ
             newInstance->m_instantiated = IdUtils::Remapper<AZ::EntityId>::CloneObjectAndGenerateNewIdsAndFixRefs(&sourceEntitiesContainer, sourceToCloneEntityIdMap);
         }
 
-        // Generate EntityId map between entities in base sub-slice and the cloned entities, 
+        // Generate EntityId map between entities in base sub-slice and the cloned entities,
         // also generate DataFlags for cloned entities (in newInstance) based on its corresponding source entities.
         const DataFlagsPerEntity& liveInstanceDataFlags = sourceSliceInstance->GetDataFlags();
         DataFlagsPerEntity cloneInstanceDataFlags;
@@ -2608,8 +2609,8 @@ namespace AZ
     void SliceComponent::RemoveLooseEntity(EntityId entityId)
     {
         auto entityIt = AZStd::find_if(
-            m_entities.begin(), 
-            m_entities.end(), 
+            m_entities.begin(),
+            m_entities.end(),
             [entityId](Entity* entity) -> bool { return entity->GetId() == entityId; });
 
         if (entityIt != m_entities.end())
@@ -2733,7 +2734,7 @@ namespace AZ
                     // Check if the entity's ancestor is shared with the root
                     AZ::Data::Asset<SliceAsset> ancestorAsset = ancestor.m_sliceAddress.GetReference()->GetSliceAsset();
                     auto isShared = AZStd::find_if(sharedAncestry.begin(), sharedAncestry.end(),
-                        [ancestorAsset](const Ancestor& sharedAncestor) 
+                        [ancestorAsset](const Ancestor& sharedAncestor)
                         {
                             return sharedAncestor.m_sliceAddress.GetReference()->GetSliceAsset() == ancestorAsset;
                         });
@@ -2953,7 +2954,7 @@ namespace AZ
         // One of our dependent assets has changed.
         // We need to identify any dependent assets that have changed, since there may be multiple
         // due to the nature of cascaded slice reloading.
-        // Because we're about to re-construct our own asset and dispatch the change notification, 
+        // Because we're about to re-construct our own asset and dispatch the change notification,
         // we need to handle all pending dependent changes.
         bool dependencyHasChanged = false;
         for (SliceReference& slice : m_slices)
@@ -3061,7 +3062,7 @@ namespace AZ
     * and use the this->events.
     */
     class SliceComponentSerializationEvents
-        : public SerializeContext::IEventHandler
+        : public Serialization::IEventHandler
     {
         /// Called right before we start reading from the instance pointed by classPtr.
         void OnReadBegin(void* classPtr) override
@@ -3113,7 +3114,7 @@ namespace AZ
     //=========================================================================
     void SliceComponent::InitMetadata()
     {
-        // If we have a new metadata entity, we need to add a SliceMetadataInfoComponent to it and 
+        // If we have a new metadata entity, we need to add a SliceMetadataInfoComponent to it and
         // fill it in with general metadata hierarchy and association data as well as assign a
         // useful name to the entity.
         auto* metadataInfoComponent = m_metadataEntity.FindComponent<SliceMetadataInfoComponent>();
@@ -3187,7 +3188,7 @@ namespace AZ
                 }
             }
         }
-        
+
     }
 
     void SliceComponent::RestoreCachedInstances()
@@ -3324,7 +3325,7 @@ namespace AZ
     bool SliceComponent::CheckContainsInstantiateCycle(const AZ::Data::AssetId& assetId)
     {
         /* this function is called during recursive slice instantiation to check for cycles.
-        /  It is assumed that before recursing, PushInstantiateCycle is called, 
+        /  It is assumed that before recursing, PushInstantiateCycle is called,
         /  and when recursion returns, PopInstantiateCycle is called.
         /  we want to make sure we are never in the following situation:
         /     SliceA
@@ -3337,7 +3338,7 @@ namespace AZ
         AZStd::unique_lock<AZStd::recursive_mutex> lock(m_instantiateMutex);
         if (AZStd::find(m_instantiateCycleChecker.begin(), m_instantiateCycleChecker.end(), assetId) != m_instantiateCycleChecker.end())
         {
-   
+
 #if defined(AZ_ENABLE_TRACING)
             AZ::Data::Asset<SliceAsset> fullAsset = AZ::Data::AssetManager::Instance().FindAsset(assetId, AZ::Data::AssetLoadBehavior::Default);
             AZStd::string messageString = "Cyclic Slice references detected!  Please see the hierarchy below:";

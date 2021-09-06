@@ -676,7 +676,7 @@ void UiLayoutGridComponent::CheckLayoutFitterAndRefreshEditorTransformProperties
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiLayoutGridComponent::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1:
     // - Need to convert Vec2 to AZ::Vector2

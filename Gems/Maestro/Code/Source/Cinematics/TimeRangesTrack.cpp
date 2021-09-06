@@ -97,7 +97,7 @@ int CTimeRangesTrack::GetActiveKeyIndexForTime(const float time)
 //////////////////////////////////////////////////////////////////////////
 static bool TimeRangesTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

@@ -5,23 +5,23 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
-#include <AzCore/Component/Component.h>
-#include <AzCore/Jobs/JobManager.h>
-#include <AzCore/Jobs/JobContext.h>
-#include <AzCore/Jobs/JobManagerBus.h>
-#include <AzCore/Jobs/JobCancelGroup.h>
-
-#include <AzCore/Serialization/SerializeContext.h>
-#include <AzCore/Serialization/EditContext.h>
+#include <AWSCoreSystemComponent.h>
 
 #include <AWSNativeSDKInit/AWSNativeSDKInit.h>
-
-#include <AWSCoreSystemComponent.h>
 #include <Configuration/AWSCoreConfiguration.h>
 #include <Credential/AWSCredentialManager.h>
 #include <Framework/AWSApiJob.h>
 #include <ResourceMapping/AWSResourceMappingBus.h>
 #include <ResourceMapping/AWSResourceMappingManager.h>
+
+#include <AzCore/Component/Component.h>
+#include <AzCore/Jobs/JobManager.h>
+#include <AzCore/Jobs/JobContext.h>
+#include <AzCore/Jobs/JobManagerBus.h>
+#include <AzCore/Jobs/JobCancelGroup.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/EditContext.h>
 
 namespace AWSCore
 {

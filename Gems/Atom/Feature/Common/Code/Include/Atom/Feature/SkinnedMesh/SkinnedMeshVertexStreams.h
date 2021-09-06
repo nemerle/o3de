@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include <Atom/RPI.Reflect/Model/ModelLodAsset.h>
 #include <Atom/RPI.Public/Model/Model.h>
 #include <Atom/RPI.Public/Shader/Shader.h>
 #include <AtomCore/Instance/InstanceData.h>
@@ -116,7 +115,7 @@ namespace AZ
             virtual Data::Asset<RPI::ResourcePoolAsset> GetInputStreamResourcePool() const = 0;
             virtual Data::Asset<RPI::ResourcePoolAsset> GetStaticStreamResourcePool() const = 0;
             virtual Data::Asset<RPI::ResourcePoolAsset> GetOutputStreamResourcePool() const = 0;
-            
+
             virtual uint32_t GetMaxSupportedVertexCount() const = 0;
         };
     }

@@ -185,9 +185,9 @@ public: // static member functions
     //! An index of -1 is used when this is called on the root element of the canvas, otherwise index
     //! is the index of the child entity withing the children container.
     static bool MoveEntityAndDescendantsToListAndReplaceWithEntityId(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& elementNode,
+        AZ::Serialization::DataElementNode& elementNode,
         int index,
-        AZStd::vector<AZ::SerializeContext::DataElementNode>& entities);
+        AZStd::vector<AZ::Serialization::DataElementNode>& entities);
 
 protected: // member functions
 
@@ -206,7 +206,7 @@ private: //types
     //! ChildOrderSerializationEvents intercepts the serialization events for patching.
     //! This allows us to do some fixup after patching is done on a UiElementComponent.
     class ChildOrderSerializationEvents
-        : public AZ::SerializeContext::IEventHandler
+        : public AZ::Serialization::IEventHandler
     {
         //! Called right after we finish writing data to the instance pointed at by classPtr.
         void OnPatchEnd(void* classPtr, const AZ::DataPatchNodeInfo& patchInfo) override
@@ -268,7 +268,7 @@ private: // member functions
 private: // static member functions
 
     static bool VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement);
+        AZ::Serialization::DataElementNode& classElement);
 
     //! Destroy UI element entity
     static void DestroyElementEntity(AZ::EntityId entityId);

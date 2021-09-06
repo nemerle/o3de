@@ -60,7 +60,7 @@ void CSelectTrack::GetKeyInfo(int key, const char*& description, float& duration
 //////////////////////////////////////////////////////////////////////////
 static bool SelectTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

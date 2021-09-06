@@ -43,7 +43,7 @@ namespace ScriptCanvas
                 }
             }
 
-            bool OperatorDivideByNumber::OperatorDivideByNumberVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+            bool OperatorDivideByNumber::OperatorDivideByNumberVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
             {
                 if (rootElement.GetVersion() < Version::RemoveOperatorBase)
                 {

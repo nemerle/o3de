@@ -11,7 +11,7 @@ namespace LmbrCentral
     namespace ClassConverters
     {
         template <typename Shape, typename ShapeConfig>
-        bool UpgradeShapeComponentConfigToShape(AZ::u32 version, const char* shapeName, AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeShapeComponentConfigToShape(AZ::u32 version, const char* shapeName, AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (version <= 2)
             {

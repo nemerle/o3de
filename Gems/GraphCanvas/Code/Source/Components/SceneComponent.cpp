@@ -1014,7 +1014,7 @@ namespace GraphCanvas
         }
     }
 
-    class GraphCanvasSceneDataEventHandler : public AZ::SerializeContext::IEventHandler
+    class GraphCanvasSceneDataEventHandler : public AZ::Serialization::IEventHandler
     {
     public:
         /// Called to rebuild the Endpoint map
@@ -1029,13 +1029,13 @@ namespace GraphCanvas
     /////////////////////////////////
     // GraphCanvasConstructSaveData
     /////////////////////////////////
-    bool SceneComponent::GraphCanvasConstructSaveData::VersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& classElement)
+    bool SceneComponent::GraphCanvasConstructSaveData::VersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() == 1)
         {
             AZ::Crc32 typeId = AZ_CRC("Type", 0x8cde5729);
 
-            AZ::SerializeContext::DataElementNode* dataNode = classElement.FindSubElement(typeId);
+            AZ::Serialization::DataElementNode* dataNode = classElement.FindSubElement(typeId);
 
             ConstructType constructType = ConstructType::Unknown;
 

@@ -37,13 +37,14 @@ namespace AZ
         class GenericStream;
     }
 
-    namespace ObjectStreamInternal {
+    namespace ObjectStreamInternal
+    {
         class ObjectStreamImpl;
     }
 
     namespace SerializeContextAttributes
     {
-        // Attribute used to set an override function on a SerializeContext::ClassData attribute array
+        // Attribute used to set an override function on a Serialization::ClassData attribute array
         // which can be used to override the ObjectStream WriteElement call to write out reflected data differently
         static const AZ::Crc32 ObjectStreamWriteElementOverride = AZ_CRC("ObjectStreamWriteElementOverride", 0x35eb659f);
     }
@@ -55,8 +56,8 @@ namespace AZ
     ///< @param classData reference to this instance Class Data that will be supplied to the callback
     ///< @param classElement class element pointer which contains information about the element being serialized.
     ///< root elements do not not have a valid class element pointer
-    using ObjectStreamWriteOverrideCB = AZStd::function<void(SerializeContext::EnumerateInstanceCallContext& callContext,
-        const void* classPtr, const SerializeContext::ClassData& classData, const SerializeContext::ClassElement* classElement)>;
+    using ObjectStreamWriteOverrideCB = AZStd::function<void(Serialization::EnumerateInstanceCallContext& callContext,
+        const void* classPtr, const Serialization::ClassData& classData, const Serialization::ClassElement* classElement)>;
 
     AZ_TYPE_INFO_SPECIALIZE(ObjectStreamWriteOverrideCB, "{87B1A36B-8C8A-42B6-A0B5-E770D9FDBAD4}");
 
@@ -121,7 +122,7 @@ namespace AZ
          * \param classId provided to you for information
          * \param context provided to you for information
          */
-        typedef AZStd::function< void (void** /*rootAddress*/, const SerializeContext::ClassData** /*classData*/, const Uuid& /*classId*/, SerializeContext* /*context*/)> InplaceLoadRootInfoCB;
+        typedef AZStd::function< void (void** /*rootAddress*/, const Serialization::ClassData** /*classData*/, const Uuid& /*classId*/, SerializeContext* /*context*/)> InplaceLoadRootInfoCB;
 
         /// Called for each root object loaded
         typedef AZStd::function< void (void* /*classPtr*/, const Uuid& /*classId*/, SerializeContext* /*context*/) > ClassReadyCB;
@@ -133,7 +134,7 @@ namespace AZ
         /// or instead throw an error and fail if any error is encountered.
         enum FilterFlags
         {
-            /** 
+            /**
             * If the FILTERFLAG_STRICT flag is set, the serialization operation will return false (failure to deserialize) if ANY error has occurred at all
             * even non-fatal errors.  So any kind of issue - asset missing, unknown class, non-deprecatd class, container failure, even things which it can
             * continue reading through and ignore safely, will cause it to return false for the entire serialization.  This should only be used in cases
@@ -143,13 +144,13 @@ namespace AZ
             * not return "false" for the entire operation just becuase of a single recoverable error.
             **/
             FILTERFLAG_STRICT                   = 1 << 0,
-            
-            /** 
+
+            /**
             * if FILTERFLAG_IGNORE_UNKNOWN_CLASSES is set, deprecated or unrecognized classes will be SILENTLY ignored with no error output.
             * this is only to be rarely used, when reading data you know contains classes that you want to ignore silently, not for ignoring errors in general.
-            */ 
-            FILTERFLAG_IGNORE_UNKNOWN_CLASSES   = 1 << 1, 
-            
+            */
+            FILTERFLAG_IGNORE_UNKNOWN_CLASSES   = 1 << 1,
+
         };
 
         struct FilterDescriptor
@@ -159,7 +160,7 @@ namespace AZ
                 : m_flags(rhs.m_flags)
                 , m_assetCB(rhs.m_assetCB)
             {}
-            
+
             // intentionally explicit - you may not auto-convert from a assetFilterCB to a FilterDescriptor by accident - this is to prevent the loss of the above filter flags unintentionally
             explicit FilterDescriptor(const Data::AssetFilterCB& assetFilterCB = nullptr, u32 filterFlags = 0)
                 : m_flags(filterFlags)
@@ -176,7 +177,7 @@ namespace AZ
         /// Create a new object stream for writing
         static ObjectStream* Create(IO::GenericStream* stream, SerializeContext& sc, DataStream::StreamType fmt);
 
-        virtual bool WriteClass(const void* classPtr, const Uuid& classId, const SerializeContext::ClassData* classData = nullptr) = 0;
+        virtual bool WriteClass(const void* classPtr, const Uuid& classId, const Serialization::ClassData* classData = nullptr) = 0;
 
         /// Default asset filter obeys the Asset<> holder's load flags.
         static bool AssetFilterDefault(const Data::AssetFilterInfo& filterInfo);
@@ -218,7 +219,7 @@ namespace AZ
         // Call SaveClass with the potential pointer to derived class fully resolved.
         const void* classPtr = SerializeTypeInfo<T>::RttiCast(obj, SerializeTypeInfo<T>::GetRttiTypeId(obj));
         const Uuid& classId = SerializeTypeInfo<T>::GetUuid(obj);
-        const SerializeContext::ClassData* classData = m_sc->FindClassData(classId, NULL, 0);
+        const Serialization::ClassData* classData = m_sc->FindClassData(classId, NULL, 0);
         if (!classData)
         {
             GenericClassInfo* genericClassInfo = SerializeGenericTypeInfo<T>::GetGenericInfo();

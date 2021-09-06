@@ -14,7 +14,7 @@ namespace AZ
 {
     namespace Render
     {
-        bool MaterialAssignmentId::ConvertVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool MaterialAssignmentId::ConvertVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 2)
             {

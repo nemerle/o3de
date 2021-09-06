@@ -237,7 +237,7 @@ namespace ScriptCanvas
         };
 
 #if defined(OBJECT_STREAM_EDITOR_ASSET_LOADING_SUPPORT_ENABLED)////
-        class SerializeContextEventHandler : public AZ::SerializeContext::IEventHandler
+        class SerializeContextEventHandler : public AZ::Serialization::IEventHandler
         {
         public:
             /// Called after we are done writing to the instance pointed by classPtr.

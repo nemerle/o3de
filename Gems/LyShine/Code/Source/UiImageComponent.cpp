@@ -2656,7 +2656,7 @@ void UiImageComponent::CheckLayoutFitterAndRefreshEditorTransformProperties() co
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiImageComponent::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1:
     // - Need to convert CryString elements to AZStd::string

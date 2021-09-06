@@ -88,7 +88,7 @@ namespace
                 continue;
             }
 
-            [[maybe_unused]] const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(type);
+            [[maybe_unused]] const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(type);
             AZ_Assert(classData, "Failed to find ClassData for ID: %s", type.ToString<AZStd::string>().data());
 
             ScriptCanvasEditor::Nodes::StyleConfiguration styleConfiguration;
@@ -120,7 +120,7 @@ namespace ScriptCanvasEditor
             AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
 
             serializeContext->EnumerateDerived<ScriptCanvas::Node>(
-                [this](const AZ::SerializeContext::ClassData* classData, [[maybe_unused]] const AZ::Uuid& classUuid) -> bool
+                [this](const AZ::Serialization::ClassData* classData, [[maybe_unused]] const AZ::Uuid& classUuid) -> bool
                 {
                     if (classData && classData->m_editData)
                     {
@@ -157,7 +157,7 @@ namespace ScriptCanvasEditor
                         const AZStd::string& nodeName = *(nodes.begin());
 
                         serializeContext->EnumerateDerived<ScriptCanvas::Node>(
-                            [&nodeName, &nodeTypeToAdd](const AZ::SerializeContext::ClassData* classData, [[maybe_unused]] const AZ::Uuid& classUuid) -> bool
+                            [&nodeName, &nodeTypeToAdd](const AZ::Serialization::ClassData* classData, [[maybe_unused]] const AZ::Uuid& classUuid) -> bool
                             {
                                 if (classData && classData->m_editData)
                                 {
@@ -260,7 +260,7 @@ namespace ScriptCanvasEditor
                 }
                 else
                 {
-                    if (const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(nodeType))
+                    if (const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(nodeType))
                     {
                         if (index.column() == ColumnIndex::CommandIndex)
                         {
@@ -295,7 +295,7 @@ namespace ScriptCanvasEditor
                 }
                 else
                 {
-                    if (const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(nodeType))
+                    if (const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(nodeType))
                     {
                         if (index.column() == ColumnIndex::CommandIndex)
                         {
@@ -343,7 +343,7 @@ namespace ScriptCanvasEditor
             {
                 if (!entry.m_type.IsNull())
                 {
-                    if (const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(entry.m_type))
+                    if (const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(entry.m_type))
                     {
                         QString name = QString(classData->m_name);
                         if (name.startsWith(input.c_str(), Qt::CaseSensitivity::CaseInsensitive))

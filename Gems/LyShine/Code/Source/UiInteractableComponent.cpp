@@ -771,7 +771,7 @@ LyShine::EntityArray UiInteractableComponent::GetNavigableInteractables(AZ::Enti
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiInteractableComponent::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1:
     // - Need to move the navigation settings into a sub element UiNavigationSettings
@@ -796,18 +796,18 @@ bool UiInteractableComponent::VersionConverter(AZ::SerializeContext& context,
             AZ_Error("Serialization", false, "UiInteractableComponent version conversion failed when adding navigation settings");
             return false;
         }
-        AZ::SerializeContext::DataElementNode& navSettingsNode = classElement.GetSubElement(navSettingsIndex);
+        AZ::Serialization::DataElementNode& navSettingsNode = classElement.GetSubElement(navSettingsIndex);
 
         // for each of the fields to move, make a copy of the existing node and add it to the nav settings
-        AZ::SerializeContext::DataElementNode navModeNode = classElement.GetSubElement(navModeIndex);
+        AZ::Serialization::DataElementNode navModeNode = classElement.GetSubElement(navModeIndex);
         navSettingsNode.AddElement(navModeNode);
-        AZ::SerializeContext::DataElementNode navUpNode = classElement.GetSubElement(navUpIndex);
+        AZ::Serialization::DataElementNode navUpNode = classElement.GetSubElement(navUpIndex);
         navSettingsNode.AddElement(navUpNode);
-        AZ::SerializeContext::DataElementNode navDownNode = classElement.GetSubElement(navDownIndex);
+        AZ::Serialization::DataElementNode navDownNode = classElement.GetSubElement(navDownIndex);
         navSettingsNode.AddElement(navDownNode);
-        AZ::SerializeContext::DataElementNode navLeftNode = classElement.GetSubElement(navLeftIndex);
+        AZ::Serialization::DataElementNode navLeftNode = classElement.GetSubElement(navLeftIndex);
         navSettingsNode.AddElement(navLeftNode);
-        AZ::SerializeContext::DataElementNode navRightNode = classElement.GetSubElement(navRightIndex);
+        AZ::Serialization::DataElementNode navRightNode = classElement.GetSubElement(navRightIndex);
         navSettingsNode.AddElement(navRightNode);
 
         // Remove the old nodes in reverse order since removing an index invalidates all indices after it

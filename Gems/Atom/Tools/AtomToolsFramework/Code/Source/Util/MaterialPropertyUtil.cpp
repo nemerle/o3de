@@ -168,7 +168,7 @@ namespace AtomToolsFramework
         for (const AzToolsFramework::InstanceDataNode* currentNode = pNode; currentNode; currentNode = currentNode->GetParent())
         {
             const AZ::SerializeContext* context = currentNode->GetSerializeContext();
-            const AZ::SerializeContext::ClassData* classData = currentNode->GetClassMetadata();
+            const AZ::Serialization::ClassData* classData = currentNode->GetClassMetadata();
             if (context && classData)
             {
                 if (context->CanDowncast(classData->m_typeId, azrtti_typeid<AtomToolsFramework::DynamicProperty>(), classData->m_azRtti, nullptr))

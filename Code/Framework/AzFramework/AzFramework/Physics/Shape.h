@@ -9,7 +9,6 @@
 #pragma once
 
 #include <AzFramework/Physics/ShapeConfiguration.h>
-#include <AzCore/Serialization/SerializeContext.h>
 #include <AzFramework/Physics/Material.h>
 #include <AzFramework/Physics/Collision/CollisionGroups.h>
 #include <AzFramework/Physics/Collision/CollisionLayers.h>
@@ -131,7 +130,7 @@ namespace Physics
         //! If vertices are returned but not indices you may assume the vertices are in triangle list format.
         //! @param vertices A buffer to be filled with vertices
         //! @param indices A buffer to be filled with indices
-        //! @param optionalBounds Optional AABB that, if provided, will limit the mesh returned to that AABB.  
+        //! @param optionalBounds Optional AABB that, if provided, will limit the mesh returned to that AABB.
         //!                       Currently only supported by the heightfield shape.
         virtual void GetGeometry(AZStd::vector<AZ::Vector3>& vertices, AZStd::vector<AZ::u32>& indices, AZ::Aabb* optionalBounds = nullptr) = 0;
 

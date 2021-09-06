@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Asset/AssetManagerBus.h>
+#include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Debug/Trace.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/IO/SystemFile.h>
@@ -24,7 +25,7 @@
 #include <AzToolsFramework/AssetCatalog/PlatformAddressedAssetCatalogBus.h>
 
 
-namespace AzToolsFramework 
+namespace AzToolsFramework
 {
     const char* logWindowName = "AssetBundle";
     const char tempBundleFileSuffix[] = "_temp";
@@ -89,7 +90,7 @@ namespace AzToolsFramework
         bool m_result = false;
     };
 
-    
+
     void AssetBundleComponent::Reflect(AZ::ReflectContext* context)
     {
         if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -136,7 +137,7 @@ namespace AzToolsFramework
         bool result = false;
         AZStd::vector<AZStd::string> fileEntries;
         ArchiveCommandsBus::BroadcastResult(result, &AzToolsFramework::ArchiveCommands::ListFilesInArchiveBlocking, normalizedSourcePakPath, fileEntries);
-        // This ebus currently always returns false as the result, as it is believed that the 7z process is 
+        // This ebus currently always returns false as the result, as it is believed that the 7z process is
         //  being terminated by the user instead of ending gracefully. Check against an empty fileList instead
         //  as a result.
         if (fileEntries.empty())
@@ -166,7 +167,7 @@ namespace AzToolsFramework
         }
 
         // remove non-asset entries from this file list (including the source pak itself)
-        AZ_TracePrintf(logWindowName, "Removing known non-assets from the gathered list of file entries.\n");        
+        AZ_TracePrintf(logWindowName, "Removing known non-assets from the gathered list of file entries.\n");
         if (!RemoveNonAssetFileEntries(fileEntries, normalizedSourcePakPath, manifest))
         {
             return false;
@@ -185,7 +186,7 @@ namespace AzToolsFramework
         if (!InjectFile(outCatalogPath, normalizedSourcePakPath))
         {
             return false;
-        }        
+        }
 
         // clean up the file that was created.
         if (!fileIO->Remove(outCatalogPath.c_str()))
@@ -330,7 +331,7 @@ namespace AzToolsFramework
 
             if (!MaxSizeExceeded(totalFileSize, bundleSize, assetCatalogFileSizeBuffer, maxSizeInBytes))
             {
-                // if we are here it implies that the total file size on disk is less than the max bundle size 
+                // if we are here it implies that the total file size on disk is less than the max bundle size
                 // and therefore these files can be added together into the bundle.
                 fileEntries.emplace_back(assetFileInfo.m_assetRelativePath);
                 deltaCatalogEntries.emplace_back(assetFileInfo.m_assetRelativePath);
@@ -360,7 +361,7 @@ namespace AzToolsFramework
 
             if (MaxSizeExceeded(totalFileSize, bundleSize, assetCatalogFileSizeBuffer, maxSizeInBytes))
             {
-                // if we are here it implies that adding file size to the remaining increases the size over the max size 
+                // if we are here it implies that adding file size to the remaining increases the size over the max size
                 // and therefore we can add the pending files and the delta catalog to the bundle
                 if (!AddCatalogAndFilesToBundle(deltaCatalogEntries, fileEntries, tempBundleFilePath, assetAlias.c_str(), platformId))
                 {
@@ -623,7 +624,7 @@ namespace AzToolsFramework
         }
         return fileAddedToArchive;
     }
-    
+
     bool AssetBundleComponent::InjectFile(const AZStd::string& filePath, const AZStd::string& sourcePak)
     {
         return InjectFile(filePath, sourcePak, "");

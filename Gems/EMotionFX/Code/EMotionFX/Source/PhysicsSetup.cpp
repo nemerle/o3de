@@ -216,7 +216,7 @@ namespace EMotionFX
             return AZ::Failure();
         }
 
-        const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(typeId);
+        const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(typeId);
         if (!classData)
         {
             outResult = "Cannot add collider. Class data cannot be found.";
@@ -348,7 +348,7 @@ namespace EMotionFX
         }
     }
 
-    bool PhysicsSetup::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool PhysicsSetup::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() == 2)
         {
@@ -358,7 +358,7 @@ namespace EMotionFX
         // Convert legacy hit detection colliders to shape configurations in the animation config from AzFramework.
         if (classElement.GetVersion() < 4 && classElement.FindSubElement(AZ_CRC("hitDetectionColliders", 0x8675a818)))
         {
-            AZ::SerializeContext::DataElementNode* animationConfigElement = classElement.FindSubElement(AZ_CRC("config", 0xd48a2f7c));
+            AZ::Serialization::DataElementNode* animationConfigElement = classElement.FindSubElement(AZ_CRC("config", 0xd48a2f7c));
             if (!animationConfigElement)
             {
                 // Create animation config in case it didn't exist before.
@@ -366,7 +366,7 @@ namespace EMotionFX
                 animationConfigElement = classElement.FindSubElement(AZ_CRC("config", 0xd48a2f7c));
             }
 
-            AZ::SerializeContext::DataElementNode* hitDetectionConfigElement = animationConfigElement->FindSubElement(AZ_CRC("hitDetectionConfig", 0xf55ba0c6));
+            AZ::Serialization::DataElementNode* hitDetectionConfigElement = animationConfigElement->FindSubElement(AZ_CRC("hitDetectionConfig", 0xf55ba0c6));
             if (!hitDetectionConfigElement)
             {
                 // Create hit detection config in case it didn't exist before.
@@ -380,21 +380,21 @@ namespace EMotionFX
                 return false;
             }
 
-            AZ::SerializeContext::DataElementNode* oldColliderSetElement = classElement.FindSubElement(AZ_CRC("hitDetectionColliders", 0x8675a818));
+            AZ::Serialization::DataElementNode* oldColliderSetElement = classElement.FindSubElement(AZ_CRC("hitDetectionColliders", 0x8675a818));
             if (!oldColliderSetElement)
             {
                 return false;
             }
 
-            AZ::SerializeContext::DataElementNode* oldCollidersElement = oldColliderSetElement->FindSubElement(AZ_CRC("colliders", 0x0373b539));
+            AZ::Serialization::DataElementNode* oldCollidersElement = oldColliderSetElement->FindSubElement(AZ_CRC("colliders", 0x0373b539));
             if (oldCollidersElement)
             {
                 const int numColliders = oldCollidersElement->GetNumSubElements();
                 for (int i = 0; i < numColliders; ++i)
                 {
-                    AZ::SerializeContext::DataElementNode& oldColliderPair = oldCollidersElement->GetSubElement(i);
-                    AZ::SerializeContext::DataElementNode& stringElement = oldColliderPair.GetSubElement(0);
-                    AZ::SerializeContext::DataElementNode& colliderElement = oldColliderPair.GetSubElement(1);
+                    AZ::Serialization::DataElementNode& oldColliderPair = oldCollidersElement->GetSubElement(i);
+                    AZ::Serialization::DataElementNode& stringElement = oldColliderPair.GetSubElement(0);
+                    AZ::Serialization::DataElementNode& colliderElement = oldColliderPair.GetSubElement(1);
 
                     AZStd::string nodeName;
                     if (!stringElement.GetData<AZStd::string>(nodeName))
@@ -404,7 +404,7 @@ namespace EMotionFX
 
                     AZ::Vector3 position = AZ::Vector3::CreateZero();
                     AZ::Quaternion rotation = AZ::Quaternion::CreateIdentity();
-                    AZ::SerializeContext::DataElementNode* colliderBaseElement = colliderElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+                    AZ::Serialization::DataElementNode* colliderBaseElement = colliderElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
                     if (colliderBaseElement)
                     {
                         colliderBaseElement->FindSubElementAndGetData(AZ_CRC("position", 0x462ce4f5), position);
@@ -474,7 +474,7 @@ namespace EMotionFX
             }
 
             // Remove the hit detection config in case one was present before converting (All colliders are still there in the ported version).
-            AZ::SerializeContext::DataElementNode* newcharacterConfigElement = classElement.FindSubElement(AZ_CRC("config", 0xd48a2f7c));
+            AZ::Serialization::DataElementNode* newcharacterConfigElement = classElement.FindSubElement(AZ_CRC("config", 0xd48a2f7c));
             if (!newcharacterConfigElement->RemoveElementByName(AZ_CRC("hitDetectionConfig", 0xf55ba0c6)))
             {
                 return false;

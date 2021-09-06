@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Settings/SettingsRegistry.h>
 #include <AzToolsFramework/Prefab/Spawnable/PrefabConversionPipeline.h>
 
@@ -60,7 +61,7 @@ namespace AzToolsFramework::Prefab::PrefabConversionUtils
 
         for (const auto& processor : m_processors)
         {
-            const AZ::SerializeContext::ClassData* classData = context->FindClassData(processor->RTTI_GetType());
+            const AZ::Serialization::ClassData* classData = context->FindClassData(processor->RTTI_GetType());
 
             if (!classData)
             {
@@ -82,7 +83,7 @@ namespace AzToolsFramework::Prefab::PrefabConversionUtils
             serializeContext->Class<PrefabProcessor>()->Version(1);
             serializeContext->RegisterGenericType<PrefabProcessorList>();
             serializeContext->RegisterGenericType<PrefabProcessorListEntry>();
-        }  
+        }
     }
 
     size_t PrefabConversionPipeline::GetFingerprint() const

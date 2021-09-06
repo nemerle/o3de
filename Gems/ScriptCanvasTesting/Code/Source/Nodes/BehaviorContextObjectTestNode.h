@@ -10,6 +10,9 @@
 
 #include <ScriptCanvas/Core/Attributes.h>
 
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
+
 namespace ScriptCanvasTestingNodes
 {
     //! This object is used to test the use of BehaviorContext classes
@@ -29,7 +32,7 @@ namespace ScriptCanvasTestingNodes
                     ->Field("String", &BehaviorContextObjectTest::m_string)
                     ->Field("Name", &BehaviorContextObjectTest::m_name)
                     ;
-                                
+
                 if (AZ::EditContext* editContext = serializeContext->GetEditContext())
                 {
                     editContext->Class<BehaviorContextObjectTest>("Behavior Context Object Test", "An Object that lives within Behavior Context exclusively for testing")

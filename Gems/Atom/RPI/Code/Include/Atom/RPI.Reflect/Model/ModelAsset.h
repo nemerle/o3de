@@ -49,10 +49,10 @@ namespace AZ
 
             //! Returns the model-space axis aligned bounding box
             const AZ::Aabb& GetAabb() const;
-            
+
             //! Returns the list of all ModelMaterialSlot's for the model, across all LODs.
             const ModelMaterialSlotMap& GetMaterialSlots() const;
-            
+
             //! Find a material slot with the given stableId, or returns an invalid slot if it isn't found.
             const ModelMaterialSlot& FindMaterialSlot(uint32_t stableId) const;
 
@@ -88,13 +88,6 @@ namespace AZ
             bool BruteForceRayIntersect(
                 const AZ::Vector3& rayStart, const AZ::Vector3& rayDir, float& distanceNormalized, AZ::Vector3& normal) const;
 
-            bool LocalRayIntersectionAgainstMesh(
-                const ModelLodAsset::Mesh& mesh,
-                const AZ::Vector3& rayStart,
-                const AZ::Vector3& rayDir,
-                float& distanceNormalized,
-                AZ::Vector3& normal) const;
-
             // Various model information used in raycasting
             AZ::Name m_positionName{ "POSITION" };
             // there is a tradeoff between memory use and performance but anywhere under a few thousand triangles or so remains under a few milliseconds per ray cast
@@ -103,7 +96,7 @@ namespace AZ
             volatile mutable bool m_isKdTreeCalculationRunning = false;
             mutable AZStd::mutex m_kdTreeLock;
             mutable AZStd::optional<AZStd::size_t> m_modelTriangleCount;
-            
+
             // Lists all of the material slots that are used by this LOD.
             // Note the same slot can appear in multiple LODs in the model, so that LODs don't have to refer back to the model asset.
             ModelMaterialSlotMap m_materialSlots;

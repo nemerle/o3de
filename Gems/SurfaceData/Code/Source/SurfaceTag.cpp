@@ -19,7 +19,7 @@ namespace SurfaceData
 {
     namespace SurfaceTagUtil
     {
-        static bool UpdateVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool UpdateVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 1)
             {

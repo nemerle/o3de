@@ -42,7 +42,7 @@ namespace ScriptCanvas
                 }
             }
 
-            bool OperatorLength::OperatorLengthConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+            bool OperatorLength::OperatorLengthConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
             {
                 if (rootElement.GetVersion() < Version::RemoveOperatorBase)
                 {

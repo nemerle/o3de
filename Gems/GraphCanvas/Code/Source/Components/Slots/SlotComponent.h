@@ -27,7 +27,7 @@ namespace GraphCanvas
     {
     public:
         AZ_COMPONENT(SlotComponent, "{EACFC8FB-C75B-4ABA-988D-89C964B9A4E4}");
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
         static void Reflect(AZ::ReflectContext* context);
         static AZ::Entity* CreateCoreSlotEntity();
 

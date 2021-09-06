@@ -18,7 +18,7 @@ namespace AzFramework
     //=========================================================================
     // DataVersionConverter
     //=========================================================================
-    bool AssetCatalogComponentDataVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool AssetCatalogComponentDataVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         (void)context;
 

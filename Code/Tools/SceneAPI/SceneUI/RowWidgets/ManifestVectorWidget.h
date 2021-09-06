@@ -95,7 +95,7 @@ namespace AZ
 
             protected:
                 void DisplayAddPrompt();
-                void AddNewObject(SerializeContext::IObjectFactory* factory, const AZStd::string& typeName);
+                void AddNewObject(Serialization::IObjectFactory* factory, const AZStd::string& typeName);
                 void UpdatePropertyGrid();
                 void UpdatePropertyGridSize();
                 void EmitObjectChanged(const DataTypes::IManifestObject* object);

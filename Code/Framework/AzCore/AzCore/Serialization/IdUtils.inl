@@ -20,8 +20,8 @@ namespace AZ
         static const AZ::Uuid s_GenericClassPairID = AZ::Uuid::CreateString("{9F3F5302-3390-407a-A6F7-2E011E3BB686}"); // GenericClassPair
         struct StackDataType
         {
-            const AZ::SerializeContext::ClassData* m_classData;
-            const AZ::SerializeContext::ClassElement* m_elementData;
+            const AZ::Serialization::ClassData* m_classData;
+            const AZ::Serialization::ClassElement* m_elementData;
             void* m_dataPtr;
             bool m_isModifiedContainer;
         };
@@ -44,7 +44,7 @@ namespace AZ
             unsigned int replaced = 0;
             AZStd::vector<StackDataType> parentStack;
             parentStack.reserve(30);
-            auto beginCB = [&](void* ptr, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* elementData) -> bool
+            auto beginCB = [&](void* ptr, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* elementData) -> bool
             {
                 if (classData->m_typeId == AZ::SerializeTypeInfo<IdType>::GetUuid())
                 {
@@ -63,7 +63,7 @@ namespace AZ
                     }
 
                     auto originalIdPtr = reinterpret_cast<IdType*>(ptr);
-                    if (elementData->m_flags & AZ::SerializeContext::ClassElement::FLG_POINTER)
+                    if (elementData->m_flags & AZ::Serialization::ClassElement::FLG_POINTER)
                     {
                         originalIdPtr = *reinterpret_cast<IdType**>(ptr);
                     }
@@ -176,12 +176,12 @@ namespace AZ
             unsigned int replaced = 0;
             AZStd::vector<StackDataType> parentStack;
             parentStack.reserve(30);
-            auto beginCB = [&](void* ptr, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* elementData) -> bool
+            auto beginCB = [&](void* ptr, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* elementData) -> bool
             {
                 if (classData->m_typeId == AZ::SerializeTypeInfo<IdType>::GetUuid())
                 {
                     auto originalIdPtr = reinterpret_cast<IdType*>(ptr);
-                    if (elementData->m_flags & AZ::SerializeContext::ClassElement::FLG_POINTER)
+                    if (elementData->m_flags & AZ::Serialization::ClassElement::FLG_POINTER)
                     {
                         originalIdPtr = *reinterpret_cast<IdType**>(ptr);
                     }

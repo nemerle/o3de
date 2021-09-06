@@ -11,14 +11,12 @@
 #include <Atom/RPI.Public/Buffer/Buffer.h>
 #include <Atom/RPI.Public/Material/Material.h>
 #include <Atom/RPI.Public/Model/UvStreamTangentBitmask.h>
+#include <Atom/RPI.Reflect/Model/ModelMaterialSlot.h>
 
 #include <Atom/RHI/DrawItem.h>
 
 #include <Atom/RHI.Reflect/Base.h>
 #include <Atom/RHI.Reflect/Limits.h>
-
-#include <Atom/RPI.Reflect/Model/ModelLodAsset.h>
-#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
 #include <AtomCore/std/containers/array_view.h>
 #include <AtomCore/std/containers/vector_set.h>
@@ -31,11 +29,14 @@ namespace AZ
     {
         //! A map matches the UV shader inputs of this material to the custom UV names from the model.
         using MaterialModelUvOverrideMap = AZStd::unordered_map<RHI::ShaderSemantic, AZ::Name>;
+        class ModelAsset;
+        class ModelLodAsset;
 
         class ModelLod final
             : public Data::InstanceData
         {
             friend class ModelSystem;
+            friend uint32_t TrackBuffer(const Data::Instance<Buffer>& buffer, ModelLod* self);
         public:
             //! Describes a single stream buffer/channel in a single mesh. For example position, normal, or UV.
             //! ModelLod always uses a separate stream buffer for each stream channel (no interleaving) so
@@ -49,17 +50,17 @@ namespace AZ
 
                 //! Specifically used by UV sets for now, to define custom readable name (e.g. Unwrapped) besides semantic (UVi)
                 AZ::Name m_customName;
-                
+
                 //! Format of the vertex data in this channel
                 RHI::Format m_format;
-                
+
                 //! Indicates a ModelLod::m_buffers entry
                 uint32_t m_bufferIndex;
-                
+
                 //! Indicates a range within the ModelLod::m_buffers entry (because each buffer contains vertex data for all meshes in the LOD)
-                uint32_t m_byteOffset;           
+                uint32_t m_byteOffset;
                 uint32_t m_byteCount;
-                
+
                 //! Number of bytes in one element of the stream. This corresponds to m_format.
                 uint32_t m_stride;
             };
@@ -75,7 +76,7 @@ namespace AZ
                 StreamInfoList m_streamInfo;
 
                 ModelMaterialSlot::StableId m_materialSlotStableId = ModelMaterialSlot::InvalidStableId;
-                
+
                 //! The default material assigned to the mesh by the asset.
                 Data::Instance<Material> m_material;
             };
@@ -128,9 +129,6 @@ namespace AZ
             static Data::Instance<ModelLod> CreateInternal(const Data::Asset<ModelLodAsset>& lodAsset, const AZStd::any* modelAssetAny);
             RHI::ResultCode Init(const Data::Asset<ModelLodAsset>& lodAsset, const Data::Asset<ModelAsset>& modelAsset);
 
-            bool SetMeshInstanceData(
-                const ModelLodAsset::Mesh::StreamBufferInfo& streamBufferInfo,
-                Mesh& meshInstance);
 
             StreamInfoList::const_iterator FindFirstUvStreamFromMesh(size_t meshIndex) const;
 
@@ -151,13 +149,6 @@ namespace AZ
                 StreamInfoList::const_iterator defaultUv,
                 StreamInfoList::const_iterator firstUv,
                 UvStreamTangentBitmask* uvStreamTangentBitmaskOut) const;
-
-            // Meshes may share index/stream buffers in an LOD or they may have 
-            // unique buffers. Often the asset builder will prioritize shared buffers
-            // so we need to check if the buffer is already tracked before we add it
-            // to the list.
-            // @return the index of the buffer in m_buffers
-            uint32_t TrackBuffer(const Data::Instance<Buffer>& buffer);
 
             // Collection of buffers grouped by payload
             // Provides buffer views backed by data in m_buffers;

@@ -84,13 +84,13 @@ void FilteredComponentList::ContextMenu_NewEntity()
 
 void FilteredComponentList::ContextMenu_AddToFavorites()
 {
-    AZStd::vector<const AZ::SerializeContext::ClassData*> componentsToAdd;
+    AZStd::vector<const AZ::Serialization::ClassData*> componentsToAdd;
     for (auto index : selectedIndexes())
     {
         QVariant classDataVariant = index.data(ComponentDataModel::ClassDataRole);
         if (classDataVariant.isValid())
         {
-            auto classData = reinterpret_cast<const AZ::SerializeContext::ClassData*>(classDataVariant.value<void*>());
+            auto classData = reinterpret_cast<const AZ::Serialization::ClassData*>(classDataVariant.value<void*>());
             componentsToAdd.push_back(classData);
         }
     }

@@ -166,16 +166,16 @@ namespace AZ::SceneAPI::SceneData
     }
 
     bool CoordinateSystemRule::ConvertLegacyCoordinateSystemRule(AZ::SerializeContext& serializeContext,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
-        AZ::SerializeContext::DataElementNode* ruleContainerNode = classElement.FindSubElement(AZ_CRC("rules", 0x899a993c));
+        AZ::Serialization::DataElementNode* ruleContainerNode = classElement.FindSubElement(AZ_CRC("rules", 0x899a993c));
         if (!ruleContainerNode)
         {
             AZ_TracePrintf(AZ::SceneAPI::Utilities::ErrorWindow, "Can't find rule container.\n");
             return false;
         }
 
-        AZ::SerializeContext::DataElementNode* rulesNode = ruleContainerNode->FindSubElement(AZ_CRC("rules", 0x899a993c));
+        AZ::Serialization::DataElementNode* rulesNode = ruleContainerNode->FindSubElement(AZ_CRC("rules", 0x899a993c));
         if (!rulesNode)
         {
             AZ_TracePrintf(AZ::SceneAPI::Utilities::ErrorWindow, "Can't find rules within rule container.\n");
@@ -186,10 +186,10 @@ namespace AZ::SceneAPI::SceneData
         const int numRules = rulesNode->GetNumSubElements();
         for (int i = 0; i < numRules; ++i)
         {
-            AZ::SerializeContext::DataElementNode& sharedPointerNode = rulesNode->GetSubElement(i);
+            AZ::Serialization::DataElementNode& sharedPointerNode = rulesNode->GetSubElement(i);
             if (sharedPointerNode.GetNumSubElements() == 1)
             {
-                AZ::SerializeContext::DataElementNode& currentRuleNode = sharedPointerNode.GetSubElement(0);
+                AZ::Serialization::DataElementNode& currentRuleNode = sharedPointerNode.GetSubElement(0);
 
                 // Convert the coordinate system rule
                 if (currentRuleNode.GetId() == oldCoordSysRuleId)

@@ -162,7 +162,7 @@ namespace AZ
                 EBUS_EVENT_RESULT(context, ComponentApplicationBus, GetSerializeContext);
                 if (context)
                 {
-                    const SerializeContext::ClassData* classData = context->FindClassData(target->RTTI_GetType());
+                    const Serialization::ClassData* classData = context->FindClassData(target->RTTI_GetType());
                     if (classData)
                     {
                         if (classData->m_editData)

@@ -5,12 +5,10 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
-#ifndef AZCORE_ENTITY_UTILS_H
-#define AZCORE_ENTITY_UTILS_H
+#pragma once
 
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Debug/Profiler.h>
-#include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/functional.h>
 #include <AzCore/Serialization/IdUtils.h>
 
@@ -42,7 +40,7 @@ namespace AZ
         * Given key, return the EntityId to map to
         */
         typedef AZStd::function< EntityId(const EntityId& /*originalId*/, bool /*isEntityId*/) > EntityIdMapper;
-        typedef AZStd::function< void(const AZ::EntityId& /*id*/, bool /*isEntityId*/, const AZ::SerializeContext::ClassElement* /*elementData*/) > EntityIdVisitor;
+        typedef AZStd::function< void(const AZ::EntityId& /*id*/, bool /*isEntityId*/, const AZ::Serialization::ClassElement* /*elementData*/) > EntityIdVisitor;
 
         /**
         * Enumerates all entity references in the object's hierarchy and remaps them with the result returned by mapper.
@@ -192,7 +190,7 @@ namespace AZ
             return entity ? FindDerivedComponents<ComponentType>(entity) : AZStd::vector<ComponentType*>();
         }
 
-        using EnumerateBaseRecursiveVisitor = AZStd::function< bool(const SerializeContext::ClassData*, const Uuid&)>;
+        using EnumerateBaseRecursiveVisitor = AZStd::function< bool(const Serialization::ClassData*, const Uuid&)>;
         bool EnumerateBaseRecursive(SerializeContext* context, const EnumerateBaseRecursiveVisitor& baseClassVisitor, const TypeId& typeToExamine);
 
         //! Performs a recursive search of all classes declared in the serialize hierarchy of typeToExamine
@@ -217,6 +215,3 @@ namespace AZ
 
     } // namespace EntityUtils
 }   // namespace AZ
-
-#endif  // AZCORE_ENTITY_UTILS_H
-#pragma once

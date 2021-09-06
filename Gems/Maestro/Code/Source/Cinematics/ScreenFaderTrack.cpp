@@ -170,7 +170,7 @@ bool CScreenFaderTrack::SetActiveTexture(int index)
 //////////////////////////////////////////////////////////////////////////
 static bool ScreenFaderTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

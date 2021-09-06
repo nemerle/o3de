@@ -168,7 +168,7 @@ namespace ScriptCanvas
         }
     }
 
-    bool RuntimeComponent::VersionConverter(AZ::SerializeContext&, AZ::SerializeContext::DataElementNode& classElement)
+    bool RuntimeComponent::VersionConverter(AZ::SerializeContext&, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 3)
         {

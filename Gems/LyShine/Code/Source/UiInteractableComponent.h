@@ -195,7 +195,7 @@ private: // static member functions
     static LyShine::EntityArray GetNavigableInteractables(AZ::EntityId sourceEntity);
 
     static bool VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement);
+        AZ::Serialization::DataElementNode& classElement);
 
 private: // types
 

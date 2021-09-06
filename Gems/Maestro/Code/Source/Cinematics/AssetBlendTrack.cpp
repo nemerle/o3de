@@ -160,7 +160,7 @@ float CAssetBlendTrack::GetKeyDuration(int key) const
 //////////////////////////////////////////////////////////////////////////
 static bool AssetBlendTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

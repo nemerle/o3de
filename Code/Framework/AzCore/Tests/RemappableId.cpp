@@ -152,7 +152,7 @@ namespace UnitTest
         };
 
         struct ParentEntityContainerEventHandler
-            : public AZ::SerializeContext::IEventHandler
+            : public AZ::Serialization::IEventHandler
         {
             static bool s_isCheckingCallbackOrder;
 

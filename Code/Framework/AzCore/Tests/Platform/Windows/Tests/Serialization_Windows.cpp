@@ -36,7 +36,7 @@ namespace UnitTest
     TEST_F(SerializationFixture, CallingDeletePointerDataOnIDataContainerObject_DoesNotAccessInvalidMemory)
     {
         struct TestDataContainer
-            : AZ::SerializeContext::IDataContainer
+            : AZ::Serialization::IDataContainer
         {
             TestDataContainer(uint32_t* testInt)
                 : m_testInt(testInt)
@@ -51,11 +51,11 @@ namespace UnitTest
                 m_classElement.m_editData = {};
                 m_classElement.m_flags = 0;
             }
-            const AZ::SerializeContext::ClassElement* GetElement(uint32_t) const override
+            const AZ::Serialization::ClassElement* GetElement(uint32_t) const override
             {
                 return {};
             }
-            bool GetElement(AZ::SerializeContext::ClassElement&, const AZ::SerializeContext::DataElement&) const override
+            bool GetElement(AZ::Serialization::ClassElement&, const AZ::Serialization::DataElement&) const override
             {
                 return {};
             }
@@ -91,11 +91,11 @@ namespace UnitTest
             {
                 return {};
             }
-            void* ReserveElement(void*, const AZ::SerializeContext::ClassElement*) override
+            void* ReserveElement(void*, const AZ::Serialization::ClassElement*) override
             {
                 return {};
             }
-            void* GetElementByIndex(void*, const AZ::SerializeContext::ClassElement*, size_t) override
+            void* GetElementByIndex(void*, const AZ::Serialization::ClassElement*, size_t) override
             {
                 return {};
             }
@@ -115,7 +115,7 @@ namespace UnitTest
             {}
 
             uint32_t* m_testInt;
-            AZ::SerializeContext::ClassElement m_classElement;
+            AZ::Serialization::ClassElement m_classElement;
         };
 
 

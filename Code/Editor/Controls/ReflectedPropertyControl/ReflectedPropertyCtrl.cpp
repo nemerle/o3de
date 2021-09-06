@@ -26,6 +26,9 @@
 #include <AzToolsFramework/UI/SearchWidget/SearchCriteriaWidget.hxx>
 #include <AzToolsFramework/Editor/EditorSettingsAPIBus.h>
 
+//AzCore
+#include <AzCore/Component/ComponentApplicationBus.h>
+
 // Editor
 #include "Clipboard.h"
 
@@ -653,7 +656,7 @@ CReflectedVar * ReflectedPropertyControl::GetReflectedVarFromCallbackInstance(Az
 {
     if (!pNode)
         return nullptr;
-    const AZ::SerializeContext::ClassData *classData = pNode->GetClassMetadata();
+    const AZ::Serialization::ClassData *classData = pNode->GetClassMetadata();
     if (classData->m_azRtti && classData->m_azRtti->IsTypeOf(CReflectedVar::TYPEINFO_Uuid()))
         return reinterpret_cast<CReflectedVar *>(pNode->GetInstance(0));
     else

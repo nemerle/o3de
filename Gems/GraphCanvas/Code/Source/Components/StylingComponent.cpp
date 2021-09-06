@@ -26,7 +26,7 @@ namespace GraphCanvas
     /////////////////////
     // StylingComponent
     /////////////////////
-    bool StylingComponentVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool StylingComponentVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() <= 1)
         {
@@ -34,7 +34,7 @@ namespace GraphCanvas
 
             StylingComponent::StylingComponentSaveData saveData;
 
-            AZ::SerializeContext::DataElementNode* dataNode = classElement.FindSubElement(classId);
+            AZ::Serialization::DataElementNode* dataNode = classElement.FindSubElement(classId);
 
             if (dataNode)
             {

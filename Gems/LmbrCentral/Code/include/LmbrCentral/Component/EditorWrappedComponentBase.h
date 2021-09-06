@@ -47,7 +47,7 @@ namespace LmbrCentral
 
     protected:
         template<typename TDerivedClass, typename TBaseClass>
-        static void ReflectSubClass(AZ::ReflectContext* context, unsigned int version = 0, AZ::SerializeContext::VersionConverter versionConverter = nullptr);
+        static void ReflectSubClass(AZ::ReflectContext* context, unsigned int version = 0, AZ::Serialization::VersionConverter versionConverter = nullptr);
 
         static void Reflect(AZ::ReflectContext* context);
 

@@ -55,7 +55,7 @@ namespace AZ
                 SCENE_CORE_API void RemoveRule(const AZStd::shared_ptr<DataTypes::IRule>& rule);
 
                 static void Reflect(ReflectContext* context);
-                static SCENE_CORE_API bool VectorToRuleContainerConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+                static SCENE_CORE_API bool VectorToRuleContainerConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
             private:
                 AZStd::vector<AZStd::shared_ptr<DataTypes::IRule>> m_rules;

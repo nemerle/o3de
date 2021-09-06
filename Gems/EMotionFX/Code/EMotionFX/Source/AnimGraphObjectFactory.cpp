@@ -278,7 +278,7 @@ namespace EMotionFX
             return nullptr;
         }
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(type);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(type);
         if (!classData)
         {
             AZ_Warning("EMotionFX", false, "Can't find class data for this type.");

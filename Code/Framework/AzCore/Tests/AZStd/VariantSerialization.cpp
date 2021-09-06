@@ -8,6 +8,7 @@
 
 #include <SerializeContextFixture.h>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/std/any.h>
 #include <AzCore/std/containers/variant.h>
 #include <AzCore/Component/Entity.h>
@@ -29,7 +30,7 @@ namespace UnitTest
 
             m_serializeContext = AZStd::make_unique<AZ::SerializeContext>();
             AZ::Entity::Reflect(m_serializeContext.get());
-            
+
         }
 
         void TearDown() override
@@ -238,10 +239,10 @@ namespace UnitTest
         }
         EXPECT_EQ(sourceVariant.index(), loadAnyVariant1.index());
         ASSERT_EQ(0U, loadAnyVariant1.index());
-        
+
         AZStd::any& loadAnyValue = AZStd::get<0>(loadAnyVariant1);
         EXPECT_TRUE(loadAnyValue.is<int32_t>());
-        
+
         int32_t* loadIntValue = AZStd::any_cast<int32_t>(&loadAnyValue);
         ASSERT_NE(nullptr, loadIntValue);
         EXPECT_EQ(expectedIntValue, *loadIntValue);
@@ -278,7 +279,7 @@ namespace UnitTest
         }
 
         // Due to the Variant Serialization only writing out the alternative to disk and the AZStd::any class
-        // being only able to determine the type dynamically, the type that is stored in the any is the 
+        // being only able to determine the type dynamically, the type that is stored in the any is the
         // alternative, not the variant
         EXPECT_TRUE(loadAny.is<int>());
         int* loadIntValue = AZStd::any_cast<int>(&loadAny);
@@ -299,7 +300,7 @@ namespace UnitTest
 
         VariantWrapper saveWrapper;
 
-        saveWrapper.m_wrappedVariant = new AZStd::variant<uint64_t>(expectedIntValue);        
+        saveWrapper.m_wrappedVariant = new AZStd::variant<uint64_t>(expectedIntValue);
         EXPECT_EQ(expectedIntValue, AZStd::get<0>(*saveWrapper.m_wrappedVariant));
 
         VariantWrapper loadWrapper;
@@ -375,7 +376,7 @@ namespace UnitTest
         SaveVariant sourceVariant{ expectedIntValue };
         AZStd::vector<char> byteBuffer;
         AZ::IO::ByteContainerStream<decltype(byteBuffer)> byteStream(&byteBuffer);
-        
+
         {
             ScopedSerializeContextReflector scopedReflector(*m_serializeContext, {
                 [](AZ::SerializeContext* serializeContext)
@@ -728,7 +729,7 @@ namespace UnitTest
         const AZStd::string expectedStringValue1{ "Zubat Key" };
         const AZStd::string expectedStringValue2{ "Yubioh Key" };
         const AZStd::string expectedStringValue3{ "Gelato Token" };
-        
+
         SaveType twoStepsVectorAndTwoStepsBack;
         // Set the inner vector first element to have an expected string value of "Yubioh Key" and "Gelato Token"
         twoStepsVectorAndTwoStepsBack.emplace_back();

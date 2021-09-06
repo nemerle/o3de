@@ -35,7 +35,7 @@ namespace GradientSignal
         GradientSampler m_gradientSampler;
         SmoothStep m_smoothStep;
     private:
-        static bool UpdateVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool UpdateVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     };
 
     static const AZ::Uuid SmoothStepGradientComponentTypeId = "{404BD2B5-6229-4C60-998E-77F394FF27A8}";

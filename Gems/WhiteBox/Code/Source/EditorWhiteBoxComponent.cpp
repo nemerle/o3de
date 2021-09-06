@@ -136,7 +136,7 @@ namespace WhiteBox
     }
 
     bool EditorWhiteBoxVersionConverter(
-        AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() <= 1)
         {

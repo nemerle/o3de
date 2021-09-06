@@ -25,7 +25,7 @@ namespace ScriptCanvasEditor
         AZ::SerializeContext* serializeContext = nullptr;
         AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
         AZ_Assert(serializeContext, "Failed to acquire application serialize context.");
-        const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(classId);
+        const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(classId);
 
         // Find the icon's path in the editor data attributes
         if (classData && classData->m_editData)

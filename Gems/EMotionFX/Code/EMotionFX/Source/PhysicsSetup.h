@@ -71,7 +71,7 @@ namespace EMotionFX
         static void Reflect(AZ::ReflectContext* context);
 
     private:
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         static const char* s_colliderConfigTypeVisualNames[5];
 

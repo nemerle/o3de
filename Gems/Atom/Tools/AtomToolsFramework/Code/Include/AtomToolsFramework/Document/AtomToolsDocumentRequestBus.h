@@ -10,6 +10,7 @@
 #include <AzCore/std/any.h>
 #include <AtomToolsFramework/DynamicProperty/DynamicProperty.h>
 #include <AtomToolsFramework/DynamicProperty/DynamicPropertyGroup.h>
+#include <AzCore/EBus/EBus.h>
 
 namespace AtomToolsFramework
 {
@@ -34,7 +35,7 @@ namespace AtomToolsFramework
         //! Returns a property object
         //! If the document is not open or the id can't be found, an invalid property is returned.
         virtual const AtomToolsFramework::DynamicProperty& GetProperty(const AZ::Name& propertyFullName) const = 0;
-        
+
         //! Returns whether a property group is visible
         //! If the document is not open or the id can't be found, returns false.
         virtual bool IsPropertyGroupVisible(const AZ::Name& propertyGroupFullName) const = 0;

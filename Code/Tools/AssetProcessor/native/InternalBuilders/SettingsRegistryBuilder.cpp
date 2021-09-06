@@ -8,6 +8,7 @@
 
 #include <limits>
 #include <AssetBuilderSDK/AssetBuilderSDK.h>
+#include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Settings/SettingsRegistryImpl.h>
 #include <AzCore/Settings/SettingsRegistryMergeUtils.h>
 #include <AzCore/Utils/Utils.h>
@@ -160,7 +161,7 @@ namespace AssetProcessor
         builderDesc.m_processJobFunction = AZStd::bind(&SettingsRegistryBuilder::ProcessJob, this, AZStd::placeholders::_1, AZStd::placeholders::_2);
 
         AssetBuilderSDK::AssetBuilderBus::Broadcast(&AssetBuilderSDK::AssetBuilderBusTraits::RegisterBuilderInformation, builderDesc);
-        
+
         return true;
     }
 
@@ -211,8 +212,8 @@ namespace AssetProcessor
 
         AZStd::vector<AZStd::string> excludes = ReadExcludesFromRegistry();
         // Exclude the AssetProcessor settings from the game regsitry
-        excludes.emplace_back(AssetProcessor::AssetProcessorSettingsKey); 
-        
+        excludes.emplace_back(AssetProcessor::AssetProcessorSettingsKey);
+
         AZStd::vector<char> scratchBuffer;
         scratchBuffer.reserve(512 * 1024); // Reserve 512kb to avoid repeatedly resizing the buffer;
         AZStd::fixed_vector<AZStd::string_view, AzFramework::MaxPlatformCodeNames> platformCodes;
@@ -221,7 +222,7 @@ namespace AssetProcessor
         // Determines the suffix that will be used for the launcher based on processing server vs non-server assets
         const char* launcherType = assetPlatformIdentifier != AzFramework::PlatformHelper::GetPlatformName(AzFramework::PlatformId::SERVER)
             ? "_GameLauncher" : "_ServerLauncher";
-        
+
         AZ::SettingsRegistryInterface::Specializations specializations[] =
         {
             { AZStd::string_view{"release"}, AZStd::string_view{"game"} },

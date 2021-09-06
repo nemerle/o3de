@@ -66,7 +66,7 @@ namespace
 
     bool HasExcludeFromNodeListAttribute(const AZ::SerializeContext* serializeContext, const AZ::Uuid& typeId)
     {
-        const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(typeId);
+        const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(typeId);
         if (classData && classData->m_editData)
         {
             if (auto editorElementData = classData->m_editData->FindElementData(AZ::Edit::ClassElements::EditorData))
@@ -254,7 +254,7 @@ namespace
     {
         // Get all the types.
         auto EnumerateLibraryDefintionNodes = [&nodePaletteModel, &serializeContext](
-            const AZ::SerializeContext::ClassData* classData, const AZ::Uuid&) -> bool
+            const AZ::Serialization::ClassData* classData, const AZ::Uuid&) -> bool
         {
             ScriptCanvasEditor::CategoryInformation categoryInfo;
 
@@ -302,7 +302,7 @@ namespace
                 }
 
                 // Pass in the associated class data so we can do more intensive lookups?
-                const AZ::SerializeContext::ClassData* nodeClassData = serializeContext.FindClassData(node.first);
+                const AZ::Serialization::ClassData* nodeClassData = serializeContext.FindClassData(node.first);
 
                 if (nodeClassData == nullptr)
                 {
@@ -893,7 +893,7 @@ namespace ScriptCanvasEditor
         NodePaletteModelNotificationBus::Event(m_paletteId, &NodePaletteModelNotifications::OnAssetModelRepopulated);
     }
 
-    void NodePaletteModel::RegisterCustomNode(AZStd::string_view categoryPath, const AZ::Uuid& uuid, AZStd::string_view name, const AZ::SerializeContext::ClassData* classData)
+    void NodePaletteModel::RegisterCustomNode(AZStd::string_view categoryPath, const AZ::Uuid& uuid, AZStd::string_view name, const AZ::Serialization::ClassData* classData)
     {
         ScriptCanvas::NodeTypeIdentifier nodeIdentifier = ScriptCanvas::NodeUtils::ConstructCustomNodeIdentifier(uuid);
 

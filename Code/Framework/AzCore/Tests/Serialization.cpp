@@ -9,6 +9,7 @@
 #include "FileIOBaseTestTypes.h"
 
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 
 #include <AzCore/Serialization/SerializeContext.h>
@@ -173,7 +174,7 @@ namespace SerializeTestClasses {
         AZ_RTTI(MyClassMixNew, "{A15003C6-797A-41BB-9D21-716DF0678D02}", MyClassBase1, MyClassBase2, MyClassBase3); // Use the same UUID as MyClassMix for conversion test
         AZ_CLASS_ALLOCATOR(MyClassMixNew, AZ::SystemAllocator, 0);
 
-        static bool ConvertOldVersions(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool ConvertOldVersions(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() == 0)
             {
@@ -181,7 +182,7 @@ namespace SerializeTestClasses {
                 float sum = 0.f;
                 for (int i = 0; i < classElement.GetNumSubElements(); )
                 {
-                    AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(i);
+                    AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(i);
                     if (elementNode.GetName() == AZ_CRC("dataMix", 0x041bcc8d))
                     {
                         classElement.RemoveElement(i);
@@ -192,7 +193,7 @@ namespace SerializeTestClasses {
                         // go through our base classes adding their data members
                         for (int j = 0; j < elementNode.GetNumSubElements(); ++j)
                         {
-                            AZ::SerializeContext::DataElementNode& dataNode = elementNode.GetSubElement(j);
+                            AZ::Serialization::DataElementNode& dataNode = elementNode.GetSubElement(j);
                             if (dataNode.GetName() == AZ_CRC("data", 0xadf3f363))
                             {
                                 float data;
@@ -732,14 +733,14 @@ namespace SerializeTestClasses
         AZ_CLASS_ALLOCATOR(GenericsNew, AZ::SystemAllocator, 0);
         AZ_TYPE_INFO(GenericsNew, "{ACA50B82-D04B-4ACF-9FF6-F780040C9EB9}") // Match Generics ID for conversion test
 
-        static bool ConvertOldVersions(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool ConvertOldVersions(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() == 0)
             {
                 // convert from version 0
                 for (int i = 0; i < classElement.GetNumSubElements(); )
                 {
-                    AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(i);
+                    AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(i);
                     if (elementNode.GetName() == AZ_CRC("textData", 0xf322c69d))
                     {
                         AZStd::string text;
@@ -749,7 +750,7 @@ namespace SerializeTestClasses
                         int memberIdx = classElement.AddElement<AZStd::string>(context, "string");
                         if (memberIdx != -1)
                         {
-                            AZ::SerializeContext::DataElementNode& memberNode = classElement.GetSubElement(memberIdx);
+                            AZ::Serialization::DataElementNode& memberNode = classElement.GetSubElement(memberIdx);
                             memberNode.SetData(context, text);
                         }
                         classElement.RemoveElement(i);
@@ -768,14 +769,14 @@ namespace SerializeTestClasses
                         int memberIdx = classElement.AddElement<AZStd::vector<int> >(context, "vectorInt2");
                         if (memberIdx != -1)
                         {
-                            AZ::SerializeContext::DataElementNode& memberNode = classElement.GetSubElement(memberIdx);
+                            AZ::Serialization::DataElementNode& memberNode = classElement.GetSubElement(memberIdx);
                             for (int j = 0; j < elementNode.GetNumSubElements(); ++j)
                             {
-                                AZ::SerializeContext::DataElementNode& vecElemNode = elementNode.GetSubElement(j);
+                                AZ::Serialization::DataElementNode& vecElemNode = elementNode.GetSubElement(j);
                                 int val;
                                 bool result = vecElemNode.GetData(val);
                                 EXPECT_TRUE(result);
-                                int elemIdx = memberNode.AddElement<int>(context, AZ::SerializeContext::IDataContainer::GetDefaultElementName());
+                                int elemIdx = memberNode.AddElement<int>(context, AZ::Serialization::IDataContainer::GetDefaultElementName());
                                 if (elemIdx != -1)
                                 {
                                     memberNode.GetSubElement(elemIdx).SetData(context, val * 2);
@@ -790,21 +791,21 @@ namespace SerializeTestClasses
                         int newListIntList = classElement.AddElement<AZStd::list<AZStd::list<int> > >(context, "listIntList");
                         if (newListIntList != -1)
                         {
-                            AZ::SerializeContext::DataElementNode& listIntListNode = classElement.GetSubElement(newListIntList);
+                            AZ::Serialization::DataElementNode& listIntListNode = classElement.GetSubElement(newListIntList);
                             for (int j = 0; j < elementNode.GetNumSubElements(); ++j)
                             {
-                                AZ::SerializeContext::DataElementNode& subVecNode = elementNode.GetSubElement(j);
-                                int newListInt = listIntListNode.AddElement<AZStd::list<int> >(context, AZ::SerializeContext::IDataContainer::GetDefaultElementName());
+                                AZ::Serialization::DataElementNode& subVecNode = elementNode.GetSubElement(j);
+                                int newListInt = listIntListNode.AddElement<AZStd::list<int> >(context, AZ::Serialization::IDataContainer::GetDefaultElementName());
                                 if (newListInt != -1)
                                 {
-                                    AZ::SerializeContext::DataElementNode& listIntNode = listIntListNode.GetSubElement(newListInt);
+                                    AZ::Serialization::DataElementNode& listIntNode = listIntListNode.GetSubElement(newListInt);
                                     for (int k = 0; k < subVecNode.GetNumSubElements(); ++k)
                                     {
-                                        AZ::SerializeContext::DataElementNode& intNode = subVecNode.GetSubElement(k);
+                                        AZ::Serialization::DataElementNode& intNode = subVecNode.GetSubElement(k);
                                         int val;
                                         bool result = intNode.GetData(val);
                                         EXPECT_TRUE(result);
-                                        int newInt = listIntNode.AddElement<int>(context, AZ::SerializeContext::IDataContainer::GetDefaultElementName());
+                                        int newInt = listIntNode.AddElement<int>(context, AZ::Serialization::IDataContainer::GetDefaultElementName());
                                         if (newInt != -1)
                                         {
                                             listIntNode.GetSubElement(newInt).SetData(context, val);
@@ -1020,7 +1021,7 @@ namespace ContainerElementDeprecationTestData
         }
     };
 
-    static bool ConvertDerivedClass2ToDerivedClass3(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    static bool ConvertDerivedClass2ToDerivedClass3(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         classElement.Convert(context, AZ::AzTypeInfo<DerivedClass3>::Uuid());
         return true;
@@ -1068,7 +1069,7 @@ namespace AZ {
     };
 
     class NullFactory
-        : public SerializeContext::IObjectFactory
+        : public Serialization::IObjectFactory
     {
     public:
         void* Create(const char* name) override
@@ -1093,11 +1094,11 @@ namespace AZ {
         public:
             AZ_TYPE_INFO(GenericClassGenericInfo, "{7A26F864-DADC-4bdf-8C4C-A162349031C6}");
             GenericClassGenericInfo()
-                : m_classData{ SerializeContext::ClassData::Create<GenericClass>("GenericClass", GetSpecializedTypeId(), &m_factory) }
+                : m_classData{ Serialization::ClassData::Create<GenericClass>("GenericClass", GetSpecializedTypeId(), &m_factory) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -1126,7 +1127,7 @@ namespace AZ {
             void Reflect(SerializeContext*) override {}
 
             NullFactory m_factory;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassGenericInfo;
@@ -1157,11 +1158,11 @@ namespace AZ {
         public:
             AZ_TYPE_INFO(GenericClassGenericInfo, "{D1E1ACC0-7B90-48e9-999B-5825D4D4E397}");
             GenericClassGenericInfo()
-                : m_classData{ SerializeContext::ClassData::Create<GenericChild>("GenericChild", GetSpecializedTypeId(), &m_factory) }
+                : m_classData{ Serialization::ClassData::Create<GenericChild>("GenericChild", GetSpecializedTypeId(), &m_factory) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -1190,7 +1191,7 @@ namespace AZ {
             void Reflect(SerializeContext*) override;
 
             NullFactory m_factory;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassGenericInfo;
@@ -1282,10 +1283,10 @@ namespace UnitTest
             GenericClassInfo* containerInfo = SerializeGenericTypeInfo<decltype(instance)>::GetGenericInfo();
             EXPECT_NE(nullptr, containerInfo);
             EXPECT_NE(nullptr, containerInfo->GetClassData());
-            SerializeContext::IDataContainer* container = containerInfo->GetClassData()->m_container;
+            AZ::Serialization::IDataContainer* container = containerInfo->GetClassData()->m_container;
             EXPECT_NE(nullptr, container);
 
-            SerializeContext::IEventHandler* eventHandler = containerInfo->GetClassData()->m_eventHandler;
+            AZ::Serialization::IEventHandler* eventHandler = containerInfo->GetClassData()->m_eventHandler;
             if (eventHandler)
             {
                 eventHandler->OnWriteBegin(&container);
@@ -2163,7 +2164,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
         sc.Class<SimpleDerivedClass1>();
         sc.DisableRemoveReflection();
 
-        AZ::SerializeContext::VersionConverter converter = [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement) -> bool
+        AZ::Serialization::VersionConverter converter = [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement) -> bool
         {
             return classElement.Convert<SimpleDerivedClass2>(context);
         };
@@ -2365,7 +2366,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
                             ->Field("m_oldClassData", &DeprecationTestClass::m_newClassData)
                             ->Field("m_data", &DeprecationTestClass::m_data);
 
-                        AZ::SerializeContext::VersionConverter converter = [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement) -> bool
+                        AZ::Serialization::VersionConverter converter = [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement) -> bool
                         {
                             return classElement.Convert<DeprecationTestClass>(context);
                         };
@@ -2400,7 +2401,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
                             ->Version(1)
                             ->Field("m_data", &SimpleBaseClass::m_data);
 
-                        AZ::SerializeContext::VersionConverter converter = [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement) -> bool
+                        AZ::Serialization::VersionConverter converter = [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement) -> bool
                         {
                             return classElement.Convert<SimpleBaseClass>(context);
                         };
@@ -2474,7 +2475,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
                         sc.Class<OwnerClass>();
                         sc.DisableRemoveReflection();
 
-                        AZ::SerializeContext::VersionConverter converter = [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement) -> bool
+                        AZ::Serialization::VersionConverter converter = [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement) -> bool
                         {
                             const int idx = classElement.FindElement(AZ_CRC("Pointer", 0x320468a8));
                             classElement.GetSubElement(idx).Convert<SimpleDerivedClass2>(context);
@@ -3010,7 +3011,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
 
             ClonableMutlipleInheritanceOrderingB() = default;
             ~ClonableMutlipleInheritanceOrderingB() override = default;
-            
+
             MOCK_METHOD2(OnTick, void (float, AZ::ScriptTimePoint));
             MOCK_METHOD0(SomeVirtualFunction, void ());
 
@@ -3347,7 +3348,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
 
         void TearDown() override
         {
-            m_serializeContext->EnableRemoveReflection(); 
+            m_serializeContext->EnableRemoveReflection();
             TestCloneWrapperObject::Reflect(m_serializeContext.get());
             m_serializeContext->DisableRemoveReflection();
             m_serializeContext.reset();
@@ -3604,7 +3605,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
     {
 
         struct EmptyDataContainer
-            : AZ::SerializeContext::IDataContainer
+            : AZ::Serialization::IDataContainer
         {
             EmptyDataContainer()
             {
@@ -3618,11 +3619,11 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
                 m_classElement.m_editData = {};
                 m_classElement.m_flags = 0;
             }
-            const AZ::SerializeContext::ClassElement* GetElement(uint32_t) const override
+            const AZ::Serialization::ClassElement* GetElement(uint32_t) const override
             {
                 return {};
             }
-            bool GetElement(AZ::SerializeContext::ClassElement&, const AZ::SerializeContext::DataElement&) const override
+            bool GetElement(AZ::Serialization::ClassElement&, const AZ::Serialization::DataElement&) const override
             {
                 return {};
             }
@@ -3663,11 +3664,11 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
             {
                 return {};
             }
-            void* ReserveElement(void*, const AZ::SerializeContext::ClassElement*) override
+            void* ReserveElement(void*, const AZ::Serialization::ClassElement*) override
             {
                 return {};
             }
-            void* GetElementByIndex(void*, const AZ::SerializeContext::ClassElement*, size_t) override
+            void* GetElementByIndex(void*, const AZ::Serialization::ClassElement*, size_t) override
             {
                 return {};
             }
@@ -3684,7 +3685,7 @@ TEST_F(SerializeBasicTest, BasicTypeTest_Succeed)
             void ClearElements(void*, AZ::SerializeContext*) override
             {}
 
-            AZ::SerializeContext::ClassElement m_classElement;
+            AZ::Serialization::ClassElement m_classElement;
         };
 
         m_serializeContext->Class<TestContainerType>()
@@ -4026,7 +4027,7 @@ namespace UnitTest
         class EditContextTest
         {
         public:
-            bool BeginSerializationElement(SerializeContext* sc, void* instance, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* classElement)
+            bool BeginSerializationElement(SerializeContext* sc, void* instance, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* classElement)
             {
                 (void)instance;
                 (void)classData;
@@ -4035,7 +4036,7 @@ namespace UnitTest
                 if (classElement)
                 {
                     // if we are a pointer, then we may be pointing to a derived type.
-                    if (classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER)
+                    if (classElement->m_flags & AZ::Serialization::ClassElement::FLG_POINTER)
                     {
                         // if dataAddress is a pointer in this case, cast it's value to a void* (or const void*) and dereference to get to the actual class.
                         instance = *(void**)(instance);
@@ -4256,7 +4257,7 @@ namespace UnitTest
                     ;
             }
 
-            static bool ConvertOldVersions(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            static bool ConvertOldVersions(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 (void)context;
                 (void)classElement;
@@ -4295,7 +4296,7 @@ namespace UnitTest
 
             virtual ~Payload() {}
 
-            static bool ConvertOldVersions(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            static bool ConvertOldVersions(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 (void)classElement;
                 (void)context;
@@ -4305,7 +4306,7 @@ namespace UnitTest
                     AZStd::string newData;
                     for (int i = 0; i < classElement.GetNumSubElements(); ++i)
                     {
-                        AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(i);
+                        AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(i);
 
                         if (elementNode.GetName() == AZ_CRC("m_textData", 0xfc7870e5))
                         {
@@ -4318,7 +4319,7 @@ namespace UnitTest
 
                     for (int i = 0; i < classElement.GetNumSubElements(); ++i)
                     {
-                        AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(i);
+                        AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(i);
                         if (elementNode.GetName() == AZ_CRC("m_newTextData", 0x3feafc3d))
                         {
                             elementNode.SetData(context, newData);
@@ -4501,7 +4502,7 @@ namespace UnitTest
         TestFileUtilsFile(ObjectStream::ST_BINARY);
     }
 
-    
+
 
     /*
     *
@@ -4538,7 +4539,7 @@ namespace UnitTest
             AllocatorsFixture::TearDown();
         }
 
-        static bool VersionConverter(AZ::SerializeContext& sc, AZ::SerializeContext::DataElementNode& classElement)
+        static bool VersionConverter(AZ::SerializeContext& sc, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() == 0)
             {
@@ -4670,14 +4671,14 @@ namespace UnitTest
             AllocatorsFixture::TearDown();
         }
 
-        static bool GetDataHierachyVersionConverter(AZ::SerializeContext& sc, AZ::SerializeContext::DataElementNode& rootElement)
+        static bool GetDataHierachyVersionConverter(AZ::SerializeContext& sc, AZ::Serialization::DataElementNode& rootElement)
         {
             if (rootElement.GetVersion() == 0)
             {
                 int entityIndex = rootElement.FindElement(AZ_CRC("m_entity"));
                 EXPECT_NE(-1, entityIndex);
 
-                AZ::SerializeContext::DataElementNode& entityElement = rootElement.GetSubElement(entityIndex);
+                AZ::Serialization::DataElementNode& entityElement = rootElement.GetSubElement(entityIndex);
                 AZ::Entity newEntity;
                 EXPECT_TRUE(entityElement.GetData(newEntity));
                 EXPECT_EQ(AZ::EntityId(21434), newEntity.GetId());
@@ -4698,7 +4699,7 @@ namespace UnitTest
             return true;
         }
 
-        static bool ContainerTestVersionConverter(AZ::SerializeContext& sc, AZ::SerializeContext::DataElementNode& rootElement)
+        static bool ContainerTestVersionConverter(AZ::SerializeContext& sc, AZ::Serialization::DataElementNode& rootElement)
         {
             if (rootElement.GetVersion() == 0)
             {
@@ -4741,7 +4742,7 @@ namespace UnitTest
 
                 rootElement.GetSubElement(addedStringIndex).SetData(sc, newString); // Set string element data
                 rootElement.AddElementWithData(sc, "m_addedVector", newInts); // Add the addedVector vector<int> with initialized data
-                AZ::SerializeContext::DataElementNode* changedVectorElementNode = rootElement.FindSubElement(AZ_CRC("m_changedVector"));
+                AZ::Serialization::DataElementNode* changedVectorElementNode = rootElement.FindSubElement(AZ_CRC("m_changedVector"));
                 EXPECT_NE(nullptr, changedVectorElementNode);
                 changedVectorElementNode->RemoveElement(0);
 
@@ -4762,14 +4763,14 @@ namespace UnitTest
             return true;
         }
 
-        static bool ContainerOfEntitiesVersionConverter(AZ::SerializeContext&, AZ::SerializeContext::DataElementNode& rootElement)
+        static bool ContainerOfEntitiesVersionConverter(AZ::SerializeContext&, AZ::Serialization::DataElementNode& rootElement)
         {
             if (rootElement.GetVersion() == 0)
             {
                 int entityContainerIndex = rootElement.FindElement(AZ_CRC("m_entitySet"));
                 EXPECT_NE(-1, entityContainerIndex);
 
-                AZ::SerializeContext::DataElementNode& entityContainerElement = rootElement.GetSubElement(entityContainerIndex);
+                AZ::Serialization::DataElementNode& entityContainerElement = rootElement.GetSubElement(entityContainerIndex);
                 AZStd::unordered_set<AZ::Entity*> newContainerEntities;
                 EXPECT_TRUE(entityContainerElement.GetData(newContainerEntities));
                 for (AZ::Entity* entity : newContainerEntities)
@@ -4781,7 +4782,7 @@ namespace UnitTest
             return true;
         }
 
-        static bool StringIntMapVersionConverter(AZ::SerializeContext& sc, AZ::SerializeContext::DataElementNode& rootElement)
+        static bool StringIntMapVersionConverter(AZ::SerializeContext& sc, AZ::Serialization::DataElementNode& rootElement)
         {
             if (rootElement.GetVersion() == 0)
             {
@@ -4854,7 +4855,7 @@ namespace UnitTest
             // Binary
             IO::ByteContainerStream<const AZStd::vector<AZ::u8> > binaryStream(&binaryBuffer);
             binaryStream.Seek(0, IO::GenericStream::ST_SEEK_BEGIN);
-            
+
             AZ::ObjectStream::ClassReadyCB readyCB([&](void* classPtr, const AZ::Uuid& classId, AZ::SerializeContext* sc)
             {
                 AZ_UNUSED(classId);
@@ -5062,7 +5063,7 @@ namespace UnitTest
             AllocatorsFixture::TearDown();
         }
 
-        static bool GetDataOnNonReflectedClassVersionConverter(AZ::SerializeContext& sc, AZ::SerializeContext::DataElementNode& rootElement)
+        static bool GetDataOnNonReflectedClassVersionConverter(AZ::SerializeContext& sc, AZ::Serialization::DataElementNode& rootElement)
         {
             (void)sc;
             if (rootElement.GetVersion() == 0)
@@ -5381,7 +5382,7 @@ namespace UnitTest
         SerializeTestClasses::MyClassMix obj;
         obj.m_dataMix = 5.;
         m_serializeContext->EnumerateObject(&obj,
-            [](void* classPtr, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement*)
+            [](void* classPtr, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement*)
         {
             if (classData->m_typeId == azrtti_typeid<SerializeTestClasses::MyClassMix>())
             {
@@ -5752,7 +5753,7 @@ namespace UnitTest
             AZStd::string m_testString;
         };
 
-        static bool DeprecatedClassConverter(SerializeContext& serializeContext, SerializeContext::DataElementNode& deprecatedNode)
+        static bool DeprecatedClassConverter(SerializeContext& serializeContext, AZ::Serialization::DataElementNode& deprecatedNode)
         {
             return deprecatedNode.Convert<ConvertedClass>(serializeContext) && deprecatedNode.SetData(serializeContext, ConvertedClass{});
         }
@@ -5917,7 +5918,7 @@ namespace UnitTest
             AZStd::string_view versionMaxStringBinary = "00FFFFFFFF18EF8FF807DDEE4EB0B6784CA3A2C490A40000";
             AZStd::vector<AZ::u8> byteArray;
             AZ::IO::ByteContainerStream<AZStd::vector<AZ::u8>> binaryStream(&byteArray);
-            AZStd::unique_ptr<AZ::SerializeContext::IDataSerializer> binarySerializer = AZStd::make_unique<AZ::Internal::AZByteStream<AZStd::allocator>>();
+            AZStd::unique_ptr<AZ::Serialization::IDataSerializer> binarySerializer = AZStd::make_unique<AZ::Internal::AZByteStream<AZStd::allocator>>();
             binarySerializer->TextToData(versionMaxStringBinary.data(), 0, binaryStream);
             binarySerializer.reset();
 
@@ -5981,7 +5982,7 @@ namespace UnitTest
             AZStd::string_view version1StringBinary = "0000000001085A2F60AAF63E4106BD5E0F77E01DDBAC5CC08C4427EF8FF807DDEE4EB0B6784CA3A2C490A454657374000000";
             AZStd::vector<AZ::u8> byteArray;
             AZ::IO::ByteContainerStream<AZStd::vector<AZ::u8>> binaryStream(&byteArray);
-            AZStd::unique_ptr<AZ::SerializeContext::IDataSerializer> binarySerializer = AZStd::make_unique<AZ::Internal::AZByteStream<AZStd::allocator>>();
+            AZStd::unique_ptr<AZ::Serialization::IDataSerializer> binarySerializer = AZStd::make_unique<AZ::Internal::AZByteStream<AZStd::allocator>>();
             binarySerializer->TextToData(version1StringBinary.data(), 0, binaryStream);
             binarySerializer.reset();
 
@@ -6039,7 +6040,7 @@ namespace UnitTest
             AZStd::string_view version2StringBinary = "00000000021CEF8FF807DDEE4EB0B6784CA3A2C490A403AAAB3F5C475A669EBCD5FA4DB353C9546573740000";
             AZStd::vector<AZ::u8> byteArray;
             AZ::IO::ByteContainerStream<AZStd::vector<AZ::u8>> binaryStream(&byteArray);
-            AZStd::unique_ptr<AZ::SerializeContext::IDataSerializer> binarySerializer = AZStd::make_unique<AZ::Internal::AZByteStream<AZStd::allocator>>();
+            AZStd::unique_ptr<AZ::Serialization::IDataSerializer> binarySerializer = AZStd::make_unique<AZ::Internal::AZByteStream<AZStd::allocator>>();
             binarySerializer->TextToData(version2StringBinary.data(), 0, binaryStream);
             binarySerializer.reset();
 
@@ -6052,7 +6053,7 @@ namespace UnitTest
 
     TEST_F(ObjectStreamSerialization, UnreflectedChildElementAndDeprecatedClass_XmlTest)
     {
-        // Reflect the Deprecated class and the wrapper class 
+        // Reflect the Deprecated class and the wrapper class
         // with the deprecated class as a field
         DeprecatedClass::Reflect(m_serializeContext.get());
         ReflectedFieldNameOldVersion1::Reflect(m_serializeContext.get());
@@ -6060,7 +6061,7 @@ namespace UnitTest
         ConvertedClass::Reflect(m_serializeContext.get());
 
         RootFieldNameV1 oldDeprecatedElement;
-        // Test Saving and Loading XML 
+        // Test Saving and Loading XML
         AZStd::vector<AZ::u8> byteBuffer;
         AZ::IO::ByteContainerStream<decltype(byteBuffer)> byteStream(&byteBuffer);
         EXPECT_TRUE(AZ::Utils::SaveObjectToStream(byteStream, AZ::DataStream::ST_XML, &oldDeprecatedElement, m_serializeContext.get()));
@@ -6098,7 +6099,7 @@ namespace UnitTest
 
     TEST_F(ObjectStreamSerialization, UnreflectedChildElementAndDeprecatedClass_BinaryTest)
     {
-        // Reflect the Deprecated class and the wrapper class 
+        // Reflect the Deprecated class and the wrapper class
         // with the deprecated class as a field
         DeprecatedClass::Reflect(m_serializeContext.get());
         ReflectedFieldNameOldVersion1::Reflect(m_serializeContext.get());
@@ -6106,7 +6107,7 @@ namespace UnitTest
         ConvertedClass::Reflect(m_serializeContext.get());
 
         RootFieldNameV1 oldDeprecatedElement;
-        // Test Saving and Loading XML 
+        // Test Saving and Loading XML
         AZStd::vector<AZ::u8> byteBuffer;
         AZ::IO::ByteContainerStream<decltype(byteBuffer)> byteStream(&byteBuffer);
         EXPECT_TRUE(AZ::Utils::SaveObjectToStream(byteStream, AZ::DataStream::ST_BINARY, &oldDeprecatedElement, m_serializeContext.get()));
@@ -6144,7 +6145,7 @@ namespace UnitTest
 
     TEST_F(ObjectStreamSerialization, UnreflectedChildElementAndDeprecatedClass_JSONTest)
     {
-        // Reflect the Deprecated class and the wrapper class 
+        // Reflect the Deprecated class and the wrapper class
         // with the deprecated class as a field
         DeprecatedClass::Reflect(m_serializeContext.get());
         ReflectedFieldNameOldVersion1::Reflect(m_serializeContext.get());
@@ -6152,7 +6153,7 @@ namespace UnitTest
         ConvertedClass::Reflect(m_serializeContext.get());
 
         RootFieldNameV1 oldDeprecatedElement;
-        // Test Saving and Loading XML 
+        // Test Saving and Loading XML
         AZStd::vector<AZ::u8> byteBuffer;
         AZ::IO::ByteContainerStream<decltype(byteBuffer)> byteStream(&byteBuffer);
         EXPECT_TRUE(AZ::Utils::SaveObjectToStream(byteStream, AZ::DataStream::ST_JSON, &oldDeprecatedElement, m_serializeContext.get()));
@@ -6390,7 +6391,7 @@ namespace UnitTest
             ;
 
         m_serializeContext->ClassDeprecate("EmptyDeprecatedClass", "{73890A64-9ADB-4639-B0E0-93294CE81B19}",
-            [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElementNode) -> bool
+            [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElementNode) -> bool
         {
             rootElementNode.Convert<ConvertedNewClass>(context);
             return true;
@@ -6406,7 +6407,7 @@ namespace UnitTest
         m_serializeContext->Class<ConvertedNewClass>();
         m_serializeContext->Class<AggregateTestClassV2>();
         m_serializeContext->ClassDeprecate("EmptyDeprecatedClass", "{73890A64-9ADB-4639-B0E0-93294CE81B19}",
-            [](AZ::SerializeContext&, AZ::SerializeContext::DataElementNode&) -> bool
+            [](AZ::SerializeContext&, AZ::Serialization::DataElementNode&) -> bool
         {
             return true;
         });
@@ -6422,7 +6423,7 @@ namespace UnitTest
             : m_value{ value }
         {}
 
-        static void ReflectWithEventHandler(ReflectContext* context, SerializeContext::IEventHandler* eventHandler)
+        static void ReflectWithEventHandler(ReflectContext* context, AZ::Serialization::IEventHandler* eventHandler)
         {
             if (auto serializeContext = azrtti_cast<SerializeContext*>(context))
             {
@@ -6435,7 +6436,7 @@ namespace UnitTest
         }
 
         class ObjectStreamEventHandler
-            : public SerializeContext::IEventHandler
+            : public AZ::Serialization::IEventHandler
         {
         public:
             MOCK_METHOD1(OnLoadedFromObjectStream, void(void*));
@@ -6490,7 +6491,7 @@ namespace UnitTest
 
         ClassWithObjectStreamCallback cloneObject;
         m_serializeContext->CloneObjectInplace(cloneObject, &saveObject);
-        
+
         // Cloning the cloned object should increase the newly cloned object m_value by one again
         ClassWithObjectStreamCallback secondCloneObject;
         m_serializeContext->CloneObjectInplace(secondCloneObject, &cloneObject);
@@ -7090,10 +7091,10 @@ namespace UnitTest
         GenericClassInfo* containerInfo = SerializeGenericTypeInfo<decltype(m_array)>::GetGenericInfo();
         ASSERT_NE(nullptr, containerInfo);
         ASSERT_NE(nullptr, containerInfo->GetClassData());
-        SerializeContext::IDataContainer* container = containerInfo->GetClassData()->m_container;
+        AZ::Serialization::IDataContainer* container = containerInfo->GetClassData()->m_container;
         ASSERT_NE(nullptr, container);
 
-        SerializeContext::IEventHandler* eventHandler = containerInfo->GetClassData()->m_eventHandler;
+        AZ::Serialization::IEventHandler* eventHandler = containerInfo->GetClassData()->m_eventHandler;
         ASSERT_NE(nullptr, eventHandler);
         eventHandler->OnWriteBegin(&m_array);
 
@@ -7252,10 +7253,10 @@ namespace UnitTest
         virtual ~VectorTest() = default;
         AZStd::vector<int> m_vec;
 
-        static bool Convert(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool Convert(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             AZStd::vector<int> vec;
-            AZ::SerializeContext::DataElementNode* vecElement = classElement.FindSubElement(AZ_CRC("m_vec"));
+            AZ::Serialization::DataElementNode* vecElement = classElement.FindSubElement(AZ_CRC("m_vec"));
             EXPECT_TRUE(vecElement != nullptr);
             bool gotData = vecElement->GetData(vec);
             EXPECT_TRUE(gotData);
@@ -7440,9 +7441,9 @@ namespace UnitTest
         modifiedWrapper.m_vectorInts[0] = 5;
         modifiedWrapper.m_vectorInts[1] = 10;
         modifiedWrapper.m_vectorInts.push_back(15);
-        
+
         VectorWrapper initialWrapper;
-        
+
         DataPatch patch;
         patch.Create(&initialWrapper, azrtti_typeid<VectorWrapper>(), &modifiedWrapper, azrtti_typeid<VectorWrapper>(), DataPatch::FlagsMap(), DataPatch::FlagsMap(), m_serializeContext.get());
         VectorWrapper* patchedWrapper = patch.Apply(&initialWrapper, m_serializeContext.get());
@@ -7484,7 +7485,7 @@ namespace UnitTest
     };
 
     class TestLeafNodeSerializer
-        : public SerializeContext::IDataSerializer
+        : public AZ::Serialization::IDataSerializer
     {
         /// Store the class data into a stream.
         size_t Save(const void* classPtr, IO::GenericStream& stream, bool isDataBigEndian /*= false*/) override
@@ -7555,7 +7556,7 @@ namespace UnitTest
 
     // Serializer which sets a reference bool to true on deletion to detect when it's lifetime ends.
     class TestDeleterSerializer
-        : public SerializeContext::IDataSerializer
+        : public AZ::Serialization::IDataSerializer
     {
     public:
         TestDeleterSerializer(bool& serializerDeleted)
@@ -7641,7 +7642,7 @@ namespace UnitTest
     TEST_F(Serialization, CustomSerializerWithDefaultDeleter_IsDeletedOnUnreflect)
     {
         bool serializerDeleted = false;
-        AZ::SerializeContext::IDataSerializerPtr customSerializer{ new TestDeleterSerializer{ serializerDeleted }, AZ::SerializeContext::IDataSerializer::CreateDefaultDeleteDeleter() };
+        AZ::Serialization::IDataSerializerPtr customSerializer{ new TestDeleterSerializer{ serializerDeleted }, AZ::Serialization::IDataSerializer::CreateDefaultDeleteDeleter() };
         m_serializeContext->Class<TestLeafNode>()
             ->Version(1)
             ->Serializer(AZStd::move(customSerializer));
@@ -7658,7 +7659,7 @@ namespace UnitTest
     {
         bool serializerDeleted = false;
         TestDeleterSerializer* serializerInstance = new TestDeleterSerializer{ serializerDeleted };
-        AZ::SerializeContext::IDataSerializerPtr customSerializer{ serializerInstance, AZ::SerializeContext::IDataSerializer::CreateNoDeleteDeleter() };
+        AZ::Serialization::IDataSerializerPtr customSerializer{ serializerInstance, AZ::Serialization::IDataSerializer::CreateNoDeleteDeleter() };
         m_serializeContext->Class<TestLeafNode>()
             ->Version(1)
             ->Serializer(AZStd::move(customSerializer));
@@ -7844,7 +7845,7 @@ namespace UnitTest
     TEST_F(EnumTypeSerialization, TestUnscopedEnumReflection_Succeeds)
     {
         m_serializeContext->Enum<TestUnscopedSerializationEnum>();
-        const AZ::SerializeContext::ClassData* enumClassData = m_serializeContext->FindClassData(azrtti_typeid<TestUnscopedSerializationEnum>());
+        const AZ::Serialization::ClassData* enumClassData = m_serializeContext->FindClassData(azrtti_typeid<TestUnscopedSerializationEnum>());
         ASSERT_NE(nullptr, enumClassData);
         AZ::TypeId underlyingTypeId = AZ::TypeId::CreateNull();
         AttributeReader attrReader(nullptr, enumClassData->FindAttribute(AZ::Serialize::Attributes::EnumUnderlyingType));
@@ -7862,7 +7863,7 @@ namespace UnitTest
     TEST_F(EnumTypeSerialization, TestScopedEnumReflection_Succeeds)
     {
         m_serializeContext->Enum<TestScopedSerializationEnum>();
-        const AZ::SerializeContext::ClassData* enumClassData = m_serializeContext->FindClassData(azrtti_typeid<TestScopedSerializationEnum>());
+        const AZ::Serialization::ClassData* enumClassData = m_serializeContext->FindClassData(azrtti_typeid<TestScopedSerializationEnum>());
         ASSERT_NE(nullptr, enumClassData);
 
         // Unreflect Enum type
@@ -7882,7 +7883,7 @@ namespace UnitTest
             ->Value("Option4", TestUnscopedSerializationEnum::TestUnscopedSerializationEnum_Option4)
             ;
 
-        const AZ::SerializeContext::ClassData* enumClassData = m_serializeContext->FindClassData(azrtti_typeid<TestUnscopedSerializationEnum>());
+        const AZ::Serialization::ClassData* enumClassData = m_serializeContext->FindClassData(azrtti_typeid<TestUnscopedSerializationEnum>());
         ASSERT_NE(nullptr, enumClassData);
         using EnumConstantBase = AZ::SerializeContextEnumInternal::EnumConstantBase;
         using EnumConstantBasePtr = AZStd::unique_ptr<EnumConstantBase>;
@@ -7930,7 +7931,7 @@ namespace UnitTest
 
         // The TestScopedSerializationEnum is explicitly reflected as an Enum in the SerializeContext and FindClassData
         // should return the EnumType class data
-        const AZ::SerializeContext::ClassData* enumClassData = m_serializeContext->FindClassData(azrtti_typeid<TestScopedSerializationEnum>());
+        const AZ::Serialization::ClassData* enumClassData = m_serializeContext->FindClassData(azrtti_typeid<TestScopedSerializationEnum>());
         ASSERT_NE(nullptr, enumClassData);
         EXPECT_EQ(azrtti_typeid<TestScopedSerializationEnum>(), enumClassData->m_typeId);
 
@@ -7962,7 +7963,7 @@ namespace UnitTest
 
         // The TestScopedSerializationEnum is not reflected as an Enum in the SerializeContext, but has specialized AzTypeInfo
         // So FindClassData should return the underlying type in this case, which is an int
-        const AZ::SerializeContext::ClassData* underlyingTypeClassData = m_serializeContext->FindClassData(azrtti_typeid<TestScopedSerializationEnum>());
+        const AZ::Serialization::ClassData* underlyingTypeClassData = m_serializeContext->FindClassData(azrtti_typeid<TestScopedSerializationEnum>());
         ASSERT_NE(nullptr, underlyingTypeClassData);
         EXPECT_EQ(azrtti_typeid<int>(), underlyingTypeClassData->m_typeId);
 
@@ -8028,7 +8029,7 @@ namespace UnitTest
         // is set to the Type of TestScopedSerializationEnum and not the TypeId of int
         // When using enum types in fields previously it always used the underlying type for reflection
         // Now if the enum type is being used in a field and has specialized AzTypeInfo, it uses the specialized TypeID
-        const SerializeContext::ClassData* classData = m_serializeContext->FindClassData(azrtti_typeid<TypeInfoReflectedEnumWrapper>());
+        const AZ::Serialization::ClassData* classData = m_serializeContext->FindClassData(azrtti_typeid<TypeInfoReflectedEnumWrapper>());
         ASSERT_NE(nullptr, classData);
         ASSERT_EQ(1, classData->m_elements.size());
         EXPECT_EQ(azrtti_typeid<TestScopedSerializationEnum>(), classData->m_elements[0].m_typeId);
@@ -8059,7 +8060,7 @@ namespace UnitTest
         </ObjectStream>
         )";
 
-        auto VersionConverter = [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement) -> bool
+        auto VersionConverter = [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement) -> bool
         {
             if (classElement.GetVersion() < 1)
             {
@@ -8069,7 +8070,7 @@ namespace UnitTest
                     return false;
                 }
 
-                AZ::SerializeContext::DataElementNode& enumValueNode = classElement.GetSubElement(enumIndex);
+                AZ::Serialization::DataElementNode& enumValueNode = classElement.GetSubElement(enumIndex);
                 TestUnsignedEnum oldValue{};
                 EXPECT_TRUE(enumValueNode.GetData(oldValue));
                 EXPECT_EQ(234343U, static_cast<std::underlying_type_t<TestUnsignedEnum>>(oldValue));

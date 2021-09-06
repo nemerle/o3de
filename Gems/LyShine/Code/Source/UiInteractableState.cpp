@@ -156,7 +156,7 @@ void UiInteractableStateColor::Reflect(AZ::ReflectContext* context)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiInteractableStateColor::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1 to current:
     // - Need to convert AZ::Vector3 to AZ::Color

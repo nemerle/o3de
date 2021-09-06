@@ -51,7 +51,7 @@ namespace TextureAtlasNamespace
         TextureAtlasImpl(AtlasCoordinateSets handles);
         ~TextureAtlasImpl();
 
-        static bool TextureAtlasVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement);
+        static bool TextureAtlasVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement);
         static void Reflect(AZ::ReflectContext* context);
         
         //! Retrieve a coordinate set from the Atlas by its handle

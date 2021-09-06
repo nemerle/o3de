@@ -337,7 +337,7 @@ namespace AzToolsFramework
     {
         if (index.isValid())
         {
-            auto componentClass = reinterpret_cast<const AZ::SerializeContext::ClassData*>(m_componentModel->data(index, Qt::ItemDataRole::UserRole + 1).toULongLong());
+            auto componentClass = reinterpret_cast<const AZ::Serialization::ClassData*>(m_componentModel->data(index, Qt::ItemDataRole::UserRole + 1).toULongLong());
             if (componentClass)
             {
                 emit OnAddComponentBegin();

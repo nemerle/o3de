@@ -1535,7 +1535,7 @@ namespace AzToolsFramework
             // Layers are setup in this way.
             if (containsLayerEntity)
             {
-                const AZ::SerializeContext::ClassData* componentClassData = GetComponentClassData(component);
+                const AZ::Serialization::ClassData* componentClassData = GetComponentClassData(component);
                 if (componentClassData && !m_componentFilter(*componentClassData))
                 {
                     continue;
@@ -2116,7 +2116,7 @@ namespace AzToolsFramework
     void EntityPropertyEditor::AddMenuOptionsForFields(
         InstanceDataNode* fieldNode,
         InstanceDataNode* componentNode,
-        const AZ::SerializeContext::ClassData* componentClassData,
+        const AZ::Serialization::ClassData* componentClassData,
         QMenu& menu)
     {
         if (!fieldNode)
@@ -2348,7 +2348,7 @@ namespace AzToolsFramework
         return false;
     }
 
-    void EntityPropertyEditor::AddMenuOptionsForRevert(InstanceDataNode* fieldNode, InstanceDataNode* componentNode, const AZ::SerializeContext::ClassData* componentClassData, QMenu& menu)
+    void EntityPropertyEditor::AddMenuOptionsForRevert(InstanceDataNode* fieldNode, InstanceDataNode* componentNode, const AZ::Serialization::ClassData* componentClassData, QMenu& menu)
     {
         QMenu* revertMenu = nullptr;
 

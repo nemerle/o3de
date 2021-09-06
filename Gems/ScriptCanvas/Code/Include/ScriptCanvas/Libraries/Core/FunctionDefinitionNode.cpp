@@ -14,6 +14,7 @@
 #include <ScriptCanvas/Libraries/Core/FunctionBus.h>
 
 #include <ScriptCanvas/Debugger/ValidationEvents/DataValidation/InvalidPropertyEvent.h>
+#include <AzCore/std/string/regex.h>
 
 namespace FunctionDefinitionNodeCpp
 {
@@ -154,16 +155,16 @@ namespace ScriptCanvas
                         slotConfiguration.m_name = " ";
                         slotConfiguration.m_addUniqueSlotByNameAndType = false;
 
-                        slotConfiguration.m_contractDescs = 
-                        { 
-                            { 
-                                [this]() 
-                                { 
+                        slotConfiguration.m_contractDescs =
+                        {
+                            {
+                                [this]()
+                                {
                                     DisplayGroupConnectedSlotLimitContract* limitContract = aznew DisplayGroupConnectedSlotLimitContract(GetSlotDisplayGroup(), 1);
 
                                     limitContract->SetCustomErrorMessage("Execution nodes can only be connected to either the Input or Output, and not both at the same time.");
                                     return limitContract;
-                                } 
+                                }
                             },
                             {
                                 []()
@@ -184,16 +185,16 @@ namespace ScriptCanvas
                         slotConfiguration.m_name = " ";
                         slotConfiguration.m_addUniqueSlotByNameAndType = false;
 
-                        slotConfiguration.m_contractDescs = 
-                        { 
-                            { 
-                                [this]() 
-                                { 
+                        slotConfiguration.m_contractDescs =
+                        {
+                            {
+                                [this]()
+                                {
                                     DisplayGroupConnectedSlotLimitContract* limitContract = aznew DisplayGroupConnectedSlotLimitContract(GetSlotDisplayGroup(), 1);
 
                                     limitContract->SetCustomErrorMessage("Execution nodes can only be connected to either the Input or Output, and not both at the same time.");
                                     return limitContract;
-                                } 
+                                }
                             }
                         };
 

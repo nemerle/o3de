@@ -162,10 +162,10 @@ namespace AZ
             AZ_TYPE_INFO(GenericClassSharedPtr, "{D5B5ACA6-A81E-410E-8151-80C97B8CD2A0}");
             GenericClassSharedPtr()
             {
-                m_classData = SerializeContext::ClassData::Create<ContainerType>("AZStd::shared_ptr", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage);
+                m_classData = Serialization::ClassData::Create<ContainerType>("AZStd::shared_ptr", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage);
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -216,7 +216,7 @@ namespace AZ
             }
 
             EMotionFX::EventDataSharedPtrContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         static GenericClassInfo* GetGenericInfo()

@@ -19,6 +19,7 @@
 #include <Vegetation/Ebuses/AreaSystemRequestBus.h>
 #include <Vegetation/Ebuses/FilterRequestBus.h>
 #include <Vegetation/InstanceData.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
 namespace Vegetation
 {
@@ -348,7 +349,7 @@ namespace Vegetation
 
     void MeshBlockerComponent::OnSurfaceChanged(const AZ::EntityId& /*entityId*/, const AZ::Aabb& /*oldBounds*/, const AZ::Aabb& /*newBounds*/)
     {
-        // If our surfaces have changed, we will need to refresh our cache.  
+        // If our surfaces have changed, we will need to refresh our cache.
         // Our cache performs lookups based on ClaimPoint handles, but the list of handles can potentially change
         // from any type of surface change anywhere, so refresh even if the area doesn't overlap.
         OnCompositionChanged();

@@ -19,7 +19,7 @@ namespace ScriptCanvas
     {
         namespace Operators
         {
-            bool OperatorArithmetic::OperatorArithmeticVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& classElement)
+            bool OperatorArithmetic::OperatorArithmeticVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& classElement)
             {
                 if (classElement.GetVersion() < Version::RemoveOperatorBase)
                 {

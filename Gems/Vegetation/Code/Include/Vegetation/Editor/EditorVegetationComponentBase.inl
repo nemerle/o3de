@@ -55,9 +55,9 @@ namespace Vegetation
         BaseClassType::Deactivate();
     }
 
-    inline AZ::SerializeContext::DataElementNode* GetParentByIndex(AZ::SerializeContext::DataElementNode& node, int level)
+    inline AZ::Serialization::DataElementNode* GetParentByIndex(AZ::Serialization::DataElementNode& node, int level)
     {
-        AZ::SerializeContext::DataElementNode* searchNode = &node;
+        AZ::Serialization::DataElementNode* searchNode = &node;
 
         for (int i = 0; i < level; ++i)
         {
@@ -72,7 +72,7 @@ namespace Vegetation
         return searchNode;
     }
 
-    inline void CopySubElements(AZ::SerializeContext::DataElementNode& source, AZ::SerializeContext::DataElementNode& target)
+    inline void CopySubElements(AZ::Serialization::DataElementNode& source, AZ::Serialization::DataElementNode& target)
     {
         for (int subElementIndex = 0; subElementIndex < source.GetNumSubElements(); ++subElementIndex)
         {
@@ -83,14 +83,14 @@ namespace Vegetation
     }
 
     template<typename TComponent, typename TConfiguration>
-    bool EditorVegetationComponentBaseVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool EditorVegetationComponentBaseVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 1)
         {
             TConfiguration configData;
             AzToolsFramework::Components::EditorComponentBase editorComponentBaseData;
 
-            AZ::SerializeContext::DataElementNode* oldEditorComponentBaseElement = GetParentByIndex(classElement, 2);
+            AZ::Serialization::DataElementNode* oldEditorComponentBaseElement = GetParentByIndex(classElement, 2);
 
             if (!oldEditorComponentBaseElement || !oldEditorComponentBaseElement->GetData(editorComponentBaseData))
             {

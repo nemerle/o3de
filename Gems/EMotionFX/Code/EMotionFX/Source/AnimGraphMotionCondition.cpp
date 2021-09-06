@@ -451,7 +451,7 @@ namespace EMotionFX
     }
 
 
-    bool AnimGraphMotionConditionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElementNode)
+    bool AnimGraphMotionConditionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElementNode)
     {
         if (rootElementNode.GetVersion() >= 2)
         {
@@ -460,7 +460,7 @@ namespace EMotionFX
 
         AZ::GenericClassInfo* classInfo = serializeContext.FindGenericClassInfo(azrtti_typeid<AZStd::vector<AZStd::shared_ptr<const EventData>>>());
         const int elementIndex = rootElementNode.AddElement(serializeContext, "eventDatas", classInfo);
-        AZ::SerializeContext::DataElementNode& eventDataSharedPtrElement = rootElementNode.GetSubElement(elementIndex);
+        AZ::Serialization::DataElementNode& eventDataSharedPtrElement = rootElementNode.GetSubElement(elementIndex);
 
         // Read the old eventType and eventParameter fields
         AZStd::string eventType;
@@ -469,7 +469,7 @@ namespace EMotionFX
         {
             return false;
         }
-        AZ::SerializeContext::DataElementNode eventTypeNode = rootElementNode.GetSubElement(eventTypeIndex);
+        AZ::Serialization::DataElementNode eventTypeNode = rootElementNode.GetSubElement(eventTypeIndex);
         if (!eventTypeNode.GetData(eventType))
         {
             return false;
@@ -482,7 +482,7 @@ namespace EMotionFX
             return false;
         }
 
-        AZ::SerializeContext::DataElementNode eventParameterNode = rootElementNode.GetSubElement(eventParameterIndex);
+        AZ::Serialization::DataElementNode eventParameterNode = rootElementNode.GetSubElement(eventParameterIndex);
         if (!eventParameterNode.GetData(eventParameter))
         {
             return false;

@@ -91,7 +91,7 @@ namespace EMotionFX
             return nullptr;
         }
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(type);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(type);
         void* parameterInstance = classData->m_factory->Create(classData->m_name);
         return reinterpret_cast<Parameter*>(parameterInstance);
     }

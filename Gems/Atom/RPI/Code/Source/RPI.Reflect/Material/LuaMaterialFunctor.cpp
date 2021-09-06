@@ -9,6 +9,7 @@
 #include <Atom/RPI.Reflect/Material/LuaMaterialFunctor.h>
 #include <Atom/RPI.Reflect/Material/MaterialPropertiesLayout.h>
 #include <Atom/RPI.Public/Shader/ShaderResourceGroup.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/Script/ScriptSystemBus.h>
 #include <AzCore/Script/ScriptAsset.h>
@@ -56,7 +57,7 @@ namespace AZ
 
             // We don't need any functions in Image, but just need BehaviorContext to be aware of this
             // type so we can pass around image pointers within lua scripts.
-            behaviorContext->Class<Image>(); 
+            behaviorContext->Class<Image>();
 
             MaterialPropertyDescriptor::Reflect(behaviorContext);
             ReflectMaterialDynamicMetadata(behaviorContext);
@@ -248,7 +249,7 @@ namespace AZ
             }
 
             return value.GetValue<Type>();
-        } 
+        }
 
         // Specialize for type Image* because that will be more intuitive within Lua.
         // The script can then check the result for nil without calling "get()".
@@ -421,7 +422,7 @@ namespace AZ
                 return LuaMaterialFunctorShaderItem{nullptr};
             }
         }
-        
+
         bool LuaMaterialFunctorRuntimeContext::HasShaderWithTag(const char* shaderTag)
         {
             return m_runtimeContextImpl->m_shaderCollection->HasShaderTag(AZ::Name{shaderTag});
@@ -528,7 +529,7 @@ namespace AZ
 
             return m_editorContextImpl->SetMaterialPropertySoftMaxValue(index, value);
         }
-        
+
         bool LuaMaterialFunctorEditorContext::SetMaterialPropertyGroupVisibility(const char* name, MaterialPropertyGroupVisibility visibility)
         {
             if (m_editorContextImpl)
@@ -799,7 +800,7 @@ namespace AZ
         }
 
         void LuaMaterialFunctorRenderStates::ClearMultisampleCustomPositionCount()
-        {                                                                                      
+        {
             m_renderStates->m_multisampleState.m_customPositionsCount = RHI::RenderStates_InvalidUInt;
         }
 

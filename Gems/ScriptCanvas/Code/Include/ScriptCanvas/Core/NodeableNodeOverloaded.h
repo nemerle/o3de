@@ -39,7 +39,7 @@ namespace ScriptCanvas
                 Current
             };
 
-            static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+            static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
             class NodeableMethodOverloadContractInterface
                 : public OverloadContractInterface

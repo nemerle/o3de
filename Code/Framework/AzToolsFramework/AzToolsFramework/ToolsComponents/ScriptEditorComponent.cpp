@@ -11,6 +11,7 @@
 #include <AzCore/Script/ScriptSystemBus.h>
 #include <AzCore/EBus/Results.h>
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzFramework/StringFunc/StringFunc.h>
 #include <AzFramework/Asset/AssetCatalogBus.h>
@@ -33,20 +34,20 @@ namespace AZ
             : public Attribute
         {
         public:
-            AZ_RTTI(AttributeDynamicScriptValue, "{46803928-11c9-4176-b2fe-2f0aed99bfeb}", Attribute); 
+            AZ_RTTI(AttributeDynamicScriptValue, "{46803928-11c9-4176-b2fe-2f0aed99bfeb}", Attribute);
             AZ_CLASS_ALLOCATOR(AttributeDynamicScriptValue, AZ::SystemAllocator, 0)
 
             AttributeDynamicScriptValue(const DynamicSerializableField& value)
                 : m_value(value) {}
-            virtual ~AttributeDynamicScriptValue() 
-            { 
+            virtual ~AttributeDynamicScriptValue()
+            {
                 m_value.DestroyData();
             }
 
             template<class T>
             bool Get(T& value) const
             {
-                // We deal only with exact types no base types, etc. 
+                // We deal only with exact types no base types, etc.
                 // We can do that if needed, but introduces lots of complications
                 // which we are not convinced they are worth it.
                 //if (dhtypeid(AZStd::remove_pointer<T>::type) == m_value.m_typeId)
@@ -198,7 +199,7 @@ namespace AzToolsFramework
                 const char* fieldName;
                 int fieldIndex;
                 int elementIndex;
-                
+
                 bool isEntity = false;
 
                 const size_t entityRefNameLength = strlen(EntityRefName);
@@ -233,7 +234,7 @@ namespace AzToolsFramework
                     // Create an EntityId instance
                     const AZ::SerializeContext* context = nullptr;
                     EBUS_EVENT_RESULT(context, AZ::ComponentApplicationBus, GetSerializeContext);
-                    const AZ::SerializeContext::ClassData* entityIdClassData = context->FindClassData(azrtti_typeid<AZ::EntityId>());
+                    const AZ::Serialization::ClassData* entityIdClassData = context->FindClassData(azrtti_typeid<AZ::EntityId>());
                     AZ_Assert(entityIdClassData && entityIdClassData->m_factory, "AZ::EntityId is missing ClassData or factory in the SerializeContext");
                     AZ::EntityId* entityId = static_cast<AZ::EntityId*>(entityIdClassData->m_factory->Create(name));
 
@@ -256,7 +257,7 @@ namespace AzToolsFramework
             LSV_BEGIN(sdc.GetNativeContext(), 0);
 
             /////////////////////////////////////////////////////////////////////////////////
-            // This is an example that you can do you the custom OnUnhandledAttribute message 
+            // This is an example that you can do you the custom OnUnhandledAttribute message
             // check for data element properties, not real attributes.
             if (azstricmp(name, "enumValues") == 0)
             {
@@ -504,7 +505,7 @@ namespace AzToolsFramework
                                     if (auto itr = AZStd::find(group.m_properties.begin(), group.m_properties.end(), groupProperty))
                                     {
                                         if (itr != group.m_properties.end())
-                                        { 
+                                        {
                                             delete *itr;
                                             group.m_properties.erase(itr);
                                         }
@@ -537,7 +538,7 @@ namespace AzToolsFramework
                                     {
                                         groupArrayProperty->SetElementTypeUuid(tempArrayProperty->GetElementTypeUuid());
                                     }
-                                    
+
                                     if(tempScriptProperty)
                                     {
                                         delete tempScriptProperty;
@@ -831,7 +832,7 @@ namespace AzToolsFramework
             // Pop the script table
             lua_pop(context->NativeContext(), 1);
 
-            // TODO: Call this at the end of a session, instead of on load. This will allow 
+            // TODO: Call this at the end of a session, instead of on load. This will allow
             // users to quickly revert back to old properties instead of losing them right away.
 
             // Remove all old properties, every confirmed property will have
@@ -861,7 +862,7 @@ namespace AzToolsFramework
             if (GetEntity())
             {
                 AzToolsFramework::ToolsApplicationEvents::Bus::Broadcast(
-                    &AzToolsFramework::ToolsApplicationEvents::InvalidatePropertyDisplay, 
+                    &AzToolsFramework::ToolsApplicationEvents::InvalidatePropertyDisplay,
                     AzToolsFramework::Refresh_EntireTree);
             }
         }
@@ -965,9 +966,9 @@ namespace AzToolsFramework
 #endif
         }
 
-        void ScriptEditorComponent::SetScript(const AZ::Data::Asset<AZ::ScriptAsset>& script) 
+        void ScriptEditorComponent::SetScript(const AZ::Data::Asset<AZ::ScriptAsset>& script)
         {
-            m_scriptAsset = script; 
+            m_scriptAsset = script;
             m_scriptComponent.SetScript(script);
 
             m_customName = "Lua Script";

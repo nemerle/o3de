@@ -28,8 +28,8 @@ namespace AssetBuilderSDK
     bool UpdateDependenciesFromClassData(
         const AZ::SerializeContext& serializeContext,
         void* instancePointer,
-        const AZ::SerializeContext::ClassData* classData,
-        const AZ::SerializeContext::ClassElement* classElement,
+        const AZ::Serialization::ClassData* classData,
+        const AZ::Serialization::ClassElement* classElement,
         UniqueDependencyList& productDependencySet,
         ProductPathDependencySet& productPathDependencySet,
         bool enumerateChildren);
@@ -45,8 +45,8 @@ namespace AssetBuilderSDK
     using DependencyHandler = AZStd::function<bool(
         const AZ::SerializeContext& /*serializeContext*/,
         void* /*instancePointer*/,
-        const AZ::SerializeContext::ClassData* /*classData*/,
-        const AZ::SerializeContext::ClassElement* /*classElement*/,
+        const AZ::Serialization::ClassData* /*classData*/,
+        const AZ::Serialization::ClassElement* /*classElement*/,
         UniqueDependencyList& /*productDependencySet*/,
         ProductPathDependencySet& /*productPathDependencySet*/,
         bool enumerateChildren)>;

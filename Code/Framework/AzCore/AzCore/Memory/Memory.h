@@ -654,12 +654,12 @@ namespace AZ
         */
         template<class Allocator, bool StoreAllocatorOnHeap>
         struct ModuleStoragePolicyBase;
-        
+
         template<class Allocator>
         struct ModuleStoragePolicyBase<Allocator, false>: public StoragePolicyBase<Allocator>
         {
         protected:
-            // Use a static instance to store the allocator. This is not recommended when the order of shut-down with the module matters, as the allocator could have its memory destroyed 
+            // Use a static instance to store the allocator. This is not recommended when the order of shut-down with the module matters, as the allocator could have its memory destroyed
             // before the users of it are destroyed. The primary use case for this is allocators that need to support the CRT, as they cannot allocate from the heap.
             static Allocator& GetModuleAllocatorInstance()
             {

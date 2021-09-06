@@ -54,7 +54,7 @@ namespace GradientSignal
         AZ_RTTI(ImageSettings, "{B36FEB5C-41B6-4B58-A212-21EF5AEF523C}", AZ::Data::AssetData);
         AZ_CLASS_ALLOCATOR(ImageSettings, AZ::SystemAllocator, 0);
         static void Reflect(AZ::ReflectContext* context);
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         bool m_shouldProcess = true;
 

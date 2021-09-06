@@ -91,7 +91,7 @@ namespace EMotionFX
 
                 const void* instance = pNode->GetInstance(instanceIndex);
 
-                const AZ::SerializeContext::ClassElement* elementData = pNode->GetElementMetadata();
+                const AZ::Serialization::ClassElement* elementData = pNode->GetElementMetadata();
                 if (elementData->m_nameCrc == AZ_CRC("objectName", 0xd403db79))
                 {
                     command->SetOldObjectName(*static_cast<const AZStd::string*>(instance));
@@ -132,7 +132,7 @@ namespace EMotionFX
 
                 const void* instance = pNode->GetInstance(instanceIndex);
 
-                const AZ::SerializeContext::ClassElement* elementData = pNode->GetElementMetadata();
+                const AZ::Serialization::ClassElement* elementData = pNode->GetElementMetadata();
                 if (elementData->m_nameCrc == AZ_CRC("coneAngleLimit", 0x355562ed))
                 {
                     command->SetOldConeAngleLimit(*static_cast<const float*>(instance));
@@ -189,7 +189,7 @@ namespace EMotionFX
 
                 const void* instance = pNode->GetInstance(instanceIndex);
 
-                const AZ::SerializeContext::ClassElement* elementData = pNode->GetElementMetadata();
+                const AZ::Serialization::ClassElement* elementData = pNode->GetElementMetadata();
                 if (elementData->m_nameCrc == AZ_CRC("objectName", 0xd403db79))
                 {
                     command->SetObjectName(*static_cast<const AZStd::string*>(instance));
@@ -268,7 +268,7 @@ namespace EMotionFX
 
                 const void* instance = pNode->GetInstance(instanceIndex);
 
-                const AZ::SerializeContext::ClassElement* elementData = pNode->GetElementMetadata();
+                const AZ::Serialization::ClassElement* elementData = pNode->GetElementMetadata();
                 if (elementData->m_nameCrc == AZ_CRC("coneAngleLimit", 0x355562ed))
                 {
                     command->SetConeAngleLimit(*static_cast<const float*>(instance));

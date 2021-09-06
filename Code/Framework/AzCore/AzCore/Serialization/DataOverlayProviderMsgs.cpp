@@ -13,12 +13,12 @@ namespace AZ
     //-------------------------------------------------------------------------
     // DataOverlayTarget
     //-------------------------------------------------------------------------
-    void DataOverlayTarget::Parse(const void* classPtr, const SerializeContext::ClassData* classData)
+    void DataOverlayTarget::Parse(const void* classPtr, const Serialization::ClassData* classData)
     {
-        AZStd::vector<SerializeContext::DataElementNode*> nodeStack;
+        AZStd::vector<Serialization::DataElementNode*> nodeStack;
         nodeStack.push_back(m_dataContainer);
 
-        SerializeContext::EnumerateInstanceCallContext callContext(
+        Serialization::EnumerateInstanceCallContext callContext(
             AZStd::bind(&DataOverlayTarget::ElementBegin, this, &nodeStack, AZStd::placeholders::_1, AZStd::placeholders::_2, AZStd::placeholders::_3),
             AZStd::bind(&DataOverlayTarget::ElementEnd, this, &nodeStack),
             m_sc,
@@ -35,10 +35,10 @@ namespace AZ
             );
     }
     //-------------------------------------------------------------------------
-    bool DataOverlayTarget::ElementBegin(NodeStack* nodeStack, const void* elemPtr, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* elementData)
+    bool DataOverlayTarget::ElementBegin(NodeStack* nodeStack, const void* elemPtr, const Serialization::ClassData* classData, const Serialization::ClassElement* elementData)
     {
         nodeStack->back()->m_subElements.push_back();
-        SerializeContext::DataElementNode* node = &nodeStack->back()->m_subElements.back();
+        Serialization::DataElementNode* node = &nodeStack->back()->m_subElements.back();
         nodeStack->push_back(node);
 
         node->m_classData = classData;
@@ -52,7 +52,7 @@ namespace AZ
         if (classData->m_serializer)
         {
             node->m_element.m_dataSize = classData->m_serializer->Save(elemPtr, node->m_element.m_byteStream);
-            node->m_element.m_dataType = SerializeContext::DataElement::DT_BINARY;
+            node->m_element.m_dataType = Serialization::DataElement::DT_BINARY;
         }
         else
         {

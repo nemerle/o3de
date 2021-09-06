@@ -55,7 +55,7 @@ namespace AzToolsFramework
                 rotation = transform.GetRotation().GetEulerDegrees();
             }
 
-            bool TransformComponentDataConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            bool TransformComponentDataConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 if (classElement.GetVersion() < 6)
                 {
@@ -168,7 +168,7 @@ namespace AzToolsFramework
                 return true;
             }
 
-            bool EditorTransformDataConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            bool EditorTransformDataConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 if (classElement.GetVersion() < 3)
                 {

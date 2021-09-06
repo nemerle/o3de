@@ -92,8 +92,8 @@ namespace LmbrCentral
 
     namespace ClassConverters
     {
-        static bool DeprecateSphereColliderConfiguration(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        static bool DeprecateSphereColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool DeprecateSphereColliderConfiguration(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        static bool DeprecateSphereColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     }
 
     void SphereShapeConfig::Reflect(AZ::ReflectContext* context)
@@ -196,7 +196,7 @@ namespace LmbrCentral
 
     namespace ClassConverters
     {
-        static bool DeprecateSphereColliderConfiguration(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool DeprecateSphereColliderConfiguration(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             /*
             Old:
@@ -239,7 +239,7 @@ namespace LmbrCentral
             return false;
         }
 
-        static bool DeprecateSphereColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool DeprecateSphereColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             /*
             Old:

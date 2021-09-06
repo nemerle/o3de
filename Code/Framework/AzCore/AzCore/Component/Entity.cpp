@@ -36,7 +36,7 @@
 namespace AZ
 {
     class SerializeEntityFactory
-        : public SerializeContext::IObjectFactory
+        : public Serialization::IObjectFactory
     {
         void* Create(const char* name) override
         {
@@ -673,7 +673,7 @@ namespace AZ
         }
     }
 
-    bool ConvertOldData(SerializeContext& context, SerializeContext::DataElementNode& classElement)
+    bool ConvertOldData(SerializeContext& context, Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 2)
         {
@@ -686,7 +686,7 @@ namespace AZ
             //    ...
             for (int i = 0; i < classElement.GetNumSubElements(); ++i)
             {
-                AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(i);
+                AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(i);
                 if (elementNode.GetName() == AZ_CRC("Id", 0xbf396750))
                 {
                     u64 oldEntityId;
@@ -705,7 +705,7 @@ namespace AZ
 
                         if (entityIdIdx != -1)
                         {
-                            AZ::SerializeContext::DataElementNode& entityIdNode = classElement.GetSubElement(entityIdIdx);
+                            AZ::Serialization::DataElementNode& entityIdNode = classElement.GetSubElement(entityIdIdx);
                             int idIndex = entityIdNode.AddElement<u64>(context, "id");
                             if (idIndex != -1)
                             {
@@ -722,14 +722,14 @@ namespace AZ
         return true;
     }
 
-    bool EntityIdConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement)
+    bool EntityIdConverter(SerializeContext& context, Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() == 0)
         {
             // Version 0 was EntityRef, so convert the old field name to the new one.
             for (int i = 0; i < classElement.GetNumSubElements(); ++i)
             {
-                AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(i);
+                AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(i);
                 if (elementNode.GetName() == AZ_CRC("m_refId", 0xb7853eda))
                 {
                     u64 oldEntityId;

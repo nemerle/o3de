@@ -23,7 +23,7 @@ namespace AZ
     namespace SceneProcessingConfig
     {
         class SceneProcessingConfigSystemComponentSerializationEvents
-            : public SerializeContext::IEventHandler
+            : public Serialization::IEventHandler
         {
         public:
             AZ_CLASS_ALLOCATOR(SceneProcessingConfigSystemComponentSerializationEvents, SystemAllocator, 0);

@@ -16,7 +16,7 @@ namespace AZ
         template<typename TController, typename TRuntimeComponent, typename TConfiguration>
         template<int TVersion>
         bool EditorRenderComponentAdapter<TController, TRuntimeComponent, TConfiguration>::ConvertToEditorRenderComponentAdapter(
-            AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < TVersion)
             {
@@ -38,7 +38,7 @@ namespace AZ
                 // Replace the old base class data with EditorRenderComponentAdapter
                 EditorRenderComponentAdapter<TController, TRuntimeComponent, TConfiguration> newBaseClassData;
 
-                AZ::SerializeContext::DataElementNode& newBaseClassElement =
+                AZ::Serialization::DataElementNode& newBaseClassElement =
                     classElement.GetSubElement(classElement.AddElementWithData(context, "BaseClass1", newBaseClassData));
 
                 // Overwrite EditorRenderComponentAdapter base class data with retrieved EditorComponentAdapter base class data

@@ -7,6 +7,7 @@
  */
 
 #include <AtomCore/std/containers/vector_set.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <Atom/RPI.Reflect/Material/ShaderCollection.h>
 #include <Atom/RHI/RHISystemInterface.h>
 #include <Atom/RHI/DrawListTagRegistry.h>
@@ -19,7 +20,7 @@ namespace AZ
         //! but still provide the corresponding ShaderOptionsGroup for use at runtime.
         //! RenderStates will be modified at runtime as well. It will be merged into the RenderStates stored in the corresponding ShaderVariant.
         class ShaderVariantReferenceSerializationEvents
-            : public SerializeContext::IEventHandler
+            : public Serialization::IEventHandler
         {
             //! Called right before we start reading from the instance pointed by classPtr.
             virtual void OnReadBegin(void* classPtr)
@@ -229,7 +230,7 @@ namespace AZ
             }
 
             RHI::DrawListTagRegistry* drawListTagRegistry = RHI::RHISystemInterface::Get()->GetDrawListTagRegistry();
-            // Note: we should use FindTag instead of AcquireTag to avoid occupy DrawListTag entries. 
+            // Note: we should use FindTag instead of AcquireTag to avoid occupy DrawListTag entries.
             RHI::DrawListTag newTag = drawListTagRegistry->FindTag(drawListName);
             if (newTag.IsNull())
             {

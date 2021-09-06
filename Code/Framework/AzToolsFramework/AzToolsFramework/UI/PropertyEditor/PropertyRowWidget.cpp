@@ -520,7 +520,7 @@ namespace AzToolsFramework
                     {
                         auto classElement = dataNode->GetElementMetadata();
                         auto genericClassInfo = classElement->m_genericClassInfo;
-                        AZ::SerializeContext::IDataContainer* container = dataNode->GetClassMetadata()->m_container;
+                        AZ::Serialization::IDataContainer* container = dataNode->GetClassMetadata()->m_container;
                         if (genericClassInfo->GetNumTemplatedArguments() == 1)
                         {
                             void* ptrAddress = dataNode->GetInstance(0);
@@ -733,7 +733,7 @@ namespace AzToolsFramework
                 }
             };
 
-            const AZ::SerializeContext::ClassElement* element = m_sourceNode->GetElementMetadata();
+            const AZ::Serialization::ClassElement* element = m_sourceNode->GetElementMetadata();
             if (element)
             {
                 consumeAttributes(element->m_attributes);

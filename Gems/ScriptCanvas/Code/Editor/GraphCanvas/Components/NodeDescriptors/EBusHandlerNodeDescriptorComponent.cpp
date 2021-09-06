@@ -32,7 +32,7 @@ namespace ScriptCanvasEditor
     //////////////////////////////////////
     // EBusHandlerNodeDescriptorSaveData
     //////////////////////////////////////
-    bool EBusHandlerNodeDescriptorSaveDataVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool EBusHandlerNodeDescriptorSaveDataVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 2)
         {
@@ -94,7 +94,7 @@ namespace ScriptCanvasEditor
     // EBusHandlerNodeDescriptorComponent
     ///////////////////////////////////////
 
-    bool EBusHandlerDescriptorVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool EBusHandlerDescriptorVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() <= 1)
         {
@@ -102,7 +102,7 @@ namespace ScriptCanvasEditor
 
             EBusHandlerNodeDescriptorComponent::EBusHandlerNodeDescriptorSaveData saveData;
 
-            AZ::SerializeContext::DataElementNode* dataNode = classElement.FindSubElement(displayConnectionId);
+            AZ::Serialization::DataElementNode* dataNode = classElement.FindSubElement(displayConnectionId);
 
             if (dataNode)
             {

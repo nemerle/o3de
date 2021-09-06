@@ -63,14 +63,14 @@ namespace AZ
     {
         namespace JSR = JsonSerializationResult; // Used to remove name conflicts in AzCore in uber builds.
 
-        const SerializeContext::ClassData* containerClass = context.GetSerializeContext()->FindClassData(valueTypeId);
+        const Serialization::ClassData* containerClass = context.GetSerializeContext()->FindClassData(valueTypeId);
         if (!containerClass)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve information for definition of the AZStd::pair or AZStd::tuple instance.");
         }
 
-        SerializeContext::IDataContainer* container = containerClass->m_container;
+        Serialization::IDataContainer* container = containerClass->m_container;
         if (!container)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
@@ -78,16 +78,16 @@ namespace AZ
         }
 
         size_t typeCount = 0;
-        auto typeCountCallback = [&typeCount](const Uuid&, const SerializeContext::ClassElement*)
+        auto typeCountCallback = [&typeCount](const Uuid&, const Serialization::ClassElement*)
         {
             typeCount++;
             return true;
         };
         container->EnumTypes(typeCountCallback);
 
-        AZStd::vector<const SerializeContext::ClassElement*> classElements;
+        AZStd::vector<const Serialization::ClassElement*> classElements;
         classElements.reserve(typeCount);
-        auto typeEnumCallback = [&classElements](const Uuid&, const SerializeContext::ClassElement* genericClassElement)
+        auto typeEnumCallback = [&classElements](const Uuid&, const Serialization::ClassElement* genericClassElement)
         {
             classElements.push_back(genericClassElement);
             return true;
@@ -106,7 +106,7 @@ namespace AZ
 
             ScopedContextPath subPath(context, i);
 
-            ContinuationFlags flags = classElements[i]->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER
+            ContinuationFlags flags = classElements[i]->m_flags & Serialization::ClassElement::Flags::FLG_POINTER
                 ? ContinuationFlags::ResolvePointer
                 : ContinuationFlags::None;
 
@@ -144,14 +144,14 @@ namespace AZ
     {
         namespace JSR = JsonSerializationResult; // Used to remove name conflicts in AzCore in uber builds.
 
-        const SerializeContext::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
+        const Serialization::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
         if (!containerClass)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve information for definition of the AZStd::pair instance.");
         }
 
-        SerializeContext::IDataContainer* container = containerClass->m_container;
+        Serialization::IDataContainer* container = containerClass->m_container;
         if (!container)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
@@ -159,16 +159,16 @@ namespace AZ
         }
 
         size_t typeCount = 0;
-        auto typeCountCallback = [&typeCount](const Uuid&, const SerializeContext::ClassElement*)
+        auto typeCountCallback = [&typeCount](const Uuid&, const Serialization::ClassElement*)
         {
             typeCount++;
             return true;
         };
         container->EnumTypes(typeCountCallback);
 
-        AZStd::vector<const SerializeContext::ClassElement*> classElements;
+        AZStd::vector<const Serialization::ClassElement*> classElements;
         classElements.reserve(typeCount);
-        auto typeEnumCallback = [&classElements](const Uuid&, const SerializeContext::ClassElement* genericClassElement)
+        auto typeEnumCallback = [&classElements](const Uuid&, const Serialization::ClassElement* genericClassElement)
         {
             classElements.push_back(genericClassElement);
             return true;
@@ -189,7 +189,7 @@ namespace AZ
 
                 ContinuationFlags flags = ContinuationFlags::LoadAsNewInstance;
                 flags |=
-                    (classElements[i]->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER ? ContinuationFlags::ResolvePointer
+                    (classElements[i]->m_flags & Serialization::ClassElement::Flags::FLG_POINTER ? ContinuationFlags::ResolvePointer
                                                                                                     : ContinuationFlags::None);
                 JSR::ResultCode result = ContinueLoading(elementAddress, classElements[i]->m_typeId, explicitDefaultValue, context, flags);
                 retVal.Combine(result);
@@ -220,7 +220,7 @@ namespace AZ
                 AZ_Assert(elementAddress, "Address of AZStd::pair or AZStd::tuple element %zu could not be retrieved.", i);
 
                 ContinuationFlags flags =
-                    (classElements[i]->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER ? ContinuationFlags::ResolvePointer
+                    (classElements[i]->m_flags & Serialization::ClassElement::Flags::FLG_POINTER ? ContinuationFlags::ResolvePointer
                                                                                                     : ContinuationFlags::None);
                 while (arrayIndex < inputValue.Size())
                 {

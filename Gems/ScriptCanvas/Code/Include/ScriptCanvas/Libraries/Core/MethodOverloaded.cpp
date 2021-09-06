@@ -41,7 +41,7 @@ namespace ScriptCanvas
             // MethodOverloaded
             /////////////////////
 
-            static bool MethodOverloadedVersionConverter(AZ::SerializeContext& , AZ::SerializeContext::DataElementNode& classElement)
+            static bool MethodOverloadedVersionConverter(AZ::SerializeContext& , AZ::Serialization::DataElementNode& classElement)
             {
                 if (classElement.GetVersion() <= MethodOverloadedCpp::DataDrivingOverloads)
                 {

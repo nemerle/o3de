@@ -13,7 +13,7 @@ namespace ScriptCanvas
 {
     namespace Deprecated
     {
-        bool VariableDatumVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElementNode)
+        bool VariableDatumVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElementNode)
         {
             if (rootElementNode.GetVersion() == 0)
             {

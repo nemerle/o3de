@@ -230,7 +230,7 @@ namespace ScriptCanvas
         AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
         AZ_Assert(serializeContext, "Failed to retrieve application serialize context");
 
-        const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(nodeType);
+        const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(nodeType);
         AZ_Assert(classData, "Type %s is not registered in the serialization context", nodeType.ToString<AZStd::string>().data());
 
         if (classData)

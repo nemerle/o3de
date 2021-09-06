@@ -29,7 +29,7 @@ namespace Input
 {
     static const int s_inputVersion = 2;
 
-    bool ConvertInputVersion1To2(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool ConvertInputVersion1To2(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         const int deviceTypeElementIndex = classElement.FindElement(AZ_CRC("Input Device Type"));
         if (deviceTypeElementIndex == -1)
@@ -38,7 +38,7 @@ namespace Input
             return false;
         }
 
-        AZ::SerializeContext::DataElementNode& deviceTypeElementNode = classElement.GetSubElement(deviceTypeElementIndex);
+        AZ::Serialization::DataElementNode& deviceTypeElementNode = classElement.GetSubElement(deviceTypeElementIndex);
         AZStd::string deviceTypeElementValue;
         if (!deviceTypeElementNode.GetData(deviceTypeElementValue))
         {
@@ -60,7 +60,7 @@ namespace Input
             return false;
         }
 
-        AZ::SerializeContext::DataElementNode& eventNameElementNode = classElement.GetSubElement(eventNameElementIndex);
+        AZ::Serialization::DataElementNode& eventNameElementNode = classElement.GetSubElement(eventNameElementIndex);
         AZStd::string eventNameElementValue;
         if (!eventNameElementNode.GetData(eventNameElementValue))
         {
@@ -78,7 +78,7 @@ namespace Input
         return true;
     }
 
-    bool ConvertInputVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool ConvertInputVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         int currentUpgradedVersion = classElement.GetVersion();
         while (currentUpgradedVersion < s_inputVersion)

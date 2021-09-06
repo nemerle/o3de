@@ -42,7 +42,7 @@ namespace ComponentHelpers
 
     struct ComponentTypeData
     {
-        const AZ::SerializeContext::ClassData* classData;
+        const AZ::Serialization::ClassData* classData;
         bool isLyShineComponent;
     };
     AZStd::vector<ComponentTypeData> GetAllComponentTypesThatCanAppearInAddComponentMenu();

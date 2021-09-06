@@ -125,7 +125,7 @@ namespace ScriptCanvasEditor
         m_graphCanvasSceneEntity = nullptr;
     }
 
-    static bool GraphVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootDataElementNode)
+    static bool GraphVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootDataElementNode)
     {
         // Version 0/1 graph will have their SaveFormatConverted flag flipped off
         if (rootDataElementNode.GetVersion() < 2)
@@ -708,7 +708,7 @@ namespace ScriptCanvasEditor
             return AZ::Failure();
         }
 
-        const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(nodeConfig.m_type);
+        const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(nodeConfig.m_type);
         if (!classData)
         {
             AZ_Warning("ScriptCanvas", false, "Failed to find replacement class with UUID %s from serialize context.", nodeConfig.m_type.data);

@@ -18,7 +18,7 @@ namespace Camera
 {
     namespace ClassConverters
     {
-        static bool DeprecateCameraTargetComponentAcquirer(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool DeprecateCameraTargetComponentAcquirer(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     } // namespace ClassConverters
 
     void AcquireByTag::Reflect(AZ::ReflectContext* reflection)
@@ -94,7 +94,7 @@ namespace Camera
 
     namespace ClassConverters
     {
-        static bool DeprecateCameraTargetComponentAcquirer(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool DeprecateCameraTargetComponentAcquirer(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             AZStd::string tag;
             classElement.GetChildData(AZ::Crc32("Tag of Specific Target"), tag);

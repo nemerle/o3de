@@ -50,7 +50,7 @@ namespace AZ
                 void SetEndFrame(uint32_t frame) override;
 
                 static void Reflect(ReflectContext* context);
-                static bool VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement);
+                static bool VersionConverter(SerializeContext& context, Serialization::DataElementNode& classElement);
 
             protected:
                 DataTypes::IAnimationGroup::PerBoneCompressionList m_perBoneCompression;

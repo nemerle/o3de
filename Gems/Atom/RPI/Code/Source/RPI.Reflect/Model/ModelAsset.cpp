@@ -8,6 +8,7 @@
 
 #include <Atom/RPI.Reflect/Model/ModelAsset.h>
 #include <Atom/RPI.Reflect/Model/ModelKdTree.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Debug/EventTrace.h>
 #include <AzCore/Jobs/JobFunction.h>
 #include <AzCore/Math/IntersectSegment.h>
@@ -20,6 +21,111 @@ namespace AZ
 {
     namespace RPI
     {
+    namespace
+    {
+    bool LocalRayIntersectionAgainstMesh(
+        const ModelLodAsset::Mesh& mesh,
+        const AZ::Vector3& rayStart,
+        const AZ::Vector3& rayDir,
+        float& distanceNormalized,
+        AZ::Vector3& normal,
+        const AZ::Name &positionName)
+    {
+        const BufferAssetView& indexBufferView = mesh.GetIndexBufferAssetView();
+        const AZStd::array_view<ModelLodAsset::Mesh::StreamBufferInfo>& streamBufferList = mesh.GetStreamBufferInfoList();
+
+        // find position semantic
+        const ModelLodAsset::Mesh::StreamBufferInfo* positionBuffer = nullptr;
+
+        for (const ModelLodAsset::Mesh::StreamBufferInfo& bufferInfo : streamBufferList)
+        {
+            if (bufferInfo.m_semantic.m_name == positionName)
+            {
+                positionBuffer = &bufferInfo;
+                break;
+            }
+        }
+
+        if (positionBuffer && positionBuffer->m_bufferAssetView.GetBufferAsset().Get())
+        {
+            BufferAsset* bufferAssetViewPtr = positionBuffer->m_bufferAssetView.GetBufferAsset().Get();
+            BufferAsset* indexAssetViewPtr = indexBufferView.GetBufferAsset().Get();
+
+            if (!bufferAssetViewPtr || !indexAssetViewPtr)
+            {
+                return false;
+            }
+
+            RHI::BufferViewDescriptor positionBufferViewDesc = bufferAssetViewPtr->GetBufferViewDescriptor();
+            AZStd::array_view<uint8_t> positionRawBuffer = bufferAssetViewPtr->GetBuffer();
+
+            const uint32_t positionElementSize = positionBufferViewDesc.m_elementSize;
+            const uint32_t positionElementCount = positionBufferViewDesc.m_elementCount;
+
+            // Position is 3 floats
+            if (positionElementSize != sizeof(float) * 3)
+            {
+                AZ_Warning("ModelAsset", false, "unsupported mesh posiiton format, only full 3 floats per vertex are supported at the moment");
+                return false;
+            }
+
+            AZStd::array_view<uint8_t> indexRawBuffer = indexAssetViewPtr->GetBuffer();
+            RHI::BufferViewDescriptor indexRawDesc = indexAssetViewPtr->GetBufferViewDescriptor();
+
+            bool anyHit = false;
+
+            const AZ::Vector3 rayEnd = rayStart + rayDir;
+            AZ::Vector3 a, b, c;
+            AZ::Vector3 intersectionNormal;
+
+            float shortestDistanceNormalized = AZStd::numeric_limits<float>::max();
+            const AZ::u32* indexPtr = reinterpret_cast<const AZ::u32*>(indexRawBuffer.data());
+            for (uint32_t indexIter = 0; indexIter <= indexRawDesc.m_elementCount - 3; indexIter += 3, indexPtr += 3)
+            {
+                AZ::u32 index0 = indexPtr[0];
+                AZ::u32 index1 = indexPtr[1];
+                AZ::u32 index2 = indexPtr[2];
+
+                if (index0 >= positionElementCount || index1 >= positionElementCount || index2 >= positionElementCount)
+                {
+                    AZ_Warning("ModelAsset", false, "mesh has a bad vertex index");
+                    return false;
+                }
+
+                const float* p = reinterpret_cast<const float*>(&positionRawBuffer[index0 * positionElementSize]);
+                a.Set(const_cast<float*>(p)); // faster than AZ::Vector3 c-tor
+
+                p = reinterpret_cast<const float*>(&positionRawBuffer[index1 * positionElementSize]);
+                b.Set(const_cast<float*>(p));
+
+                p = reinterpret_cast<const float*>(&positionRawBuffer[index2 * positionElementSize]);
+                c.Set(const_cast<float*>(p));
+
+                float currentDistanceNormalized;
+                if (AZ::Intersect::IntersectSegmentTriangleCCW(rayStart, rayEnd, a, b, c, intersectionNormal, currentDistanceNormalized))
+                {
+                    anyHit = true;
+
+                    if (currentDistanceNormalized < shortestDistanceNormalized)
+                    {
+                        normal = intersectionNormal;
+                        shortestDistanceNormalized = currentDistanceNormalized;
+                    }
+                }
+            }
+
+            if (anyHit)
+            {
+                distanceNormalized = shortestDistanceNormalized;
+            }
+
+            return anyHit;
+        }
+
+        return false;
+    }
+
+    }
         const char* ModelAsset::DisplayName = "ModelAsset";
         const char* ModelAsset::Group = "Model";
         const char* ModelAsset::Extension = "azmodel";
@@ -57,12 +163,12 @@ namespace AZ
         {
             return m_aabb;
         }
-        
+
         const ModelMaterialSlotMap& ModelAsset::GetMaterialSlots() const
         {
             return m_materialSlots;
         }
-            
+
         const ModelMaterialSlot& ModelAsset::FindMaterialSlot(uint32_t stableId) const
         {
             auto iter = m_materialSlots.find(stableId);
@@ -170,7 +276,7 @@ namespace AZ
                     for (const ModelLodAsset::Mesh& mesh : loadAssetPtr->GetMeshes())
                     {
                         float currentDistanceNormalized;
-                        if (LocalRayIntersectionAgainstMesh(mesh, rayStart, rayDir, currentDistanceNormalized, intersectionNormal))
+                        if (LocalRayIntersectionAgainstMesh(mesh, rayStart, rayDir, currentDistanceNormalized, intersectionNormal,m_positionName))
                         {
                             anyHit = true;
 
@@ -189,107 +295,6 @@ namespace AZ
 
                     return anyHit;
                 }
-            }
-
-            return false;
-        }
-
-        bool ModelAsset::LocalRayIntersectionAgainstMesh(
-            const ModelLodAsset::Mesh& mesh,
-            const AZ::Vector3& rayStart,
-            const AZ::Vector3& rayDir,
-            float& distanceNormalized,
-            AZ::Vector3& normal) const
-        {
-            const BufferAssetView& indexBufferView = mesh.GetIndexBufferAssetView();
-            const AZStd::array_view<ModelLodAsset::Mesh::StreamBufferInfo>& streamBufferList = mesh.GetStreamBufferInfoList();
-
-            // find position semantic
-            const ModelLodAsset::Mesh::StreamBufferInfo* positionBuffer = nullptr;
-
-            for (const ModelLodAsset::Mesh::StreamBufferInfo& bufferInfo : streamBufferList)
-            {
-                if (bufferInfo.m_semantic.m_name == m_positionName)
-                {
-                    positionBuffer = &bufferInfo;
-                    break;
-                }
-            }
-
-            if (positionBuffer && positionBuffer->m_bufferAssetView.GetBufferAsset().Get())
-            {
-                BufferAsset* bufferAssetViewPtr = positionBuffer->m_bufferAssetView.GetBufferAsset().Get();
-                BufferAsset* indexAssetViewPtr = indexBufferView.GetBufferAsset().Get();
-
-                if (!bufferAssetViewPtr || !indexAssetViewPtr)
-                {
-                    return false;
-                }
-
-                RHI::BufferViewDescriptor positionBufferViewDesc = bufferAssetViewPtr->GetBufferViewDescriptor();
-                AZStd::array_view<uint8_t> positionRawBuffer = bufferAssetViewPtr->GetBuffer();
-
-                const uint32_t positionElementSize = positionBufferViewDesc.m_elementSize;
-                const uint32_t positionElementCount = positionBufferViewDesc.m_elementCount;
-
-                // Position is 3 floats
-                if (positionElementSize != sizeof(float) * 3)
-                {
-                    AZ_Warning("ModelAsset", false, "unsupported mesh posiiton format, only full 3 floats per vertex are supported at the moment");
-                    return false;
-                }
-
-                AZStd::array_view<uint8_t> indexRawBuffer = indexAssetViewPtr->GetBuffer();
-                RHI::BufferViewDescriptor indexRawDesc = indexAssetViewPtr->GetBufferViewDescriptor();
-
-                bool anyHit = false;
-
-                const AZ::Vector3 rayEnd = rayStart + rayDir;
-                AZ::Vector3 a, b, c;
-                AZ::Vector3 intersectionNormal;
-
-                float shortestDistanceNormalized = AZStd::numeric_limits<float>::max();
-                const AZ::u32* indexPtr = reinterpret_cast<const AZ::u32*>(indexRawBuffer.data());
-                for (uint32_t indexIter = 0; indexIter <= indexRawDesc.m_elementCount - 3; indexIter += 3, indexPtr += 3)
-                {
-                    AZ::u32 index0 = indexPtr[0];
-                    AZ::u32 index1 = indexPtr[1];
-                    AZ::u32 index2 = indexPtr[2];
-
-                    if (index0 >= positionElementCount || index1 >= positionElementCount || index2 >= positionElementCount)
-                    {
-                        AZ_Warning("ModelAsset", false, "mesh has a bad vertex index");
-                        return false;
-                    }
-
-                    const float* p = reinterpret_cast<const float*>(&positionRawBuffer[index0 * positionElementSize]);
-                    a.Set(const_cast<float*>(p)); // faster than AZ::Vector3 c-tor
-
-                    p = reinterpret_cast<const float*>(&positionRawBuffer[index1 * positionElementSize]);
-                    b.Set(const_cast<float*>(p));
-
-                    p = reinterpret_cast<const float*>(&positionRawBuffer[index2 * positionElementSize]);
-                    c.Set(const_cast<float*>(p));
-
-                    float currentDistanceNormalized;
-                    if (AZ::Intersect::IntersectSegmentTriangleCCW(rayStart, rayEnd, a, b, c, intersectionNormal, currentDistanceNormalized))
-                    {
-                        anyHit = true;
-
-                        if (currentDistanceNormalized < shortestDistanceNormalized)
-                        {
-                            normal = intersectionNormal;
-                            shortestDistanceNormalized = currentDistanceNormalized;
-                        }
-                    }
-                }
-
-                if (anyHit)
-                {
-                    distanceNormalized = shortestDistanceNormalized;
-                }
-
-                return anyHit;
             }
 
             return false;

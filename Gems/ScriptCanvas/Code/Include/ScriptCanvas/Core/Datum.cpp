@@ -34,7 +34,7 @@ namespace DatumHelpers
 
     using namespace ScriptCanvas;
 
-    bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootDataElementNode)
+    bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootDataElementNode)
     {
         if (rootDataElementNode.GetVersion() <= Version::JSONSerializerSupport)
         {

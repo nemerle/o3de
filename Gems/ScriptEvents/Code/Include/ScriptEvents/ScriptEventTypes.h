@@ -9,7 +9,12 @@
 #pragma once
 
 #include <ScriptEvents/Internal/VersionedProperty.h>
-
+#include <AzCore/Script/ScriptContextAttributes.h>
+namespace AZ
+{
+    class BehaviorClass;
+    class BehaviorMethod;
+}
 namespace ScriptEvents
 {
     namespace Types
@@ -19,7 +24,7 @@ namespace ScriptEvents
 
         VersionedTypes GetValidAddressTypes();
 
-        // Returns the list of the valid Script Event method parameter type Ids, this is used 
+        // Returns the list of the valid Script Event method parameter type Ids, this is used
         AZStd::vector<AZ::Uuid> GetSupportedParameterTypes();
 
         // Returns the list of the valid Script Event method parameters, this is used to populate the ReflectedPropertyEditor's combobox

@@ -7,6 +7,7 @@
  */
 
 #include <Atom/RPI.Public/Model/Model.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
 #include <Atom/RHI/Factory.h>
 
@@ -129,13 +130,13 @@ namespace AZ
         bool Model::LocalRayIntersection(const AZ::Vector3& rayStart, const AZ::Vector3& rayDir, float& distanceNormalized, AZ::Vector3& normal) const
         {
             AZ_PROFILE_FUNCTION(RPI);
-            
+
             if (!GetModelAsset())
             {
                 AZ_Assert(false, "Invalid Model - not created from a ModelAsset?");
                 return false;
             }
-            
+
             float start;
             float end;
             const int result = Intersect::IntersectRayAABB2(rayStart, rayDir.GetReciprocal(), GetModelAsset()->GetAabb(), start, end);

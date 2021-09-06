@@ -1,3 +1,4 @@
+bld/
 .idea/
 .vs/
 .vscode/
@@ -27,3 +28,4 @@ TestResults/**
 /imgui.ini
 /scripts/project_manager/logs/
 /AutomatedTesting/Gem/PythonTests/scripting/TestResults
+*.PVS-Studio.json

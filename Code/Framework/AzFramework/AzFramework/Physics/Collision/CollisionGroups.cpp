@@ -9,6 +9,8 @@
 #include <AzFramework/Physics/Collision/CollisionGroups.h>
 
 #include <AzCore/Memory/SystemAllocator.h>
+#include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/Script/ScriptContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 #include <AzFramework/Physics/CollisionBus.h>
@@ -121,7 +123,7 @@ namespace AzPhysics
         return !(*this == other);
     }
 
-    CollisionGroup::CollisionGroup(AZ::u64 mask) 
+    CollisionGroup::CollisionGroup(AZ::u64 mask)
         : m_mask(mask)
     {
     }
@@ -140,7 +142,7 @@ namespace AzPhysics
             m_mask |= 1ULL << layer.GetIndex();
         }
         else
-        { 
+        {
             m_mask &= ~(1ULL << layer.GetIndex());
         }
     }
@@ -190,7 +192,7 @@ namespace AzPhysics
 
     CollisionGroup CollisionGroups::FindGroupById(CollisionGroups::Id id) const
     {
-        auto found = AZStd::find_if(m_groups.begin(), m_groups.end(), [id](const Preset& preset) 
+        auto found = AZStd::find_if(m_groups.begin(), m_groups.end(), [id](const Preset& preset)
         {
             return preset.m_id == id;
         });

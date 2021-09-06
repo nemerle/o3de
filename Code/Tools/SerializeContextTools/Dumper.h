@@ -34,24 +34,24 @@ namespace AZ
 
             static rapidjson::Value WriteToJsonValue(const Uuid& uuid, rapidjson::Document& document);
             
-            static bool DumpClassContent(const SerializeContext::ClassData* classData, rapidjson::Value& parent, rapidjson::Document& document, 
+            static bool DumpClassContent(const Serialization::ClassData* classData, rapidjson::Value& parent, rapidjson::Document& document, 
                 const AZStd::vector<Uuid>& systemComponents, SerializeContext* context, AZStd::string& scratchStringBuffer);
             static bool DumpClassContent(AZStd::string& output, void* classPtr, const Uuid& classId, SerializeContext* context);
             
-            static void DumpElementInfo(const SerializeContext::ClassElement& element, const SerializeContext::ClassData* classData, SerializeContext* context, 
+            static void DumpElementInfo(const Serialization::ClassElement& element, const Serialization::ClassData* classData, SerializeContext* context, 
                 rapidjson::Value& fields, rapidjson::Value& bases, rapidjson::Document& document, AZStd::string& scratchStringBuffer);
-            static void DumpElementInfo(AZStd::string& output, const SerializeContext::ClassElement* classElement, SerializeContext* context);
+            static void DumpElementInfo(AZStd::string& output, const Serialization::ClassElement* classElement, SerializeContext* context);
             
             static void DumpGenericStructure(AZStd::string& output, GenericClassInfo* genericClassInfo, SerializeContext* context);
             static rapidjson::Value DumpGenericStructure(GenericClassInfo* genericClassInfo, SerializeContext* context, 
                 rapidjson::Document& parentDoc, AZStd::string& scratchStringBuffer);
             
-            static void DumpPrimitiveTag(AZStd::string& output, const SerializeContext::ClassData* classData, 
-                const SerializeContext::ClassElement* classElement);
-            static void DumpClassName(rapidjson::Value& parent, SerializeContext* context, const SerializeContext::ClassData* classData, 
+            static void DumpPrimitiveTag(AZStd::string& output, const Serialization::ClassData* classData, 
+                const Serialization::ClassElement* classElement);
+            static void DumpClassName(rapidjson::Value& parent, SerializeContext* context, const Serialization::ClassData* classData, 
                 rapidjson::Document& parentDoc, AZStd::string& scratchStringBuffer);
             
-            static void AppendTypeName(AZStd::string& output, const SerializeContext::ClassData* classData, const Uuid& classId);
+            static void AppendTypeName(AZStd::string& output, const Serialization::ClassData* classData, const Uuid& classId);
         };
     } // namespace SerializeContextTools
 } // namespace AZ

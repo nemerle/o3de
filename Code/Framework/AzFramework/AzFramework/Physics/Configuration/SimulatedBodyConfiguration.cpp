@@ -15,7 +15,7 @@ namespace AzPhysics
 {
     namespace Internal
     {
-        bool DeprecateWorldBodyConfiguration(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateWorldBodyConfiguration(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // WorldBodyConfiguration on serialized the name so capture that.
             AZStd::string name = "";
@@ -27,7 +27,7 @@ namespace AzPhysics
             return true;
         }
 
-        bool SimulatedBodyVersionConverter([[maybe_unused]] AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool SimulatedBodyVersionConverter([[maybe_unused]] AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() <= 1)
             {

@@ -19,7 +19,7 @@
 
 namespace AzToolsFramework
 {
-    using DynamicEditDataProvider = AZStd::function<const AZ::Edit::ElementData*(const void* /*objectPtr*/, const AZ::SerializeContext::ClassData* /*classData*/)>;
+    using DynamicEditDataProvider = AZStd::function<const AZ::Edit::ElementData*(const void* /*objectPtr*/, const AZ::Serialization::ClassData* /*classData*/)>;
 
     class InstanceDataHierarchy;
     class ComponentEditor;
@@ -93,8 +93,8 @@ namespace AzToolsFramework
         NodeContainer&                              GetChildren()                   { return m_children; }
         const NodeContainer&                        GetChildren() const             { return m_children; }
 
-        const AZ::SerializeContext::ClassData*      GetClassMetadata() const        { return m_classData; }
-        const AZ::SerializeContext::ClassElement*   GetElementMetadata() const      { return m_classElement; }
+        const AZ::Serialization::ClassData*      GetClassMetadata() const        { return m_classData; }
+        const AZ::Serialization::ClassElement*   GetElementMetadata() const      { return m_classElement; }
         const AZ::Edit::ElementData*                GetElementEditMetadata() const  { return m_elementEditData; }
         const AZ::Edit::ElementData*                GetGroupElementMetadata() const { return m_groupElementData; }
 
@@ -126,8 +126,8 @@ namespace AzToolsFramework
         //@}
         */
 
-        typedef AZStd::function<const AZ::SerializeContext::ClassData* (const AZ::Uuid& classId, const AZ::Uuid& typeId, AZ::SerializeContext* context)> SelectClassCallback;
-        typedef AZStd::function<bool (void* dataPtr, const AZ::SerializeContext::ClassElement* classElement, bool noDefaultData, AZ::SerializeContext* context)> FillDataClassCallback;
+        typedef AZStd::function<const AZ::Serialization::ClassData* (const AZ::Uuid& classId, const AZ::Uuid& typeId, AZ::SerializeContext* context)> SelectClassCallback;
+        typedef AZStd::function<bool (void* dataPtr, const AZ::Serialization::ClassElement* classElement, bool noDefaultData, AZ::SerializeContext* context)> FillDataClassCallback;
         typedef AZStd::function<void (const AZ::Uuid& classId)> CustomElementCreationHandler;
 
         bool CreateContainerElement(const SelectClassCallback& selectClass, const FillDataClassCallback& fillData);
@@ -152,8 +152,8 @@ namespace AzToolsFramework
         InstanceDataNode*                           m_parent;
         InstanceDataNode*                           m_root;
         NodeContainer                               m_children;
-        const AZ::SerializeContext::ClassData*      m_classData;
-        const AZ::SerializeContext::ClassElement*   m_classElement;
+        const AZ::Serialization::ClassData*      m_classData;
+        const AZ::Serialization::ClassElement*   m_classElement;
         const AZ::Edit::ElementData*                m_elementEditData;
         AZ::SerializeContext*                       m_context;
         AZ::u32                                     m_comparisonFlags;
@@ -396,7 +396,7 @@ namespace AzToolsFramework
         };
         typedef AZStd::vector<EditDataOverride> EditDataOverrideStack;
 
-        typedef AZStd::list<AZ::SerializeContext::ClassElement> SupplementalElementDataContainer;
+        typedef AZStd::list<AZ::Serialization::ClassElement> SupplementalElementDataContainer;
 
         struct InstanceData
         {
@@ -421,7 +421,7 @@ namespace AzToolsFramework
 
         void EnumerateUIElements(InstanceDataNode* node, DynamicEditDataProvider dynamicEditDataProvider);
 
-        bool BeginNode(void* instance, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* classElement, DynamicEditDataProvider dynamicEditDataProvider);
+        bool BeginNode(void* instance, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* classElement, DynamicEditDataProvider dynamicEditDataProvider);
         bool EndNode();
 
         static void CompareHierarchies(const InstanceDataNode* sourceNode, InstanceDataNode* targetNode,

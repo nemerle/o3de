@@ -103,7 +103,7 @@ namespace AzToolsFramework
         NodeDisplayVisibility visibility = NodeDisplayVisibility::NotVisible;
 
         // If parent is a dynamic serializable field with edit reflection, default to visible.
-        if (node.GetElementMetadata() && 0 != (node.GetElementMetadata()->m_flags & AZ::SerializeContext::ClassElement::FLG_DYNAMIC_FIELD))
+        if (node.GetElementMetadata() && 0 != (node.GetElementMetadata()->m_flags & AZ::Serialization::ClassElement::FLG_DYNAMIC_FIELD))
         {
             if (node.GetParent() && node.GetParent()->GetElementEditMetadata())
             {
@@ -112,7 +112,7 @@ namespace AzToolsFramework
         }
 
         // Show UI Elements by default
-        if (node.GetElementMetadata() && 0 != (node.GetElementMetadata()->m_flags & AZ::SerializeContext::ClassElement::FLG_UI_ELEMENT))
+        if (node.GetElementMetadata() && 0 != (node.GetElementMetadata()->m_flags & AZ::Serialization::ClassElement::FLG_UI_ELEMENT))
         {
             visibility = NodeDisplayVisibility::Visible;
         }
@@ -129,7 +129,7 @@ namespace AzToolsFramework
         // Use class meta data as opposed to parent's reflection data if this is a base class element,
         // which isn't explicitly reflected by the containing class.
         if ((visibility == NodeDisplayVisibility::NotVisible && node.GetElementMetadata()) &&
-            (node.GetElementMetadata()->m_flags & AZ::SerializeContext::ClassElement::FLG_BASE_CLASS))
+            (node.GetElementMetadata()->m_flags & AZ::Serialization::ClassElement::FLG_BASE_CLASS))
         {
             if (node.GetClassMetadata() && node.GetClassMetadata()->m_editData)
             {
@@ -171,7 +171,7 @@ namespace AzToolsFramework
             // Components should always appear, even if they're not exposed in the inspector UI.
             if (visibility != AzToolsFramework::NodeDisplayVisibility::Visible)
             {
-                const AZ::SerializeContext::ClassData* classData = node.GetClassMetadata();
+                const AZ::Serialization::ClassData* classData = node.GetClassMetadata();
                 if (classData && classData->m_azRtti && classData->m_azRtti->IsTypeOf(azrtti_typeid<AZ::Component>()))
                 {
                     visibility = AzToolsFramework::NodeDisplayVisibility::Visible;

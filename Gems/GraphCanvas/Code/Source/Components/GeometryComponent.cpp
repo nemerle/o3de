@@ -23,7 +23,7 @@ namespace GraphCanvas
     //////////////////////
     const float GeometryComponent::IS_CLOSE_TOLERANCE = 0.001f;
 
-    bool GeometryComponentVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool GeometryComponentVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() <= 3)
         {
@@ -31,7 +31,7 @@ namespace GraphCanvas
 
             GeometrySaveData saveData;
 
-            AZ::SerializeContext::DataElementNode* dataNode = classElement.FindSubElement(positionId);
+            AZ::Serialization::DataElementNode* dataNode = classElement.FindSubElement(positionId);
 
             if (dataNode)
             {

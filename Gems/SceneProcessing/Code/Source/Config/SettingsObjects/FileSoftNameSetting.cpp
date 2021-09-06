@@ -50,7 +50,7 @@ namespace AZ
                 AZ_Assert(context, "Unable to find valid serialize context.");
 
                 context->EnumerateDerived<SceneAPI::DataTypes::IGraphObject>(
-                    [this](const SerializeContext::ClassData* data, const Uuid& typeId) -> bool
+                    [this](const Serialization::ClassData* data, const Uuid& typeId) -> bool
                     {
                         AZ_UNUSED(typeId);
                         if (AzFramework::StringFunc::Equal(data->m_name, m_name.c_str()))

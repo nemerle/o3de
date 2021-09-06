@@ -427,7 +427,7 @@ namespace UnitTest
             }
         };
 
-        static bool ConvertDerivedClass2ToDerivedClass3(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool ConvertDerivedClass2ToDerivedClass3(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             classElement.Convert(context, AZ::AzTypeInfo<ObjectDerivedClass3>::Uuid());
             return true;
@@ -480,7 +480,7 @@ namespace UnitTest
             ObjectWithMultiPointers::Reflect(*m_serializeContext);
             AZ::DataPatch::Reflect(m_serializeContext.get());
 
-            const SerializeContext::ClassData* addressTypeSerializerClassData = m_serializeContext.get()->FindClassData(azrtti_typeid<DataPatch::AddressType>());
+            const Serialization::ClassData* addressTypeSerializerClassData = m_serializeContext.get()->FindClassData(azrtti_typeid<DataPatch::AddressType>());
 
             AZ_Assert(addressTypeSerializerClassData, "AddressType class not reflected, required to run DataPatch Unit Tests");
             m_addressTypeSerializer = static_cast<DataPatchInternal::AddressTypeSerializer*>(addressTypeSerializerClassData->m_serializer.get());
@@ -2643,7 +2643,7 @@ namespace UnitTest
                     }
                 }
 
-                static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+                static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
                 {
                     if (rootElement.GetVersion() < 2)
                     {

@@ -10,7 +10,7 @@
 
 namespace AZ
 {
-    DataPatchUpgradeManager::DataPatchUpgradeManager(const AZ::SerializeContext::DataPatchFieldUpgrades& upgrades, int startingVersion)
+    DataPatchUpgradeManager::DataPatchUpgradeManager(const AZ::Serialization::DataPatchFieldUpgrades& upgrades, int startingVersion)
         : m_upgrades(upgrades)
         , m_startingVersion(startingVersion)
     {}
@@ -80,7 +80,7 @@ namespace AZ
     }
 
     // Apply appropriate upgrades to an address. Returns a new address.
-    void DataPatchUpgradeManager::ApplyUpgrades(AZ::DataPatch::AddressTypeElement& addressElement, AZStd::vector<AZ::SerializeContext::DataPatchUpgrade*> upgrades) const
+    void DataPatchUpgradeManager::ApplyUpgrades(AZ::DataPatch::AddressTypeElement& addressElement, AZStd::vector<AZ::Serialization::DataPatchUpgrade*> upgrades) const
     {
         if (upgrades.empty())
         {
@@ -89,7 +89,7 @@ namespace AZ
 
         for (auto* upgrade : upgrades)
         {
-            if (upgrade->GetUpgradeType() == AZ::SerializeContext::TYPE_UPGRADE)
+            if (upgrade->GetUpgradeType() == AZ::Serialization::TYPE_UPGRADE)
             {
                 AZ_Assert(addressElement.GetElementTypeId() == upgrade->GetFromType(), "Data Patch Upgrade Failure: address element type does not match the from type of the upgrade.");
                 addressElement.SetAddressClassTypeId(upgrade->GetToType());
@@ -102,7 +102,7 @@ namespace AZ
                     addressElement.SetAddressClassVersion(upgrade->ToVersion());
                 }
             }
-            else if (upgrade->GetUpgradeType() == AZ::SerializeContext::NAME_UPGRADE)
+            else if (upgrade->GetUpgradeType() == AZ::Serialization::NAME_UPGRADE)
             {
                 addressElement.SetPathElement(upgrade->GetNewName());
                 addressElement.SetAddressElement(AZ::u32(AZ::Crc32(upgrade->GetNewName().c_str())));
@@ -129,7 +129,7 @@ namespace AZ
         for (auto* upgrade : upgrades)
         {
             // Ignore name upgrades
-            if (upgrade->GetUpgradeType() == AZ::SerializeContext::TYPE_UPGRADE)
+            if (upgrade->GetUpgradeType() == AZ::Serialization::TYPE_UPGRADE)
             {
                 value = upgrade->Apply(value);
             }
@@ -138,14 +138,14 @@ namespace AZ
 
     // Retrieve an ordered list of upgrades managed by this handler that should be applied
     // to the given address or an associated value. Returns an empty vector if there are none.
-    AZStd::vector<AZ::SerializeContext::DataPatchUpgrade*> DataPatchUpgradeManager::GetApplicableUpgrades(const DataPatch::AddressTypeElement& address) const
+    AZStd::vector<AZ::Serialization::DataPatchUpgrade*> DataPatchUpgradeManager::GetApplicableUpgrades(const DataPatch::AddressTypeElement& address) const
     {
         if (m_upgrades.empty())
         {
-            return AZStd::vector<AZ::SerializeContext::DataPatchUpgrade*>();
+            return AZStd::vector<AZ::Serialization::DataPatchUpgrade*>();
         }
 
-        AZStd::vector<AZ::SerializeContext::DataPatchUpgrade*> result;
+        AZStd::vector<AZ::Serialization::DataPatchUpgrade*> result;
         unsigned int typeVersion = m_startingVersion;
         unsigned int nameVersion = m_startingVersion;
         AZ::Crc32 currentNameCRC = AZ::Crc32(u32(address.GetAddressElement()));
@@ -153,11 +153,11 @@ namespace AZ
         auto nextUpgrade = GetNextUpgrade(typeVersion, nameVersion, currentNameCRC);
         while (nextUpgrade)
         {
-            if (nextUpgrade->GetUpgradeType() == AZ::SerializeContext::TYPE_UPGRADE)
+            if (nextUpgrade->GetUpgradeType() == AZ::Serialization::TYPE_UPGRADE)
             {
                 typeVersion = nextUpgrade->ToVersion();
             }
-            else if (nextUpgrade->GetUpgradeType() == AZ::SerializeContext::NAME_UPGRADE)
+            else if (nextUpgrade->GetUpgradeType() == AZ::Serialization::NAME_UPGRADE)
             {
                 nameVersion = nextUpgrade->ToVersion();
                 currentNameCRC = AZ::Crc32(nextUpgrade->GetNewName().c_str());
@@ -174,7 +174,7 @@ namespace AZ
         return result;
     }
 
-    const AZ::SerializeContext::DataPatchUpgradeMap* DataPatchUpgradeManager::GetPotentialUpgrades(const AZ::Crc32& fieldNameCRC) const
+    const AZ::Serialization::DataPatchUpgradeMap* DataPatchUpgradeManager::GetPotentialUpgrades(const AZ::Crc32& fieldNameCRC) const
     {
         auto upgradesByField = m_upgrades.find(fieldNameCRC);
         if (upgradesByField == m_upgrades.end())
@@ -186,7 +186,7 @@ namespace AZ
         return &(upgradesByField->second);
     }
 
-    AZ::SerializeContext::DataPatchUpgrade* DataPatchUpgradeManager::GetNextUpgrade(unsigned int currentTypeVersion, unsigned int currentNameVersion, AZ::Crc32 currentNameCRC) const
+    AZ::Serialization::DataPatchUpgrade* DataPatchUpgradeManager::GetNextUpgrade(unsigned int currentTypeVersion, unsigned int currentNameVersion, AZ::Crc32 currentNameCRC) const
     {
         if (m_upgrades.empty())
         {
@@ -209,7 +209,7 @@ namespace AZ
         return nextNameUpgrade;
     }
 
-    AZ::SerializeContext::DataPatchUpgrade* DataPatchUpgradeManager::GetNextTypeUpgrade(AZ::Crc32 currentFieldNameCRC, unsigned int currentTypeVersion) const
+    AZ::Serialization::DataPatchUpgrade* DataPatchUpgradeManager::GetNextTypeUpgrade(AZ::Crc32 currentFieldNameCRC, unsigned int currentTypeVersion) const
     {
         if (m_upgrades.empty())
         {
@@ -227,9 +227,9 @@ namespace AZ
 
                     while (possibleUpgrade != mapIter->second.rend())
                     {
-                        AZ::SerializeContext::DataPatchUpgradeType upgradeType = (*possibleUpgrade)->GetUpgradeType();
+                        AZ::Serialization::DataPatchUpgradeType upgradeType = (*possibleUpgrade)->GetUpgradeType();
                         unsigned int toVersion = (*possibleUpgrade)->ToVersion();
-                        if (upgradeType == AZ::SerializeContext::TYPE_UPGRADE && toVersion > currentTypeVersion)
+                        if (upgradeType == AZ::Serialization::TYPE_UPGRADE && toVersion > currentTypeVersion)
                         {
                             return (*possibleUpgrade);
                         }
@@ -243,7 +243,7 @@ namespace AZ
         return nullptr;
     }
 
-    AZ::SerializeContext::DataPatchUpgrade* DataPatchUpgradeManager::GetNextNameUpgrade(AZ::Crc32 fieldNameCRC, unsigned int currentNameVersion) const
+    AZ::Serialization::DataPatchUpgrade* DataPatchUpgradeManager::GetNextNameUpgrade(AZ::Crc32 fieldNameCRC, unsigned int currentNameVersion) const
     {
         if (m_upgrades.empty())
         {
@@ -268,9 +268,9 @@ namespace AZ
 
                     while (possibleUpgrade != mapIter->second.rend())
                     {
-                        AZ::SerializeContext::DataPatchUpgradeType upgradeType = (*possibleUpgrade)->GetUpgradeType();
+                        AZ::Serialization::DataPatchUpgradeType upgradeType = (*possibleUpgrade)->GetUpgradeType();
                         unsigned int toVersion = (*possibleUpgrade)->ToVersion();
-                        if (upgradeType == AZ::SerializeContext::NAME_UPGRADE && toVersion > currentNameVersion)
+                        if (upgradeType == AZ::Serialization::NAME_UPGRADE && toVersion > currentNameVersion)
                         {
                             return (*possibleUpgrade);
                         }

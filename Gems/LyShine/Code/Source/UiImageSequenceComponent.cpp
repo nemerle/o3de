@@ -621,7 +621,7 @@ bool UiImageSequenceComponent::IsPixelAligned()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiImageSequenceComponent::VersionConverter([[maybe_unused]] AZ::SerializeContext& context,
-    [[maybe_unused]] AZ::SerializeContext::DataElementNode& classElement)
+    [[maybe_unused]] AZ::Serialization::DataElementNode& classElement)
 {
     return true;
 }

@@ -9,6 +9,7 @@
 
 #include <AzCore/base.h>
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 
 namespace AZ
 {
@@ -136,7 +137,7 @@ namespace AZ
         {
             return m_index <= rhs.m_index;
         }
-        
+
         template <typename T, typename NamespaceType>
         bool Handle<T, NamespaceType>::operator>(const Handle& rhs) const
         {

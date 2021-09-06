@@ -80,7 +80,7 @@ namespace AZ
 
 namespace AzFramework
 {
-    bool TransformComponentVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool TransformComponentVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 3)
         {

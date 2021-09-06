@@ -266,32 +266,32 @@ namespace LmbrCentral
             // Allow loading of Material and Texture Assets which explicitly specialized AzTypeInfo instead of using
             // the AZ_RTTI Uuid from SimpleAssetReference<T>
             serializeContext->ClassDeprecate("SimpleAssetReference_MaterialAsset", "{B7B8ECC7-FF89-4A76-A50E-4C6CA2B6E6B4}",
-                [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+                [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
                 {
-                    AZStd::vector<AZ::SerializeContext::DataElementNode> childNodeElements;
+                    AZStd::vector<AZ::Serialization::DataElementNode> childNodeElements;
                     for (int index = 0; index < rootElement.GetNumSubElements(); ++index)
                     {
                         childNodeElements.push_back(rootElement.GetSubElement(index));
                     }
                     // Convert the rootElement now, the existing child DataElmentNodes are now removed
                     rootElement.Convert<AzFramework::SimpleAssetReference<MaterialAsset>>(context);
-                    for (AZ::SerializeContext::DataElementNode& childNodeElement : childNodeElements)
+                    for (AZ::Serialization::DataElementNode& childNodeElement : childNodeElements)
                     {
                         rootElement.AddElement(AZStd::move(childNodeElement));
                     }
                     return true;
                 });
             serializeContext->ClassDeprecate("SimpleAssetReference_TextureAsset", "{68E92460-5C0C-4031-9620-6F1A08763243}",
-                [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+                [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
                 {
-                    AZStd::vector<AZ::SerializeContext::DataElementNode> childNodeElements;
+                    AZStd::vector<AZ::Serialization::DataElementNode> childNodeElements;
                     for (int index = 0; index < rootElement.GetNumSubElements(); ++index)
                     {
                         childNodeElements.push_back(rootElement.GetSubElement(index));
                     }
                     // Convert the rootElement now, the existing child DataElmentNodes are now removed
                     rootElement.Convert<AzFramework::SimpleAssetReference<TextureAsset>>(context);
-                    for (AZ::SerializeContext::DataElementNode& childNodeElement : childNodeElements)
+                    for (AZ::Serialization::DataElementNode& childNodeElement : childNodeElements)
                     {
                         rootElement.AddElement(AZStd::move(childNodeElement));
                     }

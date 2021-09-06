@@ -31,7 +31,7 @@ namespace TextureAtlasNamespace
         m_image = nullptr;
     }
 
-    bool TextureAtlasImpl::TextureAtlasVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool TextureAtlasImpl::TextureAtlasVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 2)
         {
@@ -56,16 +56,16 @@ namespace TextureAtlasNamespace
         if (AZ::SerializeContext* serialize = azrtti_cast<AZ::SerializeContext*>(context))
         {
             serialize->ClassDeprecate("SimpleAssetReference_TextureAtlasAsset", "{6F612FE6-A054-4E49-830C-0288F3C79A52}",
-                [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+                [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
             {
-                AZStd::vector<AZ::SerializeContext::DataElementNode> childNodeElements;
+                AZStd::vector<AZ::Serialization::DataElementNode> childNodeElements;
                 for (int index = 0; index < rootElement.GetNumSubElements(); ++index)
                 {
                     childNodeElements.push_back(rootElement.GetSubElement(index));
                 }
                 // Convert the rootElement now, the existing child DataElmentNodes are now removed
                 rootElement.Convert<AzFramework::SimpleAssetReference<TextureAtlasAsset>>(context);
-                for (AZ::SerializeContext::DataElementNode& childNodeElement : childNodeElements)
+                for (AZ::Serialization::DataElementNode& childNodeElement : childNodeElements)
                 {
                     rootElement.AddElement(AZStd::move(childNodeElement));
                 }

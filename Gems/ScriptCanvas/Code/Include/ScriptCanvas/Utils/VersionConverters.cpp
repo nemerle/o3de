@@ -7,6 +7,7 @@
  */
 #include "VersionConverters.h"
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/Utils.h>
 
 #include <ScriptCanvas/Core/Contracts/DisallowReentrantExecutionContract.h>
@@ -20,7 +21,7 @@
 
 namespace ScriptCanvas
 {
-    bool VersionConverters::ContainsStringVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::ContainsStringVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 1)
         {
@@ -53,7 +54,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::DelayVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::DelayVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         // Fixed issue with out pins not being correctly marked as latent.
         if (rootElement.GetVersion() < 2)
@@ -63,8 +64,8 @@ namespace ScriptCanvas
 
             AZStd::list< ScriptCanvas::Slot > nodeSlots;
 
-            AZ::SerializeContext::DataElementNode* baseClassElement = rootElement.FindSubElement(AZ::Crc32("BaseClass1"));
-            AZ::SerializeContext::DataElementNode* dataNode = baseClassElement->FindSubElement(slotsId);
+            AZ::Serialization::DataElementNode* baseClassElement = rootElement.FindSubElement(AZ::Crc32("BaseClass1"));
+            AZ::Serialization::DataElementNode* dataNode = baseClassElement->FindSubElement(slotsId);
 
             if (dataNode && dataNode->GetData(nodeSlots))
             {
@@ -84,7 +85,7 @@ namespace ScriptCanvas
 
         if (rootElement.GetVersion() < 3)
         {
-            AZ::SerializeContext::DataElementNode* nodeElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+            AZ::Serialization::DataElementNode* nodeElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
             if (!nodeElement)
             {
                 AZ_Error("Script Canvas", false, "Unable to retrieve the node structure in Delay Node version %u.", rootElement.GetVersion());
@@ -123,7 +124,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::DurationVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::DurationVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         // Fixed issue with out and done pins not being correctly marked as latent.
         if (rootElement.GetVersion() < 2)
@@ -133,8 +134,8 @@ namespace ScriptCanvas
 
             AZStd::list< ScriptCanvas::Slot > nodeSlots;
 
-            AZ::SerializeContext::DataElementNode* baseClassElement = rootElement.FindSubElement(AZ::Crc32("BaseClass1"));
-            AZ::SerializeContext::DataElementNode* dataNode = baseClassElement->FindSubElement(slotsId);
+            AZ::Serialization::DataElementNode* baseClassElement = rootElement.FindSubElement(AZ::Crc32("BaseClass1"));
+            AZ::Serialization::DataElementNode* dataNode = baseClassElement->FindSubElement(slotsId);
 
             if (dataNode && dataNode->GetData(nodeSlots))
             {
@@ -156,7 +157,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::EBusEventHandlerVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::EBusEventHandlerVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() <= 3)
         {
@@ -203,7 +204,7 @@ namespace ScriptCanvas
                         CombinedSlotType slotType;
                         if (slotElements.size() > static_cast<size_t>(index) && slotElements[index]->GetChildData(AZ_CRC("type", 0x8cde5729), slotType) && slotType == CombinedSlotType::DataIn)
                         {
-                            AZ::SerializeContext::DataElementNode& slotElement = *slotElements[index];
+                            AZ::Serialization::DataElementNode& slotElement = *slotElements[index];
 
                             slotName = "Source";
                             slotElement.RemoveElementByName(AZ_CRC("slotName", 0x817c3511));
@@ -258,7 +259,7 @@ namespace ScriptCanvas
             auto ebusEventEntryElements = AZ::Utils::FindDescendantElements(context, rootElement, AZStd::vector<AZ::Crc32>{AZ_CRC("m_events", 0x191405b4), AZ_CRC("element", 0x41405e39)});
 
             Nodes::Core::EBusEventHandler::EventMap eventMap;
-            for (AZ::SerializeContext::DataElementNode* ebusEventEntryElement : ebusEventEntryElements)
+            for (AZ::Serialization::DataElementNode* ebusEventEntryElement : ebusEventEntryElements)
             {
                 Nodes::Core::EBusEventEntry eventEntry;
                 if (!ebusEventEntryElement->GetData(eventEntry))
@@ -298,7 +299,7 @@ namespace ScriptCanvas
                         CombinedSlotType slotType;
                         if (slotElements.size() > static_cast<size_t>(index) && slotElements[index]->GetChildData(AZ_CRC("type", 0x8cde5729), slotType) && slotType == CombinedSlotType::DataIn)
                         {
-                            AZ::SerializeContext::DataElementNode& slotElement = *slotElements[index];
+                            AZ::Serialization::DataElementNode& slotElement = *slotElements[index];
 
                             slotName = "BusId";
                             slotElement.RemoveElementByName(AZ_CRC("slotName", 0x817c3511));
@@ -330,7 +331,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::ForEachVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::ForEachVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 2)
         {
@@ -346,7 +347,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::FunctionNodeVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::FunctionNodeVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         rootElement.RemoveElementByName(AZ_CRC("m_runtimeAssetId", 0x82d37299));
         rootElement.RemoveElementByName(AZ_CRC("m_sourceAssetId", 0x7a4d00c9));
@@ -373,11 +374,11 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::HeartBeatVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::HeartBeatVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 1)
         {
-            AZ::SerializeContext::DataElementNode* baseTimerElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+            AZ::Serialization::DataElementNode* baseTimerElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
             if (!baseTimerElement)
             {
                 AZ_Error("Script Canvas", false, "Unable to retrieve the BaseTimerNode data in Node version %u.", rootElement.GetVersion());
@@ -393,7 +394,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::InputNodeVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::InputNodeVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 1)
         {
@@ -406,7 +407,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::LerpBetweenVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::LerpBetweenVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() <= 1)
         {
@@ -419,7 +420,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::MarkSlotAsLatent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement, const AZStd::vector<AZStd::string>& startWith)
+    bool VersionConverters::MarkSlotAsLatent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement, const AZStd::vector<AZStd::string>& startWith)
     {
         auto slotContainerElements = AZ::Utils::FindDescendantElements(context, rootElement, AZStd::vector<AZ::Crc32>{AZ_CRC("BaseClass1", 0xd4925735), AZ_CRC("Slots", 0xc87435d0), AZ_CRC("element", 0x41405e39)});
         for (auto slotElement : slotContainerElements)
@@ -449,11 +450,11 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::OnceNodeVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::OnceNodeVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() == 0)
         {
-            AZ::SerializeContext::DataElementNode* nodeElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+            AZ::Serialization::DataElementNode* nodeElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
             if (!nodeElement)
             {
                 AZ_Error("Script Canvas", false, "Unable to retrieve the node structure in Once Node version %u.", rootElement.GetVersion());
@@ -487,11 +488,11 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::ReceiveScriptEventVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::ReceiveScriptEventVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() <= 2)
         {
-            AZ::SerializeContext::DataElementNode* scriptEventBase = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+            AZ::Serialization::DataElementNode* scriptEventBase = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
             if (!scriptEventBase)
             {
                 AZ_Error("Script Canvas", false, "Unable to retrieve the BaseTimerNode data in Node version %u.", rootElement.GetVersion());
@@ -507,7 +508,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::RepeaterVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode & rootElement)
+    bool VersionConverters::RepeaterVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode & rootElement)
     {
         /*
         // Old units enum. Here for reference in version conversion
@@ -532,7 +533,7 @@ namespace ScriptCanvas
                     timeUnit = ScriptCanvas::Nodes::Internal::BaseTimerNode::TimeUnits::Seconds;
                 }
 
-                AZ::SerializeContext::DataElementNode* baseTimerNode = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+                AZ::Serialization::DataElementNode* baseTimerNode = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
 
                 if (baseTimerNode)
                 {
@@ -549,7 +550,7 @@ namespace ScriptCanvas
 
         if (rootElement.GetVersion() < 3)
         {
-            AZ::SerializeContext::DataElementNode* baseTimerElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+            AZ::Serialization::DataElementNode* baseTimerElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
             if (!baseTimerElement)
             {
                 AZ_Error("Script Canvas", false, "Unable to retrieve the BaseTimerNode data in Node version %u.", rootElement.GetVersion());
@@ -565,7 +566,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::TickDelayVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::TickDelayVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 1)
         {
@@ -578,11 +579,11 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::TimeDelayVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::TimeDelayVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 1)
         {
-            AZ::SerializeContext::DataElementNode* baseTimerElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+            AZ::Serialization::DataElementNode* baseTimerElement = rootElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
             if (!baseTimerElement)
             {
                 AZ_Error("Script Canvas", false, "Unable to retrieve the BaseTimerNode data in Node version %u.", rootElement.GetVersion());
@@ -598,7 +599,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::TimerVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::TimerVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 3)
         {
@@ -611,7 +612,7 @@ namespace ScriptCanvas
         return true;
     }
 
-    bool VersionConverters::ScriptEventBaseVersionConverter(AZ::SerializeContext&, AZ::SerializeContext::DataElementNode& rootElement)
+    bool VersionConverters::ScriptEventBaseVersionConverter(AZ::SerializeContext&, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 6)
         {

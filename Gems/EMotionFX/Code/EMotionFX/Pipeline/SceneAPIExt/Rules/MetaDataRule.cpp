@@ -68,14 +68,14 @@ namespace EMotionFX
                 m_commands = metaData;
             }
 
-            bool MetaDataRuleConverter(AZ::SerializeContext & serializeContext, AZ::SerializeContext::DataElementNode & rootElementNode)
+            bool MetaDataRuleConverter(AZ::SerializeContext & serializeContext, AZ::Serialization::DataElementNode & rootElementNode)
             {
                 if (rootElementNode.GetVersion() >= 2)
                 {
                     return false;
                 }
 
-                AZ::SerializeContext::DataElementNode* metaDataStringNode = rootElementNode.FindSubElement(AZ_CRC("metaData"));
+                AZ::Serialization::DataElementNode* metaDataStringNode = rootElementNode.FindSubElement(AZ_CRC("metaData"));
                 AZStd::vector<AZStd::string> commands;
                 if (metaDataStringNode)
                 {
@@ -99,7 +99,7 @@ namespace EMotionFX
                 }
 
                 const int commandsElementIndex = rootElementNode.AddElement<AZStd::vector<MCore::Command*>>(serializeContext, "commands");
-                AZ::SerializeContext::DataElementNode& commandsElement = rootElementNode.GetSubElement(commandsElementIndex);
+                AZ::Serialization::DataElementNode& commandsElement = rootElementNode.GetSubElement(commandsElementIndex);
 
                 for (const AZStd::string& commandString : commands)
                 {
@@ -114,7 +114,7 @@ namespace EMotionFX
                     }
                     AZStd::unique_ptr<MCore::Command> commandObject { commandManagersCommand->Create() };
                     const int commandElementIndex = commandsElement.AddElement(serializeContext, "element", azrtti_typeid(commandObject.get()));
-                    AZ::SerializeContext::DataElementNode& commandElement = commandsElement.GetSubElement(commandElementIndex);
+                    AZ::Serialization::DataElementNode& commandElement = commandsElement.GetSubElement(commandElementIndex);
 
                     AZStd::string commandParameters;
                     if (wordSeparatorIndex != AZStd::string::npos)

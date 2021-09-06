@@ -99,7 +99,7 @@ namespace GraphCanvas
     // NodeGroupFrameComponent
     ////////////////////////////
 
-    bool NodeGroupFrameComponentVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool NodeGroupFrameComponentVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() == 1)
         {
@@ -109,7 +109,7 @@ namespace GraphCanvas
 
             NodeGroupFrameComponent::NodeGroupFrameComponentSaveData saveData;
 
-            AZ::SerializeContext::DataElementNode* dataNode = classElement.FindSubElement(colorId);
+            AZ::Serialization::DataElementNode* dataNode = classElement.FindSubElement(colorId);
 
             if (dataNode)
             {
@@ -142,7 +142,7 @@ namespace GraphCanvas
         return true;
     }
 
-    bool NodeGroupFrameSaveDataVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool NodeGroupFrameSaveDataVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 4)
         {

@@ -37,7 +37,7 @@ namespace ScriptCanvas
                     Current
                 };
 
-                static bool OperatorClearVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
+                static bool OperatorClearVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
 
                 OperatorClear() = default;
 

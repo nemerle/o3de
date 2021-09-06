@@ -29,8 +29,8 @@ namespace AZ
 
         struct StackDataType
         {
-            const SerializeContext::ClassData* m_classData;
-            const SerializeContext::ClassElement* m_elementData;
+            const Serialization::ClassData* m_classData;
+            const Serialization::ClassElement* m_elementData;
             void* m_dataPtr;
             bool m_isModifiedContainer;
         };
@@ -51,9 +51,9 @@ namespace AZ
                     return;
                 }
             }
-            AZStd::vector<const SerializeContext::ClassData*> parentStack;
+            AZStd::vector<const Serialization::ClassData*> parentStack;
             parentStack.reserve(30);
-            auto beginCB = [ &](void* ptr, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* elementData) -> bool
+            auto beginCB = [ &](void* ptr, const Serialization::ClassData* classData, const Serialization::ClassElement* elementData) -> bool
                 {
                     (void)elementData;
 
@@ -68,7 +68,7 @@ namespace AZ
                             isEntityId = true;
                         }
 
-                        EntityId* entityIdPtr = (elementData->m_flags & SerializeContext::ClassElement::FLG_POINTER) ?
+                        EntityId* entityIdPtr = (elementData->m_flags & Serialization::ClassElement::FLG_POINTER) ?
                             *reinterpret_cast<EntityId**>(ptr) : reinterpret_cast<EntityId*>(ptr);
                         visitor(*entityIdPtr, isEntityId, elementData);
                     }
@@ -83,7 +83,7 @@ namespace AZ
                     return true;
                 };
 
-            SerializeContext::EnumerateInstanceCallContext callContext(
+            Serialization::EnumerateInstanceCallContext callContext(
                 beginCB,
                 endCB,
                 context,
@@ -165,7 +165,7 @@ namespace AZ
 
             AZStd::fixed_vector<TypeId, 64> knownBaseClasses = { typeToExamine };  // avoid allocating heap here if possible.  64 types are 64*sizeof(Uuid) which is only 1k.
             bool foundBaseClass = false;
-            auto enumerateBaseVisitor = [&baseClassVisitor, &knownBaseClasses](const AZ::SerializeContext::ClassData* classData, const TypeId& examineTypeId)
+            auto enumerateBaseVisitor = [&baseClassVisitor, &knownBaseClasses](const AZ::Serialization::ClassData* classData, const TypeId& examineTypeId)
             {
                 if (!classData)
                 {
@@ -202,9 +202,9 @@ namespace AZ
         bool CheckIfClassIsDeprecated(SerializeContext* context, const TypeId& typeToExamine)
         {
             bool isDeprecated = false;
-            auto classVisitorFn = [&isDeprecated](const AZ::SerializeContext::ClassData* classData, const TypeId& /*rttiBase*/)
+            auto classVisitorFn = [&isDeprecated](const AZ::Serialization::ClassData* classData, const TypeId& /*rttiBase*/)
             {
-                // Stop iterating once we stop receiving SerializeContext::ClassData*.
+                // Stop iterating once we stop receiving Serialization::ClassData*.
                 if (!classData)
                 {
                     return false;
@@ -221,7 +221,7 @@ namespace AZ
             };
 
             // Check if the type is deprecated
-            const AZ::SerializeContext::ClassData* classData = context->FindClassData(typeToExamine);
+            const AZ::Serialization::ClassData* classData = context->FindClassData(typeToExamine);
             if (classData->IsDeprecated())
             {
                 return true;
@@ -242,7 +242,7 @@ namespace AZ
             }
 
             bool foundBaseClass = false;
-            auto baseClassVisitorFn = [&typeToFind, &foundBaseClass](const AZ::SerializeContext::ClassData* reflectedBase, const TypeId& /*rttiBase*/)
+            auto baseClassVisitorFn = [&typeToFind, &foundBaseClass](const AZ::Serialization::ClassData* reflectedBase, const TypeId& /*rttiBase*/)
             {
                 if (!reflectedBase)
                 {

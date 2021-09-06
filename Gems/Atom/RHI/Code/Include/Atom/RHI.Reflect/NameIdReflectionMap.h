@@ -73,7 +73,7 @@ namespace AZ
             bool IsEmpty() const;
 
             class NameIdReflectionMapSerializationEvents
-                : public SerializeContext::IEventHandler
+                : public Serialization::IEventHandler
             {
                 void OnLoadedFromObjectStream(void* classPtr) override
                 {

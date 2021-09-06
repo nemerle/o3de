@@ -14,23 +14,23 @@ namespace LmbrCentral
     namespace ClassConverters
     {
         /// EditorSphereShapeComponent converters
-        bool DeprecateEditorSphereColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool UpgradeEditorSphereShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        bool DeprecateEditorSphereColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool UpgradeEditorSphereShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         /// EditorBoxShapeComponent converters
-        bool DeprecateEditorBoxColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool UpgradeEditorBoxShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool UpgradeBoxShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        bool DeprecateEditorBoxColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool UpgradeEditorBoxShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool UpgradeBoxShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         /// EditorCylinderShapeComponent converters
-        bool DeprecateEditorCylinderColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool UpgradeEditorCylinderShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        bool DeprecateEditorCylinderColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool UpgradeEditorCylinderShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         /// EditorCapsuleShapeComponent converters
-        bool DeprecateEditorCapsuleColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool UpgradeEditorCapsuleShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        bool DeprecateEditorCapsuleColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool UpgradeEditorCapsuleShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         /// EditorPolygonPrismShapeComponent converters
-        bool UpgradeEditorPolygonPrismShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        bool UpgradeEditorPolygonPrismShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     } // namespace ClassConverters
 } // namespace LmbrCentral

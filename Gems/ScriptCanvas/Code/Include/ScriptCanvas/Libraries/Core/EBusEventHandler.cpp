@@ -666,7 +666,7 @@ namespace ScriptCanvas
                 }
             }
 
-            bool EBusEventEntry::EBusEventEntryVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+            bool EBusEventEntry::EBusEventEntryVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
             {
                 if (rootElement.GetVersion() == 0)
                 {

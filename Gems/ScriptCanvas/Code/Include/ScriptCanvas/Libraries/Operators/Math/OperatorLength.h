@@ -34,7 +34,7 @@ namespace ScriptCanvas
                     Current
                 };
 
-                static bool OperatorLengthConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
+                static bool OperatorLengthConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
 
                 OperatorLength() = default;
                 ~OperatorLength() = default;

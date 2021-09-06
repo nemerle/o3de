@@ -27,7 +27,7 @@ namespace AzToolsFramework
             static void Reflect(AZ::ReflectContext* context);
             static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& services);
             static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& services);
-            static bool SerializationConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+            static bool SerializationConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
             
             ~EditorInspectorComponent();
 
@@ -56,7 +56,7 @@ namespace AzToolsFramework
              * ComponentOrderSerializationEvents intercepts the serialization events to ensure the data is complete before and after serialization
              */
             class ComponentOrderSerializationEvents
-                : public AZ::SerializeContext::IEventHandler
+                : public AZ::Serialization::IEventHandler
             {
                 /** 
                  * Called right before we start reading from the instance pointed by classPtr.

@@ -185,12 +185,12 @@ void CUiAnimViewAnimNode::UiElementPropertyChanged()
 
                     const AZ::Uuid& classId = AZ::SerializeTypeInfo<AZ::Component>::GetUuid(oldComponent);
 
-                    const AZ::SerializeContext::ClassData* classData = context->FindClassData(classId);
+                    const AZ::Serialization::ClassData* classData = context->FindClassData(classId);
 
                     // we would like to be able to know what changed
-                    for (const AZ::SerializeContext::ClassElement& element : classData->m_elements)
+                    for (const AZ::Serialization::ClassElement& element : classData->m_elements)
                     {
-                        if (element.m_flags & AZ::SerializeContext::ClassElement::FLG_BASE_CLASS)
+                        if (element.m_flags & AZ::Serialization::ClassElement::FLG_BASE_CLASS)
                         {
                             if (BaseClassPropertyPotentiallyChanged(context, newComponent, oldComponent, element, element.m_offset))
                             {
@@ -231,9 +231,9 @@ void CUiAnimViewAnimNode::UiElementPropertyChanged()
 //////////////////////////////////////////////////////////////////////////
 void CUiAnimViewAnimNode::AzEntityPropertyChanged(
     AZ::Component* oldComponent, AZ::Component* newComponent,
-    const AZ::SerializeContext::ClassElement& element, size_t offset)
+    const AZ::Serialization::ClassElement& element, size_t offset)
 {
-    if (element.m_flags & AZ::SerializeContext::ClassElement::FLG_BASE_CLASS)
+    if (element.m_flags & AZ::Serialization::ClassElement::FLG_BASE_CLASS)
     {
         // this is a base class of a member within the component e.g. the base class of an asset ref
         // we do not yet handle animating such values
@@ -292,7 +292,7 @@ void CUiAnimViewAnimNode::AzEntityPropertyChanged(
 //////////////////////////////////////////////////////////////////////////
 void CUiAnimViewAnimNode::AzCreateCompoundTrackIfNeeded(
     float time, AZ::Component* newComponent, AZ::Component* oldComponent,
-    const AZ::SerializeContext::ClassElement& element, size_t offset)
+    const AZ::Serialization::ClassElement& element, size_t offset)
 {
     UiAnimParamData param(newComponent->GetId(), element.m_name, element.m_typeId, offset);
     CUiAnimViewTrack* track = GetTrackForParameterAz(param);
@@ -316,7 +316,7 @@ void CUiAnimViewAnimNode::AzCreateCompoundTrackIfNeeded(
 //////////////////////////////////////////////////////////////////////////
 void CUiAnimViewAnimNode::SetComponentParamValueAz(float time,
     AZ::Component* dstComponent, AZ::Component* srcComponent,
-    const AZ::SerializeContext::ClassElement& element, size_t offset)
+    const AZ::Serialization::ClassElement& element, size_t offset)
 {
     void* srcElementData = reinterpret_cast<char*>(srcComponent) + offset;
 
@@ -371,12 +371,12 @@ void CUiAnimViewAnimNode::SetComponentParamValueAz(float time,
         AZ_Assert(context, "No serialization context found");
 
         // it is not a float
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(element.m_typeId);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(element.m_typeId);
         if (classData && !classData->m_elements.empty())
         {
             AzCreateCompoundTrackIfNeeded(time, dstComponent, srcComponent, element, element.m_offset);
 
-            for (const AZ::SerializeContext::ClassElement& subElement : classData->m_elements)
+            for (const AZ::Serialization::ClassElement& subElement : classData->m_elements)
             {
                 SetComponentParamValueAz(time,
                     dstComponent, srcComponent,
@@ -389,9 +389,9 @@ void CUiAnimViewAnimNode::SetComponentParamValueAz(float time,
 //////////////////////////////////////////////////////////////////////////
 bool CUiAnimViewAnimNode::HasComponentParamValueAzChanged(
     AZ::Component* dstComponent, AZ::Component* srcComponent,
-    const AZ::SerializeContext::ClassElement& element, size_t offset)
+    const AZ::Serialization::ClassElement& element, size_t offset)
 {
-    if (element.m_flags & AZ::SerializeContext::ClassElement::FLG_BASE_CLASS)
+    if (element.m_flags & AZ::Serialization::ClassElement::FLG_BASE_CLASS)
     {
         // this is a base class of a member within the component e.g. the base class of an asset ref
         // we do not yet handle animating such values
@@ -467,13 +467,13 @@ bool CUiAnimViewAnimNode::HasComponentParamValueAzChanged(
         EBUS_EVENT_RESULT(context, AZ::ComponentApplicationBus, GetSerializeContext);
         AZ_Assert(context, "No serialization context found");
 
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(element.m_typeId);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(element.m_typeId);
         if (classData && !classData->m_elements.empty())
         {
             // this is an aggregate type, try finding any floats within
             // we would like to be able to know what changed
 
-            for (const AZ::SerializeContext::ClassElement& subElement : classData->m_elements)
+            for (const AZ::Serialization::ClassElement& subElement : classData->m_elements)
             {
                 if (HasComponentParamValueAzChanged(dstComponent, srcComponent,
                         subElement, offset + subElement.m_offset))
@@ -491,19 +491,19 @@ bool CUiAnimViewAnimNode::HasComponentParamValueAzChanged(
 bool CUiAnimViewAnimNode::BaseClassPropertyPotentiallyChanged(
     AZ::SerializeContext* context,
     AZ::Component* dstComponent, AZ::Component* srcComponent,
-    const AZ::SerializeContext::ClassElement& element, [[maybe_unused]] size_t offset)
+    const AZ::Serialization::ClassElement& element, [[maybe_unused]] size_t offset)
 {
     size_t baseClassOffset = element.m_offset;
     const AZ::Uuid& baseClassId = element.m_typeId;
-    const AZ::SerializeContext::ClassData* baseClassData = context->FindClassData(baseClassId);
+    const AZ::Serialization::ClassData* baseClassData = context->FindClassData(baseClassId);
 
     bool valueChanged = false;
     if (baseClassData)
     {
-        for (const AZ::SerializeContext::ClassElement& baseElement : baseClassData->m_elements)
+        for (const AZ::Serialization::ClassElement& baseElement : baseClassData->m_elements)
         {
             size_t baseOffset = baseClassOffset + baseElement.m_offset;
-            if (baseElement.m_flags & AZ::SerializeContext::ClassElement::FLG_BASE_CLASS)
+            if (baseElement.m_flags & AZ::Serialization::ClassElement::FLG_BASE_CLASS)
             {
                 if (BaseClassPropertyPotentiallyChanged(context, dstComponent, srcComponent, baseElement, baseOffset))
                 {

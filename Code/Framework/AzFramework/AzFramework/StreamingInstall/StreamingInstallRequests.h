@@ -9,10 +9,8 @@
 #pragma once
 
 #include <AzCore/EBus/EBus.h>
-#include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/EditContextConstants.inl>
-#include <AzCore/RTTI/BehaviorContext.h>
 
 namespace AzFramework
 {
@@ -45,8 +43,8 @@ namespace AzFramework
             virtual void ChangeChunkPriority(const AZStd::vector<const char*>& chunkIds) = 0;
 
             ////////////////////////////////////////////////////////////////////////////////////////////
-            //! Override will use platform API to query if a chunk is installed. 
-            //! \param[in] Id of the chunk to query. 
+            //! Override will use platform API to query if a chunk is installed.
+            //! \param[in] Id of the chunk to query.
             virtual void IsChunkInstalled(const char* chunkId) = 0;
         };
 

@@ -36,7 +36,7 @@ namespace AZ
         const char* EditorMaterialComponent::ResetMaterialsToolTipText = "Clear all settings, materials, and properties then rebuild material slots from the associated model.";
 
         // Update serialized data to the new format and data types
-        bool EditorMaterialComponent::ConvertVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool EditorMaterialComponent::ConvertVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (!BaseClass::ConvertToEditorRenderComponentAdapter<1>(context, classElement))
             {

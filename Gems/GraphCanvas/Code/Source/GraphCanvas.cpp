@@ -69,14 +69,14 @@
 
 namespace GraphCanvas
 {
-    bool EntitySaveDataContainerVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool EntitySaveDataContainerVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() == 1)
         {
             AZ::Crc32 componentDataId = AZ_CRC("ComponentData", 0xa6acc628);
             AZStd::unordered_map< AZ::Uuid, GraphCanvas::ComponentSaveData* > componentSaveData;
 
-            AZ::SerializeContext::DataElementNode* dataNode = classElement.FindSubElement(componentDataId);
+            AZ::Serialization::DataElementNode* dataNode = classElement.FindSubElement(componentDataId);
 
             if (dataNode)
             {

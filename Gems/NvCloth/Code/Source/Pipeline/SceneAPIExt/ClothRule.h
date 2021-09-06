@@ -33,7 +33,7 @@ namespace NvCloth
             static void Reflect(AZ::ReflectContext* context);
             static bool VersionConverter(
                 AZ::SerializeContext& context,
-                AZ::SerializeContext::DataElementNode& classElement);
+                AZ::Serialization::DataElementNode& classElement);
 
             static const char* const DefaultChooseNodeName;
             static const char* const DefaultInverseMassesString;

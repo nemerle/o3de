@@ -7,6 +7,7 @@
  */
 
 #include <AtomLyIntegration/CommonFeatures/Mesh/MeshComponentBus.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
 #include <NvCloth/ITangentSpaceHelper.h>
 
@@ -62,7 +63,7 @@ namespace NvCloth
     }
 
     bool MeshAssetHelper::ObtainClothMeshNodeInfo(
-        const AZStd::string& meshNode, 
+        const AZStd::string& meshNode,
         MeshNodeInfo& meshNodeInfo,
         MeshClothInfo& meshClothInfo)
     {

@@ -87,7 +87,7 @@ public: // static member functions
 private: // static member functions
 
     static bool VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement);
+        AZ::Serialization::DataElementNode& classElement);
 
 protected: // data
     AZ::EntityId m_targetEntity;

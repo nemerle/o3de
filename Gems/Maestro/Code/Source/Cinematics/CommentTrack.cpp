@@ -75,7 +75,7 @@ void CCommentTrack::SerializeKey(ICommentKey& key, XmlNodeRef& keyNode, bool bLo
 //////////////////////////////////////////////////////////////////////////
 static bool CommentTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

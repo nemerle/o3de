@@ -243,7 +243,7 @@ namespace AZ
 
                     // Cleanup the Serialized Element to allow any classes within the element's hierarchy to delete
                     // memory allocated by the SerializeContext
-                    const AZ::SerializeContext::ClassData* classData = context->FindClassData(classId);
+                    const AZ::Serialization::ClassData* classData = context->FindClassData(classId);
                     if (classData)
                     {
                         classData->m_factory->Destroy(classPtr);
@@ -256,7 +256,7 @@ namespace AZ
                         result = ConvertSystemComponents(documents, *reinterpret_cast<Entity*>(classPtr), configurationName,
                             sourceGameFolder, convertSettings, verifySettings) && result;
                     }
-                    const AZ::SerializeContext::ClassData* classData = context->FindClassData(classId);
+                    const AZ::Serialization::ClassData* classData = context->FindClassData(classId);
                     if (classData)
                     {
                         classData->m_factory->Destroy(classPtr);
@@ -269,7 +269,7 @@ namespace AZ
                         result = ConvertModuleComponents(documents, *reinterpret_cast<ModuleEntity*>(classPtr), configurationName, 
                             convertSettings, verifySettings) && result;
                     }
-                    const AZ::SerializeContext::ClassData* classData = context->FindClassData(classId);
+                    const AZ::Serialization::ClassData* classData = context->FindClassData(classId);
                     if (classData)
                     {
                         classData->m_factory->Destroy(classPtr);
@@ -774,7 +774,7 @@ namespace AZ
                 return false;
             }
 
-            const SerializeContext::ClassData* data = settings.m_serializeContext->FindClassData(originalType);
+            const Serialization::ClassData* data = settings.m_serializeContext->FindClassData(originalType);
             if (!data)
             {
                 AZ_Printf("Convert", "  Failed to find serialization information for type '%s'.\n",
@@ -812,7 +812,7 @@ namespace AZ
 
         AZStd::string Converter::GetClassName(const Uuid& classId, SerializeContext* context)
         {
-            const SerializeContext::ClassData* data = context->FindClassData(classId);
+            const Serialization::ClassData* data = context->FindClassData(classId);
             if (data)
             {
                 if (data->m_editData)

@@ -8,9 +8,10 @@
 #include "AssetRequestHandler.h"
 
 
+#include <AzCore/Asset/AssetSerializer.h>
+#include <AzToolsFramework/ToolsComponents/ToolsAssetCatalogBus.h>
 #include <QDir>
 #include <QTimer>
-#include <AzToolsFramework/ToolsComponents/ToolsAssetCatalogBus.h>
 
 using namespace AssetProcessor;
 
@@ -320,7 +321,7 @@ bool AssetRequestHandler::InvokeHandler(MessageData<AzFramework::AssetSystem::Ba
 }
 
 void AssetRequestHandler::ProcessAssetRequest(MessageData<RequestAssetStatus> messageData)
-{    
+{
     if ((messageData.m_message->m_searchTerm.empty())&&(!messageData.m_message->m_assetId.IsValid()))
     {
         AZ_TracePrintf(AssetProcessor::DebugChannel, "Failed to decode incoming RequestAssetStatus - both path and uuid is empty\n");
@@ -401,9 +402,9 @@ void AssetRequestHandler::OnRequestAssetExistsResponse(NetworkRequestID groupID,
         AZ_TracePrintf(AssetProcessor::DebugChannel, "OnRequestAssetExistsResponse: No such compile group found, ignoring.\n");
         return;
     }
-    
-    AZ_TracePrintf(AssetProcessor::DebugChannel, "GetAssetStatus / CompileAssetSync: Asset %s is %s.\n", 
-        located.value().GetDisplayString().toUtf8().constData(), 
+
+    AZ_TracePrintf(AssetProcessor::DebugChannel, "GetAssetStatus / CompileAssetSync: Asset %s is %s.\n",
+        located.value().GetDisplayString().toUtf8().constData(),
         exists ? "compiled already" : "missing" );
 
     SendAssetStatus(groupID, RequestAssetStatus::MessageType, exists ? AssetStatus_Compiled : AssetStatus_Missing);

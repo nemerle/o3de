@@ -80,7 +80,7 @@ void CSequenceTrack::GetKeyInfo(int key, const char*& description, float& durati
 //////////////////////////////////////////////////////////////////////////
 static bool SequencTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

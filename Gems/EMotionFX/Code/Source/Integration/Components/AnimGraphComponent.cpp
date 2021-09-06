@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
@@ -144,7 +145,7 @@ namespace EMotionFX
                     // General API
                     ->Event("FindParameterIndex", &AnimGraphComponentRequestBus::Events::FindParameterIndex)
                     ->Event("FindParameterName", &AnimGraphComponentRequestBus::Events::FindParameterName)
-                    
+
                     // Setters
                     ->Event("SetParameterFloat", &AnimGraphComponentRequestBus::Events::SetParameterFloat)
                     ->Event("SetParameterBool", &AnimGraphComponentRequestBus::Events::SetParameterBool)
@@ -463,7 +464,7 @@ namespace EMotionFX
                         GetEntityId().ToString().c_str());
                     return;
                 }
-                
+
                 m_animGraphInstance->SetVisualizationEnabled(cfg.m_visualize);
 
                 m_actorInstance->SetAnimGraphInstance(m_animGraphInstance.get());

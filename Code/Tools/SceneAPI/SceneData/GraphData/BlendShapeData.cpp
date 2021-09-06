@@ -10,6 +10,7 @@
 #include <SceneAPI/SceneData/GraphData/BlendShapeData.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
+#include <AzCore/std/containers/bitset.h>
 
 namespace AZ
 {
@@ -182,7 +183,7 @@ namespace AZ
             {
                 auto iter = m_vertexIndexToControlPointIndexMap.find(vertexIndex);
                 AZ_Assert(iter != m_vertexIndexToControlPointIndexMap.end(), "Vertex index %i doesn't exist.", vertexIndex);
-                // Note: AZStd::unordered_map's operator [] doesn't have const version... 
+                // Note: AZStd::unordered_map's operator [] doesn't have const version...
                 return iter->second;
             }
 

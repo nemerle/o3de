@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Script/ScriptTimePoint.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/std/smart_ptr/shared_ptr.h>
@@ -31,6 +32,7 @@
 #include <Source/MeshColliderComponent.h>
 #include <Source/SphereColliderComponent.h>
 #include <Source/Utils.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
 #include <LyViewPaneNames.h>
 #include <Editor/ConfigurationWindowBus.h>
@@ -667,7 +669,7 @@ namespace PhysX
             {
                 m_sceneInterface->RemoveSimulatedBody(m_editorSceneHandle, m_editorBodyHandle);
             }
-            
+
             m_editorBodyHandle = m_sceneInterface->AddSimulatedBody(m_editorSceneHandle, &configuration);
         }
 
@@ -1232,7 +1234,7 @@ namespace PhysX
         AZStd::vector<AZ::Data::AssetInfo> productsInfo;
 
         AzToolsFramework::AssetSystemRequestBus::BroadcastResult(productsQueryResult,
-            &AzToolsFramework::AssetSystemRequestBus::Events::GetAssetsProducedBySourceUUID, 
+            &AzToolsFramework::AssetSystemRequestBus::Events::GetAssetsProducedBySourceUUID,
             renderMeshAsset.GetId().m_guid, productsInfo);
 
         if (productsQueryResult)
@@ -1272,7 +1274,7 @@ namespace PhysX
                         renderMeshAsset.GetHint().c_str());
                 }
             }
-            // This is not necessarily an incorrect case but it's worth reporting 
+            // This is not necessarily an incorrect case but it's worth reporting
             // in case if we forgot to configure the source asset to produce the collision mesh
             else if (physicsAssets.empty())
             {
@@ -1284,9 +1286,9 @@ namespace PhysX
         }
         else
         {
-            AZ_Warning("EditorColliderComponent", false, 
+            AZ_Warning("EditorColliderComponent", false,
                 "SetCollisionMeshFromRender on entity %s: Unable to get the assets produced by the render mesh asset GUID: %s, hint: %s",
-                GetEntity()->GetName().c_str(), 
+                GetEntity()->GetName().c_str(),
                 renderMeshAsset.GetId().m_guid.ToString<AZStd::string>().c_str(),
                 renderMeshAsset.GetHint().c_str());
         }

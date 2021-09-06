@@ -147,7 +147,7 @@ float CCharacterTrack::GetKeyDuration(int key) const
 //////////////////////////////////////////////////////////////////////////
 static bool CharacterTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

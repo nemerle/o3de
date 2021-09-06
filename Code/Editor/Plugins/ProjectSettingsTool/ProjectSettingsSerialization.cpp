@@ -141,7 +141,7 @@ namespace ProjectSettingsTool
 
     bool Serializer::UiEqualToJson(rapidjson::Value* root, AzToolsFramework::InstanceDataNode* node) const
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
@@ -268,7 +268,7 @@ namespace ProjectSettingsTool
 
     bool Serializer::UiEqualToPlist(AzToolsFramework::InstanceDataNode* node) const
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
@@ -365,12 +365,12 @@ namespace ProjectSettingsTool
 
     bool Serializer::UiEqualToPlistArray(AZ::rapidxml::xml_node<char>* array, AzToolsFramework::InstanceDataNode* node) const
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
             {
-                const AZ::SerializeContext::ClassElement* childMeta = childNode.GetElementMetadata();
+                const AZ::Serialization::ClassElement* childMeta = childNode.GetElementMetadata();
                 if (childMeta)
                 {
                     AZ::Uuid type = childMeta->m_typeId;
@@ -413,7 +413,7 @@ namespace ProjectSettingsTool
 
     bool Serializer::UiEqualToPlistImages(AzToolsFramework::InstanceDataNode* node) const
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
@@ -442,7 +442,7 @@ namespace ProjectSettingsTool
 
     void Serializer::LoadFromSettings(rapidjson::Value* root, AzToolsFramework::InstanceDataNode* node)
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
@@ -517,7 +517,7 @@ namespace ProjectSettingsTool
 
     void Serializer::SaveToSettings(rapidjson::Value* root, AzToolsFramework::InstanceDataNode* node)
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
@@ -595,12 +595,12 @@ namespace ProjectSettingsTool
 
     void Serializer::LoadFromSettings(AzToolsFramework::InstanceDataNode* node)
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
             {
-                const AZ::SerializeContext::ClassElement* childMeta = childNode.GetElementMetadata();
+                const AZ::Serialization::ClassElement* childMeta = childNode.GetElementMetadata();
                 if (childMeta)
                 {
                     const char* propertyName = childMeta->m_name;
@@ -648,12 +648,12 @@ namespace ProjectSettingsTool
 
     void Serializer::LoadOrientations(XmlNode* array, AzToolsFramework::InstanceDataNode* node)
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
             {
-                const AZ::SerializeContext::ClassElement* childMeta = childNode.GetElementMetadata();
+                const AZ::Serialization::ClassElement* childMeta = childNode.GetElementMetadata();
                 if (childMeta)
                 {
                     const char* propertyName = childMeta->m_name;
@@ -694,7 +694,7 @@ namespace ProjectSettingsTool
 
     void Serializer::SetClassToDefaults(AzToolsFramework::InstanceDataNode* node)
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
@@ -740,7 +740,7 @@ namespace ProjectSettingsTool
 
     void Serializer::SaveToSettings(AzToolsFramework::InstanceDataNode* node)
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
@@ -811,12 +811,12 @@ namespace ProjectSettingsTool
     {
         bool anyEnabled = false;
 
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())
             {
-                const AZ::SerializeContext::ClassElement* childMeta = childNode.GetElementMetadata();
+                const AZ::Serialization::ClassElement* childMeta = childNode.GetElementMetadata();
                 if (childMeta)
                 {
                     AZ::Uuid type = childMeta->m_typeId;
@@ -861,7 +861,7 @@ namespace ProjectSettingsTool
 
     void Serializer::OverwriteImages(AzToolsFramework::InstanceDataNode* node)
     {
-        const AZ::SerializeContext::ClassData* baseMeta = node->GetClassMetadata();
+        const AZ::Serialization::ClassData* baseMeta = node->GetClassMetadata();
         if (baseMeta)
         {
             for (AzToolsFramework::InstanceDataNode& childNode : node->GetChildren())

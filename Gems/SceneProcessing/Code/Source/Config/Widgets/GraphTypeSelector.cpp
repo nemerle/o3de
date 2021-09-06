@@ -35,7 +35,7 @@ namespace AZ
             AZ_Assert(context, "Unable to find valid serialize context.");
 
             context->EnumerateDerived<SceneAPI::DataTypes::IGraphObject>(
-                [menu](const SerializeContext::ClassData* data, const Uuid& typeId) -> bool
+                [menu](const Serialization::ClassData* data, const Uuid& typeId) -> bool
                 {
                     AZ_UNUSED(typeId);
                     QAction* action = menu->addAction(data->m_name);

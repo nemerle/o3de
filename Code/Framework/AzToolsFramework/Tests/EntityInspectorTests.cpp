@@ -234,21 +234,21 @@ namespace UnitTest
     };
 
     // Component Filters for Testing
-    bool Filter_IsTestComponent1(const AZ::SerializeContext::ClassData& classData)
+    bool Filter_IsTestComponent1(const AZ::Serialization::ClassData& classData)
     {
         AZ::Uuid testComponent1_typeId = azrtti_typeid<Inspector_TestComponent1>();
         return classData.m_typeId == testComponent1_typeId;
     }
 
     // Component Filters for Testing
-    bool Filter_IsTestComponent2(const AZ::SerializeContext::ClassData& classData)
+    bool Filter_IsTestComponent2(const AZ::Serialization::ClassData& classData)
     {
         AZ::Uuid testComponent2_typeId = azrtti_typeid<Inspector_TestComponent2>();
         return classData.m_typeId == testComponent2_typeId;
     }
 
     // Component Filters for Testing
-    bool Filter_IsTestComponent3(const AZ::SerializeContext::ClassData& classData)
+    bool Filter_IsTestComponent3(const AZ::Serialization::ClassData& classData)
     {
         AZ::Uuid testComponent3_typeId = azrtti_typeid<Inspector_TestComponent2>();
         return classData.m_typeId == testComponent3_typeId;
@@ -311,7 +311,7 @@ namespace UnitTest
         AZ::ComponentDescriptor::DependencyArrayType testComponent1_ProvidedServices;
         Inspector_TestComponent1::GetProvidedServices(testComponent1_ProvidedServices);
         AZ_TEST_ASSERT(testComponent1_ProvidedServices.size() == 1);
-        const AZ::SerializeContext::ClassData* testComponent1_ClassData = context->FindClassData(testComponent1_typeId);
+        const AZ::Serialization::ClassData* testComponent1_ClassData = context->FindClassData(testComponent1_typeId);
 
         EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::OffersRequiredServices(testComponent1_ClassData, testComponent1_ProvidedServices));
 
@@ -333,7 +333,7 @@ namespace UnitTest
         EXPECT_FALSE(AzToolsFramework::ComponentPaletteUtil::IsAddableByUser(testComponent1_ClassData));
 
         // Verify that IsAddableByUser returns true when given a component that has the appropriate edit context reflection
-        const AZ::SerializeContext::ClassData* testComponent2_ClassData = context->FindClassData(testComponent2_typeId);
+        const AZ::Serialization::ClassData* testComponent2_ClassData = context->FindClassData(testComponent2_typeId);
         EXPECT_TRUE(AzToolsFramework::ComponentPaletteUtil::IsAddableByUser(testComponent2_ClassData));
 
         //////////////////////////////////////////////////////////////////////////

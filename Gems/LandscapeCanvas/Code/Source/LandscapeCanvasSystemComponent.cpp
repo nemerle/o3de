@@ -278,7 +278,7 @@ namespace LandscapeCanvas
         // Search through all registered Nodes to find the TypeId for one that
         // matches the requested class name.
         m_serializeContext->EnumerateDerived<GraphModel::Node>(
-            [&nodeTypeId, nodeName](const AZ::SerializeContext::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
+            [&nodeTypeId, nodeName](const AZ::Serialization::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
         {
             AZ_UNUSED(knownType);
 

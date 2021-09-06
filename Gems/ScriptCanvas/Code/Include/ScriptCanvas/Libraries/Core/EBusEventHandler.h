@@ -33,7 +33,7 @@ namespace ScriptCanvas
         {
             struct EBusEventEntry
             {
-                static bool EBusEventEntryVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
+                static bool EBusEventEntryVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
                 static void Reflect(AZ::ReflectContext* context);
 
                 AZ_TYPE_INFO(EBusEventEntry, "{92A20C1B-A54A-4583-97DB-A894377ACE21}");

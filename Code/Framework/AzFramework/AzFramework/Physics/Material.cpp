@@ -5,6 +5,8 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
+
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/IO/FileIO.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Interface/Interface.h>
@@ -26,7 +28,7 @@ namespace
 namespace Physics
 {
     class MaterialLibraryAssetEventHandler
-        : public AZ::SerializeContext::IEventHandler
+        : public AZ::Serialization::IEventHandler
     {
         void OnReadBegin(void* classPtr)
         {
@@ -36,7 +38,7 @@ namespace Physics
     };
 
     class MaterialSelectionEventHandler
-        : public AZ::SerializeContext::IEventHandler
+        : public AZ::Serialization::IEventHandler
     {
         void OnReadEnd(void* classPtr)
         {
@@ -149,7 +151,7 @@ namespace Physics
         return colors[selection];
     }
 
-    bool MaterialConfiguration::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool MaterialConfiguration::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         bool success = true;
 
@@ -160,7 +162,7 @@ namespace Physics
             if (surfaceTypeElemIndex >= 0)
             {
                 AZStd::string surfaceType;
-                AZ::SerializeContext::DataElementNode& surfaceTypeElem = classElement.GetSubElement(surfaceTypeElemIndex);
+                AZ::Serialization::DataElementNode& surfaceTypeElem = classElement.GetSubElement(surfaceTypeElemIndex);
                 surfaceTypeElem.GetData(surfaceType);
                 debugColor = GenerateDebugColor(surfaceType.c_str());
             }
@@ -362,8 +364,8 @@ namespace Physics
 
     MaterialId MaterialId::Create()
     {
-        MaterialId id; 
-        id.m_id = AZ::Uuid::Create(); 
+        MaterialId id;
+        id.m_id = AZ::Uuid::Create();
         return id;
     }
 
@@ -425,7 +427,7 @@ namespace Physics
         }
         else
         {
-            // If there is more than one material slot 
+            // If there is more than one material slot
             // the caller must use SetMaterialSlots function
             return "<error>";
         }

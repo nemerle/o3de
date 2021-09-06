@@ -9,7 +9,7 @@
 namespace LmbrCentral
 {
     template <typename TComponent, typename TConfiguration, int TVersion>
-    bool EditorWrappedComponentBaseVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool EditorWrappedComponentBaseVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < TVersion)
         {
@@ -77,7 +77,7 @@ namespace LmbrCentral
 
     template <typename TComponent, typename TConfiguration>
     template<typename TDerivedClass, typename TBaseClass>
-    void EditorWrappedComponentBase<TComponent, TConfiguration>::ReflectSubClass(AZ::ReflectContext* context, unsigned int version, AZ::SerializeContext::VersionConverter versionConverter)
+    void EditorWrappedComponentBase<TComponent, TConfiguration>::ReflectSubClass(AZ::ReflectContext* context, unsigned int version, AZ::Serialization::VersionConverter versionConverter)
     {
         TBaseClass::Reflect(context);
 

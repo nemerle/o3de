@@ -87,7 +87,7 @@ namespace PhysX
     }
 
     bool EditorJointLimitConfig::VersionConverter([[maybe_unused]] AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         bool result = true;
 
@@ -304,7 +304,7 @@ namespace PhysX
     }
 
     bool EditorJointConfig::VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         bool result = true;
 
@@ -327,7 +327,7 @@ namespace PhysX
             const int localRotationIndex = classElement.FindElement(AZ_CRC("Local Rotation", 0x95f2be6d));
             if (localRotationIndex >= 0)
             {
-                AZ::SerializeContext::DataElementNode& localRotationElement = classElement.GetSubElement(localRotationIndex);
+                AZ::Serialization::DataElementNode& localRotationElement = classElement.GetSubElement(localRotationIndex);
                 AZ::Quaternion localRotationQuat = AZ::Quaternion::CreateZero();
                 localRotationElement.GetData<AZ::Quaternion>(localRotationQuat);
                 classElement.RemoveElement(localRotationIndex);

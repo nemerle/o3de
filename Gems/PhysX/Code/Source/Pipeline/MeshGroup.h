@@ -212,7 +212,7 @@ namespace PhysX
             const ConvexDecompositionParams& GetConvexDecompositionParams() const;
 
         protected:
-            static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+            static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
             AZ::u32 OnNodeSelectionChanged();
             AZ::u32 OnExportMethodChanged();

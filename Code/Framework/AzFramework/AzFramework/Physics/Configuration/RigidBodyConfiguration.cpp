@@ -35,7 +35,7 @@ namespace AzPhysics
             }
         }
 
-        bool RigidBodyVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool RigidBodyVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() <= 1)
             {
@@ -44,7 +44,7 @@ namespace AzPhysics
                 if (elementIndex >= 0)
                 {
                     AZ::Vector3 existingCenterOfMassOffset;
-                    AZ::SerializeContext::DataElementNode& centerOfMassElement = classElement.GetSubElement(elementIndex);
+                    AZ::Serialization::DataElementNode& centerOfMassElement = classElement.GetSubElement(elementIndex);
                     const bool found = centerOfMassElement.GetData<AZ::Vector3>(existingCenterOfMassOffset);
 
                     if (found && !existingCenterOfMassOffset.IsZero())
@@ -71,7 +71,7 @@ namespace AzPhysics
                 if (elementIndex >= 0)
                 {
                     float existingMass = 0;
-                    AZ::SerializeContext::DataElementNode& massElement = classElement.GetSubElement(elementIndex);
+                    AZ::Serialization::DataElementNode& massElement = classElement.GetSubElement(elementIndex);
                     const bool found = massElement.GetData<float>(existingMass);
 
                     if (found && existingMass > 0)

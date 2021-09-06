@@ -64,7 +64,7 @@ namespace ScriptCanvas
 
 #if defined(OBJECT_STREAM_EDITOR_ASSET_LOADING_SUPPORT_ENABLED)////
     class NodeEventHandler
-        : public AZ::SerializeContext::IEventHandler
+        : public AZ::Serialization::IEventHandler
     {
     public:
         void OnWriteEnd(void* objectPtr) override
@@ -75,7 +75,7 @@ namespace ScriptCanvas
     };
 #endif//defined(OBJECT_STREAM_EDITOR_ASSET_LOADING_SUPPORT_ENABLED)
 
-    bool NodeVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& nodeElementNode)
+    bool NodeVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& nodeElementNode)
     {
         if (nodeElementNode.GetVersion() <= 5)
         {
@@ -2978,7 +2978,7 @@ namespace ScriptCanvas
 
         if (serializeContext)
         {
-            const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(RTTI_GetType());
+            const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(RTTI_GetType());
 
             if (classData)
             {

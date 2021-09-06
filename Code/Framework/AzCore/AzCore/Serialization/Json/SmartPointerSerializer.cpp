@@ -19,14 +19,14 @@ namespace AZ
     {
         namespace JSR = JsonSerializationResult;
 
-        const SerializeContext::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
+        const Serialization::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
         if (!containerClass)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve information for definition of the smart pointer instance. Only registered classes can be serialized.");
         }
 
-        SerializeContext::IDataContainer* container = containerClass->m_container;
+        Serialization::IDataContainer* container = containerClass->m_container;
         if (!container)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
@@ -49,7 +49,7 @@ namespace AZ
 
         JSR::ResultCode result(JSR::Tasks::ReadField);
         auto elementCallback = [this, &inputValue, &context, container, &result](void* instance, const Uuid& elementClassId,
-            const SerializeContext::ClassData*, const SerializeContext::ClassElement* classElement)
+            const Serialization::ClassData*, const Serialization::ClassElement* classElement)
         {
             if (*reinterpret_cast<void**>(instance))
             {
@@ -109,14 +109,14 @@ namespace AZ
     {
         namespace JSR = JsonSerializationResult;
 
-        const SerializeContext::ClassData* containerClass = context.GetSerializeContext()->FindClassData(valueTypeId);
+        const Serialization::ClassData* containerClass = context.GetSerializeContext()->FindClassData(valueTypeId);
         if (!containerClass)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve information for definition of the smart pointer instance. Only registered classes can be serialized.");
         }
 
-        SerializeContext::IDataContainer* container = containerClass->m_container;
+        Serialization::IDataContainer* container = containerClass->m_container;
         if (!container)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
@@ -132,7 +132,7 @@ namespace AZ
 
         Uuid inputPtrType;
         auto inputCallback = [&inputValue, &inputPtrType]
-            (void* elementPtr, const Uuid& elementId, const SerializeContext::ClassData*, const SerializeContext::ClassElement*)
+            (void* elementPtr, const Uuid& elementId, const Serialization::ClassData*, const Serialization::ClassElement*)
             {
                 inputValue = elementPtr;
                 inputPtrType = elementId;
@@ -143,7 +143,7 @@ namespace AZ
         if (defaultValue)
         {
             auto defaultInputCallback = [&defaultValue]
-                (void* elementPtr, const Uuid&, const SerializeContext::ClassData*, const SerializeContext::ClassElement*)
+                (void* elementPtr, const Uuid&, const Serialization::ClassData*, const Serialization::ClassElement*)
                 {
                     defaultValue = elementPtr;
                     return false;

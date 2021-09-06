@@ -29,7 +29,7 @@ namespace ScriptCanvasEditor
             AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
             serializeContext->EnumerateDerived<ScriptCanvas::Library::LibraryDefinition>(
                 [this]
-            (const AZ::SerializeContext::ClassData* classData, [[maybe_unused]] const AZ::Uuid& classUuid) -> bool
+            (const AZ::Serialization::ClassData* classData, [[maybe_unused]] const AZ::Uuid& classUuid) -> bool
             {
                 Add(classData->m_name, classData->m_typeId);
                 return true;
@@ -73,7 +73,7 @@ namespace ScriptCanvasEditor
             {
                 AZ::SerializeContext* serializeContext = nullptr;
                 EBUS_EVENT_RESULT(serializeContext, AZ::ComponentApplicationBus, GetSerializeContext);
-                const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(m_data[index.row()].m_uuid);
+                const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(m_data[index.row()].m_uuid);
 
                 if (classData && classData->m_editData)
                 {

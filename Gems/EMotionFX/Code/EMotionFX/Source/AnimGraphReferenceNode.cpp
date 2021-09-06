@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/std/sort.h>
@@ -114,7 +115,7 @@ namespace EMotionFX
 
     AnimGraphReferenceNode::~AnimGraphReferenceNode()
     {
-        // This node listens to changes in AnimGraph and MotionSet assets. We need to remove this node before disconnecting the asset bus to avoid the disconnect 
+        // This node listens to changes in AnimGraph and MotionSet assets. We need to remove this node before disconnecting the asset bus to avoid the disconnect
         // removing the MotionSet which can in turn access this node that is being deleted.
         if (m_animGraph)
         {
@@ -476,7 +477,7 @@ namespace EMotionFX
         }
     }
 
- 
+
     void AnimGraphReferenceNode::RecursiveCollectActiveNodes(AnimGraphInstance* animGraphInstance, AZStd::vector<AnimGraphNode*>* outNodes, const AZ::TypeId& nodeType) const
     {
         AnimGraphNode::RecursiveCollectActiveNodes(animGraphInstance, outNodes, nodeType);
@@ -535,14 +536,14 @@ namespace EMotionFX
             if (numAnimGraphInstances > 0)
             {
                 AnimGraphInstance* animGraphInstance = m_animGraph->GetAnimGraphInstance(0);
-                do 
+                do
                 {
                     if (animGraphInstance->GetAnimGraph() == referenceAnimGraph)
                     {
                         return true;
                     }
                     animGraphInstance = animGraphInstance->GetParentAnimGraphInstance();
-                } 
+                }
                 while (animGraphInstance);
             }
             // If we don't have an animgraph instance, we have to go through the anim graph to find recursive, which is a bit slow.
@@ -622,7 +623,7 @@ namespace EMotionFX
                 ->Attribute(AZ::Edit::Attributes::Visibility, AZ::Edit::PropertyVisibility::HideChildren)
             ;
     }
-    
+
     void AnimGraphReferenceNode::ReleaseAnimGraphInstances()
     {
         // Inform the unique datas as well as other systems about the changed anim graph asset, destroy and nullptr the reference
@@ -964,7 +965,7 @@ namespace EMotionFX
     void AnimGraphReferenceNode::ReinitMaskedParameters()
     {
         m_maskedParameterNames.clear();
-        
+
         if (!m_animGraphAsset)
         {
             return;
@@ -984,7 +985,7 @@ namespace EMotionFX
 
         // For each parameter in referencedValueParameters, if it is not in valueParameters or is not compatible, add it
         // to m_maskedParameterNames. Ports are going to be created for all parameters in m_maskedParameterNames
-        
+
         for (const ValueParameter* referencedValueParameter : referencedValueParameters)
         {
             // find a parameter with the same name and matching attributes

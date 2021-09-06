@@ -8,6 +8,7 @@
 
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Console/Console.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
 #include <Components/ClothComponent.h>
 
@@ -30,12 +31,12 @@ namespace NvCloth
         : m_config(config)
     {
     }
-    
+
     void ClothComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
     {
         provided.push_back(AZ_CRC("ClothMeshService", 0x6ffcbca5));
     }
-    
+
     void ClothComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
     {
         required.push_back(AZ_CRC("MeshService", 0x71d8a455));

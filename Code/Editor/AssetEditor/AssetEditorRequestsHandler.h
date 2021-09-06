@@ -7,11 +7,10 @@
  */
 #pragma once
 
-#include <AzCore/Serialization/SerializeContext.h>
 #include <AzToolsFramework/AssetEditor/AssetEditorBus.h>
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
 
-class AssetEditorRequestsHandler 
+class AssetEditorRequestsHandler
     : public AzToolsFramework::AssetEditor::AssetEditorRequestsBus::Handler
     , public AzToolsFramework::EditorEvents::Bus::Handler
 {

@@ -47,7 +47,7 @@ namespace ScriptCanvas
             void GenerateNewId();
 
         private:
-            friend bool VariableDatumVersionConverter(AZ::SerializeContext&, AZ::SerializeContext::DataElementNode&);
+            friend bool VariableDatumVersionConverter(AZ::SerializeContext&, AZ::Serialization::DataElementNode&);
             void OnExposureChanged();
             void OnExposureGroupChanged();
 

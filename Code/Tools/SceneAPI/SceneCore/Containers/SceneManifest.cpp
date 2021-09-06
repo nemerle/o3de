@@ -18,6 +18,7 @@
 #include <AzCore/JSON/document.h>
 #include <AzCore/JSON/prettywriter.h>
 #include <AzCore/Memory/SystemAllocator.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/Json/RegistrationContext.h>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
 #include <AzCore/Serialization/Json/JsonSerializationResult.h>
@@ -44,7 +45,7 @@ namespace AZ
             SceneManifest::~SceneManifest()
             {
             }
-            
+
             void SceneManifest::Clear()
             {
                 m_storageLookup.clear();
@@ -64,8 +65,8 @@ namespace AZ
                 m_storageLookup[value.get()] = index;
                 m_values.push_back(AZStd::move(value));
 
-                AZ_Assert(m_values.size() == m_storageLookup.size(), 
-                    "SceneManifest values and storage-lookup tables have gone out of lockstep (%i vs %i)", 
+                AZ_Assert(m_values.size() == m_storageLookup.size(),
+                    "SceneManifest values and storage-lookup tables have gone out of lockstep (%i vs %i)",
                     m_values.size(), m_storageLookup.size());
                 return true;
             }
@@ -210,7 +211,7 @@ namespace AZ
                             auto outcome = self.SaveToJsonDocument();
                             if (outcome.IsSuccess())
                             {
-                                // write the manifest to a UTF-8 string buffer and move return the string 
+                                // write the manifest to a UTF-8 string buffer and move return the string
                                 rapidjson::StringBuffer sb;
                                 rapidjson::Writer<rapidjson::StringBuffer, rapidjson::UTF8<>> writer(sb);
                                 rapidjson::Document& document = outcome.GetValue();
@@ -223,7 +224,7 @@ namespace AZ
                 }
             }
 
-            bool SceneManifest::VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& node)
+            bool SceneManifest::VersionConverter(SerializeContext& context, Serialization::DataElementNode& node)
             {
                 if (node.GetVersion() != 0)
                 {
@@ -232,20 +233,20 @@ namespace AZ
                 }
 
                 // Copy out the original values.
-                AZStd::vector<SerializeContext::DataElementNode> values;
+                AZStd::vector<Serialization::DataElementNode> values;
                 values.reserve(node.GetNumSubElements());
                 for (int i = 0; i < node.GetNumSubElements(); ++i)
                 {
                     // The old format stored AZStd::pair<AZStd::string, AZStd::shared_ptr<IManifestObjets>>. All this
                     //      data is still used, but needs to be move to the new location. The shared ptr needs to be
                     //      moved into the new container, while the name needs to be moved to the group name.
-                    
-                    SerializeContext::DataElementNode& pairNode = node.GetSubElement(i);
+
+                    Serialization::DataElementNode& pairNode = node.GetSubElement(i);
                     // This is the original content of the shared ptr. Using the shared pointer directly caused
                     //      registration issues so it's extracting the data the shared ptr was storing instead.
-                    SerializeContext::DataElementNode& elementNode = pairNode.GetSubElement(1).GetSubElement(0);
-                    
-                    SerializeContext::DataElementNode& nameNode = pairNode.GetSubElement(0);
+                    Serialization::DataElementNode& elementNode = pairNode.GetSubElement(1).GetSubElement(0);
+
+                    Serialization::DataElementNode& nameNode = pairNode.GetSubElement(0);
                     AZStd::string name;
                     if (nameNode.GetData(name))
                     {
@@ -265,15 +266,15 @@ namespace AZ
 
                 // Put stored values back
                 int vectorIndex = node.AddElement<ValueStorage>(context, "values");
-                SerializeContext::DataElementNode& vectorNode = node.GetSubElement(vectorIndex);
-                for (SerializeContext::DataElementNode& value : values)
+                Serialization::DataElementNode& vectorNode = node.GetSubElement(vectorIndex);
+                for (Serialization::DataElementNode& value : values)
                 {
                     value.SetName("element");
-                    
+
                     // Put in a blank shared ptr to be filled with a value stored from "values".
                     int valueIndex = vectorNode.AddElement<ValueStorageType>(context, "element");
-                    SerializeContext::DataElementNode& pointerNode = vectorNode.GetSubElement(valueIndex);
-                    
+                    Serialization::DataElementNode& pointerNode = vectorNode.GetSubElement(valueIndex);
+
                     // Type doesn't matter as it will be overwritten by the stored value.
                     pointerNode.AddElement<int>(context, "element");
                     pointerNode.GetSubElement(0) = value;

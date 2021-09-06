@@ -15,6 +15,7 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <ScriptCanvas/Core/Contracts.h>
 #include <ScriptCanvas/Core/NodeableNode.h>
 #include <ScriptCanvas/Core/SlotExecutionMap.h>
@@ -94,7 +95,7 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 {# ----------------------------------------------------------------------------------------- #}
 
 {% if attribute_Namespace is defined %}
-namespace {{attribute_Namespace}} 
+namespace {{attribute_Namespace}}
 {
 {% endif %}
 
@@ -247,9 +248,9 @@ ScriptCanvas::NodePropertyInterface* {{ attribute_QualifiedName }}::GetPropertyI
 ////////////////////////////////////////////////////////////////////////////
 
 {# Constructor #}
-Nodes::{{ nodeableNodeName }}::{{ nodeableNodeName }}() 
-{ 
-    SetNodeable(AZStd::make_unique<{{ attribute_QualifiedName }}>()); 
+Nodes::{{ nodeableNodeName }}::{{ nodeableNodeName }}()
+{
+    SetNodeable(AZStd::make_unique<{{ attribute_QualifiedName }}>());
 }
 
 {# NodeableNode Reflection #}
@@ -349,8 +350,8 @@ void Nodes::{{ nodeableNodeName }}::ConfigureSlots()
 {%- for item in Class.findall('Input') %}
 {%-     set itemName = item.attrib['Name'] %}
 {%      set itemDisplayGroup = item.attrib['DisplayGroup'] if item.attrib['DisplayGroup'] is defined else macros.SlotName(itemName) %}
-    // execution in begin 
-    { 
+    // execution in begin
+    {
         SlotExecution::In in;
 
 {{      nodemacro.CreateExecutionSlot(item, "Input", undefined) }}
@@ -359,7 +360,7 @@ void Nodes::{{ nodeableNodeName }}::ConfigureSlots()
 {% for paraItem in item.findall('Parameter') %}
         {{ nodemacro.AddDataSlot("true", "in.inputs", undefined, paraItem.attrib['Name'], paraItem.attrib['Description'], paraItem.attrib['DefaultValue'], paraItem.attrib['Type'], item.attrib['Name']) }}
 {% endfor %}
-        { // execution outs begin    
+        { // execution outs begin
 {%      if item.findall("Branch")|length == 0 %}
 {#          add a single out slot, as there are no branches #}
 // NO branches were found, at the default
@@ -411,7 +412,7 @@ void Nodes::{{ nodeableNodeName }}::ConfigureSlots()
 {% endfor %}
 {%- for item in Class.findall('Output') %}
 {%-     set itemName = item.attrib['Name'] %}
-{%      set itemDisplayGroup = item.attrib['DisplayGroup'] if item.attrib['DisplayGroup'] is defined else macros.SlotName(itemName) %}  
+{%      set itemDisplayGroup = item.attrib['DisplayGroup'] if item.attrib['DisplayGroup'] is defined else macros.SlotName(itemName) %}
     // Latent out
     {
         SlotExecution::Out out;
@@ -428,7 +429,7 @@ void Nodes::{{ nodeableNodeName }}::ConfigureSlots()
     }
 {% endfor  %}
 
-{# Go through the DisplayGroups dictionary and add inputs as grouped 
+{# Go through the DisplayGroups dictionary and add inputs as grouped
 // Display Grouped
 {% for key, tagList in global_displayGroupMap.items() %}
 {%      for item in tagList %}
@@ -468,7 +469,7 @@ void Nodes::{{ nodeableNodeName }}::ConfigureSlots()
 {% endfor %}
 #}
 
-{% if Class.attrib['ExtendConfigureSlots'] is defined %}    
+{% if Class.attrib['ExtendConfigureSlots'] is defined %}
     ExtendConfigureSlots(ins, outs);
 {% endif %}
     // Generate the execution map

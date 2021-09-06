@@ -47,7 +47,7 @@ namespace
 
     bool RemoveV4MarkupFlag(
         [[maybe_unused]] AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         int index = classElement.FindElement(AZ_CRC("SupportMarkup", 0x5e81a9c7));
         if (index != -1)
@@ -60,7 +60,7 @@ namespace
 
     bool AddV8EnableMarkupFlag(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         // This element is a pre-version-8 text component. Prior to version 8 there was no MarkupEnabled
         // flag and markup was always enabled. Going forward, for new components we want to default to
@@ -93,22 +93,22 @@ namespace
 
     bool ConvertV3FontFileNameIfDefault(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         int index = classElement.FindElement(AZ_CRC("FontFileName", 0x44defd6f));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& fontFileNameNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& fontFileNameNode = classElement.GetSubElement(index);
             index = fontFileNameNode.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
 
             if (index != -1)
             {
-                AZ::SerializeContext::DataElementNode& baseClassNode = fontFileNameNode.GetSubElement(index);
+                AZ::Serialization::DataElementNode& baseClassNode = fontFileNameNode.GetSubElement(index);
                 index = baseClassNode.FindElement(AZ_CRC("AssetPath", 0x2c355179));
 
                 if (index != -1)
                 {
-                    AZ::SerializeContext::DataElementNode& assetPathNode = baseClassNode.GetSubElement(index);
+                    AZ::Serialization::DataElementNode& assetPathNode = baseClassNode.GetSubElement(index);
                     AZStd::string oldData;
 
                     if (!assetPathNode.GetData(oldData))
@@ -130,7 +130,7 @@ namespace
                         index = classElement.FindElement(AZ_CRC("EffectIndex", 0x4d3320e3));
                         if (index != -1)
                         {
-                            AZ::SerializeContext::DataElementNode& effectIndexNode = classElement.GetSubElement(index);
+                            AZ::Serialization::DataElementNode& effectIndexNode = classElement.GetSubElement(index);
                             uint32 effectIndex = 0;
 
                             if (!effectIndexNode.GetData(effectIndex))
@@ -174,12 +174,12 @@ namespace
     //! only performed uniform scaling along both axes).
     bool ConvertV8ShrinkToFitSetting(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         int index = classElement.FindElement(AZ_CRC("WrapTextSetting"));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& wrapTextSettingNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& wrapTextSettingNode = classElement.GetSubElement(index);
             int oldWrapTextValue = 0;
 
             if (!wrapTextSettingNode.GetData<int>(oldWrapTextValue))
@@ -217,7 +217,7 @@ namespace
 
                 // Legacy shrink-to-fit only applied uniform scaling along both axes. So here we use
                 // the Uniform setting of ShrinkToFit to maintain backwards compatibility.
-                AZ::SerializeContext::DataElementNode& shrinkToFitNode = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& shrinkToFitNode = classElement.GetSubElement(index);
                 if (!shrinkToFitNode.SetData<int>(context, static_cast<int>(UiTextInterface::ShrinkToFit::Uniform)))
                 {
                     AZ_Error("Serialization", false, "Unable to set ShrinkToFit to Uniform (%d).", static_cast<int>(UiTextInterface::ShrinkToFit::Uniform));
@@ -239,12 +239,12 @@ namespace
     //! effect since ResizeToText was removed anyways.
     bool ConvertV8LegacyOverflowModeSetting(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         int index = classElement.FindElement(AZ_CRC("OverflowMode"));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& overflowModeSettingNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& overflowModeSettingNode = classElement.GetSubElement(index);
             int oldOverflowModeValue = 0;
 
             if (!overflowModeSettingNode.GetData<int>(oldOverflowModeValue))
@@ -4995,7 +4995,7 @@ AZ::Vector2 UiTextComponent::CalculateAlignedPositionWithYOffset(const UiTransfo
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiTextComponent::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1: Need to convert Color to Color and Alpha
     // conversion from version 1 or 2: Need to convert Text from CryString to AzString

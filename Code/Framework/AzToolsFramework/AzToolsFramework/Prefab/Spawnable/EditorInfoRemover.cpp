@@ -205,7 +205,7 @@ namespace AzToolsFramework::Prefab::PrefabConversionUtils
         AZ::Component* component,
         PrefabProcessorContext& context) const
     {
-        const AZ::SerializeContext::ClassData* classData = m_serializeContext->FindClassData(component->RTTI_GetType());
+        const AZ::Serialization::ClassData* classData = m_serializeContext->FindClassData(component->RTTI_GetType());
         if (!classData || !classData->m_editData)
         {
             return AZ::Success(true);
@@ -297,7 +297,7 @@ namespace AzToolsFramework::Prefab::PrefabConversionUtils
 
         // Determine if the component has a custom export callback, and invoke it if so.
         // If there's no custom export callback, just return what we were given.
-        const AZ::SerializeContext::ClassData* classData = m_serializeContext->FindClassData(inputComponent->RTTI_GetType());
+        const AZ::Serialization::ClassData* classData = m_serializeContext->FindClassData(inputComponent->RTTI_GetType());
         if (!classData || !classData->m_editData)
         {
             return AZ::Success(component);

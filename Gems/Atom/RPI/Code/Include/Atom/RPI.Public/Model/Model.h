@@ -10,7 +10,6 @@
 
 #include <Atom/RHI.Reflect/Base.h>
 
-#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 #include <Atom/RPI.Reflect/Model/ModelLodIndex.h>
 
 #include <Atom/RPI.Public/Model/ModelLod.h>
@@ -24,6 +23,8 @@ namespace AZ
 {
     namespace RPI
     {
+        class ModelAsset;
+
         class Model final
             : public Data::InstanceData
         {
@@ -92,8 +93,8 @@ namespace AZ
 
             static Data::Instance<Model> CreateInternal(const Data::Asset<ModelAsset>& modelAsset);
             RHI::ResultCode Init(const Data::Asset<ModelAsset>& modelAsset);
-
-            AZStd::fixed_vector<Data::Instance<ModelLod>, ModelLodAsset::LodCountMax> m_lods;
+            //FIXME: was ModelLodAsset::LodCountMax
+            AZStd::fixed_vector<Data::Instance<ModelLod>, 10> m_lods;
             Data::Asset<ModelAsset> m_modelAsset;
 
             AZStd::unordered_set<AZ::Name> m_uvNames;

@@ -114,7 +114,7 @@ namespace AZ
                 return AZ::Failure(jsonResult.ToString(""));
             }
 
-            const SerializeContext::ClassData* classData = serializeContext->FindClassData(classId);
+            const Serialization::ClassData* classData = serializeContext->FindClassData(classId);
 
             jsonDocument.AddMember(rapidjson::StringRef(VersionTag), 1, jsonDocument.GetAllocator());
             jsonDocument.AddMember(rapidjson::StringRef(ClassNameTag), rapidjson::StringRef(classData->m_name), jsonDocument.GetAllocator());

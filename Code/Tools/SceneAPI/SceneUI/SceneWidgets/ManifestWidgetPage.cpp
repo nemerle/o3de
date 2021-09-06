@@ -177,7 +177,7 @@ namespace AZ
                     node = node->GetParent();
                     while (node)
                     {
-                        if (const AZ::SerializeContext::ClassData* classData = node->GetClassMetadata(); classData && classData->m_azRtti)
+                        if (const AZ::Serialization::ClassData* classData = node->GetClassMetadata(); classData && classData->m_azRtti)
                         {
                             if (const DataTypes::IManifestObject* cast = classData->m_azRtti->Cast<DataTypes::IManifestObject>(node->FirstInstance()); cast)
                             {
@@ -301,7 +301,7 @@ namespace AZ
             {
                 static const AZStd::string s_groupSuffix = "group";
 
-                const SerializeContext::ClassData* classData = m_context->FindClassData(id);
+                const Serialization::ClassData* classData = m_context->FindClassData(id);
                 if (!classData)
                 {
                     return "<type not registered>";
@@ -335,7 +335,7 @@ namespace AZ
             {
                 AZ_TraceContext("Instance id", id);
                 
-                const SerializeContext::ClassData* classData = m_context->FindClassData(id);
+                const Serialization::ClassData* classData = m_context->FindClassData(id);
                 AZ_Assert(classData, "Type not registered.");
                 if (classData)
                 {

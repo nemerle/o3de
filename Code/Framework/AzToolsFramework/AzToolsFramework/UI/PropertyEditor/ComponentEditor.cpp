@@ -750,11 +750,11 @@ namespace AzToolsFramework
 
             //build a vector of all class info associated with typeId
             //EnumerateBase doesn't include class data for requested type so it must be added manually
-            AZStd::vector<const AZ::SerializeContext::ClassData*> classDataVec = { GetComponentClassData(component) };
+            AZStd::vector<const AZ::Serialization::ClassData*> classDataVec = { GetComponentClassData(component) };
 
             //get all class info for any base classes (light components share a common base class where all properties are set)
             m_serializeContext->EnumerateBase(
-                [&classDataVec](const AZ::SerializeContext::ClassData* classData, AZ::Uuid) { classDataVec.push_back(classData); return true; }, typeId);
+                [&classDataVec](const AZ::Serialization::ClassData* classData, AZ::Uuid) { classDataVec.push_back(classData); return true; }, typeId);
 
             for (auto classData : classDataVec)
             {

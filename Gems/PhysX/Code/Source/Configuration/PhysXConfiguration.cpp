@@ -26,7 +26,7 @@ namespace PhysX
             return configuration;
         }
 
-        bool PhysXSystemConfigurationConverter([[maybe_unused]] AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& dataElement)
+        bool PhysXSystemConfigurationConverter([[maybe_unused]] AZ::SerializeContext& context, AZ::Serialization::DataElementNode& dataElement)
         {
             if (dataElement.GetVersion() <= 1)
             {

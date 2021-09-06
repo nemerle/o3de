@@ -371,12 +371,12 @@ namespace EMotionFX
     }
 
 
-    static bool AnimGraphGameControllerSettingsVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& element)
+    static bool AnimGraphGameControllerSettingsVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& element)
     {
         if (element.GetVersion() < 2)
         {
             constexpr AZStd::string_view activePresetIndex{"activePresetIndex"};
-            if (AZ::SerializeContext::DataElementNode* presetIndexElement = element.FindSubElement(AZ::Crc32(activePresetIndex)))
+            if (AZ::Serialization::DataElementNode* presetIndexElement = element.FindSubElement(AZ::Crc32(activePresetIndex)))
             {
                 uint32 value;
                 presetIndexElement->GetData(value);

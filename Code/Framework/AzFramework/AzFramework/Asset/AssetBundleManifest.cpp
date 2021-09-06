@@ -11,7 +11,7 @@
 
 namespace AzFramework
 {
-    
+
     const int AssetBundleManifest::CurrentBundleVersion = 2;
     const char AssetBundleManifest::s_manifestFileName[] = "manifest.xml";
     void AssetBundleManifest::ReflectSerialize(AZ::SerializeContext* serializeContext)

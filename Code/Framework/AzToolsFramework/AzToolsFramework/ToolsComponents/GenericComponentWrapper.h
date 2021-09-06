@@ -40,7 +40,7 @@ namespace AzToolsFramework
             static AZ::ComponentDescriptor* CreateDescriptor();
 
             GenericComponentWrapper();
-            GenericComponentWrapper(const AZ::SerializeContext::ClassData* templateClassData);
+            GenericComponentWrapper(const AZ::Serialization::ClassData* templateClassData);
             GenericComponentWrapper(AZ::Component* templateClass);
             ~GenericComponentWrapper();
             GenericComponentWrapper(const GenericComponentWrapper& RHS);

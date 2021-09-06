@@ -17,14 +17,14 @@ namespace AzToolsFramework
             : m_serializeContext(serializeContext)
         {
             m_serializeContext.EnumerateAll(
-                [this](const AZ::SerializeContext::ClassData* classData, const AZ::TypeId&)
+                [this](const AZ::Serialization::ClassData* classData, const AZ::TypeId&)
             {
                 CreateFingerprint(*classData);
                 return true;
             });
         }
 
-        TypeFingerprint TypeFingerprinter::CreateFingerprint(const AZ::SerializeContext::ClassData& classData)
+        TypeFingerprint TypeFingerprinter::CreateFingerprint(const AZ::Serialization::ClassData& classData)
         {
             // Ensures hash will change if a service is moved from, say, required to dependent.
             static const size_t kRequiredServiceKey = AZ_CRC("RequiredServiceKey", 0x22e125a6);
@@ -73,7 +73,7 @@ namespace AzToolsFramework
                 }
             }
 
-            for (const AZ::SerializeContext::ClassElement& element : classData.m_elements)
+            for (const AZ::Serialization::ClassElement& element : classData.m_elements)
             {
                 AZStd::hash_combine(fingerprint, element.m_typeId);
                 AZStd::hash_range(fingerprint, element.m_name, element.m_name + strlen(element.m_name));
@@ -86,8 +86,8 @@ namespace AzToolsFramework
 
         void TypeFingerprinter::GatherAllTypesInObject(const void* instance, const AZ::TypeId& typeId, TypeCollection& outTypeCollection) const
         {
-            AZ::SerializeContext::BeginElemEnumCB elementCallback =
-                [&outTypeCollection](void* /* instance pointer */, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* /* classElement*/)
+            AZ::Serialization::BeginElemEnumCB elementCallback =
+                [&outTypeCollection](void* /* instance pointer */, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* /* classElement*/)
             {
                 outTypeCollection.insert(classData->m_typeId);
                 return true;
@@ -102,7 +102,7 @@ namespace AzToolsFramework
 
             m_serializeContext.EnumerateDerived(
                 [this, &types]
-            (const AZ::SerializeContext::ClassData* classData, const AZ::Uuid& /*knownType*/)
+            (const AZ::Serialization::ClassData* classData, const AZ::Uuid& /*knownType*/)
                 {
                     if (!classData->m_azRtti->IsAbstract())
                     {
@@ -110,7 +110,7 @@ namespace AzToolsFramework
                     }
 
                     // We need to recursively include all the types referenced by the component in the fingerprint
-                    AZStd::queue<const AZ::SerializeContext::ClassElement*> elementQueue;
+                    AZStd::queue<const AZ::Serialization::ClassElement*> elementQueue;
 
                     for (const auto& element : classData->m_elements)
                     {

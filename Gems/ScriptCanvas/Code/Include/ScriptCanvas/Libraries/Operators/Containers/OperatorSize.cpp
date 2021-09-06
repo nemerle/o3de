@@ -44,12 +44,12 @@ namespace ScriptCanvas
                 }
             }
 
-            bool OperatorSize::OperatorSizeVersionConverter(AZ::SerializeContext&, AZ::SerializeContext::DataElementNode& classElement)
+            bool OperatorSize::OperatorSizeVersionConverter(AZ::SerializeContext&, AZ::Serialization::DataElementNode& classElement)
             {
                 // Remove the now unnecessary OperatorBase class from the inheritance chain.
                 if (classElement.GetVersion() < 1)
                 {
-                    AZ::SerializeContext::DataElementNode* operatorBaseClass = classElement.FindSubElement(AZ::Crc32("BaseClass1"));
+                    AZ::Serialization::DataElementNode* operatorBaseClass = classElement.FindSubElement(AZ::Crc32("BaseClass1"));
 
                     if (operatorBaseClass == nullptr)
                     {
@@ -64,7 +64,7 @@ namespace ScriptCanvas
                     }
 
                     // The DataElementNode is being copied purposefully in this statement to clone the data
-                    AZ::SerializeContext::DataElementNode baseNodeElement = operatorBaseClass->GetSubElement(nodeElementIndex);
+                    AZ::Serialization::DataElementNode baseNodeElement = operatorBaseClass->GetSubElement(nodeElementIndex);
 
                     classElement.RemoveElementByName(AZ::Crc32("BaseClass1"));
                     classElement.AddElement(baseNodeElement);

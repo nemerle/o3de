@@ -33,7 +33,7 @@ namespace Maestro
 
     namespace ClassConverters
     {
-        static bool UpVersionAnimationData(AZ::SerializeContext&, AZ::SerializeContext::DataElementNode&);
+        static bool UpVersionAnimationData(AZ::SerializeContext&, AZ::Serialization::DataElementNode&);
     } // namespace ClassConverters
 
       ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -414,7 +414,7 @@ namespace Maestro
             return nodeConverted;
         }
 
-        static bool UpVersionAnimationData(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool UpVersionAnimationData(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() == 0)
             {

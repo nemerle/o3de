@@ -21,7 +21,7 @@
 
 namespace StartingPointInput
 {
-    static bool ConvertToInputEventMap(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    static bool ConvertToInputEventMap(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         // Capture the old values
         AZStd::string deviceType;

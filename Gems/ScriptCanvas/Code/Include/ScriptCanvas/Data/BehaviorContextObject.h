@@ -40,7 +40,7 @@ namespace ScriptCanvas
         static void Reflect(AZ::ReflectContext* reflection);
 
         static BehaviorContextObjectPtr Create(const AZ::BehaviorClass& behaviorClass, const void* value = nullptr);
-        
+
         template<typename t_Value>
         AZ_INLINE static BehaviorContextObjectPtr Create(const t_Value& value, const AZ::BehaviorClass& behaviorClass);
 
@@ -423,4 +423,4 @@ namespace ScriptCanvas
         ++m_referenceCount;
     }
 
-} 
+}

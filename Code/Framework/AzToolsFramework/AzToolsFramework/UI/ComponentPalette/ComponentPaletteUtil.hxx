@@ -22,24 +22,24 @@ namespace AzToolsFramework
 {
     namespace ComponentPaletteUtil
     {
-        using ComponentDataTable = AZStd::map <QString, AZStd::map <QString, const AZ::SerializeContext::ClassData* > >;
+        using ComponentDataTable = AZStd::map <QString, AZStd::map <QString, const AZ::Serialization::ClassData* > >;
 
-        using ComponentIconTable = AZStd::map<const AZ::SerializeContext::ClassData*, QString>;
+        using ComponentIconTable = AZStd::map<const AZ::Serialization::ClassData*, QString>;
 
         // Returns true if the given component provides at least one of the services specified or no services are provided
         bool OffersRequiredServices(
-            const AZ::SerializeContext::ClassData* componentClass,
+            const AZ::Serialization::ClassData* componentClass,
             const AZStd::vector<AZ::ComponentServiceType>& serviceFilter,
             const AZStd::vector<AZ::ComponentServiceType>& incompatibleServiceFilter
         );
 
         bool OffersRequiredServices(
-            const AZ::SerializeContext::ClassData* componentClass,
+            const AZ::Serialization::ClassData* componentClass,
             const AZStd::vector<AZ::ComponentServiceType>& serviceFilter
         );
 
         // Returns true if the given component is addable by the user
-        bool IsAddableByUser(const AZ::SerializeContext::ClassData* componentClass);
+        bool IsAddableByUser(const AZ::Serialization::ClassData* componentClass);
 
         void BuildComponentTables(
             AZ::SerializeContext* serializeContext,

@@ -20,7 +20,7 @@
 namespace PhysX
 {
     bool RagdollComponent::VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         // The element "PhysXRagdoll" was changed from a shared pointer to a unique pointer, but a version converter was
         // not added at the time.  This means there may be serialized data with either the shared or unique pointer, but
@@ -32,7 +32,7 @@ namespace PhysX
 
             if (ragdollElementIndex >= 0)
             {
-                AZ::SerializeContext::DataElementNode& ragdollElement = classElement.GetSubElement(ragdollElementIndex);
+                AZ::Serialization::DataElementNode& ragdollElement = classElement.GetSubElement(ragdollElementIndex);
 
                 // If we find a shared pointer, change it to a unique pointer.  If we don't, we already have a unique
                 // pointer and it's fine to do nothing but bump the version number from 1 to 2.

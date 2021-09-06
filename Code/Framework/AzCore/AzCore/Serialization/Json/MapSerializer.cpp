@@ -7,6 +7,7 @@
  */
 
 #include <algorithm>
+#include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/Json/BasicContainerSerializer.h>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
 #include <AzCore/Serialization/Json/MapSerializer.h>
@@ -19,7 +20,7 @@ namespace AZ
     AZ_CLASS_ALLOCATOR_IMPL(JsonMapSerializer, SystemAllocator, 0);
     AZ_CLASS_ALLOCATOR_IMPL(JsonUnorderedMapSerializer, SystemAllocator, 0);
     AZ_CLASS_ALLOCATOR_IMPL(JsonUnorderedMultiMapSerializer, SystemAllocator, 0);
-    
+
     // JsonMapSerializer
 
     JsonSerializationResult::Result JsonMapSerializer::Load(void* outputValue, const Uuid& outputValueTypeId,
@@ -33,7 +34,7 @@ namespace AZ
         switch (inputValue.GetType())
         {
         case rapidjson::kArrayType: // fall through
-        case rapidjson::kObjectType: 
+        case rapidjson::kObjectType:
             return LoadContainer(outputValue, outputValueTypeId, inputValue, context);
 
         case rapidjson::kNullType: // fall through
@@ -61,18 +62,18 @@ namespace AZ
     {
         namespace JSR = JsonSerializationResult;
 
-        const SerializeContext::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
+        const Serialization::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
         if (!containerClass)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve information for definition of the associative container instance.");
         }
 
-        SerializeContext::IDataContainer* container = containerClass->m_container;
+        Serialization::IDataContainer* container = containerClass->m_container;
         AZ_Assert(container, "Unable to retrieve information for representation of the associative container instance.");
-        
-        const SerializeContext::ClassElement* pairElement = nullptr;
-        auto pairTypeEnumCallback = [&pairElement](const Uuid&, const SerializeContext::ClassElement* genericClassElement)
+
+        const Serialization::ClassElement* pairElement = nullptr;
+        auto pairTypeEnumCallback = [&pairElement](const Uuid&, const Serialization::ClassElement* genericClassElement)
         {
             AZ_Assert(!pairElement, "A map is expected to only have one element.");
             pairElement = genericClassElement;
@@ -81,13 +82,13 @@ namespace AZ
         container->EnumTypes(pairTypeEnumCallback);
         AZ_Assert(pairElement, "A map is expected to have exactly one pair element.");
 
-        const SerializeContext::ClassData* pairClass = context.GetSerializeContext()->FindClassData(pairElement->m_typeId);
+        const Serialization::ClassData* pairClass = context.GetSerializeContext()->FindClassData(pairElement->m_typeId);
         AZ_Assert(pairClass, "Associative container was registered but not the pair that's used for storage.");
-        SerializeContext::IDataContainer* pairContainer = pairClass->m_container;
+        Serialization::IDataContainer* pairContainer = pairClass->m_container;
         AZ_Assert(pairClass, "Associative container is missing the interface to the storage container.");
-        const SerializeContext::ClassElement* keyElement = nullptr;
-        const SerializeContext::ClassElement* valueElement = nullptr;
-        auto keyValueTypeEnumCallback = [&keyElement, &valueElement](const Uuid&, const SerializeContext::ClassElement* genericClassElement)
+        const Serialization::ClassElement* keyElement = nullptr;
+        const Serialization::ClassElement* valueElement = nullptr;
+        auto keyValueTypeEnumCallback = [&keyElement, &valueElement](const Uuid&, const Serialization::ClassElement* genericClassElement)
         {
             if (keyElement)
             {
@@ -134,7 +135,7 @@ namespace AZ
 
                 const rapidjson::Value& key = (keyName == JsonSerialization::DefaultStringIdentifier) ? defaultValue : entry.name;
 
-                JSR::Result elementResult = LoadElement(outputValue, container, pairElement, pairContainer, 
+                JSR::Result elementResult = LoadElement(outputValue, container, pairElement, pairContainer,
                     keyElement, valueElement, key, entry.value, context);
                 if (elementResult.GetResultCode().GetProcessing() != JSR::Processing::Halted)
                 {
@@ -194,14 +195,14 @@ namespace AZ
         }
         AZStd::string_view message =
             addedCount >= maximumSize ? "Successfully read associative container." :
-            addedCount == 0 ? "Unable to read data for the associative container." : 
+            addedCount == 0 ? "Unable to read data for the associative container." :
             "Partially read data for the associative container.";
         return context.Report(retVal, message);
     }
 
-    JsonSerializationResult::Result JsonMapSerializer::LoadElement(void* outputValue, SerializeContext::IDataContainer* container,
-        const SerializeContext::ClassElement* pairElement, SerializeContext::IDataContainer* pairContainer,
-        const SerializeContext::ClassElement* keyElement, const SerializeContext::ClassElement* valueElement,
+    JsonSerializationResult::Result JsonMapSerializer::LoadElement(void* outputValue, Serialization::IDataContainer* container,
+        const Serialization::ClassElement* pairElement, Serialization::IDataContainer* pairContainer,
+        const Serialization::ClassElement* keyElement, const Serialization::ClassElement* valueElement,
         const rapidjson::Value& key, const rapidjson::Value& value, JsonDeserializerContext& context)
     {
         namespace JSR = JsonSerializationResult;
@@ -218,7 +219,7 @@ namespace AZ
         void* keyAddress = pairContainer->GetElementByIndex(address, pairElement, 0);
         AZ_Assert(keyAddress, "Element reserved for associative container, but unable to retrieve address of the key.");
         ContinuationFlags keyLoadFlags = ContinuationFlags::LoadAsNewInstance;
-        if (keyElement->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER)
+        if (keyElement->m_flags & Serialization::ClassElement::Flags::FLG_POINTER)
         {
             keyLoadFlags |= ContinuationFlags::ResolvePointer;
             *reinterpret_cast<void**>(keyAddress) = nullptr;
@@ -233,8 +234,8 @@ namespace AZ
         // Load value
         void* valueAddress = pairContainer->GetElementByIndex(address, pairElement, 1);
         AZ_Assert(valueAddress, "Element reserved for associative container, but unable to retrieve address of the value.");
-        ContinuationFlags valueLoadFlags = ContinuationFlags::LoadAsNewInstance; 
-        if (valueElement->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER)
+        ContinuationFlags valueLoadFlags = ContinuationFlags::LoadAsNewInstance;
+        if (valueElement->m_flags & Serialization::ClassElement::Flags::FLG_POINTER)
         {
             valueLoadFlags |= ContinuationFlags::ResolvePointer;
             *reinterpret_cast<void**>(valueAddress) = nullptr;
@@ -263,7 +264,7 @@ namespace AZ
                     "Unable to store the element that was read to the associative container.");
             }
         }
-        
+
         return context.Report(JSR::ResultCode::Combine(keyResult, valueResult),
             "Successfully loaded an entry into the associative container.");
     }
@@ -294,7 +295,7 @@ namespace AZ
 
             AZ_Assert(!keyValues.Empty(), "Intermediate array for associative container can't be empty "
                 "because an empty array would be stored as an empty default object.")
-            
+
             if (CanBeConvertedToObject(keyValues))
             {
                 // Convert the array to a Object with the member being the key.
@@ -413,7 +414,7 @@ namespace AZ
     }
 
 
-    
+
     // JsonUnorderedMapSerializer
 
     JsonSerializationResult::Result JsonUnorderedMapSerializer::Store(rapidjson::Value& outputValue, const void* inputValue,
@@ -426,9 +427,9 @@ namespace AZ
 
     // JsonUnorderedMultiMapSerializer
 
-    JsonSerializationResult::Result JsonUnorderedMultiMapSerializer::LoadElement(void* outputValue, SerializeContext::IDataContainer* container,
-        const SerializeContext::ClassElement* pairElement, SerializeContext::IDataContainer* pairContainer,
-        const SerializeContext::ClassElement* keyElement, const SerializeContext::ClassElement* valueElement,
+    JsonSerializationResult::Result JsonUnorderedMultiMapSerializer::LoadElement(void* outputValue, Serialization::IDataContainer* container,
+        const Serialization::ClassElement* pairElement, Serialization::IDataContainer* pairContainer,
+        const Serialization::ClassElement* keyElement, const Serialization::ClassElement* valueElement,
         const rapidjson::Value& key, const rapidjson::Value& value, JsonDeserializerContext& context)
     {
         namespace JSR = JsonSerializationResult;
@@ -571,7 +572,7 @@ namespace AZ
 
             outputValue = AZStd::move(newOutput);
         }
-        
+
         return result;
     }
 }

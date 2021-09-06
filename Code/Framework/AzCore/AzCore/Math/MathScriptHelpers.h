@@ -9,7 +9,7 @@
 #pragma once
 
 #include <AzCore/Serialization/EditContext.h>
-#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/Serialization/SerializationInterfaces.h>
 #include <AzCore/RTTI/RTTI.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/std/string/string.h>
@@ -46,7 +46,7 @@ namespace AZ
     }
 
     class UuidSerializer
-        : public SerializeContext::IDataSerializer
+        : public Serialization::IDataSerializer
     {
         //! Store the class data into a binary buffer.
         size_t Save(const void* classPtr, IO::GenericStream& stream, bool isDataBigEndian /*= false*/) override;
@@ -73,7 +73,7 @@ namespace AZ
     //! Custom template to cover all fundamental AZMATH classes.
     template <class T, T CreateFromFloats(const float*), void (T::* StoreToFloat)(float*) const, float GetEpsilon(), size_t NumFloats = sizeof(T) / sizeof(float)>
     class FloatBasedContainerSerializer
-        : public SerializeContext::IDataSerializer
+        : public Serialization::IDataSerializer
     {
         //! Store the class data into a stream.
         size_t Save(const void* classPtr, IO::GenericStream& stream, bool isDataBigEndian /*= false*/) override

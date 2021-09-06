@@ -29,7 +29,7 @@ namespace AZ
             AZ_EDITOR_COMPONENT(EditorMaterialComponent, EditorMaterialComponentTypeId, BaseClass);
 
             static void Reflect(AZ::ReflectContext* context);
-            static bool ConvertVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+            static bool ConvertVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
             EditorMaterialComponent() = default;
             EditorMaterialComponent(const MaterialComponentConfig& config);

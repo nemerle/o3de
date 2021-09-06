@@ -68,7 +68,7 @@ void CCaptureTrack::GetKeyInfo(int key, const char*& description, float& duratio
 //////////////////////////////////////////////////////////////////////////
 static bool CaptureTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

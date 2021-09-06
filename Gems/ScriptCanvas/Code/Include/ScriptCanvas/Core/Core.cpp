@@ -88,7 +88,7 @@ namespace ScriptCanvas
         return report;
     }
 
-    bool SlotIdVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool SlotIdVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         //! Version 1: Slot Ids contained a Crc32 hash of the name given
         //! Version 2+: Slot Ids now contain a random Uuid
@@ -158,7 +158,7 @@ namespace ScriptCanvas
     {
         AZ::SerializeContext* serializeContext{};
         AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
-        AZ::SerializeContext::ClassData classData;
+        AZ::Serialization::ClassData classData;
         classData.m_name = name.data();
         classData.m_typeId = typeId;
         classData.m_azRtti = rttiHelper;

@@ -147,6 +147,6 @@ namespace AZ
                              *  OnMetadataDependenciesRemoved notification when it's dependency count goes to 0.
                              *  For example: The Root Slice. */
     private:
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     };
 } // namespace AZ

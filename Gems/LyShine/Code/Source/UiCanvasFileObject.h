@@ -42,14 +42,14 @@ private: // static methods
     static UiCanvasFileObject* LoadCanvasEntitiesFromOldFormatFile(const char* buffer, size_t bufferSize, const AZ::ObjectStream::FilterDescriptor& filterDesc = AZ::ObjectStream::FilterDescriptor());
     static UiCanvasFileObject* LoadCanvasFromNewFormatStream(AZ::IO::GenericStream& stream, const AZ::ObjectStream::FilterDescriptor& filterDesc = AZ::ObjectStream::FilterDescriptor());
 
-    static AZ::SerializeContext::DataElementNode* FindRootElementInCanvasEntity(
+    static AZ::Serialization::DataElementNode* FindRootElementInCanvasEntity(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& canvasEntityNode);
+        AZ::Serialization::DataElementNode& canvasEntityNode);
 
     static bool CreateRootSliceNodeAndCopyInEntities(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& canvasFileObjectNode,
-        AZStd::vector<AZ::SerializeContext::DataElementNode>& copiedEntities);
+        AZ::Serialization::DataElementNode& canvasFileObjectNode,
+        AZStd::vector<AZ::Serialization::DataElementNode>& copiedEntities);
 
-    static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+    static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 };

@@ -8,12 +8,13 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 
 {% macro add_attribute(attribute, tags) %}
 {% set value = tags[attribute] %}
-{% if value is defined %} 
+{% if value is defined %}
 ->Attribute(AZ::Edit::Attributes::{{ attribute }}, {{ value }})
 {% endif %}
 {% endmacro %}
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/RTTI/TypeInfo.h>
 
 #include <ScriptCanvas/Core/Slot.h>
@@ -37,7 +38,7 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 {% endif %}
 
 {% if attribute_Namespace is defined %}
-namespace {{attribute_Namespace}} 
+namespace {{attribute_Namespace}}
 {
 {% endif %}
 
@@ -147,7 +148,7 @@ void {{ Class.attrib['QualifiedName'] }}::ConfigureSlots()
 {% for Property in Class.iter('DynamicDataSlot') %}
     // {{ Property.attrib['Name'] }}
     {
-        ScriptCanvas::DynamicDataSlotConfiguration slotConfiguration;       
+        ScriptCanvas::DynamicDataSlotConfiguration slotConfiguration;
         slotConfiguration.m_name = "{{ Property.attrib['Name'] }}";
         slotConfiguration.m_toolTip = "{{ Property.attrib['Description'] }}";
     {% if Property.attrib['DisplayGroup'] is defined %}
@@ -205,7 +206,7 @@ void {{ Class.attrib['QualifiedName'] }}::Reflect(AZ::ReflectContext* context)
 {% if Class.attrib['DependentReflections'] is defined %}
 {% for dependentClass in Class.attrib['DependentReflections'].split(';') %}
     {{ dependentClass }}::Reflect(context);
-{% endfor %}    
+{% endfor %}
 
 {% endif %}
     static_assert((std::is_base_of<ScriptCanvas::Node, {{ baseClass }}>::value), "Script Canvas nodes require the first base class to be derived from ScriptCanvas::Node");

@@ -49,7 +49,7 @@ namespace AZ
          */
         template <typename TagContainer>
         bool SystemComponentTagsMatchesAtLeastOneTag(
-            const AZ::SerializeContext::ClassData* classData,
+            const AZ::Serialization::ClassData* classData,
             const TagContainer& requiredTags,
             bool defaultVal = false);
 
@@ -85,7 +85,7 @@ namespace AZ
             const char*         m_description = nullptr;
             const char*         m_name = nullptr;
             const char*         m_deprecatedName = nullptr;
-            SerializeContext::ClassElement* m_serializeClassElement; ///< If nullptr this is class (logical) element, not physical element exists in the class
+            Serialization::ClassElement* m_serializeClassElement; ///< If nullptr this is class (logical) element, not physical element exists in the class
             AttributeArray      m_attributes;
         };
 
@@ -108,7 +108,7 @@ namespace AZ
 
             const char*                 m_name;
             const char*                 m_description;
-            SerializeContext::ClassData* m_classData;
+            Serialization::ClassData* m_classData;
             DynamicEditDataProvider*    m_editDataProvider;
             AZStd::list<ElementData>    m_elements;
         };
@@ -146,7 +146,7 @@ namespace AZ
         template <class E>
         EnumBuilder Enum(const char* displayName, const char* description);
 
-        void RemoveClassData(SerializeContext::ClassData* classData);
+        void RemoveClassData(Serialization::ClassData* classData);
 
         const Edit::ElementData* GetEnumElementData(const AZ::Uuid& enumId) const;
 
@@ -187,7 +187,7 @@ namespace AZ
         class ClassBuilder
         {
             friend EditContext;
-            ClassBuilder(EditContext* context, SerializeContext::ClassData* classData, Edit::ClassData* classElement)
+            ClassBuilder(EditContext* context, Serialization::ClassData* classData, Edit::ClassData* classElement)
                 : m_context(context)
                 , m_classData(classData)
                 , m_classElement(classElement)
@@ -207,7 +207,7 @@ namespace AZ
             }
 
             EditContext*                    m_context;
-            SerializeContext::ClassData*    m_classData;
+            Serialization::ClassData*    m_classData;
             Edit::ClassData*                m_classElement;
             Edit::ElementData*              m_editElement;
 
@@ -453,7 +453,7 @@ namespace AZ
         {
             // find the class data in the serialize context.
             SerializeContext::UuidToClassMap::iterator classDataIter = m_serializeContext.m_uuidMap.find(AzTypeInfo<T>::Uuid());
-            SerializeContext::ClassData* serializeClassData{};
+            Serialization::ClassData* serializeClassData{};
             if (classDataIter != m_serializeContext.m_uuidMap.end())
             {
                 serializeClassData = &classDataIter->second;
@@ -615,10 +615,10 @@ namespace AZ
         size_t offset = reinterpret_cast<size_t>(&(reinterpret_cast<typename ElementTypeInfo::ClassType const volatile*>(0)->*memberVariable));
         //offset = or pass it to the function with offsetof(typename ElementTypeInfo::ClassType,memberVariable);
 
-        SerializeContext::ClassElement* classElement = nullptr;
+        Serialization::ClassElement* classElement = nullptr;
         for (size_t i = 0; i < m_classData->m_elements.size(); ++i)
         {
-            SerializeContext::ClassElement* element = &m_classData->m_elements[i];
+            Serialization::ClassElement* element = &m_classData->m_elements[i];
             if (element->m_offset == offset)
             {
                 classElement = element;
@@ -656,7 +656,7 @@ namespace AZ
         using ElementType = typename AZStd::Utils::if_c<AZStd::is_enum<typename ElementTypeInfo::Type>::value, typename ElementTypeInfo::Type, typename ElementTypeInfo::ElementType>::type;
         AZ_Assert(m_classData->m_typeId == AzTypeInfo<typename ElementTypeInfo::ClassType>::Uuid(), "Data element (%s) belongs to a different class!", AzTypeInfo<typename ElementTypeInfo::ValueType>::Name());
 
-        const SerializeContext::ClassData* classData = m_context->m_serializeContext.FindClassData(AzTypeInfo<typename ElementTypeInfo::ValueType>::Uuid());
+        const Serialization::ClassData* classData = m_context->m_serializeContext.FindClassData(AzTypeInfo<typename ElementTypeInfo::ValueType>::Uuid());
         if (classData && classData->m_editData)
         {
             return DataElement<T>(uiId, memberVariable, classData->m_editData->m_name, classData->m_editData->m_description);
@@ -695,7 +695,7 @@ namespace AZ
         AZ_Assert(m_classData->m_typeId == AzTypeInfo<typename ElementTypeInfo::ClassType>::Uuid(), "Data element (%s) belongs to a different class!", AzTypeInfo<typename ElementTypeInfo::ValueType>::Name());
         using ElementType = typename AZStd::Utils::if_c<AZStd::is_enum<typename ElementTypeInfo::Type>::value, typename ElementTypeInfo::Type, typename ElementTypeInfo::ElementType>::type;
 
-        const SerializeContext::ClassData* classData = m_context->m_serializeContext.FindClassData(AzTypeInfo<typename ElementTypeInfo::ValueType>::Uuid());
+        const Serialization::ClassData* classData = m_context->m_serializeContext.FindClassData(AzTypeInfo<typename ElementTypeInfo::ValueType>::Uuid());
         if (classData && classData->m_editData)
         {
             return DataElement<T>(uiIdCrc, memberVariable, classData->m_editData->m_name, classData->m_editData->m_description);
@@ -846,7 +846,7 @@ namespace AZ
             return this;
         }
 
-        const SerializeContext::ClassData* templatedClassData = nullptr;
+        const Serialization::ClassData* templatedClassData = nullptr;
         AZStd::string idString = "{Unknown Type Id}";
 
         bool belongsToContainerType = AZ::Internal::AttributeValueTypeClassChecker<T>::Check(m_classData->m_typeId, m_classData->m_azRtti);

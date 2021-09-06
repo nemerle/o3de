@@ -109,8 +109,8 @@ namespace LmbrCentral
 
     namespace ClassConverters
     {
-        static bool DeprecateCapsuleColliderConfiguration(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        static bool DeprecateCapsuleColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool DeprecateCapsuleColliderConfiguration(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        static bool DeprecateCapsuleColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     }
 
     void CapsuleShapeConfig::Reflect(AZ::ReflectContext* context)
@@ -219,7 +219,7 @@ namespace LmbrCentral
 
     namespace ClassConverters
     {
-        static bool DeprecateCapsuleColliderConfiguration(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool DeprecateCapsuleColliderConfiguration(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             /*
             Old:
@@ -276,7 +276,7 @@ namespace LmbrCentral
             return false;
         }
 
-        static bool DeprecateCapsuleColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool DeprecateCapsuleColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             /*
             Old:

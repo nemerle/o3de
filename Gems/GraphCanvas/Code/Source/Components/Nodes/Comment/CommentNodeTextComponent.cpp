@@ -38,7 +38,7 @@ namespace GraphCanvas
     /////////////////////////////
     // CommentNodeTextComponent
     /////////////////////////////
-    bool CommentNodeTextComponentVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool CommentNodeTextComponentVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() <= 2)
         {
@@ -47,7 +47,7 @@ namespace GraphCanvas
 
             CommentNodeTextSaveData saveData;
 
-            AZ::SerializeContext::DataElementNode* dataNode = classElement.FindSubElement(commentId);
+            AZ::Serialization::DataElementNode* dataNode = classElement.FindSubElement(commentId);
 
             if (dataNode)
             {

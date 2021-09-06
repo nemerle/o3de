@@ -117,7 +117,7 @@ namespace PhysX
         AZStd::vector<AZStd::unique_ptr<AZ::Data::AssetHandler>> m_assetHandlers;
         PhysX::MaterialsManager m_materialManager;
 
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
     private:
         // AZ::TickBus::Handler ...

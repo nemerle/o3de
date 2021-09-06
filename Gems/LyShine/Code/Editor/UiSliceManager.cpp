@@ -397,7 +397,7 @@ AzToolsFramework::SliceUtilities::SliceTransaction::Result SlicePreSaveCallbackF
 
         AZ::EntityUtils::EnumerateEntityIds(clonedEntity,
             [clonedEntity, &referencedEntities, &referencedChildEntities]
-        (const AZ::EntityId& id, bool isEntityId, const AZ::SerializeContext::ClassElement* elementData) -> void
+        (const AZ::EntityId& id, bool isEntityId, const AZ::Serialization::ClassElement* elementData) -> void
             {
                 if (!isEntityId && id.IsValid())
                 {
@@ -456,7 +456,7 @@ AzToolsFramework::SliceUtilities::SliceTransaction::Result SlicePreSaveCallbackF
             AZStd::string fieldName;
             AZ::EntityUtils::EnumerateEntityIds(referencingEntity,
                 [&referencedEntityId, &fieldName]
-            (const AZ::EntityId& id, bool isEntityId, const AZ::SerializeContext::ClassElement* elementData) -> void
+            (const AZ::EntityId& id, bool isEntityId, const AZ::Serialization::ClassElement* elementData) -> void
                 {
                     if (!isEntityId && id.IsValid() && id == referencedEntityId)
                     {

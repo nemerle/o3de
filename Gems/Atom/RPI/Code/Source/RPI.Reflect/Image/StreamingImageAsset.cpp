@@ -8,6 +8,7 @@
 
 #include <Atom/RPI.Reflect/Image/StreamingImageAsset.h>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 namespace AZ
@@ -38,7 +39,7 @@ namespace AZ
                     ;
             }
         }
-        
+
         const Data::Asset<ImageMipChainAsset>& StreamingImageAsset::GetMipChainAsset(size_t mipChainIndex) const
         {
             return m_mipChains[mipChainIndex].m_asset;
@@ -92,7 +93,7 @@ namespace AZ
         {
             return m_totalImageDataSize;
         }
-        
+
         AZStd::array_view<uint8_t> StreamingImageAsset::GetSubImageData(uint32_t mip, uint32_t slice)
         {
             if (mip >= m_mipLevelToChainIndex.size())

@@ -43,7 +43,7 @@ namespace ScriptCanvas
                 }
             }
 
-            bool OperatorClear::OperatorClearVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+            bool OperatorClear::OperatorClearVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
             {
                 if (rootElement.GetVersion() < Version::RemoveOperatorBase)
                 {

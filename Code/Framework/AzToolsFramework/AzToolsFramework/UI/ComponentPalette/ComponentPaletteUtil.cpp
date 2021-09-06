@@ -21,7 +21,7 @@ namespace AzToolsFramework
     namespace ComponentPaletteUtil
     {
         bool OffersRequiredServices(
-            const AZ::SerializeContext::ClassData* componentClass,
+            const AZ::Serialization::ClassData* componentClass,
             const AZStd::vector<AZ::ComponentServiceType>& serviceFilter,
             const AZStd::vector<AZ::ComponentServiceType>& incompatibleServiceFilter
         )
@@ -73,7 +73,7 @@ namespace AzToolsFramework
         }
 
         bool OffersRequiredServices(
-            const AZ::SerializeContext::ClassData* componentClass,
+            const AZ::Serialization::ClassData* componentClass,
             const AZStd::vector<AZ::ComponentServiceType>& serviceFilter
         )
         {
@@ -81,7 +81,7 @@ namespace AzToolsFramework
             return OffersRequiredServices(componentClass, serviceFilter, incompatibleServices);
         }
 
-        bool IsAddableByUser(const AZ::SerializeContext::ClassData* componentClass)
+        bool IsAddableByUser(const AZ::Serialization::ClassData* componentClass)
         {
             AZ_Assert(componentClass, "component class must not be null");
 
@@ -123,7 +123,7 @@ namespace AzToolsFramework
         {
             AZ_PROFILE_FUNCTION(AzToolsFramework);
             serializeContext->EnumerateDerived<AZ::Component>(
-                [&](const AZ::SerializeContext::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
+                [&](const AZ::Serialization::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
                 {
                     AZ_UNUSED(knownType);
 
@@ -184,7 +184,7 @@ namespace AzToolsFramework
             bool containsEditable = false;
 
             serializeContext->EnumerateDerived<AZ::Component>(
-                [&](const AZ::SerializeContext::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
+                [&](const AZ::Serialization::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
                 {
                     AZ_UNUSED(knownType);
 

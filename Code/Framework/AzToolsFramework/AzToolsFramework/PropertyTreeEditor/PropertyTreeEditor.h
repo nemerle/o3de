@@ -11,7 +11,7 @@
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/std/string/string.h>
 #include <AzCore/std/containers/unordered_map.h>
-
+#include <AzCore/Asset/AssetCommon.h>
 #include <AzToolsFramework/UI/PropertyEditor/InstanceDataHierarchy.h>
 #include <AzToolsFramework/UI/PropertyEditor/PropertyEditorAPI.h>
 
@@ -95,7 +95,7 @@ namespace AzToolsFramework
         {
             PropertyTreeEditorNode() {}
             PropertyTreeEditorNode(AzToolsFramework::InstanceDataNode* nodePtr, AZStd::optional<AZStd::string> newName);
-            PropertyTreeEditorNode(AzToolsFramework::InstanceDataNode* nodePtr, AZStd::optional<AZStd::string> newName, 
+            PropertyTreeEditorNode(AzToolsFramework::InstanceDataNode* nodePtr, AZStd::optional<AZStd::string> newName,
                 const AZStd::string& parentPath, const AZStd::vector<ChangeNotification>& notifiers);
             PropertyTreeEditorNode(const AZ::TypeId& typeId, AzToolsFramework::InstanceDataNode* nodePtr, AZStd::optional<AZStd::string> newName);
 
@@ -115,8 +115,8 @@ namespace AzToolsFramework
             ~ContainerData() = default;
 
             const PropertyTreeEditorNode* m_propertyTreeEditorNode = nullptr;
-            AZ::SerializeContext::IDataContainer* m_dataContainer = nullptr;
-            const AZ::SerializeContext::ClassElement* m_valueElement = nullptr;
+            AZ::Serialization::IDataContainer* m_dataContainer = nullptr;
+            const AZ::Serialization::ClassElement* m_valueElement = nullptr;
         };
 
         struct AssociatePairInfo final
@@ -124,9 +124,9 @@ namespace AzToolsFramework
             AssociatePairInfo() = default;
             ~AssociatePairInfo() = default;
 
-            const AZ::SerializeContext::ClassData* m_pairClass = nullptr;
-            const AZ::SerializeContext::ClassElement* m_keyElement = nullptr;
-            const AZ::SerializeContext::ClassElement* m_valueElement = nullptr;
+            const AZ::Serialization::ClassData* m_pairClass = nullptr;
+            const AZ::Serialization::ClassElement* m_keyElement = nullptr;
+            const AZ::Serialization::ClassElement* m_valueElement = nullptr;
         };
 
         bool SetSimpleAssetPath(const AZ::Data::AssetId& assetId, const PropertyTreeEditorNode& pteNode);
@@ -135,11 +135,11 @@ namespace AzToolsFramework
         void HandleChangeNotifyAttribute(PropertyAttributeReader& reader, InstanceDataNode* node, AZStd::vector<ChangeNotification>& notifier);
 
         void PopulateNodeMap(AZStd::list<InstanceDataNode>& nodeList, const AZStd::string_view& previousPath = "");
-        
+
         PropertyModificationRefreshLevel PropertyNotify(const PropertyTreeEditorNode* node, size_t optionalIndex = 0);
 
         AZStd::optional<ContainerData> FetchContainerData(AZStd::string_view propertyPath) const;
-        AZStd::optional<AssociatePairInfo> MakeAssociatePair(const AZ::SerializeContext::ClassElement* containerElement) const;
+        AZStd::optional<AssociatePairInfo> MakeAssociatePair(const AZ::Serialization::ClassElement* containerElement) const;
 
         AZ::SerializeContext* m_serializeContext = nullptr;
         AZStd::shared_ptr<InstanceDataHierarchy> m_instanceDataHierarchy;

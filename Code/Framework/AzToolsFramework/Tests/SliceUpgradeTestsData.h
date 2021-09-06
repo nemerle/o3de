@@ -185,7 +185,7 @@ namespace UnitTest
             return in + 13.5f;
         }
 
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // conversion from Version 0 to Version 1
             // - Data (int) becomes Info (float) with the conversion Info = Data + 13.5f
@@ -198,14 +198,14 @@ namespace UnitTest
                     return false;
                 }
 
-                AZ::SerializeContext::DataElementNode& dataElement = classElement.GetSubElement(dataIndex);
+                AZ::Serialization::DataElementNode& dataElement = classElement.GetSubElement(dataIndex);
                 int data;
 
                 dataElement.GetData<int>(data);
 
                 //Create a new info value
                 int infoIndex = classElement.AddElement<float>(context, "Info");
-                AZ::SerializeContext::DataElementNode& infoElement = classElement.GetSubElement(infoIndex);
+                AZ::Serialization::DataElementNode& infoElement = classElement.GetSubElement(infoIndex);
 
                 //Set width and height data to x and y from the old size
                 infoElement.SetData<float>(context, data + 13.5f);

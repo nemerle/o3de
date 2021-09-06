@@ -73,7 +73,7 @@ namespace LmbrCentral
     //////////////////////////////////////////////////////////////////////////
 
     //=========================================================================
-    bool NavigationComponentVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool NavigationComponentVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 4)
         {

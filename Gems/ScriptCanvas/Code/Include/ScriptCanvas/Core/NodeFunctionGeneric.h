@@ -297,8 +297,8 @@ namespace ScriptCanvas
             MultipleOutputInvoker<t_Func, function, t_Traits>::Add(*this);
         }
 
-        static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
-        static bool ConvertOldNodeGeneric(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
+        static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
+        static bool ConvertOldNodeGeneric(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
 
     private:
 
@@ -334,7 +334,7 @@ namespace ScriptCanvas
     };
 
     template<typename t_Func, typename t_Traits, t_Func function, typename t_DefaultFunc, t_DefaultFunc defaultsFunction>
-    bool NodeFunctionGenericMultiReturn<t_Func, t_Traits, function, t_DefaultFunc, defaultsFunction>::ConvertOldNodeGeneric(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+    bool NodeFunctionGenericMultiReturn<t_Func, t_Traits, function, t_DefaultFunc, defaultsFunction>::ConvertOldNodeGeneric(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
     {
         int nodeElementIndex = rootElement.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
         if (nodeElementIndex == -1)
@@ -344,7 +344,7 @@ namespace ScriptCanvas
         }
 
         // The DataElementNode is being copied purposefully in this statement to clone the data
-        AZ::SerializeContext::DataElementNode baseNodeElement = rootElement.GetSubElement(nodeElementIndex);
+        AZ::Serialization::DataElementNode baseNodeElement = rootElement.GetSubElement(nodeElementIndex);
         if (!rootElement.Convert(serializeContext, azrtti_typeid<NodeFunctionGenericMultiReturn>()))
         {
             AZ_Error("Script Canvas", false, "Unable to convert deprecated class %s to class %s", rootElement.GetNameString(), RTTI_TypeName());
@@ -361,7 +361,7 @@ namespace ScriptCanvas
     }
 
     template<typename t_Func, typename t_Traits, t_Func function, typename t_DefaultFunc, t_DefaultFunc defaultsFunction>
-    bool NodeFunctionGenericMultiReturn<t_Func, t_Traits, function, t_DefaultFunc, defaultsFunction>::VersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+    bool NodeFunctionGenericMultiReturn<t_Func, t_Traits, function, t_DefaultFunc, defaultsFunction>::VersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 1)
         {

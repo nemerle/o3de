@@ -9,15 +9,15 @@
 namespace Vegetation
 {
     template<typename TComponent, typename TConfiguration>
-    bool EditorAreaComponentBaseVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool EditorAreaComponentBaseVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 1)
         {
             TConfiguration configData;
             AzToolsFramework::Components::EditorComponentBase editorComponentBaseData;
 
-            AZ::SerializeContext::DataElementNode oldEditorAreaComponentBaseElement = *GetParentByIndex(classElement, 1);
-            AZ::SerializeContext::DataElementNode* oldEditorComponentBaseElement = GetParentByIndex(classElement, 3);
+            AZ::Serialization::DataElementNode oldEditorAreaComponentBaseElement = *GetParentByIndex(classElement, 1);
+            AZ::Serialization::DataElementNode* oldEditorComponentBaseElement = GetParentByIndex(classElement, 3);
 
             if (!oldEditorComponentBaseElement->GetData(editorComponentBaseData))
             {

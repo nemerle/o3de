@@ -8,6 +8,7 @@
 
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/IO/SystemFile.h>
 
 namespace AZ {
@@ -104,13 +105,13 @@ namespace AZ {
             bytesRead += stream.Read(sizeof(assetLoadBehavior), reinterpret_cast<void*>(&assetLoadBehavior));
             AZ_SERIALIZE_SWAP_ENDIAN(assetLoadBehavior, isDataBigEndian);
         }
-        
+
         AZ_Assert(bytesRead == dataSize, "Invalid asset type/read");
         (void)bytesRead;
 
 
         Asset<AssetData>* asset = reinterpret_cast<Asset<AssetData>*>(classPtr);
-        
+
         asset->m_assetId = assetId;
         asset->m_assetType = assetType;
         asset->m_assetHint = assetHint;
@@ -122,7 +123,7 @@ namespace AZ {
             asset->SetAutoLoadBehavior(assetLoadBehavior);
         }
         asset->UpgradeAssetInfo();
-   
+
         return true;
     }
 
@@ -145,7 +146,7 @@ namespace AZ {
     {
         AZ_Assert(sourcePtr, "AssetSerializer::Clone received invalid source pointer.");
         AZ_Assert(destPtr, "AssetSerializer::Clone received invalid destination pointer.");
-            
+
         const Data::Asset<Data::AssetData>* sourceAsset = reinterpret_cast<const Data::Asset<Data::AssetData>*>(sourcePtr);
         Data::Asset<Data::AssetData>* destAsset = reinterpret_cast<Data::Asset<Data::AssetData>*>(destPtr);
 
@@ -191,7 +192,7 @@ namespace AZ {
                 assetLoadBehavior = static_cast<Data::AssetLoadBehavior>(strtoul(loadBehaviorStart+1, nullptr, 16));
             }
         }
-        
+
         Data::AssetId assetId;
         assetId.m_guid = Uuid::CreateString(idGuidStart, idGuidEnd - idGuidStart);
         assetId.m_subId = static_cast<u32>(strtoul(idSubIdStart, nullptr, 16));
@@ -217,7 +218,7 @@ namespace AZ {
 
         const Data::Asset<Data::AssetData>* asset = reinterpret_cast<const Data::Asset<Data::AssetData>*>(classPtr);
 
-        AZ_Assert(asset->Get() == nullptr || asset->GetType() != AzTypeInfo<Data::AssetData>::Uuid(), 
+        AZ_Assert(asset->Get() == nullptr || asset->GetType() != AzTypeInfo<Data::AssetData>::Uuid(),
             "Asset contains data, but does not have a valid asset type.");
 
         Data::AssetId assetId = asset->GetId();
@@ -248,7 +249,7 @@ namespace AZ {
             // The asset reference is null, so there's no additional processing required.
             return true;
         }
-        
+
         if (assetFilterCallback && !assetFilterCallback(AZ::Data::AssetFilterInfo(asset)))
         {
             // This asset reference is filtered out for further processing/loading.
@@ -303,7 +304,7 @@ namespace AZ {
 
         // If the asset is flagged to pre-load, kick off a blocking load.
         if (blockingLoad)
-        {   
+        {
             asset.BlockUntilLoadComplete();
 
             if (asset.IsError())

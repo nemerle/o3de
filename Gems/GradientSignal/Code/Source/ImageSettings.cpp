@@ -72,77 +72,77 @@ namespace GradientSignal
         }
     }
 
-    bool ImageSettings::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool ImageSettings::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 1)
         {
             {
                 int index = classElement.AddElement<bool>(context, "UseR");
 
-                AZ::SerializeContext::DataElementNode& channelElem = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& channelElem = classElement.GetSubElement(index);
                 channelElem.SetData<bool>(context, true);
             }
 
             {
                 int index = classElement.AddElement<bool>(context, "UseG");
 
-                AZ::SerializeContext::DataElementNode& channelElem = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& channelElem = classElement.GetSubElement(index);
                 channelElem.SetData<bool>(context, false);
             }
 
             {
                 int index = classElement.AddElement<bool>(context, "UseB");
 
-                AZ::SerializeContext::DataElementNode& channelElem = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& channelElem = classElement.GetSubElement(index);
                 channelElem.SetData<bool>(context, false);
             }
 
             {
                 int trsIndex = classElement.AddElement<ChannelExportTransform>(context, "RGBTransformation");
 
-                AZ::SerializeContext::DataElementNode& transform = classElement.GetSubElement(trsIndex);
+                AZ::Serialization::DataElementNode& transform = classElement.GetSubElement(trsIndex);
                 transform.SetData<ChannelExportTransform>(context, ChannelExportTransform::MAX);
             }
 
             {
                 int index = classElement.AddElement<bool>(context, "UseA");
 
-                AZ::SerializeContext::DataElementNode& channelElem = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& channelElem = classElement.GetSubElement(index);
                 channelElem.SetData<bool>(context, false);
             }
 
             {
                 int alphaIndex = classElement.AddElement<AlphaExportTransform>(context, "AlphaTransformation");
 
-                AZ::SerializeContext::DataElementNode& alph = classElement.GetSubElement(alphaIndex);
+                AZ::Serialization::DataElementNode& alph = classElement.GetSubElement(alphaIndex);
                 alph.SetData<AlphaExportTransform>(context, AlphaExportTransform::MULTIPLY);
             }
             
             {
                 int expIndex = classElement.AddElement<ExportFormat>(context, "ExportFormat");
 
-                AZ::SerializeContext::DataElementNode& exp = classElement.GetSubElement(expIndex);
+                AZ::Serialization::DataElementNode& exp = classElement.GetSubElement(expIndex);
                 exp.SetData<ExportFormat>(context, ExportFormat::U8);
             }
 
             {
                 int index = classElement.AddElement<bool>(context, "AutoScale");
 
-                AZ::SerializeContext::DataElementNode& node = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& node = classElement.GetSubElement(index);
                 node.SetData<bool>(context, true);
             }
 
             {
                 int index = classElement.AddElement<float>(context, "RangeMin");
 
-                AZ::SerializeContext::DataElementNode& node = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& node = classElement.GetSubElement(index);
                 node.SetData<float>(context, 0.0f);
             }
 
             {
                 int index = classElement.AddElement<float>(context, "RangeMax");
 
-                AZ::SerializeContext::DataElementNode& node = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& node = classElement.GetSubElement(index);
                 node.SetData<float>(context, 255.0f);
             }
         }

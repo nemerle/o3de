@@ -8,6 +8,8 @@
 
 #include <Atom/RPI.Public/Model/ModelLod.h>
 #include <Atom/RPI.Public/Material/Material.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
+#include <Atom/RPI.Reflect/Model/ModelLodAsset.h>
 
 #include <Atom/RHI/Factory.h>
 #include <Atom/RHI.Reflect/InputStreamLayoutBuilder.h>
@@ -19,6 +21,51 @@ namespace AZ
 {
     namespace RPI
     {
+        uint32_t TrackBuffer(const Data::Instance<Buffer>& buffer, ModelLod *self)
+        {
+            for (uint32_t i = 0; i < self->m_buffers.size(); ++i)
+            {
+                auto& existingBuffer = self->m_buffers[i];
+                if (existingBuffer.get() == buffer)
+                {
+                    return i;
+                }
+            }
+
+            self->m_buffers.emplace_back(buffer);
+            return static_cast<uint32_t>(self->m_buffers.size() - 1);
+        }
+        namespace
+        {
+            bool SetMeshInstanceData(const ModelLodAsset::Mesh::StreamBufferInfo& streamBufferInfo, ModelLod::Mesh& meshInstance, ModelLod* self)
+            {
+                AZ_TRACE_METHOD();
+
+                const Data::Asset<BufferAsset>& streamBufferAsset = streamBufferInfo.m_bufferAssetView.GetBufferAsset();
+                const Data::Instance<Buffer>& streamBuffer = Buffer::FindOrCreate(streamBufferAsset);
+                if (streamBuffer == nullptr)
+                {
+                    AZ_Error("ModelLod", false, "Failed to create stream buffer! Possibly out of memory!");
+                    return false;
+                }
+
+                const RHI::BufferViewDescriptor& bufferViewDescriptor = streamBufferInfo.m_bufferAssetView.GetBufferViewDescriptor();
+
+                ModelLod::StreamBufferInfo info;
+                info.m_semantic = streamBufferInfo.m_semantic;
+                info.m_customName = streamBufferInfo.m_customName;
+                info.m_format = bufferViewDescriptor.m_elementFormat;
+                info.m_byteOffset = bufferViewDescriptor.m_elementOffset * bufferViewDescriptor.m_elementSize;
+                info.m_byteCount = bufferViewDescriptor.m_elementCount * bufferViewDescriptor.m_elementSize;
+                info.m_stride = bufferViewDescriptor.m_elementSize;
+                info.m_bufferIndex = TrackBuffer(streamBuffer, self);
+                meshInstance.m_streamInfo.push_back(info);
+
+                return true;
+            }
+
+        } // namespace
+
         Data::Instance<ModelLod> ModelLod::FindOrCreate(const Data::Asset<ModelLodAsset>& lodAsset, const Data::Asset<ModelAsset>& modelAsset)
         {
             AZStd::any modelAssetAny{&modelAsset};
@@ -94,13 +141,13 @@ namespace AZ
                     drawIndexed.m_instanceCount = 1;
                     meshInstance.m_drawArguments = drawIndexed;
 
-                    TrackBuffer(indexBuffer);
+                    TrackBuffer(indexBuffer, this);
                 }
 
                 // [GFX TODO][ATOM-838]: We need to figure out how to load only the required streams from disk rather than all available streams.
                 for (const auto& streamBufferInfo : mesh.GetStreamBufferInfoList())
                 {
-                    if (!SetMeshInstanceData(streamBufferInfo, meshInstance))
+                    if (!SetMeshInstanceData(streamBufferInfo, meshInstance, this))
                     {
                         return RHI::ResultCode::InvalidOperation;
                     }
@@ -389,35 +436,6 @@ namespace AZ
             }
         }
 
-        bool ModelLod::SetMeshInstanceData(
-            const ModelLodAsset::Mesh::StreamBufferInfo& streamBufferInfo,
-            Mesh& meshInstance)
-        {
-            AZ_TRACE_METHOD();
-
-            const Data::Asset<BufferAsset>& streamBufferAsset = streamBufferInfo.m_bufferAssetView.GetBufferAsset();
-            const Data::Instance<Buffer>& streamBuffer = Buffer::FindOrCreate(streamBufferAsset);
-            if (streamBuffer == nullptr)
-            {
-                AZ_Error("ModelLod", false, "Failed to create stream buffer! Possibly out of memory!");
-                return false;
-            }
-
-            const RHI::BufferViewDescriptor& bufferViewDescriptor = streamBufferInfo.m_bufferAssetView.GetBufferViewDescriptor();
-
-            StreamBufferInfo info;
-            info.m_semantic = streamBufferInfo.m_semantic;
-            info.m_customName = streamBufferInfo.m_customName;
-            info.m_format = bufferViewDescriptor.m_elementFormat;
-            info.m_byteOffset = bufferViewDescriptor.m_elementOffset * bufferViewDescriptor.m_elementSize;
-            info.m_byteCount = bufferViewDescriptor.m_elementCount * bufferViewDescriptor.m_elementSize;
-            info.m_stride = bufferViewDescriptor.m_elementSize;
-            info.m_bufferIndex = TrackBuffer(streamBuffer);
-
-            meshInstance.m_streamInfo.push_back(info);
-
-            return true;
-        }
 
         void ModelLod::WaitForUpload()
         {
@@ -429,21 +447,6 @@ namespace AZ
                 }
                 m_isUploadPending = false;
             }
-        }
-
-        uint32_t ModelLod::TrackBuffer(const Data::Instance<Buffer>& buffer)
-        {
-            for (uint32_t i = 0; i < m_buffers.size(); ++i)
-            {
-                auto& existingBuffer = m_buffers[i];
-                if (existingBuffer.get() == buffer)
-                {
-                    return i;
-                }
-            }
-
-            m_buffers.emplace_back(buffer);
-            return static_cast<uint32_t>(m_buffers.size() - 1);
         }
     } // namespace RPI
 } // namespace AZ

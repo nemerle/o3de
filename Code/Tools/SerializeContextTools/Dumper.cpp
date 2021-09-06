@@ -70,7 +70,7 @@ namespace AZ::SerializeContextTools
             {
                 result = DumpClassContent(content, classPtr, classId, context) && result;
 
-                const SerializeContext::ClassData* classData = context->FindClassData(classId);
+                const Serialization::ClassData* classData = context->FindClassData(classId);
                 if (classData && classData->m_factory)
                 {
                     classData->m_factory->Destroy(classPtr);
@@ -122,7 +122,7 @@ namespace AZ::SerializeContextTools
         temp.reserve(256 * 1024); // Reserve 256kb of memory to avoid the string constantly resizing.
 
         bool result = true;
-        auto callback = [context, &doc, &scObject, &temp, &systemComponents, &result](const SerializeContext::ClassData* classData, const Uuid& /*typeId*/) -> bool
+        auto callback = [context, &doc, &scObject, &temp, &systemComponents, &result](const Serialization::ClassData* classData, const Uuid& /*typeId*/) -> bool
         {
             if (!DumpClassContent(classData, scObject, doc, systemComponents, context, temp))
             {
@@ -201,7 +201,7 @@ namespace AZ::SerializeContextTools
         }
     }
 
-    bool Dumper::DumpClassContent(const SerializeContext::ClassData* classData, rapidjson::Value& parent, rapidjson::Document& document,
+    bool Dumper::DumpClassContent(const Serialization::ClassData* classData, rapidjson::Value& parent, rapidjson::Document& document,
         const AZStd::vector<Uuid>& systemComponents, SerializeContext* context, AZStd::string& scratchStringBuffer)
     {
         AZ_Assert(scratchStringBuffer.empty(), "Provided scratch string buffer wasn't empty.");
@@ -242,7 +242,7 @@ namespace AZ::SerializeContextTools
             rapidjson::Value fields(rapidjson::kArrayType);
             rapidjson::Value bases(rapidjson::kArrayType);
 
-            for (const SerializeContext::ClassElement& element : classData->m_elements)
+            for (const Serialization::ClassElement& element : classData->m_elements)
             {
                 DumpElementInfo(element, classData, context, fields, bases, document, scratchStringBuffer);
             }
@@ -264,7 +264,7 @@ namespace AZ::SerializeContextTools
 
     bool Dumper::DumpClassContent(AZStd::string& output, void* classPtr, const Uuid& classId, SerializeContext* context)
     {
-        const SerializeContext::ClassData* classData = context->FindClassData(classId);
+        const Serialization::ClassData* classData = context->FindClassData(classId);
         if (!classData)
         {
             AZ_Printf("", "  Class data for '%s' is missing.\n", classId.ToString<AZStd::string>().c_str());
@@ -272,7 +272,7 @@ namespace AZ::SerializeContextTools
         }
 
         size_t indention = 0;
-        auto begin = [context, &output, &indention](void* /*instance*/, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* classElement) -> bool
+        auto begin = [context, &output, &indention](void* /*instance*/, const Serialization::ClassData* classData, const Serialization::ClassElement* classElement) -> bool
         {
             for (size_t i = 0; i < indention; ++i)
             {
@@ -296,19 +296,19 @@ namespace AZ::SerializeContextTools
             return true;
         };
 
-        SerializeContext::EnumerateInstanceCallContext callContext(begin, end, context, SerializeContext::ENUM_ACCESS_FOR_WRITE, nullptr);
+        Serialization::EnumerateInstanceCallContext callContext(begin, end, context, SerializeContext::ENUM_ACCESS_FOR_WRITE, nullptr);
         context->EnumerateInstance(&callContext, classPtr, classId, classData, nullptr);
         return true;
     }
 
-    void Dumper::DumpElementInfo(const SerializeContext::ClassElement& element, const SerializeContext::ClassData* classData, SerializeContext* context,
+    void Dumper::DumpElementInfo(const Serialization::ClassElement& element, const Serialization::ClassData* classData, SerializeContext* context,
         rapidjson::Value& fields, rapidjson::Value& bases, rapidjson::Document& document, AZStd::string& scratchStringBuffer)
     {
         AZ_Assert(fields.IsArray(), "Expected 'fields' to be an array.");
         AZ_Assert(bases.IsArray(), "Expected 'bases' to be an array.");
         AZ_Assert(scratchStringBuffer.empty(), "Provided scratch string buffer wasn't empty.");
 
-        const SerializeContext::ClassData* elementClass = context->FindClassData(element.m_typeId, classData);
+        const Serialization::ClassData* elementClass = context->FindClassData(element.m_typeId, classData);
 
         AppendTypeName(scratchStringBuffer, elementClass, element.m_typeId);
         Uuid elementTypeId = element.m_typeId;
@@ -317,14 +317,14 @@ namespace AZ::SerializeContextTools
             DumpGenericStructure(scratchStringBuffer, element.m_genericClassInfo, context);
             elementTypeId = element.m_genericClassInfo->GetSpecializedTypeId();
         }
-        if ((element.m_flags & SerializeContext::ClassElement::FLG_POINTER) != 0)
+        if ((element.m_flags & Serialization::ClassElement::FLG_POINTER) != 0)
         {
             scratchStringBuffer += '*';
         }
         rapidjson::Value elementTypeString(scratchStringBuffer.c_str(), document.GetAllocator());
         scratchStringBuffer.clear();
 
-        if ((element.m_flags & SerializeContext::ClassElement::FLG_BASE_CLASS) != 0)
+        if ((element.m_flags & Serialization::ClassElement::FLG_BASE_CLASS) != 0)
         {
             rapidjson::Value baseNode(rapidjson::kObjectType);
             baseNode.AddMember("Type", AZStd::move(elementTypeString), document.GetAllocator());
@@ -339,10 +339,10 @@ namespace AZ::SerializeContextTools
             elementNode.AddMember("Type", AZStd::move(elementTypeString), document.GetAllocator());
             elementNode.AddMember("Uuid", WriteToJsonValue(elementTypeId, document), document.GetAllocator());
 
-            elementNode.AddMember("HasDefault", (element.m_flags & SerializeContext::ClassElement::FLG_NO_DEFAULT_VALUE) == 0, document.GetAllocator());
-            elementNode.AddMember("IsDynamic", (element.m_flags & SerializeContext::ClassElement::FLG_DYNAMIC_FIELD) != 0, document.GetAllocator());
-            elementNode.AddMember("IsPointer", (element.m_flags & SerializeContext::ClassElement::FLG_POINTER) != 0, document.GetAllocator());
-            elementNode.AddMember("IsUiElement", (element.m_flags & SerializeContext::ClassElement::FLG_UI_ELEMENT) != 0, document.GetAllocator());
+            elementNode.AddMember("HasDefault", (element.m_flags & Serialization::ClassElement::FLG_NO_DEFAULT_VALUE) == 0, document.GetAllocator());
+            elementNode.AddMember("IsDynamic", (element.m_flags & Serialization::ClassElement::FLG_DYNAMIC_FIELD) != 0, document.GetAllocator());
+            elementNode.AddMember("IsPointer", (element.m_flags & Serialization::ClassElement::FLG_POINTER) != 0, document.GetAllocator());
+            elementNode.AddMember("IsUiElement", (element.m_flags & Serialization::ClassElement::FLG_UI_ELEMENT) != 0, document.GetAllocator());
             elementNode.AddMember("DataSize", static_cast<uint64_t>(element.m_dataSize), document.GetAllocator());
             elementNode.AddMember("Offset", static_cast<uint64_t>(element.m_offset), document.GetAllocator());
 
@@ -357,7 +357,7 @@ namespace AZ::SerializeContextTools
                 rapidjson::Value genericArray(rapidjson::kArrayType);
                 rapidjson::Value classObject(rapidjson::kObjectType);
 
-                const SerializeContext::ClassData* genericClassData = element.m_genericClassInfo->GetClassData();
+                const Serialization::ClassData* genericClassData = element.m_genericClassInfo->GetClassData();
                 classObject.AddMember("Type", rapidjson::StringRef(genericClassData->m_name), document.GetAllocator());
                 classObject.AddMember("GenericUuid", WriteToJsonValue(element.m_genericClassInfo->GetGenericTypeId(), document), document.GetAllocator());
                 classObject.AddMember("SpecializedUuid", WriteToJsonValue(element.m_genericClassInfo->GetSpecializedTypeId(), document), document.GetAllocator());
@@ -371,7 +371,7 @@ namespace AZ::SerializeContextTools
         }
     }
 
-    void Dumper::DumpElementInfo(AZStd::string& output, const SerializeContext::ClassElement* classElement, SerializeContext* context)
+    void Dumper::DumpElementInfo(AZStd::string& output, const Serialization::ClassElement* classElement, SerializeContext* context)
     {
         if (classElement)
         {
@@ -379,13 +379,13 @@ namespace AZ::SerializeContextTools
             {
                 DumpGenericStructure(output, classElement->m_genericClassInfo, context);
             }
-            if ((classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER) != 0)
+            if ((classElement->m_flags & Serialization::ClassElement::FLG_POINTER) != 0)
             {
                 output += '*';
             }
             output += ' ';
             output += classElement->m_name;
-            if ((classElement->m_flags & SerializeContext::ClassElement::FLG_BASE_CLASS) != 0)
+            if ((classElement->m_flags & Serialization::ClassElement::FLG_BASE_CLASS) != 0)
             {
                 output += " [Base]";
             }
@@ -396,11 +396,11 @@ namespace AZ::SerializeContextTools
     {
         output += '<';
 
-        const SerializeContext::ClassData* classData = genericClassInfo->GetClassData();
+        const Serialization::ClassData* classData = genericClassInfo->GetClassData();
         if (classData && classData->m_container)
         {
             bool firstArgument = true;
-            auto callback = [&output, context, &firstArgument](const Uuid& elementClassId, const SerializeContext::ClassElement* genericClassElement) -> bool
+            auto callback = [&output, context, &firstArgument](const Uuid& elementClassId, const Serialization::ClassElement* genericClassElement) -> bool
             {
                 if (!firstArgument)
                 {
@@ -411,13 +411,13 @@ namespace AZ::SerializeContextTools
                     firstArgument = false;
                 }
 
-                const SerializeContext::ClassData* argClassData = context->FindClassData(elementClassId);
+                const Serialization::ClassData* argClassData = context->FindClassData(elementClassId);
                 AppendTypeName(output, argClassData, elementClassId);
                 if (genericClassElement->m_genericClassInfo)
                 {
                     DumpGenericStructure(output, genericClassElement->m_genericClassInfo, context);
                 }
-                if ((genericClassElement->m_flags & SerializeContext::ClassElement::FLG_POINTER) != 0)
+                if ((genericClassElement->m_flags & Serialization::ClassElement::FLG_POINTER) != 0)
                 {
                     output += '*';
                 }
@@ -437,7 +437,7 @@ namespace AZ::SerializeContextTools
                     output += ',';
                 }
                 const Uuid& argClassId = genericClassInfo->GetTemplatedTypeId(i);
-                const SerializeContext::ClassData* argClass = context->FindClassData(argClassId);
+                const Serialization::ClassData* argClass = context->FindClassData(argClassId);
                 AppendTypeName(output, argClass, argClassId);
             }
         }
@@ -451,20 +451,20 @@ namespace AZ::SerializeContextTools
 
         rapidjson::Value result(rapidjson::kArrayType);
 
-        const SerializeContext::ClassData* classData = genericClassInfo->GetClassData();
+        const Serialization::ClassData* classData = genericClassInfo->GetClassData();
         if (classData && classData->m_container)
         {
             auto callback = [&result, context, &parentDoc, &scratchStringBuffer](const Uuid& elementClassId,
-                const SerializeContext::ClassElement* genericClassElement) -> bool
+                const Serialization::ClassElement* genericClassElement) -> bool
             {
                 rapidjson::Value classObject(rapidjson::kObjectType);
 
-                const SerializeContext::ClassData* argClassData = context->FindClassData(elementClassId);
+                const Serialization::ClassData* argClassData = context->FindClassData(elementClassId);
                 AppendTypeName(scratchStringBuffer, argClassData, elementClassId);
                 classObject.AddMember("Type", rapidjson::Value(scratchStringBuffer.c_str(), parentDoc.GetAllocator()), parentDoc.GetAllocator());
                 scratchStringBuffer.clear();
 
-                classObject.AddMember("IsPointer", (genericClassElement->m_flags & SerializeContext::ClassElement::FLG_POINTER) != 0, parentDoc.GetAllocator());
+                classObject.AddMember("IsPointer", (genericClassElement->m_flags & Serialization::ClassElement::FLG_POINTER) != 0, parentDoc.GetAllocator());
                 if (genericClassElement->m_genericClassInfo)
                 {
                     GenericClassInfo* genericClassInfo = genericClassElement->m_genericClassInfo;
@@ -494,7 +494,7 @@ namespace AZ::SerializeContextTools
 
                 rapidjson::Value classObject(rapidjson::kObjectType);
 
-                const SerializeContext::ClassData* argClassData = context->FindClassData(elementClassId);
+                const Serialization::ClassData* argClassData = context->FindClassData(elementClassId);
                 AppendTypeName(scratchStringBuffer, argClassData, elementClassId);
                 classObject.AddMember("Type", rapidjson::Value(scratchStringBuffer.c_str(), parentDoc.GetAllocator()), parentDoc.GetAllocator());
                 scratchStringBuffer.clear();
@@ -511,7 +511,7 @@ namespace AZ::SerializeContextTools
         return result;
     }
 
-    void Dumper::DumpPrimitiveTag(AZStd::string& output, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* classElement)
+    void Dumper::DumpPrimitiveTag(AZStd::string& output, const Serialization::ClassData* classData, const Serialization::ClassElement* classElement)
     {
         if (classData)
         {
@@ -527,7 +527,7 @@ namespace AZ::SerializeContextTools
         }
     }
 
-    void Dumper::DumpClassName(rapidjson::Value& parent, SerializeContext* context, const SerializeContext::ClassData* classData,
+    void Dumper::DumpClassName(rapidjson::Value& parent, SerializeContext* context, const Serialization::ClassData* classData,
         rapidjson::Document& parentDoc, AZStd::string& scratchStringBuffer)
     {
         AZ_Assert(scratchStringBuffer.empty(), "Scratch string buffer is not empty.");
@@ -562,7 +562,7 @@ namespace AZ::SerializeContextTools
         scratchStringBuffer.clear();
     }
 
-    void Dumper::AppendTypeName(AZStd::string& output, const SerializeContext::ClassData* classData, const Uuid& classId)
+    void Dumper::AppendTypeName(AZStd::string& output, const Serialization::ClassData* classData, const Uuid& classId)
     {
         if (classData)
         {

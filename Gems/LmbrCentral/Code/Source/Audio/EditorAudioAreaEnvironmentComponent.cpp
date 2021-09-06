@@ -16,7 +16,7 @@ namespace LmbrCentral
     //=========================================================================
     namespace ClassConverters
     {
-        static bool UpgradeEditorAudioAreaEnvironmentComponent(AZ::SerializeContext&, AZ::SerializeContext::DataElementNode&);
+        static bool UpgradeEditorAudioAreaEnvironmentComponent(AZ::SerializeContext&, AZ::Serialization::DataElementNode&);
     } // namespace ClassConverters
 
     //=========================================================================
@@ -74,7 +74,7 @@ namespace LmbrCentral
     //=========================================================================
     namespace ClassConverters
     {
-        static bool UpgradeEditorAudioAreaEnvironmentComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool UpgradeEditorAudioAreaEnvironmentComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() == 1)
             {

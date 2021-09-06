@@ -7,6 +7,7 @@
  */
 
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 #include <Atom/Feature/DisplayMapper/DisplayMapperConfigurationDescriptor.h>
@@ -114,7 +115,7 @@ namespace AZ
                     ->Value("Reinhard", DisplayMapperOperationType::Reinhard)
                     ->Value("Invalid", DisplayMapperOperationType::Invalid)
                     ;
-                
+
                 serializeContext->Class<DisplayMapperConfigurationDescriptor>()
                     ->Version(2)
                     ->Field("Name", &DisplayMapperConfigurationDescriptor::m_name)

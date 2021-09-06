@@ -96,7 +96,7 @@ namespace EMotionFX
     private:
         using PropertyChangeFunction = AZStd::function<void(UniqueData*)>;
 
-        static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElementNode);
+        static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElementNode);
 
         void Update(AnimGraphInstance* animGraphInstance, float timePassedInSeconds) override;
         void Output(AnimGraphInstance* animGraphInstance) override;

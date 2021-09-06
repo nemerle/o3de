@@ -202,19 +202,19 @@ namespace AzToolsFramework
 
     //! Return whether component should appear in an entity's "Add Component" menu.
     //! \param entityType The type of entity (ex: "Game", "System")
-    static bool AppearsInAddComponentMenu(const AZ::SerializeContext::ClassData& classData, const AZ::Crc32& entityType);
+    static bool AppearsInAddComponentMenu(const AZ::Serialization::ClassData& classData, const AZ::Crc32& entityType);
 
     //! ComponentFilter for components that users can add to game entities.
-    static bool AppearsInGameComponentMenu(const AZ::SerializeContext::ClassData&);
+    static bool AppearsInGameComponentMenu(const AZ::Serialization::ClassData&);
 
     //! ComponentFilter for components that can be added to system entities.
-    static bool AppearsInSystemComponentMenu(const AZ::SerializeContext::ClassData&);
+    static bool AppearsInSystemComponentMenu(const AZ::Serialization::ClassData&);
 
     //
     // Implementation
     //
 
-    inline bool AppearsInAddComponentMenu(const AZ::SerializeContext::ClassData& classData, const AZ::Crc32& entityType)
+    inline bool AppearsInAddComponentMenu(const AZ::Serialization::ClassData& classData, const AZ::Crc32& entityType)
     {
         if (classData.m_editData)
         {
@@ -249,7 +249,7 @@ namespace AzToolsFramework
         return false;
     }
 
-    inline bool AppearsInGameComponentMenu(const AZ::SerializeContext::ClassData& classData)
+    inline bool AppearsInGameComponentMenu(const AZ::Serialization::ClassData& classData)
     {
         // We don't call AppearsInAddComponentMenu(...) because we support legacy values.
         // AppearsInAddComponentMenu used to be a bool,
@@ -294,22 +294,22 @@ namespace AzToolsFramework
         return false;
     }
 
-    inline bool AppearsInSystemComponentMenu(const AZ::SerializeContext::ClassData& classData)
+    inline bool AppearsInSystemComponentMenu(const AZ::Serialization::ClassData& classData)
     {
         return AppearsInAddComponentMenu(classData, AZ_CRC("System", 0xc94d118b));
     }
 
-    inline bool AppearsInLayerComponentMenu(const AZ::SerializeContext::ClassData& classData)
+    inline bool AppearsInLayerComponentMenu(const AZ::Serialization::ClassData& classData)
     {
         return AppearsInAddComponentMenu(classData, AZ_CRC("Layer", 0xe4db211a));
     }
 
-    inline bool AppearsInLevelComponentMenu(const AZ::SerializeContext::ClassData& classData)
+    inline bool AppearsInLevelComponentMenu(const AZ::Serialization::ClassData& classData)
     {
         return AppearsInAddComponentMenu(classData, AZ_CRC("Level", 0x9aeacc13));
     }
 
-    inline bool AppearsInAnyComponentMenu(const AZ::SerializeContext::ClassData& classData)
+    inline bool AppearsInAnyComponentMenu(const AZ::Serialization::ClassData& classData)
     {
         return (AppearsInGameComponentMenu(classData) || AppearsInSystemComponentMenu(classData) || AppearsInLayerComponentMenu(classData) || AppearsInLevelComponentMenu(classData));
     }

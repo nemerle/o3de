@@ -452,12 +452,12 @@ namespace AzToolsFramework
         const PropertyTreeEditorNode* pteNode = &(nodeIterator->second);
         if (pteNode->m_nodePtr->GetClassMetadata())
         {
-            AZ::SerializeContext::IDataContainer* dataContainer = nullptr;
+            AZ::Serialization::IDataContainer* dataContainer = nullptr;
             dataContainer = pteNode->m_nodePtr->GetClassMetadata()->m_container;
             if (dataContainer)
             {
-                const AZ::SerializeContext::ClassElement* valueElement = nullptr;
-                auto typeEnumCallback = [&valueElement](const AZ::Uuid&, const AZ::SerializeContext::ClassElement* genericClassElement)
+                const AZ::Serialization::ClassElement* valueElement = nullptr;
+                auto typeEnumCallback = [&valueElement](const AZ::Uuid&, const AZ::Serialization::ClassElement* genericClassElement)
                 {
                     AZ_Error("PropertyTreeEditor", !valueElement, "AddContainerItem - container is expected to only have one element type.");
                     valueElement = genericClassElement;
@@ -483,12 +483,12 @@ namespace AzToolsFramework
         return {};
     }
 
-    AZStd::optional<PropertyTreeEditor::AssociatePairInfo> PropertyTreeEditor::MakeAssociatePair(const AZ::SerializeContext::ClassElement* containerElement) const
+    AZStd::optional<PropertyTreeEditor::AssociatePairInfo> PropertyTreeEditor::MakeAssociatePair(const AZ::Serialization::ClassElement* containerElement) const
     {
-        const AZ::SerializeContext::ClassData* pairClass = m_serializeContext->FindClassData(containerElement->m_typeId);
-        const AZ::SerializeContext::ClassElement* keyElement = nullptr;
-        const AZ::SerializeContext::ClassElement* valueElement = nullptr;
-        auto keyValueTypeEnumCallback = [&keyElement, &valueElement](const AZ::Uuid&, const AZ::SerializeContext::ClassElement* genericClassElement)
+        const AZ::Serialization::ClassData* pairClass = m_serializeContext->FindClassData(containerElement->m_typeId);
+        const AZ::Serialization::ClassElement* keyElement = nullptr;
+        const AZ::Serialization::ClassElement* valueElement = nullptr;
+        auto keyValueTypeEnumCallback = [&keyElement, &valueElement](const AZ::Uuid&, const AZ::Serialization::ClassElement* genericClassElement)
         {
             if (!keyElement)
             {

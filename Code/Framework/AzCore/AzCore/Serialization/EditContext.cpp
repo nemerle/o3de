@@ -44,7 +44,7 @@ namespace AZ
     //=========================================================================
     // ~RemoveClassData
     //=========================================================================
-    void EditContext::RemoveClassData(SerializeContext::ClassData* classData)
+    void EditContext::RemoveClassData(Serialization::ClassData* classData)
     {
         Edit::ClassData* data = classData->m_editData;
         if (data)
@@ -87,7 +87,7 @@ namespace AZ
             componentUuids.clear();
 
             serializeContext->EnumerateAll(
-                [&requiredTags, &componentUuids](const AZ::SerializeContext::ClassData* data, const AZ::Uuid& typeId) -> bool
+                [&requiredTags, &componentUuids](const AZ::Serialization::ClassData* data, const AZ::Uuid& typeId) -> bool
             {
                 if (SystemComponentTagsMatchesAtLeastOneTag(data, requiredTags))
                 {

@@ -31,7 +31,7 @@ namespace UiSerialize
     //! Helper function for version conversion
     bool MoveToInteractableStateActions(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& srcClassElement,
+        AZ::Serialization::DataElementNode& srcClassElement,
         const char* stateActionsElementName,
         const char* colorElementName,
         const char* alphaElementName,

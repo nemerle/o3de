@@ -61,7 +61,7 @@ namespace AzToolsFramework
             services.push_back(AZ_CRC("EditorChildEntitySortService", 0x916caa82));
         }
 
-        bool EditorEntitySortComponent::SerializationConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool EditorEntitySortComponent::SerializationConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Prior to version 2, we left the version unspecified so it was technically 0
             if (classElement.GetVersion() <= 1)
@@ -77,8 +77,8 @@ namespace AzToolsFramework
                 entityOrderArray.reserve(entityOrderArrayElement->GetNumSubElements());
                 for (int arrayElementIndex = 0; arrayElementIndex < entityOrderArrayElement->GetNumSubElements(); ++arrayElementIndex)
                 {
-                    AZ::SerializeContext::DataElementNode& elementNode = entityOrderArrayElement->GetSubElement(arrayElementIndex);
-                    AZ::SerializeContext::DataElementNode& idNode = elementNode.GetSubElement(0);
+                    AZ::Serialization::DataElementNode& elementNode = entityOrderArrayElement->GetSubElement(arrayElementIndex);
+                    AZ::Serialization::DataElementNode& idNode = elementNode.GetSubElement(0);
                     AZ::u64 id;
                     if (idNode.GetData(id))
                     {

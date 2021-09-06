@@ -104,7 +104,7 @@ namespace AZ
             }
 
 
-            bool SkeletonGroup::VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement)
+            bool SkeletonGroup::VersionConverter(SerializeContext& context, Serialization::DataElementNode& classElement)
             {
                 const unsigned int version = classElement.GetVersion();
 

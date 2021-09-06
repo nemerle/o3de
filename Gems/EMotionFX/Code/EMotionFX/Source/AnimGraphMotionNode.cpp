@@ -917,7 +917,7 @@ namespace EMotionFX
         }
     }
 
-    bool AnimGraphMotionNode::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool AnimGraphMotionNode::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         const unsigned int version = classElement.GetVersion();
         if (version < 2)
@@ -927,7 +927,7 @@ namespace EMotionFX
             {
                 return false;
             }
-            AZ::SerializeContext::DataElementNode& dataElementNode = classElement.GetSubElement(motionIdsIndex);
+            AZ::Serialization::DataElementNode& dataElementNode = classElement.GetSubElement(motionIdsIndex);
             AZStd::vector<AZStd::string> oldMotionIds;
             AZStd::vector<AZStd::pair<AZStd::string, float> > motionIdsWothRandomWeights;
             const bool result = dataElementNode.GetData<AZStd::vector<AZStd::string> >(oldMotionIds);

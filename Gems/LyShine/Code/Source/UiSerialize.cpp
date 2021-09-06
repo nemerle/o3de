@@ -502,16 +502,16 @@ namespace UiSerialize
 
             // Allow loading FontAssets and CanvasAssets with previous Uuid specializations of AZ_TYPE_INFO_SPECIALIZE
             serializeContext->ClassDeprecate("SimpleAssetReference_FontAsset", "{D6342379-A5FA-4B18-B890-702C2FE99A5A}",
-                [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+                [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
             {
-                AZStd::vector<AZ::SerializeContext::DataElementNode> childNodeElements;
+                AZStd::vector<AZ::Serialization::DataElementNode> childNodeElements;
                 for (int index = 0; index < rootElement.GetNumSubElements(); ++index)
                 {
                     childNodeElements.push_back(rootElement.GetSubElement(index));
                 }
                 // Convert the rootElement now, the existing child DataElmentNodes are now removed
                 rootElement.Convert<AzFramework::SimpleAssetReference<LyShine::FontAsset>>(context);
-                for (AZ::SerializeContext::DataElementNode& childNodeElement : childNodeElements)
+                for (AZ::Serialization::DataElementNode& childNodeElement : childNodeElements)
                 {
                     rootElement.AddElement(AZStd::move(childNodeElement));
                 }
@@ -543,7 +543,7 @@ namespace UiSerialize
     // to the interactable base class
     bool MoveToInteractableStateActions(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& srcClassElement,
+        AZ::Serialization::DataElementNode& srcClassElement,
         const char* stateActionsElementName,
         const char* colorElementName,
         const char* alphaElementName,
@@ -566,13 +566,13 @@ namespace UiSerialize
 
         {
             interactableBaseClassIndex = srcClassElement.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
-            AZ::SerializeContext::DataElementNode& dstClassElement = srcClassElement.GetSubElement(interactableBaseClassIndex);
+            AZ::Serialization::DataElementNode& dstClassElement = srcClassElement.GetSubElement(interactableBaseClassIndex);
 
             stateActionsIndex = dstClassElement.FindElement(AZ_CRC(stateActionsElementName));
-            AZ::SerializeContext::DataElementNode& stateActionsNode = dstClassElement.GetSubElement(stateActionsIndex);
+            AZ::Serialization::DataElementNode& stateActionsNode = dstClassElement.GetSubElement(stateActionsIndex);
 
             int colorIndex = stateActionsNode.AddElement<UiInteractableStateColor*>(context, "element");
-            AZ::SerializeContext::DataElementNode& colorNode = stateActionsNode.GetSubElement(colorIndex);
+            AZ::Serialization::DataElementNode& colorNode = stateActionsNode.GetSubElement(colorIndex);
 
             if (!LyShine::MoveElement(context, srcClassElement, colorNode, colorElementName, "Color"))
             {
@@ -586,11 +586,11 @@ namespace UiSerialize
                 // we need to convert the color to an AZ::Color now.
                 // Note that indices will have changed since MoveElement was called.
                 interactableBaseClassIndex = srcClassElement.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
-                AZ::SerializeContext::DataElementNode& dstBaseClassElement = srcClassElement.GetSubElement(interactableBaseClassIndex);
+                AZ::Serialization::DataElementNode& dstBaseClassElement = srcClassElement.GetSubElement(interactableBaseClassIndex);
                 stateActionsIndex = dstBaseClassElement.FindElement(AZ_CRC(stateActionsElementName));
-                AZ::SerializeContext::DataElementNode& dstStateActionsNode = dstBaseClassElement.GetSubElement(stateActionsIndex);
+                AZ::Serialization::DataElementNode& dstStateActionsNode = dstBaseClassElement.GetSubElement(stateActionsIndex);
                 colorIndex = dstStateActionsNode.FindElement(AZ_CRC("element"));
-                AZ::SerializeContext::DataElementNode& dstColorNode = dstStateActionsNode.GetSubElement(colorIndex);
+                AZ::Serialization::DataElementNode& dstColorNode = dstStateActionsNode.GetSubElement(colorIndex);
 
                 if (!LyShine::ConvertSubElementFromVector3ToAzColor(context, dstColorNode, "Color"))
                 {
@@ -601,13 +601,13 @@ namespace UiSerialize
 
         {
             interactableBaseClassIndex = srcClassElement.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
-            AZ::SerializeContext::DataElementNode& dstClassElement = srcClassElement.GetSubElement(interactableBaseClassIndex);
+            AZ::Serialization::DataElementNode& dstClassElement = srcClassElement.GetSubElement(interactableBaseClassIndex);
 
             stateActionsIndex = dstClassElement.FindElement(AZ_CRC(stateActionsElementName));
-            AZ::SerializeContext::DataElementNode& stateActionsNode = dstClassElement.GetSubElement(stateActionsIndex);
+            AZ::Serialization::DataElementNode& stateActionsNode = dstClassElement.GetSubElement(stateActionsIndex);
 
             int alphaIndex = stateActionsNode.AddElement<UiInteractableStateAlpha*>(context, "element");
-            AZ::SerializeContext::DataElementNode& alphaNode = stateActionsNode.GetSubElement(alphaIndex);
+            AZ::Serialization::DataElementNode& alphaNode = stateActionsNode.GetSubElement(alphaIndex);
             if (!LyShine::MoveElement(context, srcClassElement, alphaNode, alphaElementName, "Alpha"))
             {
                 return false;
@@ -616,13 +616,13 @@ namespace UiSerialize
 
         {
             interactableBaseClassIndex = srcClassElement.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
-            AZ::SerializeContext::DataElementNode& dstClassElement = srcClassElement.GetSubElement(interactableBaseClassIndex);
+            AZ::Serialization::DataElementNode& dstClassElement = srcClassElement.GetSubElement(interactableBaseClassIndex);
 
             stateActionsIndex = dstClassElement.FindElement(AZ_CRC(stateActionsElementName));
-            AZ::SerializeContext::DataElementNode& stateActionsNode = dstClassElement.GetSubElement(stateActionsIndex);
+            AZ::Serialization::DataElementNode& stateActionsNode = dstClassElement.GetSubElement(stateActionsIndex);
 
             int spriteIndex = stateActionsNode.AddElement<UiInteractableStateSprite*>(context, "element");
-            AZ::SerializeContext::DataElementNode& spriteNode = stateActionsNode.GetSubElement(spriteIndex);
+            AZ::Serialization::DataElementNode& spriteNode = stateActionsNode.GetSubElement(spriteIndex);
             if (!LyShine::MoveElement(context, srcClassElement, spriteNode, spriteElementName, "Sprite"))
             {
                 return false;

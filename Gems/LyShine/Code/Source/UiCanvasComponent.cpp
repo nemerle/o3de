@@ -2221,15 +2221,15 @@ void UiCanvasComponent::Reflect(AZ::ReflectContext* context)
         AZ::TypeId deprecatedTypeId = AZ::TypeId("{6F612FE6-A054-4E49-830C-0288F3C79A52}") + AZ::AzTypeInfo<AZStd::allocator>::Uuid()
             + AZ::TypeId("{A60E3E61-1FF6-4982-B6B8-9E4350C4C679}");
         serializeContext->ClassDeprecate("AZStd::vector<SimpleAssetReference_TextureAtlasAsset>", deprecatedTypeId,
-            [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+            [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
         {
-            AZStd::vector<AZ::SerializeContext::DataElementNode> childNodeElements;
+            AZStd::vector<AZ::Serialization::DataElementNode> childNodeElements;
             for (int index = 0; index < rootElement.GetNumSubElements(); ++index)
             {
                 childNodeElements.push_back(rootElement.GetSubElement(index));
             }
             rootElement.Convert<AZStd::vector<AzFramework::SimpleAssetReference<TextureAtlasNamespace::TextureAtlasAsset>>>(context);
-            for (AZ::SerializeContext::DataElementNode& childNodeElement : childNodeElements)
+            for (AZ::Serialization::DataElementNode& childNodeElement : childNodeElements)
             {
                 rootElement.AddElement(AZStd::move(childNodeElement));
             }
@@ -4206,7 +4206,7 @@ UiCanvasComponent* UiCanvasComponent::FixupPostLoad(AZ::Entity* canvasEntity, AZ
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiCanvasComponent::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1 to 2:
     if (classElement.GetVersion() < 2)

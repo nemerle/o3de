@@ -93,7 +93,7 @@ namespace AZ
          *       Use the OSAllocator only.
          */
         struct Descriptor
-            : public SerializeContext::IObjectFactory
+            : public Serialization::IObjectFactory
         {
             AZ_TYPE_INFO(ComponentApplication::Descriptor, "{70277A3E-2AF5-4309-9BBF-6161AFBDE792}");
             AZ_CLASS_ALLOCATOR(ComponentApplication::Descriptor, SystemAllocator, 0);
@@ -112,7 +112,7 @@ namespace AZ
             typedef AZStd::vector<AllocatorRemapping, OSStdAllocator> AllocatorRemappings;
 
             ///////////////////////////////////////////////
-            // SerializeContext::IObjectFactory
+            // Serialization::IObjectFactory
             void* Create(const char* name) override;
             void  Destroy(void* data) override;
             ///////////////////////////////////////////////

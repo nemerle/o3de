@@ -14,7 +14,7 @@ namespace ScriptCanvas
 {
     namespace UnitTesting
     {
-        bool ExpectBooleanVersioner(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+        bool ExpectBooleanVersioner(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
         {
             if (rootElement.GetVersion() == 0)
             {
@@ -47,7 +47,7 @@ namespace ScriptCanvas
             return true;
         }
         
-        bool ExpectComparisonVersioner(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+        bool ExpectComparisonVersioner(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
         {
             if (rootElement.GetVersion() == 0)
             {

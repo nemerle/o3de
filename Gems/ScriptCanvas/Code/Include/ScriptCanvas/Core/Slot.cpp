@@ -31,7 +31,7 @@ namespace ScriptCanvas
         Current
     };
 
-    static bool SlotVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    static bool SlotVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         // SlotName
         if (classElement.GetVersion() <= 6)
@@ -59,7 +59,7 @@ namespace ScriptCanvas
         }
         else if (classElement.GetVersion() < 11)
         {
-            AZ::SerializeContext::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("dataTypeOverride", 0x7f1765d9));
+            AZ::Serialization::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("dataTypeOverride", 0x7f1765d9));
 
             int enumValue = 0;
             if (subElement->GetData(enumValue))
@@ -86,7 +86,7 @@ namespace ScriptCanvas
         // Descriptor
         if (classElement.GetVersion() <= 13)
         {
-            AZ::SerializeContext::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("type", 0x8cde5729));
+            AZ::Serialization::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("type", 0x8cde5729));
 
             int enumValue = 0;
             if (subElement && subElement->GetData(enumValue))
@@ -107,7 +107,7 @@ namespace ScriptCanvas
         // DataType
         if (classElement.GetVersion() <= 15)
         {
-            AZ::SerializeContext::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("Descriptor", 0x03927602));
+            AZ::Serialization::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("Descriptor", 0x03927602));
 
             Slot::DataType dataType = Slot::DataType::NoData;
 
@@ -125,7 +125,7 @@ namespace ScriptCanvas
         // This data field wasn't actually being initalized correctly So need to re-version convert.
         else if (classElement.GetVersion() <= 17)
         {            
-            AZ::SerializeContext::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("Descriptor", 0x03927602));
+            AZ::Serialization::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("Descriptor", 0x03927602));
 
             Slot::DataType dataType = Slot::DataType::NoData;
 
@@ -149,7 +149,7 @@ namespace ScriptCanvas
 
         if (classElement.GetVersion() <= SlotVersion::CorrectDynamicDataTypeForExecution)
         {
-            AZ::SerializeContext::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("Descriptor", 0x03927602));
+            AZ::Serialization::DataElementNode* subElement = classElement.FindSubElement(AZ_CRC("Descriptor", 0x03927602));
 
             SlotDescriptor slotDescriptor;
             if (subElement && subElement->GetData(slotDescriptor))

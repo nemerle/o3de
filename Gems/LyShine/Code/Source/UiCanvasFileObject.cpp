@@ -329,12 +329,12 @@ UiCanvasFileObject* UiCanvasFileObject::LoadCanvasFromNewFormatStream(AZ::IO::Ge
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Helper function to find the root element node in a canvas entity node
-AZ::SerializeContext::DataElementNode* UiCanvasFileObject::FindRootElementInCanvasEntity(
+AZ::Serialization::DataElementNode* UiCanvasFileObject::FindRootElementInCanvasEntity(
     [[maybe_unused]] AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& canvasEntityNode)
+    AZ::Serialization::DataElementNode& canvasEntityNode)
 {
     // Find the UiCanvasComponent in the CanvasEntity
-    AZ::SerializeContext::DataElementNode* canvasComponentNode =
+    AZ::Serialization::DataElementNode* canvasComponentNode =
         LyShine::FindComponentNode(canvasEntityNode, UiCanvasComponent::TYPEINFO_Uuid());
     if (!canvasComponentNode)
     {
@@ -347,7 +347,7 @@ AZ::SerializeContext::DataElementNode* UiCanvasFileObject::FindRootElementInCanv
     {
         return nullptr;
     }
-    AZ::SerializeContext::DataElementNode& rootElementNode = canvasComponentNode->GetSubElement(rootElementIndex);
+    AZ::Serialization::DataElementNode& rootElementNode = canvasComponentNode->GetSubElement(rootElementIndex);
 
     return &rootElementNode;
 }
@@ -357,8 +357,8 @@ AZ::SerializeContext::DataElementNode* UiCanvasFileObject::FindRootElementInCanv
 // the entities representing all the UI elements in the canvas into the SliceComponent node
 bool UiCanvasFileObject::CreateRootSliceNodeAndCopyInEntities(
     AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& canvasFileObjectNode,
-    AZStd::vector<AZ::SerializeContext::DataElementNode>& copiedEntities)
+    AZ::Serialization::DataElementNode& canvasFileObjectNode,
+    AZStd::vector<AZ::Serialization::DataElementNode>& copiedEntities)
 {
     // Create an entity node for the root slice
     int entityIndex = canvasFileObjectNode.AddElement<AZ::Entity>(context, "RootSliceEntity");
@@ -366,7 +366,7 @@ bool UiCanvasFileObject::CreateRootSliceNodeAndCopyInEntities(
     {
         return false;
     }
-    AZ::SerializeContext::DataElementNode& entityNode = canvasFileObjectNode.GetSubElement(entityIndex);
+    AZ::Serialization::DataElementNode& entityNode = canvasFileObjectNode.GetSubElement(entityIndex);
 
     // create the entity Id node
     if (!LyShine::CreateEntityIdNode(context, entityNode))
@@ -389,13 +389,13 @@ bool UiCanvasFileObject::CreateRootSliceNodeAndCopyInEntities(
 
     // create the components vector node (which is a generic vector)
     using componentsVector = AZStd::vector<AZ::Component*>;
-    AZ::SerializeContext::ClassData* componentVectorClassData = AZ::SerializeGenericTypeInfo<componentsVector>::GetGenericInfo()->GetClassData();
+    AZ::Serialization::ClassData* componentVectorClassData = AZ::SerializeGenericTypeInfo<componentsVector>::GetGenericInfo()->GetClassData();
     int componentsIndex = entityNode.AddElement(context, "Components", *componentVectorClassData);
     if (componentsIndex == -1)
     {
         return false;
     }
-    AZ::SerializeContext::DataElementNode& componentsNode = entityNode.GetSubElement(componentsIndex);
+    AZ::Serialization::DataElementNode& componentsNode = entityNode.GetSubElement(componentsIndex);
 
     // create the slice component node
     int sliceComponentIndex = componentsNode.AddElement(context, "element", AZ::SliceComponent::TYPEINFO_Uuid());
@@ -403,7 +403,7 @@ bool UiCanvasFileObject::CreateRootSliceNodeAndCopyInEntities(
     {
         return false;
     }
-    AZ::SerializeContext::DataElementNode& sliceComponentNode = componentsNode.GetSubElement(sliceComponentIndex);
+    AZ::Serialization::DataElementNode& sliceComponentNode = componentsNode.GetSubElement(sliceComponentIndex);
 
     // create the component base class
     if (!LyShine::CreateComponentBaseClassNode(context, sliceComponentNode))
@@ -413,16 +413,16 @@ bool UiCanvasFileObject::CreateRootSliceNodeAndCopyInEntities(
 
     // create the Entities vector
     using entityVector = AZStd::vector<AZ::Entity*>;
-    AZ::SerializeContext::ClassData* entityVectorClassData = AZ::SerializeGenericTypeInfo<entityVector>::GetGenericInfo()->GetClassData();
+    AZ::Serialization::ClassData* entityVectorClassData = AZ::SerializeGenericTypeInfo<entityVector>::GetGenericInfo()->GetClassData();
     int entitiesIndex = sliceComponentNode.AddElement(context, "Entities", *entityVectorClassData);
     if (entitiesIndex == -1)
     {
         return false;
     }
-    AZ::SerializeContext::DataElementNode& entitiesNode = sliceComponentNode.GetSubElement(entitiesIndex);
+    AZ::Serialization::DataElementNode& entitiesNode = sliceComponentNode.GetSubElement(entitiesIndex);
 
     // Add the entities to the entities vector
-    for (AZ::SerializeContext::DataElementNode& entityElement : copiedEntities)
+    for (AZ::Serialization::DataElementNode& entityElement : copiedEntities)
     {
         entityElement.SetName("element");   // all elements in the Vector should have this name
         entitiesNode.AddElement(entityElement);
@@ -442,7 +442,7 @@ bool UiCanvasFileObject::CreateRootSliceNodeAndCopyInEntities(
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-bool UiCanvasFileObject::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& canvasFileObjectNode)
+bool UiCanvasFileObject::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& canvasFileObjectNode)
 {
     if (canvasFileObjectNode.GetVersion() == 1)
     {
@@ -457,17 +457,17 @@ bool UiCanvasFileObject::VersionConverter(AZ::SerializeContext& context, AZ::Ser
         {
             return false;
         }
-        AZ::SerializeContext::DataElementNode& canvasEntityNode = canvasFileObjectNode.GetSubElement(canvasEntityIndex);
+        AZ::Serialization::DataElementNode& canvasEntityNode = canvasFileObjectNode.GetSubElement(canvasEntityIndex);
 
         // Find the m_rootElement member in the UiCanvasComponent on the canvas entity
-        AZ::SerializeContext::DataElementNode* rootElementNode = FindRootElementInCanvasEntity(context, canvasEntityNode);
+        AZ::Serialization::DataElementNode* rootElementNode = FindRootElementInCanvasEntity(context, canvasEntityNode);
         if (!rootElementNode)
         {
             return false;
         }
 
         // All UI element entities will be copied to this container and then added to the slice component
-        AZStd::vector<AZ::SerializeContext::DataElementNode> copiedEntities;
+        AZStd::vector<AZ::Serialization::DataElementNode> copiedEntities;
 
         // recursively process the root element and all of its child elements, copying their child entities to the
         // entities container and replacing them with EntityIds

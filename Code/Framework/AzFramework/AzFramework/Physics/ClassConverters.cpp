@@ -13,6 +13,7 @@
 #include <AzFramework/Physics/Ragdoll.h>
 #include <AzFramework/Physics/Shape.h>
 #include <AzFramework/Physics/SystemBus.h>
+#include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/std/utils.h>
 
@@ -20,7 +21,7 @@ namespace Physics
 {
     namespace ClassConverters
     {
-        bool RagdollNodeConfigConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool RagdollNodeConfigConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 2)
             {
@@ -31,20 +32,20 @@ namespace Physics
                 const int shapesIndex = classElement.FindElement(AZ_CRC("shapes", 0x93dba512));
                 if (shapesIndex != -1)
                 {
-                    AZ::SerializeContext::DataElementNode& shapesElement = classElement.GetSubElement(shapesIndex);
+                    AZ::Serialization::DataElementNode& shapesElement = classElement.GetSubElement(shapesIndex);
 
                     // copy the old shape config data before removing the original vector
-                    AZStd::vector<AZ::SerializeContext::DataElementNode> shapesCopy;
+                    AZStd::vector<AZ::Serialization::DataElementNode> shapesCopy;
                     const int numSubElements = shapesElement.GetNumSubElements();
                     shapesCopy.reserve(numSubElements);
 
                     for (int i = 0; i < numSubElements; i++)
                     {
-                        AZ::SerializeContext::DataElementNode& sharedPtrElement = shapesElement.GetSubElement(i);
+                        AZ::Serialization::DataElementNode& sharedPtrElement = shapesElement.GetSubElement(i);
 
                         if (sharedPtrElement.GetNumSubElements() > 0)
                         {
-                            AZ::SerializeContext::DataElementNode& shape = sharedPtrElement.GetSubElement(0);
+                            AZ::Serialization::DataElementNode& shape = sharedPtrElement.GetSubElement(0);
                             shapesCopy.push_back(shape);
                         }
                     }
@@ -56,18 +57,18 @@ namespace Physics
                     const int newShapesIndex = classElement.AddElement<AzPhysics::ShapeColliderPairList>(context, "shapes");
                     if (newShapesIndex != -1)
                     {
-                        AZ::SerializeContext::DataElementNode& newShapesElement = classElement.GetSubElement(newShapesIndex);
+                        AZ::Serialization::DataElementNode& newShapesElement = classElement.GetSubElement(newShapesIndex);
 
                         // convert the old shapes into the new format and add to the vector
-                        for (AZ::SerializeContext::DataElementNode shape : shapesCopy)
+                        for (AZ::Serialization::DataElementNode shape : shapesCopy)
                         {
                             const int pairIndex = newShapesElement.AddElementWithData<AzPhysics::ShapeColliderPair>(
                                 context, "element", AzPhysics::ShapeColliderPair());
 
-                            AZ::SerializeContext::DataElementNode& pairElement = newShapesElement.GetSubElement(pairIndex);
+                            AZ::Serialization::DataElementNode& pairElement = newShapesElement.GetSubElement(pairIndex);
 
                             ColliderConfiguration colliderConfig;
-                            if (AZ::SerializeContext::DataElementNode* baseClassNode = shape.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735)))
+                            if (AZ::Serialization::DataElementNode* baseClassNode = shape.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735)))
                             {
                                 baseClassNode->FindSubElementAndGetData(AZ_CRC("Trigger", 0x1a6b0f5d), colliderConfig.m_isTrigger);
                                 baseClassNode->FindSubElementAndGetData(AZ_CRC("Position", 0x462ce4f5), colliderConfig.m_position);
@@ -98,7 +99,7 @@ namespace Physics
                 const int rigidBodyConfigIndex = classElement.FindElement(AZ_CRC("RigidBodyConfiguration", 0x152d8d79));
                 if (rigidBodyConfigIndex != -1)
                 {
-                    AZ::SerializeContext::DataElementNode& rigidBodyConfigElement = classElement.GetSubElement(rigidBodyConfigIndex);
+                    AZ::Serialization::DataElementNode& rigidBodyConfigElement = classElement.GetSubElement(rigidBodyConfigIndex);
                     // in the animation editor we want to show inertia, damping, sleep, interpolation, gravity and CCD properties
                     // so the value should be (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 7) = 190
                     rigidBodyConfigElement.AddElementWithData<AZ::u16>(context, "Property Visibility Flags", 190);
@@ -108,25 +109,25 @@ namespace Physics
             return true;
         }
 
-        bool RagdollConfigConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool RagdollConfigConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 3)
             {
                 CharacterColliderConfiguration newColliderConfig;
 
-                AZ::SerializeContext::DataElementNode* ragdollNodeConfig = classElement.FindSubElement(AZ_CRC("nodes", 0x1d3d05fc));
+                AZ::Serialization::DataElementNode* ragdollNodeConfig = classElement.FindSubElement(AZ_CRC("nodes", 0x1d3d05fc));
                 if (ragdollNodeConfig)
                 {
                     int numNodes = ragdollNodeConfig->GetNumSubElements();
                     for (int i = 0; i < numNodes; ++i)
                     {
-                        AZ::SerializeContext::DataElementNode& nodeElement = ragdollNodeConfig->GetSubElement(i);
+                        AZ::Serialization::DataElementNode& nodeElement = ragdollNodeConfig->GetSubElement(i);
 
                         AZStd::string name;
-                        AZ::SerializeContext::DataElementNode* baseClass1 = nodeElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+                        AZ::Serialization::DataElementNode* baseClass1 = nodeElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
                         if (baseClass1)
                         {
-                            AZ::SerializeContext::DataElementNode* baseBaseClass1 = baseClass1->FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+                            AZ::Serialization::DataElementNode* baseBaseClass1 = baseClass1->FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
                             if (baseBaseClass1 && baseBaseClass1->FindSubElementAndGetData<AZStd::string>(AZ_CRC("name", 0x5e237e06), name))
                             {
                                 AzPhysics::ShapeColliderPairList shapes;
@@ -150,7 +151,7 @@ namespace Physics
             return true;
         }
 
-        bool MaterialLibraryAssetConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool MaterialLibraryAssetConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() <= 1)
             {
@@ -194,7 +195,7 @@ namespace Physics
             return true;
         }
 
-        bool ColliderConfigurationConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& dataElement)
+        bool ColliderConfigurationConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& dataElement)
         {
             // version 1->2
             if (dataElement.GetVersion() <= 1)
@@ -220,7 +221,7 @@ namespace Physics
                 if (elementIndex >= 0)
                 {
                     bool isTrigger = false;
-                    AZ::SerializeContext::DataElementNode& triggerElement = dataElement.GetSubElement(elementIndex);
+                    AZ::Serialization::DataElementNode& triggerElement = dataElement.GetSubElement(elementIndex);
                     const bool found = triggerElement.GetData<bool>(isTrigger);
 
                     if (found && isTrigger)
@@ -244,7 +245,7 @@ namespace Physics
             return true;
         }
 
-        bool MaterialSelectionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& dataElement)
+        bool MaterialSelectionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& dataElement)
         {
             bool success = true;
 

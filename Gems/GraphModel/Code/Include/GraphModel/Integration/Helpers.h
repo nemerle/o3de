@@ -34,7 +34,7 @@ namespace GraphModelIntegration
 
             AZStd::string paletteOverride;
 
-            const AZ::SerializeContext::ClassData* derivedClassData = serializeContext->FindClassData(typeId);
+            const AZ::Serialization::ClassData* derivedClassData = serializeContext->FindClassData(typeId);
             if (!derivedClassData)
             {
                 return paletteOverride;

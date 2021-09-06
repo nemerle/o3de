@@ -59,7 +59,7 @@ namespace ScriptCanvasEditor::Nodes
     //////////////////////
     // NodeConfiguration
     //////////////////////
-    AZStd::string GetCategoryName(const AZ::SerializeContext::ClassData& classData)
+    AZStd::string GetCategoryName(const AZ::Serialization::ClassData& classData)
     {
         if (auto editorDataElement = classData.m_editData->FindElementData(AZ::Edit::ClassElements::EditorData))
         {
@@ -75,7 +75,7 @@ namespace ScriptCanvasEditor::Nodes
         return {};
     }
 
-    AZStd::string GetContextName(const AZ::SerializeContext::ClassData& classData)
+    AZStd::string GetContextName(const AZ::Serialization::ClassData& classData)
     {
         if (auto editorDataElement = classData.m_editData ? classData.m_editData->FindElementData(AZ::Edit::ClassElements::EditorData) : nullptr)
         {

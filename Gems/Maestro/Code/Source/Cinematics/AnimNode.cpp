@@ -267,7 +267,7 @@ bool CAnimNode::RemoveTrack(IAnimTrack* pTrack)
 //////////////////////////////////////////////////////////////////////////
 static bool AnimNodeVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

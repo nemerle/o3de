@@ -6,6 +6,7 @@
  *
  */
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Console/IConsole.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/IO/SystemFile.h>
@@ -529,7 +530,7 @@ namespace UnitTest
     TEST_F(AssetManagerTest, AssetSerializerAssetReferenceTest)
     {
         auto assetId = AssetId("{3E971FD2-DB5F-4617-9061-CCD3606124D0}", 0);
-        
+
         SerializeContext context;
         AssetWithAssetReference::Reflect(context);
         char memBuffer[4096];
@@ -795,7 +796,7 @@ namespace UnitTest
         EXPECT_NE(assets.find(MyAsset1Id), assets.end());
 
         AssetManager::Instance().ResumeAssetRelease();
-        
+
         // Sleep to allow for the assets to release
         int retryCount = 100;
         while ((--retryCount>0) && assets.size() > 0)

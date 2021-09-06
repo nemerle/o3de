@@ -10,12 +10,17 @@
 
 #include <AzCore/EBus/EBus.h>
 
+namespace AZ
+{
+    class Entity;
+}
+
 namespace AzFramework
 {
     using EntityContextId = AZ::Uuid;
     using EntityList = AZStd::vector<AZ::Entity*>;
 
-    class EntityOwnershipService;   
+    class EntityOwnershipService;
 
     class EntityOwnershipServiceInterface
     {

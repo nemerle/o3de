@@ -18,7 +18,7 @@ namespace ScriptCanvas
     const size_t k_maximumVariableNameSize = 200;
     const char* CopiedVariableData::k_variableKey = "ScriptCanvas::CopiedVariableData";
 
-    bool GraphVariableManagerComponentVersionConverter([[maybe_unused]] AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& componentElementNode)
+    bool GraphVariableManagerComponentVersionConverter([[maybe_unused]] AZ::SerializeContext& context, AZ::Serialization::DataElementNode& componentElementNode)
     {
         if (componentElementNode.GetVersion() < 3)
         {

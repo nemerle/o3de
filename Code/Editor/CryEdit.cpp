@@ -535,7 +535,7 @@ public:
         // nsDocumentRevisionDebugMode is an argument that the macOS system passed into an App bundle that is being debugged.
         // Need to include it here so that Qt argument parser does not error out.
         bool nsDocumentRevisionsDebugMode = false;
-        const std::vector<std::pair<QString, bool&> > options = {
+        const std::pair<QString, bool&> options[] = {
             { "export", m_bExport },
             { "exportTexture", m_bExportTexture },
             { "test", m_bTest },
@@ -607,10 +607,9 @@ public:
         }
 
         // Get boolean options
-        const int numOptions = static_cast<int>(options.size());
-        for (int i = 0; i < numOptions; ++i)
+        for (const std::pair<QString, bool&> & option : options)
         {
-            options[i].second = parser.isSet(options[i].first);
+            option.second = parser.isSet(option.first);
         }
 
         // Get string options
@@ -3910,7 +3909,7 @@ void CCryEditApp::OpenLUAEditor(const char* files)
     constexpr const char* argumentQuoteString = "";
 #else
     constexpr const char* argumentQuoteString = "\"";
-#endif    
+#endif
 
     AZStd::string process = AZStd::string::format("%s%.*s" AZ_CORRECT_FILESYSTEM_SEPARATOR_STRING "LuaIDE"
 #if defined(AZ_PLATFORM_WINDOWS)

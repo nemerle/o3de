@@ -37,7 +37,7 @@ namespace ScriptCanvas
                 SCRIPTCANVAS_NODE(Any);
 
 
-                static bool AnyNodeVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
+                static bool AnyNodeVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
 
                 Any() = default;
 

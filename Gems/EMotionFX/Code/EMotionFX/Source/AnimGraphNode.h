@@ -337,7 +337,7 @@ namespace EMotionFX
         bool RemoveConnectionById(AnimGraphConnectionId connectionId, bool delFromMem = true);
         void RemoveAllConnections();
 
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         TriggerActionSetup& GetTriggerActionSetup() { return m_actionSetup; }
         const TriggerActionSetup& GetTriggerActionSetup() const { return m_actionSetup; }

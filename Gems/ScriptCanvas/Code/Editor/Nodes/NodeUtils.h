@@ -92,8 +92,8 @@ namespace ScriptCanvasEditor
             AZStd::string m_titlePalette;
         };
 
-        AZStd::string GetContextName(const AZ::SerializeContext::ClassData& classData);
-        AZStd::string GetCategoryName(const AZ::SerializeContext::ClassData& classData);
+        AZStd::string GetContextName(const AZ::Serialization::ClassData& classData);
+        AZStd::string GetCategoryName(const AZ::Serialization::ClassData& classData);
 
         void CopySlotTranslationKeyedNamesToDatums(AZ::EntityId graphCanvasNodeId);
 

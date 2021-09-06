@@ -30,12 +30,12 @@ AZ_POP_DISABLE_WARNING
 
 namespace AzToolsFramework
 {
-    const AZ::SerializeContext::ClassData* CreateContainerElementSelectClassCallback(const AZ::Uuid& classId, const AZ::Uuid& typeId, AZ::SerializeContext* context)
+    const AZ::Serialization::ClassData* CreateContainerElementSelectClassCallback(const AZ::Uuid& classId, const AZ::Uuid& typeId, AZ::SerializeContext* context)
     {
-        AZStd::vector<const AZ::SerializeContext::ClassData*> derivedClasses;
+        AZStd::vector<const AZ::Serialization::ClassData*> derivedClasses;
         context->EnumerateDerived(
             [&derivedClasses]
-        (const AZ::SerializeContext::ClassData* classData, const AZ::Uuid& /*knownType*/) -> bool
+        (const AZ::Serialization::ClassData* classData, const AZ::Uuid& /*knownType*/) -> bool
         {
             derivedClasses.push_back(classData);
             return true;
@@ -46,7 +46,7 @@ namespace AzToolsFramework
 
         if (derivedClasses.empty())
         {
-            const AZ::SerializeContext::ClassData* classData = context->FindClassData(typeId);
+            const AZ::Serialization::ClassData* classData = context->FindClassData(typeId);
             const char* className = classData ?
                 (classData->m_editData ? classData->m_editData->m_name : classData->m_name)
                 : "<unknown>";
@@ -1346,14 +1346,14 @@ namespace AzToolsFramework
     // (useful for notifying which element in a vector was modified/removed)
     static int CalculateElementIndexInContainer(
         InstanceDataNode* node, void* parentInstanceNode,
-        AZ::SerializeContext::IDataContainer* container, AZStd::vector<void*>& nodeInstancesOut)
+        AZ::Serialization::IDataContainer* container, AZStd::vector<void*>& nodeInstancesOut)
     {
         // get the node's instance list, giving the ElementInstances attribute for containers priority over the raw instance list
         if (!node->ReadAttribute(AZ::Edit::InternalAttributes::ElementInstances, nodeInstancesOut))
         {
             for (size_t i = 0, instanceCount = node->GetNumInstances(); i < instanceCount; ++i)
             {
-                nodeInstancesOut.push_back((node->GetElementMetadata()->m_flags & AZ::SerializeContext::ClassElement::FLG_POINTER)
+                nodeInstancesOut.push_back((node->GetElementMetadata()->m_flags & AZ::Serialization::ClassElement::FLG_POINTER)
                     ? node->GetInstanceAddress(i)
                     : node->GetInstance(i));
             }
@@ -1365,8 +1365,8 @@ namespace AzToolsFramework
         // find the index of the element we are about to remove
         container->EnumElements(parentInstanceNode, [&elementIndex, elementPtr](
             void* instancePointer, const AZ::Uuid& /*elementClassId*/,
-            const AZ::SerializeContext::ClassData* /*elementGenericClassData*/,
-            const AZ::SerializeContext::ClassElement* /*genericClassElement*/)
+            const AZ::Serialization::ClassData* /*elementGenericClassData*/,
+            const AZ::Serialization::ClassElement* /*genericClassElement*/)
         {
             if (instancePointer == elementPtr)
             {
@@ -1433,7 +1433,7 @@ namespace AzToolsFramework
                 const auto calculateElementIndex = [](InstanceDataNode* node) -> int {
                     if (InstanceDataNode* parent = node->GetParent())
                     {
-                        if (AZ::SerializeContext::IDataContainer* container = parent->GetClassMetadata()->m_container)
+                        if (AZ::Serialization::IDataContainer* container = parent->GetClassMetadata()->m_container)
                         {
                             AZStd::vector<void*> nodeInstancesOut;
                             return CalculateElementIndexInContainer(
@@ -1568,7 +1568,7 @@ namespace AzToolsFramework
 
     void ReflectedPropertyEditor::OnPropertyRowRequestClear(PropertyRowWidget* widget, InstanceDataNode* node)
     {
-        AZ::SerializeContext::IDataContainer* container = node->GetClassMetadata()->m_container;
+        AZ::Serialization::IDataContainer* container = node->GetClassMetadata()->m_container;
         AZ_Assert(container->IsFixedSize() == false || container->IsSmartPointer(), "Attempted to clear elements in a static container");
 
         bool isContainerEmpty = false;
@@ -1731,7 +1731,7 @@ namespace AzToolsFramework
             m_impl->m_ptrNotify->BeforePropertyModified(containerNode);
         }
 
-        const AZ::SerializeContext::ClassElement* containerClassElement = container->GetElement(container->GetDefaultElementNameCrc());
+        const AZ::Serialization::ClassElement* containerClassElement = container->GetElement(container->GetDefaultElementNameCrc());
 
         AZ::SerializeContext* serializeContext = nullptr;
         AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationBus::Events::GetSerializeContext);
@@ -1788,7 +1788,7 @@ namespace AzToolsFramework
             return;
         }
 
-        AZ::SerializeContext::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
+        AZ::Serialization::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
 
         AZStd::vector<void*> nodeInstancesOut;
         const int elementIndex = CalculateElementIndexInContainer(node, pContainerNode->GetInstance(0), container, nodeInstancesOut);
@@ -1812,7 +1812,7 @@ namespace AzToolsFramework
             return;
         }
 
-        AZ::SerializeContext::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
+        AZ::Serialization::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
 
         AZStd::vector<void*> nodeInstancesOut;
         int elementIndex = CalculateElementIndexInContainer(nodeToMove, pContainerNode->GetInstance(0), container, nodeInstancesOut);
@@ -1844,7 +1844,7 @@ namespace AzToolsFramework
             return;
         }
 
-        AZ::SerializeContext::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
+        AZ::Serialization::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
 
         AZStd::vector<void*> nodeInstancesOut;
         int elementIndex = CalculateElementIndexInContainer(nodeToMove, pContainerNode->GetInstance(0), container, nodeInstancesOut);
@@ -1864,7 +1864,7 @@ namespace AzToolsFramework
     {
         InstanceDataNode* pContainerNode = FindContainerNodeForNode(node);
 
-        AZ::SerializeContext::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
+        AZ::Serialization::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
 
         AZStd::vector<void*> nodeInstancesOut;
         int elementIndex = CalculateElementIndexInContainer(node, pContainerNode->GetInstance(0), container, nodeInstancesOut);
@@ -1900,7 +1900,7 @@ namespace AzToolsFramework
             m_impl->m_ptrNotify->BeforePropertyModified(pContainerNode);
         }
 
-        AZ::SerializeContext::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
+        AZ::Serialization::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
         AZ_Assert(container->IsFixedSize() == false ||
             container->IsSmartPointer(), "We can't remove elements from a fixed size container!");
 
@@ -2020,7 +2020,7 @@ namespace AzToolsFramework
             pContainerNode->GetElementMetadata() ? pContainerNode->GetElementMetadata()->m_name : pContainerNode->GetClassMetadata()->m_name,
             pContainerNode->GetClassMetadata()->m_typeId.ToString<AZStd::string>().c_str());
 
-        AZ::SerializeContext::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
+        AZ::Serialization::IDataContainer* container = pContainerNode->GetClassMetadata()->m_container;
 
         //If the container is at capacity, we do not want to add another item.
         if (container->IsFixedCapacity() && !container->IsSmartPointer())
@@ -2066,7 +2066,7 @@ namespace AzToolsFramework
                 syntheticData.m_description = "";
 
                 bool hasProvidedFirstDynamicEditData = false;
-                promptEditor->SetDynamicEditDataProvider([&](const void* objectPtr, const AZ::SerializeContext::ClassData* classData) -> const AZ::Edit::ElementData*
+                promptEditor->SetDynamicEditDataProvider([&](const void* objectPtr, const AZ::Serialization::ClassData* classData) -> const AZ::Edit::ElementData*
                     {
                         Q_UNUSED(classData)
 
@@ -2141,7 +2141,7 @@ namespace AzToolsFramework
         AZStd::shared_ptr<void> keyToAdd(nullptr);
 
         bool createdElement = pContainerNode->CreateContainerElement(CreateContainerElementSelectClassCallback,
-            [pContainerNode, promptForValue, &keyToAdd](void* dataPtr, const AZ::SerializeContext::ClassElement* classElement, bool noDefaultData, AZ::SerializeContext*) -> bool
+            [pContainerNode, promptForValue, &keyToAdd](void* dataPtr, const AZ::Serialization::ClassElement* classElement, bool noDefaultData, AZ::SerializeContext*) -> bool
         {
             bool handled = false;
 

@@ -55,7 +55,7 @@ private:
             : m_classData(nullptr)
             , m_compareInstance(nullptr)
         {}
-        const AZ::SerializeContext::ClassData* m_classData;
+        const AZ::Serialization::ClassData* m_classData;
 
         /// Components instanced (one from each entity).
         AZStd::vector<AZ::Component*> m_instances;

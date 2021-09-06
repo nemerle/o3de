@@ -20,6 +20,7 @@
 #include <AzFramework/IO/LocalFileIO.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/Slice/SliceAsset.h> // For slice asset sub ids
+#include <AzCore/RTTI/BehaviorContext.h>
 //////////////////////////////////////////////////////////////////////////
 
 namespace AssetBuilderSDK
@@ -326,7 +327,7 @@ namespace AssetBuilderSDK
         // for legacy compatibility, we make sure that if only the m_platform field is populated
         // we go ahead and fill out the new API from the old one.
         class JobDescriptorSerializeEventHandler
-            : public AZ::SerializeContext::IEventHandler
+            : public AZ::Serialization::IEventHandler
         {
         public:
             virtual void OnReadBegin(void* classPtr)
@@ -648,7 +649,7 @@ namespace AssetBuilderSDK
         , m_productSubID(productSubID)
     {
         //////////////////////////////////////////////////////////////////////////
-        // Builders should output product asset types directly.  
+        // Builders should output product asset types directly.
         // This should only be used for exceptions, mostly legacy and generic data.
         if (m_productAssetType.IsNull())
         {
@@ -667,7 +668,7 @@ namespace AssetBuilderSDK
         , m_productSubID(productSubID)
     {
         //////////////////////////////////////////////////////////////////////////
-        // Builders should output product asset types directly.  
+        // Builders should output product asset types directly.
         // This should only be used for exceptions, mostly legacy.
         if (m_productAssetType.IsNull())
         {

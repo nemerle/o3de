@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/std/containers/bitset.h>
 #include <AzCore/std/smart_ptr/make_shared.h>
 #include <AzCore/std/string/conversions.h>
 #include <AzToolsFramework/Debug/TraceContext.h>
@@ -196,7 +197,7 @@ namespace AZ
                         for (unsigned int vertIdx = 0; vertIdx < aiAnimMesh->mNumVertices; ++vertIdx)
                         {
                             AZ::Vector3 vertex(AssImpSDKWrapper::AssImpTypeConverter::ToVector3(aiAnimMesh->mVertices[vertIdx]));
-                   
+
                             context.m_sourceSceneSystem.SwapVec3ForUpAxis(vertex);
                             context.m_sourceSceneSystem.ConvertUnit(vertex);
 

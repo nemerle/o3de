@@ -12,6 +12,7 @@
 #include <Atom/RPI.Reflect/Asset/AssetHandler.h>
 #include <Atom/RPI.Public/Shader/ShaderReloadDebugTracker.h>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Component/TickBus.h>
@@ -132,7 +133,7 @@ namespace AZ
             {
                 Data::AssetBus::Handler::BusConnect(m_materialTypeAsset.GetId());
                 MaterialReloadNotificationBus::Handler::BusConnect(m_materialTypeAsset.GetId());
-                
+
                 AssetInitBus::Handler::BusDisconnect();
 
                 return true;
@@ -153,7 +154,7 @@ namespace AZ
                 MaterialReloadNotificationBus::Event(GetId(), &MaterialReloadNotifications::OnMaterialAssetReinitialized, Data::Asset<MaterialAsset>{this, AZ::Data::AssetLoadBehavior::PreLoad});
             }
         }
-        
+
         void MaterialAsset::RealignPropertyValuesAndNames()
         {
             const MaterialPropertiesLayout* propertyLayout = GetMaterialPropertiesLayout();
@@ -180,7 +181,7 @@ namespace AZ
             }
 
             m_isDirty = false;
-        } 
+        }
 
         void MaterialAsset::ReinitializeMaterialTypeAsset(Data::Asset<Data::AssetData> asset)
         {

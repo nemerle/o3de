@@ -83,7 +83,7 @@ namespace ScriptCanvas
         }
     };
 
-    static bool GraphVariableVersionConverter([[maybe_unused]] AZ::SerializeContext& context, [[maybe_unused]] AZ::SerializeContext::DataElementNode& classElement)
+    static bool GraphVariableVersionConverter([[maybe_unused]] AZ::SerializeContext& context, [[maybe_unused]] AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 4)
         {

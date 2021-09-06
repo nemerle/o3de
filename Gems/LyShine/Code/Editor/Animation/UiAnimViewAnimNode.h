@@ -224,22 +224,22 @@ private:
 
     // Az Entity specific
     void AzEntityPropertyChanged(AZ::Component* oldComponent, AZ::Component* newComponent,
-        const AZ::SerializeContext::ClassElement& element, size_t offset);
+        const AZ::Serialization::ClassElement& element, size_t offset);
     void AzCreateCompoundTrackIfNeeded(float time, AZ::Component* newComponent, AZ::Component* oldComponent,
-        const AZ::SerializeContext::ClassElement& element, size_t offset);
+        const AZ::Serialization::ClassElement& element, size_t offset);
 
     void SetComponentParamValueAz(float time,
         AZ::Component* dstComponent, AZ::Component* srcComponent,
-        const AZ::SerializeContext::ClassElement& element, size_t offset);
+        const AZ::Serialization::ClassElement& element, size_t offset);
 
     bool HasComponentParamValueAzChanged(
         AZ::Component* dstComponent, AZ::Component* srcComponent,
-        const AZ::SerializeContext::ClassElement& element, size_t offset);
+        const AZ::Serialization::ClassElement& element, size_t offset);
 
     bool BaseClassPropertyPotentiallyChanged(
         AZ::SerializeContext* context,
         AZ::Component* dstComponent, AZ::Component* srcComponent,
-        const AZ::SerializeContext::ClassElement& element, size_t offset);
+        const AZ::Serialization::ClassElement& element, size_t offset);
 
     // IUiAnimNodeOwner
     virtual void OnNodeVisibilityChanged(IUiAnimNode* pNode, const bool bHidden) override;

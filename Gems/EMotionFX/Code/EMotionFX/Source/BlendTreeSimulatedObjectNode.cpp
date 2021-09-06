@@ -362,7 +362,7 @@ namespace EMotionFX
     }
 
 
-    bool BlendTreeSimulatedObjectNode::VersionConverter([[maybe_unused]] AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElementNode)
+    bool BlendTreeSimulatedObjectNode::VersionConverter([[maybe_unused]] AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElementNode)
     {
         if (rootElementNode.GetVersion() == 1)
         {

@@ -33,7 +33,7 @@ namespace AZ
 {
     bool ShouldUseSystemComponent(const ComponentDescriptor& descriptor, const AZStd::vector<Crc32>& requiredTags, const SerializeContext& serialize)
     {
-        const SerializeContext::ClassData* classData = serialize.FindClassData(descriptor.GetUuid());
+        const Serialization::ClassData* classData = serialize.FindClassData(descriptor.GetUuid());
         AZ_Warning(s_moduleLoggingScope, classData, "Component type %s not reflected to SerializeContext!", descriptor.GetName());
         return Edit::SystemComponentTagsMatchesAtLeastOneTag(classData, requiredTags, false);
     }

@@ -17,6 +17,7 @@
 
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Asset/AssetManagerBus.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Debug/EventTrace.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
@@ -34,7 +35,7 @@ namespace AZ
 
         namespace MeshComponentControllerVersionUtility
         {
-            bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 if (classElement.GetVersion() < 2)
                 {
@@ -302,7 +303,7 @@ namespace AZ
                 m_meshFeatureProcessor->SetTransform(m_meshHandle, m_transformInterface->GetWorldTM(), m_cachedNonUniformScale);
             }
         }
-        
+
         RPI::ModelMaterialSlotMap MeshComponentController::GetModelMaterialSlots() const
         {
             Data::Asset<const RPI::ModelAsset> modelAsset = GetModelAsset();

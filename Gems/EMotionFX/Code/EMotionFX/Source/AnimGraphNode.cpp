@@ -2469,7 +2469,7 @@ namespace EMotionFX
     }
 
 
-    bool AnimGraphNode::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool AnimGraphNode::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         const unsigned int version = classElement.GetVersion();
         if (version < 2)
@@ -2478,7 +2478,7 @@ namespace EMotionFX
             if (vizColorIndex > 0)
             {
                 AZ::u32 oldColor;
-                AZ::SerializeContext::DataElementNode& dataElementNode = classElement.GetSubElement(vizColorIndex);
+                AZ::Serialization::DataElementNode& dataElementNode = classElement.GetSubElement(vizColorIndex);
                 const bool result = dataElementNode.GetData<AZ::u32>(oldColor);
                 if (!result)
                 {

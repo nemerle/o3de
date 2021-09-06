@@ -7,6 +7,7 @@
  */
 #include "EditorLayerComponent.h"
 #include <AzCore/IO/FileIO.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
@@ -262,8 +263,8 @@ namespace AzToolsFramework
             if (m_editableLayerProperties.m_saveAsBinary)
             {
                 return LayerProperties::SaveFormat::Binary;
-            } 
-            else 
+            }
+            else
             {
                 return LayerProperties::SaveFormat::Xml;
             }
@@ -508,8 +509,8 @@ namespace AzToolsFramework
             m_loadedLayer = nullptr;
         }
 
-        void EditorLayerComponent::SetSaveFormat(LayerProperties::SaveFormat saveFormat) 
-        { 
+        void EditorLayerComponent::SetSaveFormat(LayerProperties::SaveFormat saveFormat)
+        {
             m_editableLayerProperties.m_saveAsBinary = saveFormat == LayerProperties::SaveFormat::Binary;
         }
 
@@ -1469,7 +1470,7 @@ namespace AzToolsFramework
             AzToolsFramework::ScopedUndoBatch undo("RecoverEditorLayer");
 
             LayerProperties::SaveFormat saveFormat = LayerProperties::SaveFormat::Xml;
-            
+
             if (editorLayer->m_layerProperties.m_saveAsBinary)
             {
                 saveFormat = LayerProperties::SaveFormat::Binary;

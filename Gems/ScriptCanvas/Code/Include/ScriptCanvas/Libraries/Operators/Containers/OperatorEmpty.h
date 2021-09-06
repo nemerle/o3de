@@ -26,7 +26,7 @@ namespace ScriptCanvas
 
                 void CustomizeReplacementNode(Node* replacementNode, AZStd::unordered_map<SlotId, AZStd::vector<SlotId>>& outSlotIdMap) const override;
 
-                static bool OperatorEmptyVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+                static bool OperatorEmptyVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
                 OperatorEmpty() = default;
 

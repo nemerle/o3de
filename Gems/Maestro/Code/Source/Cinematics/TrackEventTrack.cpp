@@ -156,7 +156,7 @@ void CTrackEventTrack::GetKeyInfo(int key, const char*& description, float& dura
 //////////////////////////////////////////////////////////////////////////
 static bool EventTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

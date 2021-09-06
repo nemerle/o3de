@@ -148,7 +148,7 @@ AssetCatalogModel::AssetCatalogModel(QObject* parent)
     EBUS_EVENT_RESULT(serializeContext, AZ::ComponentApplicationBus, GetSerializeContext);
     AZ_Assert(serializeContext, "Failed to acquire application serialize context.");
 
-    serializeContext->EnumerateDerived<AZ::Component>([this](const AZ::SerializeContext::ClassData* classData, const AZ::Uuid&) -> bool
+    serializeContext->EnumerateDerived<AZ::Component>([this](const AZ::Serialization::ClassData* classData, const AZ::Uuid&) -> bool
         {
             if (classData->m_editData)
             {

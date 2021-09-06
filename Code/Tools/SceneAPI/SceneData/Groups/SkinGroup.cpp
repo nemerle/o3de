@@ -110,7 +110,7 @@ namespace AZ
             }
 
 
-            bool SkinGroup::VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement)
+            bool SkinGroup::VersionConverter(SerializeContext& context, Serialization::DataElementNode& classElement)
             {
                 const unsigned int version = classElement.GetVersion();
 

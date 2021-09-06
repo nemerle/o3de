@@ -21,7 +21,7 @@ namespace
 
 namespace Blast
 {
-    class BlastMaterialLibraryAssetEventHandler : public AZ::SerializeContext::IEventHandler
+    class BlastMaterialLibraryAssetEventHandler : public AZ::Serialization::IEventHandler
     {
         void OnReadBegin(void* classPtr)
         {

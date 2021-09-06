@@ -56,7 +56,7 @@ namespace SceneBuilder
             AZ::ComponentApplicationBus::BroadcastResult(context, &AZ::ComponentApplicationBus::Events::GetSerializeContext);
             if (context)
             {
-                auto callback = [&fragments](const AZ::SerializeContext::ClassData* data, const AZ::Uuid& typeId)
+                auto callback = [&fragments](const AZ::Serialization::ClassData* data, const AZ::Uuid& typeId)
                 {
                     AZ_UNUSED(typeId);
                     fragments.insert(AZStd::string::format("[%s:v%i]", data->m_name, data->m_version));

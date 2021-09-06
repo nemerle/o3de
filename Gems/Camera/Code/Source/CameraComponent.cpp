@@ -23,8 +23,8 @@ namespace Camera
 {
     namespace ClassConverters
     {
-        extern bool DeprecateCameraComponentWithoutEditor(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        extern bool UpdateCameraComponentToUseController(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        extern bool DeprecateCameraComponentWithoutEditor(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        extern bool UpdateCameraComponentToUseController(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     }
 
     CameraComponent::CameraComponent(const CameraComponentConfig& properties)
@@ -42,7 +42,7 @@ namespace Camera
         CameraComponentBase::Deactivate();
     }
 
-    static bool UpdateGameCameraComponentToUseController(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    static bool UpdateGameCameraComponentToUseController(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (!ClassConverters::UpdateCameraComponentToUseController(context, classElement))
         {

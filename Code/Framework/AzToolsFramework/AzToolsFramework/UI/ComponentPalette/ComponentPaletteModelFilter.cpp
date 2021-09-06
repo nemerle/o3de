@@ -30,7 +30,7 @@ namespace AzToolsFramework
             return true;
         }
 
-        auto componentClass = reinterpret_cast<const AZ::SerializeContext::ClassData*>(sourceModel()->data(index, Qt::ItemDataRole::UserRole + 1).toULongLong());
+        auto componentClass = reinterpret_cast<const AZ::Serialization::ClassData*>(sourceModel()->data(index, Qt::ItemDataRole::UserRole + 1).toULongLong());
         if (componentClass)
         {
             const QString componentName = sourceModel()->data(index, Qt::DisplayRole).toString();

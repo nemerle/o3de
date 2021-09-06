@@ -31,7 +31,7 @@ namespace MethodCPP
         Current,
     };
 
-    bool MethodVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElementNode)
+    bool MethodVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElementNode)
     {
         if (rootElementNode.GetVersion() < MethodCPP::eVersion::PluralizeResults)
         {

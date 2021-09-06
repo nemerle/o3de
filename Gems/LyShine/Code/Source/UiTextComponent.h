@@ -560,7 +560,7 @@ protected: // member functions
 private: // static member functions
 
     static bool VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement);
+        AZ::Serialization::DataElementNode& classElement);
 
     AZ_DISABLE_COPY_MOVE(UiTextComponent);
 

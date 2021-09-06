@@ -6,6 +6,7 @@
  *
  */
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Console/IConsole.h>
 #include <AzCore/Console/Console.h>
 #include <AzCore/Interface/Interface.h>
@@ -588,7 +589,7 @@ namespace UnitTest
 
     TEST_F(AssetJobsFloodTest, RapidAcquireAndRelease)
     {
-        DebugListener listener;  
+        DebugListener listener;
         auto assetUuids = {
             MyAsset1Id,
             MyAsset2Id,
@@ -619,7 +620,7 @@ namespace UnitTest
                 {
                     Asset<AssetWithAssetReference> asset1 =
                         m_testAssetManager->GetAsset(assetUuid, azrtti_typeid<AssetWithAssetReference>(), AZ::Data::AssetLoadBehavior::PreLoad);
-                    
+
                     if (checkLoaded)
                     {
                         asset1.BlockUntilLoadComplete();
@@ -1376,7 +1377,7 @@ namespace UnitTest
             }
             EXPECT_EQ(readyListener.m_ready, 1);
             EXPECT_EQ(depenencyListener.m_ready, 0);
-            
+
             AZ::Data::AssetLoadParameters loadParams(nullptr, AZ::Data::AssetDependencyLoadRules::LoadAll);
             loadParams.m_reloadMissingDependencies = true;
             auto loadDependencyRef = m_testAssetManager->GetAsset(NoLoadAssetId, azrtti_typeid<AssetWithAssetReference>(),

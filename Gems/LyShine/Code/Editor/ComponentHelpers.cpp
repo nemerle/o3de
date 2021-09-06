@@ -22,7 +22,7 @@
 // Internal helper functions
 namespace Internal
 {
-    AZStd::string GetComponentIconPath(const AZ::SerializeContext::ClassData& componentClassData)
+    AZStd::string GetComponentIconPath(const AZ::Serialization::ClassData& componentClassData)
     {
         AZStd::string iconPath = "Icons/Components/Component_Placeholder.svg";
 
@@ -60,7 +60,7 @@ namespace Internal
         return serializeContext;
     }
 
-    const char* GetFriendlyComponentName(const AZ::SerializeContext::ClassData& componentClassData)
+    const char* GetFriendlyComponentName(const AZ::Serialization::ClassData& componentClassData)
     {
         return componentClassData.m_editData
             ? componentClassData.m_editData->m_name
@@ -69,7 +69,7 @@ namespace Internal
 
     AZStd::string GetFriendlyComponentNameFromType(const AZ::TypeId& componentType)
     {
-        const AZ::SerializeContext::ClassData* componentClassData = GetSerializeContext()->FindClassData(componentType);
+        const AZ::Serialization::ClassData* componentClassData = GetSerializeContext()->FindClassData(componentType);
         AZStd::string componentName(componentClassData ? GetFriendlyComponentName(*componentClassData) : "<unknown>");
 
         return componentName;
@@ -81,12 +81,12 @@ namespace Internal
         return editorComponentBaseComponent;
     }
 
-    bool AppearsInUIComponentMenu(const AZ::SerializeContext::ClassData& componentClassData, bool forCanvasEntity)
+    bool AppearsInUIComponentMenu(const AZ::Serialization::ClassData& componentClassData, bool forCanvasEntity)
     {
         return AzToolsFramework::AppearsInAddComponentMenu(componentClassData, forCanvasEntity ? AZ_CRC("CanvasUI", 0xe1e05605) : AZ_CRC("UI", 0x27ff46b0));
     }
 
-    bool IsAddableByUser(const AZ::SerializeContext::ClassData& componentClassData)
+    bool IsAddableByUser(const AZ::Serialization::ClassData& componentClassData)
     {
         if (componentClassData.m_editData)
         {
@@ -109,7 +109,7 @@ namespace Internal
         return true;
     }
 
-    bool IsAddableByUserAndCompatibleWithEntityType(const AZ::SerializeContext::ClassData& componentClassData, bool forCanvasEntity)
+    bool IsAddableByUserAndCompatibleWithEntityType(const AZ::Serialization::ClassData& componentClassData, bool forCanvasEntity)
     {
         return IsAddableByUser(componentClassData) && AppearsInUIComponentMenu(componentClassData, forCanvasEntity);
     }
@@ -442,7 +442,7 @@ namespace Internal
         for (auto component : components)
         {
             const AZ::Uuid& componentToAddTypeId = AzToolsFramework::GetUnderlyingComponentType(*component);
-            const AZ::SerializeContext::ClassData* componentClassData = serializeContext->FindClassData(componentToAddTypeId);
+            const AZ::Serialization::ClassData* componentClassData = serializeContext->FindClassData(componentToAddTypeId);
             if (!componentClassData)
             {
                 AZ_Error("UI Editor", false, "Can't find class data for class Id %s", componentToAddTypeId.ToString<AZStd::string>().c_str());
@@ -637,7 +637,7 @@ namespace Internal
         AZ::SerializeContext* serializeContext = GetSerializeContext();
         for (const AZ::TypeId& componentType : componentTypes)
         {
-            const AZ::SerializeContext::ClassData* componentClassData = serializeContext->FindClassData(componentType);
+            const AZ::Serialization::ClassData* componentClassData = serializeContext->FindClassData(componentType);
             if (!componentClassData)
             {
                 AZ_Error("UI Editor", false, "Can't find class data for class Id %s", componentType.ToString<AZStd::string>().c_str());
@@ -675,7 +675,7 @@ namespace ComponentHelpers
             }
         }
 
-        using ComponentsList = AZStd::vector < const AZ::SerializeContext::ClassData* >;
+        using ComponentsList = AZStd::vector < const AZ::Serialization::ClassData* >;
         ComponentsList componentsList;
 
         // Get the serialize context.
@@ -683,7 +683,7 @@ namespace ComponentHelpers
 
         // Gather all components that match our filter and group by category.
         serializeContext->EnumerateDerived<AZ::Component>(
-            [&componentsList, isCanvasSelected](const AZ::SerializeContext::ClassData* componentClassData, const AZ::Uuid& knownType) -> bool
+            [&componentsList, isCanvasSelected](const AZ::Serialization::ClassData* componentClassData, const AZ::Uuid& knownType) -> bool
         {
             (void)knownType;
 
@@ -708,7 +708,7 @@ namespace ComponentHelpers
         for (auto& componentType : *componentOrderList)
         {
             auto iter = AZStd::find_if(componentsList.begin(), componentsList.end(),
-                [componentType](const AZ::SerializeContext::ClassData* componentClassData) -> bool
+                [componentType](const AZ::Serialization::ClassData* componentClassData) -> bool
             {
                 return (componentClassData->m_typeId == componentType);
             }
@@ -1158,7 +1158,7 @@ namespace ComponentHelpers
 
         // Gather all components that match our filter and group by category.
         serializeContext->EnumerateDerived<AZ::Component>(
-            [ &componentsList, lyShineComponentDescriptors ](const AZ::SerializeContext::ClassData* classData, const AZ::Uuid& knownType) -> bool
+            [ &componentsList, lyShineComponentDescriptors ](const AZ::Serialization::ClassData* classData, const AZ::Uuid& knownType) -> bool
             {
                 (void)knownType;
 

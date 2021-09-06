@@ -50,8 +50,8 @@ namespace EMotionFX
                 void SetBestMatchingRootBone(const AZ::SceneAPI::Containers::SceneGraph& sceneGraph) override;
 
                 static void Reflect(AZ::ReflectContext* context);
-                static bool IActorGroupVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-                static bool ActorVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+                static bool IActorGroupVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+                static bool ActorVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
             protected:
                 AZ::SceneAPI::Containers::RuleContainer             m_rules;

@@ -18,7 +18,7 @@ namespace AZ
     namespace Internal
     {
         struct AZStdAnyContainer
-            : public SerializeContext::IDataContainer
+            : public Serialization::IDataContainer
         {
         public:
             AZStdAnyContainer() = default;
@@ -28,12 +28,12 @@ namespace AZ
             u32 GetElementNameCrC([[maybe_unused]] int index = 0) override { return AZ_CRC("m_data", 0x335cc942); }
 
             /// Null if element with this name can't be found.
-            const SerializeContext::ClassElement* GetElement(u32) const override
+            const Serialization::ClassElement* GetElement(u32) const override
             {
                 return nullptr;
             }
 
-            bool GetElement(SerializeContext::ClassElement& classElement, const SerializeContext::DataElement& dataElement) const override
+            bool GetElement(Serialization::ClassElement& classElement, const Serialization::DataElement& dataElement) const override
             {
                 if (static_cast<AZ::u32>(AZ_CRC("m_data", 0x335cc942)) == dataElement.m_nameCrc)
                 {
@@ -45,7 +45,7 @@ namespace AZ
                     classElement.m_azRtti = nullptr;
                     classElement.m_genericClassInfo = m_serializeContext->FindGenericClassInfo(dataElement.m_id);
                     classElement.m_editData = nullptr;
-                    classElement.m_flags = SerializeContext::ClassElement::FLG_DYNAMIC_FIELD;
+                    classElement.m_flags = Serialization::ClassElement::FLG_DYNAMIC_FIELD;
                     return true;
                 }
                 return false;
@@ -63,7 +63,7 @@ namespace AZ
                     return;
                 }
 
-                SerializeContext::ClassElement anyChildElement;
+                Serialization::ClassElement anyChildElement;
                 anyChildElement.m_name = "m_data";
                 anyChildElement.m_nameCrc = AZ_CRC("m_data", 0x335cc942);
                 anyChildElement.m_typeId = anyTypeId;
@@ -72,7 +72,7 @@ namespace AZ
                 anyChildElement.m_azRtti = nullptr;
                 anyChildElement.m_genericClassInfo = m_serializeContext->FindGenericClassInfo(anyTypeId);
                 anyChildElement.m_editData = nullptr;
-                anyChildElement.m_flags = SerializeContext::ClassElement::FLG_DYNAMIC_FIELD | (anyPtr->get_type_info().m_isPointer ? SerializeContext::ClassElement::FLG_POINTER : 0);
+                anyChildElement.m_flags = Serialization::ClassElement::FLG_DYNAMIC_FIELD | (anyPtr->get_type_info().m_isPointer ? Serialization::ClassElement::FLG_POINTER : 0);
 
                 if (!cb(AZStd::any_cast<void>(anyPtr), anyTypeId, anyChildElement.m_genericClassInfo ? anyChildElement.m_genericClassInfo->GetClassData() : nullptr, &anyChildElement))
                 {
@@ -114,7 +114,7 @@ namespace AZ
             bool    CanAccessElementsByIndex() const override { return false; }
 
             /// Reserve element
-            void* ReserveElement(void* instance, const SerializeContext::ClassElement* classElement) override
+            void* ReserveElement(void* instance, const Serialization::ClassElement* classElement) override
             {
                 if (m_serializeContext && classElement)
                 {
@@ -127,7 +127,7 @@ namespace AZ
             }
 
             /// Get an element's address by its index (called before the element is loaded).
-            void* GetElementByIndex(void* instance, const SerializeContext::ClassElement* classElement, size_t index) override
+            void* GetElementByIndex(void* instance, const Serialization::ClassElement* classElement, size_t index) override
             {
                 (void)instance;
                 (void)classElement;
@@ -214,7 +214,7 @@ namespace AZ
                 AZ::SerializeContext* serializeContext = nullptr;
                 AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
 
-                const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(lhs.type());
+                const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(lhs.type());
                 if (classData)
                 {
                     if (classData->m_serializer)

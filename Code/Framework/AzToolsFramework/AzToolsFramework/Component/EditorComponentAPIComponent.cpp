@@ -150,7 +150,7 @@ namespace AzToolsFramework
             foundTypeIds.resize(typesCount, AZ::Uuid::CreateNull());
 
             m_serializeContext->EnumerateDerived<AZ::Component>(
-                [&counter, typesCount, componentTypeNames, &foundTypeIds, entityType](const AZ::SerializeContext::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
+                [&counter, typesCount, componentTypeNames, &foundTypeIds, entityType](const AZ::Serialization::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
                 {
                     (void)knownType;
 
@@ -226,7 +226,7 @@ namespace AzToolsFramework
             foundTypeNames.resize(typesCount);
 
             m_serializeContext->EnumerateDerived<AZ::Component>(
-                [&counter, typesCount, componentTypeIds, &foundTypeNames](const AZ::SerializeContext::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
+                [&counter, typesCount, componentTypeIds, &foundTypeNames](const AZ::Serialization::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
             {
                 (void)knownType;
 
@@ -260,7 +260,7 @@ namespace AzToolsFramework
             AZStd::vector<AZStd::string> typeNameList;
 
             m_serializeContext->EnumerateDerived<AZ::Component>(
-                [&typeNameList, entityType](const AZ::SerializeContext::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
+                [&typeNameList, entityType](const AZ::Serialization::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
                 {
                     AZ_UNUSED(knownType);
 

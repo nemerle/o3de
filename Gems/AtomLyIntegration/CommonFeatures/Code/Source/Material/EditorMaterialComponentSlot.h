@@ -28,7 +28,7 @@ namespace AZ
             AZ_CLASS_ALLOCATOR(EditorMaterialComponentSlot, SystemAllocator, 0);
 
             static void Reflect(ReflectContext* context);
-            static bool ConvertVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+            static bool ConvertVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
             AZ::Data::AssetId GetDefaultAssetId() const;
             AZStd::string GetLabel() const;

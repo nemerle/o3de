@@ -490,6 +490,8 @@ set(FILES
     Serialization/SerializationUtils.cpp
     Serialization/ObjectStream.cpp
     Serialization/ObjectStream.h
+    Serialization/SerializationInterfaces.cpp
+    Serialization/SerializationInterfaces.h
     Serialization/SerializeContext.cpp
     Serialization/SerializeContext.h
     Serialization/SerializeContextEnum.cpp

@@ -56,8 +56,8 @@ namespace EMotionFX
         }
 
         const AZ::SerializeContext* serializeContext = parentDataNode->GetSerializeContext();
-        const AZ::SerializeContext::ClassData* classData = parentDataNode->GetClassMetadata();
-        const AZ::SerializeContext::ClassElement* elementData = pNode->GetElementMetadata();
+        const AZ::Serialization::ClassData* classData = parentDataNode->GetClassMetadata();
+        const AZ::Serialization::ClassElement* elementData = pNode->GetElementMetadata();
 
         const Actor* actor = m_colliderWidget->GetActor();
         const Node* joint = m_colliderWidget->GetJoint();
@@ -159,8 +159,8 @@ namespace EMotionFX
         }
 
         const AZ::SerializeContext* serializeContext = parentDataNode->GetSerializeContext();
-        const AZ::SerializeContext::ClassData* classData = parentDataNode->GetClassMetadata();
-        const AZ::SerializeContext::ClassElement* elementData = pNode->GetElementMetadata();
+        const AZ::Serialization::ClassData* classData = parentDataNode->GetClassMetadata();
+        const AZ::Serialization::ClassElement* elementData = pNode->GetElementMetadata();
 
         const Actor* actor = m_colliderWidget->GetActor();
         const Node* joint = m_colliderWidget->GetJoint();

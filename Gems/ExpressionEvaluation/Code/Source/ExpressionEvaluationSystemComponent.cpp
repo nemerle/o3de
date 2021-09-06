@@ -87,7 +87,7 @@ namespace ExpressionEvaluation
     // ExpressionEvaluationSystemComponent
     ////////////////////////////////////////
 
-    static bool ExpressionTokenConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+    static bool ExpressionTokenConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() < 1)
         {

@@ -5,11 +5,13 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Script/ScriptContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Script/lua/lua.h>
 #include <AzCore/Script/ScriptProperty.h>
+#include <AzCore/Serialization/SerializeContext.h>
 
 namespace AZ
 {
@@ -60,14 +62,14 @@ namespace AZ
     // ScriptProperty
     ///////////////////
 
-    bool ScriptProperty::VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement)
+    bool ScriptProperty::VersionConverter(SerializeContext& context, Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() == 1)
         {
             // Generate persistent Id field.
             for (int i = 0; i < classElement.GetNumSubElements(); ++i)
             {
-                AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(i);
+                AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(i);
                 if (elementNode.GetName() == AZ_CRC("name", 0x5e237e06))
                 {
                     AZStd::string name;
@@ -792,7 +794,7 @@ namespace AZ
         return AZ::SerializeGenericTypeInfo< AZStd::vector<bool> >::GetClassTypeId();
     }
 
-    bool ScriptPropertyBooleanArray::DoesTypeMatch(AZ::ScriptDataContext& context, int valueIndex) const 
+    bool ScriptPropertyBooleanArray::DoesTypeMatch(AZ::ScriptDataContext& context, int valueIndex) const
     {
         return IsBooleanArray(context,valueIndex);
     }
@@ -918,7 +920,7 @@ namespace AZ
         return AZ::SerializeGenericTypeInfo< AZStd::vector<double> >::GetClassTypeId();
     }
 
-    bool ScriptPropertyNumberArray::DoesTypeMatch(AZ::ScriptDataContext& context, int valueIndex) const 
+    bool ScriptPropertyNumberArray::DoesTypeMatch(AZ::ScriptDataContext& context, int valueIndex) const
     {
         return IsNumberArray(context,valueIndex);
     }
@@ -1044,7 +1046,7 @@ namespace AZ
         return AZ::SerializeGenericTypeInfo< AZStd::vector<AZStd::string> >::GetClassTypeId();
     }
 
-    bool ScriptPropertyStringArray::DoesTypeMatch(AZ::ScriptDataContext& context, int valueIndex) const 
+    bool ScriptPropertyStringArray::DoesTypeMatch(AZ::ScriptDataContext& context, int valueIndex) const
     {
         return IsStringArray(context,valueIndex);
     }
@@ -1212,7 +1214,7 @@ namespace AZ
         m_elementTypeId = elementTypeId;
     }
 
-    bool ScriptPropertyGenericClassArray::DoesTypeMatch(AZ::ScriptDataContext& context, int valueIndex) const 
+    bool ScriptPropertyGenericClassArray::DoesTypeMatch(AZ::ScriptDataContext& context, int valueIndex) const
     {
         return IsGenericClassArray(context,valueIndex);
     }
@@ -1265,7 +1267,7 @@ namespace AZ
     }
 
     bool ScriptPropertyGenericClassArray::VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
 
         if (classElement.GetVersion() == 1)
@@ -1273,16 +1275,16 @@ namespace AZ
             // Generate dynamic element Id field.
             for (int classIdx = 0; classIdx < classElement.GetNumSubElements(); ++classIdx)
             {
-                AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(classIdx);
+                AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(classIdx);
                 if (elementNode.GetName() == AZ_CRC("values", 0x3aa74ce6))
                 {
                     if (elementNode.GetNumSubElements() > 0)
                     {
                         // If there are elements to derive from, base the element type off that
-                        AZ::SerializeContext::DataElementNode& dsfNode = elementNode.GetSubElement(0);
+                        AZ::Serialization::DataElementNode& dsfNode = elementNode.GetSubElement(0);
                         for (int dsfIdx = 0; dsfIdx < dsfNode.GetNumSubElements(); ++dsfIdx)
                         {
-                            AZ::SerializeContext::DataElementNode& dataNode = dsfNode.GetSubElement(dsfIdx);
+                            AZ::Serialization::DataElementNode& dataNode = dsfNode.GetSubElement(dsfIdx);
                             if (dataNode.GetName() == AZ_CRC("m_data", 0x335cc942))
                             {
                                 const int idx = classElement.AddElement<AZ::Uuid>(context, "elementType");

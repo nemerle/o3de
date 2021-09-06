@@ -479,7 +479,7 @@ namespace EMotionFX
         return m_additiveBlending;
     }
 
-    bool BlendTreeBlend2LegacyNodeConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElementNode)
+    bool BlendTreeBlend2LegacyNodeConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElementNode)
     {
         if (rootElementNode.GetVersion() < 3)
         {
@@ -488,15 +488,15 @@ namespace EMotionFX
             if (currentBaseClass1Index >= 0)
             {
                 // If AnimGraphNode is the BaseClass1, move it to be a child of BlendTreeBlend2NodeBase
-                const AZ::SerializeContext::DataElementNode& currentBaseClass1 = rootElementNode.GetSubElement(currentBaseClass1Index);
+                const AZ::Serialization::DataElementNode& currentBaseClass1 = rootElementNode.GetSubElement(currentBaseClass1Index);
                 if (currentBaseClass1.GetId() == azrtti_typeid<AnimGraphNode>())
                 {
                     // Create a copy so we can remove it before creating a new one with a different type
-                    AZ::SerializeContext::DataElementNode currentBaseClass1Copy = currentBaseClass1;
+                    AZ::Serialization::DataElementNode currentBaseClass1Copy = currentBaseClass1;
                     rootElementNode.RemoveElement(currentBaseClass1Index);
                     const int newBaseClass1Index = rootElementNode.AddElement(serializeContext, "BaseClass1", azrtti_typeid<BlendTreeBlend2NodeBase>());
 
-                    AZ::SerializeContext::DataElementNode& newBaseClass1 = rootElementNode.GetSubElement(newBaseClass1Index);
+                    AZ::Serialization::DataElementNode& newBaseClass1 = rootElementNode.GetSubElement(newBaseClass1Index);
                     newBaseClass1.AddElement(currentBaseClass1Copy);
 
                     // Move the members: syncMode, eventMode, extractionMode and mask to the newBaseClass1

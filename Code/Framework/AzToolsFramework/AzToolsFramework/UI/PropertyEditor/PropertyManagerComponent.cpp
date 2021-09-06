@@ -227,10 +227,10 @@ namespace AzToolsFramework
                 // does a base class have a handler?
                 AZ::SerializeContext* sc = NULL;
                 EBUS_EVENT_RESULT(sc, AZ::ComponentApplicationBus, GetSerializeContext);
-                AZStd::vector<const AZ::SerializeContext::ClassData*> classes;
+                AZStd::vector<const AZ::Serialization::ClassData*> classes;
 
                 sc->EnumerateBase(
-                    [&classes](const AZ::SerializeContext::ClassData* classData, AZ::Uuid)
+                    [&classes](const AZ::Serialization::ClassData* classData, AZ::Uuid)
                     {
                         if (classData)
                         {

@@ -39,7 +39,7 @@ namespace ScriptCanvas
 
         static void Reflect(AZ::ReflectContext* context);
 
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         RuntimeComponent() = default;
 

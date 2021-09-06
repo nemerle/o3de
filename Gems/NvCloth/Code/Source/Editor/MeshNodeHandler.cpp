@@ -9,6 +9,7 @@
 #include <AzToolsFramework/AssetBrowser/AssetBrowserBus.h>
 
 #include <AtomLyIntegration/CommonFeatures/Mesh/MeshComponentBus.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
 #include <Editor/PropertyTypes.h>
 #include <Editor/MeshNodeHandler.h>
@@ -31,14 +32,14 @@ namespace NvCloth
             picker->GetEditButton()->setText("");
             picker->GetEditButton()->setEnabled(false);
 
-            connect(picker->GetComboBox(), 
+            connect(picker->GetComboBox(),
                 &QComboBox::currentTextChanged, this,
                 [picker]()
                 {
                     AzToolsFramework::PropertyEditorGUIMessages::Bus::Broadcast(&AzToolsFramework::PropertyEditorGUIMessages::RequestWrite, picker);
                 });
 
-            connect(picker->GetEditButton(), 
+            connect(picker->GetEditButton(),
                 &QToolButton::clicked, this,
                 [this, picker]()
                 {

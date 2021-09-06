@@ -46,7 +46,7 @@ namespace AZ
                 void SetSelectedRootBone(const AZStd::string& selectedRootBone) override;
 
                 static void Reflect(ReflectContext* context);
-                static bool VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement);
+                static bool VersionConverter(SerializeContext& context, Serialization::DataElementNode& classElement);
 
             protected:
                 Containers::RuleContainer m_rules;

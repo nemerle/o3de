@@ -32,7 +32,7 @@ namespace AZ
 
 namespace
 {
-    static bool StyleVersionConverter(AZ::SerializeContext& /*serializeContext*/, AZ::SerializeContext::DataElementNode& classElement)
+    static bool StyleVersionConverter(AZ::SerializeContext& /*serializeContext*/, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() <= 3)
         {
@@ -126,7 +126,7 @@ namespace
     }
 
     class QVariantSerializer
-        : public AZ::SerializeContext::IDataSerializer
+        : public AZ::Serialization::IDataSerializer
     {
         /// Store the class data into a binary buffer
         virtual size_t Save(const void* classPtr, AZ::IO::GenericStream& stream, bool isDataBigEndian /*= false*/)

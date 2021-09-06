@@ -231,7 +231,7 @@ private: // member functions
 private: // static member functions
 
     static bool VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement);
+        AZ::Serialization::DataElementNode& classElement);
 
     //! Determine whether the specified scale to device mode affects horizontal scale
     static bool DoesScaleToDeviceModeAffectX(ScaleToDeviceMode scaleToDeviceMode);

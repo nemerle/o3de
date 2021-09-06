@@ -8,6 +8,7 @@
 
 #include <AzFramework/Physics/Configuration/SystemConfiguration.h>
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -68,7 +69,7 @@ namespace AzPhysics
             }
         }
     }
-    
+
     bool SystemConfiguration::operator==(const SystemConfiguration& other) const
     {
         return m_autoManageSimulationUpdate == other.m_autoManageSimulationUpdate &&

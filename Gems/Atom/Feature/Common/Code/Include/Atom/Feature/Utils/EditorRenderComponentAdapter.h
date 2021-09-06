@@ -48,7 +48,7 @@ namespace AZ
             // Convert pre-existing EditorCompnentAdapter based serialized data to EditorRenderComponentAdapter
             template<int TVersion>
             static bool ConvertToEditorRenderComponentAdapter(
-                AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+                AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
         };
     } // namespace Render
 } // namespace AZ

@@ -28,7 +28,7 @@ namespace ScriptCanvasEditor
     // EBusHandlerEventNodeDescriptorComponent
     ////////////////////////////////////////////
 
-    static bool EBusHandlerEventNodeDescriptorComponentVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+    static bool EBusHandlerEventNodeDescriptorComponentVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
     {
         if (rootElement.GetVersion() <= 1)
         {

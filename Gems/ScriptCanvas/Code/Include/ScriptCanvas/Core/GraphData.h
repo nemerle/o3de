@@ -54,6 +54,6 @@ namespace ScriptCanvas
         // The endpoint map is lookup table for all endpoints connected on the opposite end of the key value endpoint
         AZStd::unordered_multimap<Endpoint, Endpoint> m_endpointMap; ///< Endpoint map built at edit time based on active connections
 
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     };
 }

@@ -6,6 +6,7 @@
  *
  */
 #include <AzCore/Asset/AssetManager.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Console/IConsole.h>
 #include <AzCore/Interface/Interface.h>
 #include <AzCore/IO/SystemFile.h>
@@ -338,7 +339,7 @@ namespace UnitTest
     // which immediately executes in-place to process the asset due to the synchronous JobManager.
     // Note that if we just created the asset in a Ready state, most of the asset loading code is completely bypassed, and so we
     // wouldn't be able to test for race conditions in the AssetContainer.
-    // 
+    //
     // This class also unregisters the catalog and asset handler before shutting down the asset manager.  This is done to catch
     // any outstanding asset references that exist due to loads not completing and cleaning up successfully.
     struct AssetManagerStreamerImmediateCompletionTests : public BaseAssetManagerTest,
@@ -426,7 +427,7 @@ namespace UnitTest
         }
 
         // AssetCatalogRequestBus implementation
-        
+
         // Minimalist mocks to provide our desired asset path or asset id
         AZStd::string GetAssetPathById(const AZ::Data::AssetId& id) override
         {
@@ -466,7 +467,7 @@ namespace UnitTest
         }
 
         // AssetCatalog implementation
-        
+
         // Set the mocked-out asset load to have a 0-byte length so that the load skips I/O and immediately returns success
         AZ::Data::AssetStreamInfo GetStreamInfoForLoad(
             const AZ::Data::AssetId& id, const AZ::Data::AssetType& type) override

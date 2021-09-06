@@ -802,7 +802,7 @@ void CAnimSequence::SetId(uint32 newId)
 //////////////////////////////////////////////////////////////////////////
 static bool AnimSequenceVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 5)
     {

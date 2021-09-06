@@ -34,7 +34,7 @@ namespace AzToolsFramework
     {
     public:
 
-        using ClassDataType = const AZ::SerializeContext::ClassData*;
+        using ClassDataType = const AZ::Serialization::ClassData*;
         using ClassDataContainer = AZStd::vector<ClassDataType>;
 
         static QString GetMimeType();

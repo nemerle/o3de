@@ -44,7 +44,7 @@ namespace ScriptCanvas
                 }
             }
 
-            bool OperatorEmpty::OperatorEmptyVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            bool OperatorEmpty::OperatorEmptyVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 if (classElement.GetVersion() < 1)
                 {

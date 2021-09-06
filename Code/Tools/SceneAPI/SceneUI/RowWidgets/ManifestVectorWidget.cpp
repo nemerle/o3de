@@ -154,7 +154,7 @@ namespace AZ
                 
                 for (auto& manifestUUID : availableManifestUUIDs)
                 {
-                    const AZ::SerializeContext::ClassData* manifestClassData = m_serializeContext->FindClassData(manifestUUID);
+                    const AZ::Serialization::ClassData* manifestClassData = m_serializeContext->FindClassData(manifestUUID);
 
                     AZ_TraceContext("Child manifest object UUID", manifestUUID.ToString<AZStd::string>());
 
@@ -189,7 +189,7 @@ namespace AZ
                 }
             }
 
-            void ManifestVectorWidget::AddNewObject(SerializeContext::IObjectFactory* factory, const AZStd::string& objectName)
+            void ManifestVectorWidget::AddNewObject(Serialization::IObjectFactory* factory, const AZStd::string& objectName)
             {
                 if (m_manifestVector.size() >= m_capSize)
                 {
@@ -259,7 +259,7 @@ namespace AZ
                 if (node && node->GetParent())
                 {
                     AzToolsFramework::InstanceDataNode* owner = node->GetParent();
-                    const AZ::SerializeContext::ClassData* classData = owner->GetClassMetadata();
+                    const AZ::Serialization::ClassData* classData = owner->GetClassMetadata();
                     if (classData && classData->m_azRtti)
                     {
                         const DataTypes::IManifestObject* cast = classData->m_azRtti->Cast<DataTypes::IManifestObject>(owner->FirstInstance());

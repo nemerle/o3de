@@ -52,16 +52,16 @@ namespace EMotionFX
 
         }
 
-        bool EditorSimpleLODComponent::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool EditorSimpleLODComponent::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             const unsigned int version = classElement.GetVersion();
             bool result = true;
             if (version < 2)
             {
-                AZ::SerializeContext::DataElementNode LODDistanceNode = classElement.GetSubElement(1);
+                AZ::Serialization::DataElementNode LODDistanceNode = classElement.GetSubElement(1);
                 classElement.RemoveElement(1);
                 result = result && classElement.AddElement<SimpleLODComponent::Configuration>(context, "LOD Configuration");
-                AZ::SerializeContext::DataElementNode& LODConfigurationNode = classElement.GetSubElement(1);
+                AZ::Serialization::DataElementNode& LODConfigurationNode = classElement.GetSubElement(1);
                 result = result && LODConfigurationNode.AddElement(LODDistanceNode);
             }
 

@@ -11,7 +11,7 @@
 namespace GradientSignal
 {
     template <typename TComponent, typename TConfiguration>
-    bool EditorGradientComponentBase<TComponent, TConfiguration>::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool EditorGradientComponentBase<TComponent, TConfiguration>::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         // Changed EditorGradientComponentBase to inherit from EditorWrappedComponentBase
         if (classElement.GetVersion() < 1)

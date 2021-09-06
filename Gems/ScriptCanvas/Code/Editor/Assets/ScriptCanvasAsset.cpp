@@ -30,7 +30,7 @@ namespace ScriptCanvas
         return *this;
     }
 
-    static bool ScriptCanvasDataVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootDataElementNode)
+    static bool ScriptCanvasDataVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootDataElementNode)
     {
         if (rootDataElementNode.GetVersion() == 0)
         {

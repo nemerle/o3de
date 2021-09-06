@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <EMotionFX/Source/AnimGraph.h>
@@ -135,7 +136,7 @@ namespace EMotionFX
     }
 
 
-    bool AnimGraphSymbolicFollowerParameterAction::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool AnimGraphSymbolicFollowerParameterAction::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         const unsigned int version = classElement.GetVersion();
         if (version < 2)
@@ -147,7 +148,7 @@ namespace EMotionFX
             if (index > 0)
             {
                 AZStd::string oldValue;
-                AZ::SerializeContext::DataElementNode& dataElementNode = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& dataElementNode = classElement.GetSubElement(index);
                 const bool result = dataElementNode.GetData<AZStd::string>(oldValue);
                 if (!result)
                 {
@@ -164,7 +165,7 @@ namespace EMotionFX
             if (index > 0)
             {
                 AZStd::string oldValue;
-                AZ::SerializeContext::DataElementNode& dataElementNode = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& dataElementNode = classElement.GetSubElement(index);
                 const bool result = dataElementNode.GetData<AZStd::string>(oldValue);
                 if (!result)
                 {

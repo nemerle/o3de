@@ -13,6 +13,7 @@ ly_append_configurations_options(
         -fno-exceptions
         -fvisibility=hidden
         -fvisibility-inlines-hidden
+	-ftime-trace
         -Wall
         -Werror
 

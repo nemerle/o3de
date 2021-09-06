@@ -27,6 +27,9 @@
 #include <AzFramework/Physics/PhysicsScene.h>
 #include <AzFramework/Physics/WindBus.h>
 #include <AzFramework/Physics/Common/PhysicsTypes.h>
+#include <Atom/RPI.Reflect/Buffer/BufferAssetView.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
+#include <Atom/RPI.Reflect/Model/ModelLodAsset.h>
 
 namespace NvCloth
 {
@@ -365,7 +368,7 @@ namespace NvCloth
 
             if (m_timeClothSkinningUpdates <= cloth_SecondsToDelaySimulationOnActorSpawned)
             {
-                // Update skinning for all particles and apply it to cloth 
+                // Update skinning for all particles and apply it to cloth
                 AZStd::vector<SimParticleFormat> particles = m_cloth->GetParticles();
                 m_actorClothSkinning->ApplySkinning(m_cloth->GetInitialParticles(), particles);
                 m_cloth->SetParticles(AZStd::move(particles));

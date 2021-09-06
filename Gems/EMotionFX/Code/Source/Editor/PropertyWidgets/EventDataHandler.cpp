@@ -50,7 +50,7 @@ namespace EMotionFX
         m_eventDataClassNames.emplace_back("<none>", AZ::Uuid::CreateNull());
 
         context->EnumerateDerived<EventData>(
-            [this](const AZ::SerializeContext::ClassData* classData, const AZ::Uuid&)
+            [this](const AZ::Serialization::ClassData* classData, const AZ::Uuid&)
             {
                 // Only add this type if it has the "Creatable" class attribute
                 // set to true
@@ -192,7 +192,7 @@ namespace EMotionFX
         {
             AZ::SerializeContext* context;
             AZ::ComponentApplicationBus::BroadcastResult(context, &AZ::ComponentApplicationBus::Events::GetSerializeContext);
-            const AZ::SerializeContext::ClassData* classData = context->FindClassData(newTypeId);
+            const AZ::Serialization::ClassData* classData = context->FindClassData(newTypeId);
             instance.reset(static_cast<EMotionFX::EventData*>(classData->m_factory->Create(classData->m_name)));
 
             // Deduplicate the event data

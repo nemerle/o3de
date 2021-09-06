@@ -28,12 +28,12 @@ namespace
     //! Renames the float field "Frame Delay" to "Framerate" (as of V3).
     bool ConvertFrameDelayToFramerate(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         int index = classElement.FindElement(AZ_CRC("Frame Delay"));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& frameDelayNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& frameDelayNode = classElement.GetSubElement(index);
             float frameDelayValue = 0;
 
             if (!frameDelayNode.GetData<float>(frameDelayValue))
@@ -60,7 +60,7 @@ namespace
             }
 
             // Finally, set the framerate to be the same value as the frame delay
-            AZ::SerializeContext::DataElementNode& framerateNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& framerateNode = classElement.GetSubElement(index);
             if (!framerateNode.SetData<float>(context, frameDelayValue))
             {
                 AZ_Error("Serialization", false, "Unable to set Framerate to legacy Frame Delay value (%.2f).", frameDelayValue);
@@ -76,7 +76,7 @@ namespace
     //! Prior to V3, default unit of time for playback was seconds-per-frame.
     bool ConvertFramerateUnitToSeconds(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         // If Framerate Unit doesn't exist yet, add it
         int index = classElement.FindElement(AZ_CRC("Framerate Unit"));
@@ -93,7 +93,7 @@ namespace
         }
 
         // Set the framerate unit to seconds for legacy reasons (FPS is default for newer versions of this component)
-        AZ::SerializeContext::DataElementNode& framerateUnitNode = classElement.GetSubElement(index);
+        AZ::Serialization::DataElementNode& framerateUnitNode = classElement.GetSubElement(index);
         const int secondsEnumVal = static_cast<int>(UiFlipbookAnimationInterface::FramerateUnits::SecondsPerFrame);
         if (!framerateUnitNode.SetData<int>(context, secondsEnumVal))
         {
@@ -133,7 +133,7 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static bool UiFlipbookAnimationComponentVersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 2:
     // - Rename "frame delay" to "framerate"

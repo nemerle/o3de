@@ -82,7 +82,7 @@ namespace ScriptCanvas
         // NodeableNodeOverloaded
         ///////////////////////////
 
-        bool NodeableNodeOverloaded::VersionConverter(AZ::SerializeContext&, AZ::SerializeContext::DataElementNode& classElement)
+        bool NodeableNodeOverloaded::VersionConverter(AZ::SerializeContext&, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() <= DataDrivingOverloads)
             {

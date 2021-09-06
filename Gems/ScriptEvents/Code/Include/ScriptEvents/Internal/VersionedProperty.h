@@ -291,8 +291,8 @@ namespace ScriptEventData
     {
         serializeContext->EnumerateObject(obj, 
             [](void *instance, 
-               const AZ::SerializeContext::ClassData *classData, 
-               [[maybe_unused]] const AZ::SerializeContext::ClassElement *classElement) -> bool
+               const AZ::Serialization::ClassData *classData, 
+               [[maybe_unused]] const AZ::Serialization::ClassElement *classElement) -> bool
             {
                 if (classData->m_typeId == azrtti_typeid<VersionedProperty>())
                 {

@@ -80,7 +80,7 @@ namespace ScriptCanvas
         AZ_TYPE_INFO(EditableVariableConfiguration, "{96D2F031-DEA0-44DF-82FB-2612AFB1DACF}");
         AZ_CLASS_ALLOCATOR(EditableVariableConfiguration, AZ::SystemAllocator, 0);
 
-        static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElementNode);
+        static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElementNode);
         static void Reflect(AZ::ReflectContext* context);
 
         GraphVariable m_graphVariable;

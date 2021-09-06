@@ -8,7 +8,10 @@
 
 #pragma once
 
-#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/RTTI/TypeInfo.h>
+#include <AzCore/Memory/SystemAllocator.h>
+#include <AzCore/std/string/string.h>
+#include <AzCore/std/containers/vector.h>
 
 namespace AZ
 {
@@ -27,7 +30,7 @@ namespace AzFramework
         AssetBundleManifest() = default;
 
         static void ReflectSerialize(AZ::SerializeContext* serializeContext);
-        
+
         // Each AssetBundle contains a Catalog file with a unique name used to describe the list
         // of files within the AssetBundle in order to update the Asset Registry at runtime when
         // loading the bundle
@@ -42,8 +45,8 @@ namespace AzFramework
 
         static const char s_manifestFileName[];
         static const int CurrentBundleVersion;
-        
-    private: 
+
+    private:
         AZStd::string m_catalogName;
         AZStd::vector<AZStd::string> m_depedendentBundleNames;
         AZStd::vector<AZStd::string> m_levelDirs;

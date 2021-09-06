@@ -166,7 +166,7 @@ private: // member functions
 private: // static member functions
 
     static bool VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement);
+        AZ::Serialization::DataElementNode& classElement);
 
 private: // data
 

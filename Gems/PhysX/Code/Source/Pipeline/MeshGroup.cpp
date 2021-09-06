@@ -898,7 +898,7 @@ namespace PhysX
                 AzToolsFramework::PropertyModificationRefreshLevel::Refresh_AttributesAndValues);
         }
 
-        bool MeshGroup::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool MeshGroup::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Remove the material rule.
             if (classElement.GetVersion() < 1)
@@ -908,7 +908,7 @@ namespace PhysX
                     ruleContainerNodeIndex >= 0
                 )
                 {
-                    AZ::SerializeContext::DataElementNode& ruleContainerNode = classElement.GetSubElement(ruleContainerNodeIndex);
+                    AZ::Serialization::DataElementNode& ruleContainerNode = classElement.GetSubElement(ruleContainerNodeIndex);
                     AZ::SceneAPI::Containers::RuleContainer ruleContainer;
                     if (ruleContainerNode.GetData<AZ::SceneAPI::Containers::RuleContainer>(ruleContainer))
                     {

@@ -102,7 +102,7 @@ namespace ScriptCanvasEditor
         {
         }
 
-        bool EditorWorkspace::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootDataElementNode)
+        bool EditorWorkspace::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootDataElementNode)
         {
             if (rootDataElementNode.GetVersion() < 3)
             {
@@ -228,7 +228,7 @@ namespace ScriptCanvasEditor
         // ScriptCanvasEditorSettings
         ///////////////////////////////
 
-        bool ScriptCanvasEditorSettings::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool ScriptCanvasEditorSettings::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() <= 5)
             {
@@ -246,7 +246,7 @@ namespace ScriptCanvasEditor
                 ToggleableConfiguration dropSplicingConfiguration(true, 1000);
 
                 // Drag Coupling
-                AZ::SerializeContext::DataElementNode* dataNode = classElement.FindSubElement(dragCouplingEnabledId);
+                AZ::Serialization::DataElementNode* dataNode = classElement.FindSubElement(dragCouplingEnabledId);
 
                 if (dataNode)
                 {

@@ -42,7 +42,7 @@ namespace AzToolsFramework::Prefab::PrefabConversionUtils
 
             AZ::EntityUtils::EnumerateEntityIds<AZ::Entity>(
                 runtimeEntity,
-                [&editorOnlyEntityIds, &result, runtimeEntity](const AZ::EntityId& id, bool /*isEntityId*/, const AZ::SerializeContext::ClassElement* /*elementData*/)
+                [&editorOnlyEntityIds, &result, runtimeEntity](const AZ::EntityId& id, bool /*isEntityId*/, const AZ::Serialization::ClassElement* /*elementData*/)
                 {
                     if (editorOnlyEntityIds.end() != editorOnlyEntityIds.find(id))
                     {

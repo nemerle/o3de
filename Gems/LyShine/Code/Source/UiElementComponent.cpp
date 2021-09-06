@@ -1405,12 +1405,12 @@ void UiElementComponent::Initialize()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiElementComponent::MoveEntityAndDescendantsToListAndReplaceWithEntityId(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& elementNode,
+    AZ::Serialization::DataElementNode& elementNode,
     int index,
-    AZStd::vector<AZ::SerializeContext::DataElementNode>& entities)
+    AZStd::vector<AZ::Serialization::DataElementNode>& entities)
 {
     // Find the UiElementComponent on this entity
-    AZ::SerializeContext::DataElementNode* elementComponentNode =
+    AZ::Serialization::DataElementNode* elementComponentNode =
         LyShine::FindComponentNode(elementNode, UiElementComponent::TYPEINFO_Uuid());
     if (!elementComponentNode)
     {
@@ -1426,22 +1426,22 @@ bool UiElementComponent::MoveEntityAndDescendantsToListAndReplaceWithEntityId(AZ
     {
         return false;
     }
-    AZ::SerializeContext::DataElementNode& childrenNode = elementComponentNode->GetSubElement(childrenIndex);
+    AZ::Serialization::DataElementNode& childrenNode = elementComponentNode->GetSubElement(childrenIndex);
 
     // Create the child entities member (which is a generic vector)
-    AZ::SerializeContext::ClassData* classData = AZ::SerializeGenericTypeInfo<ChildEntityIdOrderArray>::GetGenericInfo()->GetClassData();
+    AZ::Serialization::ClassData* classData = AZ::SerializeGenericTypeInfo<ChildEntityIdOrderArray>::GetGenericInfo()->GetClassData();
     int newChildrenIndex = elementComponentNode->AddElement(context, "ChildEntityIdOrder", *classData);
     if (newChildrenIndex == -1)
     {
         return false;
     }
-    AZ::SerializeContext::DataElementNode& newChildrenNode = elementComponentNode->GetSubElement(newChildrenIndex);
+    AZ::Serialization::DataElementNode& newChildrenNode = elementComponentNode->GetSubElement(newChildrenIndex);
 
     // iterate through children and recursively call this function
     int numChildren = childrenNode.GetNumSubElements();
     for (int childIndex = 0; childIndex < numChildren; ++childIndex)
     {
-        AZ::SerializeContext::DataElementNode& childElementNode = childrenNode.GetSubElement(childIndex);
+        AZ::Serialization::DataElementNode& childElementNode = childrenNode.GetSubElement(childIndex);
         MoveEntityAndDescendantsToListAndReplaceWithEntityId(context, childElementNode, childIndex, entities);
 
         newChildrenNode.AddElement(childElementNode);
@@ -1466,7 +1466,7 @@ bool UiElementComponent::MoveEntityAndDescendantsToListAndReplaceWithEntityId(AZ
     {
         return false;
     }
-    AZ::SerializeContext::DataElementNode& elementIdNode = elementNode.GetSubElement(entityIdIndex);
+    AZ::Serialization::DataElementNode& elementIdNode = elementNode.GetSubElement(entityIdIndex);
 
     // Find the sub node of the EntityID that actually stores the u64 and make a copy of it
     int u64Index = elementIdNode.FindElement(AZ_CRC("id", 0xbf396750));
@@ -1474,7 +1474,7 @@ bool UiElementComponent::MoveEntityAndDescendantsToListAndReplaceWithEntityId(AZ
     {
         return false;
     }
-    AZ::SerializeContext::DataElementNode u64Node = elementIdNode.GetSubElement(u64Index);
+    AZ::Serialization::DataElementNode u64Node = elementIdNode.GetSubElement(u64Index);
 
     // -1 indicates this is the root element reference
     if (index == -1)
@@ -1494,7 +1494,7 @@ bool UiElementComponent::MoveEntityAndDescendantsToListAndReplaceWithEntityId(AZ
 
         // add sub element from the entity Id
         int childOrderEntryEntityIdIndex = elementNode.AddElement<AZ::EntityId>(context, "ChildEntityId");
-        AZ::SerializeContext::DataElementNode& childOrderEntryEntityIdElementNode = elementNode.GetSubElement(childOrderEntryEntityIdIndex);
+        AZ::Serialization::DataElementNode& childOrderEntryEntityIdElementNode = elementNode.GetSubElement(childOrderEntryEntityIdIndex);
 
         // copy in the subNode that stores the actual u64 (that we saved a copy of above)
         childOrderEntryEntityIdElementNode.AddElement(u64Node);
@@ -1890,7 +1890,7 @@ void UiElementComponent::PrepareElementForDestroy()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiElementComponent::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1 to 2:
     if (classElement.GetVersion() < 2)
@@ -1912,26 +1912,26 @@ bool UiElementComponent::VersionConverter(AZ::SerializeContext& context,
         int childrenIndex = classElement.FindElement(AZ_CRC("Children"));
         if (childrenIndex != -1)
         {
-            AZ::SerializeContext::DataElementNode& childrenElementNode = classElement.GetSubElement(childrenIndex);
+            AZ::Serialization::DataElementNode& childrenElementNode = classElement.GetSubElement(childrenIndex);
 
             // add the new "ChildEntityIdOrder" element, this is a container
             int childOrderIndex = classElement.AddElement<ChildEntityIdOrderArray>(context, "ChildEntityIdOrder");
-            AZ::SerializeContext::DataElementNode& childOrderElementNode = classElement.GetSubElement(childOrderIndex);
+            AZ::Serialization::DataElementNode& childOrderElementNode = classElement.GetSubElement(childOrderIndex);
 
             int numChildren = childrenElementNode.GetNumSubElements();
 
             // for each EntityId in the Children container create a ChildEntityIdOrderEntry in the ChildEntityIdOrder container
             for (int childIndex = 0; childIndex < numChildren; ++childIndex)
             {
-                AZ::SerializeContext::DataElementNode& childElementNode = childrenElementNode.GetSubElement(childIndex);
+                AZ::Serialization::DataElementNode& childElementNode = childrenElementNode.GetSubElement(childIndex);
 
                 // add the entry in the container (or type ChildEntityIdOrderEntry which is a struct of EntityId and u64)
                 int childOrderEntryIndex = childOrderElementNode.AddElement<ChildEntityIdOrderEntry>(context, "element");
-                AZ::SerializeContext::DataElementNode& childOrderEntryElementNode = childOrderElementNode.GetSubElement(childOrderEntryIndex);
+                AZ::Serialization::DataElementNode& childOrderEntryElementNode = childOrderElementNode.GetSubElement(childOrderEntryIndex);
 
                 // copy the EntityId node from the Children container and change its name
                 int childOrderEntryEntityIdIndex = childOrderEntryElementNode.AddElement(childElementNode);
-                AZ::SerializeContext::DataElementNode& childOrderEntryEntityIdElementNode = childOrderEntryElementNode.GetSubElement(childOrderEntryEntityIdIndex);
+                AZ::Serialization::DataElementNode& childOrderEntryEntityIdElementNode = childOrderEntryElementNode.GetSubElement(childOrderEntryEntityIdIndex);
                 childOrderEntryEntityIdElementNode.SetName("ChildEntityId");
 
                 // add the the sort index - which is just the position in the container when we are converting old data.

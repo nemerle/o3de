@@ -24,7 +24,7 @@ namespace Camera
 {
     namespace ClassConverters
     {
-        extern bool UpdateCameraComponentToUseController(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        extern bool UpdateCameraComponentToUseController(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     }
 
     void EditorCameraComponent::Activate()
@@ -60,7 +60,7 @@ namespace Camera
         return configurationHash;
     }
 
-    static bool UpdateEditorCameraComponentToUseController(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    static bool UpdateEditorCameraComponentToUseController(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (!ClassConverters::UpdateCameraComponentToUseController(context, classElement))
         {

@@ -56,11 +56,11 @@ namespace AzToolsFramework
 
     using EntityIdList = AZStd::vector<AZ::EntityId>;
     using EntityList = AZStd::vector<AZ::Entity*>;
-    using ClassDataList = AZStd::vector<const AZ::SerializeContext::ClassData*>;
+    using ClassDataList = AZStd::vector<const AZ::Serialization::ClassData*>;
     using EntityIdSet = AZStd::unordered_set<AZ::EntityId>;
 
     //! Return true to accept this type of component.
-    using ComponentFilter = AZStd::function<bool(const AZ::SerializeContext::ClassData&)>;
+    using ComponentFilter = AZStd::function<bool(const AZ::Serialization::ClassData&)>;
 
     /**
      * Bus owned by the ToolsApplication. Listen for general ToolsApplication events.

@@ -14,7 +14,7 @@ namespace AZ
     {
         template <typename TagContainer>
         bool SystemComponentTagsMatchesAtLeastOneTag(
-            const AZ::SerializeContext::ClassData* classData,
+            const AZ::Serialization::ClassData* classData,
             const TagContainer& requiredTags,
             bool defaultVal)
         {

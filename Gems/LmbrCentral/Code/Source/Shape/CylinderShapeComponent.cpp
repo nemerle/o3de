@@ -92,8 +92,8 @@ namespace LmbrCentral
 
     namespace ClassConverters
     {
-        static bool DeprecateCylinderColliderConfiguration(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        static bool DeprecateCylinderColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool DeprecateCylinderColliderConfiguration(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        static bool DeprecateCylinderColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
     }
 
     void CylinderShapeConfig::Reflect(AZ::ReflectContext* context)
@@ -203,7 +203,7 @@ namespace LmbrCentral
 
     namespace ClassConverters
     {
-        static bool DeprecateCylinderColliderConfiguration(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool DeprecateCylinderColliderConfiguration(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             /*
             Old:
@@ -257,7 +257,7 @@ namespace LmbrCentral
             return false;
         }
 
-        static bool DeprecateCylinderColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool DeprecateCylinderColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             /*
             Old:

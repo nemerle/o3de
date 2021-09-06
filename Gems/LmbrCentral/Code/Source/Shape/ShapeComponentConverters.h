@@ -17,13 +17,13 @@ namespace LmbrCentral
         /// Common convert function to move shape config to shape type.
         template <typename Shape, typename ShapeConfig>
         bool UpgradeShapeComponentConfigToShape(
-            AZ::u32 version, const char* shapeName, AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+            AZ::u32 version, const char* shapeName, AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         /// ShapeComponent converters
-        bool UpgradeBoxShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool UpgradeSphereShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool UpgradeCapsuleShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
-        bool UpgradeCylinderShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        bool UpgradeBoxShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool UpgradeSphereShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool UpgradeCapsuleShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
+        bool UpgradeCylinderShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
     } // namespace ClassConverters
 } // namespace LmbrCentral

@@ -61,7 +61,7 @@ namespace AzToolsFramework
         {
         }
 
-        GenericComponentWrapper::GenericComponentWrapper(const AZ::SerializeContext::ClassData* templateClassData)
+        GenericComponentWrapper::GenericComponentWrapper(const AZ::Serialization::ClassData* templateClassData)
         {
             EBUS_EVENT_ID_RESULT(m_template, templateClassData->m_typeId, AZ::ComponentDescriptorBus, CreateComponent);
         }

@@ -18,28 +18,28 @@ namespace LmbrCentral
 {
     namespace ClassConverters
     {
-        bool UpgradeBoxShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeBoxShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // upgrade for editor and runtime components at this stage are the same
             return UpgradeShapeComponentConfigToShape<BoxShape, BoxShapeConfig>(
                 classElement.GetVersion(), "BoxShape", context, classElement);
         }
 
-        bool UpgradeSphereShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeSphereShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // upgrade for editor and runtime components at this stage are the same
             return UpgradeShapeComponentConfigToShape<SphereShape, SphereShapeConfig>(
                 classElement.GetVersion(), "SphereShape", context, classElement);
         }
 
-        bool UpgradeCapsuleShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeCapsuleShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // upgrade for editor and runtime components at this stage are the same
             return UpgradeShapeComponentConfigToShape<CapsuleShape, CapsuleShapeConfig>(
                 classElement.GetVersion(), "CapsuleShape", context, classElement);
         }
 
-        bool UpgradeCylinderShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeCylinderShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // upgrade for editor and runtime components at this stage are the same
             return UpgradeShapeComponentConfigToShape<CylinderShape, CylinderShapeConfig>(

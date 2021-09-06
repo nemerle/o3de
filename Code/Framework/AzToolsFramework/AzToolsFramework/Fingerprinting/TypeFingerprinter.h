@@ -59,7 +59,7 @@ namespace AzToolsFramework
 
         private:
 
-            TypeFingerprint CreateFingerprint(const AZ::SerializeContext::ClassData& classData);
+            TypeFingerprint CreateFingerprint(const AZ::Serialization::ClassData& classData);
 
             AZStd::unordered_map<AZ::TypeId, TypeFingerprint> m_typeFingerprints;
             const AZ::SerializeContext& m_serializeContext;

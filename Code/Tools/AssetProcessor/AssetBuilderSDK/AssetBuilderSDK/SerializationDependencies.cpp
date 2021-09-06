@@ -7,14 +7,15 @@
  */
 
 #include <AssetBuilderSDK/SerializationDependencies.h>
+#include <AzCore/Asset/AssetSerializer.h>
 
 namespace AssetBuilderSDK
 {
     bool UpdateDependenciesFromClassData(
         const AZ::SerializeContext& serializeContext,
         void* instancePointer,
-        const AZ::SerializeContext::ClassData* classData,
-        const AZ::SerializeContext::ClassElement* classElement,
+        const AZ::Serialization::ClassData* classData,
+        const AZ::Serialization::ClassElement* classElement,
         UniqueDependencyList& productDependencySet,
         ProductPathDependencySet& productPathDependencySet,
         bool enumerateChildren)
@@ -58,7 +59,7 @@ namespace AssetBuilderSDK
                     // 2) one file extension like "fileExtension"
                     // 3) a semi colon separated list of file extensions like  "*.fileExtension1; *.fileExtension2"
                     // Please note that if file extension is missing from the path and we get a list of semicolon separated file extensions
-                    // we will extract the first file extension and use that. 
+                    // we will extract the first file extension and use that.
                     fileExtension = asset->GetFileFilter();
                     AZStd::regex fileExtensionRegex("^(?:\\*\\.)?(\\w+);?");
                     AZStd::smatch match;
@@ -75,12 +76,12 @@ namespace AssetBuilderSDK
         else if(enumerateChildren)
         {
 
-            auto beginCallback = [&serializeContext, &productDependencySet, &productPathDependencySet](void* instancePointer, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* classElement)
+            auto beginCallback = [&serializeContext, &productDependencySet, &productPathDependencySet](void* instancePointer, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* classElement)
             {
                 // EnumerateInstance calls are already recursive, so no need to keep going, set enumerateChildren to false.
                 return UpdateDependenciesFromClassData(serializeContext, instancePointer, classData, classElement, productDependencySet, productPathDependencySet, false);
             };
-            AZ::SerializeContext::EnumerateInstanceCallContext callContext(
+            AZ::Serialization::EnumerateInstanceCallContext callContext(
                 beginCallback,
                 {},
                 &serializeContext,
@@ -160,7 +161,7 @@ namespace AssetBuilderSDK
 
         // start with a set to make it easy to avoid duplicate entries.
         UniqueDependencyList productDependencySet;
-        auto beginCallback = [&serializeContext, &productDependencySet, &productPathDependencySet, handler](void* instancePointer, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* classElement)
+        auto beginCallback = [&serializeContext, &productDependencySet, &productPathDependencySet, handler](void* instancePointer, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* classElement)
         {
             // EnumerateObject already visits every element, so no need to enumerate farther, set enumerateChildren to false.
             return handler(serializeContext, instancePointer, classData, classElement, productDependencySet, productPathDependencySet, false);

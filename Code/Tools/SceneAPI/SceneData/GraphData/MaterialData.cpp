@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <SceneAPI/SceneData/GraphData/MaterialData.h>
@@ -94,7 +95,7 @@ namespace AZ
             {
                 return m_diffuseColor;
             }
-            
+
             void MaterialData::SetSpecularColor(const AZ::Vector3& color)
             {
                 m_specularColor = color;
@@ -114,7 +115,7 @@ namespace AZ
             {
                 return m_emissiveColor;
             }
-            
+
             void MaterialData::SetOpacity(float opacity)
             {
                 m_opacity = opacity;
@@ -124,7 +125,7 @@ namespace AZ
             {
                 return m_opacity;
             }
-            
+
             void MaterialData::SetShininess(float shininess)
             {
                 m_shininess = shininess;

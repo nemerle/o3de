@@ -26,6 +26,7 @@
 #include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Asset/AssetManagerBus.h>
 #include <AzCore/Utils/Utils.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 #include <AzFramework/Components/CameraBus.h>
 #include <AzFramework/Session/ISessionRequests.h>
 #include <AzFramework/Session/SessionConfig.h>
@@ -464,7 +465,7 @@ namespace Multiplayer
                 auto visitor = [](IConnection& connection) { connection.Disconnect(DisconnectReason::TerminatedByUser, TerminationEndpoint::Local); };
                 m_networkInterface->GetConnectionSet().VisitConnections(visitor);
                 return true;
-            }   
+            }
         }
         reinterpret_cast<ServerToClientConnectionData*>(connection->GetUserData())->SetProviderTicket(packet.GetTicket().c_str());
 
@@ -653,7 +654,7 @@ namespace Multiplayer
                 controlledEntity.GetNetBindComponent()->SetOwningConnectionId(connection->GetConnectionId());
             }
             controlledEntity.Activate();
-            
+
             if (connection->GetUserData() == nullptr) // Only add user data if the connect event handler has not already done so
             {
                 connection->SetUserData(new ServerToClientConnectionData(connection, *this, controlledEntity));
@@ -726,7 +727,7 @@ namespace Multiplayer
         // Signal to session management when there are no remaining players in a dedicated server for potential cleanup
         // We avoid this for client server as the host itself is a user and non-transient dedicated servers
         if (sv_isTransient && m_agentType == MultiplayerAgentType::DedicatedServer && connection->GetConnectionRole() == ConnectionRole::Acceptor)
-        {   
+        {
             if (m_networkInterface->GetConnectionSet().GetActiveConnectionCount() == 0)
             {
                 Terminate(DisconnectReason::TerminatedByServer);
@@ -774,7 +775,7 @@ namespace Multiplayer
             }
             controlledEntity.Activate();
         }
-        
+
         AZLOG_INFO("Multiplayer operating in %s mode", GetEnumString(m_agentType));
     }
 

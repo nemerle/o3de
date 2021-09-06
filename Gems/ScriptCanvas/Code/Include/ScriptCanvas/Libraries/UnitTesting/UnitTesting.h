@@ -16,8 +16,8 @@ namespace ScriptCanvas
     {
         using Report = AZStd::string;
 
-        bool ExpectBooleanVersioner(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
-        bool ExpectComparisonVersioner(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
+        bool ExpectBooleanVersioner(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
+        bool ExpectComparisonVersioner(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
     } 
 
 } 

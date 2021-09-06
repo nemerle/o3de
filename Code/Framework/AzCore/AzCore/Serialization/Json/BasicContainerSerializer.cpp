@@ -55,14 +55,14 @@ namespace AZ
     {
         namespace JSR = JsonSerializationResult; // Used to remove name conflicts in AzCore in uber builds.
 
-        const SerializeContext::ClassData* containerClass = context.GetSerializeContext()->FindClassData(valueTypeId);
+        const Serialization::ClassData* containerClass = context.GetSerializeContext()->FindClassData(valueTypeId);
         if (!containerClass)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve information for definition of the basic container instance.");
         }
 
-        SerializeContext::IDataContainer* container = containerClass->m_container;
+        Serialization::IDataContainer* container = containerClass->m_container;
         if (!container)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
@@ -74,9 +74,9 @@ namespace AZ
         size_t index = 0;
         JSR::ResultCode retVal(JSR::Tasks::WriteValue);
         auto elementCallback = [this, &array, &retVal, &index, &context]
-            (void* elementPtr, const Uuid& elementId, const SerializeContext::ClassData*, const SerializeContext::ClassElement* classElement)
+            (void* elementPtr, const Uuid& elementId, const Serialization::ClassData*, const Serialization::ClassElement* classElement)
         {
-            ContinuationFlags flags = classElement->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER
+            ContinuationFlags flags = classElement->m_flags & Serialization::ClassElement::Flags::FLG_POINTER
                 ? ContinuationFlags::ResolvePointer
                 : ContinuationFlags::None;
             flags |= ContinuationFlags::ReplaceDefault;
@@ -143,22 +143,22 @@ namespace AZ
     {
         namespace JSR = JsonSerializationResult; // Used to remove name conflicts in AzCore in uber builds.
 
-        const SerializeContext::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
+        const Serialization::ClassData* containerClass = context.GetSerializeContext()->FindClassData(outputValueTypeId);
         if (!containerClass)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve information for definition of the basic container.");
         }
 
-        SerializeContext::IDataContainer* container = containerClass->m_container;
+        Serialization::IDataContainer* container = containerClass->m_container;
         if (!container)
         {
             return context.Report(JSR::Tasks::RetrieveInfo, JSR::Outcomes::Unsupported,
                 "Unable to retrieve container meta information for the basic container.");
         }
 
-        const SerializeContext::ClassElement* classElement = nullptr;
-        auto typeEnumCallback = [&classElement](const Uuid&, const SerializeContext::ClassElement* genericClassElement)
+        const Serialization::ClassElement* classElement = nullptr;
+        auto typeEnumCallback = [&classElement](const Uuid&, const Serialization::ClassElement* genericClassElement)
         {
             AZ_Assert(!classElement, "There are multiple class elements registered for a basic container where only one was expected.");
             classElement = genericClassElement;
@@ -167,7 +167,7 @@ namespace AZ
         container->EnumTypes(typeEnumCallback);
         AZ_Assert(classElement, "No class element found for the type in the basic container.");
 
-        ContinuationFlags flags = classElement->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER
+        ContinuationFlags flags = classElement->m_flags & Serialization::ClassElement::Flags::FLG_POINTER
             ? ContinuationFlags::ResolvePointer
             : ContinuationFlags::None;
         flags |= ContinuationFlags::LoadAsNewInstance;
@@ -212,7 +212,7 @@ namespace AZ
                 return context.Report(JSR::Tasks::ReadField, JSR::Outcomes::Catastrophic,
                     "Failed to allocate an item in the basic container.");
             }
-            if (classElement->m_flags & SerializeContext::ClassElement::Flags::FLG_POINTER)
+            if (classElement->m_flags & Serialization::ClassElement::Flags::FLG_POINTER)
             {
                 *reinterpret_cast<void**>(elementAddress) = nullptr;
             }

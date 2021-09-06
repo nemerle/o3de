@@ -7,6 +7,7 @@
  */
 
 #include <AzCore/RTTI/AttributeReader.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/ObjectStream.h>
 #include <AzCore/Serialization/DataOverlayInstanceMsgs.h>
 #include <AzCore/Serialization/DataOverlayProviderMsgs.h>
@@ -75,7 +76,7 @@ namespace AZ
             };
 
             // These are written with every data element. Note that the size can be
-            // encoded in the flags if it is < 7 (this optimizes the common case 
+            // encoded in the flags if it is < 7 (this optimizes the common case
             // of size=4). If new flags are required, they will need to be packed
             // into the extra size field
             enum BinaryFlags
@@ -115,15 +116,15 @@ namespace AZ
             /// Starts the operation
             bool Start();
 
-            bool LoadClass(IO::GenericStream& stream, SerializeContext::DataElementNode& convertedClassElement, const SerializeContext::ClassData* parentClassInfo, void* parentClassPtr, int flags);
+            bool LoadClass(IO::GenericStream& stream, Serialization::DataElementNode& convertedClassElement, const Serialization::ClassData* parentClassInfo, void* parentClassPtr, int flags);
 
             // returns true if an element was found at the requested level
-            bool ReadElement(SerializeContext& sc, const SerializeContext::ClassData*& cd, SerializeContext::DataElement& element, const SerializeContext::ClassData* parent, bool nextLevel, bool isTopElement);
+            bool ReadElement(SerializeContext& sc, const Serialization::ClassData*& cd, Serialization::DataElement& element, const Serialization::ClassData* parent, bool nextLevel, bool isTopElement);
             // used during load to skip the rest of the element including any subelements
             void SkipElement();
 
-            bool WriteClass(const void* classPtr, const Uuid& classId, const SerializeContext::ClassData* classData) override;
-            bool WriteElement(const void* elemPtr, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* classElement);
+            bool WriteClass(const void* classPtr, const Uuid& classId, const Serialization::ClassData* classData) override;
+            bool WriteElement(const void* elemPtr, const Serialization::ClassData* classData, const Serialization::ClassElement* classElement);
             bool CloseElement();
 
             const char* GetStreamFilename() const;
@@ -138,7 +139,7 @@ namespace AZ
             struct StorageAddressElement
             {
                 StorageAddressElement(void* dataAddressRef, void* reserveAddressRef, bool& errorResultRef,
-                    SerializeContext::IDataContainer* classContainerRef, size_t& currentContainerElementIndexRef)
+                    Serialization::IDataContainer* classContainerRef, size_t& currentContainerElementIndexRef)
                     : m_dataAddress(dataAddressRef)
                     , m_reserveAddress(reserveAddressRef)
                     , m_errorResult(errorResultRef)
@@ -149,7 +150,7 @@ namespace AZ
                 void* m_dataAddress{};
                 void* m_reserveAddress{};
                 bool& m_errorResult;
-                SerializeContext::IDataContainer* m_classContainer{};
+                Serialization::IDataContainer* m_classContainer{};
                 size_t& m_currentContainerElementIndex;
             };
             /// Retrieves storage address for data element of being loaded
@@ -168,16 +169,16 @@ namespace AZ
             /// has a more reserved elements than the currentContainerElementIndex and the container can be accessed by index, then this is used to access that reserved element
             /// @return Success if @dataAddress has been populated with a memory address to store the @dataElement value;
             /// FailedContinueEnumeration if an error occurred while attempting to retrieve a memory address of a non root level element;
-            /// FailedStopEnumeration if an error occurred while attempting to retrieve a memory address of a root level 
-            StorageAddressResult GetElementStorageAddress(StorageAddressElement& storageAddressElement, const SerializeContext::ClassElement* classElement, const SerializeContext::DataElement& dataElement,
-                const SerializeContext::ClassData* dataElementClassData, void* parentClassPtr);
+            /// FailedStopEnumeration if an error occurred while attempting to retrieve a memory address of a root level
+            StorageAddressResult GetElementStorageAddress(StorageAddressElement& storageAddressElement, const Serialization::ClassElement* classElement, const Serialization::DataElement& dataElement,
+                const Serialization::ClassData* dataElementClassData, void* parentClassPtr);
 
             /// finalizes the stream after the user is done submitting his writes
             bool Finalize() override;
 
             /// Returns true if we will keep the element class, otherwise false
-            bool ConvertOldVersion(SerializeContext& sc, SerializeContext::DataElementNode& elementNode, IO::GenericStream& stream, const SerializeContext::ClassData* elementClass);
-            void PreparseOldVersion(SerializeContext& sc, SerializeContext::DataElementNode& elementNode, IO::GenericStream& stream, const SerializeContext::ClassData* elementClass);
+            bool ConvertOldVersion(SerializeContext& sc, Serialization::DataElementNode& elementNode, IO::GenericStream& stream, const Serialization::ClassData* elementClass);
+            void PreparseOldVersion(SerializeContext& sc, Serialization::DataElementNode& elementNode, IO::GenericStream& stream, const Serialization::ClassData* elementClass);
 
             int                                 m_flags;
             FilterDescriptor                    m_filterDesc;
@@ -186,7 +187,7 @@ namespace AZ
             CompletionCB                        m_doneCB;
             InplaceLoadRootInfoCB               m_inplaceLoadInfoCB;
             unsigned int                        m_version;
-            SerializeContext::ErrorHandler      m_errorLogger;
+            Serialization::ErrorHandler      m_errorLogger;
             AZStd::atomic_int                   m_pending;
 
             // used for xml streams
@@ -231,12 +232,12 @@ namespace AZ
         // PreparseOldVersion
         // [4/25/2012]
         //=========================================================================
-        void ObjectStreamImpl::PreparseOldVersion(SerializeContext& sc, SerializeContext::DataElementNode& elementNode, IO::GenericStream& stream, const SerializeContext::ClassData* elementClass)
+        void ObjectStreamImpl::PreparseOldVersion(SerializeContext& sc, Serialization::DataElementNode& elementNode, IO::GenericStream& stream, const Serialization::ClassData* elementClass)
         {
             // whenever tracing is availalble we make error logging available.
-#if defined(AZ_ENABLE_TRACING) 
+#if defined(AZ_ENABLE_TRACING)
             {
-                SerializeContext::DbgStackEntry de;
+                Serialization::DbgStackEntry de;
                 de.m_dataPtr = nullptr;
                 de.m_uuidPtr = &elementClass->m_typeId;
                 de.m_elementName = elementNode.GetNameString();
@@ -245,12 +246,12 @@ namespace AZ
                 m_errorLogger.Push(de);
             }
 #endif // AZ_ENABLE_TRACING
-            SerializeContext::DataElement childElement;
+            Serialization::DataElement childElement;
             childElement.m_stream = &childElement.m_byteStream;
             childElement.m_stream->Seek(0, IO::GenericStream::ST_SEEK_BEGIN);
             childElement.m_dataSize = 0;
 
-            const SerializeContext::ClassData* childClass = nullptr;
+            const Serialization::ClassData* childClass = nullptr;
             bool nextLevel = true;
             while (ReadElement(sc, childClass, childElement, elementClass, nextLevel, false))
             {
@@ -259,7 +260,7 @@ namespace AZ
                 nextLevel = false;
 
                 elementNode.m_subElements.push_back();
-                SerializeContext::DataElementNode& childNode = elementNode.m_subElements.back();
+                Serialization::DataElementNode& childNode = elementNode.m_subElements.back();
                 // we might need to copy the element name, if it's deleted after the read element
                 // otherwise it will be left dangling
                 childNode.m_element = AZStd::move(childElement);
@@ -315,7 +316,7 @@ namespace AZ
         // ConvertOldVersion
         // [4/25/2012]
         //=========================================================================
-        bool ObjectStreamImpl::ConvertOldVersion(SerializeContext& sc, SerializeContext::DataElementNode& elementNode, IO::GenericStream& stream, const SerializeContext::ClassData* elementClass)
+        bool ObjectStreamImpl::ConvertOldVersion(SerializeContext& sc, Serialization::DataElementNode& elementNode, IO::GenericStream& stream, const Serialization::ClassData* elementClass)
         {
             AZ_Assert(elementNode.m_classData->IsDeprecated() || elementNode.m_element.m_version < elementNode.m_classData->m_version, "Don't call this function if the element is not an old version element!");
 
@@ -337,14 +338,14 @@ namespace AZ
                 //  - Sub-elements whose class data is missing (a subcase of the above).
                 for (int iDataElem = elementNode.GetNumSubElements() - 1; iDataElem >= 0; --iDataElem)
                 {
-                    SerializeContext::DataElement& subElem = elementNode.GetSubElement(iDataElem).m_element;
-                    const SerializeContext::ClassData* classData = elementNode.GetSubElement(iDataElem).m_classData;
+                    Serialization::DataElement& subElem = elementNode.GetSubElement(iDataElem).m_element;
+                    const Serialization::ClassData* classData = elementNode.GetSubElement(iDataElem).m_classData;
                     bool keep = false;
                     if (classData)
                     {
                         for (size_t iClassElem = 0; iClassElem < elementClass->m_elements.size(); ++iClassElem)
                         {
-                            const SerializeContext::ClassElement& classElem = elementClass->m_elements[iClassElem];
+                            const Serialization::ClassElement& classElem = elementClass->m_elements[iClassElem];
                             const TypeId underlyingTypeId = sc.GetUnderlyingTypeId(classElem.m_typeId);
                             if (classElem.m_nameCrc == subElem.m_nameCrc && (m_sc->CanDowncast(subElem.m_id, classElem.m_typeId, classData->m_azRtti, classElem.m_azRtti)
                                 || subElem.m_id == underlyingTypeId))
@@ -368,18 +369,18 @@ namespace AZ
         // LoadClass
         // [4/25/2012]
         //=========================================================================
-        bool ObjectStreamImpl::LoadClass(IO::GenericStream& stream, SerializeContext::DataElementNode& convertedClassElement, const SerializeContext::ClassData* parentClassInfo, void* parentClassPtr, int flags)
+        bool ObjectStreamImpl::LoadClass(IO::GenericStream& stream, Serialization::DataElementNode& convertedClassElement, const Serialization::ClassData* parentClassInfo, void* parentClassPtr, int flags)
         {
             bool result = true;
 
-            SerializeContext::DataElement element;
+            Serialization::DataElement element;
 
             if (element.m_stream == nullptr)
             {
                 element.m_stream = &stream;
             }
 
-            SerializeContext::DataElementNode* convertedNode = &convertedClassElement;
+            Serialization::DataElementNode* convertedNode = &convertedClassElement;
             size_t convertedClassElementIndex = 0;
             bool nextLevel = true;
 
@@ -388,7 +389,7 @@ namespace AZ
             while (true)
             {
                 // reset the class info
-                const SerializeContext::ClassData* classData = nullptr;
+                const Serialization::ClassData* classData = nullptr;
 
                 bool isConvertedData = false;
                 // read from the converted list (if we have something)
@@ -441,9 +442,9 @@ namespace AZ
                             AZStd::string error = AZStd::string::format("Converter failed for element '%s'(0x%x) with deprecated class ID '%s'.  File %s",
                                 element.m_name ? element.m_name : "NULL", element.m_nameCrc, element.m_id.ToString<AZStd::string>().c_str(),
                                 GetStreamFilename());
-                            
+
                             m_errorLogger.ReportError(error.c_str());
-                            
+
                             result = result && ((m_filterDesc.m_flags & FILTERFLAG_STRICT) == 0);  // in strict mode, this is a complete failure.
                         }
 
@@ -451,7 +452,7 @@ namespace AZ
                         element.m_dataSize = static_cast<size_t>(stream.GetCurPos());
                         continue;
                     }
-                    
+
                     classData = convertedClassElement.m_classData;
                     element = convertedClassElement.m_element;
                     isConvertedData = true;
@@ -496,7 +497,7 @@ namespace AZ
                 {
                     DataOverlayInfo overlay;
                     result = LoadClass(stream, *convertedNode, classData, &overlay, flags) && result;
-                    SerializeContext::DataElementNode overlaidNode;
+                    Serialization::DataElementNode overlaidNode;
                     overlaidNode.m_classData = parentClassInfo;
                     overlaidNode.m_element.m_stream = &stream;
                     DataOverlayTarget data(&overlaidNode, m_sc, &m_errorLogger);
@@ -518,9 +519,9 @@ namespace AZ
                 // The node needs to match the name and type of some ClassElement at the current level in the
                 // reflected hierarchy.
                 // If it is a pointer type, the node could be of a derived type!
-                const SerializeContext::ClassElement* classElement = nullptr;
-                SerializeContext::IDataContainer* classContainer = nullptr;
-                SerializeContext::ClassElement dynamicElementMetadata;  // we'll point to this if we are loading a DynamicSerializableField
+                const Serialization::ClassElement* classElement = nullptr;
+                Serialization::IDataContainer* classContainer = nullptr;
+                Serialization::ClassElement dynamicElementMetadata;  // we'll point to this if we are loading a DynamicSerializableField
                 if (parentClassInfo)
                 {
                     if (parentClassInfo->m_container)
@@ -534,13 +535,13 @@ namespace AZ
                             classElement = &dynamicElementMetadata;
                             // if the container contains pointers, then the elements could be a derived type,
                             // otherwise we need the uuids to be exactly the same.
-                            if (classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER)
+                            if (classElement->m_flags & Serialization::ClassElement::FLG_POINTER)
                             {
                                 bool isCastableToClassElement = m_sc->CanDowncast(element.m_id, classElement->m_typeId, classData->m_azRtti, classElement->m_azRtti);
                                 bool isConvertableToClassElement = false;
                                 if (!isCastableToClassElement)
                                 {
-                                    const SerializeContext::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId, parentClassInfo, classElement->m_nameCrc);
+                                    const Serialization::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId, parentClassInfo, classElement->m_nameCrc);
                                     isConvertableToClassElement = classElementClassData && classElementClassData->CanConvertFromType(element.m_id, *m_sc);
                                 }
 
@@ -549,7 +550,7 @@ namespace AZ
                                     AZStd::string error = AZStd::string::format("Element of type %s cannot be added to container of pointers to type %s!  File %s"
                                         , element.m_id.ToString<AZStd::string>().c_str(), classElement->m_typeId.ToString<AZStd::string>().c_str(),
                                         GetStreamFilename());
-                                    
+
 
                                     result = result && ((m_filterDesc.m_flags & FILTERFLAG_STRICT) == 0);  // in strict mode, this is a complete failure.
                                     m_errorLogger.ReportError(error.c_str());
@@ -563,7 +564,7 @@ namespace AZ
                                 bool isConvertableToClassElement = false;
                                 if (!isCastableToClassElement)
                                 {
-                                    const SerializeContext::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId, parentClassInfo);
+                                    const Serialization::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId, parentClassInfo);
                                     isConvertableToClassElement = classElementClassData && classElementClassData->CanConvertFromType(element.m_id, *m_sc);
                                 }
 
@@ -572,7 +573,7 @@ namespace AZ
                                     AZStd::string error = AZStd::string::format("Element of type %s cannot be added to container of type %s!  File %s"
                                         , element.m_id.ToString<AZStd::string>().c_str(), classElement->m_typeId.ToString<AZStd::string>().c_str(),
                                         GetStreamFilename());
-                                    
+
                                     result = result && ((m_filterDesc.m_flags & FILTERFLAG_STRICT) == 0);  // in strict mode, this is a complete failure.
                                     m_errorLogger.ReportError(error.c_str());
 
@@ -589,7 +590,7 @@ namespace AZ
                         dynamicElementMetadata.m_nameCrc = element.m_nameCrc;
                         dynamicElementMetadata.m_offset = reinterpret_cast<size_t>(&(reinterpret_cast<DynamicSerializableField const volatile*>(0)->m_data));
                         dynamicElementMetadata.m_dataSize = sizeof(void*);
-                        dynamicElementMetadata.m_flags = SerializeContext::ClassElement::FLG_POINTER;   // we want to load the data as a pointer
+                        dynamicElementMetadata.m_flags = Serialization::ClassElement::FLG_POINTER;   // we want to load the data as a pointer
                         dynamicElementMetadata.m_azRtti = classData->m_azRtti;
                         dynamicElementMetadata.m_genericClassInfo = m_sc->FindGenericClassInfo(element.m_id);
                         dynamicElementMetadata.m_typeId = fieldContainer->m_typeId;
@@ -599,18 +600,18 @@ namespace AZ
                     {
                         for (size_t i = 0; i < parentClassInfo->m_elements.size(); ++i)
                         {
-                            const SerializeContext::ClassElement* childElement = &parentClassInfo->m_elements[i];
+                            const Serialization::ClassElement* childElement = &parentClassInfo->m_elements[i];
                             if (childElement->m_nameCrc == element.m_nameCrc)
                             {
                                 // if the member is a pointer type, then the pointer could be a derived type,
                                 // otherwise we need the uuids to be exactly the same.
-                                if (childElement->m_flags & SerializeContext::ClassElement::FLG_POINTER)
+                                if (childElement->m_flags & Serialization::ClassElement::FLG_POINTER)
                                 {
                                     bool isCastableToClassElement = m_sc->CanDowncast(element.m_id, childElement->m_typeId, classData->m_azRtti, childElement->m_azRtti);
                                     bool isConvertableToClassElement = false;
                                     if(!isCastableToClassElement)
                                     {
-                                        const SerializeContext::ClassData* classElementClassData = m_sc->FindClassData(childElement->m_typeId, parentClassInfo, childElement->m_nameCrc);
+                                        const Serialization::ClassData* classElementClassData = m_sc->FindClassData(childElement->m_typeId, parentClassInfo, childElement->m_nameCrc);
                                         isConvertableToClassElement = classElementClassData && classElementClassData->CanConvertFromType(element.m_id, *m_sc);
                                     }
                                     if (isCastableToClassElement || isConvertableToClassElement)
@@ -635,7 +636,7 @@ namespace AZ
                                     bool isConvertableToClassElement = false;
                                     if (!isCastableToClassElement)
                                     {
-                                        const SerializeContext::ClassData* classElementClassData = m_sc->FindClassData(childElement->m_typeId, parentClassInfo, childElement->m_nameCrc);
+                                        const Serialization::ClassData* classElementClassData = m_sc->FindClassData(childElement->m_typeId, parentClassInfo, childElement->m_nameCrc);
                                         isConvertableToClassElement = classElementClassData && classElementClassData->CanConvertFromType(element.m_id, *m_sc);
                                     }
 
@@ -663,10 +664,10 @@ namespace AZ
                         // We can continue safely, but this constitutes loss of old data that users should be aware of.
                         if (classElement == nullptr)
                         {
-                            AZStd::string error = AZStd::string::format("Element '%s'(0x%x) of type %s is not registered as part of class '%s'. Data will be discarded.  File %s", 
+                            AZStd::string error = AZStd::string::format("Element '%s'(0x%x) of type %s is not registered as part of class '%s'. Data will be discarded.  File %s",
                                 element.m_name ? element.m_name : "NULL", element.m_nameCrc, element.m_id.ToString<AZStd::string>().c_str(), parentClassInfo->m_name,
                                 GetStreamFilename());
-                            
+
                             if (m_filterDesc.m_flags & FILTERFLAG_STRICT)
                             {
                                 m_errorLogger.ReportError(error.c_str());
@@ -719,7 +720,7 @@ namespace AZ
                                 "Instead use DeprecateClass for the old Uuid, provide a converter, and use that converter to designate a new type/uuid.  File %s",
                                 convertedClassElement.m_classData->m_typeId.ToString<AZStd::string>().c_str(), classData->m_typeId.ToString<AZStd::string>().c_str(),
                                 GetStreamFilename());
-                            
+
                             result = result && ((m_filterDesc.m_flags & FILTERFLAG_STRICT) == 0);  // in strict mode, this is a complete failure.
                             m_errorLogger.ReportError(error.c_str());
                         }
@@ -738,7 +739,7 @@ namespace AZ
                 }
 
                 StorageAddressElement storageElement{ nullptr, nullptr, result, classContainer, currentContainerElementIndex };
-                
+
                 if(GetElementStorageAddress(storageElement, classElement, element, classData, parentClassPtr) != StorageAddressResult::Success)
                 {
                     continue;
@@ -750,7 +751,7 @@ namespace AZ
 
 #if defined(AZ_ENABLE_TRACING)
                 {
-                    SerializeContext::DbgStackEntry de;
+                    Serialization::DbgStackEntry de;
                     de.m_dataPtr = dataAddress;
                     de.m_uuidPtr = &element.m_id;
                     de.m_elementName = element.m_name;
@@ -776,7 +777,7 @@ namespace AZ
                         *element.m_stream,
                         element.m_version,
                         m_filterDesc.m_assetCB,
-                        element.m_dataType == SerializeContext::DataElement::DT_BINARY_BE);
+                        element.m_dataType == Serialization::DataElement::DT_BINARY_BE);
 
                     if (!loaded)
                     {
@@ -801,10 +802,10 @@ namespace AZ
                     currentStream->Seek(0, IO::GenericStream::ST_SEEK_BEGIN);
 
                     // read the class value
-                    if (dataAddress == nullptr || 
-                        !classData->m_serializer->Load(dataAddress, *currentStream, element.m_version, element.m_dataType == SerializeContext::DataElement::DT_BINARY_BE))
+                    if (dataAddress == nullptr ||
+                        !classData->m_serializer->Load(dataAddress, *currentStream, element.m_version, element.m_dataType == Serialization::DataElement::DT_BINARY_BE))
                     {
-                        AZStd::string error = AZStd::string::format("Serializer failed for %s '%s'(0x%x).  File %s", 
+                        AZStd::string error = AZStd::string::format("Serializer failed for %s '%s'(0x%x).  File %s",
                             classData->m_name, element.m_name ? element.m_name : "NULL", element.m_nameCrc,
                             GetStreamFilename());
 
@@ -850,8 +851,8 @@ namespace AZ
             return result;
         }
 
-        ObjectStreamImpl::StorageAddressResult ObjectStreamImpl::GetElementStorageAddress(StorageAddressElement& storageElement, const SerializeContext::ClassElement* classElement, const SerializeContext::DataElement& dataElement,
-            const SerializeContext::ClassData* dataElementClassData, void* parentClassPtr)
+        ObjectStreamImpl::StorageAddressResult ObjectStreamImpl::GetElementStorageAddress(StorageAddressElement& storageElement, const Serialization::ClassElement* classElement, const Serialization::DataElement& dataElement,
+            const Serialization::ClassData* dataElementClassData, void* parentClassPtr)
         {
             if (classElement)
             {
@@ -863,7 +864,7 @@ namespace AZ
                     isCastableToClassElement = m_sc->CanDowncast(dataElementClassData->m_typeId, classElement->m_typeId, dataElementClassData->m_azRtti, classElement->m_azRtti);
                     if (!isCastableToClassElement)
                     {
-                        const SerializeContext::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId);
+                        const Serialization::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId);
                         isConvertibleToClassElement = classElementClassData && classElementClassData->CanConvertFromType(dataElementClassData->m_typeId, *m_sc);
                     }
                     if (!isCastableToClassElement && !isConvertibleToClassElement)
@@ -908,12 +909,12 @@ namespace AZ
                 storageElement.m_dataAddress = storageElement.m_reserveAddress;
 
                 // create a new instance if needed
-                if (classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER)
+                if (classElement->m_flags & Serialization::ClassElement::FLG_POINTER)
                 {
                     // If the data element is convertible to the the type stored in the class element, then it is not castable(i.e a derived class)
                     // to the type stored in the class element. In that case an element of type class element should be allocated directly
-                    const SerializeContext::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId);
-                    SerializeContext::IObjectFactory* classFactory = isCastableToClassElement ? dataElementClassData->m_factory : classElementClassData ? classElementClassData->m_factory : nullptr;
+                    const Serialization::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId);
+                    Serialization::IObjectFactory* classFactory = isCastableToClassElement ? dataElementClassData->m_factory : classElementClassData ? classElementClassData->m_factory : nullptr;
 
                     // create a new instance if we are referencing it by pointer
                     AZ_Assert(classFactory != nullptr, "We are attempting to create '%s', but no factory is provided! Either provide factory or change data member '%s' to value not pointer!", dataElementClassData->m_name, classElement->m_name);
@@ -963,7 +964,7 @@ namespace AZ
                     // This is primarily for the case of serializing an element of type T into an AZStd::variant<..., T, U,...>
                     if (isConvertibleToClassElement)
                     {
-                        const SerializeContext::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId);
+                        const Serialization::ClassData* classElementClassData = m_sc->FindClassData(classElement->m_typeId);
                         void* addressToConvert = storageElement.m_reserveAddress;
                         classElementClassData->ConvertFromType(storageElement.m_dataAddress, dataElement.m_id, addressToConvert, *m_sc);
                     }
@@ -1009,7 +1010,7 @@ namespace AZ
         // [4/19/2012]
         //=========================================================================
         bool
-        ObjectStreamImpl::ReadElement(SerializeContext& sc, const SerializeContext::ClassData*& cd, SerializeContext::DataElement& element, const SerializeContext::ClassData* parent, bool nextLevel, bool isTopElement)
+        ObjectStreamImpl::ReadElement(SerializeContext& sc, const Serialization::ClassData*& cd, Serialization::DataElement& element, const Serialization::ClassData* parent, bool nextLevel, bool isTopElement)
         {
             AZ_Assert(element.m_stream != nullptr, "You must provide a stream to store the values!");
             element.m_version = 0;
@@ -1055,8 +1056,8 @@ namespace AZ
                 while (attr)
                 {
                     // "name" used to store what's now in the "field" attribute while "name" is only used for readability
-                    // to display the class name. Because at the time of the conversion of the XML the version (m_version) 
-                    // was not incremented, it has become impossible to know which version is being loaded. To address this, 
+                    // to display the class name. Because at the time of the conversion of the XML the version (m_version)
+                    // was not incremented, it has become impossible to know which version is being loaded. To address this,
                     // the "field" attribute is used by default, unless it's not found in which case the legacy "name" field is used.
                     bool isField = strcmp(attr->name(), "field") == 0;
                     if (strcmp(attr->name(), "name") == 0 || isField)
@@ -1082,7 +1083,7 @@ namespace AZ
                     else if (m_version == 2 && strcmp(attr->name(), "specializationTypeId") == 0)
                     {
                         // Version 3 of the ObjectStream serializes the specialized type id directly in the data element id field.
-                        specializedId = Uuid(attr->value());   
+                        specializedId = Uuid(attr->value());
                     }
                     attr = attr->next_attribute();
                 }
@@ -1092,7 +1093,7 @@ namespace AZ
                 {
                     if (parent && parent->m_container)
                     {
-                        const SerializeContext::ClassElement* classElement = parent->m_container->GetElement(element.m_nameCrc);
+                        const Serialization::ClassElement* classElement = parent->m_container->GetElement(element.m_nameCrc);
                         if (classElement && classElement->m_genericClassInfo)
                         {
                             if (classElement->m_genericClassInfo->CanStoreType(specializedId))
@@ -1104,7 +1105,7 @@ namespace AZ
                     }
                     element.m_id = specializedId;
                 }
- 
+
                 // find the registered class data
                 cd = sc.FindClassData(element.m_id, parent, element.m_nameCrc);
 
@@ -1130,7 +1131,7 @@ namespace AZ
                     if (cd && !cd->IsDeprecated() && cd->m_serializer)
                     {
                         element.m_dataSize = cd->m_serializer->TextToData(values, element.m_version, *element.m_stream);
-                        element.m_dataType = SerializeContext::DataElement::DT_BINARY;
+                        element.m_dataType = Serialization::DataElement::DT_BINARY;
                     }
                     else
                     {
@@ -1143,7 +1144,7 @@ namespace AZ
                             element.m_stream->Write(element.m_dataSize, values);
                         }
 
-                        element.m_dataType = SerializeContext::DataElement::DT_TEXT;
+                        element.m_dataType = Serialization::DataElement::DT_TEXT;
                     }
                 }
             }
@@ -1199,7 +1200,7 @@ namespace AZ
                     AZ_Error("Serialization", valueIt != currentElement->MemberEnd(), "All objects should have a typeId, loading aborted!");
                     return false;
                 }
-                
+
                 // Version 3 of the ObjectStream serializes the specialized type id directly in the data element id field. The data element old id field value is no longer needed
                 if (m_version == 2)
                 {
@@ -1210,7 +1211,7 @@ namespace AZ
                         Uuid specializedId(valueIt->value.GetString());
                         if (parent && parent->m_container)
                         {
-                            const SerializeContext::ClassElement* classElement = parent->m_container->GetElement(element.m_nameCrc);
+                            const Serialization::ClassElement* classElement = parent->m_container->GetElement(element.m_nameCrc);
                             if (classElement && classElement->m_genericClassInfo)
                             {
                                 if (classElement->m_genericClassInfo->CanStoreType(specializedId))
@@ -1256,7 +1257,7 @@ namespace AZ
                     if (cd && !cd->IsDeprecated() && cd->m_serializer)
                     {
                         element.m_dataSize = cd->m_serializer->TextToData(values, element.m_version, *element.m_stream);
-                        element.m_dataType = SerializeContext::DataElement::DT_BINARY;
+                        element.m_dataType = Serialization::DataElement::DT_BINARY;
                     }
                     else
                     {
@@ -1268,7 +1269,7 @@ namespace AZ
                         {
                             element.m_stream->Write(element.m_dataSize, values);
                         }
-                        element.m_dataType = SerializeContext::DataElement::DT_TEXT;
+                        element.m_dataType = Serialization::DataElement::DT_TEXT;
                     }
                 }
             }
@@ -1325,7 +1326,7 @@ namespace AZ
                     {
                         if (parent && parent->m_container)
                         {
-                            const SerializeContext::ClassElement* classElement = parent->m_container->GetElement(element.m_nameCrc);
+                            const Serialization::ClassElement* classElement = parent->m_container->GetElement(element.m_nameCrc);
                             if (classElement && classElement->m_genericClassInfo)
                             {
                                 if (classElement->m_genericClassInfo->CanStoreType(specializedId))
@@ -1338,7 +1339,7 @@ namespace AZ
                     }
                 }
 
-                element.m_dataType = SerializeContext::DataElement::DT_BINARY_BE;
+                element.m_dataType = Serialization::DataElement::DT_BINARY_BE;
 
 
                 // find the registered class data
@@ -1502,15 +1503,15 @@ namespace AZ
         // WriteClass
         // [6/22/2012]
         //=========================================================================
-        bool ObjectStreamImpl::WriteClass(const void* classPtr, const Uuid& classId, const SerializeContext::ClassData* classData)
+        bool ObjectStreamImpl::WriteClass(const void* classPtr, const Uuid& classId, const Serialization::ClassData* classData)
         {
             m_errorLogger.Reset();
             // The Write Element Stack reserve size is based on examining a ScriptCanvas object stream that had a depth of up 18 types
             // 32 should be enough slack to serialize an hierarchy of types without needing to realloc
-            constexpr size_t writeElementStackReserveSize = 32; 
+            constexpr size_t writeElementStackReserveSize = 32;
             m_writeElementResultStack.reserve(writeElementStackReserveSize);
 
-            auto writeElementCB = [this](const void* ptr, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* classElement)
+            auto writeElementCB = [this](const void* ptr, const Serialization::ClassData* classData, const Serialization::ClassElement* classElement)
             {
                 m_writeElementResultStack.push_back(WriteElement(ptr, classData, classElement));
                 return m_writeElementResultStack.back();
@@ -1532,7 +1533,7 @@ namespace AZ
                 return true;
             };
 
-            SerializeContext::EnumerateInstanceCallContext callContext(
+            Serialization::EnumerateInstanceCallContext callContext(
                 AZStd::move(writeElementCB),
                 AZStd::move(closeElementCB),
                 m_sc,
@@ -1555,7 +1556,7 @@ namespace AZ
         // WriteElement
         // [10/25/2012]
         //=========================================================================
-        bool ObjectStreamImpl::WriteElement(const void* ptr, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* classElement)
+        bool ObjectStreamImpl::WriteElement(const void* ptr, const Serialization::ClassData* classData, const Serialization::ClassElement* classElement)
         {
             AZ_Assert(classData, "We were handed a non-serializable object. This should never happen!");
             const void* objectPtr = ptr;
@@ -1566,14 +1567,14 @@ namespace AZ
                 EBUS_EVENT_ID_RESULT(overlay, DataOverlayInstanceId(objectPtr, classElement->m_typeId), DataOverlayInstanceBus, GetOverlayInfo);
                 if (overlay.m_providerId)
                 {
-                    const SerializeContext::ClassData* overlayClassMetadata = m_sc->FindClassData(SerializeTypeInfo<DataOverlayInfo>::GetUuid());
-                    SerializeContext::ClassElement overlayElementMetadata;
+                    const Serialization::ClassData* overlayClassMetadata = m_sc->FindClassData(SerializeTypeInfo<DataOverlayInfo>::GetUuid());
+                    Serialization::ClassElement overlayElementMetadata;
                     overlayElementMetadata.m_name = classElement->m_name;
                     overlayElementMetadata.m_nameCrc = classElement->m_nameCrc;
                     overlayElementMetadata.m_flags = 0;
                     overlayElementMetadata.m_typeId = SerializeTypeInfo<DataOverlayInfo>::GetUuid();
 
-                    auto writeElementCB = [this](const void* ptr, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* classElement)
+                    auto writeElementCB = [this](const void* ptr, const Serialization::ClassData* classData, const Serialization::ClassElement* classElement)
                     {
                         m_writeElementResultStack.push_back(WriteElement(ptr, classData, classElement));
                         return m_writeElementResultStack.back();
@@ -1593,7 +1594,7 @@ namespace AZ
                         m_writeElementResultStack.pop_back();
                         return true;
                     };
-                    SerializeContext::EnumerateInstanceCallContext callContext(
+                    Serialization::EnumerateInstanceCallContext callContext(
                         AZStd::move(writeElementCB),
                         AZStd::move(closeElementCB),
                         m_sc,
@@ -1612,7 +1613,7 @@ namespace AZ
                 }
 
                 // if we are a pointer, then we may be pointing to a derived type.
-                if (classElement->m_flags & SerializeContext::ClassElement::FLG_POINTER)
+                if (classElement->m_flags & Serialization::ClassElement::FLG_POINTER)
                 {
                     // if dataAddress is a pointer in this case, cast it's value to a void* (or const void*) and dereference to get to the actual class.
                     objectPtr = *(void**)(ptr);
@@ -1637,7 +1638,7 @@ namespace AZ
             AZ::AttributeReader objectStreamWriteOverrideCB{ nullptr, classData->FindAttribute(SerializeContextAttributes::ObjectStreamWriteElementOverride) };
             if (objectStreamWriteOverrideCB.GetAttribute())
             {
-                auto writeElementCB = [this](const void* ptr, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* classElement)
+                auto writeElementCB = [this](const void* ptr, const Serialization::ClassData* classData, const Serialization::ClassElement* classElement)
                 {
                     m_writeElementResultStack.push_back(WriteElement(ptr, classData, classElement));
                     return m_writeElementResultStack.back();
@@ -1657,7 +1658,7 @@ namespace AZ
                     m_writeElementResultStack.pop_back();
                     return true;
                 };
-                SerializeContext::EnumerateInstanceCallContext callContext(
+                Serialization::EnumerateInstanceCallContext callContext(
                     AZStd::move(writeElementCB),
                     AZStd::move(closeElementCB),
                     m_sc,
@@ -1678,7 +1679,7 @@ namespace AZ
                 }
             }
 
-            SerializeContext::DataElement element;
+            Serialization::DataElement element;
             if (classElement)
             {
                 element.m_name = classElement->m_name;
@@ -1972,7 +1973,7 @@ namespace AZ
             }
             else
             {   // Loading
-                SerializeContext::DataElementNode convertedClassElement;
+                Serialization::DataElementNode convertedClassElement;
 
                 IO::SizeType len = m_stream->GetLength();
 

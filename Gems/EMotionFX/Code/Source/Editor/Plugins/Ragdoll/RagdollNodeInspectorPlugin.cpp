@@ -57,7 +57,7 @@ namespace EMotionFX
         if (serializeContext)
         {
             // TypeId of D6JointLimitConfiguration
-            const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(AZ::TypeId::CreateString("{90C5C23D-16C0-4F23-AD50-A190E402388E}"));
+            const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(AZ::TypeId::CreateString("{90C5C23D-16C0-4F23-AD50-A190E402388E}"));
             if (classData && ColliderHelpers::AreCollidersReflected())
             {
                 return true;

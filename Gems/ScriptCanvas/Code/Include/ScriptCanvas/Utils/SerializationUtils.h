@@ -20,9 +20,9 @@ namespace ScriptCanvas
         // i.e. takes Derivied -> Parent -> Grandparent and converts it to Derived -> Grandparent
         //
         // Will keep all data in Grandparent while discarding all data in Parent.
-        static bool RemoveBaseClass([[maybe_unused]] AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& classElement)
+        static bool RemoveBaseClass([[maybe_unused]] AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& classElement)
         {
-            AZ::SerializeContext::DataElementNode* operatorBaseClass = classElement.FindSubElement(AZ::Crc32("BaseClass1"));
+            AZ::Serialization::DataElementNode* operatorBaseClass = classElement.FindSubElement(AZ::Crc32("BaseClass1"));
 
             if (operatorBaseClass == nullptr)
             {
@@ -37,7 +37,7 @@ namespace ScriptCanvas
             }
 
             // The DataElementNode is being copied purposefully in this statement to clone the data
-            AZ::SerializeContext::DataElementNode baseNodeElement = operatorBaseClass->GetSubElement(nodeElementIndex);
+            AZ::Serialization::DataElementNode baseNodeElement = operatorBaseClass->GetSubElement(nodeElementIndex);
 
             classElement.RemoveElementByName(AZ::Crc32("BaseClass1"));
             classElement.AddElement(baseNodeElement);
@@ -47,17 +47,17 @@ namespace ScriptCanvas
 
         // Used to shim in a new base class i.e. A > C becomes A > B > C with InsertNewBaseClass<B>
         template<class ClassType>
-        static bool InsertNewBaseClass(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& classElement)
+        static bool InsertNewBaseClass(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& classElement)
         {
             bool addedBaseClass = true;
 
             // Need to shim in a new class
-            AZ::SerializeContext::DataElementNode baseClassElement = (*classElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735)));            
+            AZ::Serialization::DataElementNode baseClassElement = (*classElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735)));            
             classElement.RemoveElementByName(AZ_CRC("BaseClass1", 0xd4925735));
 
             classElement.AddElement<ClassType>(serializeContext, "BaseClass1");
 
-            AZ::SerializeContext::DataElementNode* newClassNode = classElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
+            AZ::Serialization::DataElementNode* newClassNode = classElement.FindSubElement(AZ_CRC("BaseClass1", 0xd4925735));
 
             if (newClassNode)
             {
@@ -72,9 +72,9 @@ namespace ScriptCanvas
         }
 
         template<typename T>
-        static bool GetElementData(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& classElement, T& outData, uint32_t crc)
+        static bool GetElementData(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& classElement, T& outData, uint32_t crc)
         {
-            AZ::SerializeContext::DataElementNode* dataElement = classElement.FindSubElement(crc);
+            AZ::Serialization::DataElementNode* dataElement = classElement.FindSubElement(crc);
             if (!dataElement)
             {
                 return false;
@@ -88,7 +88,7 @@ namespace ScriptCanvas
             return true;
         }
 
-        static AZ::SerializeContext::DataElementNode* FindFirstSubElement(AZ::SerializeContext::DataElementNode& classElement, uint32_t crc, int depthLimit = 10)
+        static AZ::Serialization::DataElementNode* FindFirstSubElement(AZ::Serialization::DataElementNode& classElement, uint32_t crc, int depthLimit = 10)
         {
             if (depthLimit <= 0)
             {

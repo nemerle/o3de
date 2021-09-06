@@ -27,7 +27,7 @@
 namespace PhysX
 {
     bool SystemComponent::VersionConverter(AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         using GlobalCollisionDebugState = Debug::DebugDisplayData::GlobalCollisionDebugState;
 
@@ -38,7 +38,7 @@ namespace PhysX
             if (pvdTransportTypeElemIndex >= 0)
             {
                 Debug::PvdTransportType pvdTransportTypeValue;
-                AZ::SerializeContext::DataElementNode& pvdTransportElement = classElement.GetSubElement(pvdTransportTypeElemIndex);
+                AZ::Serialization::DataElementNode& pvdTransportElement = classElement.GetSubElement(pvdTransportTypeElemIndex);
                 pvdTransportElement.GetData<Debug::PvdTransportType>(pvdTransportTypeValue);
 
                 if (pvdTransportTypeValue == static_cast<Debug::PvdTransportType>(2))
@@ -60,7 +60,7 @@ namespace PhysX
             if (globalColliderDebugDrawElemIndex >= 0)
             {
                 bool oldGlobalColliderDebugDrawElemDebug = false;
-                AZ::SerializeContext::DataElementNode& globalColliderDebugDrawElem = classElement.GetSubElement(globalColliderDebugDrawElemIndex);
+                AZ::Serialization::DataElementNode& globalColliderDebugDrawElem = classElement.GetSubElement(globalColliderDebugDrawElemIndex);
                 // Previously globalColliderDebugDraw was a bool indicating whether to always draw debug or to manually set on the element
                 if (!globalColliderDebugDrawElem.GetData<bool>(oldGlobalColliderDebugDrawElemDebug))
                 {

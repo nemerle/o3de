@@ -17,7 +17,7 @@
 namespace GradientSignal
 {
 
-    bool SmoothStepGradientConfig::UpdateVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool SmoothStepGradientConfig::UpdateVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         // From v0 to v1, The smooth step parameters were moved into a SmoothStep subclass.  This reads the old parameters 
         // into the subclass, removes the old parameters, then write out the subclass.

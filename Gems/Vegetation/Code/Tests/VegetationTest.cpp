@@ -102,15 +102,15 @@ namespace UnitTest
         bool BeginElementMinMaxTests(
             AZ::SerializeContext* sc,
             void* instance,
-            const AZ::SerializeContext::ClassData* classData,
-            const AZ::SerializeContext::ClassElement* classElement)
+            const AZ::Serialization::ClassData* classData,
+            const AZ::Serialization::ClassElement* classElement)
         {
             (void)instance;
 
             if (classElement)
             {
                 // if we are a pointer, then we may be pointing to a derived type.
-                if (classElement->m_flags & AZ::SerializeContext::ClassElement::FLG_POINTER)
+                if (classElement->m_flags & AZ::Serialization::ClassElement::FLG_POINTER)
                 {
                     // if dataAddress is a pointer in this case, cast it's value to a void* (or const void*) and dereference to get to the actual class.
                     instance = *(void**)(instance);

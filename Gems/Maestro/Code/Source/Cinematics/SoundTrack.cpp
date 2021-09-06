@@ -57,7 +57,7 @@ void CSoundTrack::GetKeyInfo(int key, const char*& description, float& duration)
 //////////////////////////////////////////////////////////////////////////
 static bool SoundTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

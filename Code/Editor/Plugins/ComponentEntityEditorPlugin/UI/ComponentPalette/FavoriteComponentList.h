@@ -24,7 +24,7 @@
 class FavoriteComponentListRequest : public AZ::EBusTraits
 {
 public:
-    virtual void AddFavorites(const AZStd::vector<const AZ::SerializeContext::ClassData*>&) = 0;
+    virtual void AddFavorites(const AZStd::vector<const AZ::Serialization::ClassData*>&) = 0;
 };
 
 using FavoriteComponentListRequestBus = AZ::EBus<FavoriteComponentListRequest>;
@@ -47,7 +47,7 @@ public:
     //! Add a favorite component
     //! \param classData The ClassData information for the component to store as favorite
     //! \param updateSettings Optional parameter used to determine if the persistent settings need to be updated.
-    void AddFavorite(const AZ::SerializeContext::ClassData* classData, bool updateSettings = true);
+    void AddFavorite(const AZ::Serialization::ClassData* classData, bool updateSettings = true);
 
     //! Remove all the specified items from the table
     //! \param indices List of indices to remove from favorites
@@ -71,7 +71,7 @@ protected:
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 
     // List of component class data
-    QList<const AZ::SerializeContext::ClassData*> m_favorites;
+    QList<const AZ::Serialization::ClassData*> m_favorites;
 
     // The Palette settings and provider information for saving out the Favorites list
     AZStd::intrusive_ptr<ComponentPaletteSettings> m_settings;
@@ -99,7 +99,7 @@ protected:
 
     //////////////////////////////////////////////////////////////////////////
     // FavoriteComponentListRequestBus
-    void AddFavorites(const AZStd::vector<const AZ::SerializeContext::ClassData*>& classDataContainer) override;
+    void AddFavorites(const AZStd::vector<const AZ::Serialization::ClassData*>& classDataContainer) override;
     //////////////////////////////////////////////////////////////////////////
 
     void rowsInserted(const QModelIndex& parent, int start, int end);

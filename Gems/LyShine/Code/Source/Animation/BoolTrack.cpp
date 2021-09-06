@@ -70,16 +70,16 @@ template<>
 inline void TUiAnimTrack<IBoolKey>::Reflect(AZ::SerializeContext* serializeContext)
 {
     serializeContext->ClassDeprecate("TUiAnimTrack_IBoolKey", "{7C2942C1-0ACE-404E-BF2B-E095A1B69A5B}",
-        [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+        [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
-        AZStd::vector<AZ::SerializeContext::DataElementNode> childNodeElements;
+        AZStd::vector<AZ::Serialization::DataElementNode> childNodeElements;
         for (int index = 0; index < rootElement.GetNumSubElements(); ++index)
         {
             childNodeElements.push_back(rootElement.GetSubElement(index));
         }
         // Convert the rootElement now, the existing child DataElmentNodes are now removed
         rootElement.Convert<TUiAnimTrack<IBoolKey>>(context);
-        for (AZ::SerializeContext::DataElementNode& childNodeElement : childNodeElements)
+        for (AZ::Serialization::DataElementNode& childNodeElement : childNodeElements)
         {
             rootElement.AddElement(AZStd::move(childNodeElement));
         }

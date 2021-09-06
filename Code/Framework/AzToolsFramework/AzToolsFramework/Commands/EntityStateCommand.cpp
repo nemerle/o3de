@@ -153,7 +153,7 @@ namespace AzToolsFramework
             entity = new(entity) AZ::Entity();
 
             // Set up a callback so we in-place load over this entity instead of creating it new
-            inplaceLoadRootInfoCB = [entity](void** rootAddress, const AZ::SerializeContext::ClassData** /*classData*/, const AZ::Uuid& /*classId*/, AZ::SerializeContext* /*context*/)
+            inplaceLoadRootInfoCB = [entity](void** rootAddress, const AZ::Serialization::ClassData** /*classData*/, const AZ::Uuid& /*classId*/, AZ::SerializeContext* /*context*/)
             {
                 *rootAddress = entity;
             };

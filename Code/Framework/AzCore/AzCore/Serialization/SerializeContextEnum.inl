@@ -57,7 +57,7 @@ namespace AZ
 
         template<class EnumType>
         class EnumSerializer
-            : public SerializeContext::IDataSerializer
+            : public Serialization::IDataSerializer
         {
             static_assert(AZStd::is_enum<EnumType>::value, "Enum Serializer can only be used with enum types");
             using UnderlyingType = AZStd::RemoveEnumT<EnumType>;
@@ -132,7 +132,7 @@ namespace AZ
     }
 
     template<typename EnumType>
-    SerializeContext::EnumBuilder SerializeContext::Enum(IObjectFactory* factory)
+    SerializeContext::EnumBuilder SerializeContext::Enum(Serialization::IObjectFactory* factory)
     {
         static_assert(AZStd::is_enum<EnumType>::value, "SerializeContext::Enum only supports a C++ enum type");
         using UnderlyingType = std::underlying_type_t<EnumType>;
@@ -150,7 +150,7 @@ namespace AZ
             if (enumTypeIter != m_uuidMap.end())
             {
                 RemoveClassData(&enumTypeIter->second);
-                
+
                 auto classNameRange = m_classNameToUuid.equal_range(Crc32(name));
                 for (auto classNameRangeIter = classNameRange.first; classNameRangeIter != classNameRange.second;)
                 {
@@ -174,13 +174,13 @@ namespace AZ
                 enumTypeIter->second.m_name, underlyingTypeId.ToString<AZStd::string>().data(), name);
             if (enumTypeIter == m_uuidMap.end())
             {
-                typename UuidToClassMap::pair_iter_bool enumTypeInsertIter = m_uuidMap.emplace(enumTypeId, ClassData::Create<EnumType>(name, enumTypeId, factory));
-                ClassData& enumClassData = enumTypeInsertIter.first->second;
-                enumClassData.m_serializer = IDataSerializerPtr{ new SerializeContextEnumInternal::EnumSerializer<EnumType>(), IDataSerializer::CreateDefaultDeleteDeleter() };
+                typename UuidToClassMap::pair_iter_bool enumTypeInsertIter = m_uuidMap.emplace(enumTypeId, Serialization::ClassData::Create<EnumType>(name, enumTypeId, factory));
+                Serialization::ClassData& enumClassData = enumTypeInsertIter.first->second;
+                enumClassData.m_serializer = Serialization::IDataSerializerPtr{ new SerializeContextEnumInternal::EnumSerializer<EnumType>(), Serialization::IDataSerializer::CreateDefaultDeleteDeleter() };
 
                 m_classNameToUuid.emplace(Crc32(name), enumTypeId);
                 m_uuidAnyCreationMap.emplace(enumTypeId, &AnyTypeInfoConcept<EnumType>::CreateAny);
-                
+
                 // Store the underlying type as an attribute within the ClassData
                 enumClassData.m_attributes.emplace_back(Serialize::Attributes::EnumUnderlyingType, aznew AZ::AttributeContainerType<AZ::TypeId>(underlyingTypeId));
                 enumTypeIter = enumTypeInsertIter.first;
@@ -213,7 +213,7 @@ namespace AZ
     template<typename SerializerImplementation>
     auto SerializeContext::EnumBuilder::Serializer() -> EnumBuilder*
     {
-        return Serializer({ new SerializerImplementation, IDataSerializer::CreateDefaultDeleteDeleter() });
+        return Serializer({ new SerializerImplementation, Serialization::IDataSerializer::CreateDefaultDeleteDeleter() });
     }
 
     template<typename EventHandlerImplementation>

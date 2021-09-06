@@ -48,7 +48,7 @@ namespace Vegetation
             seed ^= hasher(v) + 0x9e3779b97f4a7c13LL + (seed << 12) + (seed >> 4);
         }
 
-        static bool UpdateVersion([[maybe_unused]] AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool UpdateVersion([[maybe_unused]] AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 4)
             {

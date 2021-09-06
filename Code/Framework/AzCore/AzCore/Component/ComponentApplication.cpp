@@ -160,7 +160,7 @@ namespace AZ
         m_useMalloc = false;
     }
 
-    bool AppDescriptorConverter(SerializeContext& serialize, SerializeContext::DataElementNode& node)
+    bool AppDescriptorConverter(SerializeContext& serialize, Serialization::DataElementNode& node)
     {
         if (node.GetVersion() < 2)
         {
@@ -1409,7 +1409,7 @@ namespace AZ
             return true;
         }
 
-        const SerializeContext::ClassData* classData = GetSerializeContext()->FindClassData(descriptor->GetUuid());
+        const Serialization::ClassData* classData = GetSerializeContext()->FindClassData(descriptor->GetUuid());
         AZ_Warning("ComponentApplication", classData, "Component type %s not reflected to SerializeContext!", descriptor->GetName());
 
         // Note, if there are no SystemComponentTags on the classData, we will return true

@@ -83,7 +83,7 @@ namespace EMotionFX
             ;
     }
 
-    bool MotionEventTrack::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool MotionEventTrack::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         const unsigned int version = classElement.GetVersion();
         if (version < 2)
@@ -93,7 +93,7 @@ namespace EMotionFX
             {
                 return false;
             }
-            AZ::SerializeContext::DataElementNode& nameElement = classElement.GetSubElement(nameElementIndex);
+            AZ::Serialization::DataElementNode& nameElement = classElement.GetSubElement(nameElementIndex);
 
             MCore::StringIdPoolIndex oldName;
             const bool result = nameElement.GetData<MCore::StringIdPoolIndex>(oldName);

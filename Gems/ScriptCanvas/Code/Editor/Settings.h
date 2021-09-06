@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Math/Uuid.h>
 #include <AzCore/UserSettings/UserSettings.h>
 
@@ -40,7 +41,7 @@ namespace ScriptCanvasEditor
             ScriptCanvasConstructPresets();
             ~ScriptCanvasConstructPresets() override = default;
 
-            void InitializeConstructType(GraphCanvas::ConstructType constructType);            
+            void InitializeConstructType(GraphCanvas::ConstructType constructType);
         };
 
         class EditorWorkspace
@@ -59,17 +60,17 @@ namespace ScriptCanvasEditor
                 AZ::Data::AssetType m_assetType;
             };
 
-        
+
             AZ_RTTI(EditorWorkspace, "{67DACC4D-B92C-4B5A-8884-6AF7C7B74246}", AZ::UserSettings);
             AZ_CLASS_ALLOCATOR(EditorWorkspace, AZ::SystemAllocator, 0);
 
-            static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootDataElementNode);
+            static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootDataElementNode);
             static void Reflect(AZ::ReflectContext* context);
 
             EditorWorkspace() = default;
 
             void ConfigureActiveAssets(AZ::Data::AssetId focusedAssetId, const AZStd::vector< WorkspaceAssetSaveData >& activeAssetIds);
-            
+
             AZ::Data::AssetId GetFocusedAssetId() const;
             AZStd::vector< WorkspaceAssetSaveData > GetActiveAssetData() const;
 
@@ -184,7 +185,7 @@ namespace ScriptCanvasEditor
 
             float m_minimumShakeLengthPercent;
             float m_deadZonePercent;
-            
+
             float m_straightnessPercent;
         };
 
@@ -281,7 +282,7 @@ namespace ScriptCanvasEditor
             static void Reflect(AZ::ReflectContext* reflectContext);
 
             StylingSettings() = default;
-            
+
             virtual ~StylingSettings() = default;
 
             GraphCanvas::Styling::ConnectionCurveType GetConnectionCurveType() const
@@ -309,7 +310,7 @@ namespace ScriptCanvasEditor
             AZ_CLASS_ALLOCATOR(ScriptCanvasEditorSettings, AZ::SystemAllocator, 0);
 
             static void Reflect(AZ::ReflectContext* context);
-            static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+            static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
             ScriptCanvasEditorSettings();
 

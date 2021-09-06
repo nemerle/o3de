@@ -101,7 +101,7 @@ namespace AzFramework
 
             // Callback function for allocating the root elements in the file.
             AZ::ObjectStream::InplaceLoadRootInfoCB inplaceLoadCb =
-                [](void** rootAddress, const AZ::SerializeContext::ClassData**, const AZ::Uuid& classId, AZ::SerializeContext*)
+                [](void** rootAddress, const AZ::Serialization::ClassData**, const AZ::Uuid& classId, AZ::SerializeContext*)
             {
                 if (rootAddress && classId == azrtti_typeid<AZ::ComponentApplication::Descriptor>())
                 {
@@ -120,7 +120,7 @@ namespace AzFramework
                 {
                     loadedDescriptor.reset(static_cast<AZ::ComponentApplication::Descriptor*>(classPtr));
                 }
-                else if (const AZ::SerializeContext::ClassData* classData = context->FindClassData(classId))
+                else if (const AZ::Serialization::ClassData* classData = context->FindClassData(classId))
                 {
                     classData->m_factory->Destroy(classPtr);
                 }

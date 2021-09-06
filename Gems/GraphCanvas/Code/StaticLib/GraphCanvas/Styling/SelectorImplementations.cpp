@@ -52,7 +52,7 @@ namespace GraphCanvas
         //////////////////
 
         class BasicSelectorEventHandler
-            : public AZ::SerializeContext::IEventHandler
+            : public AZ::Serialization::IEventHandler
         {
         public:
             void OnWriteEnd(void* classPtr) override

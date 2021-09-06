@@ -6,7 +6,9 @@
  *
  */
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/RTTI/AttributeReader.h>
+#include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/Json/JsonSerializer.h>
 #include <AzCore/Serialization/Json/BaseJsonSerializer.h>
 #include <AzCore/Serialization/Json/JsonSerialization.h>
@@ -40,7 +42,7 @@ namespace AZ
             return serializer->Store(output, object, defaultObject, typeId, context);
         }
 
-        const SerializeContext::ClassData* classData = context.GetSerializeContext()->FindClassData(typeId);
+        const Serialization::ClassData* classData = context.GetSerializeContext()->FindClassData(typeId);
         if (!classData)
         {
             return context.Report(Tasks::RetrieveInfo, Outcomes::Unknown,
@@ -72,10 +74,10 @@ namespace AZ
     {
         using namespace JsonSerializationResult;
 
-        const SerializeContext::ClassData* classData = context.GetSerializeContext()->FindClassData(typeId);
+        const Serialization::ClassData* classData = context.GetSerializeContext()->FindClassData(typeId);
         if (!classData)
         {
-            return context.Report(Tasks::RetrieveInfo, Outcomes::Unknown, 
+            return context.Report(Tasks::RetrieveInfo, Outcomes::Unknown,
                 AZStd::string::format("Failed to retrieve serialization information for %s.", typeId.ToString<AZStd::string>().c_str()));
         }
         if (!classData->m_azRtti)
@@ -90,7 +92,7 @@ namespace AZ
     }
 
     JsonSerializationResult::ResultCode JsonSerializer::StoreWithClassData(rapidjson::Value& node, const void* object,
-        const void* defaultObject, const SerializeContext::ClassData& classData, StoreTypeId storeTypeId,
+        const void* defaultObject, const Serialization::ClassData& classData, StoreTypeId storeTypeId,
         UseTypeSerializer custom, JsonSerializerContext& context)
     {
         using namespace JsonSerializationResult;
@@ -134,7 +136,7 @@ namespace AZ
                 return result;
             }
         }
-        
+
         if (classData.m_container)
         {
             return context.Report(Tasks::ReadField, Outcomes::Unsupported,
@@ -156,12 +158,12 @@ namespace AZ
     }
 
     JsonSerializationResult::ResultCode JsonSerializer::StoreWithClassDataFromPointer(rapidjson::Value& output, const void* object,
-        const void* defaultObject, const SerializeContext::ClassData& classData, UseTypeSerializer custom, JsonSerializerContext& context)
+        const void* defaultObject, const Serialization::ClassData& classData, UseTypeSerializer custom, JsonSerializerContext& context)
     {
         using namespace JsonSerializationResult;
 
         StoreTypeId storeTypeId = StoreTypeId::No;
-        const SerializeContext::ClassData* resolvedClassData = &classData;
+        const Serialization::ClassData* resolvedClassData = &classData;
         AZStd::any defaultPointerObject;
 
         ResultCode result(Tasks::RetrieveInfo);
@@ -183,13 +185,13 @@ namespace AZ
     }
 
     JsonSerializationResult::ResultCode JsonSerializer::StoreWithClassElement(rapidjson::Value& parentNode, const void* object,
-        const void* defaultObject, const SerializeContext::ClassElement& classElement, JsonSerializerContext& context)
+        const void* defaultObject, const Serialization::ClassElement& classElement, JsonSerializerContext& context)
     {
         using namespace JsonSerializationResult;
 
         ScopedContextPath elementPath(context, classElement.m_name);
 
-        const SerializeContext::ClassData* elementClassData =
+        const Serialization::ClassData* elementClassData =
             context.GetSerializeContext()->FindClassData(classElement.m_typeId);
         if (!elementClassData)
         {
@@ -208,12 +210,12 @@ namespace AZ
             || elementClassData->m_typeId == GetAssetClassId(), "Type id mismatch in '%s' during serialization to a json file. (%s vs %s)",
             elementClassData->m_name, elementClassData->m_azRtti->GetTypeId().ToString<AZStd::string>().c_str(), elementClassData->m_typeId.ToString<AZStd::string>().c_str());
 
-        if (classElement.m_flags & SerializeContext::ClassElement::FLG_NO_DEFAULT_VALUE)
+        if (classElement.m_flags & Serialization::ClassElement::FLG_NO_DEFAULT_VALUE)
         {
             defaultObject = nullptr;
         }
 
-        if (classElement.m_flags & SerializeContext::ClassElement::FLG_BASE_CLASS)
+        if (classElement.m_flags & Serialization::ClassElement::FLG_BASE_CLASS)
         {
             // Base class information can be reconstructed so doesn't need to be written to the final json. StoreClass
             // will simply pick up where this left off and write to the same element.
@@ -222,7 +224,7 @@ namespace AZ
         else
         {
             rapidjson::Value value;
-            ResultCode result = classElement.m_flags & SerializeContext::ClassElement::FLG_POINTER ?
+            ResultCode result = classElement.m_flags & Serialization::ClassElement::FLG_POINTER ?
                 StoreWithClassDataFromPointer(value, object, defaultObject, *elementClassData, UseTypeSerializer::Yes, context):
                 StoreWithClassData(value, object, defaultObject, *elementClassData, StoreTypeId::No, UseTypeSerializer::Yes, context);
             if (result.GetProcessing() != Processing::Halted)
@@ -245,7 +247,7 @@ namespace AZ
     }
 
     JsonSerializationResult::ResultCode JsonSerializer::StoreClass(rapidjson::Value& output, const void* object, const void* defaultObject,
-        const SerializeContext::ClassData& classData, JsonSerializerContext& context)
+        const Serialization::ClassData& classData, JsonSerializerContext& context)
     {
         using namespace JsonSerializationResult;
 
@@ -253,7 +255,7 @@ namespace AZ
         if (!classData.m_elements.empty())
         {
             ResultCode result(Tasks::WriteValue);
-            for (const SerializeContext::ClassElement& element : classData.m_elements)
+            for (const Serialization::ClassElement& element : classData.m_elements)
             {
                 const void* elementPtr = reinterpret_cast<const uint8_t*>(object) + element.m_offset;
                 const void* elementDefaultPtr = defaultObject ?
@@ -271,7 +273,7 @@ namespace AZ
     }
 
     JsonSerializationResult::ResultCode JsonSerializer::StoreEnum(rapidjson::Value& output, const void* object, const void* defaultObject,
-        const SerializeContext::ClassData& classData, JsonSerializerContext& context)
+        const Serialization::ClassData& classData, JsonSerializerContext& context)
     {
         using namespace JsonSerializationResult;
 
@@ -283,7 +285,7 @@ namespace AZ
                 "Unable to find underlying type of enum in class data.");
         }
 
-        const SerializeContext::ClassData* underlyingClassData = context.GetSerializeContext()->FindClassData(underlyingTypeId);
+        const Serialization::ClassData* underlyingClassData = context.GetSerializeContext()->FindClassData(underlyingTypeId);
         if (!underlyingClassData)
         {
             return context.Report(Tasks::RetrieveInfo, Outcomes::Unknown,
@@ -350,7 +352,7 @@ namespace AZ
 
     template<typename UnderlyingType>
     JsonSerializationResult::Result JsonSerializer::StoreUnderlyingEnumType(rapidjson::Value& outputValue, const UnderlyingType* value,
-        const UnderlyingType* defaultValue, const SerializeContext::ClassData& classData, JsonSerializerContext& context)
+        const UnderlyingType* defaultValue, const Serialization::ClassData& classData, JsonSerializerContext& context)
     {
         /*
              * The implementation strategy for storing an enumeration with Json is to first look for an exact value match for the enumeration
@@ -367,7 +369,7 @@ namespace AZ
         using namespace JsonSerializationResult;
 
         UnderlyingType enumInputValue{ *value };
-        
+
         using EnumConstantBase = SerializeContextEnumInternal::EnumConstantBase;
 
         using EnumConstantBasePtr = AZStd::unique_ptr<SerializeContextEnumInternal::EnumConstantBase>;
@@ -454,7 +456,7 @@ namespace AZ
             }
 
             //! If after all the enum values whose bitflags were mask'ed out of the input enum
-            //! the input enum value is still non-zero, that means that the remaining value is represented 
+            //! the input enum value is still non-zero, that means that the remaining value is represented
             //! is a raw integral of the left over flags
             //! Therefore it gets written to the json array has an integral value
             if (enumInputBitset != 0)
@@ -469,7 +471,7 @@ namespace AZ
     JsonSerializer::ResolvePointerResult JsonSerializer::ResolvePointer(
         JsonSerializationResult::ResultCode& status, StoreTypeId& storeTypeId,
         const void*& object, const void*& defaultObject, AZStd::any& defaultObjectStorage,
-        const SerializeContext::ClassData*& elementClassData, const AZ::IRttiHelper& rtti,
+        const Serialization::ClassData*& elementClassData, const AZ::IRttiHelper& rtti,
         JsonSerializerContext& context)
     {
         using namespace JsonSerializationResult;
@@ -482,7 +484,7 @@ namespace AZ
             return ResolvePointerResult::WriteNull;
         }
 
-        // The pointer is pointing to an instance, so determine if the pointer is polymorphic. If so, make to 
+        // The pointer is pointing to an instance, so determine if the pointer is polymorphic. If so, make to
         // tell the caller of this function to write the type id and provide a default object, if requested, for
         // the specific polymorphic instance the pointer is pointing to.
         const AZ::Uuid& actualClassId = rtti.GetActualUuid(object);
@@ -529,7 +531,7 @@ namespace AZ
         return ResolvePointerResult::ContinueProcessing;
     }
 
-    rapidjson::Value JsonSerializer::StoreTypeName(const SerializeContext::ClassData& classData, JsonSerializerContext& context)
+    rapidjson::Value JsonSerializer::StoreTypeName(const Serialization::ClassData& classData, JsonSerializerContext& context)
     {
         rapidjson::Value result;
         AZStd::vector<Uuid> ids = context.GetSerializeContext()->FindClassId(Crc32(classData.m_name));
@@ -540,7 +542,7 @@ namespace AZ
         else
         {
             // Only write the Uuid for the class if there are multiple classes sharing the same name.
-            // In this case it wouldn't be enough to determine which class needs to be used. The 
+            // In this case it wouldn't be enough to determine which class needs to be used. The
             // class name is still added as a comment for be friendlier for users to read.
             AZStd::string fullName = classData.m_typeId.ToString<AZStd::string>();
             fullName += ' ';
@@ -555,7 +557,7 @@ namespace AZ
     {
         using namespace JsonSerializationResult;
 
-        const SerializeContext::ClassData* data = context.GetSerializeContext()->FindClassData(typeId);
+        const Serialization::ClassData* data = context.GetSerializeContext()->FindClassData(typeId);
         if (data)
         {
             output = JsonSerializer::StoreTypeName(*data, context);
@@ -570,7 +572,7 @@ namespace AZ
     }
 
     JsonSerializationResult::ResultCode JsonSerializer::InsertTypeId(
-        rapidjson::Value& output, const SerializeContext::ClassData& classData, JsonSerializerContext& context)
+        rapidjson::Value& output, const Serialization::ClassData& classData, JsonSerializerContext& context)
     {
         using namespace JsonSerializationResult;
 

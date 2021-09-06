@@ -59,7 +59,7 @@ namespace GraphCpp
 
 namespace ScriptCanvas
 {
-    bool GraphComponentVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& componentElementNode)
+    bool GraphComponentVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& componentElementNode)
     {
         if (componentElementNode.GetVersion() < 12)
         {

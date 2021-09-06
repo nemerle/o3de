@@ -195,7 +195,7 @@ namespace AzToolsFramework
 
     // Filter used to test component copyability. 
     // Ensure filter passes everything to ensure layer component copyability is unaffected by filter results.
-    bool DummyComponentFilter([[maybe_unused]] const AZ::SerializeContext::ClassData& classData)
+    bool DummyComponentFilter([[maybe_unused]] const AZ::Serialization::ClassData& classData)
     {
         return true;
     }

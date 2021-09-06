@@ -60,7 +60,7 @@ namespace EditorPythonBindings
             return;
         }
 
-        const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(typeId);
+        const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(typeId);
         if(!classData)
         {
             AZ_Warning("python", false, "Missing Serialize class for UUID:%s", typeId.ToString<AZStd::string>().c_str());
@@ -651,8 +651,8 @@ namespace EditorPythonBindings
             return AZStd::nullopt;
         }
 
-        bool LoadPythonToPairElement(PyObject* pyItem, PythonMarshalTypeRequests::BehaviorTraits traits, const AZ::SerializeContext::ClassElement* itemElement,
-            AZ::SerializeContext::IDataContainer* pairContainer, size_t index, AZ::SerializeContext* serializeContext, void* newPair)
+        bool LoadPythonToPairElement(PyObject* pyItem, PythonMarshalTypeRequests::BehaviorTraits traits, const AZ::Serialization::ClassElement* itemElement,
+            AZ::Serialization::IDataContainer* pairContainer, size_t index, AZ::SerializeContext* serializeContext, void* newPair)
         {
             pybind11::object pyObj{ pybind11::reinterpret_borrow<pybind11::object>(pyItem) };
             AZ::BehaviorValueParameter behaviorItem;
@@ -697,11 +697,11 @@ namespace EditorPythonBindings
         class TypeConverterDictionary final
             : public PythonMarshalComponent::TypeConverter
         {
-            const AZ::SerializeContext::ClassData* m_classData = nullptr;
+            const AZ::Serialization::ClassData* m_classData = nullptr;
             const AZ::TypeId m_typeId = {};
 
         public:
-            TypeConverterDictionary([[maybe_unused]] AZ::GenericClassInfo* genericClassInfo, const AZ::SerializeContext::ClassData* classData, const AZ::TypeId& typeId)
+            TypeConverterDictionary([[maybe_unused]] AZ::GenericClassInfo* genericClassInfo, const AZ::Serialization::ClassData* classData, const AZ::TypeId& typeId)
                 : m_classData(classData)
                 , m_typeId(typeId)
             {
@@ -731,19 +731,19 @@ namespace EditorPythonBindings
 
                 // prepare the AZStd::unordered_map<> container
                 AZ::BehaviorObject mapInstance = behaviorClass->Create();
-                AZ::SerializeContext::IDataContainer* mapDataContainer = m_classData->m_container;
-                const AZ::SerializeContext::ClassElement* pairElement = m_classData->m_container->GetElement(m_classData->m_container->GetDefaultElementNameCrc());
-                const AZ::SerializeContext::ClassData* pairClass = serializeContext->FindClassData(pairElement->m_typeId);
+                AZ::Serialization::IDataContainer* mapDataContainer = m_classData->m_container;
+                const AZ::Serialization::ClassElement* pairElement = m_classData->m_container->GetElement(m_classData->m_container->GetDefaultElementNameCrc());
+                const AZ::Serialization::ClassData* pairClass = serializeContext->FindClassData(pairElement->m_typeId);
                 AZ_Assert(pairClass, "Associative container was registered but not the pair that's used for storage.");
-                AZ::SerializeContext::IDataContainer* pairContainer = pairClass->m_container;
+                AZ::Serialization::IDataContainer* pairContainer = pairClass->m_container;
                 AZ_Assert(pairContainer, "Associative container is missing the interface to the storage container.");
 
                 // get the key/value element types
-                const AZ::SerializeContext::ClassElement* keyElement = nullptr;
-                const AZ::SerializeContext::ClassElement* valueElement = nullptr;
-                auto keyValueTypeEnumCallback = [&keyElement, &valueElement](const AZ::Uuid&, const AZ::SerializeContext::ClassElement* genericClassElement)
+                const AZ::Serialization::ClassElement* keyElement = nullptr;
+                const AZ::Serialization::ClassElement* valueElement = nullptr;
+                auto keyValueTypeEnumCallback = [&keyElement, &valueElement](const AZ::Uuid&, const AZ::Serialization::ClassElement* genericClassElement)
                 {
-                    if (genericClassElement->m_flags & AZ::SerializeContext::ClassElement::Flags::FLG_POINTER)
+                    if (genericClassElement->m_flags & AZ::Serialization::ClassElement::Flags::FLG_POINTER)
                     {
                         AZ_Error("python", false, "Python marshalling does not handle naked pointers; not converting dict's pair");
                         return false;
@@ -906,10 +906,10 @@ namespace EditorPythonBindings
         {
         public:
             AZ::GenericClassInfo* m_genericClassInfo = nullptr;
-            const AZ::SerializeContext::ClassData* m_classData = nullptr;
+            const AZ::Serialization::ClassData* m_classData = nullptr;
             const AZ::TypeId m_typeId = {};
 
-            TypeConverterVector(AZ::GenericClassInfo* genericClassInfo, const AZ::SerializeContext::ClassData* classData, const AZ::TypeId& typeId)
+            TypeConverterVector(AZ::GenericClassInfo* genericClassInfo, const AZ::Serialization::ClassData* classData, const AZ::TypeId& typeId)
                 : m_genericClassInfo(genericClassInfo)
                 , m_classData(classData)
                 , m_typeId(typeId) 
@@ -993,8 +993,8 @@ namespace EditorPythonBindings
             AZStd::optional<PythonMarshalTypeRequests::BehaviorValueResult> PythonToBehaviorSerializedList(const AZ::TypeId& elementType, PythonMarshalTypeRequests::BehaviorTraits traits, pybind11::object pyObj, AZ::BehaviorValueParameter& outValue)
             {
                 // fetch the container parts
-                const AZ::SerializeContext::ClassData* classData = m_genericClassInfo->GetClassData();
-                const AZ::SerializeContext::ClassElement* classElement = classData->m_container->GetElement(classData->m_container->GetDefaultElementNameCrc());
+                const AZ::Serialization::ClassData* classData = m_genericClassInfo->GetClassData();
+                const AZ::Serialization::ClassElement* classElement = classData->m_container->GetElement(classData->m_container->GetDefaultElementNameCrc());
 
                 // prepare the AZStd::vector container
                 AZ::SerializeContext* serializeContext = nullptr;
@@ -1148,10 +1148,10 @@ namespace EditorPythonBindings
         {
         public:
             AZ::GenericClassInfo* m_genericClassInfo = nullptr;
-            const AZ::SerializeContext::ClassData* m_classData = nullptr;
+            const AZ::Serialization::ClassData* m_classData = nullptr;
             const AZ::TypeId m_typeId = {};
 
-            TypeConverterSet(AZ::GenericClassInfo* genericClassInfo, const AZ::SerializeContext::ClassData* classData, const AZ::TypeId& typeId)
+            TypeConverterSet(AZ::GenericClassInfo* genericClassInfo, const AZ::Serialization::ClassData* classData, const AZ::TypeId& typeId)
                 : m_genericClassInfo(genericClassInfo)
                 , m_classData(classData)
                 , m_typeId(typeId)
@@ -1217,8 +1217,8 @@ namespace EditorPythonBindings
             AZStd::optional<PythonMarshalTypeRequests::BehaviorValueResult> PythonToBehaviorSerializedSet(const AZ::TypeId& elementType, PythonMarshalTypeRequests::BehaviorTraits traits, pybind11::object pyObj, AZ::BehaviorValueParameter& outValue)
             {
                 // fetch the container parts
-                const AZ::SerializeContext::ClassData* classData = m_genericClassInfo->GetClassData();
-                const AZ::SerializeContext::ClassElement* classElement = classData->m_container->GetElement(classData->m_container->GetDefaultElementNameCrc());
+                const AZ::Serialization::ClassData* classData = m_genericClassInfo->GetClassData();
+                const AZ::Serialization::ClassElement* classElement = classData->m_container->GetElement(classData->m_container->GetDefaultElementNameCrc());
 
                 // prepare the AZStd::unordered_set container
                 AZ::SerializeContext* serializeContext = nullptr;
@@ -1374,7 +1374,7 @@ namespace EditorPythonBindings
         class TypeConverterPair final
             : public PythonMarshalComponent::TypeConverter
         {
-            const AZ::SerializeContext::ClassData* m_classData = nullptr;
+            const AZ::Serialization::ClassData* m_classData = nullptr;
             const AZ::TypeId m_typeId = {};
 
             bool IsValidList(pybind11::object pyObj) const
@@ -1400,7 +1400,7 @@ namespace EditorPythonBindings
             }
 
         public:
-            TypeConverterPair([[maybe_unused]] AZ::GenericClassInfo* genericClassInfo, const AZ::SerializeContext::ClassData* classData, const AZ::TypeId& typeId)
+            TypeConverterPair([[maybe_unused]] AZ::GenericClassInfo* genericClassInfo, const AZ::Serialization::ClassData* classData, const AZ::TypeId& typeId)
                 : m_classData(classData)
                 , m_typeId(typeId)
             {
@@ -1430,15 +1430,15 @@ namespace EditorPythonBindings
 
                 // prepare the AZStd::pair<> container
                 AZ::BehaviorObject pairInstance = behaviorClass->Create();
-                AZ::SerializeContext::IDataContainer* pairDataContainer = m_classData->m_container;
+                AZ::Serialization::IDataContainer* pairDataContainer = m_classData->m_container;
 
                 // get the element types
-                const AZ::SerializeContext::ClassElement* element0 = nullptr;
-                const AZ::SerializeContext::ClassElement* element1 = nullptr;
+                const AZ::Serialization::ClassElement* element0 = nullptr;
+                const AZ::Serialization::ClassElement* element1 = nullptr;
 
-                auto elementTypeEnumCallback = [&element0, &element1](const AZ::Uuid&, const AZ::SerializeContext::ClassElement* genericClassElement)
+                auto elementTypeEnumCallback = [&element0, &element1](const AZ::Uuid&, const AZ::Serialization::ClassElement* genericClassElement)
                 {
-                    if (genericClassElement->m_flags & AZ::SerializeContext::ClassElement::Flags::FLG_POINTER)
+                    if (genericClassElement->m_flags & AZ::Serialization::ClassElement::Flags::FLG_POINTER)
                     {
                         AZ_Error("python", false, "Python marshalling does not handle naked pointers; not converting the pair");
                         return false;
@@ -1524,7 +1524,7 @@ namespace EditorPythonBindings
             AZStd::optional<PythonMarshalTypeRequests::PythonValueResult> BehaviorValueParameterToPython(AZ::BehaviorValueParameter& behaviorValue) override
             {
                 // the class data must have a container interface
-                AZ::SerializeContext::IDataContainer* containerInterface = m_classData->m_container;
+                AZ::Serialization::IDataContainer* containerInterface = m_classData->m_container;
 
                 if (!containerInterface)
                 {
@@ -1546,7 +1546,7 @@ namespace EditorPythonBindings
                 pybind11::object pythonItem1{ pybind11::none() };
                 size_t itemCount = 0;
                 
-                auto pairElementCallback = [cleanUpList, &pythonItem0, &pythonItem1, &itemCount](void* instancePair, const AZ::Uuid& elementClassId, [[maybe_unused]] const AZ::SerializeContext::ClassData* elementGenericClassData, [[maybe_unused]] const AZ::SerializeContext::ClassElement* genericClassElement)
+                auto pairElementCallback = [cleanUpList, &pythonItem0, &pythonItem1, &itemCount](void* instancePair, const AZ::Uuid& elementClassId, [[maybe_unused]] const AZ::Serialization::ClassData* elementGenericClassData, [[maybe_unused]] const AZ::Serialization::ClassElement* genericClassElement)
                 {
                     AZ::BehaviorObject behaviorObjectValue(instancePair, elementClassId);
                     auto result = ProcessBehaviorObject(behaviorObjectValue);
@@ -1630,7 +1630,7 @@ namespace EditorPythonBindings
             }
 
             // handle the generic container types and create type converters for each found
-            auto handleTypeInfo = [registrant, serializeContext](const AZ::SerializeContext::ClassData* classData, const AZ::TypeId& typeId)
+            auto handleTypeInfo = [registrant, serializeContext](const AZ::Serialization::ClassData* classData, const AZ::TypeId& typeId)
             {
                 if (typeId == AZ::AzTypeInfo<AZStd::vector<AZ::u8>>::Uuid())
                 {

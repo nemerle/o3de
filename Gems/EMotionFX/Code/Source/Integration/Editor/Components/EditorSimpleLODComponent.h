@@ -58,7 +58,7 @@ namespace EMotionFX
             }
 
             static void Reflect(AZ::ReflectContext* context);
-            static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+            static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         private:
             EditorSimpleLODComponent(const EditorSimpleLODComponent&) = delete;

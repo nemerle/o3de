@@ -57,7 +57,7 @@ namespace AZ
             }
             if (useContext)
             {
-                const SerializeContext::ClassData* classData = useContext->FindClassData(m_typeId);
+                const Serialization::ClassData* classData = useContext->FindClassData(m_typeId);
                 if (classData)
                 {
                     if (classData->m_factory)
@@ -122,7 +122,7 @@ namespace AZ
 
         if (useContext)
         {
-            const SerializeContext::ClassData* classData = useContext->FindClassData(m_typeId);
+            const Serialization::ClassData* classData = useContext->FindClassData(m_typeId);
             if (classData)
             {
                 if (classData->m_serializer)

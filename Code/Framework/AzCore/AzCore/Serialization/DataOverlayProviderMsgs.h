@@ -39,7 +39,7 @@ namespace AZ
     class DataOverlayTarget
     {
     public:
-        DataOverlayTarget(SerializeContext::DataElementNode* dataContainer, SerializeContext* sc, SerializeContext::ErrorHandler* errorLogger)
+        DataOverlayTarget(Serialization::DataElementNode* dataContainer, SerializeContext* sc, Serialization::ErrorHandler* errorLogger)
             : m_dataContainer(dataContainer)
             , m_sc(sc)
             , m_errorLogger(errorLogger)
@@ -50,15 +50,15 @@ namespace AZ
         void   SetData(const T& obj);
 
     protected:
-        typedef AZStd::vector<SerializeContext::DataElementNode*> NodeStack;
+        typedef AZStd::vector<Serialization::DataElementNode*> NodeStack;
 
-        void Parse(const void* classPtr, const SerializeContext::ClassData* classData);
-        bool ElementBegin(NodeStack* nodeStack, const void* elemPtr, const SerializeContext::ClassData* classData, const SerializeContext::ClassElement* elementData);
+        void Parse(const void* classPtr, const Serialization::ClassData* classData);
+        bool ElementBegin(NodeStack* nodeStack, const void* elemPtr, const Serialization::ClassData* classData, const Serialization::ClassElement* elementData);
         bool ElementEnd(NodeStack* nodeStack);
 
-        SerializeContext::DataElementNode*      m_dataContainer;
+        Serialization::DataElementNode*      m_dataContainer;
         SerializeContext*                       m_sc;
-        SerializeContext::ErrorHandler*         m_errorLogger;
+        Serialization::ErrorHandler*         m_errorLogger;
     };
 
     template<typename T>
@@ -67,7 +67,7 @@ namespace AZ
         AZ_Assert(!AZStd::is_pointer<T>::value, "Cannot serialize pointer-to-pointer as root element! This makes no sense!");
         const void* classPtr = SerializeTypeInfo<T>::RttiCast(&obj, SerializeTypeInfo<T>::GetRttiTypeId(&obj));
         const Uuid& classId = SerializeTypeInfo<T>::GetUuid(&obj);
-        const SerializeContext::ClassData* classData = m_sc->FindClassData(classId, nullptr, 0);
+        const Serialization::ClassData* classData = m_sc->FindClassData(classId, nullptr, 0);
         if (!classData)
         {
             GenericClassInfo* genericClassInfo = SerializeGenericTypeInfo<T>::GetGenericInfo();

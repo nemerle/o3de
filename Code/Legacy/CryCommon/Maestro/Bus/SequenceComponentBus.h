@@ -7,6 +7,7 @@
  */
 #pragma once
 
+#include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Math/Quaternion.h>
 #include <AzCore/Math/Vector3.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -44,9 +45,9 @@ namespace Maestro
             const AZStd::string& GetVirtualPropertyName() const { return m_virtualPropertyName; }
             AZ::ComponentId      GetComponentId() const { return m_componentId; }
 
-            bool operator== (const AnimatablePropertyAddress& rhs) const 
-            { 
-                return (m_componentId == rhs.m_componentId && m_virtualPropertyName == rhs.m_virtualPropertyName); 
+            bool operator== (const AnimatablePropertyAddress& rhs) const
+            {
+                return (m_componentId == rhs.m_componentId && m_virtualPropertyName == rhs.m_virtualPropertyName);
             }
 
         private:
@@ -379,7 +380,7 @@ namespace Maestro
             float GetFloatValue() const override
             {
                 // return the length of the quat
-                return m_value.GetLength(); 
+                return m_value.GetLength();
             }
             bool GetBoolValue() const override
             {
@@ -688,7 +689,7 @@ namespace Maestro
         static const AZ::EBusHandlerPolicy HandlerPolicy = AZ::EBusHandlerPolicy::Single;  // Only one component on a entity can implement the events
         //////////////////////////////////////////////////////////////////////////
 
-        /** 
+        /**
          * Set a value for an animated property at the given address on the given entity.
          * @param animatedEntityId the entity Id of the entity containing the animatedAddress
          * @param animatedAddress identifies the component and property to be set

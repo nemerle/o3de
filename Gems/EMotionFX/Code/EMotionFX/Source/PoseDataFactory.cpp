@@ -24,7 +24,7 @@ namespace EMotionFX
             AZ_Error("EMotionFX", false, "Can't get serialize context from component application.");
             return nullptr;
         }
-        const AZ::SerializeContext::ClassData* classData = context->FindClassData(type);
+        const AZ::Serialization::ClassData* classData = context->FindClassData(type);
         
         PoseData* result = static_cast<PoseData*>(classData->m_factory->Create(classData->m_name));
         if (result)

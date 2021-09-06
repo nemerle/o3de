@@ -29,7 +29,7 @@ Q_DECLARE_METATYPE(AZ::Uuid);
 
 namespace
 {
-    bool AppearsInUiComponentMenu(const AZ::SerializeContext::ClassData& classData)
+    bool AppearsInUiComponentMenu(const AZ::Serialization::ClassData& classData)
     {
         return AzToolsFramework::AppearsInAddComponentMenu(classData, AZ_CRC("UI", 0x27ff46b0));
     }

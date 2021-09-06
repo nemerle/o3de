@@ -397,7 +397,7 @@ namespace spline
 // the "Spline" field is deserialized, the old object will be deleted.
 template<>
 inline bool TAnimSplineTrack<Vec2>::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     bool result = true;
     if (classElement.GetVersion() < 5)
@@ -412,17 +412,17 @@ inline bool TAnimSplineTrack<Vec2>::VersionConverter(AZ::SerializeContext& conte
             if (splineElementIdx != -1)
             {
                 // Find & copy the raw pointer node
-                AZ::SerializeContext::DataElementNode& splinePtrNodeRef = classElement.GetSubElement(splineElementIdx);
-                AZ::SerializeContext::DataElementNode splinePtrNodeCopy = splinePtrNodeRef;
+                AZ::Serialization::DataElementNode& splinePtrNodeRef = classElement.GetSubElement(splineElementIdx);
+                AZ::Serialization::DataElementNode splinePtrNodeCopy = splinePtrNodeRef;
 
                 // Reset the node, then convert it to an intrusive pointer
-                splinePtrNodeRef = AZ::SerializeContext::DataElementNode();
+                splinePtrNodeRef = AZ::Serialization::DataElementNode();
                 if (splinePtrNodeRef.Convert<AZStd::intrusive_ptr<spline::TrackSplineInterpolator<Vec2>>>(context, "Spline"))
                 {
                     // Use the standard name used with the smart pointers serialization
                     // (smart pointers are serialized as containers with one element);
                     // Set the intrusive pointer to the raw pointer value
-                    splinePtrNodeCopy.SetName(AZ::SerializeContext::IDataContainer::GetDefaultElementName());
+                    splinePtrNodeCopy.SetName(AZ::Serialization::IDataContainer::GetDefaultElementName());
                     splinePtrNodeRef.AddElement(splinePtrNodeCopy);
 
                     converted = true;

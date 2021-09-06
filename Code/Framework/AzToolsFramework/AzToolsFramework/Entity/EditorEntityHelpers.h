@@ -9,7 +9,6 @@
 
 #include <AzCore/Component/Component.h>
 #include <AzCore/Component/Entity.h>
-#include <AzCore/Serialization/SerializeContext.h>
 #include <AzToolsFramework/ToolsComponents/EditorComponentBase.h>
 #include <AzToolsFramework/ToolsComponents/EditorDisabledCompositionBus.h>
 #include <AzToolsFramework/ToolsComponents/EditorPendingCompositionBus.h>
@@ -98,8 +97,8 @@ namespace AzToolsFramework
 
     // Component helpers (Uses EBus calls, so safe)
     AZ::Uuid GetComponentTypeId(const AZ::Component* component);
-    const AZ::SerializeContext::ClassData* GetComponentClassData(const AZ::Component* component);
-    const AZ::SerializeContext::ClassData* GetComponentClassDataForType(const AZ::Uuid& componentTypeId);
+    const AZ::Serialization::ClassData* GetComponentClassData(const AZ::Component* component);
+    const AZ::Serialization::ClassData* GetComponentClassDataForType(const AZ::Uuid& componentTypeId);
     AZStd::string GetFriendlyComponentName(const AZ::Component* component);
     const char* GetFriendlyComponentDescription(const AZ::Component* component);
     AZ::ComponentDescriptor* GetComponentDescriptor(const AZ::Component* component);
@@ -189,7 +188,7 @@ namespace AzToolsFramework
     /// Wrap EBus GetLocalTranslation call.
     AZ::Vector3 GetLocalTranslation(AZ::EntityId entityId);
 
-    /// Wrap EBus GetWorldTM call. 
+    /// Wrap EBus GetWorldTM call.
     AZ::Transform GetWorldTransform(AZ::EntityId entityId);
 
     /// Wrap EBus SetWorldTM call.

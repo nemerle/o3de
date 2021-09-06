@@ -10,12 +10,22 @@
 #include <AzCore/base.h>
 #include <AzCore/Math/Crc.h>
 #include <AzCore/std/string/string.h>
-#include <AzCore/Serialization/SerializeContext.h>
+#include <AzCore/std/containers/vector.h>
 #include <AzCore/std/typetraits/function_traits.h>
 #include <AzCore/Preprocessor/CodeGenBoilerplate.h>
 
 // Behavior Context attributes (we don't need include them we can just define the attributes here, however those are some very light weight includes)
 #include <AzCore/Script/ScriptContextAttributes.h>
+
+namespace AZ
+{
+    class ReflectContext;
+    class SerializeContext;
+    namespace Serialization
+    {
+        class DataElementNode;
+    }
+}
 
 // Use this macro to add simple string annotatations
 #define AZCG_CreateAnnotation(annotation) __attribute__((annotate(annotation)))
@@ -156,7 +166,7 @@ namespace AzClass
     using AzCommon::Description;
 
     /**
-     * Allows you to define a custom reflection function that we will called when the 
+     * Allows you to define a custom reflection function that we will called when the
      * class reflect function is called. The signature is the same as any Reflect function.
      */
     struct CustomReflection
@@ -188,11 +198,11 @@ namespace AzClass
         Serialize() = default;
 
         template <class Parent, class ...Parents>
-        struct Base 
+        struct Base
         {
             Base() = default;
         };
-        
+
         struct OptIn
         {
             OptIn() = default;
@@ -201,7 +211,7 @@ namespace AzClass
 
     struct Version
     {
-        using ConverterFunction = bool(*)(class AZ::SerializeContext& context, class AZ::SerializeContext::DataElementNode& classElement);
+        using ConverterFunction = bool(*)(class AZ::SerializeContext& context, class AZ::Serialization::DataElementNode& classElement);
         Version(unsigned int version) { (void)version; }
         Version(unsigned int version, ConverterFunction converter) { (void)version; (void)converter; }
     };
@@ -260,7 +270,7 @@ namespace AzClass
             template <class Function>
             HelpPageURL(Function getter) { (void)getter; }
         };
-        
+
         struct HideIcon
         {
             HideIcon(bool isHidden=true) { (void)isHidden; }
@@ -284,7 +294,7 @@ namespace AzClass
     }
 
     /**
-     * Allows you to define custom class name that is different from the class actual name 
+     * Allows you to define custom class name that is different from the class actual name
      * (otherwise you can just skip that parameter)
      */
     struct BehaviorName
@@ -304,7 +314,7 @@ namespace AzClass
      * List of BusTypes (behavior type names reflect in EBus<Bus>("BusName"), which can be different than the C++ name)
      * that are associated with that class. That list is used by certain applications like ScriptCanvas or Animation System
      * to manipulate the object runtime state.
-     */ 
+     */
     struct BehaviorRequestBus
     {
         BehaviorRequestBus(std::initializer_list<const char*> requestBusses) { (void)requestBusses; }
@@ -487,16 +497,16 @@ namespace AzField
     /**
      * \ref AZ::BehaviorContext codegen support. We limit the support for most common features,
      * otherwise if you need advanced support you can use the custom reflection method.
-     */ 
+     */
     struct Behavior
     {
-        // By default we use the field name as is in C++, however you can provide custom name. 
+        // By default we use the field name as is in C++, however you can provide custom name.
         Behavior(const char* customName = nullptr) { (void)customName; }
     };
 
     struct BehaviorReadOnly
     {
-        // By default we use the field name as is in C++, however you can provide custom name. 
+        // By default we use the field name as is in C++, however you can provide custom name.
         BehaviorReadOnly(const char* customName = nullptr) { (void)customName; }
     };
 
@@ -553,7 +563,7 @@ namespace AzEnum
     */
     struct Behavior
     {
-        // By default we use the field name as is in C++, however you can provide custom name. 
+        // By default we use the field name as is in C++, however you can provide custom name.
         Behavior(const char* customName = nullptr) { (void)customName; }
     };
 
@@ -573,8 +583,8 @@ namespace AzFunction
     */
     struct Behavior
     {
-        // By default we use the field name as is in C++, however you can provide custom name. 
-        // This is actually required when you have methods with the same name and different arguments as the 
+        // By default we use the field name as is in C++, however you can provide custom name.
+        // This is actually required when you have methods with the same name and different arguments as the
         // script environments don't differentiate based on argument types.
         Behavior(const char* customName = nullptr) { (void)customName; }
     };
@@ -616,19 +626,19 @@ namespace AzEBus
 
 
     /**
-    * Enabled behavior reflection for the EBus. Contrary to the class reflection which is inclusive (you are expected to mark every function that you 
-    * want to reflect to behavior context), when you tag an EBus all events are considered for reflection (as it's the common case), you will 
+    * Enabled behavior reflection for the EBus. Contrary to the class reflection which is inclusive (you are expected to mark every function that you
+    * want to reflect to behavior context), when you tag an EBus all events are considered for reflection (as it's the common case), you will
     * need to tag events that you do not want to reflect \ref AzEBusEvent::BehaviorExclude
     */
     struct Behavior
     {
-        // By default we use the EBusName as is in C++, however you can provide custom name. 
+        // By default we use the EBusName as is in C++, however you can provide custom name.
         Behavior(const char* customName = nullptr) { (void)customName; }
     };
 
     /**
-     * Code gen will generate the EBus event handler for behavior context, all events will be included 
-     * and forwards. If you need to modify that behavior write the class yourself and pass either reflect it 
+     * Code gen will generate the EBus event handler for behavior context, all events will be included
+     * and forwards. If you need to modify that behavior write the class yourself and pass either reflect it
      * yourself or use the EventHandler tag to use it as part of codegen.
      */
     struct BehaviorAutoEventHandler

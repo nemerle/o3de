@@ -10,6 +10,7 @@
 #include <Material/EditorMaterialComponentExporter.h>
 #include <Material/EditorMaterialComponentInspector.h>
 #include <Material/EditorMaterialModelUvNameMapInspector.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
@@ -20,7 +21,7 @@
 
 AZ_PUSH_DISABLE_WARNING(4251 4800, "-Wunknown-warning-option") // disable warnings spawned by QT
 #include <QMenu>
-#include <QAction> 
+#include <QAction>
 #include <QCursor>
 AZ_POP_DISABLE_WARNING
 
@@ -29,7 +30,7 @@ namespace AZ
     namespace Render
     {
         // Update serialized data to the new format and data types
-        bool EditorMaterialComponentSlot::ConvertVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool EditorMaterialComponentSlot::ConvertVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 2)
             {
@@ -244,7 +245,7 @@ namespace AZ
                 // Treated as a special property. It will be updated together with properties.
                 OnPropertyChanged();
             };
-            
+
             if (m_materialAsset.GetId().IsValid())
             {
                 if (EditorMaterialComponentInspector::OpenInspectorDialog(m_materialAsset.GetId(), m_matModUvOverrides, m_modelUvNames, applyMatModUvOverrideChangedCallback))

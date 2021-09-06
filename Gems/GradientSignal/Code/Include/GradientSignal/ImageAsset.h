@@ -33,7 +33,7 @@ namespace GradientSignal
         AZ_CLASS_ALLOCATOR(ImageAsset, AZ::SystemAllocator, 0);
         static void Reflect(AZ::ReflectContext* context);
         static bool VersionConverter(AZ::SerializeContext& context,
-            AZ::SerializeContext::DataElementNode& classElement);
+            AZ::Serialization::DataElementNode& classElement);
 
         AZ::u32 m_imageWidth = 0;
         AZ::u32 m_imageHeight = 0;

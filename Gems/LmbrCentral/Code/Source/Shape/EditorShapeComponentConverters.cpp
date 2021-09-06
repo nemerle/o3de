@@ -21,7 +21,7 @@ namespace LmbrCentral
 {
     namespace ClassConverters
     {
-        bool DeprecateEditorSphereColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateEditorSphereColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Cache the Configuration
             SphereShapeConfig configuration;
@@ -52,7 +52,7 @@ namespace LmbrCentral
             return false;
         }
 
-        bool UpgradeEditorSphereShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeEditorSphereShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             const AZ::u32 version = classElement.GetVersion();
             if (version <= 1)
@@ -91,7 +91,7 @@ namespace LmbrCentral
             return UpgradeShapeComponentConfigToShape<SphereShape, SphereShapeConfig>(version, "SphereShape", context, classElement);;
         }
 
-        bool DeprecateEditorBoxColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateEditorBoxColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Cache the Configuration
             BoxShapeConfig configuration;
@@ -121,7 +121,7 @@ namespace LmbrCentral
             return false;
         }
 
-        bool UpgradeEditorBoxShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeEditorBoxShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             const AZ::u32 version = classElement.GetVersion();
 
@@ -162,7 +162,7 @@ namespace LmbrCentral
             return UpgradeShapeComponentConfigToShape<BoxShape, BoxShapeConfig>(version, "BoxShape", context, classElement);
         }
 
-        bool DeprecateEditorCylinderColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateEditorCylinderColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Cache the Configuration
             CylinderShapeConfig configuration;
@@ -193,7 +193,7 @@ namespace LmbrCentral
             return false;
         }
 
-        bool UpgradeEditorCylinderShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeEditorCylinderShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             const AZ::u32 version = classElement.GetVersion();
             if (version <= 1)
@@ -234,7 +234,7 @@ namespace LmbrCentral
             return UpgradeShapeComponentConfigToShape<CylinderShape, CylinderShapeConfig>(version, "CylinderShape", context, classElement);;
         }
 
-        bool DeprecateEditorCapsuleColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateEditorCapsuleColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Cache the Configuration
             CapsuleShapeConfig configuration;
@@ -265,7 +265,7 @@ namespace LmbrCentral
             return false;
         }
 
-        bool UpgradeEditorCapsuleShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeEditorCapsuleShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             const AZ::u32 version = classElement.GetVersion();
             if (version <= 1)
@@ -305,7 +305,7 @@ namespace LmbrCentral
             return UpgradeShapeComponentConfigToShape<CapsuleShape, CapsuleShapeConfig>(version, "CapsuleShape", context, classElement);
         }
 
-        bool UpgradeEditorPolygonPrismShapeComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpgradeEditorPolygonPrismShapeComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() <= 1)
             {

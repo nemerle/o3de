@@ -215,8 +215,8 @@ bool CUiAnimAzEntityNode::GetParamInfoFromType(const CUiAnimParamType& paramId, 
 }
 
 //////////////////////////////////////////////////////////////////////////
-const AZ::SerializeContext::ClassElement* CUiAnimAzEntityNode::ComputeOffsetFromElementName(
-    const AZ::SerializeContext::ClassData* classData,
+const AZ::Serialization::ClassElement* CUiAnimAzEntityNode::ComputeOffsetFromElementName(
+    const AZ::Serialization::ClassData* classData,
     IUiAnimTrack* track,
     size_t baseOffset)
 {
@@ -224,8 +224,8 @@ const AZ::SerializeContext::ClassElement* CUiAnimAzEntityNode::ComputeOffsetFrom
 
     // find the data element in the class data that matches the name in the paramData
     AZ::Crc32 nameCrc = AZ_CRC(paramData.GetName());
-    const AZ::SerializeContext::ClassElement* element = nullptr;
-    for (const AZ::SerializeContext::ClassElement& classElement : classData->m_elements)
+    const AZ::Serialization::ClassElement* element = nullptr;
+    for (const AZ::Serialization::ClassElement& classElement : classData->m_elements)
     {
         if (classElement.m_nameCrc == nameCrc)
         {
@@ -315,17 +315,17 @@ void CUiAnimAzEntityNode::ComputeOffsetsFromElementNames()
             const UiAnimParamData& paramData = track->GetParamData();
             AZ::Component* component = paramData.GetComponent(entity);
             const AZ::Uuid& classId = AZ::SerializeTypeInfo<AZ::Component>::GetUuid(component);
-            const AZ::SerializeContext::ClassData* classData = context->FindClassData(classId);
+            const AZ::Serialization::ClassData* classData = context->FindClassData(classId);
 
             // update the offset for the field this track is animating
-            const AZ::SerializeContext::ClassElement* element = ComputeOffsetFromElementName(classData, track, 0);
+            const AZ::Serialization::ClassElement* element = ComputeOffsetFromElementName(classData, track, 0);
 
             bool deleteTrack = false;
             if (element)
             {
                 // the field is a valid field in the component, proceed with sub tracks if any
                 size_t baseOffset = element->m_offset;
-                const AZ::SerializeContext::ClassData* baseElementClassData = context->FindClassData(element->m_typeId);
+                const AZ::Serialization::ClassData* baseElementClassData = context->FindClassData(element->m_typeId);
 
                 // Search the sub-tracks also if any.
                 if (baseElementClassData && !baseElementClassData->m_elements.empty())
@@ -652,7 +652,7 @@ IUiAnimTrack* CUiAnimAzEntityNode::CreateTrackForAzField(const UiAnimParamData& 
 
     IUiAnimTrack* track = nullptr;
 
-    const AZ::SerializeContext::ClassData* classData = context->FindClassData(param.GetTypeId());
+    const AZ::Serialization::ClassData* classData = context->FindClassData(param.GetTypeId());
     if (classData && !classData->m_elements.empty())
     {
         // this is a compound type, create a compound track
@@ -685,7 +685,7 @@ IUiAnimTrack* CUiAnimAzEntityNode::CreateTrackForAzField(const UiAnimParamData& 
         int numSubTracks = track->GetSubTrackCount();
         int curSubTrack = 0;
 
-        for (const AZ::SerializeContext::ClassElement& element : classData->m_elements)
+        for (const AZ::Serialization::ClassElement& element : classData->m_elements)
         {
             if (element.m_typeId == AZ::SerializeTypeInfo<float>::GetUuid() && curSubTrack < numSubTracks)
             {

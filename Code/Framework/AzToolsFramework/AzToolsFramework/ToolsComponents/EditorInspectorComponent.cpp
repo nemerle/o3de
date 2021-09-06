@@ -55,7 +55,7 @@ namespace AzToolsFramework
             services.push_back(AZ_CRC("EditorInspectorService", 0xc7357f25));
         }
 
-        bool EditorInspectorComponent::SerializationConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool EditorInspectorComponent::SerializationConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Prior to version 2, we left the version unspecified so it was technically 0
             if (classElement.GetVersion() <= 1)
@@ -72,7 +72,7 @@ namespace AzToolsFramework
                 AZ::ComponentId componentId;
                 for (int arrayElementIndex = 0; arrayElementIndex < componentOrderArrayElement->GetNumSubElements(); ++arrayElementIndex)
                 {
-                    AZ::SerializeContext::DataElementNode& elementNode = componentOrderArrayElement->GetSubElement(arrayElementIndex);
+                    AZ::Serialization::DataElementNode& elementNode = componentOrderArrayElement->GetSubElement(arrayElementIndex);
                     if (elementNode.GetData(componentId))
                     {
                         componentOrderArray.push_back(componentId);

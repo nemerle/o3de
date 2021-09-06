@@ -1418,14 +1418,14 @@ namespace LandscapeCanvasEditor
             // size (if necessary)
             m_serializeContext->EnumerateObject(component,
                 // beginElemCB (this is called at the beginning of processing a new element)
-                [this, propertyPath, elementIndexToModify, elementInContainer](void *instance, const AZ::SerializeContext::ClassData *classData, [[maybe_unused]] const AZ::SerializeContext::ClassElement *classElement) -> bool
+                [this, propertyPath, elementIndexToModify, elementInContainer](void *instance, const AZ::Serialization::ClassData *classData, [[maybe_unused]] const AZ::Serialization::ClassElement *classElement) -> bool
                 {
                     // If the element we are trying to set is in a container, we might need to add some more elements
                     // to the container to hold it
                     if (elementInContainer && classData && classData->m_container)
                     {
-                        AZ::SerializeContext::IDataContainer* container = classData->m_container;
-                        const AZ::SerializeContext::ClassElement* containerClassElement = container->GetElement(container->GetDefaultElementNameCrc());
+                        AZ::Serialization::IDataContainer* container = classData->m_container;
+                        const AZ::Serialization::ClassElement* containerClassElement = container->GetElement(container->GetDefaultElementNameCrc());
 
                         // If the container already has enough elements, then we don't need to do anything with the container
                         size_t containerSize = container->Size(instance);
@@ -2976,7 +2976,7 @@ namespace LandscapeCanvasEditor
         AzToolsFramework::EntityIdList vegetationAreaIds;
         m_serializeContext->EnumerateObject(component,
             // beginElemCB
-            [&previewEntityId, &inboundShapeEntityId, &gradientSamplerIds, &vegetationAreaIds](void *instance, [[maybe_unused]] const AZ::SerializeContext::ClassData *classData, const AZ::SerializeContext::ClassElement *classElement) -> bool
+            [&previewEntityId, &inboundShapeEntityId, &gradientSamplerIds, &vegetationAreaIds](void *instance, [[maybe_unused]] const AZ::Serialization::ClassData *classData, const AZ::Serialization::ClassElement *classElement) -> bool
         {
             if (classElement && (classElement->m_typeId == azrtti_typeid<AZ::EntityId>()))
             {

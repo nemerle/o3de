@@ -341,7 +341,7 @@ void PropertiesContainer::BuildSharedComponentList(ComponentTypeMap& sharedCompo
         for (AZ::Component* component : entity->GetComponents())
         {
             const AZ::Uuid& componentType = azrtti_typeid(component);
-            const AZ::SerializeContext::ClassData* classData = m_serializeContext->FindClassData(componentType);
+            const AZ::Serialization::ClassData* classData = m_serializeContext->FindClassData(componentType);
 
             // Skip components without edit data
             if (!classData || !classData->m_editData)

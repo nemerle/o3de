@@ -65,7 +65,7 @@ namespace ScriptCanvas
 
 #if defined(OBJECT_STREAM_EDITOR_ASSET_LOADING_SUPPORT_ENABLED)////
     template<typename t_Class>
-    class SerializeContextReadWriteHandler : public AZ::SerializeContext::IEventHandler
+    class SerializeContextReadWriteHandler : public AZ::Serialization::IEventHandler
     {
     public:
         /// Called right before we start reading from the instance pointed by classPtr.
@@ -98,7 +98,7 @@ namespace ScriptCanvas
     };
 
     template<typename t_Class>
-    class SerializeContextOnWriteEndHandler : public AZ::SerializeContext::IEventHandler
+    class SerializeContextOnWriteEndHandler : public AZ::Serialization::IEventHandler
     {
     public:
         /// Called after we are done writing to the instance pointed by classPtr.
@@ -110,7 +110,7 @@ namespace ScriptCanvas
     };
 
     template<typename t_Class>
-    class SerializeContextOnWriteHandler : public AZ::SerializeContext::IEventHandler
+    class SerializeContextOnWriteHandler : public AZ::Serialization::IEventHandler
     {
     public:
         /// Called right before we start writing to the instance pointed by classPtr.

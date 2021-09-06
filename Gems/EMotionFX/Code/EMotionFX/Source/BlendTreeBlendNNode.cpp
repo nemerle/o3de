@@ -640,7 +640,7 @@ namespace EMotionFX
         data->SetTrajectoryDeltaMirrored(delta);
     }
 
-    bool BlendTreeBlendNNode::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool BlendTreeBlendNNode::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         const unsigned int version = classElement.GetVersion();
         if (version < 2)

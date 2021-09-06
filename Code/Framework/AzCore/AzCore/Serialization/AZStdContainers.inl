@@ -10,6 +10,7 @@
 
 #include <AzCore/Outcome/Outcome.h>
 #include <AzCore/Memory/OSAllocator.h>
+#include <AzCore/Serialization/SerializationInterfaces.h>
 #include <AzCore/std/containers/stack.h>
 #include <AzCore/std/smart_ptr/unique_ptr.h>
 #include <AzCore/std/tuple.h>
@@ -61,17 +62,17 @@ namespace AZ
     {
 
         template <class ValueType>
-        void SetupClassElementFromType(SerializeContext::ClassElement& classElement)
+        void SetupClassElementFromType(Serialization::ClassElement& classElement)
         {
             using ValueClass = typename AZStd::remove_pointer_t<ValueType>;
 
             classElement.m_dataSize = sizeof(ValueType);
             classElement.m_azRtti = GetRttiHelper<ValueClass>();
-            classElement.m_flags = (AZStd::is_pointer<ValueType>::value ? SerializeContext::ClassElement::FLG_POINTER : 0);
+            classElement.m_flags = (AZStd::is_pointer<ValueType>::value ? Serialization::ClassElement::FLG_POINTER : 0);
             classElement.m_genericClassInfo = SerializeGenericTypeInfo<ValueClass>::GetGenericInfo();
             classElement.m_typeId = SerializeGenericTypeInfo<ValueClass>::GetClassTypeId();
             classElement.m_editData = nullptr;
-            classElement.m_attributeOwnership = SerializeContext::ClassElement::AttributeOwnership::Self;
+            classElement.m_attributeOwnership = Serialization::ClassElement::AttributeOwnership::Self;
             /**
              * This should technically bind the reference value from the GetCurrentSerializeContextModule() call
              * as that will always return the current module that set the allocator.
@@ -112,7 +113,7 @@ namespace AZ
         };
 
         class NullFactory
-            : public SerializeContext::IObjectFactory
+            : public Serialization::IObjectFactory
         {
             void* Create(const char* name) override
             {
@@ -150,7 +151,7 @@ namespace AZ
 
         template<class T, bool IsStableIterators>
         class AZStdBasicContainer
-            : public SerializeContext::IDataContainer
+            : public Serialization::IDataContainer
         {
         public:
             typedef typename T::value_type ValueType;
@@ -164,7 +165,7 @@ namespace AZ
             }
 
             /// Returns the element generic (offsets are mostly invalid 0xbad0ffe0, there are exceptions). Null if element with this name can't be found.
-            const SerializeContext::ClassElement* GetElement(u32 elementNameCrc) const override
+            const Serialization::ClassElement* GetElement(u32 elementNameCrc) const override
             {
                 if (elementNameCrc == m_classElement.m_nameCrc)
                 {
@@ -173,7 +174,7 @@ namespace AZ
                 return nullptr;
             }
 
-            bool GetElement(SerializeContext::ClassElement& classElement, const SerializeContext::DataElement& dataElement) const override
+            bool GetElement(Serialization::ClassElement& classElement, const Serialization::DataElement& dataElement) const override
             {
                 if (dataElement.m_nameCrc == m_classElement.m_nameCrc)
                 {
@@ -211,7 +212,7 @@ namespace AZ
                 const T* arrayPtr = reinterpret_cast<const T*>(instance);
                 return arrayPtr->size();
             }
-            
+
             /// Returns the capacity of the container. Returns 0 for objects without fixed capacity.
             size_t Capacity(void* instance) const override
             {
@@ -236,7 +237,7 @@ namespace AZ
             bool    CanAccessElementsByIndex() const override   { return false; }
 
             /// Reserve element
-            void*   ReserveElement(void* instance, const SerializeContext::ClassElement* classElement) override
+            void*   ReserveElement(void* instance, const Serialization::ClassElement* classElement) override
             {
                 (void)classElement;
                 T* arrayPtr = reinterpret_cast<T*>(instance);
@@ -245,7 +246,7 @@ namespace AZ
             }
 
             /// Get an element's address by its index (called before the element is loaded).
-            void*   GetElementByIndex(void* instance, const SerializeContext::ClassElement* classElement, size_t index) override
+            void*   GetElementByIndex(void* instance, const Serialization::ClassElement* classElement, size_t index) override
             {
                 (void)instance;
                 (void)classElement;
@@ -341,7 +342,7 @@ namespace AZ
                 arrayPtr->clear();
             }
 
-            SerializeContext::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
+            Serialization::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
         };
 
         template<class T, bool IsStableIterators>
@@ -352,7 +353,7 @@ namespace AZ
             bool CanAccessElementsByIndex() const override { return true; }
 
             /// Get an element's address by its index (called before the element is loaded).
-            void* GetElementByIndex(void* instance, const SerializeContext::ClassElement* classElement, size_t index) override
+            void* GetElementByIndex(void* instance, const Serialization::ClassElement* classElement, size_t index) override
             {
                 (void)classElement;
                 auto arrayPtr = reinterpret_cast<T*>(instance);
@@ -370,7 +371,7 @@ namespace AZ
         public:
             typedef typename T::value_type ValueType;
             typedef typename AZStd::remove_pointer<typename T::value_type>::type ValueClass;
-            
+
             /// Returns the capacity of the container. Returns 0 for objects without fixed capacity.
             size_t Capacity(void* instance) const override
             {
@@ -382,7 +383,7 @@ namespace AZ
             bool    IsFixedCapacity() const override          { return true; }
 
             /// Reserve element
-            void*   ReserveElement(void* instance, const SerializeContext::ClassElement* classElement) override
+            void*   ReserveElement(void* instance, const Serialization::ClassElement* classElement) override
             {
                 (void)classElement;
                 T* arrayPtr = reinterpret_cast<T*>(instance);
@@ -395,7 +396,7 @@ namespace AZ
             }
         };
 
-        class AZStdArrayEvents : public SerializeContext::IEventHandler
+        class AZStdArrayEvents : public Serialization::IEventHandler
         {
         public:
             using Stack = AZStd::stack<size_t, AZStd::vector<size_t, AZ::OSStdAllocator>>;
@@ -416,7 +417,7 @@ namespace AZ
         };
         template<typename T, size_t N>
         class AZStdArrayContainer
-            : public SerializeContext::IDataContainer
+            : public Serialization::IDataContainer
         {
         public:
             typedef AZStd::array<T, N> ContainerType;
@@ -431,7 +432,7 @@ namespace AZ
             }
 
             /// Returns the element generic (offsets are mostly invalid 0xbad0ffe0, there are exceptions). Null if element with this name can't be found.
-            const SerializeContext::ClassElement* GetElement(u32 elementNameCrc) const override
+            const Serialization::ClassElement* GetElement(u32 elementNameCrc) const override
             {
                 if (elementNameCrc == m_classElement.m_nameCrc)
                 {
@@ -440,7 +441,7 @@ namespace AZ
                 return nullptr;
             }
 
-            bool GetElement(SerializeContext::ClassElement& classElement, const SerializeContext::DataElement& dataElement) const override
+            bool GetElement(Serialization::ClassElement& classElement, const Serialization::DataElement& dataElement) const override
             {
                 if (dataElement.m_nameCrc == m_classElement.m_nameCrc)
                 {
@@ -479,7 +480,7 @@ namespace AZ
                 (void)instance;
                 return N;
             }
-            
+
             /// Returns the capacity of the container. Returns 0 for objects without fixed capacity.
             size_t Capacity(void* instance) const override
             {
@@ -504,7 +505,7 @@ namespace AZ
             bool    CanAccessElementsByIndex() const override   { return true; }
 
             /// Reserve element
-            void*   ReserveElement(void* instance, const SerializeContext::ClassElement* classElement) override
+            void*   ReserveElement(void* instance, const Serialization::ClassElement* classElement) override
             {
                 (void)classElement;
                 GenericClassInfo* containerClassInfo = SerializeGenericTypeInfo<ContainerType>::GetGenericInfo();
@@ -530,7 +531,7 @@ namespace AZ
             }
 
             /// Get an element's address by its index (called before the element is loaded).
-            void*   GetElementByIndex(void* instance, const SerializeContext::ClassElement* classElement, size_t index) override
+            void*   GetElementByIndex(void* instance, const Serialization::ClassElement* classElement, size_t index) override
             {
                 (void)classElement;
                 ContainerType* arrayPtr = reinterpret_cast<ContainerType*>(instance);
@@ -554,7 +555,7 @@ namespace AZ
             bool    RemoveElement(void* instance, const void* element, SerializeContext* deletePointerDataContext) override
             {
                 (void)element;
-                
+
                 AZ_Assert((reinterpret_cast<uintptr_t>(element) & (alignof(ValueType) - 1)) == 0, "element memory address does not match alignment of ValueType");
                 ContainerType* arrayPtr = reinterpret_cast<ContainerType*>(instance);
                 ptrdiff_t arrayIndex = reinterpret_cast<const ValueType*>(element) - arrayPtr->data();
@@ -569,7 +570,7 @@ namespace AZ
                 {
                     DeletePointerData(deletePointerDataContext, &m_classElement, element);
                 }
-                
+
                 // If the element that's removed is the last added element, decrement the insertion counter.
                 GenericClassInfo* containerClassInfo = SerializeGenericTypeInfo<ContainerType>::GetGenericInfo();
                 const bool eventHandlerAvailable = containerClassInfo && containerClassInfo->GetClassData() && containerClassInfo->GetClassData()->m_eventHandler;
@@ -603,13 +604,13 @@ namespace AZ
                 (void)deletePointerDataContext;
             }
 
-            SerializeContext::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
+            Serialization::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
         };
 
         template<class T>
         class AZStdAssociativeContainer
-            : public SerializeContext::IDataContainer
-            , public SerializeContext::IDataContainer::IAssociativeDataContainer
+            : public Serialization::IDataContainer
+            , public Serialization::IDataContainer::IAssociativeDataContainer
         {
             using ValueType = typename T::value_type;
             using ValueClass = AZStd::remove_pointer_t<ValueType>;
@@ -644,14 +645,14 @@ namespace AZ
                 SetupClassElementFromType<ValueType>(m_classElement);
                 // Associative containers usually do a hash insert, default value will cause a collision.
                 // If we want we can check for multi_set, multi_map, but that may be too much for now.
-                m_classElement.m_flags |= SerializeContext::ClassElement::FLG_NO_DEFAULT_VALUE;
+                m_classElement.m_flags |= Serialization::ClassElement::FLG_NO_DEFAULT_VALUE;
 
                 // Register our key type within an lvalue to rvalue wrapper as an attribute
                 AZ::TypeId uuid = azrtti_typeid<WrappedKeyType>();
                 using ContainerType = AttributeContainerType<AZ::TypeId>;
 
                /**
-                * This should technically bind the reference value from the GetCurrentSerializeContextModule() call 
+                * This should technically bind the reference value from the GetCurrentSerializeContextModule() call
                 * as that will always return the current module that set the allocator.
                 * But as the AZStdAssociativeContainer instance will not be accessed outside of the module it was
                 * created within then this will return this .dll/.exe module allocator
@@ -672,7 +673,7 @@ namespace AZ
             }
 
             /// Returns the element generic (offsets are mostly invalid 0xbad0ffe0, there are exceptions). Null if element with this name can't be found.
-            const SerializeContext::ClassElement* GetElement(u32 elementNameCrc) const override
+            const Serialization::ClassElement* GetElement(u32 elementNameCrc) const override
             {
                 if (elementNameCrc == m_classElement.m_nameCrc)
                 {
@@ -681,7 +682,7 @@ namespace AZ
                 return nullptr;
             }
 
-            bool GetElement(SerializeContext::ClassElement& classElement, const SerializeContext::DataElement& dataElement) const override
+            bool GetElement(Serialization::ClassElement& classElement, const Serialization::DataElement& dataElement) const override
             {
                 if (dataElement.m_nameCrc == m_classElement.m_nameCrc)
                 {
@@ -719,7 +720,7 @@ namespace AZ
                 const T* arrayPtr = reinterpret_cast<const T*>(instance);
                 return arrayPtr->size();
             }
-            
+
             /// Returns the capacity of the container. Returns 0 for objects without fixed capacity.
             size_t Capacity(void* instance) const override
             {
@@ -744,13 +745,13 @@ namespace AZ
             bool    CanAccessElementsByIndex() const override   { return false; }
 
             /// Returns the associative interface for this container if available, otherwise null.
-            SerializeContext::IDataContainer::IAssociativeDataContainer* GetAssociativeContainerInterface() override
+            Serialization::IDataContainer::IAssociativeDataContainer* GetAssociativeContainerInterface() override
             {
                 return this;
             }
 
             /// Reserve element
-            void*   ReserveElement(void* instance, const  SerializeContext::ClassElement* classElement) override
+            void*   ReserveElement(void* instance, const  Serialization::ClassElement* classElement) override
             {
                 (void)classElement;
                 T* containerPtr = reinterpret_cast<T*>(instance);
@@ -776,7 +777,7 @@ namespace AZ
 
         public:
             /// Get an element's address by its index (called before the element is loaded).
-            void*   GetElementByIndex(void* instance, const SerializeContext::ClassElement* classElement, size_t index) override
+            void*   GetElementByIndex(void* instance, const Serialization::ClassElement* classElement, size_t index) override
             {
                 (void)instance;
                 (void)classElement;
@@ -785,7 +786,7 @@ namespace AZ
             }
 
             /// Get an element's address by its key. Not used for serialization.
-            void*   GetElementByKey(void* instance, const SerializeContext::ClassElement* classElement, const void* key) override
+            void*   GetElementByKey(void* instance, const Serialization::ClassElement* classElement, const void* key) override
             {
                 (void)classElement;
                 T* containerPtr = reinterpret_cast<T*>(instance);
@@ -810,7 +811,7 @@ namespace AZ
                 {
                     DeletePointerData(deletePointerDataContext, &m_classElement, element);
                 }
-                
+
                 T* containerPtr = reinterpret_cast<T*>(instance);
                 ValueType* valuePtr = reinterpret_cast<ValueType*>(element);
                 valuePtr->~ValueType();
@@ -825,7 +826,7 @@ namespace AZ
                 const auto& key = T::traits_type::key_from_value(*reinterpret_cast<const ValueType*>(element));
                 AZStd::pair<typename T::iterator, typename T::iterator> valueRange = containerPtr->equal_range(key);
                 while (valueRange.first != valueRange.second) // in a case of multi key support iterate over all elements with that key until we find the one
-                { 
+                {
                     if (&(*valueRange.first) == element)
                     {
                         // Extracts the node from the associative container without deleting it
@@ -887,13 +888,13 @@ namespace AZ
                 containerPtr->swap(tempContainer);
             }
 
-            SerializeContext::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
+            Serialization::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
         };
 
 
         template<class T1, class T2>
         class AZStdPairContainer
-            : public SerializeContext::IDataContainer
+            : public Serialization::IDataContainer
         {
             typedef typename AZStd::remove_pointer<T1>::type Value1Class;
             typedef typename AZStd::remove_pointer<T2>::type Value2Class;
@@ -914,7 +915,7 @@ namespace AZ
             }
 
             /// Returns the element generic (offsets are mostly invalid 0xbad0ffe0, there are exceptions). Null if element with this name can't be found.
-            const SerializeContext::ClassElement* GetElement(u32 elementNameCrc) const override
+            const Serialization::ClassElement* GetElement(u32 elementNameCrc) const override
             {
                 if (elementNameCrc == m_value1ClassElement.m_nameCrc)
                 {
@@ -927,7 +928,7 @@ namespace AZ
                 return nullptr;
             }
 
-            bool GetElement(SerializeContext::ClassElement& classElement, const SerializeContext::DataElement& dataElement) const override
+            bool GetElement(Serialization::ClassElement& classElement, const Serialization::DataElement& dataElement) const override
             {
                 if (dataElement.m_nameCrc == m_value1ClassElement.m_nameCrc)
                 {
@@ -968,7 +969,7 @@ namespace AZ
                 (void)instance;
                 return 2;
             }
-            
+
             /// Returns the capacity of the container. Returns 0 for objects without fixed capacity.
             size_t Capacity(void* instance) const override
             {
@@ -993,7 +994,7 @@ namespace AZ
             bool    CanAccessElementsByIndex() const override   { return true; }
 
             /// Reserve element
-            void*   ReserveElement(void* instance, const SerializeContext::ClassElement* classElement) override
+            void*   ReserveElement(void* instance, const Serialization::ClassElement* classElement) override
             {
                 PairType* pairPtr = reinterpret_cast<PairType*>(instance);
                 if (classElement->m_nameCrc == m_value1ClassElement.m_nameCrc)
@@ -1008,7 +1009,7 @@ namespace AZ
             }
 
             /// Get an element's address by its index (called before the element is loaded).
-            void*   GetElementByIndex(void* instance, const SerializeContext::ClassElement* classElement, size_t index) override
+            void*   GetElementByIndex(void* instance, const Serialization::ClassElement* classElement, size_t index) override
             {
                 (void)classElement;
                 PairType* pairPtr = reinterpret_cast<PairType*>(instance);
@@ -1068,8 +1069,8 @@ namespace AZ
                 }
             }
 
-            SerializeContext::ClassElement m_value1ClassElement;
-            SerializeContext::ClassElement m_value2ClassElement;
+            Serialization::ClassElement m_value1ClassElement;
+            Serialization::ClassElement m_value2ClassElement;
         };
 
         // Define our own SafeArrayTupleSize, as we want to avoid including tuple and array
@@ -1084,7 +1085,7 @@ namespace AZ
         struct CreateClassElementHelper
         {
             // First class element: Initializes a class element that starts at index 0
-            static void Create(SerializeContext::ClassElement (&classElements)[ArraySafeTupleSize<TupleType>::value])
+            static void Create(Serialization::ClassElement (&classElements)[ArraySafeTupleSize<TupleType>::value])
             {
                 using ElementType = AZStd::tuple_element_t<Index, TupleType>;
                 classElements[Index].m_name = Internal::IndexToCStr<Index + 1>::value;
@@ -1098,7 +1099,7 @@ namespace AZ
         template<typename TupleType>
         struct CreateClassElementHelper<TupleType, 0>
         {
-            static void Create(SerializeContext::ClassElement (&classElements)[ArraySafeTupleSize<TupleType>::value])
+            static void Create(Serialization::ClassElement (&classElements)[ArraySafeTupleSize<TupleType>::value])
             {
                 using ElementType = AZStd::tuple_element_t<0, TupleType>;
                 classElements[0].m_name = "Value1";
@@ -1110,7 +1111,7 @@ namespace AZ
 
         template<typename... Types>
         class AZStdTupleContainer
-            : public SerializeContext::IDataContainer
+            : public Serialization::IDataContainer
         {
             using TupleType = AZStd::tuple<Types...>;
         public:
@@ -1122,12 +1123,12 @@ namespace AZ
             }
 
             /// Returns the element generic (offsets are mostly invalid 0xbad0ffe0, there are exceptions). Null if element with this name can't be found.
-            const SerializeContext::ClassElement* GetElement(u32 elementNameCrc) const override
+            const Serialization::ClassElement* GetElement(u32 elementNameCrc) const override
             {
                 return GetElementAddressTuple(elementNameCrc, AZStd::make_index_sequence<s_tupleSize>{});
             }
 
-            bool GetElement(SerializeContext::ClassElement& classElement, const SerializeContext::DataElement& dataElement) const override
+            bool GetElement(Serialization::ClassElement& classElement, const Serialization::DataElement& dataElement) const override
             {
                 return GetElementTuple(classElement, dataElement.m_nameCrc, AZStd::make_index_sequence<s_tupleSize>{});
             }
@@ -1177,14 +1178,14 @@ namespace AZ
              bool CanAccessElementsByIndex() const override { return true; }
 
             /// Reserve element
-             void* ReserveElement(void* instance, const SerializeContext::ClassElement* classElement) override
+             void* ReserveElement(void* instance, const Serialization::ClassElement* classElement) override
             {
                 auto tuplePtr = reinterpret_cast<TupleType*>(instance);
                 return ReserveElementTuple(*tuplePtr, classElement, AZStd::make_index_sequence<s_tupleSize>{});
             }
 
             /// Get an element's address by its index (called before the element is loaded).
-            void* GetElementByIndex(void* instance, const SerializeContext::ClassElement*, size_t index) override
+            void* GetElementByIndex(void* instance, const Serialization::ClassElement*, size_t index) override
             {
                 auto tuplePtr = reinterpret_cast<TupleType*>(instance);
                 return GetElementByIndexTuple(*tuplePtr, index, AZStd::make_index_sequence<s_tupleSize>{});
@@ -1225,7 +1226,7 @@ namespace AZ
                 }
             }
 
-            SerializeContext::ClassElement m_valueClassElements[ArraySafeTupleSize<TupleType>::value];
+            Serialization::ClassElement m_valueClassElements[ArraySafeTupleSize<TupleType>::value];
 
             private:
 
@@ -1237,7 +1238,7 @@ namespace AZ
                 }
 
                 template<size_t Index>
-                bool GetElementAddressTuple(u32 elementNameCrc, const SerializeContext::ClassElement*& classElement) const
+                bool GetElementAddressTuple(u32 elementNameCrc, const Serialization::ClassElement*& classElement) const
                 {
                     if (!classElement && elementNameCrc == m_valueClassElements[Index].m_nameCrc)
                     {
@@ -1247,17 +1248,17 @@ namespace AZ
                     return false;
                 }
                 template<size_t... Indices>
-                const SerializeContext::ClassElement* GetElementAddressTuple(u32 elementNameCrc, AZStd::index_sequence<Indices...>) const
+                const Serialization::ClassElement* GetElementAddressTuple(u32 elementNameCrc, AZStd::index_sequence<Indices...>) const
                 {
                     (void)elementNameCrc;
-                    const SerializeContext::ClassElement* classElement{};
+                    const Serialization::ClassElement* classElement{};
                     bool dummy[]{ true, (GetElementAddressTuple<Indices>(elementNameCrc, classElement))... };
                     (void)dummy;
                     return classElement;
                 }
 
                 template<size_t Index>
-                bool GetElementTuple(SerializeContext::ClassElement& classElement, u32 elementNameCrc, bool& elementFound) const
+                bool GetElementTuple(Serialization::ClassElement& classElement, u32 elementNameCrc, bool& elementFound) const
                 {
                     if (!elementFound && elementNameCrc == m_valueClassElements[Index].m_nameCrc)
                     {
@@ -1268,7 +1269,7 @@ namespace AZ
                     return false;
                 }
                 template<size_t... Indices>
-                bool GetElementTuple(SerializeContext::ClassElement& classElement, u32 elementNameCrc, AZStd::index_sequence<Indices...>) const
+                bool GetElementTuple(Serialization::ClassElement& classElement, u32 elementNameCrc, AZStd::index_sequence<Indices...>) const
                 {
                     (void)classElement;
                     (void)elementNameCrc;
@@ -1303,7 +1304,7 @@ namespace AZ
                 }
 
                 template<size_t Index>
-                bool ReserveElementTuple(TupleType& tupleRef, const SerializeContext::ClassElement* classElement, void*& reserveElement)
+                bool ReserveElementTuple(TupleType& tupleRef, const Serialization::ClassElement* classElement, void*& reserveElement)
                 {
                     if (!reserveElement && m_valueClassElements[Index].m_nameCrc == classElement->m_nameCrc)
                     {
@@ -1314,7 +1315,7 @@ namespace AZ
                 }
 
                 template<size_t... Indices>
-                void* ReserveElementTuple(TupleType& tupleRef, const SerializeContext::ClassElement* classElement, AZStd::index_sequence<Indices...>)
+                void* ReserveElementTuple(TupleType& tupleRef, const Serialization::ClassElement* classElement, AZStd::index_sequence<Indices...>)
                 {
                     (void)tupleRef;
                     (void)classElement;
@@ -1379,7 +1380,7 @@ namespace AZ
 
         template <class T>
         class AZRValueContainer
-            : public SerializeContext::IDataContainer
+            : public Serialization::IDataContainer
         {
             typedef typename Internal::RValueToLValueWrapper<T> WrapperType;
         public:
@@ -1392,7 +1393,7 @@ namespace AZ
             }
 
             /// Returns the element generic (offsets are mostly invalid 0xbad0ffe0, there are exceptions). Null if element with this name can't be found.
-            const SerializeContext::ClassElement* GetElement(u32 elementNameCrc) const override
+            const Serialization::ClassElement* GetElement(u32 elementNameCrc) const override
             {
                 if (elementNameCrc == m_valueClassElement.m_nameCrc)
                 {
@@ -1401,7 +1402,7 @@ namespace AZ
                 return nullptr;
             }
 
-            bool GetElement(SerializeContext::ClassElement& classElement, const SerializeContext::DataElement& dataElement) const override
+            bool GetElement(Serialization::ClassElement& classElement, const Serialization::DataElement& dataElement) const override
             {
                 if (dataElement.m_nameCrc == m_valueClassElement.m_nameCrc)
                 {
@@ -1469,7 +1470,7 @@ namespace AZ
             }
 
             /// Reserve element
-            void*   ReserveElement(void* instance, const SerializeContext::ClassElement* classElement) override
+            void*   ReserveElement(void* instance, const Serialization::ClassElement* classElement) override
             {
                 WrapperType* wrapperPtr = reinterpret_cast<WrapperType*>(instance);
                 if (classElement->m_nameCrc == m_valueClassElement.m_nameCrc)
@@ -1480,7 +1481,7 @@ namespace AZ
             }
 
             /// Get an element's address by its index (called before the element is loaded).
-            void*   GetElementByIndex(void* instance, const SerializeContext::ClassElement* classElement, size_t index) override
+            void*   GetElementByIndex(void* instance, const Serialization::ClassElement* classElement, size_t index) override
             {
                 (void)classElement;
                 WrapperType* wrapperPtr = reinterpret_cast<WrapperType*>(instance);
@@ -1531,7 +1532,7 @@ namespace AZ
                 }
             }
 
-            SerializeContext::ClassElement m_valueClassElement;
+            Serialization::ClassElement m_valueClassElement;
         };
 
         template <class T>
@@ -1549,7 +1550,7 @@ namespace AZ
         // Smart pointer generic handler
         template<class T>
         class AZStdSmartPtrContainer
-            : public SerializeContext::IDataContainer
+            : public Serialization::IDataContainer
         {
         public:
             typedef typename AZSmartPtrValueType<T>::value_type ValueType;
@@ -1560,14 +1561,14 @@ namespace AZ
                 m_classElement.m_dataSize = sizeof(ValueType*);
                 m_classElement.m_offset = 0;
                 m_classElement.m_azRtti = GetRttiHelper<ValueType>();
-                m_classElement.m_flags = SerializeContext::ClassElement::FLG_POINTER;
+                m_classElement.m_flags = Serialization::ClassElement::FLG_POINTER;
                 m_classElement.m_genericClassInfo = SerializeGenericTypeInfo<ValueType>::GetGenericInfo();
                 m_classElement.m_typeId = SerializeGenericTypeInfo<ValueType>::GetClassTypeId();
                 m_classElement.m_editData = nullptr;
             }
 
             /// Returns the element generic (offsets are mostly invalid 0xbad0ffe0, there are exceptions). Null if element with this name can't be found.
-            const SerializeContext::ClassElement* GetElement(AZ::u32 elementNameCrc) const override
+            const Serialization::ClassElement* GetElement(AZ::u32 elementNameCrc) const override
             {
                 if (elementNameCrc == m_classElement.m_nameCrc)
                 {
@@ -1576,7 +1577,7 @@ namespace AZ
                 return nullptr;
             }
 
-            bool GetElement(SerializeContext::ClassElement& classElement, const SerializeContext::DataElement& dataElement) const override
+            bool GetElement(Serialization::ClassElement& classElement, const Serialization::DataElement& dataElement) const override
             {
                 if (dataElement.m_nameCrc == m_classElement.m_nameCrc)
                 {
@@ -1607,7 +1608,7 @@ namespace AZ
                 (void)instance;
                 return 1;
             }
-            
+
             /// Returns the capacity of the container. Returns 0 for objects without fixed capacity.
             size_t Capacity(void* instance) const override
             {
@@ -1632,7 +1633,7 @@ namespace AZ
             bool    CanAccessElementsByIndex() const override   { return false; }
 
             /// Reserve element
-            void*   ReserveElement(void* instance, const  SerializeContext::ClassElement* classElement) override
+            void*   ReserveElement(void* instance, const  Serialization::ClassElement* classElement) override
             {
                 (void)classElement;
                 T* smartPtr = reinterpret_cast<T*>(instance);
@@ -1641,13 +1642,13 @@ namespace AZ
             }
 
             /// Get an element's address by its index (called before the element is loaded).
-            void*   GetElementByIndex(void* instance, const SerializeContext::ClassElement* classElement, size_t index) override
+            void*   GetElementByIndex(void* instance, const Serialization::ClassElement* classElement, size_t index) override
             {
                 (void)classElement;
                 (void)index;
 
                 void* ptrToRawPtr = nullptr;
-                auto captureValue = [&ptrToRawPtr](void* ptr, const AZ::Uuid&, const AZ::SerializeContext::ClassData*, const AZ::SerializeContext::ClassElement*) -> bool
+                auto captureValue = [&ptrToRawPtr](void* ptr, const AZ::Uuid&, const AZ::Serialization::ClassData*, const AZ::Serialization::ClassElement*) -> bool
                 {
                     ptrToRawPtr = ptr;
                     return false;
@@ -1704,12 +1705,12 @@ namespace AZ
                 RemoveElement(instance, element, deletePointerDataContext);
             }
 
-            SerializeContext::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
+            Serialization::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
         };
 
         template<class T>
         class AZStdOptionalContainer
-            : public SerializeContext::IDataContainer
+            : public Serialization::IDataContainer
         {
         public:
             using ValueType = typename AZSmartPtrValueType<T>::value_type;
@@ -1720,14 +1721,14 @@ namespace AZ
                 m_classElement.m_dataSize = sizeof(ValueType*);
                 m_classElement.m_offset = 0;
                 m_classElement.m_azRtti = GetRttiHelper<ValueType>();
-                m_classElement.m_flags = AZStd::is_pointer<ValueType>::value ? SerializeContext::ClassElement::FLG_POINTER : 0;
+                m_classElement.m_flags = AZStd::is_pointer<ValueType>::value ? Serialization::ClassElement::FLG_POINTER : 0;
                 m_classElement.m_genericClassInfo = SerializeGenericTypeInfo<ValueType>::GetGenericInfo();
                 m_classElement.m_typeId = SerializeGenericTypeInfo<ValueType>::GetClassTypeId();
                 m_classElement.m_editData = nullptr;
             }
 
             /// Returns the element generic (offsets are mostly invalid 0xbad0ffe0, there are exceptions). Null if element with this name can't be found.
-            const SerializeContext::ClassElement* GetElement(AZ::u32 elementNameCrc) const override
+            const Serialization::ClassElement* GetElement(AZ::u32 elementNameCrc) const override
             {
                 if (elementNameCrc == m_classElement.m_nameCrc)
                 {
@@ -1736,7 +1737,7 @@ namespace AZ
                 return nullptr;
             }
 
-            bool GetElement(SerializeContext::ClassElement& classElement, const SerializeContext::DataElement& dataElement) const override
+            bool GetElement(Serialization::ClassElement& classElement, const Serialization::DataElement& dataElement) const override
             {
                 if (dataElement.m_nameCrc == m_classElement.m_nameCrc)
                 {
@@ -1795,7 +1796,7 @@ namespace AZ
             bool CanAccessElementsByIndex() const override   { return false; }
 
             /// Reserve element
-            void* ReserveElement(void* instance, const  SerializeContext::ClassElement* classElement) override
+            void* ReserveElement(void* instance, const  Serialization::ClassElement* classElement) override
             {
                 (void)classElement;
                 T* optional = reinterpret_cast<T*>(instance);
@@ -1804,13 +1805,13 @@ namespace AZ
             }
 
             /// Get an element's address by its index (called before the element is loaded).
-            void* GetElementByIndex(void* instance, const SerializeContext::ClassElement* classElement, size_t index) override
+            void* GetElementByIndex(void* instance, const Serialization::ClassElement* classElement, size_t index) override
             {
                 (void)classElement;
                 (void)index;
 
                 void* ptrToRawPtr = nullptr;
-                auto captureValue = [&ptrToRawPtr](void* ptr, const AZ::Uuid&, const AZ::SerializeContext::ClassData*, const AZ::SerializeContext::ClassElement*) -> bool
+                auto captureValue = [&ptrToRawPtr](void* ptr, const AZ::Uuid&, const AZ::Serialization::ClassData*, const AZ::Serialization::ClassElement*) -> bool
                 {
                     ptrToRawPtr = ptr;
                     return false;
@@ -1857,13 +1858,13 @@ namespace AZ
                 optional->reset();
             }
 
-            SerializeContext::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
+            Serialization::ClassElement m_classElement;  ///< Generic class element covering as must as possible of the element (offset, and some other fields are invalid)
         };
 
         // basic string serialization
         template<class T>
         class AZStdString
-            : public SerializeContext::IDataSerializer
+            : public Serialization::IDataSerializer
         {
         public:
             /// Convert binary data to text
@@ -1923,7 +1924,7 @@ namespace AZ
         };
 
         class AZBinaryData
-            : public SerializeContext::IDataSerializer
+            : public Serialization::IDataSerializer
         {
         public:
             size_t DataToText(IO::GenericStream& in, IO::GenericStream& out, bool isDataBigEndian /*= false*/) override
@@ -2085,10 +2086,10 @@ namespace AZ
             AZ_TYPE_INFO(GenericClassInfoVector, GetGenericClassInfoVectorTypeId());
             GenericClassInfoVector()
             {
-                m_classData = SerializeContext::ClassData::Create<ContainerType>("AZStd::vector", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage);
+                m_classData = Serialization::ClassData::Create<ContainerType>("AZStd::vector", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage);
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2132,7 +2133,7 @@ namespace AZ
             }
 
             Internal::AZStdRandomAccessContainer<ContainerType, false> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassInfoVector;
@@ -2165,11 +2166,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassInfoFixedVector, GetGenericClassInfoFixedVectorTypeId());
             GenericClassInfoFixedVector()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::fixed_vector", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::fixed_vector", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2213,7 +2214,7 @@ namespace AZ
             }
 
             Internal::AZStdFixedCapacityRandomAccessContainer<ContainerType, true, Capacity> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassInfoFixedVector;
@@ -2241,11 +2242,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassInfoList, "{B845AD64-B5A0-4ccd-A86B-3477A36779BE}");
             GenericClassInfoList()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::list", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::list", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2289,7 +2290,7 @@ namespace AZ
             }
 
             Internal::AZStdBasicContainer<ContainerType, true> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassInfoList;
@@ -2317,11 +2318,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassInfoForwardList, "{D48E20E1-D3A3-46F7-A869-927F5EF50127}");
             GenericClassInfoForwardList()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::forward_list", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::forward_list", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2365,7 +2366,7 @@ namespace AZ
             }
 
             Internal::AZStdBasicContainer<ContainerType, true> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassInfoForwardList;
@@ -2398,12 +2399,12 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassInfoArray, GetGenericClassInfoArrayTypeId());
             GenericClassInfoArray()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::array", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::array", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
                 m_classData.m_eventHandler = &m_eventHandler;
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2447,7 +2448,7 @@ namespace AZ
             }
 
             Internal::AZStdArrayContainer<T, Size> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
             Internal::AZStdArrayEvents m_eventHandler;
         };
 
@@ -2481,11 +2482,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassSet, GetGenericClassSetTypeId());
             GenericClassSet()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::set", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::set", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2497,7 +2498,7 @@ namespace AZ
 
             const Uuid& GetTemplatedTypeId(size_t /*element*/) override
             {
-                return SerializeGenericTypeInfo<K>::GetClassTypeId();               
+                return SerializeGenericTypeInfo<K>::GetClassTypeId();
             }
 
             const Uuid& GetSpecializedTypeId() const override
@@ -2529,7 +2530,7 @@ namespace AZ
             }
 
             Internal::AZStdAssociativeContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassSet;
@@ -2562,11 +2563,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassUnorderedSet, GetGenericClassUnorderedSetTypeId());
             GenericClassUnorderedSet()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::unordered_set", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::unordered_set", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2611,7 +2612,7 @@ namespace AZ
             }
 
             Internal::AZStdAssociativeContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassUnorderedSet;
@@ -2639,11 +2640,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassUnorderedMultiSet, "{B619DA0D-F050-41AA-B092-416CACB7C710}");
             GenericClassUnorderedMultiSet()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::unordered_multiset", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::unordered_multiset", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2688,7 +2689,7 @@ namespace AZ
             }
 
             Internal::AZStdAssociativeContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassUnorderedMultiSet;
@@ -2721,11 +2722,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassOutcome, GetGenericOutcomeTypeId());
             GenericClassOutcome()
-                : m_classData{ SerializeContext::ClassData::Create<OutcomeType>("AZ::Outcome", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr) }
+                : m_classData{ Serialization::ClassData::Create<OutcomeType>("AZ::Outcome", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2774,7 +2775,7 @@ namespace AZ
                 }
             }
 
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassOutcome;
@@ -2806,11 +2807,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassPair, GetGenericClassPairTypeId());
             GenericClassPair()
-                : m_classData{ SerializeContext::ClassData::Create<PairType>("AZStd::pair", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_pairContainer) }
+                : m_classData{ Serialization::ClassData::Create<PairType>("AZStd::pair", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_pairContainer) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2865,7 +2866,7 @@ namespace AZ
             }
 
             Internal::AZStdPairContainer<T1, T2> m_pairContainer;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassPair;
@@ -2893,11 +2894,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassTuple, "{F98DF943-F870-4FE2-B6A9-3E8BC5861782}");
             GenericClassTuple()
-                : m_classData{ SerializeContext::ClassData::Create<TupleType>("AZStd::tuple", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_tupleContainer) }
+                : m_classData{ Serialization::ClassData::Create<TupleType>("AZStd::tuple", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_tupleContainer) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -2948,7 +2949,7 @@ namespace AZ
             }
 
             Internal::AZStdTupleContainer<Types...> m_tupleContainer;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassTuple;
@@ -2975,11 +2976,11 @@ namespace AZ
         {
         public:
             GenericClassWrapper()
-                : m_classData{ SerializeContext::ClassData::Create<WrapperType>("Internal::RValueToLValueWrapper", "{642ABA5E-BB70-40EF-A986-933420D89F85}", Internal::NullFactory::GetInstance(), nullptr, &m_wrapperContainer) }
+                : m_classData{ Serialization::ClassData::Create<WrapperType>("Internal::RValueToLValueWrapper", "{642ABA5E-BB70-40EF-A986-933420D89F85}", Internal::NullFactory::GetInstance(), nullptr, &m_wrapperContainer) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3014,7 +3015,7 @@ namespace AZ
             }
 
             Internal::AZRValueContainer<T> m_wrapperContainer;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassWrapper;
@@ -3046,11 +3047,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassMap, GetGenericClassMapTypeId());
             GenericClassMap()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::map", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::map", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3101,7 +3102,7 @@ namespace AZ
             }
 
             Internal::AZStdAssociativeContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassMap;
@@ -3134,11 +3135,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassUnorderedMap, GetGenericClassUnorderedMapTypeId());
             GenericClassUnorderedMap()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::unordered_map", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::unordered_map", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3189,7 +3190,7 @@ namespace AZ
             }
 
             Internal::AZStdAssociativeContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassUnorderedMap;
@@ -3217,11 +3218,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassUnorderedMultiMap, "{119669B8-92BF-468F-97D9-9D45F298BCD4}");
             GenericClassUnorderedMultiMap()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::unordered_multimap", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::unordered_multimap", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3272,7 +3273,7 @@ namespace AZ
             }
 
             Internal::AZStdAssociativeContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassUnorderedMultiMap;
@@ -3300,11 +3301,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassBasicString, "{EF8FF807-DDEE-4eb0-B678-4CA3A2C490A4}");
             GenericClassBasicString()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::string", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), &m_stringSerializer, nullptr) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::string", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), &m_stringSerializer, nullptr) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3344,7 +3345,7 @@ namespace AZ
             }
 
             Internal::AZStdString<ContainerType> m_stringSerializer;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassBasicString;
@@ -3372,11 +3373,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassByteStream, "{6F949CC5-24A4-4229-AC8B-C5E6C70E145E}");
             GenericClassByteStream()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("ByteStream", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), &m_dataSerializer, nullptr) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("ByteStream", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), &m_dataSerializer, nullptr) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3411,7 +3412,7 @@ namespace AZ
             }
 
             Internal::AZByteStream<A> m_dataSerializer;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassByteStream;
@@ -3438,11 +3439,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassBitSet, "{1C0270B7-F5E1-4bd6-B7BC-8D25A74B79B4}");
             GenericClassBitSet()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("BitSet", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), &m_dataSerializer, nullptr) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("BitSet", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), &m_dataSerializer, nullptr) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3477,7 +3478,7 @@ namespace AZ
             }
 
             Internal::AZBitSet<NumBits> m_dataSerializer;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassBitSet;
@@ -3504,11 +3505,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassSharedPtr, "{D5B5ACA6-A81E-410E-8151-80C97B8CD2A0}");
             GenericClassSharedPtr()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::shared_ptr", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::shared_ptr", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3558,7 +3559,7 @@ namespace AZ
             }
 
             Internal::AZStdSmartPtrContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassSharedPtr;
@@ -3585,11 +3586,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassIntrusivePtr, "{C4B5400B-5CDC-4B14-932E-BFA30BC1DE35}");
             GenericClassIntrusivePtr()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::intrusive_ptr", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::intrusive_ptr", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3639,7 +3640,7 @@ namespace AZ
             }
 
             Internal::AZStdSmartPtrContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassIntrusivePtr;
@@ -3666,11 +3667,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassUniquePtr, "{D37DF835-5B18-4F9E-9C8F-03B967483080}");
             GenericClassUniquePtr()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::unique_ptr", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::unique_ptr", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3720,7 +3721,7 @@ namespace AZ
             }
 
             Internal::AZStdSmartPtrContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassUniquePtr;
@@ -3747,11 +3748,11 @@ namespace AZ
         public:
             AZ_TYPE_INFO(GenericClassOptional, "{2C75B779-4661-4102-9D40-B2A680B6DE36}");
             GenericClassOptional()
-                : m_classData{ SerializeContext::ClassData::Create<ContainerType>("AZStd::optional", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
+                : m_classData{ Serialization::ClassData::Create<ContainerType>("AZStd::optional", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage) }
             {
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -3791,7 +3792,7 @@ namespace AZ
             }
 
             Internal::AZStdOptionalContainer<ContainerType> m_containerStorage;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassOptional;

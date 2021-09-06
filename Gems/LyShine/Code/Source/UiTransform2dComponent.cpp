@@ -69,7 +69,7 @@ namespace
     // Helper function to VersionConverter to convert a bool field to an int for ScaleToDevice
     inline bool ConvertScaleToDeviceFromBoolToEnum(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement)
+        AZ::Serialization::DataElementNode& classElement)
     {
         // Note that the name of the new element has to be the same as the name of the old element
         // because we have no version conversion for data patches. The bool to enum conversion happens
@@ -79,7 +79,7 @@ namespace
         int index = classElement.FindElement(AZ_CRC(scaleToDeviceName));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(index);
 
             bool oldData;
 
@@ -1891,7 +1891,7 @@ void UiTransform2dComponent::ApplyDeviceScale(AZ::Vector2& scale)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiTransform2dComponent::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1:
     // - Need to convert Vec2 to AZ::Vector2

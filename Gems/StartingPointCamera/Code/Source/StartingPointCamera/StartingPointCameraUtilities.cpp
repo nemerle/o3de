@@ -18,7 +18,7 @@ namespace Camera
         AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
         if (serializeContext)
         {
-            if (const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(uuid))
+            if (const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(uuid))
             {
                 return classData->m_name;
             }

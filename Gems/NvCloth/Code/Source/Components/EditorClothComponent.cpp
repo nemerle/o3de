@@ -16,6 +16,7 @@
 #include <Components/EditorClothComponent.h>
 #include <Components/ClothComponent.h>
 #include <Components/ClothComponentMesh/ClothComponentMesh.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
 #include <Utils/AssetHelper.h>
 
@@ -68,7 +69,7 @@ namespace NvCloth
                         ->Attribute(AZ::Edit::Attributes::AutoExpand, true)
 
                     // Mesh Node
-                    ->DataElement(Editor::MeshNodeSelector, &ClothConfiguration::m_meshNode, "Mesh node", 
+                    ->DataElement(Editor::MeshNodeSelector, &ClothConfiguration::m_meshNode, "Mesh node",
                         "List of mesh nodes with cloth simulation data. These are the nodes selected inside Cloth Modifiers in Scene Settings.")
                         ->Attribute(AZ::Edit::UIHandlers::EntityId, &ClothConfiguration::GetEntityId)
                         ->Attribute(AZ::Edit::Attributes::StringList, &ClothConfiguration::PopulateMeshNodeList)
@@ -78,20 +79,20 @@ namespace NvCloth
                     ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_mass, "Mass",
                         "Mass scale applied to all particles.")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.1f)
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_useCustomGravity, "Custom Gravity", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_useCustomGravity, "Custom Gravity",
                         "When enabled it allows to set a custom gravity value for this cloth.")
                         ->Attribute(AZ::Edit::Attributes::ChangeNotify, AZ::Edit::PropertyRefreshLevels::EntireTree)
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_customGravity, "Gravity", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_customGravity, "Gravity",
                         "Gravity applied to particles.")
                         ->Attribute(AZ::Edit::Attributes::ReadOnly, &ClothConfiguration::IsUsingWorldBusGravity)
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_gravityScale, "Gravity Scale", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_gravityScale, "Gravity Scale",
                         "Use this parameter to scale the gravity applied to particles.")
 
                     // Global stiffness frequency
                     ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_stiffnessFrequency, "Stiffness frequency",
                         "Stiffness exponent per second applied to damping, damping dragging, wind dragging, wind lifting, self collision stiffness, fabric stiffness, fabric compression, fabric stretch and tether constraint stiffness.")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.01f)
-                    
+
                     // Motion Constraints
                     ->ClassElement(AZ::Edit::ClassElements::Group, "Motion constraints")
                     ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_motionConstraintsMaxDistance, "Max Distance",
@@ -113,7 +114,7 @@ namespace NvCloth
                         ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
                         ->Attribute(AZ::Edit::Attributes::Step, 0.0001f)
                         ->Attribute(AZ::Edit::Attributes::Decimals, 6)
-                    
+
                     // Backstop
                     ->ClassElement(AZ::Edit::ClassElements::Group, "Backstop")
                         ->Attribute(AZ::Edit::Attributes::Visibility, &ClothConfiguration::HasBackstopData)
@@ -191,7 +192,7 @@ namespace NvCloth
                         "When enabled it allows to set a custom wind velocity value for this cloth, otherwise using wind velocity from Physics::WindBus.\n"
                         "Wind is disabled when both air coefficients are zero.")
                         ->Attribute(AZ::Edit::Attributes::ChangeNotify, AZ::Edit::PropertyRefreshLevels::EntireTree)
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_windVelocity, "Local velocity", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_windVelocity, "Local velocity",
                         "Wind in global coordinates acting on cloth's triangles. Disabled when both air coefficients are zero.\n"
                         "NOTE: A combination of high values in wind properties can cause unstable results.")
                         ->Attribute(AZ::Edit::Attributes::Min, -50.0f)
@@ -211,22 +212,22 @@ namespace NvCloth
                         ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
                         ->Attribute(AZ::Edit::Attributes::Step, 0.0001f)
                         ->Attribute(AZ::Edit::Attributes::Decimals, 6)
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_fluidDensity, "Air Density", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_fluidDensity, "Air Density",
                         "Density of air used for air drag and lift calculations.\n"
                         "NOTE: A combination of high values in wind properties can cause unstable results.")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.01f)
 
                     // Collision
                     ->ClassElement(AZ::Edit::ClassElements::Group, "Collision")
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_collisionFriction, "Friction", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_collisionFriction, "Friction",
                         "Amount of friction with colliders.\n"
                         "0: No friction\n")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_collisionMassScale, "Mass scale", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_collisionMassScale, "Mass scale",
                         "Controls how quickly mass is increased during collisions.\n"
                         "0: No mass scaling\n")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_continuousCollisionDetection, "Continuous detection", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_continuousCollisionDetection, "Continuous detection",
                         "Continuous collision detection improves collision by computing time of impact between cloth particles and colliders."
                         "The increase in quality comes with a cost in performance, it's recommended to use only when required.")
                     ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_collisionAffectsStaticParticles, "Affects static particles",
@@ -234,7 +235,7 @@ namespace NvCloth
 
                     // Self collision
                     ->ClassElement(AZ::Edit::ClassElements::Group, "Self collision")
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_selfCollisionDistance, "Distance", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_selfCollisionDistance, "Distance",
                         "Meters that particles need to be separated from each other.\n"
                         "0: No self collision\n")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
@@ -248,7 +249,7 @@ namespace NvCloth
 
                     // Fabric stiffness
                     ->ClassElement(AZ::Edit::ClassElements::Group, "Fabric stiffness")
-                    ->DataElement(AZ::Edit::UIHandlers::Slider, &ClothConfiguration::m_horizontalStiffness, "Horizontal", 
+                    ->DataElement(AZ::Edit::UIHandlers::Slider, &ClothConfiguration::m_horizontalStiffness, "Horizontal",
                         "Stiffness value for horizontal constraints.\n"
                         "0: no horizontal constraints\n")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
@@ -311,7 +312,7 @@ namespace NvCloth
 
                     // Fabric compression
                     ->ClassElement(AZ::Edit::ClassElements::Group, "Fabric compression")
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_horizontalCompressionLimit, "Horizontal limit", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_horizontalCompressionLimit, "Horizontal limit",
                         "Compression limit for horizontal constraints. It's affected by fabric horizontal stiffness multiplier.\n"
                         "0: No compression\n")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
@@ -367,10 +368,10 @@ namespace NvCloth
 
                     // Quality
                     ->ClassElement(AZ::Edit::ClassElements::Group, "Quality")
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_solverFrequency, "Solver frequency", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_solverFrequency, "Solver frequency",
                         "Target solver iterations per second. At least 1 iteration per frame will be solved regardless of the value set.")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_accelerationFilterIterations, "Acceleration filter iterations", 
+                    ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_accelerationFilterIterations, "Acceleration filter iterations",
                         "Number of iterations to average delta time factor used for gravity and external acceleration.")
                         ->Attribute(AZ::Edit::Attributes::Min, 1)
                     ->DataElement(AZ::Edit::UIHandlers::Default, &ClothConfiguration::m_removeStaticTriangles, "Remove static triangles",

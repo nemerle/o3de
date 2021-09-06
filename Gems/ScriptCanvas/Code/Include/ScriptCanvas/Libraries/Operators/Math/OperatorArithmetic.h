@@ -59,7 +59,7 @@ namespace ScriptCanvas
 
                 typedef AZStd::vector<const Datum*> ArithmeticOperands;
 
-                static bool OperatorArithmeticVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
+                static bool OperatorArithmeticVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
 
                 OperatorArithmetic() = default;
 

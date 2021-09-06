@@ -22,6 +22,7 @@ AZ_POP_DISABLE_WARNING
 
 #include <AzCore/Asset/AssetManager.h>
 #include <AzCore/Asset/AssetManagerBus.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Asset/AssetTypeInfoBus.h>
 #include <AzCore/Component/ComponentApplicationBus.h>
 #include <AzCore/IO/FileIO.h>
@@ -603,7 +604,7 @@ namespace AzToolsFramework
                 {
                     AZ::Data::AssetBus::MultiHandler::BusDisconnect(m_inMemoryAsset.GetId());
                 }
-               
+
                 AZ::Data::AssetBus::MultiHandler::BusConnect(asset.GetId());
 
                 // Need to disable editing until OnAssetReady.
@@ -641,7 +642,7 @@ namespace AzToolsFramework
 
                 GenerateSaveDataSnapshot();
 
-                // Clear the dirty flag now so that attempting to close the window during a save doesn't ask the user to save again, 
+                // Clear the dirty flag now so that attempting to close the window during a save doesn't ask the user to save again,
                 // unless there are further changes.
                 m_dirty = false;
                 m_saveAssetAction->setEnabled(false);
@@ -739,7 +740,7 @@ namespace AzToolsFramework
             {
                 m_recentlyAddedAssetPath.clear();
 
-                // The file was removed due to errors, but the user needs to be 
+                // The file was removed due to errors, but the user needs to be
                 // given a chance to fix the errors and try again.
                 m_sourceAssetId.SetInvalid();
                 m_currentAsset = "New Asset";
@@ -752,11 +753,11 @@ namespace AzToolsFramework
         void AssetEditorWidget::PopulateGenericAssetTypes()
         {
             auto enumerateCallback =
-                [this](const AZ::SerializeContext::ClassData* classData, const AZ::Uuid& /*typeId*/) -> bool
+                [this](const AZ::Serialization::ClassData* classData, const AZ::Uuid& /*typeId*/) -> bool
                 {
                     AZ::Data::AssetType assetType = classData->m_typeId;
 
-                    // make sure this is not base class                    
+                    // make sure this is not base class
                     if (assetType == AZ::AzTypeInfo<AZ::Data::AssetData>::Uuid()
                         || AZ::FindAttribute(AZ::Edit::Attributes::EnableForAssetEditor, classData->m_attributes) == nullptr)
                     {
@@ -920,7 +921,7 @@ namespace AzToolsFramework
         }
 
         void AssetEditorWidget::SetupHeader()
-        {            
+        {
             QString nameString = QString("%1").arg(m_currentAsset);
 
             m_header->setName(nameString);
@@ -939,7 +940,7 @@ namespace AzToolsFramework
             {
                 m_header->setLocation(pathAndAsset.left(seperatorPos));
             }
-            
+
             m_header->setIcon(QIcon(QStringLiteral(":/AssetEditor/default_document.svg")));
             m_header->show();
         }

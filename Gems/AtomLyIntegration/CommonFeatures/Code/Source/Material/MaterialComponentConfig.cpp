@@ -18,7 +18,7 @@ namespace AZ
         using DeprecatedMaterialAssignmentMap = AZStd::unordered_map<DeprecatedMaterialAssignmentId, MaterialAssignment>;
 
         // Update serialized data to the new format and data types
-        bool MaterialComponentConfigVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool MaterialComponentConfigVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 3)
             {

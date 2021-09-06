@@ -49,7 +49,7 @@ namespace UnitTest
         };
 
         class SerializationEvents
-            : public AZ::SerializeContext::IEventHandler
+            : public AZ::Serialization::IEventHandler
         {
             void OnReadBegin(void* classPtr) override
             {
@@ -959,7 +959,7 @@ namespace UnitTest
 
         struct KeyTestData
         {
-            virtual void InsertAndVerifyKeys(AZ::SerializeContext::IDataContainer* container, void* key, void* instance, const AZ::SerializeContext::ClassElement* classElement) const = 0;
+            virtual void InsertAndVerifyKeys(AZ::Serialization::IDataContainer* container, void* key, void* instance, const AZ::Serialization::ClassElement* classElement) const = 0;
             virtual AZ::Uuid ExpectedKeyType() const = 0;
             virtual size_t NumberOfKeys() const = 0;
             virtual ~KeyTestData() {}
@@ -974,7 +974,7 @@ namespace UnitTest
             {
             }
 
-            void InsertAndVerifyKeys(AZ::SerializeContext::IDataContainer* container, void* key, void* instance, const AZ::SerializeContext::ClassElement* classElement) const
+            void InsertAndVerifyKeys(AZ::Serialization::IDataContainer* container, void* key, void* instance, const AZ::Serialization::ClassElement* classElement) const
             {
                 T* keyContainer = reinterpret_cast<T*>(key);
                 for (const T& keyToInsert : keysToInsert)
@@ -1031,13 +1031,13 @@ namespace UnitTest
 
             auto insertKeysIntoContainer = [&serializeContext](AzToolsFramework::InstanceDataNode& node, KeyTestData* keysToInsert)
             {
-                const AZ::SerializeContext::ClassElement* element = node.GetElementMetadata();
-                AZ::SerializeContext::IDataContainer* container = node.GetClassMetadata()->m_container;
+                const AZ::Serialization::ClassElement* element = node.GetElementMetadata();
+                AZ::Serialization::IDataContainer* container = node.GetClassMetadata()->m_container;
 
                 ASSERT_NE(element, nullptr);
                 ASSERT_NE(container, nullptr);
 
-                const AZ::SerializeContext::ClassElement* containerClassElement = container->GetElement(container->GetDefaultElementNameCrc());
+                const AZ::Serialization::ClassElement* containerClassElement = container->GetElement(container->GetDefaultElementNameCrc());
                 auto associativeInterface = container->GetAssociativeContainerInterface();
                 ASSERT_NE(associativeInterface, nullptr);
                 auto key = associativeInterface->CreateKey();
@@ -1060,7 +1060,7 @@ namespace UnitTest
 
             for (InstanceDataNode& node : idh.GetChildren())
             {
-                const AZ::SerializeContext::ClassElement* element = node.GetElementMetadata();
+                const AZ::Serialization::ClassElement* element = node.GetElementMetadata();
                 auto insertIterator = keyTestData.find(element->m_nameCrc);
                 ASSERT_NE(insertIterator, keyTestData.end());
                 auto keysToInsert = insertIterator->second.get();
@@ -1072,7 +1072,7 @@ namespace UnitTest
             idh.Build(&serializeContext, 0);
             for (InstanceDataNode& node : idh.GetChildren())
             {
-                const AZ::SerializeContext::ClassElement* element = node.GetElementMetadata();
+                const AZ::Serialization::ClassElement* element = node.GetElementMetadata();
                 if (element->m_nameCrc == AZ_CRC("nestedMap"))
                 {
                     auto children = node.GetChildren();
@@ -1119,7 +1119,7 @@ namespace UnitTest
             idh.Build(&serializeContext, 0);
             for (InstanceDataNode& node : idh.GetChildren())
             {
-                const AZ::SerializeContext::ClassElement* element = node.GetElementMetadata();
+                const AZ::Serialization::ClassElement* element = node.GetElementMetadata();
                 if (element->m_nameCrc == AZ_CRC("map") || element->m_nameCrc == AZ_CRC("unorderedMap") || element->m_nameCrc == AZ_CRC("nestedMap"))
                 {
                     for (InstanceDataNode& pair : node.GetChildren())
@@ -1404,14 +1404,14 @@ namespace UnitTest
         AZStd::initializer_list<AZStd::pair<double, double>> valuesToInsert{ {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0} };
 
         AZ::GenericClassInfo* mapGenericClassInfo = AZ::SerializeGenericTypeInfo<TestMap>::GetGenericInfo();
-        AZ::SerializeContext::ClassData* mapClassData = mapGenericClassInfo->GetClassData();
+        AZ::Serialization::ClassData* mapClassData = mapGenericClassInfo->GetClassData();
         ASSERT_NE(nullptr, mapClassData);
-        AZ::SerializeContext::IDataContainer* mapDataContainer = mapClassData->m_container;
+        AZ::Serialization::IDataContainer* mapDataContainer = mapClassData->m_container;
         ASSERT_NE(nullptr, mapDataContainer);
         auto associativeInterface = mapDataContainer->GetAssociativeContainerInterface();
 
-        AZ::SerializeContext::ClassElement classElement;
-        AZ::SerializeContext::DataElement dataElement;
+        AZ::Serialization::ClassElement classElement;
+        AZ::Serialization::DataElement dataElement;
         dataElement.m_nameCrc = mapDataContainer->GetDefaultElementNameCrc();
         EXPECT_TRUE(mapDataContainer->GetElement(classElement, dataElement));
 

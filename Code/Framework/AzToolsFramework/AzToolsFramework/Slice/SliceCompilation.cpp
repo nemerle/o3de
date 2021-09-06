@@ -38,7 +38,7 @@ namespace AzToolsFramework
          */
         ShouldExportResult ShouldExportComponent(AZ::Component* component, const AZ::PlatformTagSet& platformTags, AZ::SerializeContext& serializeContext)
         {
-            const AZ::SerializeContext::ClassData* classData = serializeContext.FindClassData(component->RTTI_GetType());
+            const AZ::Serialization::ClassData* classData = serializeContext.FindClassData(component->RTTI_GetType());
             if (!classData || !classData->m_editData)
             {
                 return AZ::Success(true);
@@ -136,7 +136,7 @@ namespace AzToolsFramework
             }
 
             // Determine if the component has a custom export callback, and invoke it if so.
-            const AZ::SerializeContext::ClassData* classData = serializeContext.FindClassData(inputComponent->RTTI_GetType());
+            const AZ::Serialization::ClassData* classData = serializeContext.FindClassData(inputComponent->RTTI_GetType());
             if (classData && classData->m_editData)
             {
                 const AZ::Edit::ElementData* editorDataElement = classData->m_editData->FindElementData(AZ::Edit::ClassElements::EditorData);
@@ -632,7 +632,7 @@ namespace AzToolsFramework
             }
 
             AZ::EntityUtils::EnumerateEntityIds<AZ::Entity>(runtimeEntity, 
-                [&editorOnlyEntityIds, &result, runtimeEntity](const AZ::EntityId& id, bool /*isEntityId*/, const AZ::SerializeContext::ClassElement* /*elementData*/)
+                [&editorOnlyEntityIds, &result, runtimeEntity](const AZ::EntityId& id, bool /*isEntityId*/, const AZ::Serialization::ClassElement* /*elementData*/)
                 {
                     if (editorOnlyEntityIds.end() != editorOnlyEntityIds.find(id))
                     {

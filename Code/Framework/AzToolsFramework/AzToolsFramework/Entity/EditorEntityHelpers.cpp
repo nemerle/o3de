@@ -14,6 +14,7 @@
 #include <AzCore/std/algorithm.h>
 #include <AzCore/std/sort.h>
 #include <AzCore/RTTI/AttributeReader.h>
+#include <AzCore/Serialization/SerializeContext.h>
 #include <AzToolsFramework/Commands/EntityStateCommand.h>
 #include <AzToolsFramework/Entity/EditorEntityInfoBus.h>
 #include <AzToolsFramework/Entity/EditorEntityContextBus.h>
@@ -195,17 +196,17 @@ namespace AzToolsFramework
         return GetUnderlyingComponentType(*component);
     }
 
-    const AZ::SerializeContext::ClassData* GetComponentClassData(const AZ::Component* component)
+    const AZ::Serialization::ClassData* GetComponentClassData(const AZ::Component* component)
     {
         return GetComponentClassDataForType(GetComponentTypeId(component));
     }
 
-    const AZ::SerializeContext::ClassData* GetComponentClassDataForType(const AZ::Uuid& componentTypeId)
+    const AZ::Serialization::ClassData* GetComponentClassDataForType(const AZ::Uuid& componentTypeId)
     {
         AZ::SerializeContext* serializeContext = nullptr;
         AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
 
-        const AZ::SerializeContext::ClassData* componentClassData = serializeContext->FindClassData(componentTypeId);
+        const AZ::Serialization::ClassData* componentClassData = serializeContext->FindClassData(componentTypeId);
         return componentClassData;
     }
 
@@ -275,7 +276,7 @@ namespace AzToolsFramework
             return false;
         }
 
-        const AZ::SerializeContext::ClassData* classData = GetComponentClassData(component);
+        const AZ::Serialization::ClassData* classData = GetComponentClassData(component);
 
         // Don't show components without edit data
         if (!classData || !classData->m_editData)
@@ -536,7 +537,7 @@ namespace AzToolsFramework
         if (serializeContext)
         {
             serializeContext->EnumerateDerived<AZ::Component>(
-                [&](const AZ::SerializeContext::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
+                [&](const AZ::Serialization::ClassData* componentClass, const AZ::Uuid& knownType) -> bool
             {
                 (void)knownType;
 

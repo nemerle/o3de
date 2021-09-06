@@ -31,7 +31,7 @@ namespace ScriptCanvas
 
                 SCRIPTCANVAS_NODE(ExtractProperty);
 
-                static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
+                static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
 
                 Data::Type GetSourceSlotDataType() const;
 

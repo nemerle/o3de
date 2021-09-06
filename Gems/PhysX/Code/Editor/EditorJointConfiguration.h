@@ -47,7 +47,7 @@ namespace PhysX
 
     private:
         static bool VersionConverter(AZ::SerializeContext& context,
-            AZ::SerializeContext::DataElementNode& classElement);
+            AZ::Serialization::DataElementNode& classElement);
 
         bool IsInComponentMode() const; ///< This function is necessary for usage of m_inComponentMode as an attribute in the edit context. Using the variable directly instead of this function will result in the variable being saved.
     };
@@ -121,7 +121,7 @@ namespace PhysX
 
     private:
         static bool VersionConverter(AZ::SerializeContext& context,
-            AZ::SerializeContext::DataElementNode& classElement);
+            AZ::Serialization::DataElementNode& classElement);
 
         bool IsInComponentMode() const; ///< This function is necessary for usage of m_inComponentMode as an attribute in the edit context. Using the variable directly instead of this function will result in the variable being saved.
 

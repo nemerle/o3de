@@ -116,7 +116,7 @@ namespace EMotionFX
 
         void FindBlendNodes(AnimGraphInstance* animGraphInstance, AnimGraphNode** outNodeA, AnimGraphNode** outNodeB, uint32* outIndexA, uint32* outIndexB, float* outWeight) const;
 
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
         static void Reflect(AZ::ReflectContext* context);
         void SetSyncMode(ESyncMode syncMode);
         void SetEventMode(EEventMode eventMode);

@@ -115,7 +115,7 @@ namespace EMotionFX
                 }
             }
 
-            bool MotionGroup::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            bool MotionGroup::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 const unsigned int version = classElement.GetVersion();
 
@@ -131,15 +131,15 @@ namespace EMotionFX
                 if (version < 3)
                 {
                     AZ::u32 startFrame, endFrame;
-                    AZ::SerializeContext::DataElementNode* startFrameNode = classElement.FindSubElement(AZ_CRC("startFrame", 0xd7642114));
-                    AZ::SerializeContext::DataElementNode* endFrameNode = classElement.FindSubElement(AZ_CRC("endFrame", 0xc61fc092));
+                    AZ::Serialization::DataElementNode* startFrameNode = classElement.FindSubElement(AZ_CRC("startFrame", 0xd7642114));
+                    AZ::Serialization::DataElementNode* endFrameNode = classElement.FindSubElement(AZ_CRC("endFrame", 0xc61fc092));
                     if (startFrameNode && endFrameNode)
                     {
                         startFrameNode->GetData<AZ::u32>(startFrame);
                         endFrameNode->GetData<AZ::u32>(endFrame);
 
                         AZ::SceneAPI::Containers::RuleContainer ruleContainer;
-                        AZ::SerializeContext::DataElementNode* ruleContainerNode = classElement.FindSubElement(AZ_CRC("rules", 0x899a993c));
+                        AZ::Serialization::DataElementNode* ruleContainerNode = classElement.FindSubElement(AZ_CRC("rules", 0x899a993c));
                         if (ruleContainerNode)
                         {
                             ruleContainerNode->GetDataHierarchy<AZ::SceneAPI::Containers::RuleContainer>(context, ruleContainer);
@@ -166,14 +166,14 @@ namespace EMotionFX
                 // Motion compression settings rule is converted to motion sampling rule under 'Non-uniform sampling'.
                 if (version < 4)
                 {
-                    AZ::SerializeContext::DataElementNode* ruleContainerNode = classElement.FindSubElement(AZ_CRC("rules", 0x899a993c));
+                    AZ::Serialization::DataElementNode* ruleContainerNode = classElement.FindSubElement(AZ_CRC("rules", 0x899a993c));
                     if (!ruleContainerNode)
                     {
                         AZ_TracePrintf(AZ::SceneAPI::Utilities::ErrorWindow, "Can't find rule container.\n");
                         return false;
                     }
 
-                    AZ::SerializeContext::DataElementNode* rulesNode = ruleContainerNode->FindSubElement(AZ_CRC("rules", 0x899a993c));
+                    AZ::Serialization::DataElementNode* rulesNode = ruleContainerNode->FindSubElement(AZ_CRC("rules", 0x899a993c));
                     if (!rulesNode)
                     {
                         AZ_TracePrintf(AZ::SceneAPI::Utilities::ErrorWindow, "Can't find rules within rule container.\n");
@@ -186,10 +186,10 @@ namespace EMotionFX
                     float scaleError= 0.0f;
                     for (int i = 0; i < numRules; ++i)
                     {
-                        AZ::SerializeContext::DataElementNode& sharedPointerNode = rulesNode->GetSubElement(i);
+                        AZ::Serialization::DataElementNode& sharedPointerNode = rulesNode->GetSubElement(i);
                         if (sharedPointerNode.GetNumSubElements() == 1)
                         {
-                            AZ::SerializeContext::DataElementNode& currentRuleNode = sharedPointerNode.GetSubElement(0);
+                            AZ::Serialization::DataElementNode& currentRuleNode = sharedPointerNode.GetSubElement(0);
                             if (currentRuleNode.GetId() == azrtti_typeid<Rule::MotionCompressionSettingsRule>())
                             {
                                 currentRuleNode.FindSubElementAndGetData(AZ_CRC("maxTranslationError"), translationError);
@@ -231,14 +231,14 @@ namespace EMotionFX
                 // Motion meta data introduced (no more string- or object-based commands stored in the former meta data rule)
                 if (version < 6)
                 {
-                    AZ::SerializeContext::DataElementNode* ruleContainerNode = classElement.FindSubElement(AZ_CRC("rules", 0x899a993c));
+                    AZ::Serialization::DataElementNode* ruleContainerNode = classElement.FindSubElement(AZ_CRC("rules", 0x899a993c));
                     if (!ruleContainerNode)
                     {
                         AZ_TracePrintf(AZ::SceneAPI::Utilities::ErrorWindow, "Can't find rule container.\n");
                         return false;
                     }
 
-                    AZ::SerializeContext::DataElementNode* rulesNode = ruleContainerNode->FindSubElement(AZ_CRC("rules", 0x899a993c));
+                    AZ::Serialization::DataElementNode* rulesNode = ruleContainerNode->FindSubElement(AZ_CRC("rules", 0x899a993c));
                     if (!rulesNode)
                     {
                         AZ_TracePrintf(AZ::SceneAPI::Utilities::ErrorWindow, "Can't find rules within rule container.\n");
@@ -248,10 +248,10 @@ namespace EMotionFX
                     const int numRules = rulesNode->GetNumSubElements();
                     for (int i = 0; i < numRules; ++i)
                     {
-                        AZ::SerializeContext::DataElementNode& sharedPointerNode = rulesNode->GetSubElement(i);
+                        AZ::Serialization::DataElementNode& sharedPointerNode = rulesNode->GetSubElement(i);
                         if (sharedPointerNode.GetNumSubElements() == 1)
                         {
-                            AZ::SerializeContext::DataElementNode& currentRuleNode = sharedPointerNode.GetSubElement(0);
+                            AZ::Serialization::DataElementNode& currentRuleNode = sharedPointerNode.GetSubElement(0);
                             if (currentRuleNode.GetId() == azrtti_typeid<Rule::MetaDataRule>())
                             {
                                 // Read the old, command-based meta data rule and retrieve the command objects.

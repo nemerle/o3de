@@ -335,7 +335,7 @@ namespace NvCloth
 
         bool ClothRule::VersionConverter(
             AZ::SerializeContext& context,
-            AZ::SerializeContext::DataElementNode& classElement)
+            AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() <= 1)
             {

@@ -6,9 +6,10 @@
  *
  */
 #include <Atom/Component/DebugCamera/ArcBallControllerComponent.h>
+#include <DebugCameraUtils.h>
 
 #include <AzCore/Component/TransformBus.h>
-
+#include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzFramework/Input/Devices/Keyboard/InputDeviceKeyboard.h>
 #include <AzFramework/Input/Devices/Mouse/InputDeviceMouse.h>
@@ -16,7 +17,6 @@
 #include <AzFramework/Input/Devices/Touch/InputDeviceTouch.h>
 #include <AzFramework/Windowing/WindowBus.h>
 
-#include <DebugCameraUtils.h>
 
 namespace AZ
 {
@@ -61,7 +61,7 @@ namespace AZ
                     ;
             }
         }
-        
+
         void ArcBallControllerComponent::OnEnabled()
         {
             // Reset parameters with initial values
@@ -103,7 +103,7 @@ namespace AZ
             AzFramework::InputChannelEventListener::Disconnect();
             ArcBallControllerRequestBus::Handler::BusDisconnect();
         }
-        
+
         void ArcBallControllerComponent::OnTick(float deltaTime, AZ::ScriptTimePoint time)
         {
             AZ_UNUSED(time);

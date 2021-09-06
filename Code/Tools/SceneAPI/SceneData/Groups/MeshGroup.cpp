@@ -105,7 +105,7 @@ namespace AZ
             }
 
 
-            bool MeshGroup::VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement)
+            bool MeshGroup::VersionConverter(SerializeContext& context, Serialization::DataElementNode& classElement)
             {
                 const unsigned int version = classElement.GetVersion();
 

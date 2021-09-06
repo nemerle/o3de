@@ -12,12 +12,13 @@
 #include <AzCore/Math/Quaternion.h>
 #include <AzCore/Math/Transform.h>
 #include <LmbrCentral/Animation/SkeletalHierarchyRequestBus.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
 namespace AZ
 {
     namespace Render
     {
-        bool EditorAttachmentComponentVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool EditorAttachmentComponentVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 2)
             {
@@ -27,7 +28,7 @@ namespace AZ
                 if (scaleElementIndex != -1)
                 {
                     AZ::Vector3 oldScaleValue = AZ::Vector3::CreateOne();
-                    AZ::SerializeContext::DataElementNode& dataElementNode = classElement.GetSubElement(scaleElementIndex);
+                    AZ::Serialization::DataElementNode& dataElementNode = classElement.GetSubElement(scaleElementIndex);
                     if (dataElementNode.GetData<AZ::Vector3>(oldScaleValue))
                     {
                         uniformScaleOffset = oldScaleValue.GetMaxElement();

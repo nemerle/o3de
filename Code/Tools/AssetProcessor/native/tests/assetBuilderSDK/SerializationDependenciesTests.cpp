@@ -7,6 +7,7 @@
  */
 
 #include <AzTest/AzTest.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AssetBuilderSDK/SerializationDependencies.h>
 #include <Tests/SerializeContextFixture.h>
 
@@ -18,7 +19,7 @@ namespace SerializationDependencyTests
         AZ_RTTI(ClassWithAssetId, "{F6970E05-890B-4E5D-A944-1F58E9751922}");
 
         virtual ~ClassWithAssetId() {}
-        
+
         static void Reflect(AZ::ReflectContext* reflection)
         {
             AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(reflection);
@@ -38,7 +39,7 @@ namespace SerializationDependencyTests
         AZ_RTTI(ClassWithAsset, "{D2BCF9BF-3E64-4942-8AFB-BD3E8453CB52}");
 
         virtual ~ClassWithAsset() {}
-        
+
         static void Reflect(AZ::ReflectContext* reflection)
         {
             AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(reflection);
@@ -80,7 +81,7 @@ namespace SerializationDependencyTests
     {
     public:
         AZ_RTTI(SimpleAssetMock, "{AA2CDA39-A357-441D-BABA-B1AD3C3A8083}", AzFramework::SimpleAssetReferenceBase);
-                
+
         static void Reflect(AZ::ReflectContext* reflection)
         {
             AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(reflection);
@@ -107,7 +108,7 @@ namespace SerializationDependencyTests
         AZ_RTTI(ClassWithSimpleAsset, "{F4F50653-692C-46F8-A9B0-73C19523E56A}");
 
         virtual ~ClassWithSimpleAsset() {}
-        
+
         static void Reflect(AZ::ReflectContext* reflection)
         {
             AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(reflection);
@@ -187,7 +188,7 @@ namespace SerializationDependencyTests
         ClassWithAssetId classWithAssetId;
         classWithAssetId.m_assetId = AZ::Data::AssetId("{3008D6F9-1E56-4699-95F9-91A3758A964E}", 33);
         bool gatherResult = AssetBuilderSDK::GatherProductDependencies(*m_serializeContext, &classWithAssetId, productDependencies, productPathDependencySet);
-        
+
         ASSERT_TRUE(gatherResult);
         ASSERT_EQ(productDependencies.size(), 1);
         ASSERT_TRUE(FindAssetIdInProductDependencies(productDependencies, classWithAssetId.m_assetId));
@@ -247,7 +248,7 @@ namespace SerializationDependencyTests
         ClassWithSimpleAsset classWithSimpleAsset;
         const AZStd::string expectedAssetPath("TestAssetPathString.txt");
         classWithSimpleAsset.m_simpleAsset.SetAssetPath(expectedAssetPath.c_str());
-        
+
         bool gatherResult = AssetBuilderSDK::GatherProductDependencies(*m_serializeContext, &classWithSimpleAsset, productDependencies, productPathDependencySet);
 
         ASSERT_TRUE(gatherResult);

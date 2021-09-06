@@ -104,8 +104,8 @@ protected:
 
     //! Given the class data definition and a track for a field within it,
     //! compute the offset for the field and set it in the track
-    const AZ::SerializeContext::ClassElement* ComputeOffsetFromElementName(
-        const AZ::SerializeContext::ClassData* classData,
+    const AZ::Serialization::ClassElement* ComputeOffsetFromElementName(
+        const AZ::Serialization::ClassData* classData,
         IUiAnimTrack* track,
         size_t baseOffset);
 

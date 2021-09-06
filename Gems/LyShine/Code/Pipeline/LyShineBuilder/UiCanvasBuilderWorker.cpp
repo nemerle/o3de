@@ -369,8 +369,8 @@ namespace LyShine
         auto callback = [](
             const AZ::SerializeContext& serializeContext,
             void* instancePointer,
-            const AZ::SerializeContext::ClassData* classData,
-            const AZ::SerializeContext::ClassElement* classElement,
+            const AZ::Serialization::ClassData* classData,
+            const AZ::Serialization::ClassElement* classElement,
             AssetBuilderSDK::UniqueDependencyList& productDependencySet,
             AssetBuilderSDK::ProductPathDependencySet& productPathDependencySet,
             bool enumerateChildren)

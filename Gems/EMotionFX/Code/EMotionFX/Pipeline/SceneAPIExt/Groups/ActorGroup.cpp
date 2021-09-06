@@ -132,7 +132,7 @@ namespace EMotionFX
             }
 
              bool ActorGroup::IActorGroupVersionConverter(
-                [[maybe_unused]] AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+                [[maybe_unused]] AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 const unsigned int version = classElement.GetVersion();
                 bool result = true;
@@ -141,8 +141,8 @@ namespace EMotionFX
                 // In version 2 IActroGroup is inherit from ISceneNodeGroup, which inherit from IGroup. We need to remove ISceneNodeGroup in-between.
                 if (version == 2)
                 {
-                    AZ::SerializeContext::DataElementNode iSceneNodeGroupNode = classElement.GetSubElement(0);
-                    AZ::SerializeContext::DataElementNode iGroupNode = iSceneNodeGroupNode.GetSubElement(0);
+                    AZ::Serialization::DataElementNode iSceneNodeGroupNode = classElement.GetSubElement(0);
+                    AZ::Serialization::DataElementNode iGroupNode = iSceneNodeGroupNode.GetSubElement(0);
                     classElement.RemoveElement(0);
                     result = result && classElement.AddElement(iGroupNode);
                 }
@@ -151,7 +151,7 @@ namespace EMotionFX
             }
 
 
-            bool ActorGroup::ActorVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            bool ActorGroup::ActorVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 const unsigned int version = classElement.GetVersion();
 

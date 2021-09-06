@@ -12,6 +12,7 @@
 #include <AzCore/Component/Entity.h>
 #include <AzCore/EBus/EBus.h>
 #include <AzCore/Module/Environment.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 #include <AzCore/Serialization/SerializeContext.h>
 
 #include <SceneAPI/SceneCore/Components/BehaviorComponent.h>
@@ -107,7 +108,7 @@ namespace AZ
                 }
             }
 
-            bool IMeshGroupConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+            bool IMeshGroupConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
             {
                 if (classElement.GetVersion() == 1)
                 {
@@ -115,7 +116,7 @@ namespace AZ
                     //      inherited as IMeshGroup : ISceneNodeGroup (was IMeshBaseGroup) : IGroup. To fix this, check
                     //      if {1D20FA11-B184-429E-8C86-745852234845} (ISceneNodeGroup) is present and if not add it.
 
-                    AZ::SerializeContext::DataElementNode& baseClass = classElement.GetSubElement(0);
+                    AZ::Serialization::DataElementNode& baseClass = classElement.GetSubElement(0);
                     if (baseClass.GetId() != AZ::SceneAPI::DataTypes::ISceneNodeGroup::TYPEINFO_Uuid())
                     {
                         if (!baseClass.Convert<AZ::SceneAPI::DataTypes::ISceneNodeGroup>(context))

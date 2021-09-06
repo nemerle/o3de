@@ -39,10 +39,10 @@ namespace
         }
 
         // Attempt to look up the attribute on the node reflected class data.
-        // This look up is done via AZ::SerializeContext::ClassData -> AZ::Edit::ClassData -> EditorData element
+        // This look up is done via AZ::Serialization::ClassData -> AZ::Edit::ClassData -> EditorData element
         if (!attr)
         {
-            if (const AZ::SerializeContext::ClassData* classData = node->GetClassMetadata())
+            if (const AZ::Serialization::ClassData* classData = node->GetClassMetadata())
             {
                 if (const auto* editClassData = classData->m_editData)
                 {
@@ -225,16 +225,16 @@ namespace AzToolsFramework
     //-----------------------------------------------------------------------------
     void** InstanceDataNode::GetInstanceAddress(size_t idx) const
     {
-        AZ_Assert(m_classElement && (m_classElement->m_flags & AZ::SerializeContext::ClassElement::FLG_POINTER), "You can not call GetInstanceAddress() on a node that is not of a pointer type!");
+        AZ_Assert(m_classElement && (m_classElement->m_flags & AZ::Serialization::ClassElement::FLG_POINTER), "You can not call GetInstanceAddress() on a node that is not of a pointer type!");
         return reinterpret_cast<void**>(m_instances[idx]);
     }
 
     //-----------------------------------------------------------------------------
     bool InstanceDataNode::CreateContainerElement(const SelectClassCallback& selectClass, const FillDataClassCallback& fillData)
     {
-        AZ::SerializeContext::IDataContainer* container = m_classData->m_container;
+        AZ::Serialization::IDataContainer* container = m_classData->m_container;
         AZ_Assert(container, "This node is NOT a container node!");
-        const AZ::SerializeContext::ClassElement* containerClassElement = container->GetElement(container->GetDefaultElementNameCrc());
+        const AZ::Serialization::ClassElement* containerClassElement = container->GetElement(container->GetDefaultElementNameCrc());
 
         AZ_Assert(containerClassElement != NULL, "We should have a valid default element in the container, otherwise we don't know what elements to make!");
         if (!containerClassElement)
@@ -242,12 +242,12 @@ namespace AzToolsFramework
             return false;
         }
 
-        if (containerClassElement->m_flags & AZ::SerializeContext::ClassElement::FLG_POINTER)
+        if (containerClassElement->m_flags & AZ::Serialization::ClassElement::FLG_POINTER)
         {
             // TEMP until it's safe to pass 0 as type id
             const AZ::Uuid& baseTypeId = containerClassElement->m_azRtti ? containerClassElement->m_azRtti->GetTypeId() : AZ::AzTypeInfo<int>::Uuid();
             // ask the GUI and use to create one (if there is choice)
-            const AZ::SerializeContext::ClassData* classData = selectClass(containerClassElement->m_typeId, baseTypeId, m_context);
+            const AZ::Serialization::ClassData* classData = selectClass(containerClassElement->m_typeId, baseTypeId, m_context);
 
             if (classData && classData->m_factory)
             {
@@ -275,7 +275,7 @@ namespace AzToolsFramework
             // an entirely different type from the others. We're going to assume that we're getting here via 
             // ScriptPropertyGenericClassArray and that it strictly uses one type. 
 
-            const AZ::SerializeContext::ClassData* classData = m_context->FindClassData(AZ::SerializeTypeInfo<AZ::DynamicSerializableField>::GetUuid());
+            const AZ::Serialization::ClassData* classData = m_context->FindClassData(AZ::SerializeTypeInfo<AZ::DynamicSerializableField>::GetUuid());
             const AZ::Edit::ElementData* element = m_parent->m_classData->m_editData->FindElementData(AZ::Edit::ClassElements::EditorData);
             if (element)
             {
@@ -289,7 +289,7 @@ namespace AzToolsFramework
                     AZ::Uuid dynamicClassUuid;
                     if (elementTypeIdReader.Read<AZ::Uuid>(dynamicClassUuid))
                     {
-                        const AZ::SerializeContext::ClassData* dynamicClassData = m_context->FindClassData(dynamicClassUuid);
+                        const AZ::Serialization::ClassData* dynamicClassData = m_context->FindClassData(dynamicClassUuid);
 
                         //Construct a new element based on the Uuid we just grabbed and wrap it in a DynamicSerializeableField for storage
                         if (classData && classData->m_factory &&
@@ -335,7 +335,7 @@ namespace AzToolsFramework
                 void* dataAddress = container->ReserveElement(GetInstance(i), containerClassElement);
                 bool isAssociative = false;
                 ReadAttribute(AZ::Edit::Attributes::ShowAsKeyValuePairs, isAssociative, true);
-                bool noDefaultData = isAssociative || (containerClassElement->m_flags & AZ::SerializeContext::ClassElement::FLG_NO_DEFAULT_VALUE) != 0;
+                bool noDefaultData = isAssociative || (containerClassElement->m_flags & AZ::Serialization::ClassElement::FLG_NO_DEFAULT_VALUE) != 0;
 
                 if (!dataAddress || !fillData(dataAddress, containerClassElement, noDefaultData, m_context) && noDefaultData) // fill default data
                 {
@@ -582,7 +582,7 @@ namespace AzToolsFramework
                             serializeFieldElement.m_offset = 0;
                             serializeFieldElement.m_typeId = AZ::Uuid::CreateNull();
                             serializeFieldElement.m_editData = &element;
-                            serializeFieldElement.m_flags = AZ::SerializeContext::ClassElement::FLG_UI_ELEMENT;
+                            serializeFieldElement.m_flags = AZ::Serialization::ClassElement::FLG_UI_ELEMENT;
 
                             m_curParentNode = node;
                             m_isMerging = i > 0; // Ensure we always add a node for the first instance, then compare
@@ -618,7 +618,7 @@ namespace AzToolsFramework
         m_comparisonHierarchies.clear();
         m_supplementalEditData.clear();
 
-        AZ::SerializeContext::EnumerateInstanceCallContext callContext(
+        AZ::Serialization::EnumerateInstanceCallContext callContext(
             AZStd::bind(&InstanceDataHierarchy::BeginNode, this, AZStd::placeholders::_1, AZStd::placeholders::_2, AZStd::placeholders::_3, dynamicEditDataProvider),
             AZStd::bind(&InstanceDataHierarchy::EndNode, this),
             sc,
@@ -694,7 +694,7 @@ namespace AzToolsFramework
 
         bool GetValueStringRepresentation(const InstanceDataNode* node, AZStd::string& value)
         {
-            const AZ::SerializeContext::ClassData* classData = node->GetClassMetadata();
+            const AZ::Serialization::ClassData* classData = node->GetClassMetadata();
             if (!node || !classData)
             {
                 return false;
@@ -739,7 +739,7 @@ namespace AzToolsFramework
             }
 
             // Fall back on using our serializer's DataToText
-            const AZ::SerializeContext::ClassElement* elementData = node->GetElementMetadata();
+            const AZ::Serialization::ClassElement* elementData = node->GetElementMetadata();
             if (elementData)
             {
                 if (auto& serializer = classData->m_serializer)
@@ -764,7 +764,7 @@ namespace AzToolsFramework
         AZ_PROFILE_FUNCTION(AzToolsFramework);
 
         bool mergeElementEditData = node->m_classElement && node->m_classElement->m_editData && node->GetElementEditMetadata() != node->m_classElement->m_editData;
-        bool mergeContainerEditData = node->m_parent && node->m_parent->m_classData->m_container && node->m_parent->GetElementEditMetadata() && (node->m_classElement->m_flags & AZ::SerializeContext::ClassElement::FLG_POINTER) == 0;
+        bool mergeContainerEditData = node->m_parent && node->m_parent->m_classData->m_container && node->m_parent->GetElementEditMetadata() && (node->m_classElement->m_flags & AZ::Serialization::ClassElement::FLG_POINTER) == 0;
 
         bool showAsKeyValue = false;
         if (!(m_buildFlags & Flags::IgnoreKeyValuePairs))
@@ -913,7 +913,7 @@ namespace AzToolsFramework
     }
 
     //-----------------------------------------------------------------------------
-    bool InstanceDataHierarchy::BeginNode(void* ptr, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* classElement, DynamicEditDataProvider dynamicEditDataProvider)
+    bool InstanceDataHierarchy::BeginNode(void* ptr, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* classElement, DynamicEditDataProvider dynamicEditDataProvider)
     {
         AZ_PROFILE_FUNCTION(AzToolsFramework);
 
@@ -939,7 +939,7 @@ namespace AzToolsFramework
                 void* objectPtr = AZ::Utils::ResolvePointer(ptr, *classElement, *m_context);
                 void* overridingInstance = editDataOverride.m_overridingInstance;
 
-                const AZ::SerializeContext::ClassElement* overridingElementData = editDataOverride.m_overridingNode->GetElementMetadata();
+                const AZ::Serialization::ClassElement* overridingElementData = editDataOverride.m_overridingNode->GetElementMetadata();
                 if (overridingElementData)
                 {
                     overridingInstance = AZ::Utils::ResolvePointer(overridingInstance, *overridingElementData, *m_context);
@@ -1047,7 +1047,7 @@ namespace AzToolsFramework
 
             // ClassElement pointers for DynamicSerializableFields are temporaries, so we need
             // to maintain it locally.
-            if (classElement && (classElement->m_flags & AZ::SerializeContext::ClassElement::FLG_DYNAMIC_FIELD))
+            if (classElement && (classElement->m_flags & AZ::Serialization::ClassElement::FLG_DYNAMIC_FIELD))
             {
                 m_supplementalElementData.push_back(*classElement);
                 classElement = &m_supplementalElementData.back();
@@ -1067,7 +1067,7 @@ namespace AzToolsFramework
                     if (classData)
                     {
                         // Within a container, use persistentId if available, otherwise use a CRC of name and container index.
-                        AZ::SerializeContext::ClassPersistentId persistentId = classData->GetPersistentId(*m_context);
+                        AZ::Serialization::ClassPersistentId persistentId = classData->GetPersistentId(*m_context);
                         if (persistentId)
                         {
                             node->m_identifier = static_cast<Identifier>(persistentId(AZ::Utils::ResolvePointer(ptr, *classElement, *m_context)));
@@ -1590,8 +1590,8 @@ namespace AzToolsFramework
             AZ_Assert(context, "Failed to retrieve application serialization context");
         }
 
-        const AZ::SerializeContext::ClassData* sourceClass = sourceNode->GetClassMetadata();
-        const AZ::SerializeContext::ClassData* targetClass = targetNode->GetClassMetadata();
+        const AZ::Serialization::ClassData* sourceClass = sourceNode->GetClassMetadata();
+        const AZ::Serialization::ClassData* targetClass = targetNode->GetClassMetadata();
 
         if (!sourceClass || !targetClass)
         {
@@ -1718,8 +1718,8 @@ namespace AzToolsFramework
                         {
                             matchedChild = true;
 
-                            const AZ::SerializeContext::ClassData* targetClassData = targetChild.GetClassMetadata();
-                            const AZ::SerializeContext::ClassData* sourceClassData = sourceChild.GetClassMetadata();
+                            const AZ::Serialization::ClassData* targetClassData = targetChild.GetClassMetadata();
+                            const AZ::Serialization::ClassData* sourceClassData = sourceChild.GetClassMetadata();
 
                             // are these proxy nodes?
                             if (!targetClassData && !sourceClassData)
@@ -1812,7 +1812,7 @@ namespace AzToolsFramework
                         void* targetPointer = targetClass->m_container->ReserveElement(targetInstance, sourceChildToAdd->m_classElement);
                         AZ_Assert(targetPointer, "Failed to allocate container element");
 
-                        if (sourceChildToAdd->GetClassMetadata() && sourceChildToAdd->m_classElement->m_flags & AZ::SerializeContext::ClassElement::FLG_POINTER)
+                        if (sourceChildToAdd->GetClassMetadata() && sourceChildToAdd->m_classElement->m_flags & AZ::Serialization::ClassElement::FLG_POINTER)
                         {
                             // It's a container of pointers, so allocate a new target class instance.
                             AZ_Assert(sourceChildToAdd->GetClassMetadata()->m_factory != nullptr, "We are attempting to create '%s', but no factory is provided! Either provide factory or change data member '%s' to value not pointer!", sourceNode->m_classData->m_name, sourceNode->m_classElement->m_name);

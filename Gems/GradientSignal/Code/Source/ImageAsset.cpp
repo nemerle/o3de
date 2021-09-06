@@ -125,7 +125,7 @@ namespace GradientSignal
         }
     }
 
-    bool ImageAsset::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool ImageAsset::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         if (classElement.GetVersion() < 1)
         {
@@ -136,7 +136,7 @@ namespace GradientSignal
                 return false;
             }
 
-            AZ::SerializeContext::DataElementNode& format = classElement.GetSubElement(formatIndex);
+            AZ::Serialization::DataElementNode& format = classElement.GetSubElement(formatIndex);
             if (format.Convert<ImageProcessingAtom::EPixelFormat>(context))
             {
                 format.SetData<ImageProcessingAtom::EPixelFormat>(context, ImageProcessingAtom::EPixelFormat::ePixelFormat_R8);
@@ -144,7 +144,7 @@ namespace GradientSignal
 
             int bppIndex = classElement.AddElement<AZ::u8>(context, "BytesPerPixel");
 
-            AZ::SerializeContext::DataElementNode& bpp = classElement.GetSubElement(bppIndex);
+            AZ::Serialization::DataElementNode& bpp = classElement.GetSubElement(bppIndex);
             bpp.SetData<AZ::u8>(context, 1);
         }
 

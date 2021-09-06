@@ -56,7 +56,7 @@ namespace EMotionFX
         void LoadAnimGraphAsset();
         void OnAnimGraphAssetReady();
 
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         AZ::Data::Asset<Integration::AnimGraphAsset>  m_refAnimGraphAsset;
         AZStd::string                                 m_followerParameterName;

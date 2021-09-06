@@ -128,9 +128,9 @@ void FavoritesList::rowsInserted([[maybe_unused]] const QModelIndex& parent, [[m
     resizeRowToContents(0);
 }
 
-void FavoritesList::AddFavorites(const AZStd::vector<const AZ::SerializeContext::ClassData*>& classDataContainer)
+void FavoritesList::AddFavorites(const AZStd::vector<const AZ::Serialization::ClassData*>& classDataContainer)
 {
-    for (const AZ::SerializeContext::ClassData* classData : classDataContainer)
+    for (const AZ::Serialization::ClassData* classData : classDataContainer)
     {
         if (classData)
         {
@@ -176,7 +176,7 @@ int FavoritesDataModel::columnCount([[maybe_unused]] const QModelIndex &parent /
 void FavoritesDataModel::SaveState()
 {
     AZStd::vector<AZ::Uuid> favorites;
-    for (const AZ::SerializeContext::ClassData* classData : m_favorites)
+    for (const AZ::Serialization::ClassData* classData : m_favorites)
     {
         favorites.push_back(classData->m_typeId);
     }
@@ -216,7 +216,7 @@ void FavoritesDataModel::LoadState()
     // Add favorites to the data model from loaded settings
     for (const AZ::Uuid& favorite : m_settings->m_favorites)
     {
-        const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(favorite);
+        const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(favorite);
         if (classData)
         {
             AddFavorite(classData, false);
@@ -239,7 +239,7 @@ void FavoritesDataModel::Remove(const QModelIndexList& indices)
             QVariant classDataVariant = index.data(ComponentDataModel::ClassDataRole);
             if (classDataVariant.isValid())
             {
-                const AZ::SerializeContext::ClassData* classData = reinterpret_cast<const AZ::SerializeContext::ClassData*>(classDataVariant.value<void*>());
+                const AZ::Serialization::ClassData* classData = reinterpret_cast<const AZ::Serialization::ClassData*>(classDataVariant.value<void*>());
                 newFavorites.removeAll(classData);
 
                 AZ_TracePrintf("Debug", "Removing: %s\n", classData->m_editData->m_name);
@@ -276,7 +276,7 @@ QVariant FavoritesDataModel::data(const QModelIndex &index, int role /*= Qt::Dis
         return QVariant();
     }
 
-    const AZ::SerializeContext::ClassData* classData = m_favorites[index.row()];
+    const AZ::Serialization::ClassData* classData = m_favorites[index.row()];
     if (!classData)
     {
         return QVariant();
@@ -302,7 +302,7 @@ QVariant FavoritesDataModel::data(const QModelIndex &index, int role /*= Qt::Dis
     {
         if (index.column() == ColumnIndex::Icon)
         {
-            const AZ::SerializeContext::ClassData* iconClassData = m_favorites[index.row()];
+            const AZ::Serialization::ClassData* iconClassData = m_favorites[index.row()];
             auto iconIterator = m_componentIcons.find(iconClassData->m_typeId);
             if (iconIterator != m_componentIcons.end())
             {
@@ -317,7 +317,7 @@ QVariant FavoritesDataModel::data(const QModelIndex &index, int role /*= Qt::Dis
     case ClassDataRole:
         if (index.column() == 0) // Only get data for one column
         {
-            return QVariant::fromValue<void*>(reinterpret_cast<void*>(const_cast<AZ::SerializeContext::ClassData*>(classData)));
+            return QVariant::fromValue<void*>(reinterpret_cast<void*>(const_cast<AZ::Serialization::ClassData*>(classData)));
         }
         break;
 
@@ -346,7 +346,7 @@ FavoritesDataModel::~FavoritesDataModel()
     m_provider.Deactivate();
 }
 
-void FavoritesDataModel::AddFavorite(const AZ::SerializeContext::ClassData* classData, bool updateSettings)
+void FavoritesDataModel::AddFavorite(const AZ::Serialization::ClassData* classData, bool updateSettings)
 {
     beginResetModel();
 
@@ -375,7 +375,7 @@ bool FavoritesDataModel::dropMimeData(const QMimeData *data, Qt::DropAction acti
         AzToolsFramework::ComponentTypeMimeData::ClassDataContainer classDataContainer;
         AzToolsFramework::ComponentTypeMimeData::Get(data, classDataContainer);
 
-        for (const AZ::SerializeContext::ClassData* classData : classDataContainer)
+        for (const AZ::Serialization::ClassData* classData : classDataContainer)
         {
             if (classData)
             {

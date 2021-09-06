@@ -8,6 +8,7 @@
 #include <Editor/EditorClassConverters.h>
 #include <Source/EditorColliderComponent.h>
 #include <PhysX/MeshAsset.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Math/Matrix3x3.h>
 #include <AzFramework/Physics/Collision/CollisionGroups.h>
 
@@ -16,7 +17,7 @@ namespace PhysX
     namespace ClassConverters
     {
         template <class T>
-        bool FindElementAndGetData(AZ::SerializeContext::DataElementNode& dataElementNode, AZ::Crc32 fieldCrc, T& outValue)
+        bool FindElementAndGetData(AZ::Serialization::DataElementNode& dataElementNode, AZ::Crc32 fieldCrc, T& outValue)
         {
             const int index = dataElementNode.FindElement(fieldCrc);
             if (index == -1)
@@ -28,7 +29,7 @@ namespace PhysX
         }
 
         template <class T>
-        bool FindElementRecursiveAndGetData(AZ::SerializeContext::DataElementNode& recursiveRootNode, AZ::Crc32 fieldCrc, T& outValue)
+        bool FindElementRecursiveAndGetData(AZ::Serialization::DataElementNode& recursiveRootNode, AZ::Crc32 fieldCrc, T& outValue)
         {
             bool result = false;
             const int index = recursiveRootNode.FindElement(fieldCrc);
@@ -47,7 +48,7 @@ namespace PhysX
             return result;
         }
 
-        Physics::ColliderConfiguration FindColliderConfig(AZ::SerializeContext::DataElementNode& node)
+        Physics::ColliderConfiguration FindColliderConfig(AZ::Serialization::DataElementNode& node)
         {
             // This function is only meant to be used for the other deprecation functions in this file.
             // Any new upgrade functions should steer clear of this, as it is not handling collision groups
@@ -61,7 +62,7 @@ namespace PhysX
         }
 
         bool ConvertToNewEditorColliderComponent(AZ::SerializeContext& context,
-            AZ::SerializeContext::DataElementNode& classElement, EditorProxyShapeConfig& shapeConfig)
+            AZ::Serialization::DataElementNode& classElement, EditorProxyShapeConfig& shapeConfig)
         {
             // collision group id
             AzPhysics::CollisionGroups::Id collisionGroupId;
@@ -90,7 +91,7 @@ namespace PhysX
             return false;
         }
 
-        bool DeprecateEditorCapsuleColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateEditorCapsuleColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // capsule specific geometry data
             Physics::CapsuleShapeConfiguration capsuleConfig;
@@ -100,7 +101,7 @@ namespace PhysX
                 return false;
             }
 
-            AZ::SerializeContext::DataElementNode& capsuleConfigNode = classElement.GetSubElement(capsuleConfigIndex);
+            AZ::Serialization::DataElementNode& capsuleConfigNode = classElement.GetSubElement(capsuleConfigIndex);
             FindElementAndGetData(capsuleConfigNode, AZ_CRC("Height", 0xf54de50f), capsuleConfig.m_height);
             FindElementAndGetData(capsuleConfigNode, AZ_CRC("Radius", 0x3b7c6e5a), capsuleConfig.m_radius);
 
@@ -108,7 +109,7 @@ namespace PhysX
             return ConvertToNewEditorColliderComponent(context, classElement, shapeConfig);
         }
 
-        bool DeprecateEditorBoxColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateEditorBoxColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // box specific geometry data
             Physics::BoxShapeConfiguration boxConfig;
@@ -118,14 +119,14 @@ namespace PhysX
                 return false;
             }
 
-            AZ::SerializeContext::DataElementNode& boxConfigNode = classElement.GetSubElement(boxConfigIndex);
+            AZ::Serialization::DataElementNode& boxConfigNode = classElement.GetSubElement(boxConfigIndex);
             FindElementAndGetData(boxConfigNode, AZ_CRC("Configuration", 0xa5e2a5d7), boxConfig.m_dimensions);
 
             EditorProxyShapeConfig shapeConfig(boxConfig);
             return ConvertToNewEditorColliderComponent(context, classElement, shapeConfig);
         }
 
-        bool DeprecateEditorSphereColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateEditorSphereColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // sphere specific geometry data
             Physics::SphereShapeConfiguration sphereConfig;
@@ -135,14 +136,14 @@ namespace PhysX
                 return false;
             }
 
-            AZ::SerializeContext::DataElementNode& sphereConfigNode = classElement.GetSubElement(sphereConfigIndex);
+            AZ::Serialization::DataElementNode& sphereConfigNode = classElement.GetSubElement(sphereConfigIndex);
             FindElementAndGetData(sphereConfigNode, AZ_CRC("Radius", 0x3b7c6e5a), sphereConfig.m_radius);
 
             EditorProxyShapeConfig shapeConfig(sphereConfig);
             return ConvertToNewEditorColliderComponent(context, classElement, shapeConfig);
         }
 
-        bool DeprecateEditorMeshColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateEditorMeshColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // native shape specific geometry data
             Physics::NativeShapeConfiguration nativeShapeConfig;
@@ -152,14 +153,14 @@ namespace PhysX
                 return false;
             }
 
-            AZ::SerializeContext::DataElementNode& nativeShapeConfigNode = classElement.GetSubElement(nativeShapeConfigIndex);
+            AZ::Serialization::DataElementNode& nativeShapeConfigNode = classElement.GetSubElement(nativeShapeConfigIndex);
             FindElementAndGetData(nativeShapeConfigNode, AZ_CRC("Scale", 0xec462584), nativeShapeConfig.m_nativeShapeScale);
 
             EditorProxyShapeConfig shapeConfig(nativeShapeConfig);
             return ConvertToNewEditorColliderComponent(context, classElement, shapeConfig);
         }
 
-        bool UpgradeEditorColliderComponent(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& dataElement)
+        bool UpgradeEditorColliderComponent(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& dataElement)
         {
             // v1->v2
             if (dataElement.GetVersion() <= 1)
@@ -185,7 +186,7 @@ namespace PhysX
             if (dataElement.GetVersion() <= 2)
             {
                 // Find the shape configuration on the EditorColliderComponent
-                AZ::SerializeContext::DataElementNode* shapeConfigurationElement = dataElement.FindSubElement(AZ_CRC("ShapeConfiguration", 0xe29d5a5c));
+                AZ::Serialization::DataElementNode* shapeConfigurationElement = dataElement.FindSubElement(AZ_CRC("ShapeConfiguration", 0xe29d5a5c));
                 if (!shapeConfigurationElement)
                 {
                     return false;
@@ -200,8 +201,8 @@ namespace PhysX
                     AZ::Data::Asset<Pipeline::MeshAsset> meshAsset;
                     FindElementAndGetData(dataElement, AZ_CRC("MeshAsset", 0x2e843642), meshAsset);
 
-                    AZ::SerializeContext::DataElementNode* assetConfigNode = shapeConfigurationElement->FindSubElement(AZ_CRC("PhysicsAsset", 0x4a3b5e62));
-                    AZ::SerializeContext::DataElementNode* assetNode = assetConfigNode->FindSubElement(AZ_CRC("PhysicsAsset", 0x4a3b5e62));
+                    AZ::Serialization::DataElementNode* assetConfigNode = shapeConfigurationElement->FindSubElement(AZ_CRC("PhysicsAsset", 0x4a3b5e62));
+                    AZ::Serialization::DataElementNode* assetNode = assetConfigNode->FindSubElement(AZ_CRC("PhysicsAsset", 0x4a3b5e62));
                     assetNode->SetData<AZ::Data::Asset<AZ::Data::AssetData>>(context, meshAsset);
                 }
             }
@@ -211,7 +212,7 @@ namespace PhysX
             {
                 // version 6 moves the settings "DebugDraw" and "DebugDrawButtonState" into a separate object,
                 // "DebugDrawSettings", which is owned by the editor collider component.
-                //AZ::SerializeContext::DataElementNode* debugDrawElement = dataElement.FindSubElement(AZ_CRC("DebugDraw", 0x42ef6229));
+                //AZ::Serialization::DataElementNode* debugDrawElement = dataElement.FindSubElement(AZ_CRC("DebugDraw", 0x42ef6229));
 
                 bool debugDraw = false;
                 const int debugDrawIndex = dataElement.FindElement(AZ_CRC("DebugDraw", 0x42ef6229));
@@ -234,7 +235,7 @@ namespace PhysX
                 const int debugDrawSettingsIndex = dataElement.FindElement(AZ_CRC("DebugDrawSettings", 0xda74260a));
                 if (debugDrawSettingsIndex != -1)
                 {
-                    AZ::SerializeContext::DataElementNode& debugDrawSettingsNode = dataElement.GetSubElement(debugDrawSettingsIndex);
+                    AZ::Serialization::DataElementNode& debugDrawSettingsNode = dataElement.GetSubElement(debugDrawSettingsIndex);
                     debugDrawSettingsNode.AddElementWithData<bool>(context, "LocallyEnabled", debugDraw);
                     debugDrawSettingsNode.AddElementWithData<bool>(context, "GlobalButtonState", debugDrawButtonState);
                 }
@@ -251,7 +252,7 @@ namespace PhysX
             if (dataElement.GetVersion() <= 7)
             {
                 // Find the shape configuration on the EditorColliderComponent
-                AZ::SerializeContext::DataElementNode* shapeConfigurationElement = dataElement.FindSubElement(AZ_CRC("ShapeConfiguration", 0xe29d5a5c));
+                AZ::Serialization::DataElementNode* shapeConfigurationElement = dataElement.FindSubElement(AZ_CRC("ShapeConfiguration", 0xe29d5a5c));
                 if (!shapeConfigurationElement)
                 {
                     return false;
@@ -260,7 +261,7 @@ namespace PhysX
                 // Moved:
                 //    EditorColliderComponent::MeshAsset                        -> EditorColliderComponent::ShapeConfiguration::PhysicsAsset::Asset
                 //    EditorColliderComponent::ShapeConfiguration::PhysicsAsset -> EditorColliderComponent::ShapeConfiguration::PhysicsAsset::Configuration
-                
+
                 Physics::PhysicsAssetShapeConfiguration physAssetConfig;
                 FindElementAndGetData(*shapeConfigurationElement, AZ_CRC("PhysicsAsset", 0x4a3b5e62), physAssetConfig);
                 shapeConfigurationElement->RemoveElementByName(AZ_CRC("PhysicsAsset", 0x4a3b5e62));
@@ -275,7 +276,7 @@ namespace PhysX
 
                 shapeConfigurationElement->AddElementWithData(context, "PhysicsAsset", newAssetShapeConfig);
             }
-            
+
             if (dataElement.GetVersion() <= 8)
             {
                 dataElement.RemoveElementByName(AZ_CRC("LinkedRenderMeshAssetId", 0x466f4230));
@@ -290,7 +291,7 @@ namespace PhysX
             return true;
         }
 
-        bool EditorProxyShapeConfigVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool EditorProxyShapeConfigVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() <= 1)
             {
@@ -305,16 +306,16 @@ namespace PhysX
 
                 // Change shapeType from Native to PhysicsAsset
                 Physics::ShapeType currentShapeType = Physics::ShapeType::Sphere;
-                AZ::SerializeContext::DataElementNode* shapeTypeElement = classElement.FindSubElement(AZ_CRC("ShapeType", 0xf6826a28));
+                AZ::Serialization::DataElementNode* shapeTypeElement = classElement.FindSubElement(AZ_CRC("ShapeType", 0xf6826a28));
                 if (shapeTypeElement && shapeTypeElement->GetData<Physics::ShapeType>(currentShapeType) &&
                     currentShapeType == Physics::ShapeType::Native)
                 {
                     shapeTypeElement->SetData<Physics::ShapeType>(context, Physics::ShapeType::PhysicsAsset);
-                 
+
                     // Insert PhysicsAsset configuration instead of NativeShape. Save the mesh scale.
                     Physics::PhysicsAssetShapeConfiguration assetConfiguration;
                     assetConfiguration.m_assetScale = nativeShapeConfiguration.m_nativeShapeScale;
-                    
+
                     classElement.AddElementWithData<Physics::PhysicsAssetShapeConfiguration>(context, "PhysicsAsset", assetConfiguration);
                 }
             }
@@ -322,7 +323,7 @@ namespace PhysX
             return true;
         }
 
-        bool EditorRigidBodyConfigVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool EditorRigidBodyConfigVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Version 1 had a field "Inertia diagonal values" which was used to edit just the diagonal elements of the
             // inertia tensor, which is represented in the underlying Physics::RigidBodyConfiguration as a Matrix3x3.
@@ -339,7 +340,7 @@ namespace PhysX
                     const int rigidBodyConfigIndex = classElement.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
                     if (rigidBodyConfigIndex != -1)
                     {
-                        AZ::SerializeContext::DataElementNode rigidBodyConfigElement = classElement.GetSubElement(rigidBodyConfigIndex);
+                        AZ::Serialization::DataElementNode rigidBodyConfigElement = classElement.GetSubElement(rigidBodyConfigIndex);
                         // Update the inertia tensor
                         if (rigidBodyConfigElement.FindElement(AZ_CRC("Inertia tensor", 0xdd452265)) != -1)
                         {
@@ -353,7 +354,7 @@ namespace PhysX
             return true;
         }
 
-        bool EditorTerrainComponentConverter([[maybe_unused]] AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool EditorTerrainComponentConverter([[maybe_unused]] AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Version 1 had a field 'ExportOnSave'.
             // This field was made redundant by the in-memory terrain asset introduced in version 2.

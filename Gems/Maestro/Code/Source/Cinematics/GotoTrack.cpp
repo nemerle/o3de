@@ -153,7 +153,7 @@ void CGotoTrack::SetKeyAtTime(float time, IKey* key)
 //////////////////////////////////////////////////////////////////////////
 static bool GotoTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

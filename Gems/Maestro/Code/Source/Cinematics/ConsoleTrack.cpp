@@ -44,7 +44,7 @@ void CConsoleTrack::GetKeyInfo(int key, const char*& description, float& duratio
 //////////////////////////////////////////////////////////////////////////
 static bool ConsoleTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

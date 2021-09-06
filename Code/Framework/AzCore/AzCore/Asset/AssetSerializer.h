@@ -32,7 +32,7 @@ namespace AZ {
     /// This is used internally by the object stream because assets need
     /// special handling during serialization
     class AssetSerializer
-        : public SerializeContext::IDataSerializer
+        : public Serialization::IDataSerializer
     {
     public:
         // Store the class data into a stream.
@@ -76,7 +76,7 @@ namespace AZ {
         typedef typename Data::Asset<T> ThisType;
 
         class Factory
-            : public SerializeContext::IObjectFactory
+            : public Serialization::IObjectFactory
         {
         public:
             void* Create(const char* name) override
@@ -97,12 +97,12 @@ namespace AZ {
         {
         public:
             GenericClassGenericAsset()
-                : m_classData{ SerializeContext::ClassData::Create<ThisType>("Asset", GetAssetClassId(), &m_factory, &AssetSerializer::s_serializer) }
+                : m_classData{ Serialization::ClassData::Create<ThisType>("Asset", GetAssetClassId(), &m_factory, &AssetSerializer::s_serializer) }
             {
                 m_classData.m_version = 2;
             }
 
-            SerializeContext::ClassData* GetClassData() override
+            Serialization::ClassData* GetClassData() override
             {
                 return &m_classData;
             }
@@ -138,7 +138,7 @@ namespace AZ {
             }
 
             Factory m_factory;
-            SerializeContext::ClassData m_classData;
+            Serialization::ClassData m_classData;
         };
 
         using ClassInfoType = GenericClassGenericAsset;

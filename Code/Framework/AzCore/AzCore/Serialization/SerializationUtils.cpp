@@ -22,7 +22,7 @@ namespace AZ
 {
     namespace Utils
     {
-        bool LoadObjectFromStreamInPlace(IO::GenericStream& stream, AZ::SerializeContext* context, const SerializeContext::ClassData* objectClassData, void* targetPointer, const FilterDescriptor& filterDesc)
+        bool LoadObjectFromStreamInPlace(IO::GenericStream& stream, AZ::SerializeContext* context, const Serialization::ClassData* objectClassData, void* targetPointer, const FilterDescriptor& filterDesc)
         {
             AZ_PROFILE_FUNCTION(AzCore);
 
@@ -42,8 +42,8 @@ namespace AZ
             AZ_Assert(targetPointer, "You must provide a target pointer");
 
             bool foundSuccess = false;
-            typedef AZStd::function<void(void**, const SerializeContext::ClassData**, const Uuid&, SerializeContext*)> CreationCallback;
-            auto handler = [&targetPointer, objectClassData, &foundSuccess](void** instance, const SerializeContext::ClassData** classData, const Uuid& classId, SerializeContext* context)
+            typedef AZStd::function<void(void**, const Serialization::ClassData**, const Uuid&, SerializeContext*)> CreationCallback;
+            auto handler = [&targetPointer, objectClassData, &foundSuccess](void** instance, const Serialization::ClassData** classData, const Uuid& classId, SerializeContext* context)
                 {
                     void* convertibleInstance{};
                     if (objectClassData->ConvertFromType(convertibleInstance, classId, targetPointer, *context))
@@ -85,7 +85,7 @@ namespace AZ
                 return false;
             }
 
-            const SerializeContext::ClassData* classData = context->FindClassData(targetClassId);
+            const Serialization::ClassData* classData = context->FindClassData(targetClassId);
             if (!classData)
             {
                 AZ_Error("Serialization", false,
@@ -181,7 +181,7 @@ namespace AZ
             return loadedObject;
         }
 
-        bool SaveObjectToStream(IO::GenericStream& stream, DataStream::StreamType streamType, const void* classPtr, const Uuid& classId, SerializeContext* context, const SerializeContext::ClassData* classData)
+        bool SaveObjectToStream(IO::GenericStream& stream, DataStream::StreamType streamType, const void* classPtr, const Uuid& classId, SerializeContext* context, const Serialization::ClassData* classData)
         {
             AZ_PROFILE_FUNCTION(AzCore);
 
@@ -264,10 +264,10 @@ namespace AZ
         \param elementCrcQueue Container of Crc32 values in the order in which DataElementNodes should be matched as the DataElementNode tree is traversed
         \return Vector of valid pointers to DataElementNodes which match the entire element Crc32 queue
         */
-        AZStd::vector<AZ::SerializeContext::DataElementNode*> FindDescendantElements(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement,
+        AZStd::vector<AZ::Serialization::DataElementNode*> FindDescendantElements(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement,
             const AZStd::vector<AZ::Crc32>& elementCrcQueue)
         {
-            AZStd::vector<AZ::SerializeContext::DataElementNode*> dataElementNodes;
+            AZStd::vector<AZ::Serialization::DataElementNode*> dataElementNodes;
             FindDescendantElements(context, classElement, dataElementNodes, elementCrcQueue.begin(), elementCrcQueue.end());
 
             return dataElementNodes;
@@ -281,8 +281,8 @@ namespace AZ
         \param first The current front of the Crc32 queue
         \param last The end of the Crc32 queue
         */
-        void FindDescendantElements(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement,
-            AZStd::vector<AZ::SerializeContext::DataElementNode*>& dataElementNodes, AZStd::vector<AZ::Crc32>::const_iterator first, AZStd::vector<AZ::Crc32>::const_iterator last)
+        void FindDescendantElements(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement,
+            AZStd::vector<AZ::Serialization::DataElementNode*>& dataElementNodes, AZStd::vector<AZ::Crc32>::const_iterator first, AZStd::vector<AZ::Crc32>::const_iterator last)
         {
             if (first == last)
             {
@@ -489,9 +489,9 @@ namespace AZ
             return AZStd::make_pair(azrtti_typeid<void>(), azrtti_typeid<void>());
         }
 
-        void* ResolvePointer(void* ptr, const SerializeContext::ClassElement& classElement, const SerializeContext& context)
+        void* ResolvePointer(void* ptr, const Serialization::ClassElement& classElement, const SerializeContext& context)
         {
-            if (classElement.m_flags & SerializeContext::ClassElement::FLG_POINTER)
+            if (classElement.m_flags & Serialization::ClassElement::FLG_POINTER)
             {
                 // In the case of pointer-to-pointer, we'll deference.
                 ptr = *(void**)(ptr);
@@ -503,7 +503,7 @@ namespace AZ
                     Uuid actualClassId = classElement.m_azRtti->GetActualUuid(ptr);
                     if (actualClassId != classElement.m_typeId)
                     {
-                        const SerializeContext::ClassData* classData = context.FindClassData(actualClassId);
+                        const Serialization::ClassData* classData = context.FindClassData(actualClassId);
                         if (classData)
                         {
                             ptr = classElement.m_azRtti->Cast(ptr, classData->m_azRtti->GetTypeId());

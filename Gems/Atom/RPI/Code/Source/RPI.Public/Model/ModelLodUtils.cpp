@@ -10,7 +10,9 @@
 
 #include <Atom/RPI.Public/Model/Model.h>
 #include <Atom/RPI.Public/View.h>
+#include <Atom/RPI.Reflect/Model/ModelAsset.h>
 
+#include <AzCore/Math/Aabb.h>
 #include <AzCore/Math/Transform.h>
 #include <AzCore/Math/Vector2.h>
 
@@ -48,11 +50,11 @@ namespace AZ
                     Aabb modelAabb = model.GetModelAsset()->GetAabb();
                     modelAabb.Translate(position);
 
-                    Vector3 center; 
+                    Vector3 center;
                     float radius;
                     modelAabb.GetAsSphere(center, radius);
 
-                    // Projection of a sphere to screen space 
+                    // Projection of a sphere to screen space
                     // Derived from https://www.iquilezles.org/www/articles/sphereproj/sphereproj.htm
                     const Matrix4x4 worldToViewMatrix = view->GetWorldToViewMatrix();
                     const Matrix4x4 viewToClipMatrix = view->GetViewToClipMatrix();
@@ -69,7 +71,7 @@ namespace AZ
 
             uint8_t SelectLodFromBoundingSphere(const Vector3 center, float radius, uint8_t numLods, const Matrix4x4& worldtoView, const Matrix4x4& viewToClip)
             {
-                // Projection of a sphere to screen space 
+                // Projection of a sphere to screen space
                 // Derived from https://www.iquilezles.org/www/articles/sphereproj/sphereproj.htm
 
                 const Vector3 cameraPosition = worldtoView.GetTranslation();

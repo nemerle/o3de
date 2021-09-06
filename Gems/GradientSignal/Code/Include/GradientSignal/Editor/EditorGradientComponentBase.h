@@ -75,7 +75,7 @@ namespace GradientSignal
 
         AZ_RTTI((EditorGradientComponentBase, "{7C529503-AD3F-4EAB-9AB1-E4BCF8EDA114}", TComponent, TConfiguration), BaseClassType);
 
-        static bool VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement);
+        static bool VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement);
 
         static void Reflect(AZ::ReflectContext* context);
 

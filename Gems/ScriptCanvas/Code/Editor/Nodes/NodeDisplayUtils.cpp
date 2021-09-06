@@ -189,7 +189,7 @@ namespace ScriptCanvasEditor::Nodes
         AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
 
         AZ_Assert(serializeContext, "Failed to acquire application serialize context.");
-        const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(azrtti_typeid(node));
+        const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(azrtti_typeid(node));
 
         if (classData)
         {
@@ -864,7 +864,7 @@ namespace ScriptCanvasEditor::Nodes
 
         AZ_Assert(serializeContext, "Failed to acquire application serialize context.");
 
-        if (const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(azrtti_typeid(functionDefinitionNode)))
+        if (const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(azrtti_typeid(functionDefinitionNode)))
         {
             AZStd::string nodeContext = GetContextName(*classData);
             nodeConfiguration.m_translationContext = TranslationHelper::GetUserDefinedContext(nodeContext);
@@ -956,7 +956,7 @@ namespace ScriptCanvasEditor::Nodes
         AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApplicationRequests::GetSerializeContext);
 
         AZ_Assert(serializeContext, "Failed to acquire application serialize context.");
-        const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(azrtti_typeid(nodeling));
+        const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(azrtti_typeid(nodeling));
 
         if (classData)
         {

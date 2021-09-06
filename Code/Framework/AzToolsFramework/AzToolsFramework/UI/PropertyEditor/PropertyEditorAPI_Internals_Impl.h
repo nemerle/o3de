@@ -50,7 +50,7 @@ namespace AzToolsFramework
             }
         };
 
-        const AZ::SerializeContext::ClassElement* element = dataNode->GetElementMetadata();
+        const AZ::Serialization::ClassElement* element = dataNode->GetElementMetadata();
         if (element)
         {
             consumeAttributes(element->m_attributes, element->m_name);

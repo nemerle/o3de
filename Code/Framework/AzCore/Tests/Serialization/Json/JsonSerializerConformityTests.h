@@ -727,7 +727,7 @@ namespace JsonSerializationTests
         if (this->m_features.m_enableNewInstanceTests && this->m_features.m_mandatoryFields.empty())
         {
             AZ::SerializeContext* serializeContext = this->m_jsonDeserializationContext->GetSerializeContext();
-            const AZ::SerializeContext::ClassData* classData = serializeContext->FindClassData(azrtti_typeid<typename TypeParam::Type>());
+            const AZ::Serialization::ClassData* classData = serializeContext->FindClassData(azrtti_typeid<typename TypeParam::Type>());
             ASSERT_NE(nullptr, classData);
             // Skip this test if the target type doesn't have a factor to create a new instance with or if the factor explicit
             // prohibits construction.

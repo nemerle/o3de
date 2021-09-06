@@ -23,7 +23,7 @@ namespace Vegetation
 {
     namespace DescriptorUtil
     {
-        static bool UpdateVersion(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool UpdateVersion(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 4)
             {
@@ -661,7 +661,7 @@ namespace Vegetation
         if (serializeContext)
         {
             serializeContext->EnumerateDerived<InstanceSpawner>(
-            [&](const AZ::SerializeContext::ClassData* classData, [[maybe_unused]] const AZ::Uuid& classUuid) -> bool
+            [&](const AZ::Serialization::ClassData* classData, [[maybe_unused]] const AZ::Uuid& classUuid) -> bool
             {
                 auto spawnerDisplayName = classData->m_editData ? classData->m_editData->m_name : classData->m_name;
                 m_spawnerTypes.push_back(AZStd::make_pair(classData->m_typeId, spawnerDisplayName));

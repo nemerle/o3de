@@ -20,7 +20,7 @@ namespace AZ
 namespace ScriptCanvas
 {
 #if defined(OBJECT_STREAM_EDITOR_ASSET_LOADING_SUPPORT_ENABLED)////
-    class GraphDataEventHandler : public AZ::SerializeContext::IEventHandler
+    class GraphDataEventHandler : public AZ::Serialization::IEventHandler
     {
     public:
         /// Called to rebuild the Endpoint map
@@ -53,7 +53,7 @@ namespace ScriptCanvas
         }
     }
 
-    bool GraphData::VersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+    bool GraphData::VersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
     {
         enum
         {
@@ -68,7 +68,7 @@ namespace ScriptCanvas
                 return false;
             }
 
-            AZ::SerializeContext::DataElementNode& entityElement = rootElement.GetSubElement(connectionsIndex);
+            AZ::Serialization::DataElementNode& entityElement = rootElement.GetSubElement(connectionsIndex);
             AZStd::unordered_set<AZ::Entity*> entitiesSet;
             if (!entityElement.GetData(entitiesSet))
             {
@@ -98,7 +98,7 @@ namespace ScriptCanvas
                 return true;
             }
 
-            AZ::SerializeContext::DataElementNode& dataElement = rootElement.GetSubElement(dependentAssetsIndex);
+            AZ::Serialization::DataElementNode& dataElement = rootElement.GetSubElement(dependentAssetsIndex);
 
             DependentAssetSet dependentAssetSet;
             DependentAssets dependentAssetMap{};

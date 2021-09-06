@@ -14,7 +14,7 @@ namespace ScriptCanvas
     {
         namespace Core
         {
-            bool ExtractProperty::VersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement)
+            bool ExtractProperty::VersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement)
             {
                 if (rootElement.GetVersion() < 1)
                 {

@@ -44,7 +44,7 @@ namespace AZ
                     if (context)
                     {
                         context->EnumerateDerived(
-                            [entity](const AZ::SerializeContext::ClassData* data, const AZ::Uuid& /*typeId*/) -> bool
+                            [entity](const AZ::Serialization::ClassData* data, const AZ::Uuid& /*typeId*/) -> bool
                             {
                                 entity->CreateComponent(data->m_typeId);
                                 return true;
@@ -72,7 +72,7 @@ namespace AZ
 
                     const Uuid sceneSystemComponentType = azrtti_typeid<AZ::SceneAPI::SceneCore::SceneSystemComponent>();
                     context->EnumerateDerived(
-                        [&entity](const AZ::SerializeContext::ClassData* data, const AZ::Uuid& typeId) -> bool
+                        [&entity](const AZ::Serialization::ClassData* data, const AZ::Uuid& typeId) -> bool
                     {
                         AZ_UNUSED(typeId);
                         // Before adding a new instance of a SceneSystemComponent, first check if the entity already has

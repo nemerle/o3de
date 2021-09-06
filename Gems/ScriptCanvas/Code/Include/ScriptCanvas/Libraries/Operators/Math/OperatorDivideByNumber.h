@@ -37,7 +37,7 @@ namespace ScriptCanvas
                     Current
                 };
 
-                static bool OperatorDivideByNumberVersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& rootElement);
+                static bool OperatorDivideByNumberVersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& rootElement);
 
                 OperatorDivideByNumber() = default;
 

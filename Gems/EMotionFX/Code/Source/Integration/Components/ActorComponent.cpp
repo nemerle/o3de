@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
@@ -88,7 +89,7 @@ namespace EMotionFX
             if (auto* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
             {
                 serializeContext->Class<BoundingBoxConfiguration>()
-                    ->Version(2, [](AZ::SerializeContext& sc, AZ::SerializeContext::DataElementNode& node)
+                    ->Version(2, [](AZ::SerializeContext& sc, AZ::Serialization::DataElementNode& node)
                     {
                         if (node.GetVersion() < 2)
                         {
@@ -167,16 +168,16 @@ namespace EMotionFX
                 AZ::TypeId deprecatedTypeId = AZ::TypeId("{B7B8ECC7-FF89-4A76-A50E-4C6CA2B6E6B4}") + AZ::AzTypeInfo<AZStd::allocator>::Uuid()
                     + AZ::TypeId("{A60E3E61-1FF6-4982-B6B8-9E4350C4C679}");
                 serializeContext->ClassDeprecate("AZStd::vector<SimpleAssetReference_MaterialAsset>", deprecatedTypeId,
-                    [](AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& rootElement)
+                    [](AZ::SerializeContext& context, AZ::Serialization::DataElementNode& rootElement)
                 {
-                    AZStd::vector<AZ::SerializeContext::DataElementNode> childNodeElements;
+                    AZStd::vector<AZ::Serialization::DataElementNode> childNodeElements;
                     for (int index = 0; index < rootElement.GetNumSubElements(); ++index)
                     {
                         childNodeElements.push_back(rootElement.GetSubElement(index));
                     }
 
                     rootElement.Convert<AZStd::vector<AzFramework::SimpleAssetReference<LmbrCentral::MaterialAsset>>>(context);
-                    for (AZ::SerializeContext::DataElementNode& childNodeElement : childNodeElements)
+                    for (AZ::Serialization::DataElementNode& childNodeElement : childNodeElements)
                     {
                         rootElement.AddElement(AZStd::move(childNodeElement));
                     }
@@ -425,7 +426,7 @@ namespace EMotionFX
             AZ::TransformNotificationBus::MultiHandler::BusConnect(GetEntityId());
 
             m_actorInstance->UpdateWorldTransform();
-            // Set bounds update mode and compute bbox first time 
+            // Set bounds update mode and compute bbox first time
             m_configuration.m_bboxConfig.SetAndUpdate(m_actorInstance.get());
             m_actorInstance->UpdateBounds(0, ActorInstance::EBoundsType::BOUNDS_STATIC_BASED);
 

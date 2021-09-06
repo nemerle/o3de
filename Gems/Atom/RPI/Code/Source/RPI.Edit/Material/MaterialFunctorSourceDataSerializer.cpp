@@ -66,7 +66,7 @@ namespace AZ
             }
 
             // Create the actual source data of the functor.
-            const SerializeContext::ClassData* actualClassData = context.GetSerializeContext()->FindClassData(functorTypeId);
+            const Serialization::ClassData* actualClassData = context.GetSerializeContext()->FindClassData(functorTypeId);
             if (actualClassData)
             {
                 void* instance = actualClassData->m_factory->Create(actualClassData->m_name);

@@ -52,7 +52,7 @@ namespace AZ
                 SCENE_DATA_API const DataTypes::ISceneNodeSelectionList& GetSceneNodeSelectionList() const override;
 
                 static void Reflect(AZ::ReflectContext* context);
-                static bool VersionConverter(SerializeContext& context, SerializeContext::DataElementNode& classElement);
+                static bool VersionConverter(SerializeContext& context, Serialization::DataElementNode& classElement);
 
             protected:
                 SceneNodeSelectionList m_nodeSelectionList;

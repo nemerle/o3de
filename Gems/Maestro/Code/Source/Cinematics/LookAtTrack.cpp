@@ -76,7 +76,7 @@ void CLookAtTrack::GetKeyInfo(int key, const char*& description, float& duration
 //////////////////////////////////////////////////////////////////////////
 static bool LookAtTrackVersionConverter(
     AZ::SerializeContext& serializeContext,
-    AZ::SerializeContext::DataElementNode& rootElement)
+    AZ::Serialization::DataElementNode& rootElement)
 {
     if (rootElement.GetVersion() < 3)
     {

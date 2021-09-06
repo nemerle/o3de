@@ -28,7 +28,7 @@ namespace Vegetation
 {
     namespace SpawnerUtil
     {
-        static bool UpdateVersion([[maybe_unused]] AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        static bool UpdateVersion([[maybe_unused]] AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             if (classElement.GetVersion() < 1)
             {

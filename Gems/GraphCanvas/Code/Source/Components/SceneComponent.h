@@ -231,7 +231,7 @@ namespace GraphCanvas
             AZ_CLASS_ALLOCATOR(GraphCanvasConstructSaveData, AZ::SystemAllocator, 0);
             AZ_RTTI(GraphCanvasConstructSaveData, "{C074944F-8218-4753-94EE-1C5CC02DE8E4}");
 
-            static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& classElement);
+            static bool VersionConverter(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& classElement);
 
             // Put the invalid thing at the end of the list, instead of the start.
             // Cannot actually add new elements to this list.

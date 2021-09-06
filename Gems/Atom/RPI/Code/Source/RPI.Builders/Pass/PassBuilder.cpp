@@ -107,13 +107,13 @@ namespace AZ
         // Helper function to find all assetId's and object references
         bool FindReferencedAssets(FindPassReferenceAssetParams& params, AssetBuilderSDK::JobDescriptor* job)
         {
-            SerializeContext::ErrorHandler errorLogger;
+            Serialization::ErrorHandler errorLogger;
             errorLogger.Reset();
 
             bool success = true;
 
             // This callback will check whether the given element is an asset reference. If so, it will add it to the list of asset references
-            auto beginCallback = [&](void* ptr, const SerializeContext::ClassData* classData, [[maybe_unused]] const SerializeContext::ClassElement* classElement)
+            auto beginCallback = [&](void* ptr, const Serialization::ClassData* classData, [[maybe_unused]] const Serialization::ClassElement* classElement)
             {
                 // If the enumerated element is an asset reference
                 if (classData->m_typeId == azrtti_typeid<AssetReference>())
@@ -152,7 +152,7 @@ namespace AZ
             };
 
             // Setup enumeration context
-            SerializeContext::EnumerateInstanceCallContext callContext(
+            Serialization::EnumerateInstanceCallContext callContext(
                 AZStd::move(beginCallback),
                 nullptr,
                 params.serializeContext,

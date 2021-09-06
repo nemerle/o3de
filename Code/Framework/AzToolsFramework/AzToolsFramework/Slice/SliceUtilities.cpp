@@ -944,9 +944,9 @@ namespace AzToolsFramework
 
                 if (entity)
                 {
-                    AZStd::vector<const AZ::SerializeContext::ClassData*> parentStack;
+                    AZStd::vector<const AZ::Serialization::ClassData*> parentStack;
                     parentStack.reserve(30);
-                    auto beginCB = [&](void* ptr, const AZ::SerializeContext::ClassData* classData, const AZ::SerializeContext::ClassElement* elementData) -> bool
+                    auto beginCB = [&](void* ptr, const AZ::Serialization::ClassData* classData, const AZ::Serialization::ClassElement* elementData) -> bool
                     {
                         parentStack.push_back(classData);
 
@@ -966,7 +966,7 @@ namespace AzToolsFramework
                             }
                             else
                             {
-                                AZ::EntityId* entityIdPtr = (elementData->m_flags & AZ::SerializeContext::ClassElement::FLG_POINTER) ?
+                                AZ::EntityId* entityIdPtr = (elementData->m_flags & AZ::Serialization::ClassElement::FLG_POINTER) ?
                                     *reinterpret_cast<AZ::EntityId**>(ptr) : reinterpret_cast<AZ::EntityId*>(ptr);
                                 if (entityIdPtr)
                                 {
@@ -989,7 +989,7 @@ namespace AzToolsFramework
                         return true;
                     };
 
-                    AZ::SerializeContext::EnumerateInstanceCallContext callContext(
+                    AZ::Serialization::EnumerateInstanceCallContext callContext(
                         beginCB,
                         endCB,
                         &serializeContext,

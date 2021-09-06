@@ -1473,7 +1473,7 @@ void UiTextInputComponent::CheckStartTextInput()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 bool UiTextInputComponent::VersionConverter(AZ::SerializeContext& context,
-    AZ::SerializeContext::DataElementNode& classElement)
+    AZ::Serialization::DataElementNode& classElement)
 {
     // conversion from version 1:
     // - Need to convert CryString elements to AZStd::string
@@ -1505,7 +1505,7 @@ bool UiTextInputComponent::VersionConverter(AZ::SerializeContext& context,
         int componentBaseClassIndex = classElement.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
 
         // If there was a base class, make a copy and remove it
-        AZ::SerializeContext::DataElementNode componentBaseClassNode;
+        AZ::Serialization::DataElementNode componentBaseClassNode;
         if (componentBaseClassIndex != -1)
         {
             // make a local copy of the component base class node
@@ -1517,7 +1517,7 @@ bool UiTextInputComponent::VersionConverter(AZ::SerializeContext& context,
 
         // Add a new base class (UiInteractableComponent)
         int interactableBaseClassIndex = classElement.AddElement<UiInteractableComponent>(context, "BaseClass1");
-        AZ::SerializeContext::DataElementNode& interactableBaseClassNode = classElement.GetSubElement(interactableBaseClassIndex);
+        AZ::Serialization::DataElementNode& interactableBaseClassNode = classElement.GetSubElement(interactableBaseClassIndex);
 
         // if there was previously a base class...
         if (componentBaseClassIndex != -1)
@@ -1554,7 +1554,7 @@ bool UiTextInputComponent::VersionConverter(AZ::SerializeContext& context,
             return false;
         }
 
-        AZ::SerializeContext::DataElementNode& clipTextNode = classElement.GetSubElement(clipTextIndex);
+        AZ::Serialization::DataElementNode& clipTextNode = classElement.GetSubElement(clipTextIndex);
         clipTextNode.SetData(context, false);
     }
 

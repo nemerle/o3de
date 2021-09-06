@@ -10,10 +10,10 @@
 #define CRYINCLUDE_EDITOR_UTILS_REFLECTEDVAR_H
 #pragma once
 
-#include <AzCore/Serialization/SerializeContext.h>
 #include <algorithm>
 #include <limits>
 #include "Util/VariablePropertyType.h"
+#include <AzCore/Asset/AssetCommon.h>
 #include <AzCore/Math/Vector2.h>
 #include <AzCore/Math/Vector3.h>
 #include <AzCore/Math/Vector4.h>
@@ -295,7 +295,7 @@ public:
 };
 
 //Class to hold ePropertyUser (IVariable::DT_USERITEMCB)
-class CReflectedVarUser 
+class CReflectedVarUser
     : public CReflectedVar
 {
 public:
@@ -334,7 +334,7 @@ public:
 
     CReflectedVarSpline()
         : m_spline(0)
-        , m_propertyType(ePropertyInvalid) 
+        , m_propertyType(ePropertyInvalid)
     {}
 
     AZStd::string varName() const { return m_varName; }

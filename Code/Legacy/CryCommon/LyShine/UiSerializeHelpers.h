@@ -28,13 +28,13 @@ namespace LyShine
     template<typename T>
     inline bool ConvertSubElementFromAzStringToAssetRef(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement,
+        AZ::Serialization::DataElementNode& classElement,
         const char* subElementName)
     {
         int index = classElement.FindElement(AZ_CRC(subElementName));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(index);
 
             AZStd::string oldData;
 
@@ -58,7 +58,7 @@ namespace LyShine
             }
 
             // add a sub element for the SimpleAssetReferenceBase within the SimpleAssetReference
-            AZ::SerializeContext::DataElementNode& simpleAssetRefNode = classElement.GetSubElement(simpleAssetRefIndex);
+            AZ::Serialization::DataElementNode& simpleAssetRefNode = classElement.GetSubElement(simpleAssetRefIndex);
             int simpleAssetRefBaseIndex = simpleAssetRefNode.AddElement<AzFramework::SimpleAssetReferenceBase>(context, "BaseClass1");
             if (simpleAssetRefBaseIndex == -1)
             {
@@ -68,7 +68,7 @@ namespace LyShine
             }
 
             // add a sub element for the AssetPath within the SimpleAssetReference
-            AZ::SerializeContext::DataElementNode& simpleAssetRefBaseNode = simpleAssetRefNode.GetSubElement(simpleAssetRefBaseIndex);
+            AZ::Serialization::DataElementNode& simpleAssetRefBaseNode = simpleAssetRefNode.GetSubElement(simpleAssetRefBaseIndex);
             int assetPathElementIndex = simpleAssetRefBaseNode.AddElement<AZStd::string>(context, "AssetPath");
             if (assetPathElementIndex == -1)
             {
@@ -90,13 +90,13 @@ namespace LyShine
     // Inline to avoid DLL linkage issues
     inline bool ConvertSubElementFromCharToUInt32(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement,
+        AZ::Serialization::DataElementNode& classElement,
         const char* subElementName)
     {
         int index = classElement.FindElement(AZ_CRC(subElementName));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(index);
 
             char oldData;
 
@@ -131,13 +131,13 @@ namespace LyShine
     // Helper function to get the value for a named sub element
     template<typename T>
     inline bool GetSubElementValue(
-        AZ::SerializeContext::DataElementNode& classElement,
+        AZ::Serialization::DataElementNode& classElement,
         const char* elementName, T& value)
     {
         int index = classElement.FindElement(AZ_CRC(elementName));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(index);
             if (!elementNode.GetData(value))
             {
                 return false;
@@ -177,14 +177,14 @@ namespace LyShine
     // Inline to avoid DLL linkage issues
     inline bool ConvertSubElementFromColorToColorPlusAlpha(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement,
+        AZ::Serialization::DataElementNode& classElement,
         const char* colorElementName,
         const char* alphaElementName)
     {
         int index = classElement.FindElement(AZ_CRC(colorElementName));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(index);
 
             ColorF oldData;
 
@@ -235,13 +235,13 @@ namespace LyShine
     // Inline to avoid DLL linkage issues
     inline bool ConvertSubElementFromVector3ToAzColor(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement,
+        AZ::Serialization::DataElementNode& classElement,
         const char* colorElementName)
     {
         int index = classElement.FindElement(AZ_CRC(colorElementName));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(index);
 
             AZ::Vector3 oldData;
 
@@ -278,13 +278,13 @@ namespace LyShine
     // Inline to avoid DLL linkage issues
     inline bool ConvertSubElementFromColorFToAzColor(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement,
+        AZ::Serialization::DataElementNode& classElement,
         const char* colorElementName)
     {
         int index = classElement.FindElement(AZ_CRC(colorElementName));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(index);
 
             ColorF oldData;
 
@@ -323,13 +323,13 @@ namespace LyShine
     // Inline to avoid DLL linkage issues
     inline bool ConvertSubElementFromVec2ToVector2(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement,
+        AZ::Serialization::DataElementNode& classElement,
         const char* vec2ElementName)
     {
         int index = classElement.FindElement(AZ_CRC(vec2ElementName));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& elementNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& elementNode = classElement.GetSubElement(index);
 
             Vec2 oldData;
 
@@ -367,8 +367,8 @@ namespace LyShine
     // DataElementNode and rename it
     inline bool MoveElement(
         [[maybe_unused]] AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& srcElement,
-        AZ::SerializeContext::DataElementNode& dstElement,
+        AZ::Serialization::DataElementNode& srcElement,
+        AZ::Serialization::DataElementNode& dstElement,
         const char* srcSubElementName,
         const char* dstSubElementName)
     {
@@ -377,7 +377,7 @@ namespace LyShine
         if (srcSubElementIndex != -1)
         {
             // add a copy of the sub-element into the base class
-            AZ::SerializeContext::DataElementNode subElementNode = srcElement.GetSubElement(srcSubElementIndex);
+            AZ::Serialization::DataElementNode subElementNode = srcElement.GetSubElement(srcSubElementIndex);
             subElementNode.SetName(dstSubElementName);
             dstElement.AddElement(subElementNode);
 
@@ -393,23 +393,23 @@ namespace LyShine
     // Helper function to VersionConverter to remove leading forward slashes from asset path
     inline bool RemoveLeadingForwardSlashesFromAssetPath(
         AZ::SerializeContext& context,
-        AZ::SerializeContext::DataElementNode& classElement,
+        AZ::Serialization::DataElementNode& classElement,
         const char* simpleAssetRefSubElementName)
     {
         int index = classElement.FindElement(AZ_CRC(simpleAssetRefSubElementName));
         if (index != -1)
         {
-            AZ::SerializeContext::DataElementNode& simpleAssetRefNode = classElement.GetSubElement(index);
+            AZ::Serialization::DataElementNode& simpleAssetRefNode = classElement.GetSubElement(index);
             index = simpleAssetRefNode.FindElement(AZ_CRC("BaseClass1", 0xd4925735));
 
             if (index != -1)
             {
-                AZ::SerializeContext::DataElementNode& baseClassNode = simpleAssetRefNode.GetSubElement(index);
+                AZ::Serialization::DataElementNode& baseClassNode = simpleAssetRefNode.GetSubElement(index);
                 index = baseClassNode.FindElement(AZ_CRC("AssetPath", 0x2c355179));
 
                 if (index != -1)
                 {
-                    AZ::SerializeContext::DataElementNode& assetPathNode = baseClassNode.GetSubElement(index);
+                    AZ::Serialization::DataElementNode& assetPathNode = baseClassNode.GetSubElement(index);
                     AZStd::string assetPath;
 
                     if (!assetPathNode.GetData(assetPath))
@@ -444,7 +444,7 @@ namespace LyShine
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // Helper function to find a component with the given UUID in an entity
-    inline AZ::SerializeContext::DataElementNode* FindComponentNode(AZ::SerializeContext::DataElementNode& entityNode, const AZ::Uuid& uuid)
+    inline AZ::Serialization::DataElementNode* FindComponentNode(AZ::Serialization::DataElementNode& entityNode, const AZ::Uuid& uuid)
     {
         // get the component vector node
         int componentsIndex = entityNode.FindElement(AZ_CRC("Components", 0xee48f5fd));
@@ -452,13 +452,13 @@ namespace LyShine
         {
             return nullptr;
         }
-        AZ::SerializeContext::DataElementNode& componentsNode = entityNode.GetSubElement(componentsIndex);
+        AZ::Serialization::DataElementNode& componentsNode = entityNode.GetSubElement(componentsIndex);
 
         // search the components vector for the first component with the given ID
         int numComponents = componentsNode.GetNumSubElements();
         for (int compIndex = 0; compIndex < numComponents; ++compIndex)
         {
-            AZ::SerializeContext::DataElementNode& componentNode = componentsNode.GetSubElement(compIndex);
+            AZ::Serialization::DataElementNode& componentNode = componentsNode.GetSubElement(compIndex);
 
             if (componentNode.GetId() == uuid)
             {
@@ -471,7 +471,7 @@ namespace LyShine
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // Helper function to create an EntityId node for a newly created entity node
-    inline bool CreateEntityIdNode(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& entityNode)
+    inline bool CreateEntityIdNode(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& entityNode)
     {
         // Generate a new EntityId and extract the raw u64
         AZ::EntityId newEntityId = AZ::Entity::MakeId();
@@ -483,7 +483,7 @@ namespace LyShine
         {
             return false;
         }
-        AZ::SerializeContext::DataElementNode& elementIdNode = entityNode.GetSubElement(entityIdIndex);
+        AZ::Serialization::DataElementNode& elementIdNode = entityNode.GetSubElement(entityIdIndex);
 
         // Create the sub node of the EntityID that actually stores the u64
         int u64Index = elementIdNode.AddElementWithData(context, "id", rawId);
@@ -497,7 +497,7 @@ namespace LyShine
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // Helper function to create the AZ::Component base class for a newly created component
-    inline bool CreateComponentBaseClassNode(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& componentNode)
+    inline bool CreateComponentBaseClassNode(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& componentNode)
     {
         // Generate a new component ID (using same technique that the AZ::Component uses)
         AZ::ComponentId compId = AZ::Sfmt::GetInstance().Rand64();
@@ -508,7 +508,7 @@ namespace LyShine
         {
             return false;
         }
-        AZ::SerializeContext::DataElementNode& baseClassNode = componentNode.GetSubElement(baseClassIndex);
+        AZ::Serialization::DataElementNode& baseClassNode = componentNode.GetSubElement(baseClassIndex);
 
         // Create the sub node of the component base class that stores the u64 component id
         int u64Index = baseClassNode.AddElementWithData(context, "Id", compId);

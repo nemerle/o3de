@@ -6,6 +6,7 @@
  *
  */
 
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/Component/TransformBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
@@ -21,7 +22,7 @@
 #ifdef LMBR_CENTRAL_EDITOR
 #include "EditorSpawnerComponent.h"
 #endif
- 
+
 namespace LmbrCentral
 {
     // BehaviorContext SpawnerComponentNotificationBus forwarder
@@ -61,7 +62,7 @@ namespace LmbrCentral
 
     // Convert any instances of the old SampleComponent data into the appropriate
     // modern editor-component or game-component.
-    bool ConvertLegacySpawnerComponent(AZ::SerializeContext& serializeContext, AZ::SerializeContext::DataElementNode& classNode)
+    bool ConvertLegacySpawnerComponent(AZ::SerializeContext& serializeContext, AZ::Serialization::DataElementNode& classNode)
     {
 #ifdef LMBR_CENTRAL_EDITOR
         // To determine whether we want an editor or runtime component, we check
@@ -128,7 +129,7 @@ namespace LmbrCentral
                 ->Field("DestroyOnDeactivate", &SpawnerComponent::m_destroyOnDeactivate)
                 ;
         }
- 
+
         AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context);
         if (behaviorContext)
         {
@@ -280,7 +281,7 @@ namespace LmbrCentral
     {
         return SpawnSliceInternalRelative(m_sliceAsset, relative);
     }
-    
+
     //=========================================================================
     AzFramework::SliceInstantiationTicket SpawnerComponent::SpawnAbsolute(const AZ::Transform& world)
     {
@@ -298,7 +299,7 @@ namespace LmbrCentral
     {
         return SpawnSliceInternalRelative(slice, relative);
     }
-    
+
     //=========================================================================
     AzFramework::SliceInstantiationTicket SpawnerComponent::SpawnSliceAbsolute(const AZ::Data::Asset<AZ::Data::AssetData>& slice, const AZ::Transform& world)
     {
@@ -543,7 +544,7 @@ namespace LmbrCentral
     {
         AZ::Data::AssetBus::Handler::BusDisconnect();
 
-        m_sliceAsset = asset;  
+        m_sliceAsset = asset;
     }
 
 } // namespace LmbrCentral

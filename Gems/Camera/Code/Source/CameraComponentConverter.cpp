@@ -19,7 +19,7 @@ namespace Camera
 {
     namespace ClassConverters
     {
-        bool DeprecateCameraComponentWithoutEditor(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool DeprecateCameraComponentWithoutEditor(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Capture the old values
             float fov = DefaultFoV;
@@ -62,7 +62,7 @@ namespace Camera
             return true;
         }
 
-        bool UpdateCameraComponentToUseController(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+        bool UpdateCameraComponentToUseController(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
         {
             // Create a controller, as they now house the camera config
             CameraComponentController controller;

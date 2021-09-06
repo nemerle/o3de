@@ -37,7 +37,7 @@ namespace AZ::SceneAPI::SceneData
 
         SCENE_DATA_API static void Reflect(AZ::ReflectContext* context);
         SCENE_DATA_API static bool ConvertLegacyCoordinateSystemRule(AZ::SerializeContext& serializeContext,
-            AZ::SerializeContext::DataElementNode& classElement);
+            AZ::Serialization::DataElementNode& classElement);
 
         // advanced coordinate settings
         SCENE_DATA_API bool GetUseAdvancedData() const override;

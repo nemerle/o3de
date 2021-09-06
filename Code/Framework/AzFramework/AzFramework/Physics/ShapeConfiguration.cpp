@@ -7,9 +7,11 @@
  */
 
 #include <AzFramework/Physics/ShapeConfiguration.h>
+#include <AzCore/Asset/AssetSerializer.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzFramework/Physics/PropertyTypes.h>
 #include <AzFramework/Physics/SystemBus.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 
 namespace Physics
 {
@@ -261,15 +263,15 @@ namespace Physics
         return ShapeType::CookedMesh;
     }
 
-    void CookedMeshShapeConfiguration::SetCookedMeshData(const AZ::u8* cookedData, 
+    void CookedMeshShapeConfiguration::SetCookedMeshData(const AZ::u8* cookedData,
         size_t cookedDataSize, MeshType type)
     {
         // If the new cooked data is being set, make sure we clear the cached mesh
         ReleaseCachedNativeMesh();
-        
+
         m_cookedData.clear();
         m_cookedData.insert(m_cookedData.end(), cookedData, cookedData + cookedDataSize);
-        
+
         m_type = type;
     }
 

@@ -226,7 +226,7 @@ namespace AzToolsFramework
 
                 // Need to pass this up to my parent if it is a container to properly handle this request
                 AzToolsFramework::PropertyEditorGUIMessages::Bus::Broadcast(&AzToolsFramework::PropertyEditorGUIMessages::Bus::Events::AddElementsToParentContainer, const_cast<PropertyEntityIdCtrl*>(this), entityIdListContainer.m_entityIds.size(),
-                    [&entityIdListContainer](void* dataPtr, const AZ::SerializeContext::ClassElement* classElement, bool noDefaultData, AZ::SerializeContext*) -> bool
+                    [&entityIdListContainer](void* dataPtr, const AZ::Serialization::ClassElement* classElement, bool noDefaultData, AZ::SerializeContext*) -> bool
                 {
                     (void)noDefaultData;
                     if (classElement->m_typeId == azrtti_typeid<AZ::EntityId>())

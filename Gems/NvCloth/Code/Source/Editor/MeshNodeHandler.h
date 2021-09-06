@@ -10,6 +10,7 @@
 
 #if !defined(Q_MOC_RUN)
 #include <AzToolsFramework/UI/PropertyEditor/PropertyEditorAPI.h>
+#include <AzCore/Asset/AssetCommon.h>
 #include <Editor/ComboBoxEditButtonPair.h>
 #include <QObject>
 #endif
@@ -43,7 +44,7 @@ namespace NvCloth
             AZ_CLASS_ALLOCATOR(MeshNodeHandler, AZ::SystemAllocator, 0);
 
             MeshNodeHandler() = default;
-            
+
             // AzToolsFramework::PropertyHandler overrides ...
             AZ::u32 GetHandlerName() const override;
             QWidget* CreateGUI(QWidget* parent) override;

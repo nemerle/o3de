@@ -1226,7 +1226,7 @@ namespace EMotionFX
         return AZ::Edit::PropertyVisibility::Show;
     }
 
-    bool BlendSpace2DNode::NodeVersionConverter(AZ::SerializeContext& context, AZ::SerializeContext::DataElementNode& classElement)
+    bool BlendSpace2DNode::NodeVersionConverter(AZ::SerializeContext& context, AZ::Serialization::DataElementNode& classElement)
     {
         const unsigned int version = classElement.GetVersion();
         if (version < 2)
@@ -1238,7 +1238,7 @@ namespace EMotionFX
             if (index > 0)
             {
                 AZStd::string oldValue;
-                AZ::SerializeContext::DataElementNode& dataElementNode = classElement.GetSubElement(index);
+                AZ::Serialization::DataElementNode& dataElementNode = classElement.GetSubElement(index);
                 const bool result = dataElementNode.GetData<AZStd::string>(oldValue);
                 if (!result)
                 {
