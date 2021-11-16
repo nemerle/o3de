@@ -989,8 +989,6 @@ bool CLocalizedStringsManager::DoLoadExcelXmlSpreadsheet(const char* sFileName, 
     // key CRC
     uint32 keyCRC;
 
-    size_t nMemSize = 0;
-
     for (;; )
     {
         int nRowIndex = -1;
@@ -1471,30 +1469,6 @@ bool CLocalizedStringsManager::DoLoadExcelXmlSpreadsheet(const char* sFileName, 
             pEntry->flags |= SLocalizedStringEntry::IS_INTERCEPTED;
         }
 
-        nMemSize += sizeof(*pEntry) + pEntry->sCharacterName.length() * sizeof(char);
-        if (m_cvarLocalizationEncode == 0)
-        {
-            //Note that this isn't accurate if we're using encoding/compression to shrink the string as the encoding step hasn't happened yet
-            if (pEntry->TranslatedText.psUtf8Uncompressed)
-            {
-                nMemSize += pEntry->TranslatedText.psUtf8Uncompressed->length() * sizeof(char);
-            }
-        }
-        if (pEntry->pEditorExtension != NULL)
-        {
-            nMemSize += pEntry->pEditorExtension->sKey.length()
-                + pEntry->pEditorExtension->sOriginalActorLine.length()
-                + pEntry->pEditorExtension->sUtf8TranslatedActorLine.length() * sizeof(char)
-                + pEntry->pEditorExtension->sOriginalText.length()
-                + pEntry->pEditorExtension->sOriginalCharacterName.length();
-        }
-
-
-        // Compression Preparation
-        //unsigned int nSourceSize = pEntry->swTranslatedText.length()*sizeof(wchar_t);
-        //if (nSourceSize)
-        //  int zResult = Compress(pDest, nDestLen, pEntry->swTranslatedText.c_str(), nSourceSize);
-
         AddLocalizedString(m_pLanguage, pEntry, keyCRC);
     }
 
@@ -1502,40 +1476,26 @@ bool CLocalizedStringsManager::DoLoadExcelXmlSpreadsheet(const char* sFileName, 
     {
         pEncoder->Finalize();
 
+        uint8 compressionBuffer[COMPRESSION_FIXED_BUFFER_LENGTH];
+        for (size_t stringToCompress = startOfStringsToCompress; stringToCompress < m_pLanguage->m_vLocalizedStrings.size(); stringToCompress++)
         {
-            uint8 compressionBuffer[COMPRESSION_FIXED_BUFFER_LENGTH];
-            //uint8 decompressionBuffer[COMPRESSION_FIXED_BUFFER_LENGTH];
-            size_t uncompressedTotal = 0, compressedTotal = 0;
-            for (size_t stringToCompress = startOfStringsToCompress; stringToCompress < m_pLanguage->m_vLocalizedStrings.size(); stringToCompress++)
+            SLocalizedStringEntry* pStringToCompress = m_pLanguage->m_vLocalizedStrings[stringToCompress];
+            if (pStringToCompress->TranslatedText.szCompressed != NULL)
             {
-                SLocalizedStringEntry* pStringToCompress = m_pLanguage->m_vLocalizedStrings[stringToCompress];
-                if (pStringToCompress->TranslatedText.szCompressed != NULL)
-                {
-                    size_t compBufSize = COMPRESSION_FIXED_BUFFER_LENGTH;
-                    memset(compressionBuffer, 0, COMPRESSION_FIXED_BUFFER_LENGTH);
-                    //CryLogAlways("%u Compressing %s (%p)", stringToCompress, pStringToCompress->szCompressedTranslatedText, pStringToCompress->szCompressedTranslatedText);
-                    size_t inputStringLength = strlen((const char*)(pStringToCompress->TranslatedText.szCompressed));
-                    pEncoder->CompressInput(pStringToCompress->TranslatedText.szCompressed, inputStringLength, compressionBuffer, &compBufSize);
-                    compressionBuffer[compBufSize] = 0;
-                    pStringToCompress->huffmanTreeIndex = iEncoder;
-                    pEncoder->AddRef();
-                    //CryLogAlways("Compressed %s (%u) to %s (%u)", pStringToCompress->szCompressedTranslatedText, strlen((const char*)pStringToCompress->szCompressedTranslatedText), compressionBuffer, compBufSize);
-                    uncompressedTotal += inputStringLength;
-                    compressedTotal += compBufSize;
+                size_t compBufSize = COMPRESSION_FIXED_BUFFER_LENGTH;
+                memset(compressionBuffer, 0, COMPRESSION_FIXED_BUFFER_LENGTH);
+                size_t inputStringLength = strlen((const char*)(pStringToCompress->TranslatedText.szCompressed));
+                pEncoder->CompressInput(pStringToCompress->TranslatedText.szCompressed, inputStringLength, compressionBuffer, &compBufSize);
+                compressionBuffer[compBufSize] = 0;
+                pStringToCompress->huffmanTreeIndex = iEncoder;
+                pEncoder->AddRef();
 
-                    uint8* szCompressedString = new uint8[compBufSize];
-                    SAFE_DELETE_ARRAY(pStringToCompress->TranslatedText.szCompressed);
+                uint8* szCompressedString = new uint8[compBufSize];
+                SAFE_DELETE_ARRAY(pStringToCompress->TranslatedText.szCompressed);
 
-                    memcpy(szCompressedString, compressionBuffer, compBufSize);
-                    pStringToCompress->TranslatedText.szCompressed = szCompressedString;
-
-                    //Testing code
-                    //memset( decompressionBuffer, 0, COMPRESSION_FIXED_BUFFER_LENGTH );
-                    //size_t decompBufSize = pEncoder->UncompressInput(compressionBuffer, COMPRESSION_FIXED_BUFFER_LENGTH, decompressionBuffer, COMPRESSION_FIXED_BUFFER_LENGTH);
-                    //CryLogAlways("Decompressed %s (%u) to %s (%u)", compressionBuffer, compBufSize, decompressionBuffer, decompBufSize);
-                }
+                memcpy(szCompressedString, compressionBuffer, compBufSize);
+                pStringToCompress->TranslatedText.szCompressed = szCompressedString;
             }
-            //CryLogAlways("[LOC PROFILING] %s, %u, Uncompressed %u, Compressed %u", sFileName, m_pLanguage->m_vLocalizedStrings.size() - startOfStringsToCompress, uncompressedTotal, compressedTotal);
         }
     }
 
@@ -1546,11 +1506,7 @@ bool CLocalizedStringsManager::DoLoadExcelXmlSpreadsheet(const char* sFileName, 
 
 bool CLocalizedStringsManager::DoLoadAGSXmlDocument(const char* sFileName, uint8 nTagID, bool bReload)
 {
-    if (!sFileName)
-    {
-        return false;
-    }
-    if (!m_pLanguage)
+    if (!sFileName || !m_pLanguage)
     {
         return false;
     }
@@ -1693,7 +1649,6 @@ bool CLocalizedStringsManager::DoLoadAGSXmlDocument(const char* sFileName, uint8
         }
         {
             uint8 compressionBuffer[COMPRESSION_FIXED_BUFFER_LENGTH] = {};
-            size_t uncompressedTotal = 0, compressedTotal = 0;
             for (size_t stringToCompress = startOfStringsToCompress; stringToCompress < m_pLanguage->m_vLocalizedStrings.size(); stringToCompress++)
             {
                 SLocalizedStringEntry* pStringToCompress = m_pLanguage->m_vLocalizedStrings[stringToCompress];
@@ -1706,8 +1661,6 @@ bool CLocalizedStringsManager::DoLoadAGSXmlDocument(const char* sFileName, uint8
                     compressionBuffer[compBufSize] = 0;
                     pStringToCompress->huffmanTreeIndex = iEncoder;
                     pEncoder->AddRef();
-                    uncompressedTotal += inputStringLength;
-                    compressedTotal += compBufSize;
                     uint8* szCompressedString = new uint8[compBufSize];
                     SAFE_DELETE_ARRAY(pStringToCompress->TranslatedText.szCompressed);
                     memcpy(szCompressedString, compressionBuffer, compBufSize);
@@ -1772,7 +1725,7 @@ bool CLocalizedStringsManager::LocalizeString_s(const AZStd::string& sString, AZ
 bool CLocalizedStringsManager::LocalizeStringInternal(const char* pStr, size_t len, AZStd::string& outLocalizedString, bool bEnglish)
 {
     assert (m_pLanguage);
-    if (m_pLanguage == 0)
+    if (m_pLanguage == nullptr)
     {
         CryWarning(VALIDATOR_MODULE_SYSTEM, VALIDATOR_WARNING, "LocalizeString: No language set.");
         outLocalizedString.assign(pStr, pStr + len);
