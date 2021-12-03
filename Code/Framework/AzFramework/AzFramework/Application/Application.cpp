@@ -423,6 +423,11 @@ namespace AzFramework
         return uuid;
     }
 
+    void Application::Exit(int errorCode)
+    {
+        ApplicationRequests::Bus::Broadcast(&ApplicationRequests::TerminateOnError, errorCode);
+    }
+
     void Application::ResolveEnginePath(AZStd::string& engineRelativePath) const
     {
         auto fullPath = AZ::IO::FixedMaxPath(GetEngineRoot()) / engineRelativePath;

@@ -84,7 +84,7 @@ namespace AZ
         if (state == Entity::State::Deactivating)
         {
             EntityBus::Event(m_id, &EntityBus::Events::OnEntityDeactivated, m_id);
-            EntitySystemBus::Broadcast(&EntitySystemBus::Events::OnEntityDeactivated, m_id);
+            EntitySystemBus::Broadcast([id=m_id](EntitySystemEvents *tgt) { tgt->OnEntityDeactivated(id); });
         }
 
         m_state = state;
@@ -92,7 +92,7 @@ namespace AZ
         if (state == Entity::State::Active)
         {
             EntityBus::Event(m_id, &EntityBus::Events::OnEntityActivated, m_id);
-            EntitySystemBus::Broadcast(&EntitySystemBus::Events::OnEntityActivated, m_id);
+            EntitySystemBus::Broadcast([id=m_id](EntitySystemEvents *tgt) { tgt->OnEntityActivated(id); });
         }
     }
 
@@ -737,7 +737,7 @@ namespace AZ
         for (auto componentIt = componentsToActivate.begin(); componentIt != componentsToActivate.end(); )
         {
             Component* component = *componentIt;
-        
+
             // Remove the system entity and already activated components, we don't need to activate or store those
             if (component->GetEntityId() == SystemEntityId ||
                 AZStd::find(m_systemComponents.begin(), m_systemComponents.end(), component) != m_systemComponents.end())

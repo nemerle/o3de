@@ -640,8 +640,7 @@ namespace UnitTest
 
         Bus::Broadcast(&Bus::Events::OnEvent);
         this->ValidateCalls(1);
-
-        EBUS_EVENT(Bus, OnEvent);
+        EBUS_EVENT_L(Bus,[](typename Bus::InterfaceType *handler) { handler->OnEvent();});
         this->ValidateCalls(2);
     }
 

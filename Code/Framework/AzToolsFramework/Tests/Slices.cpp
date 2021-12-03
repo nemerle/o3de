@@ -399,7 +399,7 @@ namespace UnitTest
                 while (m_stressLoadPending > 0)
                 {
                     AZStd::this_thread::sleep_for(AZStd::chrono::milliseconds(10));
-                    EBUS_EVENT(AZ::TickBus, OnTick, 0.3f, AZ::ScriptTimePoint());
+                    EBUS_EVENT_L(AZ::TickBus, [](TickEvents *handler) { handler->OnTick(0.3f, AZ::ScriptTimePoint());});
                 }
 
                 const AZStd::chrono::system_clock::time_point assetLoadFinishTime = AZStd::chrono::system_clock::now();
@@ -657,7 +657,7 @@ namespace UnitTest
     {
         run();
     }
-    
+
     class SortTransformParentsBeforeChildrenTest
         : public ScopedAllocatorSetupFixture
     {
@@ -1019,13 +1019,13 @@ namespace UnitTest
         {
             switch (m_exportType)
             {
-                case EXPORT_EDITOR_COMPONENT:    
+                case EXPORT_EDITOR_COMPONENT:
                     return AZ::ExportedComponent(thisComponent, false, m_exportHandled);
-                case EXPORT_RUNTIME_COMPONENT:   
+                case EXPORT_RUNTIME_COMPONENT:
                     return AZ::ExportedComponent(aznew TestExportRuntimeComponent(true, true), true, m_exportHandled);
                 case EXPORT_OTHER_RUNTIME_COMPONENT:
                     return AZ::ExportedComponent(aznew TestExportOtherRuntimeComponent(), true, m_exportHandled);
-                case EXPORT_NULL_COMPONENT:      
+                case EXPORT_NULL_COMPONENT:
                     return AZ::ExportedComponent(nullptr, false, m_exportHandled);
             }
 
@@ -1067,7 +1067,7 @@ namespace UnitTest
             m_app.Start(AzFramework::Application::Descriptor());
 
             // Without this, the user settings component would attempt to save on finalize/shutdown. Since the file is
-            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash 
+            // shared across the whole engine, if multiple tests are run in parallel, the saving could cause a crash
             // in the unit tests.
             AZ::UserSettingsComponentRequestBus::Broadcast(&AZ::UserSettingsComponentRequests::DisableSaveOnFinalize);
 

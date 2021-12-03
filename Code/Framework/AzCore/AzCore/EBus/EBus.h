@@ -783,6 +783,9 @@ namespace AZ
     /// Dispatches an event to all handlers.
 #   define EBUS_EVENT(_EBUS, /*EventName,*/ ...) _EBUS::Broadcast(&_EBUS::Events::__VA_ARGS__)
 
+    /// Dispatches an event to all handlers.
+#   define EBUS_EVENT_L(_EBUS, _LAMBDA) _EBUS::Broadcast(_LAMBDA)
+
     /// Dispatches an event to all handlers and receives results.
 #   define EBUS_EVENT_RESULT(_Result, _EBUS, /*EventName,*/ ...) _EBUS::BroadcastResult(_Result, &_EBUS::Events::__VA_ARGS__)
 

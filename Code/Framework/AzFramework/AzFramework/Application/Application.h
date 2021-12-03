@@ -128,7 +128,7 @@ namespace AzFramework
         //////////////////////////////////////////////////////////////////////////
 
         // Convenience function that should be called instead of the standard exit() function to ensure platform requirements are met.
-        static void Exit(int errorCode) { ApplicationRequests::Bus::Broadcast(&ApplicationRequests::TerminateOnError, errorCode); }
+        static void Exit(int errorCode);
 
     protected:
 
@@ -138,7 +138,7 @@ namespace AzFramework
         virtual void StartCommon(AZ::Entity* systemEntity);
 
         /**
-         * set the LocalFileIO and ArchiveFileIO instances file aliases if the 
+         * set the LocalFileIO and ArchiveFileIO instances file aliases if the
          * FileIOBase environment variable is pointing to the instances owned by
          * the application
          */
