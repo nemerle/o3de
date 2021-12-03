@@ -5,7 +5,8 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  *
  */
-
+#pragma once
+#include <AzToolsFramework/ToolsComponents/EditorComponentAdapter.h>
 #include <AzFramework/Components/ComponentAdapterHelpers.h>
 
 namespace AzToolsFramework

@@ -353,6 +353,7 @@ namespace AZ
 
         template <class Function, class... InputArgs>
         inline bool RouteEvent(const typename Bus::BusIdType* busIdPtr, bool isQueued, bool isReverse, Function&& func, InputArgs&&... args);
+        inline bool RouteEvent(const typename Bus::BusIdType* busIdPtr, bool isQueued, bool isReverse, AZStd::function<void()> func);
 
         Container m_routers;
     };
@@ -416,7 +417,28 @@ namespace AZ
 
         return false;
     }
+    template <class Bus>
+    inline bool EBusRouterPolicy<Bus>::RouteEvent(const typename Bus::BusIdType* busIdPtr, bool isQueued, bool isReverse, AZStd::function<void()> func)
+    {
+        auto rtLast = m_routers.end();
+        typename Bus::RouterCallstackEntry rtCurrent(m_routers.begin(), busIdPtr, isQueued, isReverse);
+        while (rtCurrent.m_iterator != rtLast)
+        {
+            func((*rtCurrent.m_iterator++));
 
+            if (rtCurrent.m_processingState == EventProcessingState::SkipListenersAndRouters)
+            {
+                return true;
+            }
+        }
+
+        if (rtCurrent.m_processingState != EventProcessingState::ContinueProcess)
+        {
+            return true;
+        }
+
+        return false;
+    }
     /// @endcond
     //////////////////////////////////////////////////////////////////////////
 
@@ -435,6 +457,11 @@ namespace AZ
         static void Call(Function&& func, Interface&& iface, InputArgs&&... args)
         {
             AZStd::invoke(AZStd::forward<Function>(func), AZStd::forward<Interface>(iface), AZStd::forward<InputArgs>(args)...);
+        }
+        template<class Interface>
+        static void Call(AZStd::function<void(Interface &&)> func, Interface&& iface)
+        {
+            func(AZStd::forward<Interface>(iface));
         }
     };
 

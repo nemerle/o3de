@@ -571,7 +571,7 @@ namespace AZ
 
         // This alias is required because you're not allowed to inherit from a nested type.
         template <typename Bus, typename Traits>
-        using EventDispatcher = typename Traits::BusesContainer::template Dispatcher<Bus>;
+        using EventDispatcher = typename Traits::BusesContainer::template Dispatcher<Bus,typename Traits::InterfaceType>;
 
         /**
          * Base class that provides eventing, queueing, and enumeration functionality

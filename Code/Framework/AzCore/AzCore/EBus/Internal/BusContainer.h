@@ -80,6 +80,17 @@ namespace AZ
         }                                                                                       \
     } while(false)
 
+#define EBUS_LAMBDA_DO_ROUTING(contextParam, id, isQueued, isReverse) \
+    do {                                                                                        \
+        auto& local_context = (contextParam);                                                   \
+        if (local_context.m_routing.m_routers.size()) {                                         \
+            if (local_context.m_routing.RouteEvent(id, isQueued, isReverse, func)) {   \
+                return;                                                                         \
+            }                                                                                   \
+        }                                                                                       \
+    } while(false)
+
+
         // Default impl, used when there are multiple addresses and multiple handlers
         template <typename Interface, typename Traits, EBusAddressPolicy addressPolicy = Traits::AddressPolicy, EBusHandlerPolicy handlerPolicy = Traits::HandlerPolicy>
         struct EBusContainer
@@ -106,52 +117,55 @@ namespace AZ
             EBusContainer() = default;
 
             // EBus will extend this class to gain the Event*/Broadcast* functions
-            template <typename Bus>
+            template <typename Bus,typename InterfaceType = void>
             struct Dispatcher
             {
                 // Event family
                 template <typename Function, typename... ArgsT>
                 static void Event(const IdType& id, Function&& func, ArgsT&&... args)
                 {
-                    if (auto* context = Bus::GetContext())
+                    auto* context = Bus::GetContext();
+                    if (!context)
                     {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, &id, false, false);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.find(id);
-                        if (addressIt != addresses.end())
-                        {
-                            HandlerHolder& holder = *addressIt;
-                            holder.add_ref();
-
-                            auto& handlers = holder.m_handlers;
-                            auto handlerIt = handlers.begin();
-                            auto handlersEnd = handlers.end();
-
-                            auto fixer = MakeDisconnectFixer<Bus>(context, &id,
-                                [&handlerIt, &handlersEnd](Interface* handler)
-                                {
-                                     if (handlerIt != handlersEnd && handlerIt->m_interface == handler)
-                                    {
-                                        ++handlerIt;
-                                    }
-                                },
-                                [&handlers, &handlersEnd]()
-                                {
-                                    handlersEnd = handlers.end();
-                                }
-                            );
-
-                            while (handlerIt != handlersEnd)
-                            {
-                                auto itr = handlerIt++;
-                                Traits::EventProcessingPolicy::Call(func, *itr, args...);
-                            }
-
-                            holder.release();
-                        }
+                        return;
                     }
+                    typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
+                    EBUS_DO_ROUTING(*context, &id, false, false);
+
+                    auto& addresses = context->m_buses.m_addresses;
+                    auto addressIt = addresses.find(id);
+                    if (addressIt == addresses.end())
+                    {
+                        return;
+                    }
+                    HandlerHolder& holder = *addressIt;
+                    holder.add_ref();
+
+                    auto& handlers = holder.m_handlers;
+                    auto handlerIt = handlers.begin();
+                    auto handlersEnd = handlers.end();
+
+                    auto fixer = MakeDisconnectFixer<Bus>(context, &id,
+                        [&handlerIt, &handlersEnd](Interface* handler)
+                        {
+                             if (handlerIt != handlersEnd && handlerIt->m_interface == handler)
+                            {
+                                ++handlerIt;
+                            }
+                        },
+                        [&handlers, &handlersEnd]()
+                        {
+                            handlersEnd = handlers.end();
+                        }
+                    );
+
+                    while (handlerIt != handlersEnd)
+                    {
+                        auto itr = handlerIt++;
+                        Traits::EventProcessingPolicy::Call(func, *itr, args...);
+                    }
+
+                    holder.release();
                 }
                 template <typename Results, typename Function, typename... ArgsT>
                 static void EventResult(Results& results, const IdType& id, Function&& func, ArgsT&&... args)
@@ -409,6 +423,51 @@ namespace AZ
                             {
                                 auto itr = handlerIt++;
                                 Traits::EventProcessingPolicy::Call(func, *itr, args...);
+                            }
+
+                            // Increment before release so that if holder goes away, iterator is still valid
+                            ++addressIt;
+
+                            holder.release();
+                        }
+                    }
+                }
+                static void Broadcast(AZStd::function<void(InterfaceType *)> func)
+                {
+                    if (auto* context = Bus::GetContext())
+                    {
+                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
+                        EBUS_LAMBDA_DO_ROUTING(*context, nullptr, false, false);
+
+                        auto& addresses = context->m_buses.m_addresses;
+                        auto addressIt = addresses.begin();
+                        while (addressIt != addresses.end())
+                        {
+                            HandlerHolder& holder = *addressIt;
+                            holder.add_ref();
+
+                            auto& handlers = holder.m_handlers;
+                            auto handlerIt = handlers.begin();
+                            auto handlersEnd = handlers.end();
+
+                            auto fixer = MakeDisconnectFixer<Bus>(context, &holder.m_busId,
+                                [&handlerIt, &handlersEnd](Interface* handler)
+                                {
+                                    if (handlerIt != handlersEnd && handlerIt->m_interface == handler)
+                                    {
+                                        ++handlerIt;
+                                    }
+                                },
+                                [&handlers, &handlersEnd]()
+                                {
+                                    handlersEnd = handlers.end();
+                                }
+                            );
+
+                            while (handlerIt != handlersEnd)
+                            {
+                                auto itr = handlerIt++;
+                                Traits::EventProcessingPolicy::Call(func, *itr);
                             }
 
                             // Increment before release so that if holder goes away, iterator is still valid
@@ -786,7 +845,7 @@ namespace AZ
             EBusContainer() = default;
 
             // EBus will extend this class to gain the Event*/Broadcast* functions
-            template <typename Bus>
+            template <typename Bus, typename InterfaceType = void>
             struct Dispatcher
             {
                 // Event family
@@ -1327,7 +1386,7 @@ namespace AZ
             EBusContainer() = default;
 
             // EBus will extend this class to gain the Event*/Broadcast* functions
-            template <typename Bus>
+            template <typename Bus, typename InterfaceType = void>
             struct Dispatcher
             {
                 // Broadcast family
@@ -1364,6 +1423,42 @@ namespace AZ
                             auto itr = handlerIt++;
                             Traits::EventProcessingPolicy::Call(func, *itr, args...);
                         }
+                    }
+                }
+                static void Broadcast(AZStd::function<void(InterfaceType *)> func)
+                {
+                    auto* context = Bus::GetContext();
+                    if (!context)
+                    {
+                        return;
+                    }
+                    typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
+                    EBUS_LAMBDA_DO_ROUTING(*context, nullptr, false, false);
+
+                    auto& handlers = context->m_buses.m_handlers;
+                    auto handlerIt = handlers.begin();
+                    auto handlersEnd = handlers.end();
+
+                    auto fixer = MakeDisconnectFixer<Bus>(context, nullptr,
+                        [&handlerIt, &handlersEnd](Interface* handler)
+                        {
+                            if (handlerIt != handlersEnd && handlerIt->m_interface == handler)
+                            {
+                                ++handlerIt;
+                            }
+                        },
+                        [&handlers, &handlersEnd]()
+                        {
+                            handlersEnd = handlers.end();
+                        }
+                    );
+
+                    while (handlerIt != handlersEnd)
+                    {
+                        // @func and @args cannot be forwarded here as rvalue arguments need to bind to const lvalue arguments
+                        // due to potential of multiple handlers of this EBus container invoking the function multiple times
+                        auto itr = handlerIt++;
+                        Traits::EventProcessingPolicy::Call(func, *itr);
                     }
                 }
                 template <typename Results, typename Function, typename... ArgsT>
@@ -1521,7 +1616,7 @@ namespace AZ
             EBusContainer() = default;
 
             // EBus will extend this class to gain the Event*/Broadcast* functions
-            template <typename Bus>
+            template <typename Bus, typename InterfaceType = void>
             struct Dispatcher
             {
                 // Broadcast family

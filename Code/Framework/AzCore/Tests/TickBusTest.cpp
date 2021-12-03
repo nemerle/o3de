@@ -57,7 +57,8 @@ TEST_F(OrderedTickBus, OnTick_HandlersFireInSortedOrder)
     }
 
     // Tick!
-    TickBus::Broadcast(&TickBus::Events::OnTick, 0.f, ScriptTimePoint{});
+    TickBus::Broadcast([](TickEvents *s) { s->OnTick(0.f,ScriptTimePoint{}); });
+    //TickBus::Broadcast(&TickBus::Events::OnTick, 0.f, ScriptTimePoint{});
 
     // this is the order they should have fired in
     AZStd::vector<int> sortedOrder = unsortedHandlerOrder;
