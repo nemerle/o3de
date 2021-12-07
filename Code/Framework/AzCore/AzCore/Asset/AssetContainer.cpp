@@ -96,8 +96,11 @@ namespace AZ::Data
         if (loadParams.m_dependencyRules == AssetDependencyLoadRules::UseLoadBehavior)
         {
             AZStd::unordered_set<AssetId> noloadDependencies;
-            AssetCatalogRequestBus::BroadcastResult(getDependenciesResult, &AssetCatalogRequestBus::Events::GetLoadBehaviorProductDependencies,
-                                                    rootAssetId, noloadDependencies, preloadDependencies);
+            AssetCatalogRequestBus::Broadcast(
+                [&](auto* iface)
+                {
+                    getDependenciesResult = iface->GetLoadBehaviorProductDependencies(rootAssetId, noloadDependencies, preloadDependencies);
+                });
             if (!noloadDependencies.empty())
             {
                 AZStd::lock_guard<AZStd::recursive_mutex> dependencyLock(m_dependencyMutex);
@@ -106,7 +109,11 @@ namespace AZ::Data
         }
         else if (loadParams.m_dependencyRules == AssetDependencyLoadRules::LoadAll)
         {
-            AssetCatalogRequestBus::BroadcastResult(getDependenciesResult, &AssetCatalogRequestBus::Events::GetAllProductDependencies, rootAssetId);
+            AssetCatalogRequestBus::Broadcast(
+                [&](auto* iface)
+                {
+                    getDependenciesResult = iface->GetAllProductDependencies(rootAssetId);
+                });
         }
         // Do as much validation of dependencies as we can before the AddWaitingAssets and GetAsset calls for dependencies below
         if (getDependenciesResult.IsSuccess())
@@ -114,7 +121,11 @@ namespace AZ::Data
             for (const auto& thisAsset : getDependenciesResult.GetValue())
             {
                 AssetInfo assetInfo;
-                AssetCatalogRequestBus::BroadcastResult(assetInfo, &AssetCatalogRequestBus::Events::GetAssetInfoById, thisAsset.m_assetId);
+                AssetCatalogRequestBus::Broadcast(
+                    [&](auto* iface)
+                    {
+                        assetInfo = iface->GetAssetInfoById(thisAsset.m_assetId);
+                    });
 
                 // No matter whether or not the asset dependency is valid, loaded, or filtered out, mark it as successfully handled.
                 // When we encounter the asset reference during serialization, we will know that it should intentionally be skipped.
@@ -531,14 +542,18 @@ namespace AZ::Data
         if (allReady && m_initComplete && !m_finalNotificationSent)
         {
             m_finalNotificationSent = true;
-            if (m_rootAsset)
-            {
-                AssetManagerBus::Broadcast(&AssetManagerBus::Events::OnAssetContainerReady, this);
-            }
-            else
-            {
-                AssetManagerBus::Broadcast(&AssetManagerBus::Events::OnAssetContainerCanceled, this);
-            }
+            AssetCatalogRequestBus::Broadcast(
+                [&](auto* iface)
+                {
+                    if (m_rootAsset)
+                    {
+                        iface->OnAssetContainerReady(this);
+                    }
+                    else
+                    {
+                        iface->OnAssetContainerCanceled(this);
+                    }
+                });
         }
     }
 

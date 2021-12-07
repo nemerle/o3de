@@ -121,8 +121,7 @@ namespace AZ
             struct Dispatcher
             {
                 // Event family
-                template <typename Function, typename... ArgsT>
-                static void Event(const IdType& id, Function&& func, ArgsT&&... args)
+                static void Event(const IdType& id, AZStd::function<void(InterfaceType &&)>&& func)
                 {
                     auto* context = Bus::GetContext();
                     if (!context)
@@ -130,7 +129,7 @@ namespace AZ
                         return;
                     }
                     typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                    EBUS_DO_ROUTING(*context, &id, false, false);
+                    EBUS_LAMBDA_DO_ROUTING(*context, &id, false, false);
 
                     auto& addresses = context->m_buses.m_addresses;
                     auto addressIt = addresses.find(id);
@@ -162,61 +161,17 @@ namespace AZ
                     while (handlerIt != handlersEnd)
                     {
                         auto itr = handlerIt++;
-                        Traits::EventProcessingPolicy::Call(func, *itr, args...);
+                        Traits::EventProcessingPolicy::Call(func, *itr);
                     }
 
                     holder.release();
                 }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void EventResult(Results& results, const IdType& id, Function&& func, ArgsT&&... args)
+                static void EventReverse(const IdType& id, AZStd::function<void(InterfaceType &&)>&& func)
                 {
                     if (auto* context = Bus::GetContext())
                     {
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, &id, false, false);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.find(id);
-                        if (addressIt != addresses.end())
-                        {
-                            HandlerHolder& holder = *addressIt;
-                            holder.add_ref();
-
-                            auto& handlers = holder.m_handlers;
-                            auto handlerIt = handlers.begin();
-                            auto handlersEnd = handlers.end();
-
-                            auto fixer = MakeDisconnectFixer<Bus>(context, &id,
-                                [&handlerIt, &handlersEnd](Interface* handler)
-                                {
-                                    if (handlerIt != handlersEnd && handlerIt->m_interface == handler)
-                                    {
-                                        ++handlerIt;
-                                    }
-                                },
-                                [&handlers, &handlersEnd]()
-                                {
-                                    handlersEnd = handlers.end();
-                                }
-                            );
-
-                            while (handlerIt != handlersEnd)
-                            {
-                                auto itr = handlerIt++;
-                                Traits::EventProcessingPolicy::CallResult(results, func, *itr, args...);
-                            }
-
-                            holder.release();
-                        }
-                    }
-                }
-                template <typename Function, typename... ArgsT>
-                static void EventReverse(const IdType& id, Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, &id, false, true);
+                        EBUS_LAMBDA_DO_ROUTING(*context, &id, false, true);
 
                         auto& addresses = context->m_buses.m_addresses;
                         auto addressIt = addresses.find(id);
@@ -232,44 +187,14 @@ namespace AZ
                             while (handlerIt != handlers.rend())
                             {
                                 auto itr = handlerIt++;
-                                Traits::EventProcessingPolicy::Call(func, *itr, args...);
+                                Traits::EventProcessingPolicy::Call(func, *itr);
                             }
 
                             holder.release();
                         }
                     }
                 }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void EventResultReverse(Results& results, const IdType& id, Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, &id, false, true);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.find(id);
-                        if (addressIt != addresses.end())
-                        {
-                            HandlerHolder& holder = *addressIt;
-                            holder.add_ref();
-
-                            auto& handlers = holder.m_handlers;
-                            auto handlerIt = handlers.rbegin();
-
-                            CallstackEntry entry(context, &id);
-                            while (handlerIt != handlers.rend())
-                            {
-                                auto itr = handlerIt++;
-                                Traits::EventProcessingPolicy::CallResult(results, func, *itr, args...);
-                            }
-
-                            holder.release();
-                        }
-                    }
-                }
-                template <typename Function, typename... ArgsT>
-                static void Event(const BusPtr& busPtr, Function&& func, ArgsT&&... args)
+                static void Event(const BusPtr& busPtr, AZStd::function<void(InterfaceType &&)>&& func)
                 {
                     if (busPtr)
                     {
@@ -277,7 +202,7 @@ namespace AZ
                         EBUS_ASSERT(context, "Internal error: context deleted with bind ptr outstanding.");
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
 
-                        EBUS_DO_ROUTING(*context, &busPtr->m_busId, false, false);
+                        EBUS_LAMBDA_DO_ROUTING(*context, &busPtr->m_busId, false, false);
 
                         auto& handlers = busPtr->m_handlers;
                         auto handlerIt = handlers.begin();
@@ -300,12 +225,11 @@ namespace AZ
                         while (handlerIt != handlersEnd)
                         {
                             auto itr = handlerIt++;
-                            Traits::EventProcessingPolicy::Call(func, *itr, args...);
+                            Traits::EventProcessingPolicy::Call(func, *itr);
                         }
                     }
                 }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void EventResult(Results& results, const BusPtr& busPtr, Function&& func, ArgsT&&... args)
+                static void EventReverse(const BusPtr& busPtr, AZStd::function<void(InterfaceType &&)>&& func)
                 {
                     if (busPtr)
                     {
@@ -313,43 +237,7 @@ namespace AZ
                         EBUS_ASSERT(context, "Internal error: context deleted with bind ptr outstanding.");
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
 
-                        EBUS_DO_ROUTING(*context, &busPtr->m_busId, false, false);
-
-                        auto& handlers = busPtr->m_handlers;
-                        auto handlerIt = handlers.begin();
-                        auto handlersEnd = handlers.end();
-
-                        auto fixer = MakeDisconnectFixer<Bus>(context, &busPtr->m_busId,
-                            [&handlerIt, &handlersEnd](Interface* handler)
-                            {
-                                if (handlerIt != handlersEnd && handlerIt->m_interface == handler)
-                                {
-                                    ++handlerIt;
-                                }
-                            },
-                            [&handlers, &handlersEnd]()
-                            {
-                                handlersEnd = handlers.end();
-                            }
-                        );
-
-                        while (handlerIt != handlersEnd)
-                        {
-                            auto itr = handlerIt++;
-                            Traits::EventProcessingPolicy::CallResult(results, func, *itr, args...);
-                        }
-                    }
-                }
-                template <typename Function, typename... ArgsT>
-                static void EventReverse(const BusPtr& busPtr, Function&& func, ArgsT&&... args)
-                {
-                    if (busPtr)
-                    {
-                        auto* context = Bus::GetContext();
-                        EBUS_ASSERT(context, "Internal error: context deleted with bind ptr outstanding.");
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-
-                        EBUS_DO_ROUTING(*context, &busPtr->m_busId, false, true);
+                        EBUS_LAMBDA_DO_ROUTING(*context, &busPtr->m_busId, false, true);
 
                         auto& handlers = busPtr->m_handlers;
                         auto handlerIt = handlers.rbegin();
@@ -358,81 +246,12 @@ namespace AZ
                         while (handlerIt != handlers.rend())
                         {
                             auto itr = handlerIt++;
-                            Traits::EventProcessingPolicy::Call(func, *itr, args...);
-                        }
-                    }
-                }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void EventResultReverse(Results& results, const BusPtr& busPtr, Function&& func, ArgsT&&... args)
-                {
-                    if (busPtr)
-                    {
-                        auto* context = Bus::GetContext();
-                        EBUS_ASSERT(context, "Internal error: context deleted with bind ptr outstanding.");
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-
-                        EBUS_DO_ROUTING(*context, &busPtr->m_busId, false, true);
-
-                        auto& handlers = busPtr->m_handlers;
-                        auto handlerIt = handlers.rbegin();
-
-                        CallstackEntry entry(context, &busPtr->m_busId);
-                        while (handlerIt != handlers.rend())
-                        {
-                            auto itr = handlerIt++;
-                            Traits::EventProcessingPolicy::CallResult(results, func, *itr, args...);
+                            Traits::EventProcessingPolicy::Call(func, *itr);
                         }
                     }
                 }
 
-                // Broadcast family
-                template <typename Function, typename... ArgsT>
-                static void Broadcast(Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, false);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.begin();
-                        while (addressIt != addresses.end())
-                        {
-                            HandlerHolder& holder = *addressIt;
-                            holder.add_ref();
-
-                            auto& handlers = holder.m_handlers;
-                            auto handlerIt = handlers.begin();
-                            auto handlersEnd = handlers.end();
-
-                            auto fixer = MakeDisconnectFixer<Bus>(context, &holder.m_busId,
-                                [&handlerIt, &handlersEnd](Interface* handler)
-                                {
-                                    if (handlerIt != handlersEnd && handlerIt->m_interface == handler)
-                                    {
-                                        ++handlerIt;
-                                    }
-                                },
-                                [&handlers, &handlersEnd]()
-                                {
-                                    handlersEnd = handlers.end();
-                                }
-                            );
-
-                            while (handlerIt != handlersEnd)
-                            {
-                                auto itr = handlerIt++;
-                                Traits::EventProcessingPolicy::Call(func, *itr, args...);
-                            }
-
-                            // Increment before release so that if holder goes away, iterator is still valid
-                            ++addressIt;
-
-                            holder.release();
-                        }
-                    }
-                }
-                static void Broadcast(AZStd::function<void(InterfaceType *)> func)
+                static void Broadcast(AZStd::function<void(InterfaceType *)> &&func)
                 {
                     if (auto* context = Bus::GetContext())
                     {
@@ -477,59 +296,12 @@ namespace AZ
                         }
                     }
                 }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void BroadcastResult(Results& results, Function&& func, ArgsT&&... args)
+                static void BroadcastReverse(AZStd::function<void(InterfaceType *)>&& func)
                 {
                     if (auto* context = Bus::GetContext())
                     {
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, false);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.begin();
-                        while (addressIt != addresses.end())
-                        {
-                            HandlerHolder& holder = *addressIt;
-                            holder.add_ref();
-
-                            auto& handlers = holder.m_handlers;
-                            auto handlerIt = handlers.begin();
-                            auto handlersEnd = handlers.end();
-
-                            auto fixer = MakeDisconnectFixer<Bus>(context, &holder.m_busId,
-                                [&handlerIt, &handlersEnd](Interface* handler)
-                                {
-                                    if (handlerIt != handlersEnd && handlerIt->m_interface == handler)
-                                    {
-                                        ++handlerIt;
-                                    }
-                                },
-                                [&handlers, &handlersEnd]()
-                                {
-                                    handlersEnd = handlers.end();
-                                }
-                            );
-
-                            while (handlerIt != handlersEnd)
-                            {
-                                auto itr = handlerIt++;
-                                Traits::EventProcessingPolicy::CallResult(results, func, *itr, args...);
-                            }
-
-                            // Increment before release so that if holder goes away, iterator is still valid
-                            ++addressIt;
-
-                            holder.release();
-                        }
-                    }
-                }
-                template <typename Function, typename... ArgsT>
-                static void BroadcastReverse(Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, true);
+                        EBUS_LAMBDA_DO_ROUTING(*context, nullptr, false, true);
 
                         auto& addresses = context->m_buses.m_addresses;
                         auto addressIt = addresses.rbegin();
@@ -556,65 +328,7 @@ namespace AZ
                             while (handlerIt != handlers.rend())
                             {
                                 auto itr = handlerIt++;
-                                Traits::EventProcessingPolicy::Call(func, *itr, args...);
-                            }
-                            holder.release();
-
-                            // Since rend() internally points to begin(), it might have changed during the message (e.g., bus was removed).
-                            // Make sure that we are not at the end before moving to the next element, which would be an invalid operation.
-                            if (addressIt != addresses.rend())
-                            {
-                                // During message processing we could have removed/added buses. Since the reverse iterator points
-                                // to the next forward iterator, the elements it points to can change. In this case, we don't need
-                                // to move the reverse iterator.
-                                if (&*addressIt == &holder)
-                                {
-                                    ++addressIt; // If we did not remove the bus we just processed, move to the next one.
-                                }
-                            }
-
-                            if (nextHolder)
-                            {
-                                // We are done moving the ebCurrentBus iterator. It's safe to release the lock on the element the iterator was pointing to.
-                                nextHolder->release();
-                            }
-                        }
-                    }
-                }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void BroadcastResultReverse(Results& results, Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, true);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.rbegin();
-                        while (addressIt != addresses.rend())
-                        {
-                            HandlerHolder& holder = *addressIt;
-                            holder.add_ref();
-
-                            HandlerHolder* nextHolder = nullptr;
-                            if (addressIt != addresses.rbegin())
-                            {
-                                // The reverse iterator (addressIt) internally points to the previous element (the next forward iterator).
-                                // It's important to make sure that this iterator stays valid, so we hold a lock on that element until we
-                                // have moved to the next one. Moving to the next element will happen after processing current bus. While
-                                // processing, we can change the bus container (add/remove listeners).
-                                nextHolder = &*AZStd::prev(addressIt);
-                                nextHolder->add_ref();
-                            }
-
-                            auto& handlers = holder.m_handlers;
-                            auto handlerIt = handlers.rbegin();
-
-                            CallstackEntry entry(context, &holder.m_busId);
-                            while (handlerIt != handlers.rend())
-                            {
-                                auto itr = handlerIt++;
-                                Traits::EventProcessingPolicy::CallResult(results, func, *itr, args...);
+                                Traits::EventProcessingPolicy::Call(func, *itr);
                             }
                             holder.release();
 
@@ -849,76 +563,39 @@ namespace AZ
             struct Dispatcher
             {
                 // Event family
-                template <typename Function, typename... ArgsT>
-                static void Event(const IdType& id, Function&& func, ArgsT&&... args)
+                static void Event(const IdType& id, AZStd::function<void(InterfaceType *)>&& func)
                 {
                     if (auto* context = Bus::GetContext())
                     {
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, &id, false, false);
+                        EBUS_LAMBDA_DO_ROUTING(*context, &id, false, false);
 
                         auto& addresses = context->m_buses.m_addresses;
                         auto addressIt = addresses.find(id);
                         if (addressIt != addresses.end() && addressIt->m_interface)
                         {
                             CallstackEntry entry(context, &addressIt->m_busId);
-                            Traits::EventProcessingPolicy::Call(AZStd::forward<Function>(func), addressIt->m_interface, AZStd::forward<ArgsT>(args)...);
+                            Traits::EventProcessingPolicy::Call(AZStd::forward(func), addressIt->m_interface);
                         }
                     }
                 }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void EventResult(Results& results, const IdType& id, Function&& func, ArgsT&&... args)
+                static void EventReverse(const IdType& id, AZStd::function<void(InterfaceType *)>&& func)
                 {
                     if (auto* context = Bus::GetContext())
                     {
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, &id, false, false);
+                        EBUS_LAMBDA_DO_ROUTING(*context, &id, false, true);
 
                         auto& addresses = context->m_buses.m_addresses;
                         auto addressIt = addresses.find(id);
                         if (addressIt != addresses.end() && addressIt->m_interface)
                         {
                             CallstackEntry entry(context, &addressIt->m_busId);
-                            Traits::EventProcessingPolicy::CallResult(results, AZStd::forward<Function>(func), addressIt->m_interface, AZStd::forward<ArgsT>(args)...);
+                            Traits::EventProcessingPolicy::Call(AZStd::forward(func), addressIt->m_interface);
                         }
                     }
                 }
-                template <typename Function, typename... ArgsT>
-                static void EventReverse(const IdType& id, Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, &id, false, true);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.find(id);
-                        if (addressIt != addresses.end() && addressIt->m_interface)
-                        {
-                            CallstackEntry entry(context, &addressIt->m_busId);
-                            Traits::EventProcessingPolicy::Call(AZStd::forward<Function>(func), addressIt->m_interface, AZStd::forward<ArgsT>(args)...);
-                        }
-                    }
-                }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void EventResultReverse(Results& results, const IdType& id, Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, &id, false, true);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.find(id);
-                        if (addressIt != addresses.end() && addressIt->m_interface)
-                        {
-                            CallstackEntry entry(context, &addressIt->m_busId);
-                            Traits::EventProcessingPolicy::CallResult(results, AZStd::forward<Function>(func), addressIt->m_interface, AZStd::forward<ArgsT>(args)...);
-                        }
-                    }
-                }
-                template <typename Function, typename... ArgsT>
-                static void Event(const BusPtr& busPtr, Function&& func, ArgsT&&... args)
+                static void Event(const BusPtr& busPtr, AZStd::function<void(InterfaceType *)>&& func)
                 {
                     if (busPtr)
                     {
@@ -926,17 +603,16 @@ namespace AZ
                         EBUS_ASSERT(context, "Internal error: context deleted with bind ptr outstanding.");
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
 
-                        EBUS_DO_ROUTING(*context, &busPtr->m_busId, false, false);
+                        EBUS_LAMBDA_DO_ROUTING(*context, &busPtr->m_busId, false, false);
 
                         if (busPtr->m_interface)
                         {
                             CallstackEntry entry(context, &busPtr->m_busId);
-                            Traits::EventProcessingPolicy::Call(AZStd::forward<Function>(func), busPtr->m_interface, AZStd::forward<ArgsT>(args)...);
+                            Traits::EventProcessingPolicy::Call(func, busPtr->m_interface);
                         }
                     }
                 }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void EventResult(Results& results, const BusPtr& busPtr, Function&& func, ArgsT&&... args)
+                static void EventReverse(const BusPtr& busPtr, AZStd::function<void(InterfaceType *)>&& func)
                 {
                     if (busPtr)
                     {
@@ -944,60 +620,22 @@ namespace AZ
                         EBUS_ASSERT(context, "Internal error: context deleted with bind ptr outstanding.");
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
 
-                        EBUS_DO_ROUTING(*context, &busPtr->m_busId, false, false);
+                        EBUS_LAMBDA_DO_ROUTING(*context, &busPtr->m_busId, false, true);
 
                         if (busPtr->m_interface)
                         {
                             CallstackEntry entry(context, &busPtr->m_busId);
-                            Traits::EventProcessingPolicy::CallResult(results, AZStd::forward<Function>(func), busPtr->m_interface, AZStd::forward<ArgsT>(args)...);
+                            Traits::EventProcessingPolicy::Call(AZStd::forward(func), busPtr->m_interface);
                         }
                     }
                 }
-                template <typename Function, typename... ArgsT>
-                static void EventReverse(const BusPtr& busPtr, Function&& func, ArgsT&&... args)
-                {
-                    if (busPtr)
-                    {
-                        auto* context = Bus::GetContext();
-                        EBUS_ASSERT(context, "Internal error: context deleted with bind ptr outstanding.");
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-
-                        EBUS_DO_ROUTING(*context, &busPtr->m_busId, false, true);
-
-                        if (busPtr->m_interface)
-                        {
-                            CallstackEntry entry(context, &busPtr->m_busId);
-                            Traits::EventProcessingPolicy::Call(AZStd::forward<Function>(func), busPtr->m_interface, AZStd::forward<ArgsT>(args)...);
-                        }
-                    }
-                }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void EventResultReverse(Results& results, const BusPtr& busPtr, Function&& func, ArgsT&&... args)
-                {
-                    if (busPtr)
-                    {
-                        auto* context = Bus::GetContext();
-                        EBUS_ASSERT(context, "Internal error: context deleted with bind ptr outstanding.");
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-
-                        EBUS_DO_ROUTING(*context, &busPtr->m_busId, false, true);
-
-                        if (busPtr->m_interface)
-                        {
-                            CallstackEntry entry(context, &busPtr->m_busId);
-                            Traits::EventProcessingPolicy::CallResult(results, AZStd::forward<Function>(func), busPtr->m_interface, AZStd::forward<ArgsT>(args)...);
-                        }
-                    }
-                }
-
                 // Broadcast family
-                template <typename Function, typename... ArgsT>
-                static void Broadcast(Function&& func, ArgsT&&... args)
+                static void Broadcast(AZStd::function<void(InterfaceType *)>&& func)
                 {
                     if (auto* context = Bus::GetContext())
                     {
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, false);
+                        EBUS_LAMBDA_DO_ROUTING(*context, nullptr, false, false);
 
                         auto& addresses = context->m_buses.m_addresses;
                         auto addressIt = addresses.begin();
@@ -1024,56 +662,17 @@ namespace AZ
                             {
                                 // @func and @args cannot be forwarded here as rvalue arguments need to bind to const lvalue arguments
                                 // due to potential of multiple addresses of this EBus container invoking the function multiple times
-                                Traits::EventProcessingPolicy::Call(func, inst, args...);
+                                Traits::EventProcessingPolicy::Call(func, inst);
                             }
                         }
                     }
                 }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void BroadcastResult(Results& results, Function&& func, ArgsT&&... args)
+                static void BroadcastReverse(AZStd::function<void(InterfaceType *)>&& func)
                 {
                     if (auto* context = Bus::GetContext())
                     {
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, false);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.begin();
-                        auto addressesEnd = addresses.end();
-
-                        auto fixer = MakeDisconnectFixer<Bus>(context, nullptr,
-                            [&addressIt, &addressesEnd](Interface* handler)
-                            {
-                                if (addressIt != addressesEnd && addressIt->m_handler->m_interface == handler)
-                                {
-                                    ++addressIt;
-                                }
-                            },
-                            [&addresses, &addressesEnd]()
-                            {
-                                addressesEnd = addresses.end();
-                            }
-                        );
-
-                        while (addressIt != addressesEnd)
-                        {
-                            fixer.m_busId = &addressIt->m_busId;
-                            if (Interface* inst = (addressIt++)->m_interface)
-                            {
-                                // @func and @args cannot be forwarded here as rvalue arguments need to bind to const lvalue arguments
-                                // due to potential of multiple addresses of this EBus container invoking the function multiple times
-                                Traits::EventProcessingPolicy::CallResult(results, func, inst, args...);
-                            }
-                        }
-                    }
-                }
-                template <typename Function, typename... ArgsT>
-                static void BroadcastReverse(Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, true);
+                        EBUS_LAMBDA_DO_ROUTING(*context, nullptr, false, true);
 
                         auto& addresses = context->m_buses.m_addresses;
                         auto addressIt = addresses.rbegin();
@@ -1098,63 +697,7 @@ namespace AZ
                                 CallstackEntry entry(context, &holder.m_busId);
                                 // @func and @args cannot be forwarded here as rvalue arguments need to bind to const lvalue arguments
                                 // due to potential of multiple addresses of this EBus container invoking the function multiple times
-                                Traits::EventProcessingPolicy::Call(func, inst, args...);
-                            }
-                            holder.release();
-
-                            // Since rend() internally points to begin(), it might have changed during the message (e.g., bus was removed).
-                            // Make sure that we are not at the end before moving to the next element, which would be an invalid operation.
-                            if (addressIt != addresses.rend())
-                            {
-                                // During message processing we could have removed/added buses. Since the reverse iterator points
-                                // to the next forward iterator, the elements it points to can change. In this case, we don't need
-                                // to move the reverse iterator.
-                                if (&*addressIt == &holder)
-                                {
-                                    ++addressIt; // If we did not remove the bus we just processed, move to the next one.
-                                }
-                            }
-
-                            if (nextHolder)
-                            {
-                                // We are done moving the ebCurrentBus iterator. It's safe to release the lock on the element the iterator was pointing to.
-                                nextHolder->release();
-                            }
-                        }
-                    }
-                }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void BroadcastResultReverse(Results& results, Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, true);
-
-                        auto& addresses = context->m_buses.m_addresses;
-                        auto addressIt = addresses.rbegin();
-                        while (addressIt != addresses.rend())
-                        {
-                            HandlerHolder& holder = *addressIt;
-                            holder.add_ref();
-
-                            HandlerHolder* nextHolder = nullptr;
-                            if (addressIt != addresses.rbegin())
-                            {
-                                // The reverse iterator (addressIt) internally points to the previous element (the next forward iterator).
-                                // It's important to make sure that this iterator stays valid, so we hold a lock on that element until we
-                                // have moved to the next one. Moving to the next element will happen after processing current bus. While
-                                // processing, we can change the bus container (add/remove listeners).
-                                nextHolder = &*AZStd::prev(addressIt);
-                                nextHolder->add_ref();
-                            }
-
-                            if (Interface* inst = holder.m_interface)
-                            {
-                                CallstackEntry entry(context, &holder.m_busId);
-                                // @func and @args cannot be forwarded here as rvalue arguments need to bind to const lvalue arguments
-                                // due to potential of multiple addresses of this EBus container invoking the function multiple times
-                                Traits::EventProcessingPolicy::CallResult(results, func, inst, args...);
+                                Traits::EventProcessingPolicy::Call(func, inst);
                             }
                             holder.release();
 
@@ -1181,8 +724,7 @@ namespace AZ
                 }
 
                 // Enumerate family
-                template <class Callback>
-                static void EnumerateHandlers(Callback&& callback)
+                static void EnumerateHandlers(AZStd::function<bool(InterfaceType *)>&& callback)
                 {
                     if (auto* context = Bus::GetContext())
                     {
@@ -1211,9 +753,7 @@ namespace AZ
                             fixer.m_busId = &addressIt->m_busId;
                             if (Interface* inst = (addressIt++)->m_interface)
                             {
-                                bool result = false;
-                                Traits::EventProcessingPolicy::CallResult(result, callback, inst);
-                                if (!result)
+                                if (!Traits::EventProcessingPolicy::Call(callback, inst))
                                 {
                                     return;
                                 }
@@ -1221,8 +761,7 @@ namespace AZ
                         }
                     }
                 }
-                template <class Callback>
-                static void EnumerateHandlersId(const IdType& id, Callback&& callback)
+                static void EnumerateHandlersId(const IdType& id, AZStd::function<bool(InterfaceType *)>&& callback)
                 {
                     if (auto* context = Bus::GetContext())
                     {
@@ -1235,9 +774,7 @@ namespace AZ
                             if (Interface* inst = addressIt->m_interface)
                             {
                                 CallstackEntry entry(context, &id);
-                                bool result = false;
-                                Traits::EventProcessingPolicy::CallResult(result, callback, inst);
-                                if (!result)
+                                if (!Traits::EventProcessingPolicy::Call(callback, inst))
                                 {
                                     return;
                                 }
@@ -1245,24 +782,23 @@ namespace AZ
                         }
                     }
                 }
-                template <class Callback>
-                static void EnumerateHandlersPtr(const BusPtr& ptr, Callback&& callback)
+                static void EnumerateHandlersPtr(const BusPtr& ptr, AZStd::function<bool(InterfaceType *)>&& callback)
                 {
-                    if (auto* context = Bus::GetContext())
+                    auto* context = Bus::GetContext();
+                    if (!context)
                     {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
+                        return;
+                    }
+                    typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
 
-                        if (ptr)
+                    if (ptr)
+                    {
+                        if (Interface* inst = ptr->m_interface)
                         {
-                            if (Interface* inst = ptr->m_interface)
+                            CallstackEntry entry(context, &ptr->m_busId);
+                            if (!Traits::EventProcessingPolicy::Call(callback, inst))
                             {
-                                CallstackEntry entry(context, &ptr->m_busId);
-                                bool result = false;
-                                Traits::EventProcessingPolicy::CallResult(result, callback, inst);
-                                if (!result)
-                                {
-                                    return;
-                                }
+                                return;
                             }
                         }
                     }
@@ -1620,74 +1156,39 @@ namespace AZ
             struct Dispatcher
             {
                 // Broadcast family
-                template <typename Function, typename... ArgsT>
-                static void Broadcast(Function&& func, ArgsT&&... args)
+                static void Broadcast(AZStd::function<void(InterfaceType*)>&& func)
                 {
                     if (auto* context = Bus::GetContext())
                     {
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, false);
+                        EBUS_LAMBDA_DO_ROUTING(*context, nullptr, false, false);
 
                         auto handler = context->m_buses.m_handler;
                         if (handler)
                         {
                             CallstackEntry entry(context, nullptr);
-                            Traits::EventProcessingPolicy::Call(AZStd::forward<Function>(func), handler, AZStd::forward<ArgsT>(args)...);
+                            Traits::EventProcessingPolicy::Call(AZStd::move(func), handler);
                         }
                     }
                 }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void BroadcastResult(Results& results, Function&& func, ArgsT&&... args)
+                static void BroadcastReverse(AZStd::function<void(InterfaceType*)>&& func)
                 {
                     if (auto* context = Bus::GetContext())
                     {
                         typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, false);
+                        EBUS_LAMBDA_DO_ROUTING(*context, nullptr, false, false);
 
                         auto handler = context->m_buses.m_handler;
                         if (handler)
                         {
                             CallstackEntry entry(context, nullptr);
-                            Traits::EventProcessingPolicy::CallResult(results, AZStd::forward<Function>(func), handler, AZStd::forward<ArgsT>(args)...);
-                        }
-                    }
-                }
-                template <typename Function, typename... ArgsT>
-                static void BroadcastReverse(Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, false);
-
-                        auto handler = context->m_buses.m_handler;
-                        if (handler)
-                        {
-                            CallstackEntry entry(context, nullptr);
-                            Traits::EventProcessingPolicy::Call(AZStd::forward<Function>(func), handler, AZStd::forward<ArgsT>(args)...);
-                        }
-                    }
-                }
-                template <typename Results, typename Function, typename... ArgsT>
-                static void BroadcastResultReverse(Results& results, Function&& func, ArgsT&&... args)
-                {
-                    if (auto* context = Bus::GetContext())
-                    {
-                        typename Bus::Context::DispatchLockGuard lock(context->m_contextMutex);
-                        EBUS_DO_ROUTING(*context, nullptr, false, false);
-
-                        auto handler = context->m_buses.m_handler;
-                        if (handler)
-                        {
-                            CallstackEntry entry(context, nullptr);
-                            Traits::EventProcessingPolicy::CallResult(results, AZStd::forward<Function>(func), handler, AZStd::forward<ArgsT>(args)...);
+                            Traits::EventProcessingPolicy::Call(AZStd::forward(func), handler);
                         }
                     }
                 }
 
                 // Enumerate family
-                template <class Callback>
-                static void EnumerateHandlers(Callback&& callback)
+                static void EnumerateHandlers(AZStd::function<bool(InterfaceType*)>&& callback)
                 {
                     if (auto* context = Bus::GetContext())
                     {

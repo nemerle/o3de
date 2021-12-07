@@ -28,7 +28,9 @@ namespace AZ
         if (entityId.IsValid() && m_entityName.empty())
         {
             AZ::Entity* entity = nullptr;
-            ComponentApplicationBus::BroadcastResult(entity, &ComponentApplicationRequests::FindEntity, entityId);
+            ComponentApplicationBus::Broadcast([&](auto* iface) {
+                entity=iface->FindEntity(entityId);
+            });
 
             if (entity)
             {
@@ -47,7 +49,7 @@ namespace AZ
                 ;
         }
     }
-    
+
     AZStd::string NamedEntityId::ToString() const
     {
         return AZStd::string::format("%s [%llu]", m_entityName.c_str(), static_cast<AZ::u64>(static_cast<AZ::EntityId>(*this)));

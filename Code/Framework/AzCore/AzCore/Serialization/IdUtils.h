@@ -29,7 +29,7 @@ namespace AZ
             with the newer value overwriting the stored value. If false, duplicates are not allowed and
             the first stored value is kept.The default is false.
         */
-            
+
         template<typename IdType, bool AllowDuplicates = false>
         struct Remapper
         {
@@ -145,7 +145,9 @@ namespace AZ
             {
                 if (!context)
                 {
-                    AZ::ComponentApplicationBus::BroadcastResult(context, &AZ::ComponentApplicationRequests::GetSerializeContext);
+                    AZ::ComponentApplicationBus::Broadcast([&](auto* iface) {
+                       context=iface->GetSerializeContext();
+                    });
                     if (!context)
                     {
                         AZ_Error(
@@ -201,7 +203,9 @@ namespace AZ
             {
                 if (!context)
                 {
-                    AZ::ComponentApplicationBus::BroadcastResult(context, &AZ::ComponentApplicationRequests::GetSerializeContext);
+                    AZ::ComponentApplicationBus::Broadcast([&](auto* iface) {
+                       context=iface->GetSerializeContext();
+                    });
                     if (!context)
                     {
                         AZ_Error("Serialization", false, "No serialize context provided! Failed to get component application default serialize context! ComponentApp is not started or input serialize context should not be null!");

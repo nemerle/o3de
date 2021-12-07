@@ -452,16 +452,16 @@ namespace AZ
         {
             results = AZStd::invoke(AZStd::forward<Function>(func), AZStd::forward<Interface>(iface), AZStd::forward<InputArgs>(args)...);
         }
-
-        template<class Function, class Interface, class... InputArgs>
-        static void Call(Function&& func, Interface&& iface, InputArgs&&... args)
+        // For EnumerateHandlers
+        template<class Interface>
+        static void Call(AZStd::function<bool(Interface* )> func, Interface* iface)
         {
-            AZStd::invoke(AZStd::forward<Function>(func), AZStd::forward<Interface>(iface), AZStd::forward<InputArgs>(args)...);
+            return func(iface);
         }
         template<class Interface>
-        static void Call(AZStd::function<void(Interface &&)> func, Interface&& iface)
+        static void Call(AZStd::function<void(Interface* )> func, Interface* iface)
         {
-            func(AZStd::forward<Interface>(iface));
+            func(iface);
         }
     };
 

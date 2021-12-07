@@ -7,8 +7,8 @@
  */
 
 /** @file
- * Header file for buses that dispatch notification events concerning the AZ::Entity class. 
- * Buses enable entities and components to communicate with each other and with external 
+ * Header file for buses that dispatch notification events concerning the AZ::Entity class.
+ * Buses enable entities and components to communicate with each other and with external
  * systems.
  */
 
@@ -23,7 +23,7 @@
 namespace AZ
 {
     /**
-     * Interface for the AZ::EntitySystemBus, which is the EBus that dispatches   
+     * Interface for the AZ::EntitySystemBus, which is the EBus that dispatches
      * notification events about every entity in the system.
      */
     class EntitySystemEvents
@@ -54,21 +54,21 @@ namespace AZ
 
         /**
          * Signals that an entity was activated.
-         * This event is dispatched after the activation of the entity is complete. 
+         * This event is dispatched after the activation of the entity is complete.
          * @param id The ID of the activated entity.
          */
         virtual void OnEntityActivated(const AZ::EntityId&) {}
-        
+
         /**
          * Signals that an entity is being deactivated.
          * This event is dispatched immediately before the entity is deactivated.
          * @param id The ID of the deactivated entity.
          */
         virtual void OnEntityDeactivated(const AZ::EntityId&) {}
-        
+
         /**
          * Signals that the name of an entity changed.
-         * @param id The ID of the entity. 
+         * @param id The ID of the entity.
          * @param name The new name of the entity.
          */
         virtual void OnEntityNameChanged(const AZ::EntityId&, const AZStd::string& /*name*/) {}
@@ -83,13 +83,13 @@ namespace AZ
 
 
     /**
-     * The EBus for systemwide entity notification events. 
+     * The EBus for systemwide entity notification events.
      * The events are defined in the AZ::EntitySystemEvents class.
      */
     typedef AZ::EBus<EntitySystemEvents> EntitySystemBus;
 
     /**
-     * Interface for the AZ::EntityBus, which is the EBus for notification 
+     * Interface for the AZ::EntityBus, which is the EBus for notification
      * events dispatched by a specific entity.
      */
     class EntityEvents
@@ -105,7 +105,9 @@ namespace AZ
                 EBusConnectionPolicy<Bus>::Connect(busPtr, context, handler, connectLock, id);
 
                 Entity* entity = nullptr;
-                EBUS_EVENT_RESULT(entity, AZ::ComponentApplicationBus, FindEntity, id);
+                AZ::ComponentApplicationBus::Broadcast([&](auto *iface) {
+                   entity =  iface->FindEntity(id);
+                });
                 if (entity)
                 {
                     const AZ::Entity::State entityState = entity->GetState();
@@ -113,7 +115,7 @@ namespace AZ
                     {
                         handler->OnEntityExists(id);
                     }
-                    
+
                     if (entityState == Entity::State::Active)
                     {
                         handler->OnEntityActivated(id);
@@ -121,7 +123,7 @@ namespace AZ
                 }
             }
         };
-        
+
     public:
 
         /**
@@ -158,9 +160,9 @@ namespace AZ
         virtual void OnEntityDestroyed(const AZ::EntityId&) {}
 
         /**
-         * Signals that an entity was activated. 
-         * This event is dispatched after the activation of the entity is complete.  
-         * It is also dispatched immediately if the entity is already active 
+         * Signals that an entity was activated.
+         * This event is dispatched after the activation of the entity is complete.
+         * It is also dispatched immediately if the entity is already active
          * when a handler connects to the bus.
          * @param EntityId The ID of the entity that was activated.
          */

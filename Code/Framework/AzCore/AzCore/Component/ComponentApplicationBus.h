@@ -13,6 +13,7 @@
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/std/parallel/mutex.h>
 #include <AzCore/std/string/osstring.h>
+#include <AzCore/Interface/Interface.h>
 
 namespace AZ
 {
@@ -142,8 +143,8 @@ namespace AZ
         //! Entity names are not unique.
         //! This method exists to facilitate better debugging messages.
         //! @param entity A reference to the entity whose name you are seeking.
-        //! @return The name of the entity with the specified entity ID. 
-        //! If no entity is found for the specified ID, it returns an empty string. 
+        //! @return The name of the entity with the specified entity ID.
+        //! If no entity is found for the specified ID, it returns an empty string.
         virtual AZStd::string GetEntityName(const EntityId& id) { (void)id; return AZStd::string(); }
 
         //! Sets the name of the entity that has the specified entity ID.
@@ -212,7 +213,7 @@ namespace AZ
         //! threads from accessing shared data simultaneously.
         using MutexType = AZStd::recursive_mutex;
     };
-
+    //using ComponentApplicationIface = AZ::Interface<ComponentApplicationRequests>;
     //! Used by components to make requests of the component application.
     using ComponentApplicationBus = AZ::EBus<ComponentApplicationRequests, ComponentApplicationRequestsEBusTraits>;
 }

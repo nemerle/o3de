@@ -2921,7 +2921,8 @@ namespace AZ
                         break;
                     }
                 }
-                BehaviorContextBus::Event(this, &BehaviorContextBus::Events::OnRemoveClass, name, classTypeIt->second);
+                BehaviorContextBus::Event(this, [&](BehaviorContextEvents *iface) {
+                    iface->OnRemoveClass(name, classTypeIt->second); });
                 delete classTypeIt->second;
                 m_typeToClassMap.erase(classTypeIt);
             }
@@ -3020,8 +3021,12 @@ namespace AZ
                     ValidateAzEventDescription(*Base::m_context, *propertyInst->m_getter);
                 }
             }
-
-            BehaviorContextBus::Event(Base::m_context, &BehaviorContextBus::Events::OnAddClass, m_class->m_name.c_str(), m_class);
+            BehaviorContextBus::Event(
+                Base::m_context,
+                [&](BehaviorContextEvents* iface)
+                {
+                    iface->OnAddClass(m_class->m_name.c_str(), m_class);
+                });
         }
     }
 
@@ -3126,7 +3131,12 @@ namespace AZ
             auto globalMethodIt = m_methods.find(name);
             if (globalMethodIt != m_methods.end())
             {
-                BehaviorContextBus::Event(this, &BehaviorContextBus::Events::OnRemoveGlobalMethod, name, globalMethodIt->second);
+                BehaviorContextBus::Event(
+                    this,
+                    [&](BehaviorContextEvents* iface)
+                    {
+                        iface->OnRemoveGlobalMethod(name, globalMethodIt->second);
+                    });
                 delete globalMethodIt->second;
                 m_methods.erase(globalMethodIt);
             }
@@ -3397,7 +3407,12 @@ namespace AZ
             auto globalPropIt = m_properties.find(name);
             if (globalPropIt != m_properties.end())
             {
-                BehaviorContextBus::Event(this, &BehaviorContextBus::Events::OnRemoveGlobalProperty, name, globalPropIt->second);
+                BehaviorContextBus::Event(
+                    this,
+                    [&](BehaviorContextEvents* iface)
+                    {
+                        iface->OnRemoveGlobalProperty(name, globalPropIt->second);
+                    });
                 delete globalPropIt->second;
                 m_properties.erase(globalPropIt);
             }
@@ -3475,7 +3490,12 @@ namespace AZ
                     ValidateAzEventDescription(*Base::m_context, *eventSender.m_broadcast);
                 }
             }
-            BehaviorContextBus::Event(Base::m_context, &BehaviorContextBus::Events::OnAddEBus, m_ebus->m_name.c_str(), m_ebus);
+            BehaviorContextBus::Event(
+                Base::m_context,
+                [&](BehaviorContextEvents* iface)
+                {
+                    iface->OnAddEBus(m_ebus->m_name.c_str(), m_ebus);
+                });
         }
     }
 
@@ -3495,21 +3515,25 @@ namespace AZ
         if (IsRemovingReflection())
         {
             auto ebusIt = m_ebuses.find(name);
-            if (ebusIt != m_ebuses.end())
+            if (ebusIt == m_ebuses.end())
             {
-                BehaviorContextBus::Event(this, &BehaviorContextBus::Events::OnRemoveEBus, name, ebusIt->second);
-
-                // Erase the deprecated name as well
-                auto deprecatedIt = m_ebuses.find(ebusIt->second->m_deprecatedName);
-                if (deprecatedIt != m_ebuses.end())
+                return EBusBuilder<T>(this, nullptr);
+            }
+            BehaviorContextBus::Event(
+                this,
+                [&](BehaviorContextEvents* iface)
                 {
-                    m_ebuses.erase(deprecatedIt);
-                }
-
-                delete ebusIt->second;
-                m_ebuses.erase(ebusIt);
+                    iface->OnRemoveEBus(name, ebusIt->second);
+                });
+            // Erase the deprecated name as well
+            auto deprecatedIt = m_ebuses.find(ebusIt->second->m_deprecatedName);
+            if (deprecatedIt != m_ebuses.end())
+            {
+                m_ebuses.erase(deprecatedIt);
             }
 
+            delete ebusIt->second;
+            m_ebuses.erase(ebusIt);
             return EBusBuilder<T>(this, nullptr);
         }
         else
@@ -4123,9 +4147,12 @@ namespace AZ
             }
 
             CallFunction<R, Args...>::Member(m_functionPtr, *arguments[0].GetAsUnsafe<C*>(), &arguments[1], result, AZStd::make_index_sequence<sizeof...(Args)>());
-
-            EBUS_EVENT_ID(((void*)(*arguments[0].GetAsUnsafe<C*>())), BehaviorObjectSignals, OnMemberMethodCalled, this);
-
+            BehaviorObjectSignals::Event(
+                ((void*)(*arguments[0].GetAsUnsafe<C*>())),
+                [this](auto* iface)
+                {
+                    iface->OnMemberMethodCalled(this);
+                });
             return true;
         }
 
